@@ -25,7 +25,7 @@ Includes special math toolboxes:
 Asiryan Valery Mishevich, © 2015-2019
 
 
-# UMapx.NET
+#
 
 UMapx.NET Framework – динамически подключаемая библиотека для цифровой обработки и анализа сигналов, разработанная на языке программирования Microsoft Visual C#.
 
