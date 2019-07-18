@@ -9845,7 +9845,7 @@ namespace UMapx.Transform
                     {
                         for (x = 0; x < width; x++)
                         {
-                            I_outp[y, x] += T[(int)(I_gaus[y, x] * (length - 1))] * I_temp[y, x];
+                            I_outp[y, x] += T[Maths.Byte(I_gaus[y, x] * (length - 1))] * I_temp[y, x];
                         }
                     }
 
@@ -9926,7 +9926,7 @@ namespace UMapx.Transform
 
                     for (y = 0; y < height; y++)
                     {
-                        I_outp[y] += T[(int)(I_gaus[y] * (length - 1))] * I_temp[y];
+                        I_outp[y] += T[Maths.Byte(I_gaus[y] * (length - 1))] * I_temp[y];
                     }
 
                     output_laplace_pyr[level] = I_outp;
