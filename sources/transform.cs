@@ -8240,8 +8240,7 @@ namespace UMapx.Transform
                     for (k = 0; k < c; k++)
                     {
                         // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) * (cur[j, k] - low[j, k]) + (low[j, k] / length);
-
+                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + (low[j, k] / length);
                     }
                 }
             }
@@ -8277,7 +8276,7 @@ namespace UMapx.Transform
                     for (k = 0; k < c; k++)
                     {
                         // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) * (cur[j, k] - low[j, k]) + (low[j, k] / length);
+                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + (low[j, k] / length);
 
                     }
                 }
@@ -8312,7 +8311,7 @@ namespace UMapx.Transform
                 for (j = 0; j < r; j++)
                 {
                     // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) * (cur[j] - low[j]) + (low[j] / length);
+                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
                 }
             }
 
@@ -8345,7 +8344,7 @@ namespace UMapx.Transform
                 for (j = 0; j < r; j++)
                 {
                     // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) * (cur[j] - low[j]) + (low[j] / length);
+                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
                 }
             }
 
@@ -8640,6 +8639,7 @@ namespace UMapx.Transform
             // data
             int r = data[0].GetLength(0), c = data[0].GetLength(1);
             double[,] sum = new double[r, c];
+            double[,] wei = new double[r, c];
             int i, j, k;
 
             // process
@@ -8977,7 +8977,7 @@ namespace UMapx.Transform
                     for (k = 0; k < c; k++)
                     {
                         // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) * (cur[j, k] - low[j, k]) + low[j, k] / length;
+                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + low[j, k] / length;
 
                     }
                 }
@@ -9014,7 +9014,7 @@ namespace UMapx.Transform
                     for (k = 0; k < c; k++)
                     {
                         // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) * (cur[j, k] - low[j, k]) + (low[j, k] / length);
+                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + (low[j, k] / length);
 
                     }
                 }
@@ -9049,7 +9049,7 @@ namespace UMapx.Transform
                 for (j = 0; j < r; j++)
                 {
                     // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) * (cur[j] - low[j]) + (low[j] / length);
+                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
                 }
             }
 
@@ -9082,7 +9082,7 @@ namespace UMapx.Transform
                 for (j = 0; j < r; j++)
                 {
                     // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) * (cur[j] - low[j]) + (low[j] / length);
+                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
                 }
             }
 
@@ -9620,10 +9620,10 @@ namespace UMapx.Transform
         /// <param name="factor">Множитель [-1, 1]</param>
         public LocalLaplacianFilter(double sigma = 0.05, int n = 10, int levels = 10, double factor = -1.0)
         {
-            this.sigma = sigma;
-            this.n = n;
-            this.levels = levels;
-            this.factor = factor;
+            this.Sigma = sigma;
+            this.N = n;
+            this.Levels = levels;
+            this.Factor = factor;
         }
         /// <summary>
         /// Получает или задает значение σ-параметра.
@@ -9636,7 +9636,7 @@ namespace UMapx.Transform
             }
             set
             {
-                this.sigma = value;
+                this.sigma = Maths.Double(value);
             }
         }
         /// <summary>
@@ -9664,7 +9664,7 @@ namespace UMapx.Transform
             }
             set
             {
-                this.n = value;
+                this.n = Math.Max(value, 0);
             }
         }
         /// <summary>
@@ -9825,7 +9825,7 @@ namespace UMapx.Transform
                 {
                     for (x = 0; x < width; x++)
                     {
-                        I_temp[y, x] = T[(int)(input[y, x] * (length - 1))];
+                        I_temp[y, x] = T[Maths.Byte(input[y, x] * (length - 1))];
                     }
                 }
 
@@ -9910,7 +9910,7 @@ namespace UMapx.Transform
                 // remapping function
                 for (y = 0; y < height; y++)
                 {
-                    I_temp[y] = T[(int)(input[y] * (length - 1))];
+                    I_temp[y] = T[Maths.Byte(input[y] * (length - 1))];
                 }
 
                 temp_laplace_pyr = lpt.Forward(I_temp);
