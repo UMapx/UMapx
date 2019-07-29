@@ -22,7 +22,7 @@ Includes special math toolboxes:
 * Wavelet Toolbox. Provides wide functionality for the study of discrete and continuous wavelets. The toolbox also includes algorithms for discrete one-dimensional and two-dimensional wavelet transforms of real and complex signals.
 * Image Processing Toolbox. Contains efficient algorithms for processing, correcting and analyzing 32-bit raster images.
 
-Asiryan Valery Mishevich, © 2015-2019
+Asiryan Valeriy, © 2015-2019
 
 
 #
@@ -49,4 +49,4 @@ UMapx.NET Framework – динамически подключаемая библ
 * Wavelet Toolbox. Предоставляет широкий функционал для исследования дискретных и непрерывных вейвлетов. Набор инструментов включает также алгоритмы дискретных одномерных и двумерных вейвлет-преобразований вещественных и комплексных сигналов.
 * Image Processing Toolbox. Содержит эффективные алгоритмы обработки, коррекции и анализа 32-битных растровых изображений.
 
-Асирян Валерий Мишевич, © 2015-2019 гг.
+Асирян Валерий, © 2015-2019 гг.
