@@ -4677,127 +4677,160 @@ namespace UMapx.Imaging
         /// Инициализирует фильтр дитеринга Эткинсона.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering Atkinson()
+        public static ErrorDiffusionDithering Atkinson
         {
-            return new ErrorDiffusionDithering(
-                new int[3][] {
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[3][] {
                 new int[2]   {          1, 1 },
                 new int[5]   { 0, 1, 1, 1, 0 },
                 new int[5]   { 0, 0, 1, 0, 0 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Буркеса.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering Burkes()
+        public static ErrorDiffusionDithering Burkes
         {
-            return new ErrorDiffusionDithering(
-                new int[2][] {
-                new int[2] { 8, 4 },
-                new int[5] { 2, 4, 8, 4, 2 } });
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[2][] {
+                    new int[2] { 8, 4 },
+                    new int[5] { 2, 4, 8, 4, 2 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Фэна.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering Fan()
+        public static ErrorDiffusionDithering Fan
         {
-            return new ErrorDiffusionDithering(
-                new int[2][] {
-                new int[1] { 8 },
-                new int[4] { 1, 1, 2, 4 } });
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[2][] {
+                    new int[1] { 8 },
+                    new int[4] { 1, 1, 2, 4 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Сиерры.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering SierraLite()
+        public static ErrorDiffusionDithering SierraLite
         {
-            return new ErrorDiffusionDithering(
-                new int[2][] {
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[2][] {
                 new int[1] { 2 },
                 new int[2] { 1, 1 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Сиерры.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering Sierra()
+        public static ErrorDiffusionDithering Sierra
         {
-            return new ErrorDiffusionDithering(
-                new int[3][] {
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[3][] {
                 new int[2] { 5, 3 },
                 new int[5] { 2, 4, 5, 4, 2 },
                 new int[3] { 2, 3, 2 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Сиерры.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering SierraTowsRows()
+        public static ErrorDiffusionDithering SierraTowsRows
         {
-            return new ErrorDiffusionDithering(
-                new int[2][] {
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[2][] {
                 new int[2] { 4, 3 },
                 new int[5] { 1, 2, 3, 2, 1 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Флойда-Стеинберга.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering FloydSteinberg()
+        public static ErrorDiffusionDithering FloydSteinberg
         {
-            return new ErrorDiffusionDithering(
-                new int[2][] {
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[2][] {
                 new int[1] {       7 },
                 new int[3] { 3, 5, 1 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Джарвиса-Джадиса-Нинке.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering JarvisJudiceNinke()
+        public static ErrorDiffusionDithering JarvisJudiceNinke
         {
-            return new ErrorDiffusionDithering(
-                new int[3][] {
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[3][] {
                 new int[2] {          7, 5 },
                 new int[5] { 3, 5, 7, 5, 3 },
                 new int[5] { 1, 3, 5, 3, 1 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Стивенсона.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering Stevenson()
+        public static ErrorDiffusionDithering Stevenson
         {
-            return new ErrorDiffusionDithering(
-                new int[3][] {
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[3][] {
                 new int[4] { 12, 26, 30, 16 },
                 new int[3] { 12, 26, 12   },
                 new int[4] { 5, 12, 12, 5 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Шиау.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering Shiau()
+        public static ErrorDiffusionDithering Shiau
         {
-            return new ErrorDiffusionDithering(
-                new int[2][] {
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[2][] {
                 new int[1] { 4 },
                 new int[3] { 1, 1, 2 } });
+            }
         }
         /// <summary>
         /// Инициализирует фильтр дитеринга Стаки.
         /// </summary>
         /// <returns>Фильтр дитеринга диффузии ошибки</returns>
-        public static ErrorDiffusionDithering Stucki()
+        public static ErrorDiffusionDithering Stucki
         {
-            return new ErrorDiffusionDithering(
-                new int[3][] {
+            get
+            {
+                return new ErrorDiffusionDithering(
+                    new int[3][] {
                 new int[2] { 8, 4 },
                 new int[5] { 2, 4, 8, 4, 2 },
                 new int[5] { 1, 2, 4, 2, 1 } });
+            }
         }
         #endregion
     }
@@ -14077,15 +14110,34 @@ namespace UMapx.Imaging
             if (levels > length)
                 throw new Exception("Количество уровней квантования не может быть больше количества уровней представления");
 
-            int interval = length / levels;
+            int interval = length / levels + 1;
             double[] table = new double[length];
-            int beta = interval / 2;
-            int q;
+            double min = double.MaxValue;
+            double max = double.MinValue;
+            double v;
+            int q, i;
 
-            for (int i = 0; i < length; i++)
+            // calculating
+            for (i = 0; i < length; i++)
             {
-                q = (i / interval) * interval + beta;
-                table[i] = q / (length - 1.0);
+                q = (i / interval) * interval;
+                v = q / (length - 1.0);
+
+                if (v < min)
+                    min = v;
+
+                if (v > max)
+                    max = v;
+
+                table[i] = v;
+            }
+
+            // normalizing
+            v = (max - min);
+
+            for (i = 0; i < length; i++)
+            {
+                table[i] = (table[i] - min) / v;
             }
 
             return table;

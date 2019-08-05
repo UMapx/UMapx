@@ -7,6 +7,7 @@
 // Version 4.0.0
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace UMapx.Core
@@ -221,86 +222,6 @@ namespace UMapx.Core
 
         #region Algebraic
         #region Real number
-        /// <summary>
-        /// Проверяет является ли числом простым.
-        /// <remarks>
-        /// Данный метод основан на переборе всех делителей.
-        /// </remarks>
-        /// </summary>
-        /// <param name="p">Число</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsPrime(int p)
-        {
-            // if number is 2:
-            if (p == 2)
-            {
-                return true;
-            }
-            // if number is even?
-            else if ((p % 2) == 0)
-            {
-                return false;
-            }
-            else
-            {
-                // x = sqrt(P):
-                int i, sqrt = (int)Math.Sqrt(p);
-                // Eratosthenes seive:
-                int[] primes = Maths.Eratosthenes(sqrt);
-                int length = primes.Length;
-
-                // if number divisible by odd number?
-                for (i = 1; i < length; i++)
-                {
-                    if ((p % primes[i]) == 0)
-                    {
-                        return false;
-                    }
-                }
-            }
-            // number is prime!
-            return true;
-        }
-        /// <summary>
-        /// Проверяет является ли числом простым.
-        /// <remarks>
-        /// Данный метод основан на переборе всех делителей.
-        /// </remarks>
-        /// </summary>
-        /// <param name="p">Число</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsPrime(long p)
-        {
-            // if number is 2:
-            if (p == 2)
-            {
-                return true;
-            }
-            // if number is even?
-            else if ((p % 2) == 0)
-            {
-                return false;
-            }
-            else
-            {
-                // x = sqrt(P):
-                int i, sqrt = (int)Math.Sqrt(p);
-                // Eratosthenes seive:
-                int[] primes = Maths.Eratosthenes(sqrt);
-                int length = primes.Length;
-
-                // if number divisible by odd number?
-                for (i = 1; i < length; i++)
-                {
-                    if ((p % primes[i]) == 0)
-                    {
-                        return false;
-                    }
-                }
-            }
-            // number is prime!
-            return true;
-        }
         /// <summary>
         /// Проверяет является ли число полным квадратом.
         /// </summary>
@@ -1186,17 +1107,72 @@ namespace UMapx.Core
         #endregion
         #endregion
 
-        #region Modular arithmetic
+        #region Modular arithmetic and number theory
+        /// <summary>
+        /// Проверяет является ли числом простым.
+        /// <remarks>
+        /// Данный метод основан на переборе всех делителей.
+        /// </remarks>
+        /// </summary>
+        /// <param name="p">Число</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsPrime(int p)
+        {
+            // if number is 2:
+            if (p == 2)
+            {
+                return true;
+            }
+            // if number is even?
+            else if ((p % 2) == 0)
+            {
+                return false;
+            }
+            else
+            {
+                // prime or not?
+                int x = Maths.Pollard(p);
+                return x == p;
+            }
+        }
+        /// <summary>
+        /// Проверяет является ли числом простым.
+        /// <remarks>
+        /// Данный метод основан на переборе всех делителей.
+        /// </remarks>
+        /// </summary>
+        /// <param name="p">Число</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsPrime(long p)
+        {
+            // if number is 2:
+            if (p == 2)
+            {
+                return true;
+            }
+            // if number is even?
+            else if ((p % 2) == 0)
+            {
+                return false;
+            }
+            else
+            {
+                // prime or not?
+                long x = Maths.Pollard(p);
+                return x == p;   
+            }
+        }
+
         /// <summary>
         /// Возвращает взаимнопростое с "a" число.
         /// </summary>
         /// <param name="a">Целое число</param>
-        /// <param name="inc">Начальный вброс</param>
+        /// <param name="increment">Начальный вброс</param>
         /// <returns>Целое число со знаком</returns>
-        public static int Coprime(int a, int inc = 1)
+        public static int Coprime(int a, int increment = 1)
         {
             int x = 2;
-            int p = inc;
+            int p = increment;
 
             while (x != 1)
             {
@@ -1210,12 +1186,12 @@ namespace UMapx.Core
         /// Возвращает взаимнопростое с "a" число.
         /// </summary>
         /// <param name="a">Целое число</param>
-        /// <param name="inc">Начальный вброс</param>
+        /// <param name="increment">Начальный вброс</param>
         /// <returns>Целое число со знаком</returns>
-        public static long Coprime(long a, long inc = 1)
+        public static long Coprime(long a, long increment = 1)
         {
             long x = 2;
-            long p = inc;
+            long p = increment;
 
             while (x != 1)
             {
@@ -1267,76 +1243,6 @@ namespace UMapx.Core
 
             double r = a % n;
             return r < 0 ? r + n : r;
-        }
-
-        /// <summary>
-        /// Возвращает значение оператора Mof(x, n, k).
-        /// <remarks>
-        /// Оператор Mof представляет собой цикличный оператор Mod.
-        /// </remarks>
-        /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="n">Модуль</param>
-        /// <param name="k">Сдвиг</param>
-        /// <returns>Целое число</returns>
-        public static int Mof(int x, int n, int k)
-        {
-            int s = n + k;
-            int a = Maths.Mod(x - s, 2 * n);
-            int b = Maths.Mod(a, n);
-
-            if (a < n)
-            {
-                return n - b - 1;
-            }
-
-            return b;
-        }
-        /// <summary>
-        /// Возвращает значение оператора Mof(x, n, k).
-        /// <remarks>
-        /// Оператор Mof представляет собой цикличный оператор Mod.
-        /// </remarks>
-        /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="n">Модуль</param>
-        /// <param name="k">Сдвиг</param>
-        /// <returns>Целое число</returns>
-        public static long Mof(long x, long n, long k)
-        {
-            long s = n + k;
-            long a = Maths.Mod(x - s, 2 * n);
-            long b = Maths.Mod(a, n);
-
-            if (a < n)
-            {
-                return n - b - 1;
-            }
-
-            return b;
-        }
-        /// <summary>
-        /// Возвращает значение оператора Mof(x, n, k).
-        /// <remarks>
-        /// Оператор Mof представляет собой цикличный оператор Mod.
-        /// </remarks>
-        /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="n">Модуль</param>
-        /// <param name="k">Сдвиг</param>
-        /// <returns>Целое число</returns>
-        public static double Mof(double x, double n, double k)
-        {
-            double s = n + k;
-            double a = Maths.Mod(x - s, 2 * n);
-            double b = Maths.Mod(a, n);
-
-            if (a < n)
-            {
-                return n - b - 1;
-            }
-
-            return b;
         }
 
         /// <summary>
@@ -1562,36 +1468,90 @@ namespace UMapx.Core
         /// Возвращает массив множителей, из которых состоит число.
         /// </summary>
         /// <param name="n">Целое число</param>
+        /// <param name="onlyPrimes">Только простые множители или нет</param>
         /// <returns>Одномерный массив</returns>
-        public static int[] Itf(int n)
+        public static int[] Itf(int n, bool onlyPrimes = false)
         {
+            int p = n;
+
+            // if collect only prime numbers
+            // and "N" includes powers of 2
+            if (onlyPrimes)
+            {
+                int k = 0;
+
+                while (p % 2 == 0)
+                {
+                    p /= 2;
+                    k++;
+                }
+
+                if (k > 0)
+                    p *= 2;
+            }
+
+            // factorization
             var a = new List<int>();
             int div;
 
-            while (n > 1)
+            while (p > 1)
             {
-                div = (int)Pollard0(n);
+                div = Maths.Pollard(p);
                 a.Add(div);
-                n /= div;
+                p /= div;
             }
+
+            // distinct or not
+            if (onlyPrimes)
+            {
+                return a.Distinct().ToArray();
+            }
+
             return a.ToArray();
         }
         /// <summary>
         /// Возвращает массив множителей, из которых состоит число.
         /// </summary>
         /// <param name="n">Целое число</param>
+        /// <param name="onlyPrimes">Только простые множители или нет</param>
         /// <returns>Одномерный массив</returns>
-        public static long[] Itf(long n)
+        public static long[] Itf(long n, bool onlyPrimes = false)
         {
+            long p = n;
+
+            // if collect only prime numbers
+            // and "N" includes powers of 2
+            if (onlyPrimes)
+            {
+                int k = 0;
+
+                while (p % 2 == 0)
+                {
+                    p /= 2;
+                    k++;
+                }
+
+                if (k > 0)
+                    p *= 2;
+            }
+
+            // factorization
             var a = new List<long>();
             long div;
 
-            while (n > 1)
+            while (p > 1)
             {
-                div = Pollard0(n);
+                div = Maths.Pollard(p);
                 a.Add(div);
-                n /= div;
+                p /= div;
             }
+
+            // distinct or not
+            if (onlyPrimes)
+            {
+                return a.Distinct().ToArray();
+            }
+
             return a.ToArray();
         }
 
@@ -1600,7 +1560,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Целое число</param>
         /// <returns>Целое число</returns>
-        public static int Pollard0(int n)
+        public static int Pollard(int n)
         {
             int y = 2, c = 2, x = 2, factor = 1;
             int count;
@@ -1624,7 +1584,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Целое число</param>
         /// <returns>Целое число</returns>
-        public static long Pollard0(long n)
+        public static long Pollard(long n)
         {
             long y = 2, c = 2, x = 2, factor = 1;
             long count;
@@ -1651,25 +1611,17 @@ namespace UMapx.Core
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public static int Etf(int n)
         {
-            int res = n, i;
-            int sqr = (int)(Math.Sqrt(n) + 1);
+            // factorization with only primes
+            int[] itf = Maths.Itf(n, true);
+            double radical = 1;
+            int length = itf.Length;
 
-            for (i = 2; i <= sqr; i++)
+            // calculation radical
+            for (int i = 0; i < length; i++)
             {
-                if (Maths.Mod(n, i) == 0)
-                {
-                    while (Maths.Mod(n, i) == 0)
-                    {
-                        n /= i;
-                    }
-                    res -= (res / i);
-                }
+                radical *= 1.0 - 1.0 / itf[i];
             }
-            if (n > 1)
-            {
-                res -= (res / n);
-            }
-            return res;
+            return (int)(n * radical);
         }
         /// <summary>
         /// Возвращает значение функции Эйлера.
@@ -1678,199 +1630,119 @@ namespace UMapx.Core
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public static long Etf(long n)
         {
-            long res = n, i;
-            long sqr = (long)(Math.Sqrt(n) + 1);
+            // factorization with only primes
+            long[] itf = Maths.Itf(n, true);
+            double radical = 1;
+            int length = itf.Length;
 
-            for (i = 2; i <= sqr; i++)
+            // calculation radical
+            for (int i = 0; i < length; i++)
             {
-                if (Maths.Mod(n, i) == 0)
-                {
-                    while (Maths.Mod(n, i) == 0)
-                    {
-                        n /= i;
-                    }
-                    res -= (res / i);
-                }
+                radical *= 1.0 - 1.0 / itf[i];
             }
-            if (n > 1)
-            {
-                res -= (res / n);
-            }
-            return res;
+            return (long)(n * radical);
         }
-        #endregion
 
-        #region Prime seives
         /// <summary>
-        /// Реализует решето Сундарама для поиска простых чисел.
+        /// Реализует решето для поиска простых чисел.
         /// <remarks>
-        /// Данное решето является наименее вычислительно эффективным. Именно поэтому оно редко применяется на практике.
-        /// </remarks>
-        /// </summary>
-        /// <param name="limit">Число</param>
-        /// <param name="extended">Расширенное решето [1, 2N] или нет [1, N]</param>
-        /// <returns>Одномерный массив</returns>
-        public static int[] Sundaram(int limit, bool extended = false)
-        {
-            // Исключения:
-            if (limit <= 1)
-                throw new Exception("Простых чисел в указанном диапазоне не существует");
-
-            int n = limit / 2;
-            int n0 = (int)(Math.Sqrt(2 * n + 1) - 1) / 2, n1;
-            bool[] b = new bool[limit];
-            var p = new List<int>();
-            int i, j;
-
-            // Построение решета:
-            for (i = 1; i <= n0; i++)
-            {
-                n1 = (n - i) / (2 * i + 1);
-
-                for (j = i; j <= n1; j++)
-                {
-                    b[i + j + 2 * i * j] = true;
-                }
-            }
-            // Выделение простых чисел:
-            p.Add(2); // добавляем первое простое число.
-            int final = extended ? limit : n;
-            for (i = 1; i < final; i++)
-            {
-                if (b[i] == false)
-                {
-                    p.Add(2 * i + 1);
-                }
-            }
-
-            return p.ToArray();
-        }
-        /// <summary>
-        /// Реализует решето Аткина для поиска простых чисел.
-        /// <remarks>
-        /// Находит массив простых чисел за O(n / loglog(n)) операций. Однако, на практике
-        /// данное решето уступает в скорости сегментированному.
+        /// Рекурсивная реализация оптимизированного по памяти сегментированного решета Эратосфена.
+        /// Операционная сложность алгоритма O(N*logN). Сложность по памяти O(Δ), где Δ=sqrt(N).
         /// </remarks>
         /// </summary>
         /// <param name="limit">Число</param>
         /// <returns>Одномерный массив</returns>
-        public static int[] Atkin(int limit)
+        public static int[] Sieve(int limit)
         {
-            // Исключения:
-            if (limit <= 1)
-                throw new Exception("Простых чисел в указанном диапазоне не существует");
-            if (limit == 2)
+            if (limit <= 2)
+            {
+                // first prime
                 return new int[] { 2 };
-
-            // Инициализация решета:
-            bool[] primes = new bool[limit + 1];
-            int sqr = (int)Math.Sqrt(limit);
-            primes[2] = true;
-            primes[3] = true;
-            int n, i, j;
-
-            // Предположительно простые - это целые с нечетным числом
-            // представлений в данных квадратных формах.
-            // x2 и y2 - это квадраты i и j (оптимизация).
-            int x2 = 0, y2;
-
-            for (i = 1; i <= sqr; i++)
+            }
+            else
             {
-                x2 += 2 * i - 1;
-                y2 = 0;
-                for (j = 1; j <= sqr; j++)
-                {
-                    y2 += 2 * j - 1;
+                // recursion
+                int beta = (int)(Math.Pow(limit, 1.0 / 2)) + 1;
+                int[] prime = Sieve(beta);
+                bool[] mark;
+                int length = prime.Length;
+                int start, low, high;
+                int i, j, p;
+                List<int> list = prime.ToList();
 
-                    n = 4 * x2 + y2;
-                    if ((n <= limit) && (n % 12 == 1 || n % 12 == 5))
+                // do job
+                for (low = beta, high = beta + beta; low < limit; low += beta, high += beta)
+                {
+                    high = Math.Min(high, limit);
+                    mark = new bool[beta];
+
+                    for (i = 0; i < length; i++)
                     {
-                        primes[n] = !primes[n];
+                        p = prime[i];
+                        start = (int)((double)low / p) * p;
+
+                        if (start < low)
+                            start += p;
+
+                        for (j = start; j < high; j += p)
+                        {
+                            mark[j - low] = true;
+                        }
                     }
 
-                    // n = 3 * x2 + y2;
-                    n -= x2; // Оптимизация
-                    if ((n <= limit) && (n % 12 == 7))
-                        primes[n] = !primes[n];
 
-                    // n = 3 * x2 - y2;
-                    n -= 2 * y2; // Оптимизация
-                    if ((i > j) && (n <= limit) && (n % 12 == 11))
-                        primes[n] = !primes[n];
-                }
-            }
-
-            // Отсеиваем квадраты простых чисел в интервале [5, sqrt(limit)].
-            // (основной этап не может их отсеять)
-            for (i = 5; i <= sqr; i++)
-            {
-                if (primes[i])
-                {
-                    n = i * i;
-                    for (j = n; j <= limit; j += n)
+                    for (i = low; i < high; i++)
                     {
-                        primes[j] = false;
+                        if (!mark[i - low])
+                        {
+                            list.Add(i);
+                        }
                     }
                 }
-            }
 
-            // Построение коченого массива:
-            var b = new List<int>();
-            for (i = 1; i <= limit; i++)
+                return list.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Возвращает радикал целого числа.
+        /// </summary>
+        /// <param name="n">Число</param>
+        /// <returns>Целое число со знаком</returns>
+        public static int Radical(int n)
+        {
+            // factorization
+            int[] itf = Maths.Itf(n, true);
+            int radical = 1;
+            int length = itf.Length;
+
+            // calculation radical
+            for (int i = 0; i < length; i++)
             {
-                if ((primes[i]))
-                {
-                    b.Add(i);
-                }
+                radical *= itf[i];
             }
 
-            return b.ToArray();
+            return radical;
         }
         /// <summary>
-        /// Реализует решето Эратосфена для поиска простых чисел.
-        /// <remarks>
-        /// Находит массив простых чисел за O(n * loglog(n)) операций.
-        /// </remarks>
+        /// Возвращает радикал целого числа.
         /// </summary>
-        /// <param name="limit">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static int[] Eratosthenes(int limit)
+        /// <param name="n">Число</param>
+        /// <returns>Целое число со знаком</returns>
+        public static long Radical(long n)
         {
-            // Исключения:
-            if (limit <= 1)
-                throw new Exception("Простых чисел в указанном диапазоне не существует");
+            // factorization
+            long[] itf = Maths.Itf(n, true);
+            long radical = 1;
+            int length = itf.Length;
 
-            int n = limit + 1, i, j, p, p0, pf;
-            bool[] a = new bool[n];
-            var b = new List<int>();
-
-            // Заполнение массива чисел от 0 до N.
-            // Пропускаем четные элементы:
-            a[2] = true;
-            for (i = 3; i < n; i += 2)
+            // calculation radical
+            for (int i = 0; i < length; i++)
             {
-                a[i] = true;
+                radical *= itf[i];
             }
 
-            // Классическое решето Эратосфена:
-            p0 = 3; pf = p0 * p0;
-            for (p = p0; pf < n; p += 2)
-            {
-                pf = p * p;
-                for (j = pf; j < n; j += p)
-                {
-                    a[j] = false;
-                }
-            }
-            // Построение коченого массива:
-            for (i = 2; i < n; i++)
-            {
-                if (a[i])
-                {
-                    b.Add(i);
-                }
-            }
-            return b.ToArray();
+            return radical;
         }
         #endregion
 
@@ -1932,7 +1804,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Вектор-строка</param>
         /// <returns>Десятичное число</returns>
-        public static long Matrice2Numeral(int[] x)
+        public static long Vector2Numeral(int[] x)
         {
             int i, n = x.Length;
             long a = 0;
@@ -1951,7 +1823,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Десятичное число</param>
         /// <returns>Вектор-строка</returns>
-        public static int[] Numeral2Matrice(long x)
+        public static int[] Numeral2Vector(long x)
         {
             return Decimal2Base(x, base10);
         }

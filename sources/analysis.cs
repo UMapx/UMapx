@@ -88,9 +88,7 @@ namespace UMapx.Analysis
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public double Compute(double a, double b)
         {
-            // Trapezoid Integral Solution:
-            // by Asiryan Valeriy
-
+            // Trapezoid Integral Solution
             // compute first points:
             int n = 1, i;
             double h = (b - a);
@@ -183,8 +181,8 @@ namespace UMapx.Analysis
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public double Compute(double a, double b)
         {
-            // Simpson Integral Solution:
-            // by Angelina Drabkova
+            // Simpson Integral Solution
+            // A. Drabkova
             int c, n, k;
             double s1 = 0, x, s, h;
 
@@ -300,8 +298,8 @@ namespace UMapx.Analysis
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public double Compute(double a, double b)
         {
-            // Meain Runge-Kutta algorithm
-            // by T.I. Semenova:
+            // Runge-Kutta algorithm
+            // T.I. Semenova
 
             int m = 1;
             double h = b - a;
@@ -330,7 +328,7 @@ namespace UMapx.Analysis
         private double rk4(double x0, double y0, double h, int m)
         {
             // Runge-Kutta iterative algorithm
-            // by T.I. Semenova:
+            // T.I. Semenova
 
             double x = x0, y = y0;
             double k1, k2, k3, k4;
@@ -603,8 +601,6 @@ namespace UMapx.Analysis
         public double Compute(double xl)
         {
             // Lagrange interpolation algorithm
-            // by Asiryan Valeriy.
-
             int k = Maths.Range(iterations, 1, y.Length - 1);
             double l = 0, l1;
             int i, j;
@@ -708,8 +704,6 @@ namespace UMapx.Analysis
         public double Compute(double xl)
         {
             // Newton interpolation algorithm
-            // by Asiryan Valeriy.
-
             int n = Maths.Range(iterations, 1, x.Length);
             double res = y[0], F, den;
             int i, j, k;
@@ -920,219 +914,7 @@ namespace UMapx.Analysis
     }
     #endregion
 
-    #region SLAU methods
-    /// <summary>
-    /// Определяет класс, реализующий решение системы линейных алгебраических уравнений методом Якоби.
-    /// <remarks>
-    /// В числовой линейной алгебре метод Якоби (или итерационный метод Якоби) является алгоритмом определения решений диагонально доминирующей системы
-    /// линейных уравнений. Процесс вычислений повторяется до тех пор, пока он предел не сходится. Этот алгоритм является упрощенной версией метода 
-    /// преобразования Якоби матричной диагонализации.
-    /// 
-    /// Более подробную информацию можно найти на сайте:
-    /// https://en.wikipedia.org/wiki/Jacobi_method
-    /// </remarks>
-    /// </summary>
-    public class JacobiSolution : IMatrixSolution
-    {
-        #region Private data
-        private double[] b;
-        private double eps;
-        #endregion
-
-        #region Class components
-        /// <summary>
-        /// Инициализирует класс, реализующий решение системы линейных алгебраических уравнений методом Якоби.
-        /// </summary>
-        /// <param name="b">Вектор-строка</param>
-        /// <param name="eps">Погрешность [0, 1]</param>
-        public JacobiSolution(double[] b, double eps = 0.0001)
-        {
-            B = b; Eps = eps;
-        }
-        /// <summary>
-        /// Получает или задает вектор-строку.
-        /// </summary>
-        public double[] B
-        {
-            get
-            {
-                return this.b;
-            }
-            set
-            {
-                this.b = value;
-            }
-        }
-        /// <summary>
-        /// Получает или задает погрешность [0, 1].
-        /// </summary>
-        public double Eps
-        {
-            get
-            {
-                return this.eps;
-            }
-            set
-            {
-                this.eps = Maths.Double(value);
-            }
-        }
-        /// <summary>
-        /// Возвращает вектор-строку, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
-        /// </summary>
-        /// <param name="A">Квадратная матрица</param>
-        /// <returns>Вектор-строка</returns>
-        public double[] Compute(double[,] A)
-        {
-            int N = b.Length;
-            double[] p = new double[N];
-            double[] x = new double[N];
-            double norm;
-            int i, j, k;
-
-            do
-            {
-                for (i = 0; i < N; i++)
-                {
-                    p[i] = b[i];
-                    for (j = 0; j < N; j++)
-                    {
-                        if (i != j)
-                        {
-                            p[i] -= A[i, j] * x[j];
-                        }
-                    }
-                    p[i] /= A[i, i];
-                }
-                norm = Math.Abs(x[0] - p[0]);
-                for (k = 0; k < N; k++)
-                {
-                    if (Math.Abs(x[k] - p[k]) > norm)
-                    {
-                        norm = Math.Abs(x[k] - p[k]);
-                    }
-                    x[k] = p[k];
-                }
-            } while (norm > eps);
-
-            return x;
-        }
-        #endregion
-    }
-    /// <summary>
-    /// Определяет класс, реализующий решение системы линейных алгебраических уравнений методом Гаусса-Зейделя.
-    /// <remarks>
-    /// В числовой линейной алгебре метод Гаусса-Зейделя, также известный как метод Либмана или метод последовательного перемещения, 
-    /// является итерационным методом, используемым для решения линейной системы уравнений. Он назван в честь немецких математиков Карла Фридриха Гаусса
-    /// и Филиппа Людвига фон Зейделя и похож на метод Якоби. Хотя его можно применять к любой матрице с ненулевыми элементами на диагоналях, сходимость 
-    /// гарантируется только в том случае, если матрица либо диагонально доминантна, либо симметрична и положительно определена.
-    /// 
-    /// Более подробную информацию можно найти на сайте:
-    /// https://en.wikipedia.org/wiki/Gauss%E2%80%93Seidel_method
-    /// </remarks>
-    /// </summary>
-    public class GaussSeidelSolution : IMatrixSolution
-    {
-        #region Private data
-        private double[] b;
-        private double eps;
-        #endregion
-        
-        #region Class components
-        /// <summary>
-        /// Инициализирует класс, реализующий решение системы линейных алгебраических уравнений методом Гаусса-Зейделя.
-        /// </summary>
-        /// <param name="b">Вектор-строка</param>
-        /// <param name="eps">Погрешность [0, 1]</param>
-        public GaussSeidelSolution(double[] b, double eps = 0.0001)
-        {
-            B = b; Eps = eps;
-        }
-        /// <summary>
-        /// Получает или задает вектор-строку.
-        /// </summary>
-        public double[] B
-        {
-            get
-            {
-                return this.b;
-            }
-            set
-            {
-                this.b = value;
-            }
-        }
-        /// <summary>
-        /// Получает или задает погрешность [0, 1]
-        /// </summary>
-        public double Eps
-        {
-            get
-            {
-                return this.eps;
-            }
-            set
-            {
-                this.eps = Maths.Double(value);
-            }
-        }
-        /// <summary>
-        /// Возвращает вектор-строку, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
-        /// </summary>
-        /// <param name="A">Квадратная матрица</param>
-        /// <returns>Вектор-строка</returns>
-        public double[] Compute(double[,] A)
-        {
-            int n = b.Length;
-            double[] x = new double[n];
-            double[] temp;
-            int i, j;
-            double var;
-
-            do
-            {
-                temp = (double[])x.Clone();
-
-                for (i = 0; i < n; i++)
-                {
-                    var = 0;
-                    for (j = 0; j < i; j++)
-                    {
-                        var += (A[i, j] * x[j]);
-                    }
-                    for (j = i + 1; j < n; j++)
-                    {
-                        var += (A[i, j] * temp[j]);
-                    }
-                    x[i] = (b[i] - var) / A[i, i];
-                }
-            } while (!Converge(x, temp, eps, n));
-
-            return x;
-        }
-        /// <summary>
-        /// Возвращает логическое значение при условии сходимости.
-        /// </summary>
-        /// <param name="xk">Вектор-строка</param>
-        /// <param name="xkp">Вектор-строка</param>
-        /// <param name="eps">Погрешность вычислений</param>
-        /// <param name="n">Длина вектора</param>
-        /// <returns>Логическое значение</returns>
-        private bool Converge(double[] xk, double[] xkp, double eps, int n)
-        {
-            double norm = 0;
-            for (int i = 0; i < n; i++)
-            {
-                norm += (xk[i] - xkp[i]) * (xk[i] - xkp[i]);
-            }
-            if (Math.Sqrt(norm) >= eps)
-            {
-                return false;
-            }
-            return true;
-        }
-        #endregion
-    }
+    #region SLAU and roots methods
     /// <summary>
     /// Определяет класс, реализующий решение квадратных систем линейных алгебраических уравнений методом Гаусса-Йордана (метод полного исключения неизвестных).
     /// <remarks>
@@ -1151,68 +933,109 @@ namespace UMapx.Analysis
         /// </summary>
         public GaussJordanElimination() { }
         /// <summary>
-        /// Возвращает вектор-строку, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
         /// <remarks>
         /// По завершению процедуры исходная расширенная матрица A будет представлять собой верхнеугольную матрицу.
         /// </remarks>
         /// </summary>
         /// <param name="A">Расширенная матрица</param>
-        /// <returns>Вектор-строка</returns>
+        /// <returns>Вектор-столбец</returns>
         public double[] Compute(double[,] A)
         {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            int i, j, k, wf, hf, l = width - 1;
+            // параметры
+            int height = A.GetLength(0);
+            int width = A.GetLength(1);
+
+            if (height + 1 != width)
+                throw new Exception("Исходная матрица имеет неверные размеры");
+
+            // инициализация
+            double[,] B = (double[,])A.Clone();
+            int i, j, k, l;
             double[] x = new double[height];
             double temp;
 
-            // Этап 1:
+            // Этап 1
             for (i = 0; i < height; i++)
             {
-                // Делаем главную диагональ единицами:
-                temp = A[i, i];
+                // Делаем главную диагональ единицами
+                temp = B[i, i];
                 for (j = 0; j < width; j++)
                 {
-                    A[i, j] /= temp;
+                    B[i, j] /= temp;
                 }
-                // Обнуляем числа под единицами главной диогoнали:
+
+                // Обнуляем числа под единицами главной диогoнали
                 for (k = i + 1; k < height; k++)
                 {
-                    temp = A[k, i];
+                    temp = B[k, i];
                     for (j = i; j < width; j++)
                     {
-                        A[k, j] = A[k, j] - A[i, j] * temp;
+                        B[k, j] = B[k, j] - B[i, j] * temp;
                     }
                 }
             }
 
-            // Этап 2:
+            // Этап 2
             for (i = 0; i < height; i++)
             {
-                wf = (width - 1) - i - 1;
-                hf = (height - 1) - i;
+                l = (height - 1) - i;
 
-                for (k = 0; k < (height - 1) - i; k++)
+                for (k = 0; k < l; k++)
                 {
-                    temp = A[k, wf];
+                    temp = B[k, l];
 
-                    for (j = wf; j < width; j++)
+                    for (j = l; j < width; j++)
                     {
-                        A[k, j] = A[k, j] - A[hf, j] * temp;
+                        B[k, j] = B[k, j] - B[l, j] * temp;
                     }
                 }
             }
 
             for (k = 0; k < height; k++)
             {
-                x[k] = A[k, l];
+                x[k] = B[k, height];
             }
             return x;
         }
+        /// <summary>
+        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// <remarks>
+        /// По завершению процедуры исходная расширенная матрица A будет представлять собой верхнеугольную матрицу.
+        /// </remarks>
+        /// </summary>
+        /// <param name="A">Квадратная матрица</param>
+        /// <param name="b">Вектор-столбец</param>
+        /// <returns>Вектор-столбец</returns>
+        public double[] Compute(double[,] A, double[] b)
+        {
+            int height = A.GetLength(0);
+            int width = A.GetLength(1);
+            int n = b.Length;
+
+            if (height != width)
+                throw new Exception("Матрица должна быть квадратной");
+            if (height != n)
+                throw new Exception("Высота матрицы должна быть равна длине вектора");
+
+            int i, j;
+            double[,] B = new double[n, n + 1];
+
+            // композиция
+            for (i = 0; i < n; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    B[i, j] = A[i, j];
+                }
+
+                B[i, n] = b[i];
+            }
+
+            return Compute(B);
+        }
         #endregion
     }
-    #endregion
-
-    #region Roots solution
     /// <summary>
     /// Определяет класс решения уравнений с использованием спектрального разложения матрицы.
     /// <remarks>
@@ -1257,10 +1080,10 @@ namespace UMapx.Analysis
             }
         }
         /// <summary>
-        /// Возвращает вектор-строку, соотвествующий численному решению полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
+        /// Возвращает вектор-столбец, соотвествующий численному решению полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
         /// </summary>
         /// <param name="polynomial">Полином</param>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Вектор-столбец</returns>
         public Complex[] Compute(double[] polynomial)
         {
             // MATLAB roots method
@@ -1304,10 +1127,10 @@ namespace UMapx.Analysis
             return eig.D;
         }
         /// <summary>
-        /// Возвращает вектор-строку коэффициентов полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
+        /// Возвращает вектор-столбец коэффициентов полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
         /// </summary>
         /// <param name="roots">Корни полинома</param>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Вектор-столбец</returns>
         public double[] Compute(Complex[] roots)
         {
             // MATLAB roots method
@@ -1874,16 +1697,16 @@ namespace UMapx.Analysis
     {
         #region Components
         /// <summary>
-        /// Возвращает вектор-строку, соотвествующий численному полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
+        /// Возвращает вектор-столбец, соотвествующий численному полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
         /// </summary>
         /// <param name="polynomial">Полином</param>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Вектор-столбец</returns>
         Complex[] Compute(double[] polynomial);
         /// <summary>
-        /// Возвращает вектор-строку коэффициентов полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
+        /// Возвращает вектор-столбец коэффициентов полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
         /// </summary>
         /// <param name="roots">Корни полинома</param>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Вектор-столбец</returns>
         double[] Compute(Complex[] roots);
         #endregion
     }
@@ -1894,11 +1717,18 @@ namespace UMapx.Analysis
     {
         #region Components
         /// <summary>
-        /// Возвращает вектор-строку, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
         /// </summary>
-        /// <param name="A">Матрица</param>
-        /// <returns>Вектор-строка</returns>
+        /// <param name="A">Расширенная матрица</param>
+        /// <returns>Вектор-столбец</returns>
         double[] Compute(double[,] A);
+        /// <summary>
+        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// </summary>
+        /// <param name="A">Квадратная матрица</param>
+        /// <param name="b">Вектор-столбец</param>
+        /// <returns>Вектор-столбец</returns>
+        double[] Compute(double[,] A, double[] b);
         #endregion
     }
     /// <summary>
