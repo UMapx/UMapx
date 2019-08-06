@@ -3594,6 +3594,213 @@
             Получает или задает значение множителя [-1, 1].
             </summary>
         </member>
+        <member name="T:UMapx.Transform.DomainTransformFilter">
+            <summary>
+            Определяет "Domain transform" фильтр.
+            <remarks>
+            Данный фильтр представляет собой вычислительно эффективный аналог билатерального фильтра (bilateral filter).
+            Более подробную информацию можно найти на сайте:
+            http://www.inf.ufrgs.br/~eslgastal/DomainTransform/Gastal_Oliveira_SIGGRAPH2011_Domain_Transform.pdf
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.#ctor(System.Double,System.Double,System.Int32,System.Double)">
+            <summary>
+            Инициализирует "Domain transform" фильтр.
+            </summary>
+            <param name="sigma_s">Значение σs</param>
+            <param name="sigma_r">Значение σr</param>
+            <param name="iterations">Количество итераций</param>
+            <param name="factor">Множитель [-1, 1]</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(System.Double[])">
+            <summary>
+            Реализует одномерный фильтр.
+            </summary>
+            <param name="data">Одномерный массив</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(System.Double[0:,0:])">
+            <summary>
+            Реализует двумерный фильтр.
+            </summary>
+            <param name="data">Матрица</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(UMapx.Core.Complex[])">
+            <summary>
+            Реализует одномерный фильтр.
+            </summary>
+            <param name="data">Одномерный массив</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Реализует двумерный фильтр.
+            </summary>
+            <param name="data">Матрица</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(System.Double[][0:,0:])">
+            <summary>
+            Реализует двумерный фильтр.
+            </summary>
+            <param name="data">Набор матриц</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(System.Double[][])">
+            <summary>
+            Реализует одномерный фильтр.
+            </summary>
+            <param name="data">Набор векторов</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(UMapx.Core.Complex[][0:,0:])">
+            <summary>
+            Реализует двумерный фильтр.
+            </summary>
+            <param name="data">Набор матриц</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(UMapx.Core.Complex[][])">
+            <summary>
+            Реализует одномерный фильтр.
+            </summary>
+            <param name="data">Набор векторов</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.domainfilter(System.Double[0:,0:],System.Double,System.Double,System.Int32)">
+            <summary>
+            Domain transform filter.
+            </summary>
+            <param name="I">Input signal</param>
+            <param name="sigma_s">High sigma</param>
+            <param name="sigma_r">Low sigma</param>
+            <param name="iterations">Number of iterations</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.domainfilter(UMapx.Core.Complex[0:,0:],System.Double,System.Double,System.Int32)">
+            <summary>
+            Domain transform filter.
+            </summary>
+            <param name="I">Input signal</param>
+            <param name="sigma_s">High sigma</param>
+            <param name="sigma_r">Low sigma</param>
+            <param name="iterations">Number of iterations</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.domainfilter(System.Double[],System.Double,System.Double,System.Int32)">
+            <summary>
+            Domain transform filter.
+            </summary>
+            <param name="I">Input signal</param>
+            <param name="sigma_s">High sigma</param>
+            <param name="sigma_r">Low sigma</param>
+            <param name="iterations">Number of iterations</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.domainfilter(UMapx.Core.Complex[],System.Double,System.Double,System.Int32)">
+            <summary>
+            Domain transform filter.
+            </summary>
+            <param name="I">Input signal</param>
+            <param name="sigma_s">High sigma</param>
+            <param name="sigma_r">Low sigma</param>
+            <param name="iterations">Number of iterations</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.tdrf_h(System.Double[0:,0:],System.Double[0:,0:],System.Double)">
+            <summary>
+            Transformed domain recursive filter (horizontal).
+            </summary>
+            <param name="F">Input signal</param>
+            <param name="D">Difference</param>
+            <param name="sigma">Sigma</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.tdrf_v(System.Double[0:,0:],System.Double[0:,0:],System.Double)">
+            <summary>
+            Transformed domain recursive filter (vertical).
+            </summary>
+            <param name="F">Input signal</param>
+            <param name="D">Difference</param>
+            <param name="sigma">Sigma</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.tdrf_h(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:],System.Double)">
+            <summary>
+            Transformed domain recursive filter (horizontal).
+            </summary>
+            <param name="F">Input signal</param>
+            <param name="D">Difference</param>
+            <param name="sigma">Sigma</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.tdrf_v(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:],System.Double)">
+            <summary>
+            Transformed domain recursive filter (vertical).
+            </summary>
+            <param name="F">Input signal</param>
+            <param name="D">Difference</param>
+            <param name="sigma">Sigma</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.tdrf(System.Double[],System.Double[],System.Double)">
+            <summary>
+            Transformed domain recursive filter.
+            </summary>
+            <param name="F">Input signal</param>
+            <param name="D">Difference</param>
+            <param name="sigma">Sigma</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.tdrf(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Double)">
+            <summary>
+            Transformed domain recursive filter.
+            </summary>
+            <param name="F">Input signal</param>
+            <param name="D">Difference</param>
+            <param name="sigma">Sigma</param>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.powbyn(System.Double,System.Double[0:,0:])">
+            <summary>
+            Equation: B = a^A.
+            </summary>
+            <param name="a">number</param>
+            <param name="A">matrix</param>
+            <returns>matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.powbyn(System.Double,UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Equation: B = a^A.
+            </summary>
+            <param name="a">number</param>
+            <param name="A">matrix</param>
+            <returns>matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.powbyn(System.Double,System.Double[])">
+            <summary>
+            Equation: B = a^A.
+            </summary>
+            <param name="a">number</param>
+            <param name="A">vector</param>
+            <returns>vector</returns>
+        </member>
+        <member name="M:UMapx.Transform.DomainTransformFilter.powbyn(System.Double,UMapx.Core.Complex[])">
+            <summary>
+            Equation: B = a^A.
+            </summary>
+            <param name="a">number</param>
+            <param name="A">vector</param>
+            <returns>vector</returns>
+        </member>
+        <member name="P:UMapx.Transform.DomainTransformFilter.SigmaS">
+            <summary>
+            Получает или задает значение σs.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.DomainTransformFilter.SigmaR">
+            <summary>
+            Получает или задает значение σr.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.DomainTransformFilter.Iterations">
+            <summary>
+            Получает или задает количество итераций.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.DomainTransformFilter.Factor">
+            <summary>
+            Получает или задает значение множителя [-1, 1].
+            </summary>
+        </member>
         <member name="T:UMapx.Transform.LaplacianPyramidFilter">
             <summary>
             Определяет фильтр на основе пирамиды Лапласа.
@@ -25435,6 +25642,40 @@
             <param name="m">Квадратная матрица</param>
             <param name="n">Номер строки и столбца</param>
             <returns>Квадратная матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Diff(System.Double[0:,0:],System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Возвращает разность элементов массива.
+            </summary>
+            <param name="a">Матрица</param>
+            <param name="n">Порядок</param>
+            <param name="direction">Направление обработки</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Diff(UMapx.Core.Complex[0:,0:],System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Возвращает разность элементов массива.
+            </summary>
+            <param name="a">Матрица</param>
+            <param name="n">Порядок</param>
+            <param name="direction">Направление обработки</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Diff(System.Double[],System.Int32)">
+            <summary>
+            Возвращает разность элементов массива.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="n">Порядок</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Diff(UMapx.Core.Complex[],System.Int32)">
+            <summary>
+            Возвращает разность элементов массива.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="n">Порядок</param>
+            <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Compute(System.Double,System.Double,System.Double)">
             <summary>

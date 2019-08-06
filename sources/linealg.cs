@@ -6564,6 +6564,215 @@ namespace UMapx.Core
             return H;
         }
         #endregion
+
+        #region Diff voids
+        /// <summary>
+        /// Возвращает разность элементов массива.
+        /// </summary>
+        /// <param name="a">Матрица</param>
+        /// <param name="n">Порядок</param>
+        /// <param name="direction">Направление обработки</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Diff(double[,] a, int n, Direction direction)
+        {
+            // start
+            double[,] z;
+            double[,] y = a;
+            int i, j, k, length, m;
+
+            // direction of processing
+            // exception for both type
+            if (direction == Direction.Horizontal)
+            {
+                m = a.GetLength(0);
+
+                // do job
+                for (j = 0; j < n; j++)
+                {
+                    z = y;
+                    length = z.GetLength(1) - 1;
+
+                    if (length == 0)
+                        return new double[m, 0];
+
+                    y = new double[m, length];
+
+                    for (k = 0; k < m; k++)
+                    {
+                        for (i = length; i > 0; i--)
+                        {
+                            y[k, i - 1] = z[k, i] - z[k, i - 1];
+                        }
+                    }
+                }
+            }
+            else if (direction == Direction.Vertical)
+            {
+                m = a.GetLength(1);
+
+                // do job
+                for (j = 0; j < n; j++)
+                {
+                    z = y;
+                    length = z.GetLength(0) - 1;
+
+                    if (length == 0)
+                        return new double[0, m];
+
+                    y = new double[length, m];
+
+                    for (k = 0; k < m; k++)
+                    {
+                        for (i = length; i > 0; i--)
+                        {
+                            y[i - 1, k] = z[i, k] - z[i - 1, k];
+                        }
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Данное направление обработки не поддерживается функцией");
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Возвращает разность элементов массива.
+        /// </summary>
+        /// <param name="a">Матрица</param>
+        /// <param name="n">Порядок</param>
+        /// <param name="direction">Направление обработки</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Diff(Complex[,] a, int n, Direction direction)
+        {
+            // start
+            Complex[,] z;
+            Complex[,] y = a;
+            int i, j, k, length, m;
+
+            // direction of processing
+            // exception for both type
+            if (direction == Direction.Horizontal)
+            {
+                m = a.GetLength(0);
+
+                // do job
+                for (j = 0; j < n; j++)
+                {
+                    z = y;
+                    length = z.GetLength(1) - 1;
+
+                    if (length == 0)
+                        return new Complex[m, 0];
+
+                    y = new Complex[m, length];
+
+                    for (k = 0; k < m; k++)
+                    {
+                        for (i = length; i > 0; i--)
+                        {
+                            y[k, i - 1] = z[k, i] - z[k, i - 1];
+                        }
+                    }
+                }
+            }
+            else if (direction == Direction.Vertical)
+            {
+                m = a.GetLength(1);
+
+                // do job
+                for (j = 0; j < n; j++)
+                {
+                    z = y;
+                    length = z.GetLength(0) - 1;
+
+                    if (length == 0)
+                        return new Complex[0, m];
+
+                    y = new Complex[length, m];
+
+                    for (k = 0; k < m; k++)
+                    {
+                        for (i = length; i > 0; i--)
+                        {
+                            y[i - 1, k] = z[i, k] - z[i - 1, k];
+                        }
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Данное направление обработки не поддерживается функцией");
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Возвращает разность элементов массива.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="n">Порядок</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Diff(double[] v, int n)
+        {
+            // start
+            double[] z;
+            double[] y = v;
+            int i, j, length;
+
+            // do job
+            for (j = 0; j < n; j++)
+            {
+                z = y;
+                length = z.Length - 1;
+
+                if (length == 0)
+                    return new double[0];
+
+                y = new double[length];
+
+                for (i = length; i > 0; i--)
+                {
+                    y[i - 1] = z[i] - z[i - 1];
+                }
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Возвращает разность элементов массива.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="n">Порядок</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Diff(Complex[] v, int n)
+        {
+            // start
+            Complex[] z;
+            Complex[] y = v;
+            int i, j, length;
+
+            // do job
+            for (j = 0; j < n; j++)
+            {
+                z = y;
+                length = z.Length - 1;
+
+                if (length == 0)
+                    return new Complex[0];
+
+                y = new Complex[length];
+
+                for (i = length; i > 0; i--)
+                {
+                    y[i - 1] = z[i] - z[i - 1];
+                }
+            }
+
+            return y;
+        }
+        #endregion
         #endregion
 
         // Extra voids:
