@@ -30,10 +30,9 @@ namespace UMapx.Core
     /// </summary>
     public static class Matrice
     {
-        // Matrix voids:
+        // Matrix voids
 
-        #region Double matrix
-        #region Boolean
+        #region Matrix booleans
         /// <summary>
         /// Проверяет является ли матрица вектором.
         /// </summary>
@@ -140,9 +139,94 @@ namespace UMapx.Core
             }
             return true;
         }
+        /// <summary>
+        /// Проверяет является ли матрица вектором.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsVector(this Complex[,] m)
+        {
+            if (m.GetLength(0) == 1 || m.GetLength(1) == 1)
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Проверяет является ли матрица квадратной.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsSquare(this Complex[,] m)
+        {
+            if (m.GetLength(0) == m.GetLength(1))
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Проверяет является ли матрица симметричной (эрмитовой).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsSymmetric(this Complex[,] m)
+        {
+            if (Matrice.IsSquare(m))
+            {
+                // ?A = A'
+                if (m == Matrice.Hermitian(m))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// Проверяет является ли матрица кососимметричной (антиэрмитовой).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsSkewSymmetric(this Complex[,] m)
+        {
+            if (Matrice.IsSquare(m))
+            {
+                // ?A' = -A
+                if (m.Hermitian() == m.Negate())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// Проверяет является ли матрица диагональной.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsDiagonal(this Complex[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    if (i != j)
+                    {
+                        if (m[i, j] != 0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
         #endregion
 
-        #region Tranform
+        #region Matrix tranform
         /// <summary>
         /// Реализует операцию инвертирования матрицы.
         /// </summary>
@@ -297,94 +381,205 @@ namespace UMapx.Core
             }
             return m;
         }
-        #endregion
-
-        #region Operations
         /// <summary>
-        /// Возвращает матричное произведение Кронекера.
+        /// Реализует операцию инвертирования матрицы.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
+        /// <param name="m">Квадратная матрица</param>
         /// <returns>Матрица</returns>
-        public static double[,] Kronecker(this double[,] m, double[,] n)
+        public static Complex[,] Invert(this Complex[,] m)
         {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            double[,] H = new double[ml * nl, mr * nr];
-            int i, j, k, l;
-
-            for (i = 0; i < ml; i++)
+            if (!Matrice.IsSquare(m))
             {
-                for (j = 0; j < mr; j++)
+                throw new Exception("Матрица должна быть квадратной");
+            }
+
+            // Построение матрицы дополнения:
+            int n = m.GetLength(0);
+            int n2 = n * 2;
+            Complex[][] a = Matrice.ToJagged(new Complex[n, n2]);
+            int i, j;
+
+            for (i = 0; i < n; i++)
+            {
+                for (j = 0; j < n; j++)
                 {
-                    for (k = 0; k < nl; k++)
+                    a[i][j] = m[i, j];
+                }
+                a[i][i + n] = 1;
+            }
+
+            // Вычисление обратной матрицы через матрицу дополнения:
+            const double epsilon = 1e-4; // вычислительная погрешность.
+            int k, c, l, t;
+            Complex temp, factor, div1, div2;
+
+            for (i = 0; i < n; i++)
+            {
+                // first decomposition:
+                for (k = i + 1; k < n; k++)
+                {
+                    if (Maths.Abs(a[k][i]) > epsilon)
                     {
-                        for (l = 0; l < nr; l++)
+                        for (c = 0; c < n2; c++)
                         {
-                            H[i * nl + k, j * nr + l] = m[i, j] * n[k, l];
+                            temp = a[i][c];
+                            a[i][c] = a[k][c];
+                            a[k][c] = temp;
+                        }
+                        break;
+                    }
+                }
+                {
+                    // second decomposition:
+                    div1 = a[i][i];
+
+                    for (j = 0; j < n2; j++)
+                    {
+                        if (j != i)
+                        {
+                            a[i][j] /= div1;
+                        }
+                    }
+                    a[i][i] = 1;
+                    div2 = a[i][i];
+
+                    for (t = 0; t < n; t++)
+                    {
+                        if (t != i)
+                        {
+                            factor = a[t][i] / div2;
+
+                            for (l = 0; l < n2; l++)
+                            {
+                                a[t][l] -= factor * a[i][l];
+                            }
                         }
                     }
                 }
             }
 
+            // building invert matrix:
+            Complex[,] inv = new Complex[n, n];
+
+            for (i = 0; i < n; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    inv[i, j] = a[i][j + n];
+                }
+            }
+
+            return inv;
+        }
+        /// <summary>
+        /// Реализует операцию траспонирования матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Transponate(this Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r1, r0]; // Транспонированная матрица
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[j, i] = m[i, j];
+                }
+            }
+
             return H;
         }
         /// <summary>
-        /// Возвращает сумму двух матриц.
+        /// Возвращает комплексно-сопряженную матрицу.
         /// </summary>
         /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
         /// <returns>Матрица</returns>
-        public static double[,] Add(this double[,] m, double[,] n)
+        public static Complex[,] Conjugate(this Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1]; // Транспонированная матрица
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j].Conjugate;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует операцию эрмитово-сопряжения матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Hermitian(this Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r1, r0]; // Транспонированная матрица
+            int i, j, x, y;
+
+            for (i = 0, x = 0; (i < r0) && (x < r0); i++, x++)
+            {
+                for (j = 0, y = 0; (j < r1) && (y < r1); j++, y++)
+                {
+                    H[y, x] = m[i, j].Conjugate;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает зубчатый массив.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Зубчатый массив</returns>
+        public static Complex[][] ToJagged(this Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
+            Complex[][] jagged = new Complex[ml][];
+            Complex[] data;
+            int i, j;
 
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
-            double[,] H = new double[ml, mr];
+            for (i = 0; i < ml; i++)
+            {
+                data = new Complex[mr];
+                for (j = 0; j < mr; j++)
+                {
+                    data[j] = m[i, j];
+                }
+                jagged[i] = data;
+            }
+            return jagged;
+        }
+        /// <summary>
+        /// Возвращает матрицу.
+        /// </summary>
+        /// <param name="jagged">Зубчатый массив</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] FromJagged(this Complex[][] jagged)
+        {
+            int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
+            Complex[,] m = new Complex[ml, mr];
             int i, j;
 
             for (i = 0; i < ml; i++)
             {
                 for (j = 0; j < mr; j++)
                 {
-                    H[i, j] = m[i, j] + n[i, j];
+                    m[i, j] = jagged[i][j];
                 }
             }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает разность двух матриц.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Sub(this double[,] m, double[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
-            double[,] H = new double[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    H[i, j] = m[i, j] - n[i, j];
-                }
-            }
-            return H;
+            return m;
         }
         #endregion
 
-        #region Properties
+        #region Matrix properties
         /// <summary>
         /// Возвращает значение ранга матрицы.
         /// </summary>
@@ -704,809 +899,6 @@ namespace UMapx.Core
             }
             return Matrice.FromJagged(perm);
         }
-        #endregion
-        #endregion
-
-        #region Double matrix and double number
-        /// <summary>
-        /// Прибавляет ко всем элементам матрицы число.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Add(this double[,] m, double a)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = m[i, j] + a;
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Вычитает из всех элементов матрицы число.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Sub(this double[,] m, double a)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = m[i, j] - a;
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Умножает все элементы матрицы на число.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Mul(this double[,] m, double a)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = m[i, j] * a;
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Делит все элементы матрицы на число.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Div(this double[,] m, double a)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = m[i, j] / a;
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Возводит все элементы матрицы в обратную степень.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="pow">Число</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Sqrt(this double[,] m, double pow)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Sqrt(m[i, j], pow);
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Логарифмирует все элементы матрицы по основанию.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Log(this double[,] m, double a)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Log(m[i, j], a);
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Экспонирует все элементы матрицы по основанию.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Exp(this double[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Exp(m[i, j]);
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Инвертирует все элементы матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Negate(this double[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = -m[i, j];
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Возвращает комплексную матрицу.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] ToComplex(this double[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = m[i, j];
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 255].
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static double[,] ToByte(this double[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Byte(m[i, j]);
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 1].
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static double[,] ToDouble(this double[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            double max = Matrice.Max(Matrice.Max(m));
-            double min = Matrice.Min(Matrice.Min(m));
-            double range = max - min;
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = (m[i, j] - min) / range;
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Берет модуль для всех элементов матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Abs(this double[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Abs(m[i, j]);
-                }
-            }
-
-            return H;
-        }
-        #endregion
-
-        #region Complex matrix
-        #region Boolean
-        /// <summary>
-        /// Проверяет является ли матрица вектором.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsVector(this Complex[,] m)
-        {
-            if (m.GetLength(0) == 1 || m.GetLength(1) == 1)
-            {
-                return true;
-            }
-            return false;
-        }
-        /// <summary>
-        /// Проверяет является ли матрица квадратной.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsSquare(this Complex[,] m)
-        {
-            if (m.GetLength(0) == m.GetLength(1))
-            {
-                return true;
-            }
-            return false;
-        }
-        /// <summary>
-        /// Проверяет является ли матрица симметричной (эрмитовой).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsSymmetric(this Complex[,] m)
-        {
-            if (Matrice.IsSquare(m))
-            {
-                // ?A = A'
-                if (m == Matrice.Hermitian(m))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        /// <summary>
-        /// Проверяет является ли матрица кососимметричной (антиэрмитовой).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsSkewSymmetric(this Complex[,] m)
-        {
-            if (Matrice.IsSquare(m))
-            {
-                // ?A' = -A
-                if (m.Hermitian() == m.Negate())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        /// <summary>
-        /// Проверяет является ли матрица диагональной.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsDiagonal(this Complex[,] m)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    if (i != j)
-                    {
-                        if (m[i, j] != 0)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-        #endregion
-
-        #region Tranform
-        /// <summary>
-        /// Реализует операцию инвертирования матрицы.
-        /// </summary>
-        /// <param name="m">Квадратная матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Invert(this Complex[,] m)
-        {
-            if (!Matrice.IsSquare(m))
-            {
-                throw new Exception("Матрица должна быть квадратной");
-            }
-
-            // Построение матрицы дополнения:
-            int n = m.GetLength(0);
-            int n2 = n * 2;
-            Complex[][] a = Matrice.ToJagged(new Complex[n, n2]);
-            int i, j;
-
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    a[i][j] = m[i, j];
-                }
-                a[i][i + n] = 1;
-            }
-
-            // Вычисление обратной матрицы через матрицу дополнения:
-            const double epsilon = 1e-4; // вычислительная погрешность.
-            int k, c, l, t;
-            Complex temp, factor, div1, div2;
-
-            for (i = 0; i < n; i++)
-            {
-                // first decomposition:
-                for (k = i + 1; k < n; k++)
-                {
-                    if (Maths.Abs(a[k][i]) > epsilon)
-                    {
-                        for (c = 0; c < n2; c++)
-                        {
-                            temp = a[i][c];
-                            a[i][c] = a[k][c];
-                            a[k][c] = temp;
-                        }
-                        break;
-                    }
-                }
-                {
-                    // second decomposition:
-                    div1 = a[i][i];
-
-                    for (j = 0; j < n2; j++)
-                    {
-                        if (j != i)
-                        {
-                            a[i][j] /= div1;
-                        }
-                    }
-                    a[i][i] = 1;
-                    div2 = a[i][i];
-
-                    for (t = 0; t < n; t++)
-                    {
-                        if (t != i)
-                        {
-                            factor = a[t][i] / div2;
-
-                            for (l = 0; l < n2; l++)
-                            {
-                                a[t][l] -= factor * a[i][l];
-                            }
-                        }
-                    }
-                }
-            }
-
-            // building invert matrix:
-            Complex[,] inv = new Complex[n, n];
-
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    inv[i, j] = a[i][j + n];
-                }
-            }
-
-            return inv;
-        }
-        /// <summary>
-        /// Реализует операцию траспонирования матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Transponate(this Complex[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r1, r0]; // Транспонированная матрица
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[j, i] = m[i, j];
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Возвращает комплексно-сопряженную матрицу.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Conjugate(this Complex[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r0, r1]; // Транспонированная матрица
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = m[i, j].Conjugate;
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Реализует операцию эрмитово-сопряжения матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Hermitian(this Complex[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r1, r0]; // Транспонированная матрица
-            int i, j, x, y;
-
-            for (i = 0, x = 0; (i < r0) && (x < r0); i++, x++)
-            {
-                for (j = 0, y = 0; (j < r1) && (y < r1); j++, y++)
-                {
-                    H[y, x] = m[i, j].Conjugate;
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Возвращает зубчатый массив.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Зубчатый массив</returns>
-        public static Complex[][] ToJagged(this Complex[,] m)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            Complex[][] jagged = new Complex[ml][];
-            Complex[] data;
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                data = new Complex[mr];
-                for (j = 0; j < mr; j++)
-                {
-                    data[j] = m[i, j];
-                }
-                jagged[i] = data;
-            }
-            return jagged;
-        }
-        /// <summary>
-        /// Возвращает матрицу.
-        /// </summary>
-        /// <param name="jagged">Зубчатый массив</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] FromJagged(this Complex[][] jagged)
-        {
-            int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
-            Complex[,] m = new Complex[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    m[i, j] = jagged[i][j];
-                }
-            }
-            return m;
-        }
-        #endregion
-
-        #region Operations
-        /// <summary>
-        /// Реализует матричное произведение Кронекера.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Kronecker(this Complex[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            Complex[,] H = new Complex[ml * nl, mr * nr];
-            int i, j, k, l;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    for (k = 0; k < nl; k++)
-                    {
-                        for (l = 0; l < nr; l++)
-                        {
-                            H[i * nl + k, j * nr + l] = m[i, j] * n[k, l];
-                        }
-                    }
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Реализует матричное произведение Кронекера.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Kronecker(this Complex[,] m, double[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            Complex[,] H = new Complex[ml * nl, mr * nr];
-            int i, j, k, l;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    for (k = 0; k < nl; k++)
-                    {
-                        for (l = 0; l < nr; l++)
-                        {
-                            H[i * nl + k, j * nr + l] = m[i, j] * n[k, l];
-                        }
-                    }
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Реализует матричное произведение Кронекера.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Kronecker(this double[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            Complex[,] H = new Complex[ml * nl, mr * nr];
-            int i, j, k, l;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    for (k = 0; k < nl; k++)
-                    {
-                        for (l = 0; l < nr; l++)
-                        {
-                            H[i * nl + k, j * nr + l] = m[i, j] * n[k, l];
-                        }
-                    }
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Складывает две матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Add(this Complex[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
-            Complex[,] H = new Complex[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    H[i, j] = m[i, j] + n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Складывает две матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Add(this Complex[,] m, double[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
-            Complex[,] H = new Complex[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    H[i, j] = m[i, j] + n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Складывает две матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Add(this double[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
-            Complex[,] H = new Complex[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    H[i, j] = m[i, j] + n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Вычитает две матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Sub(this Complex[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
-            Complex[,] H = new Complex[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    H[i, j] = m[i, j] - n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Вычитает две матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Sub(this Complex[,] m, double[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
-            Complex[,] H = new Complex[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    H[i, j] = m[i, j] - n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Вычитает две матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Sub(this double[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
-            Complex[,] H = new Complex[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    H[i, j] = m[i, j] - n[i, j];
-                }
-            }
-            return H;
-        }
-        #endregion
-
-        #region Properties
         /// <summary>
         /// Возвращает значение ранга матрицы.
         /// </summary>
@@ -1792,11 +1184,260 @@ namespace UMapx.Core
             return H;
         }
         #endregion
+
+        #region Matrix kronecker product
+        /// <summary>
+        /// Возвращает матричное произведение Кронекера.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Kronecker(this double[,] m, double[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            double[,] H = new double[ml * nl, mr * nr];
+            int i, j, k, l;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    for (k = 0; k < nl; k++)
+                    {
+                        for (l = 0; l < nr; l++)
+                        {
+                            H[i * nl + k, j * nr + l] = m[i, j] * n[k, l];
+                        }
+                    }
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует матричное произведение Кронекера.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Kronecker(this Complex[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            Complex[,] H = new Complex[ml * nl, mr * nr];
+            int i, j, k, l;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    for (k = 0; k < nl; k++)
+                    {
+                        for (l = 0; l < nr; l++)
+                        {
+                            H[i * nl + k, j * nr + l] = m[i, j] * n[k, l];
+                        }
+                    }
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует матричное произведение Кронекера.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Kronecker(this Complex[,] m, double[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            Complex[,] H = new Complex[ml * nl, mr * nr];
+            int i, j, k, l;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    for (k = 0; k < nl; k++)
+                    {
+                        for (l = 0; l < nr; l++)
+                        {
+                            H[i * nl + k, j * nr + l] = m[i, j] * n[k, l];
+                        }
+                    }
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует матричное произведение Кронекера.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Kronecker(this double[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            Complex[,] H = new Complex[ml * nl, mr * nr];
+            int i, j, k, l;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    for (k = 0; k < nl; k++)
+                    {
+                        for (l = 0; l < nr; l++)
+                        {
+                            H[i * nl + k, j * nr + l] = m[i, j] * n[k, l];
+                        }
+                    }
+                }
+            }
+
+            return H;
+        }
         #endregion
 
-        #region Complex matrix and complex number
+        #region Matrix add/sub
         /// <summary>
-        /// Прибавляет ко всем элементам матрицы число.
+        /// Возвращает сумму двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Add(this double[,] m, double[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            if (ml != nl || mr != nr)
+                throw new Exception("Матрицы должны быть одинаковых размеров");
+
+            double[,] H = new double[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    H[i, j] = m[i, j] + n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает сумму двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Add(this Complex[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            if (ml != nl || mr != nr)
+                throw new Exception("Матрицы должны быть одинаковых размеров");
+
+            Complex[,] H = new Complex[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    H[i, j] = m[i, j] + n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает сумму двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Add(this Complex[,] m, double[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            if (ml != nl || mr != nr)
+                throw new Exception("Матрицы должны быть одинаковых размеров");
+
+            Complex[,] H = new Complex[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    H[i, j] = m[i, j] + n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает сумму двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Add(this double[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            if (ml != nl || mr != nr)
+                throw new Exception("Матрицы должны быть одинаковых размеров");
+
+            Complex[,] H = new Complex[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    H[i, j] = m[i, j] + n[i, j];
+                }
+            }
+            return H;
+        }
+
+        /// <summary>
+        /// Возвращает сумму матрицы и числа.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Add(this double[,] m, double a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] + a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает сумму матрицы и числа.
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="a">Число</param>
@@ -1818,7 +1459,268 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Вычитает из всех элементов матрицы число.
+        /// Возвращает сумму матрицы и числа.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Add(this Complex[,] m, double a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] + a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает сумму матрицы и числа.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Add(this double[,] m, Complex a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] + a;
+                }
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Возвращает сумму числа и матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Add(double a, double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a + m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает сумму числа и матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Add(Complex a, Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a + m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает сумму числа и матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Add(Complex a, double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a + m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает сумму числа и матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Add(double a, Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a + m[i, j];
+                }
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Возвращает разность двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Sub(this double[,] m, double[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            if (ml != nl || mr != nr)
+                throw new Exception("Матрицы должны быть одинаковых размеров");
+
+            double[,] H = new double[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    H[i, j] = m[i, j] - n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает разность двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Sub(this Complex[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            if (ml != nl || mr != nr)
+                throw new Exception("Матрицы должны быть одинаковых размеров");
+
+            Complex[,] H = new Complex[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    H[i, j] = m[i, j] - n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает разность двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Sub(this Complex[,] m, double[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            if (ml != nl || mr != nr)
+                throw new Exception("Матрицы должны быть одинаковых размеров");
+
+            Complex[,] H = new Complex[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    H[i, j] = m[i, j] - n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает разность двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Sub(this double[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            int nl = n.GetLength(0), nr = n.GetLength(1);
+
+            if (ml != nl || mr != nr)
+                throw new Exception("Матрицы должны быть одинаковых размеров");
+
+            Complex[,] H = new Complex[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    H[i, j] = m[i, j] - n[i, j];
+                }
+            }
+            return H;
+        }
+
+        /// <summary>
+        /// Возвращает разность матрицы и числа.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Sub(this double[,] m, double a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] - a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает разность матрицы и числа.
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="a">Число</param>
@@ -1834,6 +1736,249 @@ namespace UMapx.Core
                 for (j = 0; j < r1; j++)
                 {
                     H[i, j] = m[i, j] - a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает разность матрицы и числа.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Sub(this Complex[,] m, double a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] - a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает разность матрицы и числа.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Sub(this double[,] m, Complex a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] - a;
+                }
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Возвращает разность числа и матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Sub(double a, double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a - m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает разность числа и матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Sub(Complex a, Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a - m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает разность числа и матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Sub(Complex a, double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a - m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает разность числа и матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Sub(double a, Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a - m[i, j];
+                }
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Matrix mul
+        /// <summary>
+        /// Реализует умножение матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Mul(this double[,] m, double[,] n)
+        {
+            int ml = m.GetLength(1), mr = m.GetLength(0);
+            int i, j;
+            double[,] H = new double[mr, ml];
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    H[i, j] = m[i, j] * n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует умножение матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Mul(this Complex[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(1), mr = m.GetLength(0);
+            int i, j;
+            Complex[,] H = new Complex[mr, ml];
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    H[i, j] = m[i, j] * n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует умножение матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Mul(this Complex[,] m, double[,] n)
+        {
+            int ml = m.GetLength(1), mr = m.GetLength(0);
+            int i, j;
+            Complex[,] H = new Complex[mr, ml];
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    H[i, j] = m[i, j] * n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует умножение матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Mul(this double[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(1), mr = m.GetLength(0);
+            int i, j;
+            Complex[,] H = new Complex[mr, ml];
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    H[i, j] = m[i, j] * n[i, j];
+                }
+            }
+            return H;
+        }
+
+        /// <summary>
+        /// Умножает все элементы матрицы на число.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Mul(this double[,] m, double a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] * a;
                 }
             }
 
@@ -1862,6 +2007,249 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
+        /// Умножает все элементы матрицы на число.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Mul(this Complex[,] m, double a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] * a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Умножает все элементы матрицы на число.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Mul(this double[,] m, Complex a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] * a;
+                }
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Умножает все элементы матрицы на число.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Mul(double a, double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a * m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Умножает все элементы матрицы на число.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Mul(Complex a, Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] * a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Умножает все элементы матрицы на число.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Mul(Complex a, double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] * a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Умножает все элементы матрицы на число.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Mul(double a, Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] * a;
+                }
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Matrix div
+        /// <summary>
+        /// Делит матрицу на матрицу.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Div(this double[,] m, double[,] n)
+        {
+            int ml = m.GetLength(1), mr = m.GetLength(0);
+            int i, j;
+            double[,] H = new double[mr, ml];
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    H[i, j] = m[i, j] / n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Делит матрицу на матрицу.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Div(this Complex[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(1), mr = m.GetLength(0);
+            int i, j;
+            Complex[,] H = new Complex[mr, ml];
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    H[i, j] = m[i, j] / n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Делит матрицу на матрицу.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Div(this Complex[,] m, double[,] n)
+        {
+            int ml = m.GetLength(1), mr = m.GetLength(0);
+            int i, j;
+            Complex[,] H = new Complex[mr, ml];
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    H[i, j] = m[i, j] / n[i, j];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Делит матрицу на матрицу.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Div(this double[,] m, Complex[,] n)
+        {
+            int ml = m.GetLength(1), mr = m.GetLength(0);
+            int i, j;
+            Complex[,] H = new Complex[mr, ml];
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    H[i, j] = m[i, j] / n[i, j];
+                }
+            }
+            return H;
+        }
+
+        /// <summary>
+        /// Делит все элементы матрицы на число.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Div(this double[,] m, double a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] / a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
         /// Делит все элементы матрицы на число.
         /// </summary>
         /// <param name="m">Матрица</param>
@@ -1884,12 +2272,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возводит все элементы матрицы в обратную степень.
+        /// Делит все элементы матрицы на число.
         /// </summary>
         /// <param name="m">Матрица</param>
-        /// <param name="pow">Число</param>
+        /// <param name="a">Число</param>
         /// <returns>Матрица</returns>
-        public static Complex[,] Sqrt(this Complex[,] m, double pow)
+        public static Complex[,] Div(this Complex[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1899,7 +2287,303 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Maths.Sqrt(m[i, j], pow);
+                    H[i, j] = m[i, j] / a;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Делит все элементы матрицы на число.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Div(this double[,] m, Complex a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j] / a;
+                }
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Делит число на элементы матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Div(double a, double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a / m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Делит число на элементы матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Div(Complex a, Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a / m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Делит число на элементы матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Div(Complex a, double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a / m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Делит число на элементы матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Div(double a, Complex[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = a / m[i, j];
+                }
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Matrix pow
+        /// <summary>
+        /// Возводит все элементы матрицы в степень.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="pow">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Pow(this Complex[,] m, double pow)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Maths.Pow(m[i, j], pow);
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возводит все элементы матрицы в степень.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="pow">Число</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Pow(this double[,] m, Complex pow)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Maths.Pow(m[i, j], pow);
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возводит все элементы матрицы в степень.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="pow">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Pow(this double[,] m, double pow)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Maths.Pow(m[i, j], pow);
+                }
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Возводит число поэлементно в степень.
+        /// </summary>
+        /// <param name="a">Число</param>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Pow(double a, double[,] m)
+        {
+            int r0 = m.GetLength(0);
+            int r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Math.Pow(a, m[i, j]);
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возводит число поэлементно в степень.
+        /// </summary>
+        /// <param name="a">Число</param>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Pow(Complex a, double[,] m)
+        {
+            int r0 = m.GetLength(0);
+            int r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Maths.Pow(a, m[i, j]);
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возводит число поэлементно в степень.
+        /// </summary>
+        /// <param name="a">Число</param>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Pow(double a, Complex[,] m)
+        {
+            int r0 = m.GetLength(0);
+            int r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Maths.Pow(a, m[i, j]);
+                }
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Matrix log and exp
+        /// <summary>
+        /// Логарифмирует все элементы матрицы по основанию.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="a">Число</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Log(this double[,] m, double a)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Maths.Log(m[i, j], a);
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Экспонирует все элементы матрицы по основанию.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Exp(this double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Maths.Exp(m[i, j]);
                 }
             }
 
@@ -1948,6 +2632,30 @@ namespace UMapx.Core
 
             return H;
         }
+        #endregion
+
+        #region Matrix conversions
+        /// <summary>
+        /// Инвертирует все элементы матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Negate(this double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = -m[i, j];
+                }
+            }
+
+            return H;
+        }
         /// <summary>
         /// Инвертирует все элементы матрицы.
         /// </summary>
@@ -1964,6 +2672,91 @@ namespace UMapx.Core
                 for (j = 0; j < r1; j++)
                 {
                     H[i, j] = -m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает комплексную матрицу.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] ToComplex(this double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] H = new Complex[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = m[i, j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 255].
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] ToByte(this double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Maths.Byte(m[i, j]);
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 1].
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] ToDouble(this double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            double max = Matrice.Max(Matrice.Max(m));
+            double min = Matrice.Min(Matrice.Min(m));
+            double range = max - min;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = (m[i, j] - min) / range;
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Берет модуль для всех элементов матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Abs(this double[,] m)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] H = new double[r0, r1];
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    H[i, j] = Maths.Abs(m[i, j]);
                 }
             }
 
@@ -2052,528 +2845,6 @@ namespace UMapx.Core
             }
 
             return H;
-        }
-        #endregion
-
-        #region Matrix multiply
-        /// <summary>
-        /// Реализует скалярное произведение матриц.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Dot(this double[,] m, double[,] n)
-        {
-            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
-        }
-        /// <summary>
-        /// Реализует скалярное произведение матриц.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Dot(this Complex[,] m, Complex[,] n)
-        {
-            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
-        }
-        /// <summary>
-        /// Реализует скалярное произведение матриц.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Dot(this Complex[,] m, double[,] n)
-        {
-            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
-        }
-        /// <summary>
-        /// Реализует скалярное произведение матриц.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Dot(this double[,] m, Complex[,] n)
-        {
-            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
-        }
-
-        /// <summary>
-        /// Реализует умножение матриц.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Mul(this double[,] m, double[,] n)
-        {
-            int ml = m.GetLength(1), mr = m.GetLength(0);
-            int i, j;
-            double[,] H = new double[mr, ml];
-
-            for (i = 0; i < mr; i++)
-            {
-                for (j = 0; j < ml; j++)
-                {
-                    H[i, j] = m[i, j] * n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует умножение матриц.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Mul(this Complex[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(1), mr = m.GetLength(0);
-            int i, j;
-            Complex[,] H = new Complex[mr, ml];
-
-            for (i = 0; i < mr; i++)
-            {
-                for (j = 0; j < ml; j++)
-                {
-                    H[i, j] = m[i, j] * n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует умножение матриц.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Mul(this Complex[,] m, double[,] n)
-        {
-            int ml = m.GetLength(1), mr = m.GetLength(0);
-            int i, j;
-            Complex[,] H = new Complex[mr, ml];
-
-            for (i = 0; i < mr; i++)
-            {
-                for (j = 0; j < ml; j++)
-                {
-                    H[i, j] = m[i, j] * n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует умножение матриц.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Mul(this double[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(1), mr = m.GetLength(0);
-            int i, j;
-            Complex[,] H = new Complex[mr, ml];
-
-            for (i = 0; i < mr; i++)
-            {
-                for (j = 0; j < ml; j++)
-                {
-                    H[i, j] = m[i, j] * n[i, j];
-                }
-            }
-            return H;
-        }
-        #endregion
-
-        #region Matrix divide
-        /// <summary>
-        /// Делит матрицу на матрицу.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Div(this double[,] m, double[,] n)
-        {
-            int ml = m.GetLength(1), mr = m.GetLength(0);
-            int i, j;
-            double[,] H = new double[mr, ml];
-
-            for (i = 0; i < mr; i++)
-            {
-                for (j = 0; j < ml; j++)
-                {
-                    H[i, j] = m[i, j] / n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Делит матрицу на матрицу.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Div(this Complex[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(1), mr = m.GetLength(0);
-            int i, j;
-            Complex[,] H = new Complex[mr, ml];
-
-            for (i = 0; i < mr; i++)
-            {
-                for (j = 0; j < ml; j++)
-                {
-                    H[i, j] = m[i, j] / n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Делит матрицу на матрицу.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Div(this Complex[,] m, double[,] n)
-        {
-            int ml = m.GetLength(1), mr = m.GetLength(0);
-            int i, j;
-            Complex[,] H = new Complex[mr, ml];
-
-            for (i = 0; i < mr; i++)
-            {
-                for (j = 0; j < ml; j++)
-                {
-                    H[i, j] = m[i, j] / n[i, j];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Делит матрицу на матрицу.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Div(this double[,] m, Complex[,] n)
-        {
-            int ml = m.GetLength(1), mr = m.GetLength(0);
-            int i, j;
-            Complex[,] H = new Complex[mr, ml];
-
-            for (i = 0; i < mr; i++)
-            {
-                for (j = 0; j < ml; j++)
-                {
-                    H[i, j] = m[i, j] / n[i, j];
-                }
-            }
-            return H;
-        }
-        #endregion
-
-        #region Matrix pow
-        /// <summary>
-        /// Возводит все элементы матрицы в степень.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="pow">Число</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Pow(this Complex[,] m, double pow)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Pow(m[i, j], pow);
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Возводит все элементы матрицы в степень.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="pow">Число</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Pow(this double[,] m, Complex pow)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Pow(m[i, j], pow);
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Возводит все элементы матрицы в степень.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="pow">Число</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Pow(this double[,] m, double pow)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Pow(m[i, j], pow);
-                }
-            }
-
-            return H;
-        }
-        #endregion
-
-        #region Matrix convolutions
-        /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Conv(this double[,] m, double[,] n, bool normalize = true)
-        {
-            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-        }
-        /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Conv(this Complex[,] m, Complex[,] n, bool normalize = true)
-        {
-            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-        }
-        /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Conv(this Complex[,] m, double[,] n, bool normalize = true)
-        {
-            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-        }
-        /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Conv(this double[,] m, Complex[,] n, bool normalize = true)
-        {
-            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-        }
-        #endregion
-
-        #region Matrix convolutions (separable)
-        /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Conv(this double[,] m, double[] n, Direction direction, bool normalize = true)
-        {
-            // direction of processing
-            if (direction == Direction.Horizontal)
-            {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-            }
-            else if (direction == Direction.Vertical)
-            {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-            }
-
-            // both processing
-            float[] nn = LinealgOptions.ToJagged(n);
-            float[][] mm = LinealgOptions.ToJagged(m);
-
-            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
-        }
-        /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Conv(this double[,] m, Complex[] n, Direction direction, bool normalize = true)
-        {
-            // direction of processing
-            if (direction == Direction.Horizontal)
-            {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-            }
-            else if (direction == Direction.Vertical)
-            {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-            }
-
-            // both processing
-            LinealgOptions.Complex32[] nn = LinealgOptions.ToJagged(n);
-            float[][] mm = LinealgOptions.ToJagged(m);
-
-            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
-        }
-        /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Conv(this Complex[,] m, double[] n, Direction direction, bool normalize = true)
-        {
-            // direction of processing
-            if (direction == Direction.Horizontal)
-            {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-            }
-            else if (direction == Direction.Vertical)
-            {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-            }
-
-            // both processing
-            float[] nn = LinealgOptions.ToJagged(n);
-            LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
-
-            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
-        }
-        /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Conv(this Complex[,] m, Complex[] n, Direction direction, bool normalize = true)
-        {
-            // direction of processing
-            if (direction == Direction.Horizontal)
-            {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-            }
-            else if (direction == Direction.Vertical)
-            {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
-            }
-
-            // both processing
-            LinealgOptions.Complex32[] nn = LinealgOptions.ToJagged(n);
-            LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
-
-            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
-        }
-        #endregion
-
-        #region Morphology (separable)
-        /// <summary>
-        /// Возвращает матрицу-результат морфологического сужения.
-        /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
-        public static double[,] Min(this double[,] m, int r0, int r1)
-        {
-            // both processing
-            float[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MinVertical(
-                                             LinealgOptions.MinHorizontal(mm, r1), r0));
-        }
-        /// <summary>
-        /// Возвращает матрицу-результат морфологического расширения.
-        /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
-        public static double[,] Max(this double[,] m, int r0, int r1)
-        {
-            // both processing
-            float[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MaxVertical(
-                                             LinealgOptions.MaxHorizontal(mm, r1), r0));
-        }
-        /// <summary>
-        /// Возвращает матрицу-результат морфологии.
-        /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
-        /// <param name="threshold">Пороговое значение</param>
-        public static double[,] Morph(this double[,] m, int r0, int r1, int threshold)
-        {
-            // both processing
-            float[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MorphVertical(
-                                             LinealgOptions.MorphHorizontal(mm, r1, threshold), r0, threshold));
-        }
-        #endregion
-
-        #region Mean (separable)
-        /// <summary>
-        /// Возвращает матрицу-результат локального усреднения.
-        /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
-        public static double[,] Mean(this double[,] m, int r0, int r1)
-        {
-            // both processing
-            float[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MeanVertical(
-                                             LinealgOptions.MeanHorizontal(mm, r1), r0));
-        }
-        /// <summary>
-        /// Возвращает матрицу-результат локального усреднения.
-        /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
-        public static Complex[,] Mean(this Complex[,] m, int r0, int r1)
-        {
-            // both processing
-            LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MeanVertical(
-                                             LinealgOptions.MeanHorizontal(mm, r1), r0));
         }
         #endregion
 
@@ -2949,7 +3220,290 @@ namespace UMapx.Core
         }
         #endregion
 
-        // Image matrix voids:
+        // Matrix special
+
+        #region Matrix dot
+        /// <summary>
+        /// Реализует скалярное произведение матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Dot(this double[,] m, double[,] n)
+        {
+            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
+        }
+        /// <summary>
+        /// Реализует скалярное произведение матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Dot(this Complex[,] m, Complex[,] n)
+        {
+            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
+        }
+        /// <summary>
+        /// Реализует скалярное произведение матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Dot(this Complex[,] m, double[,] n)
+        {
+            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
+        }
+        /// <summary>
+        /// Реализует скалярное произведение матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Dot(this double[,] m, Complex[,] n)
+        {
+            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
+        }
+        #endregion
+
+        #region Matrix convolutions
+        /// <summary>
+        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <param name="normalize">Нормализованная свертка или нет</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Conv(this double[,] m, double[,] n, bool normalize = true)
+        {
+            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+        }
+        /// <summary>
+        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <param name="normalize">Нормализованная свертка или нет</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Conv(this Complex[,] m, Complex[,] n, bool normalize = true)
+        {
+            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+        }
+        /// <summary>
+        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <param name="normalize">Нормализованная свертка или нет</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Conv(this Complex[,] m, double[,] n, bool normalize = true)
+        {
+            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+        }
+        /// <summary>
+        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <param name="normalize">Нормализованная свертка или нет</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Conv(this double[,] m, Complex[,] n, bool normalize = true)
+        {
+            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+        }
+        #endregion
+
+        #region Matrix convolutions (separable)
+        /// <summary>
+        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalize">Нормализованная свертка или нет</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Conv(this double[,] m, double[] n, Direction direction, bool normalize = true)
+        {
+            // direction of processing
+            if (direction == Direction.Horizontal)
+            {
+                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
+                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            }
+            else if (direction == Direction.Vertical)
+            {
+                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
+                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            }
+
+            // both processing
+            float[] nn = LinealgOptions.ToJagged(n);
+            float[][] mm = LinealgOptions.ToJagged(m);
+
+            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
+                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
+        }
+        /// <summary>
+        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalize">Нормализованная свертка или нет</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Conv(this double[,] m, Complex[] n, Direction direction, bool normalize = true)
+        {
+            // direction of processing
+            if (direction == Direction.Horizontal)
+            {
+                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
+                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            }
+            else if (direction == Direction.Vertical)
+            {
+                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
+                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            }
+
+            // both processing
+            LinealgOptions.Complex32[] nn = LinealgOptions.ToJagged(n);
+            float[][] mm = LinealgOptions.ToJagged(m);
+
+            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
+                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
+        }
+        /// <summary>
+        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalize">Нормализованная свертка или нет</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Conv(this Complex[,] m, double[] n, Direction direction, bool normalize = true)
+        {
+            // direction of processing
+            if (direction == Direction.Horizontal)
+            {
+                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
+                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            }
+            else if (direction == Direction.Vertical)
+            {
+                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
+                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            }
+
+            // both processing
+            float[] nn = LinealgOptions.ToJagged(n);
+            LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
+
+            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
+                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
+        }
+        /// <summary>
+        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalize">Нормализованная свертка или нет</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Conv(this Complex[,] m, Complex[] n, Direction direction, bool normalize = true)
+        {
+            // direction of processing
+            if (direction == Direction.Horizontal)
+            {
+                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
+                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            }
+            else if (direction == Direction.Vertical)
+            {
+                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
+                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            }
+
+            // both processing
+            LinealgOptions.Complex32[] nn = LinealgOptions.ToJagged(n);
+            LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
+
+            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
+                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
+        }
+        #endregion
+
+        #region Matrix morphology (separable)
+        /// <summary>
+        /// Возвращает матрицу-результат морфологического сужения.
+        /// </summary>
+        /// <param name="m">Двумерный массив</param>
+        /// <param name="r0">Радиус обработки по высоте</param>
+        /// <param name="r1">Радиус обработки по ширине</param>
+        public static double[,] Min(this double[,] m, int r0, int r1)
+        {
+            // both processing
+            float[][] mm = LinealgOptions.ToJagged(m);
+            return LinealgOptions.FromJagged(LinealgOptions.MinVertical(
+                                             LinealgOptions.MinHorizontal(mm, r1), r0));
+        }
+        /// <summary>
+        /// Возвращает матрицу-результат морфологического расширения.
+        /// </summary>
+        /// <param name="m">Двумерный массив</param>
+        /// <param name="r0">Радиус обработки по высоте</param>
+        /// <param name="r1">Радиус обработки по ширине</param>
+        public static double[,] Max(this double[,] m, int r0, int r1)
+        {
+            // both processing
+            float[][] mm = LinealgOptions.ToJagged(m);
+            return LinealgOptions.FromJagged(LinealgOptions.MaxVertical(
+                                             LinealgOptions.MaxHorizontal(mm, r1), r0));
+        }
+        /// <summary>
+        /// Возвращает матрицу-результат морфологии.
+        /// </summary>
+        /// <param name="m">Двумерный массив</param>
+        /// <param name="r0">Радиус обработки по высоте</param>
+        /// <param name="r1">Радиус обработки по ширине</param>
+        /// <param name="threshold">Пороговое значение</param>
+        public static double[,] Morph(this double[,] m, int r0, int r1, int threshold)
+        {
+            // both processing
+            float[][] mm = LinealgOptions.ToJagged(m);
+            return LinealgOptions.FromJagged(LinealgOptions.MorphVertical(
+                                             LinealgOptions.MorphHorizontal(mm, r1, threshold), r0, threshold));
+        }
+        #endregion
+
+        #region Matrix mean (separable)
+        /// <summary>
+        /// Возвращает матрицу-результат локального усреднения.
+        /// </summary>
+        /// <param name="m">Двумерный массив</param>
+        /// <param name="r0">Радиус обработки по высоте</param>
+        /// <param name="r1">Радиус обработки по ширине</param>
+        public static double[,] Mean(this double[,] m, int r0, int r1)
+        {
+            // both processing
+            float[][] mm = LinealgOptions.ToJagged(m);
+            return LinealgOptions.FromJagged(LinealgOptions.MeanVertical(
+                                             LinealgOptions.MeanHorizontal(mm, r1), r0));
+        }
+        /// <summary>
+        /// Возвращает матрицу-результат локального усреднения.
+        /// </summary>
+        /// <param name="m">Двумерный массив</param>
+        /// <param name="r0">Радиус обработки по высоте</param>
+        /// <param name="r1">Радиус обработки по ширине</param>
+        public static Complex[,] Mean(this Complex[,] m, int r0, int r1)
+        {
+            // both processing
+            LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
+            return LinealgOptions.FromJagged(LinealgOptions.MeanVertical(
+                                             LinealgOptions.MeanHorizontal(mm, r1), r0));
+        }
+        #endregion
+
+        // Matrix <-> Bitmap voids
 
         #region Bitmap matrix voids
         /// <summary>
@@ -3018,7 +3572,1600 @@ namespace UMapx.Core
         }
         #endregion
 
-        // Vector voids:
+        // Vector voids
+
+        #region Vector booleans
+        /// <summary>
+        /// Проверяет являются ли вектора коллинеарными.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsPositive(this double[] v)
+        {
+            int N = v.Length;
+
+            for (int i = 0; i < N; i++)
+            {
+                if (v[i] < 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        /// <summary>
+        /// Проверяет являются ли вектора коллинеарными.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsCollinear(this double[] a, double[] b)
+        {
+            int N = a.Length, i, j;
+            double k;
+
+            for (i = 0; i < N; ++i)
+            {
+                if (a[i] == 0 &&
+                    b[i] == 0) continue;
+
+                k = a[i] / b[i];
+
+                for (j = i; j < N; j++)
+                {
+                    if (a[j] != b[j] * k) return false;
+                }
+            }
+            return true;
+        }
+        /// <summary>
+        /// Проверяет являются ли вектора коллинеарными.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsCollinear(this Complex[] a, Complex[] b)
+        {
+            int N = a.Length, i, j;
+            Complex k;
+
+            for (i = 0; i < N; ++i)
+            {
+                if (a[i] == 0 &&
+                    b[i] == 0) continue;
+
+                k = a[i] / b[i];
+
+                for (j = i; j < N; j++)
+                {
+                    if (a[j] != b[j] * k) return false;
+                }
+            }
+            return true;
+        }
+        /// <summary>
+        /// Проверяет являются ли вектора коллинеарными.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsCollinear(this Complex[] a, double[] b)
+        {
+            int N = a.Length, i, j;
+            Complex k;
+
+            for (i = 0; i < N; ++i)
+            {
+                if (a[i] == 0 &&
+                    b[i] == 0) continue;
+
+                k = a[i] / b[i];
+
+                for (j = i; j < N; j++)
+                {
+                    if (a[j] != b[j] * k) return false;
+                }
+            }
+            return true;
+        }
+        /// <summary>
+        /// Проверяет являются ли вектора коллинеарными.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsCollinear(this double[] a, Complex[] b)
+        {
+            int N = a.Length, i, j;
+            Complex k;
+
+            for (i = 0; i < N; ++i)
+            {
+                if (a[i] == 0 &&
+                    b[i] == 0) continue;
+
+                k = a[i] / b[i];
+
+                for (j = i; j < N; j++)
+                {
+                    if (a[j] != b[j] * k) return false;
+                }
+            }
+            return true;
+        }
+        #endregion
+
+        #region Vector properties
+        /// <summary>
+        /// Возвращает P-норму вектора.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="p">Параметр p</param>
+        /// <returns>Норма</returns>
+        public static double Norm(this double[] a, double p)
+        {
+            int length = a.Length, i;
+            double norm = 0;
+
+            for (i = 0; i < length; i++)
+            {
+                norm += Math.Pow(Math.Abs(a[i]), p);
+            }
+            return Maths.Sqrt(norm, p);
+        }
+        /// <summary>
+        /// Возвращает норму вектора.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <returns>Норма</returns>
+        public static double Norm(this double[] a)
+        {
+            return Norm(a, 2);
+        }
+        /// <summary>
+        /// Возвращает P-норму вектора.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="p">Параметр p</param>
+        /// <returns>Норма</returns>
+        public static double Norm(this Complex[] a, double p)
+        {
+            int length = a.Length, i;
+            double norm = 0;
+
+            for (i = 0; i < length; i++)
+            {
+                norm += Maths.Pow(Maths.Abs(a[i]), p);
+            }
+            return Maths.Sqrt(norm, p);
+        }
+        /// <summary>
+        /// Возвращает норму вектора.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <returns>Норма</returns>
+        public static double Norm(this Complex[] a)
+        {
+            return Norm(a, 2);
+        }
+        #endregion
+
+        #region Vector angle, projection, cosine
+        /// <summary>
+        /// Возвращает угол между двумя векторами.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static double Angle(this double[] a, double[] b)
+        {
+            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
+        }
+        /// <summary>
+        /// Возвращает угол между двумя векторами.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static Complex Angle(this Complex[] a, double[] b)
+        {
+            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
+        }
+        /// <summary>
+        /// Возвращает угол между двумя векторами.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static Complex Angle(this double[] a, Complex[] b)
+        {
+            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
+        }
+        /// <summary>
+        /// Возвращает угол между двумя векторами.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static Complex Angle(this Complex[] a, Complex[] b)
+        {
+            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
+        }
+
+        /// <summary>
+        /// Возвращает проекцию двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static double Proj(this double[] a, double[] b)
+        {
+            return Matrice.Dot(a, b) / Matrice.Norm(b);
+        }
+        /// <summary>
+        /// Возвращает проекцию двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static Complex Proj(this Complex[] a, double[] b)
+        {
+            return Matrice.Dot(a, b) / Matrice.Norm(b);
+        }
+        /// <summary>
+        /// Возвращает проекцию двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static Complex Proj(this double[] a, Complex[] b)
+        {
+            return Matrice.Dot(a, b) / Matrice.Norm(b);
+        }
+        /// <summary>
+        /// Возвращает проекцию двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static Complex Proj(this Complex[] a, Complex[] b)
+        {
+            return Matrice.Dot(a, b) / Matrice.Norm(b);
+        }
+
+        /// <summary>
+        /// Возвращает направляющие косинусы вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Cosines(this double[] v)
+        {
+            int length = v.Length, i;
+            double abs = Matrice.Norm(v);
+            double[] cos = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                cos[i] = v[i] / abs;
+            }
+            return cos;
+        }
+        /// <summary>
+        /// Возвращает направляющие косинусы вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Cosines(this Complex[] v)
+        {
+            int length = v.Length, i;
+            Complex abs = Matrice.Norm(v);
+            Complex[] cos = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                cos[i] = v[i] / abs;
+            }
+            return cos;
+        }
+        #endregion
+
+        #region Vector add/sub
+        /// <summary>
+        /// Возвращает сумму двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Add(this double[] a, double[] b)
+        {
+            int length = a.Length, i;
+            double[] c = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] + b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает сумму двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Add(this Complex[] a, Complex[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] + b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает сумму двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Add(this Complex[] a, double[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] + b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает сумму двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Add(this double[] a, Complex[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] + b[i];
+            }
+            return c;
+        }
+
+        /// <summary>
+        /// Возвращает сумму вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Add(this double[] a, double b)
+        {
+            int length = a.Length, i;
+            double[] c = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] + b;
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает сумму вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Add(this Complex[] a, Complex b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] + b;
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает сумму вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Add(this Complex[] a, double b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] + b;
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает сумму вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Add(this double[] a, Complex b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] + b;
+            }
+            return c;
+        }
+
+        /// <summary>
+        /// Возвращает сумму вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Add(double b, double[] a)
+        {
+            int length = a.Length, i;
+            double[] c = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = b + a[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает сумму вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Add(Complex b, Complex[] a)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = b + a[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает сумму вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Add(double b, Complex[] a)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = b + a[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает сумму вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Add(Complex b, double[] a)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = b + a[i];
+            }
+            return c;
+        }
+
+        /// <summary>
+        /// Возвращает разность двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Sub(this Complex[] a, Complex[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] - b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает разность двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Sub(this double[] a, double[] b)
+        {
+            int length = a.Length, i;
+            double[] c = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] - b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает разность двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Sub(this Complex[] a, double[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] - b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает разность двух векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Sub(this double[] a, Complex[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] - b[i];
+            }
+            return c;
+        }
+
+        /// <summary>
+        /// Возвращает разность вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Sub(this double[] a, double b)
+        {
+            int length = a.Length, i;
+            double[] c = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] - b;
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает разность вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Sub(this Complex[] a, Complex b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] - b;
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает разность вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Sub(this Complex[] a, double b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] - b;
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает разность вектора и числа.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Sub(this double[] a, Complex b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] - b;
+            }
+            return c;
+        }
+
+        /// <summary>
+        /// Возвращает разность числа и вектора.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Sub(double b, double[] a)
+        {
+            int length = a.Length, i;
+            double[] c = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = b - a[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает разность числа и вектора.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Sub(Complex b, Complex[] a)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = b - a[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает разность числа и вектора.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Sub(Complex b, double[] a)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = b - a[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Возвращает разность числа и вектора.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Sub(double b, Complex[] a)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = b - a[i];
+            }
+            return c;
+        }
+        #endregion
+
+        #region Vector mul
+        /// <summary>
+        /// Реализует умножение матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Двумерная матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[,] Mul(this double[,] m, double[] v)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] temp = new double[r0, r1];
+            double alpha;
+            int i, j;
+
+            // Вычисление новой матрицы:
+            for (j = 0; j < r1; j++)
+            {
+                alpha = v[j];
+                for (i = 0; i < r0; i++)
+                {
+                    temp[i, j] = m[i, j] * alpha;
+                }
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Реализует умножение матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Двумерная матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Mul(this Complex[,] m, double[] v)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] temp = new Complex[r0, r1];
+            Complex alpha;
+            int i, j;
+
+            // Вычисление новой матрицы:
+            for (j = 0; j < r1; j++)
+            {
+                alpha = v[j];
+                for (i = 0; i < r0; i++)
+                {
+                    temp[i, j] = m[i, j] * alpha;
+                }
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Реализует умножение матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Двумерная матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Mul(this double[,] m, Complex[] v)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] temp = new Complex[r0, r1];
+            Complex alpha;
+            int i, j;
+
+            // Вычисление новой матрицы:
+            for (j = 0; j < r1; j++)
+            {
+                alpha = v[j];
+                for (i = 0; i < r0; i++)
+                {
+                    temp[i, j] = m[i, j] * alpha;
+                }
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Реализует умножение матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Двумерная матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Mul(this Complex[,] m, Complex[] v)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] temp = new Complex[r0, r1];
+            Complex alpha;
+            int i, j;
+
+            // Вычисление новой матрицы:
+            for (j = 0; j < r1; j++)
+            {
+                alpha = v[j];
+                for (i = 0; i < r0; i++)
+                {
+                    temp[i, j] = m[i, j] * alpha;
+                }
+            }
+
+            return temp;
+        }
+
+        /// <summary>
+        /// Реализует поэлементное произведение векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Mul(this double[] a, double[] b)
+        {
+            int length = a.Length, i;
+            double[] c = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] * b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Реализует поэлементное произведение векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(this Complex[] a, double[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] * b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Реализует поэлементное произведение векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(this double[] a, Complex[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] * b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Реализует поэлементное произведение векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(this Complex[] a, Complex[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] * b[i];
+            }
+            return c;
+        }
+
+        /// <summary>
+        /// Реализует умножение вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Mul(this double[] v, double a)
+        {
+            int length = v.Length, i;
+            double[] H = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = v[i] * a;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует умножение вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(this double[] v, Complex a)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = v[i] * a;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует умножение вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(this Complex[] v, double a)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = v[i] * a;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует умножение вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(this Complex[] v, Complex a)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = v[i] * a;
+            }
+            return H;
+        }
+
+        /// <summary>
+        /// Реализует умножение вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Mul(double a, double[] v)
+        {
+            int length = v.Length, i;
+            double[] H = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = a * v[i];
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует умножение вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(Complex a, Complex[] v)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = a * v[i];
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует умножение вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(Complex a, double[] v)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = a * v[i];
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует умножение вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(double a, Complex[] v)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = a * v[i];
+            }
+            return H;
+        }
+        #endregion
+
+        #region Vector div
+        /// <summary>
+        /// Реализует поэлементное произведение векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Div(this double[] a, double[] b)
+        {
+            int length = a.Length, i;
+            double[] c = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] / b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Реализует поэлементное произведение векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(this Complex[] a, Complex[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] / b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Реализует поэлементное произведение векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(this Complex[] a, double[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] / b[i];
+            }
+            return c;
+        }
+        /// <summary>
+        /// Реализует поэлементное произведение векторов.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(this double[] a, Complex[] b)
+        {
+            int length = a.Length, i;
+            Complex[] c = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                c[i] = a[i] / b[i];
+            }
+            return c;
+        }
+
+        /// <summary>
+        /// Реализует деление вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Div(this double[] v, double a)
+        {
+            int length = v.Length, i;
+            double[] H = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = v[i] / a;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует деление вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(this double[] v, Complex a)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = v[i] / a;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует деление вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(this Complex[] v, double a)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = v[i] / a;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует деление вектора на число.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(this Complex[] v, Complex a)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = v[i] / a;
+            }
+            return H;
+        }
+
+        /// <summary>
+        /// Реализует деление числа на вектор.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Div(double a, double[] v)
+        {
+            int length = v.Length, i;
+            double[] H = new double[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = a / v[i];
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует деление числа на вектор.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(Complex a, Complex[] v)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = a / v[i];
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует деление числа на вектор.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(double a, Complex[] v)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = a / v[i];
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует деление числа на вектор.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(Complex a, double[] v)
+        {
+            int length = v.Length, i;
+            Complex[] H = new Complex[length];
+
+            for (i = 0; i < length; i++)
+            {
+                H[i] = a / v[i];
+            }
+            return H;
+        }
+        #endregion
+
+        #region Vector pow
+        /// <summary>
+        /// Возводит элементы вектора в степень.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="power">Степень</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Pow(this double[] v, double power)
+        {
+            int length = v.Length;
+            double[] H = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = Math.Pow(v[i], power);
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возводит элементы вектора в степень.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="power">Степень</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Pow(this Complex[] v, double power)
+        {
+            int length = v.Length;
+            Complex[] H = new Complex[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = Maths.Pow(v[i], power);
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возводит элементы вектора в степень.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="power">Степень</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Pow(this double[] v, Complex power)
+        {
+            int length = v.Length;
+            Complex[] H = new Complex[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = Maths.Pow(v[i], power);
+            }
+            return H;
+        }
+
+        /// <summary>
+        /// Возводит число поэлементно в степень.
+        /// </summary>
+        /// <param name="a">Число</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Pow(double a, double[] v)
+        {
+            int n = v.GetLength(0);
+            double[] H = new double[n];
+            int i;
+
+            for (i = 0; i < n; i++)
+            {
+                H[i] = Math.Pow(a, v[i]);
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возводит число поэлементно в степень.
+        /// </summary>
+        /// <param name="a">Число</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Pow(Complex a, double[] v)
+        {
+            int n = v.GetLength(0);
+            Complex[] H = new Complex[n];
+            int i;
+
+            for (i = 0; i < n; i++)
+            {
+                H[i] = Maths.Pow(a, v[i]);
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возводит число поэлементно в степень.
+        /// </summary>
+        /// <param name="a">Число</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Pow(double a, Complex[] v)
+        {
+            int n = v.GetLength(0);
+            Complex[] H = new Complex[n];
+            int i;
+
+            for (i = 0; i < n; i++)
+            {
+                H[i] = Maths.Pow(a, v[i]);
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Vector exp/log
+        /// <summary>
+        /// Логарифмирует элементы вектора по основанию.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Log(this double[] v, double a = Math.E)
+        {
+            int length = v.Length;
+            double[] H = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = Math.Log(v[i], a);
+            }
+            return H;
+        }
+        /// <summary>
+        /// Логарифмирует элементы вектора по основанию.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="a">Число</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Log(this Complex[] v, double a = Math.E)
+        {
+            int length = v.Length;
+            Complex[] H = new Complex[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = Maths.Log(v[i], a);
+            }
+            return H;
+        }
+        /// <summary>
+        /// Экспонирует элементы вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Exp(this double[] v)
+        {
+            int length = v.Length;
+            double[] H = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = Math.Exp(v[i]);
+            }
+            return H;
+        }
+        /// <summary>
+        /// Экспонирует элементы вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Exp(this Complex[] v)
+        {
+            int length = v.Length;
+            Complex[] H = new Complex[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = Maths.Exp(v[i]);
+            }
+            return H;
+        }
+        #endregion
+
+        #region Vector conversions
+        /// <summary>
+        /// Возвращает вектор, значения которого принадлежат интервалу [0, 1].
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] ToDouble(this double[] v)
+        {
+            int length = v.Length;
+            double max = Matrice.Max(v);
+            double min = Matrice.Min(v);
+            double range = max - min;
+            double[] u = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                u[i] = (v[i] - min) / range;
+            }
+            return u;
+        }
+        /// <summary>
+        /// Возвращает вектор, значения которого принадлежат интервалу [0, 255].
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] ToByte(this double[] v)
+        {
+            int length = v.Length;
+            double[] u = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                u[i] = Maths.Byte(v[i]);
+            }
+            return u;
+        }
+        /// <summary>
+        /// Возвращает модуль элементов вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Abs(this double[] v)
+        {
+            int length = v.Length;
+            double[] H = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = Math.Abs(v[i]);
+            }
+            return H;
+        }
+        /// <summary>
+        /// Инвертирует все элементы вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Negate(this double[] v)
+        {
+            int length = v.Length;
+            double[] H = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = -v[i];
+            }
+            return H;
+        }
+        /// <summary>
+        /// Инвертирует все элементы вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Negate(this Complex[] v)
+        {
+            int length = v.Length;
+            Complex[] H = new Complex[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = -v[i];
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает комплексный вектор.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] ToComplex(this double[] v)
+        {
+            int length = v.Length;
+            Complex[] H = new Complex[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = v[i];
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает модуль элементов комплексного вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Abs(this Complex[] v)
+        {
+            int length = v.Length;
+            double[] H = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = v[i].Abs;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает угол элементов комплексного вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Angle(this Complex[] v)
+        {
+            int length = v.Length;
+            double[] H = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = v[i].Angle;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает действительную часть элементов комплексного вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Real(this Complex[] v)
+        {
+            int length = v.Length;
+            double[] H = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = v[i].Re;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает мнимую часть элементов комплексного вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Imaginary(this Complex[] v)
+        {
+            int length = v.Length;
+            double[] H = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = v[i].Im;
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает комплексно-сопряженный вектор.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Conjugate(this Complex[] v)
+        {
+            int length = v.Length;
+            Complex[] H = new Complex[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                H[i] = v[i].Conjugate;
+            }
+            return H;
+        }
+        #endregion
 
         #region Vector statistics
         /// <summary>
@@ -3420,972 +5567,9 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Complex vector
-        /// <summary>
-        /// Возвращает комплексный вектор.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] ToComplex(this double[] v)
-        {
-            int length = v.Length;
-            Complex[] H = new Complex[length];
+        // Vector special
 
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = v[i];
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает модуль элементов комплексного вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Abs(this Complex[] v)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = v[i].Abs;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает угол элементов комплексного вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Angle(this Complex[] v)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = v[i].Angle;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает действительную часть элементов комплексного вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Real(this Complex[] v)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = v[i].Re;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает мнимую часть элементов комплексного вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Imaginary(this Complex[] v)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = v[i].Im;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает комплексно-сопряженный вектор.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Conjugate(this Complex[] v)
-        {
-            int length = v.Length;
-            Complex[] H = new Complex[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = v[i].Conjugate;
-            }
-            return H;
-        }
-        #endregion
-
-        #region Vector properties
-        /// <summary>
-        /// Проверяет являются ли вектора коллинеарными.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsPositive(this double[] v)
-        {
-            int N = v.Length;
-
-            for (int i = 0; i < N; i++)
-            {
-                if (v[i] < 0)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        /// <summary>
-        /// Проверяет являются ли вектора коллинеарными.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsCollinear(this double[] a, double[] b)
-        {
-            int N = a.Length, i, j;
-            double k;
-
-            for (i = 0; i < N; ++i)
-            {
-                if (a[i] == 0 &&
-                    b[i] == 0) continue;
-
-                k = a[i] / b[i];
-
-                for (j = i; j < N; j++)
-                {
-                    if (a[j] != b[j] * k) return false;
-                }
-            }
-            return true;
-        }
-        /// <summary>
-        /// Проверяет являются ли вектора коллинеарными.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
-        public static bool IsCollinear(this Complex[] a, Complex[] b)
-        {
-            int N = a.Length, i, j;
-            Complex k;
-
-            for (i = 0; i < N; ++i)
-            {
-                if (a[i] == 0 &&
-                    b[i] == 0) continue;
-
-                k = a[i] / b[i];
-
-                for (j = i; j < N; j++)
-                {
-                    if (a[j] != b[j] * k) return false;
-                }
-            }
-            return true;
-        }
-        #endregion
-
-        #region Standart operations
-        #region Spaces
-        /// <summary>
-        /// Возвращает вектор, значения которого принадлежат интервалу [0, 1].
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] ToDouble(this double[] v)
-        {
-            int length = v.Length;
-            double max = Matrice.Max(v);
-            double min = Matrice.Min(v);
-            double range = max - min;
-            double[] u = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                u[i] = (v[i] - min) / range;
-            }
-            return u;
-        }
-        /// <summary>
-        /// Возвращает вектор, значения которого принадлежат интервалу [0, 255].
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] ToByte(this double[] v)
-        {
-            int length = v.Length;
-            double[] u = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                u[i] = Maths.Byte(v[i]);
-            }
-            return u;
-        }
-        /// <summary>
-        /// Возвращает модуль элементов вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Abs(this double[] v)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Math.Abs(v[i]);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Инвертирует все элементы вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Negate(this double[] v)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = -v[i];
-            }
-            return H;
-        }
-        /// <summary>
-        /// Инвертирует все элементы вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Negate(this Complex[] v)
-        {
-            int length = v.Length;
-            Complex[] H = new Complex[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = -v[i];
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает направляющие косинусы вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Cosines(this double[] v)
-        {
-            int length = v.Length, i;
-            double abs = Matrice.Norm(v);
-            double[] cos = new double[length];
-
-            for (i = 0; i < length; i++)
-            {
-                cos[i] = v[i] / abs;
-            }
-            return cos;
-        }
-        /// <summary>
-        /// Возвращает направляющие косинусы вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Cosines(this Complex[] v)
-        {
-            int length = v.Length, i;
-            Complex abs = Matrice.Norm(v);
-            Complex[] cos = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                cos[i] = v[i] / abs;
-            }
-            return cos;
-        }
-        #endregion
-
-        #region Angles, projections
-        /// <summary>
-        /// Возвращает угол между двумя векторами.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Angle(this double[] a, double[] b)
-        {
-            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
-        }
-        /// <summary>
-        /// Возвращает угол между двумя векторами.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static Complex Angle(this Complex[] a, double[] b)
-        {
-            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
-        }
-        /// <summary>
-        /// Возвращает угол между двумя векторами.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static Complex Angle(this double[] a, Complex[] b)
-        {
-            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
-        }
-        /// <summary>
-        /// Возвращает угол между двумя векторами.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static Complex Angle(this Complex[] a, Complex[] b)
-        {
-            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
-        }
-        /// <summary>
-        /// Возвращает проекцию двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Proj(this double[] a, double[] b)
-        {
-            return Matrice.Dot(a, b) / Matrice.Norm(b);
-        }
-        /// <summary>
-        /// Возвращает проекцию двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static Complex Proj(this Complex[] a, double[] b)
-        {
-            return Matrice.Dot(a, b) / Matrice.Norm(b);
-        }
-        /// <summary>
-        /// Возвращает проекцию двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static Complex Proj(this double[] a, Complex[] b)
-        {
-            return Matrice.Dot(a, b) / Matrice.Norm(b);
-        }
-        /// <summary>
-        /// Возвращает проекцию двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static Complex Proj(this Complex[] a, Complex[] b)
-        {
-            return Matrice.Dot(a, b) / Matrice.Norm(b);
-        }
-        #endregion
-
-        #region Divide
-        /// <summary>
-        /// Реализует поэлементное произведение векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Div(this double[] a, double[] b)
-        {
-            int length = a.Length, i;
-            double[] c = new double[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] / b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Реализует поэлементное произведение векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Div(this Complex[] a, double[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] / b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Реализует поэлементное произведение векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Div(this double[] a, Complex[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] / b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Реализует поэлементное произведение векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Div(this Complex[] a, Complex[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] / b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Реализует деление вектора на число.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Div(this double[] v, double a)
-        {
-            int length = v.Length, i;
-            double[] H = new double[length];
-
-            for (i = 0; i < length; i++)
-            {
-                H[i] = v[i] / a;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует деление вектора на число.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Div(this double[] v, Complex a)
-        {
-            int length = v.Length, i;
-            Complex[] H = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                H[i] = v[i] / a;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует деление вектора на число.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Div(this Complex[] v, double a)
-        {
-            int length = v.Length, i;
-            Complex[] H = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                H[i] = v[i] / a;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует деление вектора на число.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Div(this Complex[] v, Complex a)
-        {
-            int length = v.Length, i;
-            Complex[] H = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                H[i] = v[i] / a;
-            }
-            return H;
-        }
-        #endregion
-
-        #region Norm
-        /// <summary>
-        /// Возвращает P-норму вектора.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="p">Параметр p</param>
-        /// <returns>Норма</returns>
-        public static double Norm(this double[] a, double p)
-        {
-            int length = a.Length, i;
-            double norm = 0;
-
-            for (i = 0; i < length; i++)
-            {
-                norm += Math.Pow(Math.Abs(a[i]), p);
-            }
-            return Maths.Sqrt(norm, p);
-        }
-        /// <summary>
-        /// Возвращает норму вектора.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <returns>Норма</returns>
-        public static double Norm(this double[] a)
-        {
-            return Norm(a, 2);
-        }
-        /// <summary>
-        /// Возвращает P-норму вектора.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="p">Параметр p</param>
-        /// <returns>Норма</returns>
-        public static double Norm(this Complex[] a, double p)
-        {
-            int length = a.Length, i;
-            double norm = 0;
-
-            for (i = 0; i < length; i++)
-            {
-                norm += Maths.Pow(Maths.Abs(a[i]), p);
-            }
-            return Maths.Sqrt(norm, p);
-        }
-        /// <summary>
-        /// Возвращает норму вектора.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <returns>Норма</returns>
-        public static double Norm(this Complex[] a)
-        {
-            return Norm(a, 2);
-        }
-        #endregion
-
-        #region Addition and subtraction
-        /// <summary>
-        /// Возвращает сумму двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Add(this double[] a, double[] b)
-        {
-            int length = a.Length, i;
-            double[] c = new double[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] + b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает сумму двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Add(this Complex[] a, double[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] + b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает сумму двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Add(this double[] a, Complex[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] + b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает сумму вектора и числа.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Add(this double[] a, double b)
-        {
-            int length = a.Length, i;
-            double[] c = new double[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] + b;
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает сумму двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Add(this Complex[] a, Complex[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] + b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает сумму вектора и числа.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Add(this Complex[] a, Complex b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] + b;
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает сумму вектора и числа.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Add(this Complex[] a, double b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] + b;
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает сумму вектора и числа.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Add(this double[] a, Complex b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] + b;
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает разность двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Sub(this double[] a, double[] b)
-        {
-            int length = a.Length, i;
-            double[] c = new double[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] - b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает разность двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Sub(this Complex[] a, double[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] - b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает разность двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Sub(this double[] a, Complex[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] - b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает разность вектора и числа.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Sub(this double[] a, double b)
-        {
-            int length = a.Length, i;
-            double[] c = new double[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] - b;
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает разность двух векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Sub(this Complex[] a, Complex[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] - b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает разность вектора и числа.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Sub(this Complex[] a, Complex b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] - b;
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает разность вектора и числа.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Sub(this Complex[] a, double b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] - b;
-            }
-            return c;
-        }
-        /// <summary>
-        /// Возвращает разность вектора и числа.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Sub(this double[] a, Complex b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] - b;
-            }
-            return c;
-        }
-        #endregion
-
-        #region Power, exp, log
-        /// <summary>
-        /// Возводит элементы вектора в степень.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="power">Степень</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Pow(this double[] v, double power)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Math.Pow(v[i], power);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возводит элементы вектора в степень.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="power">Степень</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Pow(this Complex[] v, double power)
-        {
-            int length = v.Length;
-            Complex[] H = new Complex[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Maths.Pow(v[i], power);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возводит элементы вектора в степень.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="power">Степень</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Pow(this double[] v, Complex power)
-        {
-            int length = v.Length;
-            Complex[] H = new Complex[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Maths.Pow(v[i], power);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Логарифмирует элементы вектора по основанию.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Log(this double[] v, double a = Math.E)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Math.Log(v[i], a);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Логарифмирует элементы вектора по основанию.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Log(this Complex[] v, double a = Math.E)
-        {
-            int length = v.Length;
-            Complex[] H = new Complex[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Maths.Log(v[i], a);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Экспонирует элементы вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Exp(this double[] v)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Math.Exp(v[i]);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Экспонирует элементы вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Exp(this Complex[] v)
-        {
-            int length = v.Length;
-            Complex[] H = new Complex[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Maths.Exp(v[i]);
-            }
-            return H;
-        }
-        #endregion
-        #endregion
-
-        #region Vector multiplications
-        #region Dot operations
+        #region Vector dot
         /// <summary>
         /// Реализует скалярное произведение векторов.
         /// </summary>
@@ -4560,7 +5744,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Vectors multiply to matrix
+        #region Vector/matrix multiply
         /// <summary>
         /// Реализует скалярное произведение векторов вида: a' * b, 
         /// где ' - знак транспонирования.
@@ -4649,265 +5833,6 @@ namespace UMapx.Core
             }
             return H;
         }
-        #endregion
-
-        #region Vector multiply values
-        /// <summary>
-        /// Реализует умножение вектора на число.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Mul(this double[] v, double a)
-        {
-            int length = v.Length, i;
-            double[] H = new double[length];
-
-            for (i = 0; i < length; i++)
-            {
-                H[i] = v[i] * a;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует умножение вектора на число.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Mul(this double[] v, Complex a)
-        {
-            int length = v.Length, i;
-            Complex[] H = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                H[i] = v[i] * a;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует умножение вектора на число.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Mul(this Complex[] v, double a)
-        {
-            int length = v.Length, i;
-            Complex[] H = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                H[i] = v[i] * a;
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует умножение вектора на число.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Mul(this Complex[] v, Complex a)
-        {
-            int length = v.Length, i;
-            Complex[] H = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                H[i] = v[i] * a;
-            }
-            return H;
-        }
-        #endregion
-
-        #region Multiply
-        /// <summary>
-        /// Реализует умножение матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Двумерная матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[,] Mul(this double[,] m, double[] v)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-
-            if (v.Length != r1)
-                throw new Exception("Размерность вектора должна быть равна ширине матрицы");
-
-            double[,] temp = new double[r0, r1];
-            double alpha;
-            int i, j;
-
-            // Вычисление новой матрицы:
-            for (j = 0; j < r1; j++)
-            {
-                alpha = v[j];
-                for (i = 0; i < r0; i++)
-                {
-                    temp[i, j] = m[i, j] * alpha;
-                }
-            }
-
-            return temp;
-        }
-        /// <summary>
-        /// Реализует умножение матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Двумерная матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Mul(this Complex[,] m, double[] v)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-
-            if (v.Length != r1)
-                throw new Exception("Размерность вектора должна быть равна ширине матрицы");
-
-            Complex[,] temp = new Complex[r0, r1];
-            Complex alpha;
-            int i, j;
-
-            // Вычисление новой матрицы:
-            for (j = 0; j < r1; j++)
-            {
-                alpha = v[j];
-                for (i = 0; i < r0; i++)
-                {
-                    temp[i, j] = m[i, j] * alpha;
-                }
-            }
-
-            return temp;
-        }
-        /// <summary>
-        /// Реализует умножение матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Двумерная матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Mul(this double[,] m, Complex[] v)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-
-            if (v.Length != r1)
-                throw new Exception("Размерность вектора должна быть равна ширине матрицы");
-
-            Complex[,] temp = new Complex[r0, r1];
-            Complex alpha;
-            int i, j;
-
-            // Вычисление новой матрицы:
-            for (j = 0; j < r1; j++)
-            {
-                alpha = v[j];
-                for (i = 0; i < r0; i++)
-                {
-                    temp[i, j] = m[i, j] * alpha;
-                }
-            }
-
-            return temp;
-        }
-        /// <summary>
-        /// Реализует умножение матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Двумерная матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Mul(this Complex[,] m, Complex[] v)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-
-            if (v.Length != r1)
-                throw new Exception("Размерность вектора должна быть равна ширине матрицы");
-
-            Complex[,] temp = new Complex[r0, r1];
-            Complex alpha;
-            int i, j;
-
-            // Вычисление новой матрицы:
-            for (j = 0; j < r1; j++)
-            {
-                alpha = v[j];
-                for (i = 0; i < r0; i++)
-                {
-                    temp[i, j] = m[i, j] * alpha;
-                }
-            }
-
-            return temp;
-        }
-        /// <summary>
-        /// Реализует поэлементное произведение векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Mul(this double[] a, double[] b)
-        {
-            int length = a.Length, i;
-            double[] c = new double[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] * b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Реализует поэлементное произведение векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Mul(this Complex[] a, double[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] * b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Реализует поэлементное произведение векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Mul(this double[] a, Complex[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] * b[i];
-            }
-            return c;
-        }
-        /// <summary>
-        /// Реализует поэлементное произведение векторов.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Mul(this Complex[] a, Complex[] b)
-        {
-            int length = a.Length, i;
-            Complex[] c = new Complex[length];
-
-            for (i = 0; i < length; i++)
-            {
-                c[i] = a[i] * b[i];
-            }
-            return c;
-        }
-        #endregion
         #endregion
 
         #region Vector convolutions
@@ -5354,6 +6279,8 @@ namespace UMapx.Core
         }
         #endregion
 
+        // ZAK voids
+
         #region Zak components
         /// <summary>
         /// Преобразование Фурье.
@@ -5449,6 +6376,7 @@ namespace UMapx.Core
             // Быстрый алгоритм ортогонализации формирующей 
             // WH-функции с использованием дискретного Zak-преобразования.
             // В.П. Волчков, Д.А. Петров и В.М. Асирян.
+            // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
 
             int N = v.Length;
             Complex[] vort = new Complex[N];
@@ -5514,7 +6442,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        // MATLAB voids:
+        // MATLAB voids
 
         #region MATLAB voids
         #region Get/set rows and columns
@@ -6775,7 +7703,7 @@ namespace UMapx.Core
         #endregion
         #endregion
 
-        // Extra voids:
+        // Extra voids
 
         #region Compute methods
         /// <summary>
@@ -7022,7 +7950,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Matrice products matrix
+        #region Matrix products
         /// <summary>
         /// Возвращает вектор Хаусхолдера.
         /// </summary>
@@ -8104,6 +9032,306 @@ namespace UMapx.Core
                 result = zero;
                 return false;
             }
+        }
+        #endregion
+
+        #region Extend/cutend voids
+        /// <summary>
+        /// Расширяет вектор до заданной длины.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="length">Длина</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Extend(double[] v, int length)
+        {
+            int r0 = v.GetLength(0);
+            int rr = (length - r0) / 2;
+            int dr = length - rr;
+            double[] b = new double[length];
+            int i;
+
+            for (i = 0; i < rr; i++)
+                b[i] = v[rr - i];
+
+            for (i = 0; i < r0; i++)
+                b[i + rr] = v[i];
+
+            for (i = 0; i <= rr; i++)
+                b[i + dr - 1] = v[r0 - i - 1];
+
+            return b;
+        }
+        /// <summary>
+        /// Обрезает вектор до заданной длины.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="length">Длина</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Cutend(double[] v, int length)
+        {
+            // params
+            int r0 = v.GetLength(0);
+            int rr = (r0 - length) / 2;
+            double[] b = new double[length];
+            int i;
+
+            // do job
+            for (i = 0; i < length; i++)
+            {
+                b[i] = v[i + rr];
+            }
+
+            return b;
+        }
+        /// <summary>
+        /// Расширяет матрицу до заданных размеров.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="height">Высота</param>
+        /// <param name="width">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Extend(double[,] m, int height, int width)
+        {
+            int r = m.GetLength(0);
+            int c = m.GetLength(1);
+
+            if (height >= r)
+                m = Matrice.ExtendVertical(m, height);
+            if (width >= c)
+                m = Matrice.ExtendHorizontal(m, width);
+
+            return m;
+        }
+        /// <summary>
+        /// extend vertical.
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static double[,] ExtendVertical(double[,] m, int length)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int rr = (length - r0) / 2;
+            double[,] B = new double[length, c0];
+            int i, j;
+
+            // do job
+            for (i = 0; i < length; i++)
+                for (j = 0; j < c0; j++)
+                    B[i, j] = m[Maths.Mod(rr - i - 1, r0), Maths.Mod(j, c0)];
+
+
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < c0; j++)
+                    B[rr + i, j] = m[i, j];
+
+            return B;
+        }
+        /// <summary>
+        /// extend horizontal.
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static double[,] ExtendHorizontal(double[,] m, int length)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int cc = (length - c0) / 2;
+            double[,] B = new double[r0, length];
+            int i, j;
+
+            // do job
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < length; j++)
+                    B[i, j] = m[Maths.Mod(i, r0), Maths.Mod(cc - j - 1, c0)];
+
+
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < c0; j++)
+                    B[i, cc + j] = m[i, j];
+
+            return B;
+        }
+        /// <summary>
+        /// Обрезает матрицу до заданных размеров.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="height">Высота</param>
+        /// <param name="width">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Cutend(double[,] m, int height, int width)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int rr = (r0 - height) / 2;
+            int cc = (c0 - width) / 2;
+            double[,] B = new double[height, width];
+            int i, j;
+
+            // do job
+            for (i = 0; i < height; i++)
+            {
+                for (j = 0; j < width; j++)
+                {
+                    B[i, j] = m[i + rr, j + cc];
+                }
+            }
+
+            return B;
+        }
+
+        /// <summary>
+        /// Расширяет вектор до заданной длины.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="length">Длина</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Extend(Complex[] v, int length)
+        {
+            int r0 = v.GetLength(0);
+            int rr = (length - r0) / 2;
+            int dr = length - rr;
+            Complex[] b = new Complex[length];
+            int i;
+
+            for (i = 0; i < rr; i++)
+                b[i] = v[rr - i];
+
+            for (i = 0; i < r0; i++)
+                b[i + rr] = v[i];
+
+            for (i = 0; i <= rr; i++)
+                b[i + dr - 1] = v[r0 - i - 1];
+
+            return b;
+        }
+        /// <summary>
+        /// Обрезает вектор до заданной длины.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="length">Длина</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Cutend(Complex[] v, int length)
+        {
+            // params
+            int r0 = v.GetLength(0);
+            int rr = (r0 - length) / 2;
+            Complex[] b = new Complex[length];
+            int i;
+
+            // do job
+            for (i = 0; i < length; i++)
+            {
+                b[i] = v[i + rr];
+            }
+
+            return b;
+        }
+        /// <summary>
+        /// Расширяет матрицу до заданных размеров.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="height">Высота</param>
+        /// <param name="width">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Extend(Complex[,] m, int height, int width)
+        {
+            int r = m.GetLength(0);
+            int c = m.GetLength(1);
+
+            if (height >= r)
+                m = Matrice.ExtendVertical(m, height);
+            if (width >= c)
+                m = Matrice.ExtendHorizontal(m, width);
+
+            return m;
+        }
+        /// <summary>
+        /// extend vertical.
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static Complex[,] ExtendVertical(Complex[,] m, int length)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int rr = (length - r0) / 2;
+            Complex[,] B = new Complex[length, c0];
+            int i, j;
+
+            // do job
+            for (i = 0; i < length; i++)
+                for (j = 0; j < c0; j++)
+                    B[i, j] = m[Maths.Mod(rr - i - 1, r0), Maths.Mod(j, c0)];
+
+
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < c0; j++)
+                    B[rr + i, j] = m[i, j];
+
+            return B;
+        }
+        /// <summary>
+        /// extend horizontal.
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static Complex[,] ExtendHorizontal(Complex[,] m, int length)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int cc = (length - c0) / 2;
+            Complex[,] B = new Complex[r0, length];
+            int i, j;
+
+            // do job
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < length; j++)
+                    B[i, j] = m[Maths.Mod(i, r0), Maths.Mod(cc - j - 1, c0)];
+
+
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < c0; j++)
+                    B[i, cc + j] = m[i, j];
+
+            return B;
+        }
+        /// <summary>
+        /// Обрезает матрицу до заданных размеров.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="height">Высота</param>
+        /// <param name="width">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Cutend(Complex[,] m, int height, int width)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int rr = (r0 - height) / 2;
+            int cc = (c0 - width) / 2;
+            Complex[,] B = new Complex[height, width];
+            int i, j;
+
+            // do job
+            for (i = 0; i < height; i++)
+            {
+                for (j = 0; j < width; j++)
+                {
+                    B[i, j] = m[i + rr, j + cc];
+                }
+            }
+
+            return B;
         }
         #endregion
     }

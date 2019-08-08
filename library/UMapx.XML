@@ -3749,38 +3749,6 @@
             <param name="D">Difference</param>
             <param name="sigma">Sigma</param>
         </member>
-        <member name="M:UMapx.Transform.DomainTransformFilter.powbyn(System.Double,System.Double[0:,0:])">
-            <summary>
-            Equation: B = a^A.
-            </summary>
-            <param name="a">number</param>
-            <param name="A">matrix</param>
-            <returns>matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.DomainTransformFilter.powbyn(System.Double,UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Equation: B = a^A.
-            </summary>
-            <param name="a">number</param>
-            <param name="A">matrix</param>
-            <returns>matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.DomainTransformFilter.powbyn(System.Double,System.Double[])">
-            <summary>
-            Equation: B = a^A.
-            </summary>
-            <param name="a">number</param>
-            <param name="A">vector</param>
-            <returns>vector</returns>
-        </member>
-        <member name="M:UMapx.Transform.DomainTransformFilter.powbyn(System.Double,UMapx.Core.Complex[])">
-            <summary>
-            Equation: B = a^A.
-            </summary>
-            <param name="a">number</param>
-            <param name="A">vector</param>
-            <returns>vector</returns>
-        </member>
         <member name="P:UMapx.Transform.DomainTransformFilter.SigmaS">
             <summary>
             Получает или задает значение σs.
@@ -19859,6 +19827,8 @@
             <summary>
             Определяет дискретное вейвлет-преобразование.
             <remarks>
+            Для корректного вейвлет-преобразования исходного сигнала необходимо, чтобы его размерность была степенью 2.
+            
             Более подробную информацию можно найти на сайте:
             https://en.wikipedia.org/wiki/Discrete_wavelet_transform
             </remarks>
@@ -19938,89 +19908,37 @@
             <param name="B">Двумерный массив</param>
             <returns>Двумерный массив</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.dwt(System.Double[])">
+        <member name="M:UMapx.Wavelet.WaveletTransform.dwt(System.Double[],System.Int32)">
             <summary>
-            Прямое вейвлет-преобразование.
+            Forward discrete wavelet transform.
             </summary>
-            <param name="data">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
+            <param name="input">Input signal</param>
+            <param name="level">Current level of transform</param>
+            <returns>Output data</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.idwt(System.Double[])">
+        <member name="M:UMapx.Wavelet.WaveletTransform.idwt(System.Double[],System.Int32)">
             <summary>
-            Прямое вейвлет-преобразование.
+            Backward discrete wavelet transform.
             </summary>
-            <param name="data">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
+            <param name="input">Input signal</param>
+            <param name="level">Current level of transform</param>
+            <returns>Output data</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.dwtLevel(System.Double[])">
+        <member name="M:UMapx.Wavelet.WaveletTransform.dwt(UMapx.Core.Complex[],System.Int32)">
             <summary>
-            Прямое вейвлет-преобразование по уровню.
+            Forward discrete wavelet transform.
             </summary>
-            <param name="data">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
+            <param name="input">Input signal</param>
+            <param name="level">Current level of transform</param>
+            <returns>Output data</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.idwtLevel(System.Double[])">
+        <member name="M:UMapx.Wavelet.WaveletTransform.idwt(UMapx.Core.Complex[],System.Int32)">
             <summary>
-            Прямое вейвлет-преобразование по уровню.
+            Backward discrete wavelet transform.
             </summary>
-            <param name="data">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.dwt2(System.Double[0:,0:])">
-            <summary>
-            Прямое вейвлет-преобразование.
-            </summary>
-            <param name="data">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.idwt2(System.Double[0:,0:])">
-            <summary>
-            Обратное вейвлет-преобразование.
-            </summary>
-            <param name="data">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.dwt(UMapx.Core.Complex[])">
-            <summary>
-            Прямое вейвлет-преобразование.
-            </summary>
-            <param name="data">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.idwt(UMapx.Core.Complex[])">
-            <summary>
-            Прямое вейвлет-преобразование.
-            </summary>
-            <param name="data">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.dwtLevel(UMapx.Core.Complex[])">
-            <summary>
-            Прямое вейвлет-преобразование по уровню.
-            </summary>
-            <param name="data">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.idwtLevel(UMapx.Core.Complex[])">
-            <summary>
-            Прямое вейвлет-преобразование по уровню.
-            </summary>
-            <param name="data">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.dwt2(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Прямое вейвлет-преобразование.
-            </summary>
-            <param name="data">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.idwt2(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Обратное вейвлет-преобразование.
-            </summary>
-            <param name="data">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
+            <param name="input">Input signal</param>
+            <param name="level">Current level of transform</param>
+            <returns>Output data</returns>
         </member>
         <member name="P:UMapx.Wavelet.WaveletTransform.Levels">
             <summary>
@@ -21152,6 +21070,102 @@
             </summary>
             <param name="x">Носитель</param>
             <returns>Значение функции</returns>
+        </member>
+        <member name="T:UMapx.Wavelet.WaveletFilter">
+            <summary>
+            Определяет вейвлет-фильтр.
+            </summary>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.#ctor(UMapx.Wavelet.WaveletTransform,System.Double,System.Double)">
+            <summary>
+            Инициализирует вейвлет-фильтр.
+            </summary>
+            <param name="dwt">Дискретное вейвлет-преобразование</param>
+            <param name="factor">Множитель [-1, 1]</param>
+            <param name="accuracy">Точность фильтра [0, 1]</param>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(System.Double[0:,0:])">
+            <summary>
+            Реализует двумерный вейвлет-фильтр.
+            </summary>
+            <param name="data">Матрица</param>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(System.Double[])">
+            <summary>
+            Реализует одномерный вейвлет-фильтр.
+            </summary>
+            <param name="data">Одномерный массив</param>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Реализует двумерный вейвлет-фильтр.
+            </summary>
+            <param name="data">Матрица</param>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(UMapx.Core.Complex[])">
+            <summary>
+            Реализует одномерный вейвлет-фильтр.
+            </summary>
+            <param name="data">Одномерный массив</param>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(System.Double[][0:,0:])">
+            <summary>
+            Реализует двумерный вейвлет-фильтр.
+            </summary>
+            <param name="data">Набор матриц</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(System.Double[][])">
+            <summary>
+            Реализует двумерный вейвлет-фильтр.
+            </summary>
+            <param name="data">Набор матриц</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(UMapx.Core.Complex[][0:,0:])">
+            <summary>
+            Реализует двумерный вейвлет-фильтр.
+            </summary>
+            <param name="data">Набор матриц</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(UMapx.Core.Complex[][])">
+            <summary>
+            Реализует двумерный вейвлет-фильтр.
+            </summary>
+            <param name="data">Набор матриц</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.GetLength(System.Int32,System.Int32)">
+            <summary>
+            Length of array for 2^K transform.
+            </summary>
+            <param name="n">Length</param>
+            <param name="levels">Levels</param>
+            <returns>New length</returns>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletFilter.GetMaxLevels(System.Int32,System.Int32)">
+            <summary>
+            Returns max levels of 2^K transform.
+            </summary>
+            <param name="n">Length</param>
+            <param name="levels">Levels</param>
+            <returns>New length</returns>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletFilter.DWT">
+            <summary>
+            Получает или задает дискретное вейвлет-преобразование.
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletFilter.Accuracy">
+            <summary>
+            Получает или задает значение точности фильтра [0, 1].
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletFilter.Factor">
+            <summary>
+            Получает или задает значение множителя [-1, 1].
+            </summary>
         </member>
         <member name="T:UMapx.Core.Maths">
             <summary>
@@ -23485,6 +23499,41 @@
             <param name="m">Матрица</param>
             <returns>Логическое значение</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.IsVector(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Проверяет является ли матрица вектором.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsSquare(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Проверяет является ли матрица квадратной.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsSymmetric(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Проверяет является ли матрица симметричной (эрмитовой).
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsSkewSymmetric(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Проверяет является ли матрица кососимметричной (антиэрмитовой).
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsDiagonal(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Проверяет является ли матрица диагональной.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Логическое значение</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Invert(System.Double[0:,0:])">
             <summary>
             Реализует операцию инвертирования матрицы.
@@ -23513,28 +23562,46 @@
             <param name="jagged">Зубчатый массив</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Kronecker(System.Double[0:,0:],System.Double[0:,0:])">
+        <member name="M:UMapx.Core.Matrice.Invert(UMapx.Core.Complex[0:,0:])">
             <summary>
-            Возвращает матричное произведение Кронекера.
+            Реализует операцию инвертирования матрицы.
             </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
+            <param name="m">Квадратная матрица</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Add(System.Double[0:,0:],System.Double[0:,0:])">
+        <member name="M:UMapx.Core.Matrice.Transponate(UMapx.Core.Complex[0:,0:])">
             <summary>
-            Возвращает сумму двух матриц.
+            Реализует операцию траспонирования матрицы.
             </summary>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Sub(System.Double[0:,0:],System.Double[0:,0:])">
+        <member name="M:UMapx.Core.Matrice.Conjugate(UMapx.Core.Complex[0:,0:])">
             <summary>
-            Возвращает разность двух матриц.
+            Возвращает комплексно-сопряженную матрицу.
             </summary>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Hermitian(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Реализует операцию эрмитово-сопряжения матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ToJagged(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает зубчатый массив.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Зубчатый массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.FromJagged(UMapx.Core.Complex[][])">
+            <summary>
+            Возвращает матрицу.
+            </summary>
+            <param name="jagged">Зубчатый массив</param>
             <returns>Матрица</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Rank(System.Double[0:,0:])">
@@ -23609,245 +23676,6 @@
             <param name="m">Квадратная матрица</param>
             <returns>Квадратная матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Add(System.Double[0:,0:],System.Double)">
-            <summary>
-            Прибавляет ко всем элементам матрицы число.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="a">Число</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(System.Double[0:,0:],System.Double)">
-            <summary>
-            Вычитает из всех элементов матрицы число.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="a">Число</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],System.Double)">
-            <summary>
-            Умножает все элементы матрицы на число.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="a">Число</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(System.Double[0:,0:],System.Double)">
-            <summary>
-            Делит все элементы матрицы на число.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="a">Число</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sqrt(System.Double[0:,0:],System.Double)">
-            <summary>
-            Возводит все элементы матрицы в обратную степень.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="pow">Число</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Log(System.Double[0:,0:],System.Double)">
-            <summary>
-            Логарифмирует все элементы матрицы по основанию.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="a">Число</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Exp(System.Double[0:,0:])">
-            <summary>
-            Экспонирует все элементы матрицы по основанию.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Negate(System.Double[0:,0:])">
-            <summary>
-            Инвертирует все элементы матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ToComplex(System.Double[0:,0:])">
-            <summary>
-            Возвращает комплексную матрицу.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ToByte(System.Double[0:,0:])">
-            <summary>
-            Возвращает матрицу, значения которой принадлежат интервалу [0, 255].
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ToDouble(System.Double[0:,0:])">
-            <summary>
-            Возвращает матрицу, значения которой принадлежат интервалу [0, 1].
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Abs(System.Double[0:,0:])">
-            <summary>
-            Берет модуль для всех элементов матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.IsVector(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Проверяет является ли матрица вектором.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Логическое значение</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.IsSquare(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Проверяет является ли матрица квадратной.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Логическое значение</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.IsSymmetric(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Проверяет является ли матрица симметричной (эрмитовой).
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Логическое значение</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.IsSkewSymmetric(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Проверяет является ли матрица кососимметричной (антиэрмитовой).
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Логическое значение</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.IsDiagonal(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Проверяет является ли матрица диагональной.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Логическое значение</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Invert(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Реализует операцию инвертирования матрицы.
-            </summary>
-            <param name="m">Квадратная матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Transponate(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Реализует операцию траспонирования матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Conjugate(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Возвращает комплексно-сопряженную матрицу.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Hermitian(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Реализует операцию эрмитово-сопряжения матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ToJagged(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Возвращает зубчатый массив.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Зубчатый массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.FromJagged(UMapx.Core.Complex[][])">
-            <summary>
-            Возвращает матрицу.
-            </summary>
-            <param name="jagged">Зубчатый массив</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Kronecker(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Реализует матричное произведение Кронекера.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Kronecker(UMapx.Core.Complex[0:,0:],System.Double[0:,0:])">
-            <summary>
-            Реализует матричное произведение Кронекера.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Kronecker(System.Double[0:,0:],UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Реализует матричное произведение Кронекера.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Складывает две матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[0:,0:],System.Double[0:,0:])">
-            <summary>
-            Складывает две матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(System.Double[0:,0:],UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Складывает две матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Вычитает две матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[0:,0:],System.Double[0:,0:])">
-            <summary>
-            Вычитает две матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(System.Double[0:,0:],UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Вычитает две матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
         <member name="M:UMapx.Core.Matrice.Rank(UMapx.Core.Complex[0:,0:])">
             <summary>
             Возвращает значение ранга матрицы.
@@ -23913,9 +23741,169 @@
             <param name="m">Матрица</param>
             <returns>Матрица</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Kronecker(System.Double[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Возвращает матричное произведение Кронекера.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Kronecker(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Реализует матричное произведение Кронекера.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Kronecker(UMapx.Core.Complex[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Реализует матричное произведение Кронекера.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Kronecker(System.Double[0:,0:],UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Реализует матричное произведение Кронекера.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Возвращает сумму двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает сумму двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Возвращает сумму двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double[0:,0:],UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает сумму двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double[0:,0:],System.Double)">
+            <summary>
+            Возвращает сумму матрицы и числа.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex)">
             <summary>
-            Прибавляет ко всем элементам матрицы число.
+            Возвращает сумму матрицы и числа.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[0:,0:],System.Double)">
+            <summary>
+            Возвращает сумму матрицы и числа.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double[0:,0:],UMapx.Core.Complex)">
+            <summary>
+            Возвращает сумму матрицы и числа.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double,System.Double[0:,0:])">
+            <summary>
+            Возвращает сумму числа и матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex,UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает сумму числа и матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex,System.Double[0:,0:])">
+            <summary>
+            Возвращает сумму числа и матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double,UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает сумму числа и матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Возвращает разность двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает разность двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Возвращает разность двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double[0:,0:],UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает разность двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double[0:,0:],System.Double)">
+            <summary>
+            Возвращает разность матрицы и числа.
             </summary>
             <param name="m">Матрица</param>
             <param name="a">Число</param>
@@ -23923,116 +23911,58 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex)">
             <summary>
-            Вычитает из всех элементов матрицы число.
+            Возвращает разность матрицы и числа.
             </summary>
             <param name="m">Матрица</param>
             <param name="a">Число</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex)">
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[0:,0:],System.Double)">
             <summary>
-            Умножает все элементы матрицы на число.
+            Возвращает разность матрицы и числа.
             </summary>
             <param name="m">Матрица</param>
             <param name="a">Число</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex)">
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double[0:,0:],UMapx.Core.Complex)">
             <summary>
-            Делит все элементы матрицы на число.
+            Возвращает разность матрицы и числа.
             </summary>
             <param name="m">Матрица</param>
             <param name="a">Число</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Sqrt(UMapx.Core.Complex[0:,0:],System.Double)">
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double,System.Double[0:,0:])">
             <summary>
-            Возводит все элементы матрицы в обратную степень.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="pow">Число</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Log(UMapx.Core.Complex[0:,0:],System.Double)">
-            <summary>
-            Логарифмирует все элементы матрицы по основанию.
+            Возвращает разность числа и матрицы.
             </summary>
             <param name="m">Матрица</param>
             <param name="a">Число</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Exp(UMapx.Core.Complex[0:,0:])">
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex,UMapx.Core.Complex[0:,0:])">
             <summary>
-            Экспонирует все элементы матрицы по основанию.
+            Возвращает разность числа и матрицы.
             </summary>
             <param name="m">Матрица</param>
+            <param name="a">Число</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Negate(UMapx.Core.Complex[0:,0:])">
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex,System.Double[0:,0:])">
             <summary>
-            Инвертирует все элементы матрицы.
+            Возвращает разность числа и матрицы.
             </summary>
             <param name="m">Матрица</param>
+            <param name="a">Число</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Abs(UMapx.Core.Complex[0:,0:])">
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double,UMapx.Core.Complex[0:,0:])">
             <summary>
-            Берет модуль для всех элементов матрицы.
+            Возвращает разность числа и матрицы.
             </summary>
             <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Берет угол для всех элементов матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Real(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Берет действительную часть для всех элементов матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Imaginary(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Берет мнимую часть для всех элементов матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Dot(System.Double[0:,0:],System.Double[0:,0:])">
-            <summary>
-            Реализует скалярное произведение матриц.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Реализует скалярное произведение матриц.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[0:,0:],System.Double[0:,0:])">
-            <summary>
-            Реализует скалярное произведение матриц.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Dot(System.Double[0:,0:],UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Реализует скалярное произведение матриц.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
+            <param name="a">Число</param>
             <returns>Матрица</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],System.Double[0:,0:])">
@@ -24067,6 +23997,70 @@
             <param name="n">Матрица</param>
             <returns>Матрица</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],System.Double)">
+            <summary>
+            Умножает все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex)">
+            <summary>
+            Умножает все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:],System.Double)">
+            <summary>
+            Умножает все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],UMapx.Core.Complex)">
+            <summary>
+            Умножает все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double,System.Double[0:,0:])">
+            <summary>
+            Умножает все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex,UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Умножает все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex,System.Double[0:,0:])">
+            <summary>
+            Умножает все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double,UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Умножает все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Double[0:,0:],System.Double[0:,0:])">
             <summary>
             Делит матрицу на матрицу.
@@ -24099,6 +24093,70 @@
             <param name="n">Матрица</param>
             <returns>Матрица</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[0:,0:],System.Double)">
+            <summary>
+            Делит все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex)">
+            <summary>
+            Делит все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[0:,0:],System.Double)">
+            <summary>
+            Делит все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[0:,0:],UMapx.Core.Complex)">
+            <summary>
+            Делит все элементы матрицы на число.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double,System.Double[0:,0:])">
+            <summary>
+            Делит число на элементы матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex,UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Делит число на элементы матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex,System.Double[0:,0:])">
+            <summary>
+            Делит число на элементы матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double,UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Делит число на элементы матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="a">Число</param>
+            <returns>Матрица</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Pow(UMapx.Core.Complex[0:,0:],System.Double)">
             <summary>
             Возводит все элементы матрицы в степень.
@@ -24123,122 +24181,129 @@
             <param name="pow">Число</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Conv(System.Double[0:,0:],System.Double[0:,0:],System.Boolean)">
+        <member name="M:UMapx.Core.Matrice.Pow(System.Double,System.Double[0:,0:])">
             <summary>
-            Возвращает матрицу-результат двумерной дискретной свертки.
+            Возводит число поэлементно в степень.
             </summary>
+            <param name="a">Число</param>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <param name="normalize">Нормализованная свертка или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Conv(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:],System.Boolean)">
+        <member name="M:UMapx.Core.Matrice.Pow(UMapx.Core.Complex,System.Double[0:,0:])">
             <summary>
-            Возвращает матрицу-результат двумерной дискретной свертки.
+            Возводит число поэлементно в степень.
             </summary>
+            <param name="a">Число</param>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <param name="normalize">Нормализованная свертка или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Conv(UMapx.Core.Complex[0:,0:],System.Double[0:,0:],System.Boolean)">
+        <member name="M:UMapx.Core.Matrice.Pow(System.Double,UMapx.Core.Complex[0:,0:])">
             <summary>
-            Возвращает матрицу-результат двумерной дискретной свертки.
+            Возводит число поэлементно в степень.
             </summary>
+            <param name="a">Число</param>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <param name="normalize">Нормализованная свертка или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Conv(System.Double[0:,0:],UMapx.Core.Complex[0:,0:],System.Boolean)">
+        <member name="M:UMapx.Core.Matrice.Log(System.Double[0:,0:],System.Double)">
             <summary>
-            Возвращает матрицу-результат двумерной дискретной свертки.
+            Логарифмирует все элементы матрицы по основанию.
             </summary>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <param name="normalize">Нормализованная свертка или нет</param>
+            <param name="a">Число</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Conv(System.Double[0:,0:],System.Double[],UMapx.Core.Direction,System.Boolean)">
+        <member name="M:UMapx.Core.Matrice.Exp(System.Double[0:,0:])">
             <summary>
-            Возвращает матрицу-результат двумерной дискретной свертки.
+            Экспонирует все элементы матрицы по основанию.
             </summary>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <param name="direction">Направление обработки</param>
-            <param name="normalize">Нормализованная свертка или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Conv(System.Double[0:,0:],UMapx.Core.Complex[],UMapx.Core.Direction,System.Boolean)">
+        <member name="M:UMapx.Core.Matrice.Log(UMapx.Core.Complex[0:,0:],System.Double)">
             <summary>
-            Возвращает матрицу-результат двумерной дискретной свертки.
+            Логарифмирует все элементы матрицы по основанию.
             </summary>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <param name="direction">Направление обработки</param>
-            <param name="normalize">Нормализованная свертка или нет</param>
+            <param name="a">Число</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Conv(UMapx.Core.Complex[0:,0:],System.Double[],UMapx.Core.Direction,System.Boolean)">
+        <member name="M:UMapx.Core.Matrice.Exp(UMapx.Core.Complex[0:,0:])">
             <summary>
-            Возвращает матрицу-результат двумерной дискретной свертки.
+            Экспонирует все элементы матрицы по основанию.
             </summary>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <param name="direction">Направление обработки</param>
-            <param name="normalize">Нормализованная свертка или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Conv(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[],UMapx.Core.Direction,System.Boolean)">
+        <member name="M:UMapx.Core.Matrice.Negate(System.Double[0:,0:])">
             <summary>
-            Возвращает матрицу-результат двумерной дискретной свертки.
+            Инвертирует все элементы матрицы.
             </summary>
             <param name="m">Матрица</param>
-            <param name="n">Матрица</param>
-            <param name="direction">Направление обработки</param>
-            <param name="normalize">Нормализованная свертка или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Min(System.Double[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Negate(UMapx.Core.Complex[0:,0:])">
             <summary>
-            Возвращает матрицу-результат морфологического сужения.
+            Инвертирует все элементы матрицы.
             </summary>
-            <param name="m">Двумерный массив</param>
-            <param name="r0">Радиус обработки по высоте</param>
-            <param name="r1">Радиус обработки по ширине</param>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Max(System.Double[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.ToComplex(System.Double[0:,0:])">
             <summary>
-            Возвращает матрицу-результат морфологического расширения.
+            Возвращает комплексную матрицу.
             </summary>
-            <param name="m">Двумерный массив</param>
-            <param name="r0">Радиус обработки по высоте</param>
-            <param name="r1">Радиус обработки по ширине</param>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Morph(System.Double[0:,0:],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.ToByte(System.Double[0:,0:])">
             <summary>
-            Возвращает матрицу-результат морфологии.
+            Возвращает матрицу, значения которой принадлежат интервалу [0, 255].
             </summary>
-            <param name="m">Двумерный массив</param>
-            <param name="r0">Радиус обработки по высоте</param>
-            <param name="r1">Радиус обработки по ширине</param>
-            <param name="threshold">Пороговое значение</param>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Mean(System.Double[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.ToDouble(System.Double[0:,0:])">
             <summary>
-            Возвращает матрицу-результат локального усреднения.
+            Возвращает матрицу, значения которой принадлежат интервалу [0, 1].
             </summary>
-            <param name="m">Двумерный массив</param>
-            <param name="r0">Радиус обработки по высоте</param>
-            <param name="r1">Радиус обработки по ширине</param>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Mean(UMapx.Core.Complex[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Abs(System.Double[0:,0:])">
             <summary>
-            Возвращает матрицу-результат локального усреднения.
+            Берет модуль для всех элементов матрицы.
             </summary>
-            <param name="m">Двумерный массив</param>
-            <param name="r0">Радиус обработки по высоте</param>
-            <param name="r1">Радиус обработки по ширине</param>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Abs(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Берет модуль для всех элементов матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Берет угол для всех элементов матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Real(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Берет действительную часть для всех элементов матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Imaginary(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Берет мнимую часть для всех элементов матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sort(System.Double[0:,0:])">
             <summary>
@@ -24377,6 +24442,155 @@
             <param name="m">Матрица</param>
             <returns>Одномерный массив</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Dot(System.Double[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Реализует скалярное произведение матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Реализует скалярное произведение матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Реализует скалярное произведение матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(System.Double[0:,0:],UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Реализует скалярное произведение матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Conv(System.Double[0:,0:],System.Double[0:,0:],System.Boolean)">
+            <summary>
+            Возвращает матрицу-результат двумерной дискретной свертки.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <param name="normalize">Нормализованная свертка или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Conv(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:],System.Boolean)">
+            <summary>
+            Возвращает матрицу-результат двумерной дискретной свертки.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <param name="normalize">Нормализованная свертка или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Conv(UMapx.Core.Complex[0:,0:],System.Double[0:,0:],System.Boolean)">
+            <summary>
+            Возвращает матрицу-результат двумерной дискретной свертки.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <param name="normalize">Нормализованная свертка или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Conv(System.Double[0:,0:],UMapx.Core.Complex[0:,0:],System.Boolean)">
+            <summary>
+            Возвращает матрицу-результат двумерной дискретной свертки.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <param name="normalize">Нормализованная свертка или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Conv(System.Double[0:,0:],System.Double[],UMapx.Core.Direction,System.Boolean)">
+            <summary>
+            Возвращает матрицу-результат двумерной дискретной свертки.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <param name="direction">Направление обработки</param>
+            <param name="normalize">Нормализованная свертка или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Conv(System.Double[0:,0:],UMapx.Core.Complex[],UMapx.Core.Direction,System.Boolean)">
+            <summary>
+            Возвращает матрицу-результат двумерной дискретной свертки.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <param name="direction">Направление обработки</param>
+            <param name="normalize">Нормализованная свертка или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Conv(UMapx.Core.Complex[0:,0:],System.Double[],UMapx.Core.Direction,System.Boolean)">
+            <summary>
+            Возвращает матрицу-результат двумерной дискретной свертки.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <param name="direction">Направление обработки</param>
+            <param name="normalize">Нормализованная свертка или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Conv(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[],UMapx.Core.Direction,System.Boolean)">
+            <summary>
+            Возвращает матрицу-результат двумерной дискретной свертки.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <param name="direction">Направление обработки</param>
+            <param name="normalize">Нормализованная свертка или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Min(System.Double[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Возвращает матрицу-результат морфологического сужения.
+            </summary>
+            <param name="m">Двумерный массив</param>
+            <param name="r0">Радиус обработки по высоте</param>
+            <param name="r1">Радиус обработки по ширине</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Max(System.Double[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Возвращает матрицу-результат морфологического расширения.
+            </summary>
+            <param name="m">Двумерный массив</param>
+            <param name="r0">Радиус обработки по высоте</param>
+            <param name="r1">Радиус обработки по ширине</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Morph(System.Double[0:,0:],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Возвращает матрицу-результат морфологии.
+            </summary>
+            <param name="m">Двумерный массив</param>
+            <param name="r0">Радиус обработки по высоте</param>
+            <param name="r1">Радиус обработки по ширине</param>
+            <param name="threshold">Пороговое значение</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mean(System.Double[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Возвращает матрицу-результат локального усреднения.
+            </summary>
+            <param name="m">Двумерный массив</param>
+            <param name="r0">Радиус обработки по высоте</param>
+            <param name="r1">Радиус обработки по ширине</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mean(UMapx.Core.Complex[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Возвращает матрицу-результат локального усреднения.
+            </summary>
+            <param name="m">Двумерный массив</param>
+            <param name="r0">Радиус обработки по высоте</param>
+            <param name="r1">Радиус обработки по ширине</param>
+        </member>
         <member name="M:UMapx.Core.Matrice.FromBitmap(System.Drawing.Bitmap)">
             <summary>
             Преобразовывает точечный рисунок в матрицу значений усредненного канала.
@@ -24397,6 +24611,724 @@
             </summary>
             <param name="m">Прямоугольная матрица</param>
             <returns>Точечный рисунок</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsPositive(System.Double[])">
+            <summary>
+            Проверяет являются ли вектора коллинеарными.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsCollinear(System.Double[],System.Double[])">
+            <summary>
+            Проверяет являются ли вектора коллинеарными.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsCollinear(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+            <summary>
+            Проверяет являются ли вектора коллинеарными.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsCollinear(UMapx.Core.Complex[],System.Double[])">
+            <summary>
+            Проверяет являются ли вектора коллинеарными.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsCollinear(System.Double[],UMapx.Core.Complex[])">
+            <summary>
+            Проверяет являются ли вектора коллинеарными.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Norm(System.Double[],System.Double)">
+            <summary>
+            Возвращает P-норму вектора.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="p">Параметр p</param>
+            <returns>Норма</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Norm(System.Double[])">
+            <summary>
+            Возвращает норму вектора.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <returns>Норма</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Norm(UMapx.Core.Complex[],System.Double)">
+            <summary>
+            Возвращает P-норму вектора.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="p">Параметр p</param>
+            <returns>Норма</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Norm(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает норму вектора.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <returns>Норма</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Angle(System.Double[],System.Double[])">
+            <summary>
+            Возвращает угол между двумя векторами.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex[],System.Double[])">
+            <summary>
+            Возвращает угол между двумя векторами.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Angle(System.Double[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает угол между двумя векторами.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает угол между двумя векторами.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Proj(System.Double[],System.Double[])">
+            <summary>
+            Возвращает проекцию двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Proj(UMapx.Core.Complex[],System.Double[])">
+            <summary>
+            Возвращает проекцию двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Proj(System.Double[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает проекцию двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Proj(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает проекцию двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Cosines(System.Double[])">
+            <summary>
+            Возвращает направляющие косинусы вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Cosines(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает направляющие косинусы вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double[],System.Double[])">
+            <summary>
+            Возвращает сумму двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает сумму двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[],System.Double[])">
+            <summary>
+            Возвращает сумму двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает сумму двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double[],System.Double)">
+            <summary>
+            Возвращает сумму вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[],UMapx.Core.Complex)">
+            <summary>
+            Возвращает сумму вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[],System.Double)">
+            <summary>
+            Возвращает сумму вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double[],UMapx.Core.Complex)">
+            <summary>
+            Возвращает сумму вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double,System.Double[])">
+            <summary>
+            Возвращает сумму вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex,UMapx.Core.Complex[])">
+            <summary>
+            Возвращает сумму вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(System.Double,UMapx.Core.Complex[])">
+            <summary>
+            Возвращает сумму вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex,System.Double[])">
+            <summary>
+            Возвращает сумму вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает разность двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double[],System.Double[])">
+            <summary>
+            Возвращает разность двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[],System.Double[])">
+            <summary>
+            Возвращает разность двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает разность двух векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double[],System.Double)">
+            <summary>
+            Возвращает разность вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[],UMapx.Core.Complex)">
+            <summary>
+            Возвращает разность вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[],System.Double)">
+            <summary>
+            Возвращает разность вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double[],UMapx.Core.Complex)">
+            <summary>
+            Возвращает разность вектора и числа.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double,System.Double[])">
+            <summary>
+            Возвращает разность числа и вектора.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex,UMapx.Core.Complex[])">
+            <summary>
+            Возвращает разность числа и вектора.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex,System.Double[])">
+            <summary>
+            Возвращает разность числа и вектора.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sub(System.Double,UMapx.Core.Complex[])">
+            <summary>
+            Возвращает разность числа и вектора.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],System.Double[])">
+            <summary>
+            Реализует умножение матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Двумерная матрица</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:],System.Double[])">
+            <summary>
+            Реализует умножение матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Двумерная матрица</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],UMapx.Core.Complex[])">
+            <summary>
+            Реализует умножение матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Двумерная матрица</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
+            <summary>
+            Реализует умножение матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Двумерная матрица</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[],System.Double[])">
+            <summary>
+            Реализует поэлементное произведение векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[],System.Double[])">
+            <summary>
+            Реализует поэлементное произведение векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[],UMapx.Core.Complex[])">
+            <summary>
+            Реализует поэлементное произведение векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+            <summary>
+            Реализует поэлементное произведение векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[],System.Double)">
+            <summary>
+            Реализует умножение вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[],UMapx.Core.Complex)">
+            <summary>
+            Реализует умножение вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[],System.Double)">
+            <summary>
+            Реализует умножение вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[],UMapx.Core.Complex)">
+            <summary>
+            Реализует умножение вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double,System.Double[])">
+            <summary>
+            Реализует умножение вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex,UMapx.Core.Complex[])">
+            <summary>
+            Реализует умножение вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex,System.Double[])">
+            <summary>
+            Реализует умножение вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double,UMapx.Core.Complex[])">
+            <summary>
+            Реализует умножение вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[],System.Double[])">
+            <summary>
+            Реализует поэлементное произведение векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+            <summary>
+            Реализует поэлементное произведение векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[],System.Double[])">
+            <summary>
+            Реализует поэлементное произведение векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[],UMapx.Core.Complex[])">
+            <summary>
+            Реализует поэлементное произведение векторов.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[],System.Double)">
+            <summary>
+            Реализует деление вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[],UMapx.Core.Complex)">
+            <summary>
+            Реализует деление вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[],System.Double)">
+            <summary>
+            Реализует деление вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[],UMapx.Core.Complex)">
+            <summary>
+            Реализует деление вектора на число.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double,System.Double[])">
+            <summary>
+            Реализует деление числа на вектор.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex,UMapx.Core.Complex[])">
+            <summary>
+            Реализует деление числа на вектор.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double,UMapx.Core.Complex[])">
+            <summary>
+            Реализует деление числа на вектор.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex,System.Double[])">
+            <summary>
+            Реализует деление числа на вектор.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Pow(System.Double[],System.Double)">
+            <summary>
+            Возводит элементы вектора в степень.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="power">Степень</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Pow(UMapx.Core.Complex[],System.Double)">
+            <summary>
+            Возводит элементы вектора в степень.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="power">Степень</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Pow(System.Double[],UMapx.Core.Complex)">
+            <summary>
+            Возводит элементы вектора в степень.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="power">Степень</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Pow(System.Double,System.Double[])">
+            <summary>
+            Возводит число поэлементно в степень.
+            </summary>
+            <param name="a">Число</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Pow(UMapx.Core.Complex,System.Double[])">
+            <summary>
+            Возводит число поэлементно в степень.
+            </summary>
+            <param name="a">Число</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Pow(System.Double,UMapx.Core.Complex[])">
+            <summary>
+            Возводит число поэлементно в степень.
+            </summary>
+            <param name="a">Число</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Log(System.Double[],System.Double)">
+            <summary>
+            Логарифмирует элементы вектора по основанию.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Log(UMapx.Core.Complex[],System.Double)">
+            <summary>
+            Логарифмирует элементы вектора по основанию.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Exp(System.Double[])">
+            <summary>
+            Экспонирует элементы вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Exp(UMapx.Core.Complex[])">
+            <summary>
+            Экспонирует элементы вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ToDouble(System.Double[])">
+            <summary>
+            Возвращает вектор, значения которого принадлежат интервалу [0, 1].
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ToByte(System.Double[])">
+            <summary>
+            Возвращает вектор, значения которого принадлежат интервалу [0, 255].
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Abs(System.Double[])">
+            <summary>
+            Возвращает модуль элементов вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Negate(System.Double[])">
+            <summary>
+            Инвертирует все элементы вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Negate(UMapx.Core.Complex[])">
+            <summary>
+            Инвертирует все элементы вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ToComplex(System.Double[])">
+            <summary>
+            Возвращает комплексный вектор.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Abs(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает модуль элементов комплексного вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает угол элементов комплексного вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Real(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает действительную часть элементов комплексного вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Imaginary(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает мнимую часть элементов комплексного вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Conjugate(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает комплексно-сопряженный вектор.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Cov(System.Double[])">
             <summary>
@@ -24564,460 +25496,6 @@
             <param name="r">Определяет диапазон сортировки. Начальная точка</param>
             <param name="l">Определяет диапазон сортировки. Конечная точка</param>
         </member>
-        <member name="M:UMapx.Core.Matrice.ToComplex(System.Double[])">
-            <summary>
-            Возвращает комплексный вектор.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Abs(UMapx.Core.Complex[])">
-            <summary>
-            Возвращает модуль элементов комплексного вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex[])">
-            <summary>
-            Возвращает угол элементов комплексного вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Real(UMapx.Core.Complex[])">
-            <summary>
-            Возвращает действительную часть элементов комплексного вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Imaginary(UMapx.Core.Complex[])">
-            <summary>
-            Возвращает мнимую часть элементов комплексного вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Conjugate(UMapx.Core.Complex[])">
-            <summary>
-            Возвращает комплексно-сопряженный вектор.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.IsPositive(System.Double[])">
-            <summary>
-            Проверяет являются ли вектора коллинеарными.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Логическое значение</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.IsCollinear(System.Double[],System.Double[])">
-            <summary>
-            Проверяет являются ли вектора коллинеарными.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Логическое значение</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.IsCollinear(UMapx.Core.Complex[],UMapx.Core.Complex[])">
-            <summary>
-            Проверяет являются ли вектора коллинеарными.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Логическое значение</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ToDouble(System.Double[])">
-            <summary>
-            Возвращает вектор, значения которого принадлежат интервалу [0, 1].
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ToByte(System.Double[])">
-            <summary>
-            Возвращает вектор, значения которого принадлежат интервалу [0, 255].
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Abs(System.Double[])">
-            <summary>
-            Возвращает модуль элементов вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Negate(System.Double[])">
-            <summary>
-            Инвертирует все элементы вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Negate(UMapx.Core.Complex[])">
-            <summary>
-            Инвертирует все элементы вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cosines(System.Double[])">
-            <summary>
-            Возвращает направляющие косинусы вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cosines(UMapx.Core.Complex[])">
-            <summary>
-            Возвращает направляющие косинусы вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Angle(System.Double[],System.Double[])">
-            <summary>
-            Возвращает угол между двумя векторами.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex[],System.Double[])">
-            <summary>
-            Возвращает угол между двумя векторами.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Angle(System.Double[],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает угол между двумя векторами.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex[],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает угол между двумя векторами.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Proj(System.Double[],System.Double[])">
-            <summary>
-            Возвращает проекцию двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Proj(UMapx.Core.Complex[],System.Double[])">
-            <summary>
-            Возвращает проекцию двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Proj(System.Double[],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает проекцию двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Proj(UMapx.Core.Complex[],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает проекцию двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(System.Double[],System.Double[])">
-            <summary>
-            Реализует поэлементное произведение векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[],System.Double[])">
-            <summary>
-            Реализует поэлементное произведение векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(System.Double[],UMapx.Core.Complex[])">
-            <summary>
-            Реализует поэлементное произведение векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[],UMapx.Core.Complex[])">
-            <summary>
-            Реализует поэлементное произведение векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(System.Double[],System.Double)">
-            <summary>
-            Реализует деление вектора на число.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(System.Double[],UMapx.Core.Complex)">
-            <summary>
-            Реализует деление вектора на число.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[],System.Double)">
-            <summary>
-            Реализует деление вектора на число.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[],UMapx.Core.Complex)">
-            <summary>
-            Реализует деление вектора на число.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Norm(System.Double[],System.Double)">
-            <summary>
-            Возвращает P-норму вектора.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="p">Параметр p</param>
-            <returns>Норма</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Norm(System.Double[])">
-            <summary>
-            Возвращает норму вектора.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <returns>Норма</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Norm(UMapx.Core.Complex[],System.Double)">
-            <summary>
-            Возвращает P-норму вектора.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="p">Параметр p</param>
-            <returns>Норма</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Norm(UMapx.Core.Complex[])">
-            <summary>
-            Возвращает норму вектора.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <returns>Норма</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(System.Double[],System.Double[])">
-            <summary>
-            Возвращает сумму двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[],System.Double[])">
-            <summary>
-            Возвращает сумму двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(System.Double[],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает сумму двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(System.Double[],System.Double)">
-            <summary>
-            Возвращает сумму вектора и числа.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает сумму двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[],UMapx.Core.Complex)">
-            <summary>
-            Возвращает сумму вектора и числа.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex[],System.Double)">
-            <summary>
-            Возвращает сумму вектора и числа.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Add(System.Double[],UMapx.Core.Complex)">
-            <summary>
-            Возвращает сумму вектора и числа.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(System.Double[],System.Double[])">
-            <summary>
-            Возвращает разность двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[],System.Double[])">
-            <summary>
-            Возвращает разность двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(System.Double[],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает разность двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(System.Double[],System.Double)">
-            <summary>
-            Возвращает разность вектора и числа.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает разность двух векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[],UMapx.Core.Complex)">
-            <summary>
-            Возвращает разность вектора и числа.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex[],System.Double)">
-            <summary>
-            Возвращает разность вектора и числа.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Sub(System.Double[],UMapx.Core.Complex)">
-            <summary>
-            Возвращает разность вектора и числа.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Pow(System.Double[],System.Double)">
-            <summary>
-            Возводит элементы вектора в степень.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="power">Степень</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Pow(UMapx.Core.Complex[],System.Double)">
-            <summary>
-            Возводит элементы вектора в степень.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="power">Степень</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Pow(System.Double[],UMapx.Core.Complex)">
-            <summary>
-            Возводит элементы вектора в степень.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="power">Степень</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Log(System.Double[],System.Double)">
-            <summary>
-            Логарифмирует элементы вектора по основанию.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Log(UMapx.Core.Complex[],System.Double)">
-            <summary>
-            Логарифмирует элементы вектора по основанию.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Exp(System.Double[])">
-            <summary>
-            Экспонирует элементы вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Exp(UMapx.Core.Complex[])">
-            <summary>
-            Экспонирует элементы вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Double[],System.Double[])">
             <summary>
             Реализует скалярное произведение векторов.
@@ -25113,102 +25591,6 @@
             <summary>
             Реализует скалярное произведение векторов вида: a' * b, 
             где ' - знак транспонирования.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(System.Double[],System.Double)">
-            <summary>
-            Реализует умножение вектора на число.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(System.Double[],UMapx.Core.Complex)">
-            <summary>
-            Реализует умножение вектора на число.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[],System.Double)">
-            <summary>
-            Реализует умножение вектора на число.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[],UMapx.Core.Complex)">
-            <summary>
-            Реализует умножение вектора на число.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],System.Double[])">
-            <summary>
-            Реализует умножение матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Двумерная матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:],System.Double[])">
-            <summary>
-            Реализует умножение матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Двумерная матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],UMapx.Core.Complex[])">
-            <summary>
-            Реализует умножение матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Двумерная матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
-            <summary>
-            Реализует умножение матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Двумерная матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(System.Double[],System.Double[])">
-            <summary>
-            Реализует поэлементное произведение векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[],System.Double[])">
-            <summary>
-            Реализует поэлементное произведение векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(System.Double[],UMapx.Core.Complex[])">
-            <summary>
-            Реализует поэлементное произведение векторов.
-            </summary>
-            <param name="a">Одномерный массив</param>
-            <param name="b">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[],UMapx.Core.Complex[])">
-            <summary>
-            Реализует поэлементное произведение векторов.
             </summary>
             <param name="a">Одномерный массив</param>
             <param name="b">Одномерный массив</param>
@@ -26140,6 +26522,106 @@
             <param name="s">Исходная строка</param>
             <param name="result">Матрица вещественных чисел</param>
             <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extend(System.Double[],System.Int32)">
+            <summary>
+            Расширяет вектор до заданной длины.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="length">Длина</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Cutend(System.Double[],System.Int32)">
+            <summary>
+            Обрезает вектор до заданной длины.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="length">Длина</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extend(System.Double[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Расширяет матрицу до заданных размеров.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="height">Высота</param>
+            <param name="width">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ExtendVertical(System.Double[0:,0:],System.Int32)">
+            <summary>
+            extend vertical.
+            </summary>
+            <param name="m"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ExtendHorizontal(System.Double[0:,0:],System.Int32)">
+            <summary>
+            extend horizontal.
+            </summary>
+            <param name="m"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Cutend(System.Double[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Обрезает матрицу до заданных размеров.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="height">Высота</param>
+            <param name="width">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extend(UMapx.Core.Complex[],System.Int32)">
+            <summary>
+            Расширяет вектор до заданной длины.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="length">Длина</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Cutend(UMapx.Core.Complex[],System.Int32)">
+            <summary>
+            Обрезает вектор до заданной длины.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="length">Длина</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extend(UMapx.Core.Complex[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Расширяет матрицу до заданных размеров.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="height">Высота</param>
+            <param name="width">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ExtendVertical(UMapx.Core.Complex[0:,0:],System.Int32)">
+            <summary>
+            extend vertical.
+            </summary>
+            <param name="m"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ExtendHorizontal(UMapx.Core.Complex[0:,0:],System.Int32)">
+            <summary>
+            extend horizontal.
+            </summary>
+            <param name="m"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Cutend(UMapx.Core.Complex[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Обрезает матрицу до заданных размеров.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="height">Высота</param>
+            <param name="width">Ширина</param>
+            <returns>Матрица</returns>
         </member>
         <member name="T:UMapx.Core.LinealgOptions">
             <summary>

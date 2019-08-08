@@ -8,7 +8,6 @@
 
 using System;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using UMapx.Core;
 using UMapx.Transform;
 
@@ -30,6 +29,8 @@ namespace UMapx.Wavelet
     /// <summary>
     /// Определяет дискретное вейвлет-преобразование.
     /// <remarks>
+    /// Для корректного вейвлет-преобразования исходного сигнала необходимо, чтобы его размерность была степенью 2.
+    /// 
     /// Более подробную информацию можно найти на сайте:
     /// https://en.wikipedia.org/wiki/Discrete_wavelet_transform
     /// </remarks>
@@ -106,7 +107,7 @@ namespace UMapx.Wavelet
         }
         #endregion
 
-        #region Wavelet double transform
+        #region Wavelet transform
         /// <summary>
         /// Прямое вейвлет-преобразование.
         /// </summary>
@@ -114,7 +115,16 @@ namespace UMapx.Wavelet
         /// <returns>Одномерный массив</returns>
         public double[] Forward(double[] A)
         {
-            return dwtLevel(A);
+            // params
+            int nLevels = (int)Math.Min(Maths.Log2(A.Length),this.levels);
+
+            // forward multi-scale wavelet transform
+            for (int i = 0; i < this.levels; i++)
+            {
+                A = this.dwt(A, i);
+            }
+
+            return A;
         }
         /// <summary>
         /// Обратное вейвлет-преобразование.
@@ -123,7 +133,16 @@ namespace UMapx.Wavelet
         /// <returns>Одномерный массив</returns>
         public double[] Backward(double[] B)
         {
-            return idwtLevel(B);
+            // params
+            int nLevels = (int)Math.Min(Maths.Log2(B.Length), this.levels);
+
+            // backward multi-scale wavelet transform
+            for (int i = this.levels; i > 0; i--)
+            {
+                B = this.idwt(B, i);
+            }
+
+            return B;
         }
         /// <summary>
         /// Прямое вейвлет-преобразование.
@@ -132,37 +151,43 @@ namespace UMapx.Wavelet
         /// <returns>Двумерный массив</returns>
         public double[,] Forward(double[,] A)
         {
-            double[,] B = (double[,])A.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-            int k, i, j, levN, levM, l;
-            double[,] tmp;
+            // params
+            int Bound1, Bound2, i, j;
+            int DataLen1 = A.GetLength(0);
+            int DataLen2 = A.GetLength(1);
+            double[,] output = (double[,])A.Clone();
+            double[] buff2 = new double[DataLen2];
+            double[] buff1 = new double[DataLen1];
+            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), 
+                this.levels), DataLen2);
 
-            // Two-dimensional forward level-wavelet transform: 
-            for (k = 0; k < levels; k++)
+            // do job
+            for (int lev = 0; lev < nLevels; lev++)
             {
-                l = (int)Math.Pow(2, k);
-                levN = N / l;
-                levM = M / l;
+                Bound1 = DataLen1 >> lev;
+                Bound2 = DataLen2 >> lev;
 
-                tmp = new double[levN, levM];
+                if (!Maths.IsEven(Bound1) && Bound1 < DataLen1)
+                    Bound1--;
+                if (!Maths.IsEven(Bound2) && Bound2 < DataLen2)
+                    Bound2--;
 
-                for (j = 0; j < levN; j++)
+                for (i = 0; i < Bound1; i++)
                 {
-                    for (i = 0; i < levM; i++)
-                        tmp[j, i] = B[j, i];
+                    for (j = 0; j < Bound2; j++) buff2[j] = output[i, j];
+                    buff2 = this.dwt(buff2, lev);
+                    for (j = 0; j < Bound2; j++) output[i, j] = buff2[j];
                 }
 
-                tmp = dwt2(tmp);
-
-                for (j = 0; j < levN; j++)
+                for (j = 0; j < Bound2; j++)
                 {
-                    for (i = 0; i < levM; i++)
-                        B[j, i] = tmp[j, i];
+                    for (i = 0; i < Bound1; i++) buff1[i] = output[i, j];
+                    buff1 = this.dwt(buff1, lev);
+                    for (i = 0; i < Bound1; i++) output[i, j] = buff1[i];
                 }
             }
 
-            return B;
+            return output;
         }
         /// <summary>
         /// Обратное вейвлет-преобразование.
@@ -171,41 +196,39 @@ namespace UMapx.Wavelet
         /// <returns>Двумерный массив</returns>
         public double[,] Backward(double[,] B)
         {
-            double[,] A = (double[,])B.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-            int k, i, j, levN, levM, l;
-            double[,] tmp;
+            // params
+            int Bound1, Bound2, i, j;
+            int DataLen1 = B.GetLength(0);
+            int DataLen2 = B.GetLength(1);
+            double[,] output = (double[,])B.Clone();
+            double[] buff1 = new double[DataLen1];
+            double[] buff2 = new double[DataLen2];
+            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1),
+    this.levels), DataLen2);
 
-            // Two-dimensional backward level-wavelet transform: 
-            for (k = levels - 1; k >= 0; k--)
+            // do job
+            for (int lev = nLevels; lev > 0; lev--)
             {
-                l = (int)Math.Pow(2, k);
-                levN = N / l;
-                levM = M / l;
+                Bound1 = DataLen1 >> lev;
+                Bound2 = DataLen2 >> lev;
 
-                tmp = new double[levN, levM];
-
-                for (j = 0; j < levN; j++)
+                for (i = 0; i < Bound1 << 1; i++)
                 {
-                    for (i = 0; i < levM; i++)
-                        tmp[j, i] = A[j, i];
+                    for (j = 0; j < Bound2 << 1; j++) buff2[j] = output[i, j];
+                    buff2 = this.idwt(buff2, lev);
+                    for (j = 0; j < Bound2 << 1; j++) output[i, j] = buff2[j];
                 }
 
-                tmp = idwt2(tmp);
-
-                for (j = 0; j < levN; j++)
+                for (j = 0; j < Bound2 << 1; j++)
                 {
-                    for (i = 0; i < levM; i++)
-                        A[j, i] = tmp[j, i];
+                    for (i = 0; i < Bound1 << 1; i++) buff1[i] = output[i, j];
+                    buff1 = this.idwt(buff1, lev);
+                    for (i = 0; i < Bound1 << 1; i++) output[i, j] = buff1[i];
                 }
             }
 
-            return A;
+            return output;
         }
-        #endregion
-
-        #region Wavelet complex transform
         /// <summary>
         /// Прямое вейвлет-преобразование.
         /// </summary>
@@ -213,7 +236,16 @@ namespace UMapx.Wavelet
         /// <returns>Одномерный массив</returns>
         public Complex[] Forward(Complex[] A)
         {
-            return dwtLevel(A);
+            // params
+            int nLevels = (int)Math.Min(Maths.Log2(A.Length), this.levels);
+
+            // forward multi-scale wavelet transform
+            for (int i = 0; i < this.levels; i++)
+            {
+                A = this.dwt(A, i);
+            }
+
+            return A;
         }
         /// <summary>
         /// Обратное вейвлет-преобразование.
@@ -222,7 +254,16 @@ namespace UMapx.Wavelet
         /// <returns>Одномерный массив</returns>
         public Complex[] Backward(Complex[] B)
         {
-            return idwtLevel(B);
+            // params
+            int nLevels = (int)Math.Min(Maths.Log2(B.Length), this.levels);
+
+            // backward multi-scale wavelet transform
+            for (int i = this.levels; i > 0; i--)
+            {
+                B = this.idwt(B, i);
+            }
+
+            return B;
         }
         /// <summary>
         /// Прямое вейвлет-преобразование.
@@ -231,37 +272,43 @@ namespace UMapx.Wavelet
         /// <returns>Двумерный массив</returns>
         public Complex[,] Forward(Complex[,] A)
         {
-            Complex[,] B = (Complex[,])A.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-            int k, i, j, levN, levM, l;
-            Complex[,] tmp;
+            // params
+            int Bound1, Bound2, i, j;
+            int DataLen1 = A.GetLength(0);
+            int DataLen2 = A.GetLength(1);
+            Complex[,] output = (Complex[,])A.Clone();
+            Complex[] buff2 = new Complex[DataLen2];
+            Complex[] buff1 = new Complex[DataLen1];
+            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1),
+this.levels), DataLen2);
 
-            // Two-dimensional forward level-wavelet transform: 
-            for (k = 0; k < levels; k++)
+            // do job
+            for (int lev = 0; lev < nLevels; lev++)
             {
-                l = (int)Math.Pow(2, k);
-                levN = N / l;
-                levM = M / l;
+                Bound1 = DataLen1 >> lev;
+                Bound2 = DataLen2 >> lev;
 
-                tmp = new Complex[levN, levM];
+                if (!Maths.IsEven(Bound1) && Bound1 < DataLen1)
+                    Bound1--;
+                if (!Maths.IsEven(Bound2) && Bound2 < DataLen2)
+                    Bound2--;
 
-                for (j = 0; j < levN; j++)
+                for (i = 0; i < Bound1; i++)
                 {
-                    for (i = 0; i < levM; i++)
-                        tmp[j, i] = B[j, i];
+                    for (j = 0; j < Bound2; j++) buff2[j] = output[i, j];
+                    buff2 = this.dwt(buff2, lev);
+                    for (j = 0; j < Bound2; j++) output[i, j] = buff2[j];
                 }
 
-                tmp = dwt2(tmp);
-
-                for (j = 0; j < levN; j++)
+                for (j = 0; j < Bound2; j++)
                 {
-                    for (i = 0; i < levM; i++)
-                        B[j, i] = tmp[j, i];
+                    for (i = 0; i < Bound1; i++) buff1[i] = output[i, j];
+                    buff1 = this.dwt(buff1, lev);
+                    for (i = 0; i < Bound1; i++) output[i, j] = buff1[i];
                 }
             }
 
-            return B;
+            return output;
         }
         /// <summary>
         /// Обратное вейвлет-преобразование.
@@ -270,588 +317,284 @@ namespace UMapx.Wavelet
         /// <returns>Двумерный массив</returns>
         public Complex[,] Backward(Complex[,] B)
         {
-            Complex[,] A = (Complex[,])B.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-            int k, i, j, levN, levM, l;
-            Complex[,] tmp;
+            // params
+            int Bound1, Bound2, i, j;
+            int DataLen1 = B.GetLength(0);
+            int DataLen2 = B.GetLength(1);
+            Complex[,] output = (Complex[,])B.Clone();
+            Complex[] buff1 = new Complex[DataLen1];
+            Complex[] buff2 = new Complex[DataLen2];
+            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1),
+    this.levels), DataLen2);
 
-            // Two-dimensional backward level-wavelet transform: 
-            for (k = levels - 1; k >= 0; k--)
+            // do job
+            for (int lev = nLevels; lev > 0; lev--)
             {
-                l = (int)Math.Pow(2, k);
-                levN = N / l;
-                levM = M / l;
+                Bound1 = DataLen1 >> lev;
+                Bound2 = DataLen2 >> lev;
 
-                tmp = new Complex[levN, levM];
-
-                for (j = 0; j < levN; j++)
+                for (i = 0; i < Bound1 << 1; i++)
                 {
-                    for (i = 0; i < levM; i++)
-                        tmp[j, i] = A[j, i];
+                    for (j = 0; j < Bound2 << 1; j++) buff2[j] = output[i, j];
+                    buff2 = this.idwt(buff2, lev);
+                    for (j = 0; j < Bound2 << 1; j++) output[i, j] = buff2[j];
                 }
 
-                tmp = idwt2(tmp);
-
-                for (j = 0; j < levN; j++)
+                for (j = 0; j < Bound2 << 1; j++)
                 {
-                    for (i = 0; i < levM; i++)
-                        A[j, i] = tmp[j, i];
+                    for (i = 0; i < Bound1 << 1; i++) buff1[i] = output[i, j];
+                    buff1 = this.idwt(buff1, lev);
+                    for (i = 0; i < Bound1 << 1; i++) output[i, j] = buff1[i];
                 }
             }
 
-            return A;
+            return output;
         }
         #endregion
 
-        #region Private wavelet voids
+        #region Private voids
         /// <summary>
-        /// Прямое вейвлет-преобразование.
+        /// Forward discrete wavelet transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        private double[] dwt(double[] data)
+        /// <param name="input">Input signal</param>
+        /// <param name="level">Current level of transform</param>
+        /// <returns>Output data</returns>
+        private double[] dwt(double[] input, int level)
         {
-            int n = data.Length;
-            double[] tmp = new double[n];
+            // params
+            int length = input.Length;
+            double[] output = new double[length];
+            int Bound = length >> level;
 
-            // Пропускаем последний нечетный элемент
-            // сигнала.
-            if (Maths.IsNotEven(n))
+            // odd element
+            if (!Maths.IsEven(Bound))
             {
-                n--; tmp[n] = data[n];
+                Bound--;
             }
 
-            int r1 = lp.Length, r1half = r1 / 2;
-            int r2 = hp.Length, r2half = r2 / 2;
-            int p1 = Maths.IsEven(r1half) ? r1half : (r1half - 1);
-            int p2 = Maths.IsEven(r2half) ? r2half : (r2half - 1);
-            int i = 0, j, k, p, h = n >> 1;
+            int lpLen = this.lp.Length;
+            int hpLen = this.hp.Length;
+            int lpStart = -((lpLen >> 1) - 1);
+            int hpStart = -((hpLen >> 1) - 1);
+            Array.Copy(input, Bound, output, Bound, length - Bound);
+            double a = 0;
+            double b = 0;
+            int h = Bound >> 1;
+            int c, i, j, r, k;
 
-            // Дискретная свертка:
-            for (j = 0; j < n; j += 2, i++)
+            // do job
+            for (i = 0, r = 0; i < Bound; i += 2, r++)
             {
-                // Преобразование по нижним частотам:
-                for (k = 0; k < r1; k++)
+                // low-pass filter
+                for (j = lpStart, k = 0; k < lpLen; j++, k++)
                 {
-                    p = Maths.Mod(j + k - p1, n);
-                    tmp[i] += data[p] * lp[k];
+                    if (j < 0 || j >= Bound)
+                        c = (j % Bound + Bound) % Bound;
+                    else
+                        c = j;
+                    a += this.lp[k] * input[c];
                 }
-                // Преобразование по верхним частотам:
-                for (k = 0; k < r2; k++)
-                {
-                    p = Maths.Mod(j + k - p2, n);
-                    tmp[i + h] += data[p] * hp[k];
-                }
-            }
 
-            // Нормализация значений преобразования:
-            if (normalized == true)
-            {
-                for (j = 0; j < n; j++)
+                // high-pass filter
+                for (j = hpStart, k = 0; k < hpLen; j++, k++)
                 {
-                    tmp[j] = tmp[j] / Maths.Sqrt2;
+                    if (j < 0 || j >= Bound)
+                        c = (j % Bound + Bound) % Bound;
+                    else
+                        c = j;
+                    b += this.hp[k] * input[c];
                 }
+                lpStart += 2;
+                hpStart += 2;
+                output[r    ] = a;
+                output[r + h] = b;
+                a = 0;
+                b = 0;
             }
-
-            return tmp;
+            return output;
         }
         /// <summary>
-        /// Прямое вейвлет-преобразование.
+        /// Backward discrete wavelet transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        private double[] idwt(double[] data)
+        /// <param name="input">Input signal</param>
+        /// <param name="level">Current level of transform</param>
+        /// <returns>Output data</returns>
+        private double[] idwt(double[] input, int level)
         {
-            int n = data.Length;
-            double[] tmp = new double[n];
+            // params
+            int length = input.Length;
+            double[] output = (double[])input.Clone();
+            int Bound = length >> level;
+            int h = Bound << 1;
+            int lpLen = this.ilp.Length;
+            int hpLen = this.ihp.Length;
+            int lpStart = -((lpLen >> 1) - 1);
+            int hpStart = -((hpLen >> 1) - 1);
+            double[] Low = new double[h];
+            double[] Hig = new double[h];
+            double s = 0;
+            int c, i, j, k;
 
-            // Пропускаем последний нечетный элемент
-            // сигнала.
-            if (Maths.IsNotEven(n))
+            // redim
+            for (i = 0, j = 0; i < h; i += 2, j++)
             {
-                n--; tmp[n] = data[n];
+                Low[i    ] = 0;
+                Hig[i    ] = 0;
+                Low[i + 1] = input[j];
+                Hig[i + 1] = input[Bound + j];
             }
 
-            int r1 = ilp.Length, r1half = r1 / 2;
-            int r2 = ihp.Length, r2half = r2 / 2;
-            int p1 = (r1half - 1) / 2;
-            int p2 = (r2half - 1) / 2;
-            int i, j = 0, k, k2, p, h = n >> 1;
-
-            // Деконвуляция:
+            // do job
             for (i = 0; i < h; i++)
             {
-                // Преобразование по нижним частотам:
-                for (k = 0; k < r1half; k++)
+                // low-pass filter
+                for (j = lpStart, k = 0; k < lpLen; j++, k++)
                 {
-                    k2 = 2 * k;
-                    p = Maths.Mod(i + k - p1, h);
-
-                    tmp[j] += data[p] * ilp[k2 + 1];
-                    tmp[j + 1] += data[p] * ilp[k2];
-                }
-                // Преобразование по верхним частотам:
-                for (k = 0; k < r2half; k++)
-                {
-                    k2 = 2 * k;
-                    p = Maths.Mod(i + k - p2, h);
-
-                    tmp[j] += data[p + h] * ihp[k2 + 1];
-                    tmp[j + 1] += data[p + h] * ihp[k2];
+                    if (j < 0 || j >= h)
+                        c = (j % h + h) % h;
+                    else
+                        c = j;
+                    s += this.ilp[k] * Low[c];
                 }
 
-                j += 2;
-            }
-
-            // Нормализация значений преобразования:
-            if (normalized == true)
-            {
-                for (j = 0; j < n; j++)
+                // high-pass filter
+                for (j = hpStart, k = 0; k < hpLen; j++, k++)
                 {
-                    tmp[j] = tmp[j] * Maths.Sqrt2;
-                }
-            }
-
-            return tmp;
-        }
-        /// <summary>
-        /// Прямое вейвлет-преобразование по уровню.
-        /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        private double[] dwtLevel(double[] data)
-        {
-            int n = data.Length, k, j, lev, l;
-            double[] output = (double[])data.Clone();
-            double[] tmp;
-
-            for (k = 0; k < levels; k++)
-            {
-                l = (int)Math.Pow(2, k);
-                lev = n / l;
-
-                tmp = new double[lev];
-
-                for (j = 0; j < lev; j++)
-                {
-                    tmp[j] = output[j];
+                    if (j < 0 || j >= h)
+                        c = (j % h + h) % h;
+                    else
+                        c = j;
+                    s += this.ihp[k] * Hig[c];
                 }
 
-                tmp = dwt(tmp);
-
-                for (j = 0; j < lev; j++)
-                {
-                    output[j] = tmp[j];
-                }
+                lpStart += 1;
+                hpStart += 1;
+                output[i] = s;
+                s = 0;
             }
 
             return output;
         }
+
         /// <summary>
-        /// Прямое вейвлет-преобразование по уровню.
+        /// Forward discrete wavelet transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        private double[] idwtLevel(double[] data)
+        /// <param name="input">Input signal</param>
+        /// <param name="level">Current level of transform</param>
+        /// <returns>Output data</returns>
+        private Complex[] dwt(Complex[] input, int level)
         {
-            int n = data.Length, k, j, lev, l;
-            double[] output = (double[])data.Clone();
-            double[] tmp;
+            // params
+            int length = input.Length;
+            Complex[] output = new Complex[length];
+            int Bound = length >> level;
 
-            for (k = levels - 1; k >= 0; k--)
+            // odd element
+            if (!Maths.IsEven(Bound))
             {
-                l = (int)Math.Pow(2, k);
-                lev = n / l;
-
-                tmp = new double[lev];
-
-                for (j = 0; j < lev; j++)
-                {
-                    tmp[j] = output[j];
-                }
-
-                tmp = idwt(tmp);
-
-                for (j = 0; j < lev; j++)
-                {
-                    output[j] = tmp[j];
-                }
+                Bound--;
             }
 
+            int lpLen = this.lp.Length;
+            int hpLen = this.hp.Length;
+            int lpStart = -((lpLen >> 1) - 1);
+            int hpStart = -((hpLen >> 1) - 1);
+            Array.Copy(input, Bound, output, Bound, length - Bound);
+            Complex a = 0;
+            Complex b = 0;
+            int h = Bound >> 1;
+            int c, i, j, r, k;
+
+            // do job
+            for (i = 0, r = 0; i < Bound; i += 2, r++)
+            {
+                // low-pass filter
+                for (j = lpStart, k = 0; k < lpLen; j++, k++)
+                {
+                    if (j < 0 || j >= Bound)
+                        c = (j % Bound + Bound) % Bound;
+                    else
+                        c = j;
+                    a += this.lp[k] * input[c];
+                }
+
+                // high-pass filter
+                for (j = hpStart, k = 0; k < hpLen; j++, k++)
+                {
+                    if (j < 0 || j >= Bound)
+                        c = (j % Bound + Bound) % Bound;
+                    else
+                        c = j;
+                    b += this.hp[k] * input[c];
+                }
+                lpStart += 2;
+                hpStart += 2;
+                output[r] = a;
+                output[r + h] = b;
+                a = 0;
+                b = 0;
+            }
             return output;
         }
         /// <summary>
-        /// Прямое вейвлет-преобразование.
+        /// Backward discrete wavelet transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
-        private double[,] dwt2(double[,] data)
+        /// <param name="input">Input signal</param>
+        /// <param name="level">Current level of transform</param>
+        /// <returns>Output data</returns>
+        private Complex[] idwt(Complex[] input, int level)
         {
-            double[,] output = (double[,])data.Clone();
-            int N = output.GetLength(0);
-            int M = output.GetLength(1);
+            // params
+            int length = input.Length;
+            Complex[] output = (Complex[])input.Clone();
+            int Bound = length >> level;
+            int h = Bound << 1;
+            int lpLen = this.ilp.Length;
+            int hpLen = this.ihp.Length;
+            int lpStart = -((lpLen >> 1) - 1);
+            int hpStart = -((hpLen >> 1) - 1);
+            Complex[] Low = new Complex[h];
+            Complex[] Hig = new Complex[h];
+            Complex s = 0;
+            int c, i, j, k;
 
-            Parallel.For(0, N, i =>
+            // redim
+            for (i = 0, j = 0; i < h; i += 2, j++)
             {
-                double[] row = new double[M];
-                int j;
-
-                for (j = 0; j < M; j++)
-                {
-                    row[j] = output[i, j];
-                }
-
-                row = dwt(row);
-
-                for (j = 0; j < M; j++)
-                {
-                    output[i, j] = row[j];
-                }
-            }
-            );
-
-            Parallel.For(0, M, j =>
-            {
-                double[] col = new double[N];
-                int i;
-
-                for (i = 0; i < N; i++)
-                {
-                    col[i] = output[i, j];
-                }
-
-                col = dwt(col);
-
-                for (i = 0; i < N; i++)
-                {
-                    output[i, j] = col[i];
-                }
-            }
-            );
-
-            return output;
-        }
-        /// <summary>
-        /// Обратное вейвлет-преобразование.
-        /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
-        private double[,] idwt2(double[,] data)
-        {
-            double[,] output = (double[,])data.Clone();
-            int N = data.GetLength(0);
-            int M = data.GetLength(1);
-
-            Parallel.For(0, M, j =>
-            {
-                double[] col = new double[N];
-                int i;
-                for (i = 0; i < N; i++)
-                {
-                    col[i] = output[i, j];
-                }
-                col = idwt(col);
-
-                for (i = 0; i < N; i++)
-                {
-                    output[i, j] = col[i];
-                }
-            }
-            );
-
-            Parallel.For(0, N, i =>
-            {
-                double[] row = new double[M];
-                int j;
-
-                for (j = 0; j < M; j++)
-                {
-                    row[j] = output[i, j];
-                }
-                row = idwt(row);
-
-                for (j = 0; j < M; j++)
-                {
-                    output[i, j] = row[j];
-                }
-            }
-            );
-
-            return output;
-        }
-        /// <summary>
-        /// Прямое вейвлет-преобразование.
-        /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        private Complex[] dwt(Complex[] data)
-        {
-            int n = data.Length;
-            Complex[] tmp = new Complex[n];
-
-            // Пропускаем последний нечетный элемент
-            // сигнала.
-            if (Maths.IsNotEven(n))
-            {
-                n--; tmp[n] = data[n];
+                Low[i] = 0;
+                Hig[i] = 0;
+                Low[i + 1] = input[j];
+                Hig[i + 1] = input[Bound + j];
             }
 
-            int r1 = lp.Length, r1half = r1 / 2;
-            int r2 = hp.Length, r2half = r2 / 2;
-            int pow1 = Maths.IsEven(r1half) ? r1half : (r1half - 1);
-            int pow2 = Maths.IsEven(r2half) ? r2half : (r2half - 1);
-            int i = 0, j, k, p, h = n >> 1;
-
-            // Дискретная свертка:
-            for (j = 0; j < n; j += 2, i++)
-            {
-                // Преобразование по нижним частотам:
-                for (k = 0; k < r1; k++)
-                {
-                    p = Maths.Mod(j + k - pow1, n);
-                    tmp[i] += data[p] * lp[k];
-                }
-                // Преобразование по верхним частотам:
-                for (k = 0; k < r2; k++)
-                {
-                    p = Maths.Mod(j + k - pow2, n);
-                    tmp[i + h] += data[p] * hp[k];
-                }
-            }
-
-            // Нормализация значений преобразования:
-            if (normalized == true)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    tmp[j] = tmp[j] / Maths.Sqrt2;
-                }
-            }
-
-            return tmp;
-        }
-        /// <summary>
-        /// Прямое вейвлет-преобразование.
-        /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        private Complex[] idwt(Complex[] data)
-        {
-            int n = data.Length;
-            Complex[] tmp = new Complex[n];
-
-            // Пропускаем последний нечетный элемент
-            // сигнала.
-            if (Maths.IsNotEven(n))
-            {
-                n--; tmp[n] = data[n];
-            }
-
-            int r1 = ilp.Length, r1half = r1 / 2;
-            int r2 = ihp.Length, r2half = r2 / 2;
-            int pow1 = (r1half - 1) / 2;
-            int pow2 = (r2half - 1) / 2;
-            int i, j = 0, k, k2, p, h = n >> 1;
-
-            // Деконвуляция:
+            // do job
             for (i = 0; i < h; i++)
             {
-                // Преобразование по нижним частотам:
-                for (k = 0; k < r1half; k++)
+                // low-pass filter
+                for (j = lpStart, k = 0; k < lpLen; j++, k++)
                 {
-                    k2 = 2 * k;
-                    p = Maths.Mod(i + k - pow1, h);
-
-                    tmp[j] += data[p] * ilp[k2 + 1];
-                    tmp[j + 1] += data[p] * ilp[k2];
-                }
-                // Преобразование по верхним частотам:
-                for (k = 0; k < r2half; k++)
-                {
-                    k2 = 2 * k;
-                    p = Maths.Mod(i + k - pow2, h);
-
-                    tmp[j] += data[p + h] * ihp[k2 + 1];
-                    tmp[j + 1] += data[p + h] * ihp[k2];
+                    if (j < 0 || j >= h)
+                        c = (j % h + h) % h;
+                    else
+                        c = j;
+                    s += this.ilp[k] * Low[c];
                 }
 
-                j += 2;
+                // high-pass filter
+                for (j = hpStart, k = 0; k < hpLen; j++, k++)
+                {
+                    if (j < 0 || j >= h)
+                        c = (j % h + h) % h;
+                    else
+                        c = j;
+                    s += this.ihp[k] * Hig[c];
+                }
+
+                lpStart += 1;
+                hpStart += 1;
+                output[i] = s;
+                s = 0;
             }
-
-            // Нормализация значений преобразования:
-            if (normalized == true)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    tmp[j] = tmp[j] * Maths.Sqrt2;
-                }
-            }
-
-            return tmp;
-        }
-        /// <summary>
-        /// Прямое вейвлет-преобразование по уровню.
-        /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        private Complex[] dwtLevel(Complex[] data)
-        {
-            int n = data.Length, k, j, lev, l;
-            Complex[] output = (Complex[])data.Clone();
-            Complex[] tmp;
-
-            for (k = 0; k < levels; k++)
-            {
-                l = (int)Math.Pow(2, k);
-                lev = n / l;
-
-                tmp = new Complex[lev];
-
-                for (j = 0; j < lev; j++)
-                {
-                    tmp[j] = output[j];
-                }
-
-                tmp = dwt(tmp);
-
-                for (j = 0; j < lev; j++)
-                {
-                    output[j] = tmp[j];
-                }
-            }
-
-            return output;
-        }
-        /// <summary>
-        /// Прямое вейвлет-преобразование по уровню.
-        /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        private Complex[] idwtLevel(Complex[] data)
-        {
-            int n = data.Length, k, j, lev, l;
-            Complex[] output = (Complex[])data.Clone();
-            Complex[] tmp;
-
-            for (k = levels - 1; k >= 0; k--)
-            {
-                l = (int)Math.Pow(2, k);
-                lev = n / l;
-
-                tmp = new Complex[lev];
-
-                for (j = 0; j < lev; j++)
-                {
-                    tmp[j] = output[j];
-                }
-
-                tmp = idwt(tmp);
-
-                for (j = 0; j < lev; j++)
-                {
-                    output[j] = tmp[j];
-                }
-            }
-
-            return output;
-        }
-        /// <summary>
-        /// Прямое вейвлет-преобразование.
-        /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
-        private Complex[,] dwt2(Complex[,] data)
-        {
-            Complex[,] output = (Complex[,])data.Clone();
-            int N = output.GetLength(0);
-            int M = output.GetLength(1);
-
-            Parallel.For(0, N, i =>
-            {
-                Complex[] row = new Complex[M];
-                int j;
-
-                for (j = 0; j < M; j++)
-                {
-                    row[j] = output[i, j];
-                }
-
-                row = dwt(row);
-
-                for (j = 0; j < M; j++)
-                {
-                    output[i, j] = row[j];
-                }
-            }
-            );
-
-            Parallel.For(0, M, j =>
-            {
-                Complex[] col = new Complex[N];
-                int i;
-
-                for (i = 0; i < N; i++)
-                {
-                    col[i] = output[i, j];
-                }
-
-                col = dwt(col);
-
-                for (i = 0; i < N; i++)
-                {
-                    output[i, j] = col[i];
-                }
-            }
-            );
-
-            return output;
-        }
-        /// <summary>
-        /// Обратное вейвлет-преобразование.
-        /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
-        private Complex[,] idwt2(Complex[,] data)
-        {
-            Complex[,] output = (Complex[,])data.Clone();
-            int N = data.GetLength(0);
-            int M = data.GetLength(1);
-
-            Parallel.For(0, M, j =>
-            {
-                Complex[] col = new Complex[N];
-                int i;
-                for (i = 0; i < N; i++)
-                {
-                    col[i] = output[i, j];
-                }
-                col = idwt(col);
-
-                for (i = 0; i < N; i++)
-                {
-                    output[i, j] = col[i];
-                }
-            }
-            );
-
-            Parallel.For(0, N, i =>
-            {
-                Complex[] row = new Complex[M];
-                int j;
-
-                for (j = 0; j < M; j++)
-                {
-                    row[j] = output[i, j];
-                }
-                row = idwt(row);
-
-                for (j = 0; j < M; j++)
-                {
-                    output[i, j] = row[j];
-                }
-            }
-            );
 
             return output;
         }
@@ -5716,6 +5459,523 @@ namespace UMapx.Wavelet
                 return (x < 0.5) ? 1.0 : -1.0;
             }
             return 0.0;
+        }
+        #endregion
+    }
+    #endregion
+
+    #region Processing filters
+    /// <summary>
+    /// Определяет вейвлет-фильтр.
+    /// </summary>
+    public class WaveletFilter : IFilter, IBlendFilter
+    {
+        #region Private data
+        WaveletTransform dwt;
+        double factor = -1.0;
+        double accuracy = 0.1;
+        #endregion
+
+        #region Filter components
+        /// <summary>
+        /// Инициализирует вейвлет-фильтр.
+        /// </summary>
+        /// <param name="dwt">Дискретное вейвлет-преобразование</param>
+        /// <param name="factor">Множитель [-1, 1]</param>
+        /// <param name="accuracy">Точность фильтра [0, 1]</param>
+        public WaveletFilter(WaveletTransform dwt, double factor = -1.0, double accuracy = 0.1)
+        {
+            this.dwt = dwt;
+            this.factor = factor;
+            this.Accuracy = accuracy;
+        }
+        /// <summary>
+        /// Получает или задает дискретное вейвлет-преобразование.
+        /// </summary>
+        public WaveletTransform DWT
+        {
+            get
+            {
+                return this.dwt;
+            }
+            set
+            {
+                this.dwt = value;
+            }
+        }
+        /// <summary>
+        /// Получает или задает значение точности фильтра [0, 1].
+        /// </summary>
+        public double Accuracy
+        {
+            get
+            {
+                return this.accuracy;
+            }
+            set
+            {
+                this.accuracy = Maths.Double(value);
+            }
+        }
+        /// <summary>
+        /// Получает или задает значение множителя [-1, 1].
+        /// </summary>
+        public double Factor
+        {
+            get
+            {
+                return this.factor;
+            }
+            set
+            {
+                this.factor = value;
+            }
+        }
+        #endregion
+
+        #region Public apply voids
+        /// <summary>
+        /// Реализует двумерный вейвлет-фильтр.
+        /// </summary>
+        /// <param name="data">Матрица</param>
+
+        public void Apply(double[,] data)
+        {
+            // params
+            int r0 = data.GetLength(0), c0 = data.GetLength(1);
+
+            // extend input
+            int delta = (int)(Math.Min(r0, c0) * accuracy);
+            int rLength = GetLength(r0 + delta * 2, dwt.Levels);
+            int cLength = GetLength(c0 + delta * 2, dwt.Levels);
+            double[,] extd = Matrice.Extend(data, rLength, cLength);
+            int r = extd.GetLength(0), c = extd.GetLength(1);
+
+            // wavelets
+            double[,] wave;
+            double alfa = 1 + factor;
+            int powR = r >> dwt.Levels;
+            int powC = c >> dwt.Levels;
+            int j, k;
+
+            // forward wavelet transform
+            wave = dwt.Forward(extd);
+
+            // do job
+            for (j = 0; j < r; j++)
+            {
+                for (k = 0; k < c; k++)
+                {
+                    if (j < powR && k < powC)
+                        // low-pass
+                        extd[j, k] = wave[j, k];
+                    else
+                        // high-pass filter
+                        extd[j, k] = wave[j, k] * alfa;
+                }
+            }
+
+            // backward wavelet transform
+            extd = dwt.Backward(extd);
+
+            // cutend result
+            extd = Matrice.Cutend(extd, r0, c0);
+
+            for (j = 0; j < r0; j++)
+                for (k = 0; k < c0; k++)
+                    data[j, k] = extd[j, k];
+
+            return;
+        }
+        /// <summary>
+        /// Реализует одномерный вейвлет-фильтр.
+        /// </summary>
+        /// <param name="data">Одномерный массив</param>
+        public void Apply(double[] data)
+        {
+            // params
+            int r0 = data.GetLength(0);
+
+            // extend input
+            int delta = (int)(r0 * accuracy);
+            int rLength = GetLength(r0 + delta * 2, dwt.Levels);
+            double[] extd = Matrice.Extend(data, rLength);
+            int r = extd.GetLength(0);
+
+            // wavelets
+            double[] wave;
+            double alfa = 1 + factor;
+            int powR = r >> dwt.Levels;
+            int j;
+
+            // forward wavelet transform
+            wave = dwt.Forward(extd);
+
+            // do job
+            for (j = 0; j < r; j++)
+            {
+                if (j < powR)
+                    // low-pass
+                    extd[j] = wave[j];
+                else
+                    // high-pass filter
+                    extd[j] = wave[j] * alfa;
+            }
+
+            // backward wavelet transform
+            extd = dwt.Backward(extd);
+
+            // cutend result
+            extd = Matrice.Cutend(extd, r0);
+
+            for (j = 0; j < r0; j++)
+                data[j] = extd[j];
+
+            return;
+        }
+        /// <summary>
+        /// Реализует двумерный вейвлет-фильтр.
+        /// </summary>
+        /// <param name="data">Матрица</param>
+
+        public void Apply(Complex[,] data)
+        {
+            // params
+            int r0 = data.GetLength(0), c0 = data.GetLength(1);
+
+            // extend input
+            int delta = (int)(Math.Min(r0, c0) * accuracy);
+            int rLength = GetLength(r0 + delta * 2, dwt.Levels);
+            int cLength = GetLength(c0 + delta * 2, dwt.Levels);
+            Complex[,] extd = Matrice.Extend(data, rLength, cLength);
+            int r = extd.GetLength(0), c = extd.GetLength(1);
+
+            // wavelets
+            Complex[,] wave;
+            double alfa = 1 + factor;
+            int powR = r >> dwt.Levels;
+            int powC = c >> dwt.Levels;
+            int j, k;
+
+            // forward wavelet transform
+            wave = dwt.Forward(extd);
+
+            // do job
+            for (j = 0; j < r; j++)
+            {
+                for (k = 0; k < c; k++)
+                {
+                    if (j < powR && k < powC)
+                        // low-pass
+                        extd[j, k] = wave[j, k];
+                    else
+                        // high-pass filter
+                        extd[j, k] = wave[j, k] * alfa;
+                }
+            }
+
+            // backward wavelet transform
+            extd = dwt.Backward(extd);
+
+            // cutend result
+            extd = Matrice.Cutend(extd, r0, c0);
+
+            for (j = 0; j < r0; j++)
+                for (k = 0; k < c0; k++)
+                    data[j, k] = extd[j, k];
+
+            return;
+        }
+        /// <summary>
+        /// Реализует одномерный вейвлет-фильтр.
+        /// </summary>
+        /// <param name="data">Одномерный массив</param>
+        public void Apply(Complex[] data)
+        {
+            // params
+            int r0 = data.GetLength(0);
+
+            // extend input
+            int delta = (int)(r0 * accuracy);
+            int rLength = GetLength(r0 + delta * 2, dwt.Levels);
+            Complex[] extd = Matrice.Extend(data, rLength);
+            int r = extd.GetLength(0);
+
+            // wavelets
+            Complex[] wave;
+            double alfa = 1 + factor;
+            int powR = r >> dwt.Levels;
+            int j;
+
+            // forward wavelet transform
+            wave = dwt.Forward(extd);
+
+            // do job
+            for (j = 0; j < r; j++)
+            {
+                if (j < powR)
+                    // low-pass
+                    extd[j] = wave[j];
+                else
+                    // high-pass filter
+                    extd[j] = wave[j] * alfa;
+            }
+
+            // backward wavelet transform
+            extd = dwt.Backward(extd);
+
+            // cutend result
+            extd = Matrice.Cutend(extd, r0);
+
+            for (j = 0; j < r0; j++)
+                data[j] = extd[j];
+
+            return;
+        }
+        #endregion
+
+        #region Blender apply voids
+        /// <summary>
+        /// Реализует двумерный вейвлет-фильтр.
+        /// </summary>
+        /// <param name="data">Набор матриц</param>
+        /// <returns>Матрица</returns>
+
+        public double[,] Apply(double[][,] data)
+        {
+            // params
+            int length = data.Length;
+            double[,] extd = data[0];
+            int r0 = extd.GetLength(0), c0 = extd.GetLength(1);
+
+            // extend input
+            int delta = (int)(Math.Min(r0, c0) * accuracy);
+            int r = GetLength(r0 + delta * 2, dwt.Levels);
+            int c = GetLength(c0 + delta * 2, dwt.Levels);
+            double[,] sum = new double[r, c];
+
+            // wavelets
+            double[,] wave;
+            double alfa = 1 + factor;
+            int powR = r >> dwt.Levels;
+            int powC = c >> dwt.Levels;
+            int j, k;
+
+            // do job
+            for (int i = 0; i < length; i++)
+            {
+                // forward wavelet transform
+                extd = Matrice.Extend(data[i], r, c);
+                wave = dwt.Forward(extd);
+
+                for (j = 0; j < r; j++)
+                {
+                    for (k = 0; k < c; k++)
+                    {
+                        if (j < powR && k < powC)
+                            // low-pass
+                            sum[j, k] += wave[j, k] / length;
+                        else
+                            // high-pass filter
+                            sum[j, k] += wave[j, k] * alfa / length;
+                    }
+                }
+            }
+
+            // backward wavelet transform
+            sum = dwt.Backward(sum);
+
+            // cutend result
+            return Matrice.Cutend(sum, r0, c0);
+        }
+        /// <summary>
+        /// Реализует двумерный вейвлет-фильтр.
+        /// </summary>
+        /// <param name="data">Набор матриц</param>
+        /// <returns>Матрица</returns>
+
+        public double[] Apply(double[][] data)
+        {
+            // params
+            int length = data.Length;
+            double[] extd = data[0];
+            int r0 = extd.GetLength(0);
+
+            // extend input
+            int delta = (int)(r0 * accuracy);
+            int r = GetLength(r0 + delta * 2, dwt.Levels);
+            double[] sum = new double[r];
+
+            // wavelets
+            double[] wave;
+            double alfa = 1 + factor;
+            int powR = r >> dwt.Levels;
+            int j;
+
+            // do job
+            for (int i = 0; i < length; i++)
+            {
+                // forward wavelet transform
+                extd = Matrice.Extend(data[i], r);
+                wave = dwt.Forward(extd);
+
+                for (j = 0; j < r; j++)
+                {
+                    if (j < powR)
+                        // low-pass
+                        sum[j] += wave[j] / length;
+                    else
+                        // high-pass filter
+                        sum[j] += wave[j] * alfa / length;
+                }
+            }
+
+            // backward wavelet transform
+            sum = dwt.Backward(sum);
+
+            // cutend result
+            return Matrice.Cutend(sum, r0);
+        }
+        /// <summary>
+        /// Реализует двумерный вейвлет-фильтр.
+        /// </summary>
+        /// <param name="data">Набор матриц</param>
+        /// <returns>Матрица</returns>
+
+        public Complex[,] Apply(Complex[][,] data)
+        {
+            // params
+            int length = data.Length;
+            Complex[,] extd = data[0];
+            int r0 = extd.GetLength(0), c0 = extd.GetLength(1);
+
+            // extend input
+            int delta = (int)(Math.Min(r0, c0) * accuracy);
+            int r = GetLength(r0 + delta * 2, dwt.Levels);
+            int c = GetLength(c0 + delta * 2, dwt.Levels);
+            Complex[,] sum = new Complex[r, c];
+
+            // wavelets
+            Complex[,] wave;
+            double alfa = 1 + factor;
+            int powR = r >> dwt.Levels;
+            int powC = c >> dwt.Levels;
+            int j, k;
+
+            // do job
+            for (int i = 0; i < length; i++)
+            {
+                // forward wavelet transform
+                extd = Matrice.Extend(data[i], r, c);
+                wave = dwt.Forward(extd);
+
+                for (j = 0; j < r; j++)
+                {
+                    for (k = 0; k < c; k++)
+                    {
+                        if (j < powR && k < powC)
+                            // low-pass
+                            sum[j, k] += wave[j, k] / length;
+                        else
+                            // high-pass filter
+                            sum[j, k] += wave[j, k] * alfa / length;
+                    }
+                }
+            }
+
+            // backward wavelet transform
+            sum = dwt.Backward(sum);
+
+            // cutend result
+            return Matrice.Cutend(sum, r0, c0);
+        }
+        /// <summary>
+        /// Реализует двумерный вейвлет-фильтр.
+        /// </summary>
+        /// <param name="data">Набор матриц</param>
+        /// <returns>Матрица</returns>
+
+        public Complex[] Apply(Complex[][] data)
+        {
+            // params
+            int length = data.Length;
+            Complex[] extd = data[0];
+            int r0 = extd.GetLength(0);
+
+            // extend input
+            int delta = (int)(r0 * accuracy);
+            int r = GetLength(r0 + delta * 2, dwt.Levels);
+            Complex[] sum = new Complex[r];
+
+            // wavelets
+            Complex[] wave;
+            double alfa = 1 + factor;
+            int powR = r >> dwt.Levels;
+            int j;
+
+            // do job
+            for (int i = 0; i < length; i++)
+            {
+                // forward wavelet transform
+                extd = Matrice.Extend(data[i], r);
+                wave = dwt.Forward(extd);
+
+                for (j = 0; j < r; j++)
+                {
+                    if (j < powR)
+                        // low-pass
+                        sum[j] += wave[j] / length;
+                    else
+                        // high-pass filter
+                        sum[j] += wave[j] * alfa / length;
+                }
+            }
+
+            // backward wavelet transform
+            sum = dwt.Backward(sum);
+
+            // cutend result
+            return Matrice.Cutend(sum, r0);
+        }
+        #endregion
+
+        #region Static voids
+        /// <summary>
+        /// Length of array for 2^K transform.
+        /// </summary>
+        /// <param name="n">Length</param>
+        /// <param name="levels">Levels</param>
+        /// <returns>New length</returns>
+        private static int GetLength(int n, int levels)
+        {
+            // params
+            int log2 = GetMaxLevels(n, levels);
+            int s = n, m, i;
+
+            // do job
+            for (i = 0; i < log2; i++)
+            {
+                m = Maths.Mod(s, 2);
+
+                if (s >= 2)
+                {
+                    if (m != 0)
+                        s = s + 1;
+                    s = s / 2;
+                }
+            }
+
+            return s * (int)Math.Pow(2, i);
+        }
+        /// <summary>
+        /// Returns max levels of 2^K transform.
+        /// </summary>
+        /// <param name="n">Length</param>
+        /// <param name="levels">Levels</param>
+        /// <returns>New length</returns>
+        private static int GetMaxLevels(int n, int levels)
+        {
+            return (int)Math.Min(Math.Log(n, 2), levels);
         }
         #endregion
     }

@@ -9834,7 +9834,7 @@ namespace UMapx.Transform
         {
             // params
             double a = Math.Exp(-Math.Sqrt(2) / sigma);
-            double[,] V = powbyn(a, D);
+            double[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -9861,7 +9861,7 @@ namespace UMapx.Transform
         {
             // params
             double a = Math.Exp(-Math.Sqrt(2) / sigma);
-            double[,] V = powbyn(a, D);
+            double[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -9888,7 +9888,7 @@ namespace UMapx.Transform
         {
             // params
             double a = Math.Exp(-Math.Sqrt(2) / sigma);
-            Complex[,] V = powbyn(a, D);
+            Complex[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -9915,7 +9915,7 @@ namespace UMapx.Transform
         {
             // params
             double a = Math.Exp(-Math.Sqrt(2) / sigma);
-            Complex[,] V = powbyn(a, D);
+            Complex[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -9943,7 +9943,7 @@ namespace UMapx.Transform
         {
             // params
             double a = Math.Exp(-Math.Sqrt(2) / sigma);
-            double[] V = powbyn(a, D);
+            double[] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int i;
 
@@ -9967,7 +9967,7 @@ namespace UMapx.Transform
         {
             // params
             double a = Math.Exp(-Math.Sqrt(2) / sigma);
-            Complex[] V = powbyn(a, D);
+            Complex[] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int i;
 
@@ -9980,91 +9980,6 @@ namespace UMapx.Transform
                 F[i] = F[i] + V[i + 1] * (F[i + 1] - F[i]);
 
             return;
-        }
-
-        /// <summary>
-        /// Equation: B = a^A.
-        /// </summary>
-        /// <param name="a">number</param>
-        /// <param name="A">matrix</param>
-        /// <returns>matrix</returns>
-        internal static double[,] powbyn(double a, double[,] A)
-        {
-            int n = A.GetLength(0);
-            int m = A.GetLength(1);
-            double[,] B = new double[n, m];
-            int i, j;
-
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < m; j++)
-                {
-                    B[i, j] = Math.Pow(a, A[i, j]);
-                }
-            }
-
-            return B;
-        }
-        /// <summary>
-        /// Equation: B = a^A.
-        /// </summary>
-        /// <param name="a">number</param>
-        /// <param name="A">matrix</param>
-        /// <returns>matrix</returns>
-        internal static Complex[,] powbyn(double a, Complex[,] A)
-        {
-            int n = A.GetLength(0);
-            int m = A.GetLength(1);
-            Complex[,] B = new Complex[n, m];
-            int i, j;
-
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < m; j++)
-                {
-                    B[i, j] = Maths.Pow(a, A[i, j]);
-                }
-            }
-
-            return B;
-        }
-        /// <summary>
-        /// Equation: B = a^A.
-        /// </summary>
-        /// <param name="a">number</param>
-        /// <param name="A">vector</param>
-        /// <returns>vector</returns>
-        internal static double[] powbyn(double a, double[] A)
-        {
-            int n = A.GetLength(0);
-            double[] B = new double[n];
-            int i;
-
-            for (i = 0; i < n; i++)
-            {
-                B[i] = Math.Pow(a, A[i]);
-            }
-
-            return B;
-        }
-        /// <summary>
-        /// Equation: B = a^A.
-        /// </summary>
-        /// <param name="a">number</param>
-        /// <param name="A">vector</param>
-        /// <returns>vector</returns>
-        internal static Complex[] powbyn(double a, Complex[] A)
-        {
-            int n = A.GetLength(0);
-            Complex[] B = new Complex[n];
-            int i;
-
-            for (i = 0; i < n; i++)
-            {
-                B[i] = Maths.Pow(a, A[i]);
-            }
-
-            return B;
         }
         #endregion
     }
