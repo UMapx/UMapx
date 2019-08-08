@@ -1,6 +1,7 @@
 # UMapx.NET
 
-UMapx.NET Framework is a dynamic link library for digital signal processing and analysis developed in the Microsoft Visual C#.
+UMapx.NET Framework is a dynamic link library for digital signal processing and analysis developed in the Microsoft 
+Visual C#.
 
 ### The library contains ready-made software tools:
 * color spaces and their transformations,
