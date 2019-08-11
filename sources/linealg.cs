@@ -34,6 +34,56 @@ namespace UMapx.Core
 
         #region Matrix booleans
         /// <summary>
+        /// Проверяет равенство двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsEquals(this double[,] m, double[,] n)
+        {
+            int r = m.GetLength(0);
+            int c = m.GetLength(1);
+
+            if (r != n.GetLength(0) || c != n.GetLength(1))
+                return false;
+
+            int i, j;
+
+            for (i = 0; i < r; i++)
+            {
+                for (j = 0; j < c; j++)
+                    if (m[i, j] != n[i, j])
+                        return false;
+            }
+
+            return true;
+        }
+        /// <summary>
+        /// Проверяет равенство двух матриц.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="n">Матрица</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsEquals(this Complex[,] m, Complex[,] n)
+        {
+            int r = m.GetLength(0);
+            int c = m.GetLength(1);
+
+            if (r != n.GetLength(0) || c != n.GetLength(1))
+                return false;
+
+            int i, j;
+
+            for (i = 0; i < r; i++)
+            {
+                for (j = 0; j < c; j++)
+                    if (m[i, j] != n[i, j])
+                        return false;
+            }
+
+            return true;
+        }
+        /// <summary>
         /// Проверяет является ли матрица вектором.
         /// </summary>
         /// <param name="m">Матрица</param>
@@ -89,7 +139,7 @@ namespace UMapx.Core
             if (Matrice.IsSquare(m))
             {
                 // ?A = A'
-                if (m == m.Transponate())
+                if (Matrice.IsEquals(m, m.Transponate()))
                 {
                     return true;
                 }
@@ -106,7 +156,7 @@ namespace UMapx.Core
             if (Matrice.IsSquare(m))
             {
                 // ?A' = -A:
-                if (m.Transponate() == m.Negate())
+                if (Matrice.IsEquals(m.Transponate(), m.Negate()))
                 {
                     return true;
                 }
@@ -175,7 +225,7 @@ namespace UMapx.Core
             if (Matrice.IsSquare(m))
             {
                 // ?A = A'
-                if (m == Matrice.Hermitian(m))
+                if (Matrice.IsEquals(m, Matrice.Hermitian(m)))
                 {
                     return true;
                 }
@@ -192,7 +242,7 @@ namespace UMapx.Core
             if (Matrice.IsSquare(m))
             {
                 // ?A' = -A
-                if (m.Hermitian() == m.Negate())
+                if (Matrice.IsEquals(m.Hermitian(), m.Negate()))
                 {
                     return true;
                 }
@@ -3576,7 +3626,47 @@ namespace UMapx.Core
 
         #region Vector booleans
         /// <summary>
-        /// Проверяет являются ли вектора коллинеарными.
+        /// Проверяет являются ли векторы одинаковыми.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsEquals(this double[] a, double[] b)
+        {
+            int n = a.Length;
+
+            if (n != b.Length)
+                return false;
+
+            for (int i = 0; i < n; ++i)
+            {
+                if (a[i] != b[i])
+                    return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Проверяет являются ли векторы одинаковыми.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Логическое значение</returns>
+        public static bool IsEquals(this Complex[] a, double[] b)
+        {
+            int n = a.Length;
+
+            if (n != b.Length)
+                return false;
+
+            for (int i = 0; i < n; ++i)
+            {
+                if (a[i] != b[i])
+                    return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Проверяет являются ли векторы коллинеарными.
         /// </summary>
         /// <param name="v">Одномерный массив</param>
         /// <returns>Логическое значение</returns>
@@ -3594,7 +3684,7 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли вектора коллинеарными.
+        /// Проверяет являются ли векторы коллинеарными.
         /// </summary>
         /// <param name="a">Одномерный массив</param>
         /// <param name="b">Одномерный массив</param>
@@ -3619,7 +3709,7 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли вектора коллинеарными.
+        /// Проверяет являются ли векторы коллинеарными.
         /// </summary>
         /// <param name="a">Одномерный массив</param>
         /// <param name="b">Одномерный массив</param>
@@ -3644,7 +3734,7 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли вектора коллинеарными.
+        /// Проверяет являются ли векторы коллинеарными.
         /// </summary>
         /// <param name="a">Одномерный массив</param>
         /// <param name="b">Одномерный массив</param>
@@ -3669,7 +3759,7 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли вектора коллинеарными.
+        /// Проверяет являются ли векторы коллинеарными.
         /// </summary>
         /// <param name="a">Одномерный массив</param>
         /// <param name="b">Одномерный массив</param>
@@ -5571,7 +5661,7 @@ namespace UMapx.Core
 
         #region Vector dot
         /// <summary>
-        /// Реализует скалярное произведение векторов.
+        /// Реализует скалярное произведение векторов вида: a * b'.
         /// </summary>
         /// <param name="a">Одномерный массив</param>
         /// <param name="b">Одномерный массив</param>
@@ -5588,7 +5678,7 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Реализует скалярное произведение векторов.
+        /// Реализует скалярное произведение векторов вида: a * b'.
         /// </summary>
         /// <param name="a">Одномерный массив</param>
         /// <param name="b">Одномерный массив</param>
@@ -5605,7 +5695,7 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Реализует скалярное произведение векторов.
+        /// Реализует скалярное произведение векторов вида: a * b'.
         /// </summary>
         /// <param name="a">Одномерный массив</param>
         /// <param name="b">Одномерный массив</param>
@@ -5622,7 +5712,7 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Реализует скалярное произведение векторов.
+        /// Реализует скалярное произведение векторов вида: a * b'.
         /// </summary>
         /// <param name="a">Одномерный массив</param>
         /// <param name="b">Одномерный массив</param>
@@ -5639,7 +5729,7 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Реализует скалярное умножение вектора на матрицу.
+        /// Реализует скалярное умножение вектора на матрицу вида: 
         /// </summary>
         /// <param name="v">Одномерный массив</param>
         /// <param name="m">Двумерная матрица</param>
@@ -6910,6 +7000,58 @@ namespace UMapx.Core
 
             return v;
         }
+        /// <summary>
+        /// Обрезает матрицу до заданных размеров.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="y">Начальная позиция по высоте</param>
+        /// <param name="x">Начальная позиция по ширине</param>
+        /// <param name="height">Высота</param>
+        /// <param name="width">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Cut(this double[,] m, int y, int x, int height, int width)
+        {
+            // params
+            double[,] B = new double[height, width];
+            int i, j;
+
+            // do job
+            for (i = 0; i < height; i++)
+            {
+                for (j = 0; j < width; j++)
+                {
+                    B[i, j] = m[i + y, j + x];
+                }
+            }
+
+            return B;
+        }
+        /// <summary>
+        /// Обрезает матрицу до заданных размеров.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="y">Начальная позиция по высоте</param>
+        /// <param name="x">Начальная позиция по ширине</param>
+        /// <param name="height">Высота</param>
+        /// <param name="width">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Cut(this Complex[,] m, int y, int x, int height, int width)
+        {
+            // params
+            Complex[,] B = new Complex[height, width];
+            int i, j;
+
+            // do job
+            for (i = 0; i < height; i++)
+            {
+                for (j = 0; j < width; j++)
+                {
+                    B[i, j] = m[i + y, j + x];
+                }
+            }
+
+            return B;
+        }
         #endregion
 
         #region Reshape voids
@@ -7500,67 +7642,124 @@ namespace UMapx.Core
         /// <param name="a">Матрица</param>
         /// <param name="n">Порядок</param>
         /// <param name="direction">Направление обработки</param>
+        /// <param name="reverse">Обратное направление обработки или нет</param>
         /// <returns>Матрица</returns>
-        public static double[,] Diff(double[,] a, int n, Direction direction)
+        public static double[,] Diff(double[,] a, int n, Direction direction, bool reverse = false)
         {
             // start
-            double[,] z;
-            double[,] y = a;
-            int i, j, k, length, m;
+            int i, r, c;
 
             // direction of processing
-            // exception for both type
             if (direction == Direction.Horizontal)
             {
-                m = a.GetLength(0);
-
                 // do job
-                for (j = 0; j < n; j++)
+                for (i = 0; i < n; i++)
                 {
-                    z = y;
-                    length = z.GetLength(1) - 1;
+                    c = a.GetLength(1);
 
-                    if (length == 0)
-                        return new double[m, 0];
+                    if (c == 0)
+                        break;
 
-                    y = new double[m, length];
-
-                    for (k = 0; k < m; k++)
-                    {
-                        for (i = length; i > 0; i--)
-                        {
-                            y[k, i - 1] = z[k, i] - z[k, i - 1];
-                        }
-                    }
+                    a = DiffHorizontal(a, reverse);
                 }
             }
             else if (direction == Direction.Vertical)
             {
-                m = a.GetLength(1);
-
                 // do job
-                for (j = 0; j < n; j++)
+                for (i = 0; i < n; i++)
                 {
-                    z = y;
-                    length = z.GetLength(0) - 1;
+                    r = a.GetLength(0);
 
-                    if (length == 0)
-                        return new double[0, m];
+                    if (r == 0)
+                        break;
 
-                    y = new double[length, m];
-
-                    for (k = 0; k < m; k++)
-                    {
-                        for (i = length; i > 0; i--)
-                        {
-                            y[i - 1, k] = z[i, k] - z[i - 1, k];
-                        }
-                    }
+                    a = DiffVertical(a, reverse);
                 }
             }
             else
             {
-                throw new Exception("Данное направление обработки не поддерживается функцией");
+                // do job
+                for (i = 0; i < n; i++)
+                {
+                    r = a.GetLength(0);
+                    c = a.GetLength(1);
+
+                    if (c == 0 || r == 0)
+                        break;
+
+                    a = DiffVertical(a, reverse);
+                    a = DiffHorizontal(a, reverse);
+                }
+            }
+
+            return a;
+        }
+        /// <summary>
+        /// Возвращает разность элементов массива.
+        /// </summary>
+        /// <param name="a">Матрица</param>
+        /// <param name="reverse">Обратное направление обработки или нет</param>
+        /// <returns>Матрица</returns>
+        private static double[,] DiffVertical(double[,] a, bool reverse = false)
+        {
+            // vertical direction 
+            // of processing
+            int r = a.GetLength(0) - 1;
+            int m = a.GetLength(1);
+            if (r == 0)
+                return new double[0, m];
+
+            // new array
+            double[,] y = new double[r, m];
+            int i, k;
+
+            // do job
+            if (reverse)
+            {
+                for (k = 0; k < m; k++)
+                    for (i = r; i > 0; i--)
+                        y[i - 1, k] = a[i - 1, k] - a[i, k];
+            }
+            else
+            {
+                for (k = 0; k < m; k++)
+                    for (i = r; i > 0; i--)
+                        y[i - 1, k] = a[i, k] - a[i - 1, k];
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Возвращает разность элементов массива.
+        /// </summary>
+        /// <param name="a">Матрица</param>
+        /// <param name="reverse">Обратное направление обработки или нет</param>
+        /// <returns>Матрица</returns>
+        private static double[,] DiffHorizontal(double[,] a, bool reverse = false)
+        {
+            // horizontal direction 
+            // of processing
+            int c = a.GetLength(1) - 1;
+            int m = a.GetLength(0);
+            if (c == 0)
+                return new double[m, 0];
+
+            // new array
+            double[,] y = new double[m, c];
+            int i, k;
+
+            // do job
+            if (reverse)
+            {
+                for (k = 0; k < m; k++)
+                    for (i = c; i > 0; i--)
+                        y[k, i - 1] = a[k, i - 1] - a[k, i];
+            }
+            else
+            {
+                for (k = 0; k < m; k++)
+                    for (i = c; i > 0; i--)
+                        y[k, i - 1] = a[k, i] - a[k, i - 1];
             }
 
             return y;
@@ -7571,67 +7770,124 @@ namespace UMapx.Core
         /// <param name="a">Матрица</param>
         /// <param name="n">Порядок</param>
         /// <param name="direction">Направление обработки</param>
+        /// <param name="reverse">Обратное направление обработки или нет</param>
         /// <returns>Матрица</returns>
-        public static Complex[,] Diff(Complex[,] a, int n, Direction direction)
+        public static Complex[,] Diff(Complex[,] a, int n, Direction direction, bool reverse = false)
         {
             // start
-            Complex[,] z;
-            Complex[,] y = a;
-            int i, j, k, length, m;
+            int i, r, c;
 
             // direction of processing
-            // exception for both type
             if (direction == Direction.Horizontal)
             {
-                m = a.GetLength(0);
-
                 // do job
-                for (j = 0; j < n; j++)
+                for (i = 0; i < n; i++)
                 {
-                    z = y;
-                    length = z.GetLength(1) - 1;
+                    c = a.GetLength(1);
 
-                    if (length == 0)
-                        return new Complex[m, 0];
+                    if (c == 0)
+                        break;
 
-                    y = new Complex[m, length];
-
-                    for (k = 0; k < m; k++)
-                    {
-                        for (i = length; i > 0; i--)
-                        {
-                            y[k, i - 1] = z[k, i] - z[k, i - 1];
-                        }
-                    }
+                    a = DiffHorizontal(a, reverse);
                 }
             }
             else if (direction == Direction.Vertical)
             {
-                m = a.GetLength(1);
-
                 // do job
-                for (j = 0; j < n; j++)
+                for (i = 0; i < n; i++)
                 {
-                    z = y;
-                    length = z.GetLength(0) - 1;
+                    r = a.GetLength(0);
 
-                    if (length == 0)
-                        return new Complex[0, m];
+                    if (r == 0)
+                        break;
 
-                    y = new Complex[length, m];
-
-                    for (k = 0; k < m; k++)
-                    {
-                        for (i = length; i > 0; i--)
-                        {
-                            y[i - 1, k] = z[i, k] - z[i - 1, k];
-                        }
-                    }
+                    a = DiffVertical(a, reverse);
                 }
             }
             else
             {
-                throw new Exception("Данное направление обработки не поддерживается функцией");
+                // do job
+                for (i = 0; i < n; i++)
+                {
+                    r = a.GetLength(0);
+                    c = a.GetLength(1);
+
+                    if (c == 0 || r == 0)
+                        break;
+
+                    a = DiffVertical(a, reverse);
+                    a = DiffHorizontal(a, reverse);
+                }
+            }
+
+            return a;
+        }
+        /// <summary>
+        /// Возвращает разность элементов массива.
+        /// </summary>
+        /// <param name="a">Матрица</param>
+        /// <param name="reverse">Обратное направление обработки или нет</param>
+        /// <returns>Матрица</returns>
+        private static Complex[,] DiffVertical(Complex[,] a, bool reverse = false)
+        {
+            // vertical direction 
+            // of processing
+            int r = a.GetLength(0) - 1;
+            int m = a.GetLength(1);
+            if (r == 0)
+                return new Complex[0, m];
+
+            // new array
+            Complex[,] y = new Complex[r, m];
+            int i, k;
+
+            // do job
+            if (reverse)
+            {
+                for (k = 0; k < m; k++)
+                    for (i = r; i > 0; i--)
+                        y[i - 1, k] = a[i - 1, k] - a[i, k];
+            }
+            else
+            {
+                for (k = 0; k < m; k++)
+                    for (i = r; i > 0; i--)
+                        y[i - 1, k] = a[i, k] - a[i - 1, k];
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Возвращает разность элементов массива.
+        /// </summary>
+        /// <param name="a">Матрица</param>
+        /// <param name="reverse">Обратное направление обработки или нет</param>
+        /// <returns>Матрица</returns>
+        private static Complex[,] DiffHorizontal(Complex[,] a, bool reverse = false)
+        {
+            // horizontal direction 
+            // of processing
+            int c = a.GetLength(1) - 1;
+            int m = a.GetLength(0);
+            if (c == 0)
+                return new Complex[m, 0];
+
+            // new array
+            Complex[,] y = new Complex[m, c];
+            int i, k;
+
+            // do job
+            if (reverse)
+            {
+                for (k = 0; k < m; k++)
+                    for (i = c; i > 0; i--)
+                        y[k, i - 1] = a[k, i - 1] - a[k, i];
+            }
+            else
+            {
+                for (k = 0; k < m; k++)
+                    for (i = c; i > 0; i--)
+                        y[k, i - 1] = a[k, i] - a[k, i - 1];
             }
 
             return y;
@@ -7641,8 +7897,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Одномерный массив</param>
         /// <param name="n">Порядок</param>
+        /// <param name="reverse">Обратное направление обработки или нет</param>
         /// <returns>Одномерный массив</returns>
-        public static double[] Diff(double[] v, int n)
+        public static double[] Diff(this double[] v, int n, bool reverse = false)
         {
             // start
             double[] z;
@@ -7660,9 +7917,15 @@ namespace UMapx.Core
 
                 y = new double[length];
 
-                for (i = length; i > 0; i--)
+                if (reverse)
                 {
-                    y[i - 1] = z[i] - z[i - 1];
+                    for (i = length; i > 0; i--)
+                        y[i - 1] = z[i - 1] - z[i];
+                }
+                else
+                {
+                    for (i = length; i > 0; i--)
+                        y[i - 1] = z[i] - z[i - 1];
                 }
             }
 
@@ -7673,8 +7936,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Одномерный массив</param>
         /// <param name="n">Порядок</param>
+        /// <param name="reverse">Обратное направление обработки или нет</param>
         /// <returns>Одномерный массив</returns>
-        public static Complex[] Diff(Complex[] v, int n)
+        public static Complex[] Diff(this Complex[] v, int n, bool reverse = false)
         {
             // start
             Complex[] z;
@@ -7692,13 +7956,219 @@ namespace UMapx.Core
 
                 y = new Complex[length];
 
-                for (i = length; i > 0; i--)
+                if (reverse)
                 {
-                    y[i - 1] = z[i] - z[i - 1];
+                    for (i = length; i > 0; i--)
+                        y[i - 1] = z[i - 1] - z[i];
+                }
+                else
+                {
+                    for (i = length; i > 0; i--)
+                        y[i - 1] = z[i] - z[i - 1];
                 }
             }
 
             return y;
+        }
+        #endregion
+
+        #region Extend voids
+        /// <summary>
+        /// Расширяет вектор до заданной длины.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="length">Длина</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Extend(this double[] v, int length)
+        {
+            int r0 = v.GetLength(0);
+            int rr = (length - r0) / 2;
+            int dr = length - rr;
+            double[] b = new double[length];
+            int i;
+
+            for (i = 0; i < rr; i++)
+                b[i] = v[rr - i];
+
+            for (i = 0; i < r0; i++)
+                b[i + rr] = v[i];
+
+            for (i = 0; i <= rr; i++)
+                b[i + dr - 1] = v[r0 - i - 1];
+
+            return b;
+        }
+        /// <summary>
+        /// Расширяет матрицу до заданных размеров.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="height">Высота</param>
+        /// <param name="width">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Extend(this double[,] m, int height, int width)
+        {
+            int r = m.GetLength(0);
+            int c = m.GetLength(1);
+
+            if (height > r)
+                m = Matrice.ExtendVertical(m, height);
+            if (width > c)
+                m = Matrice.ExtendHorizontal(m, width);
+
+            return m;
+        }
+        /// <summary>
+        /// extend vertical.
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static double[,] ExtendVertical(double[,] m, int length)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int rr = (length - r0) / 2;
+            double[,] B = new double[length, c0];
+            int i, j;
+
+            // do job
+            for (i = 0; i < length; i++)
+                for (j = 0; j < c0; j++)
+                    B[i, j] = m[Maths.Mod(rr - i - 1, r0), Maths.Mod(j, c0)];
+
+
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < c0; j++)
+                    B[rr + i, j] = m[i, j];
+
+            return B;
+        }
+        /// <summary>
+        /// extend horizontal.
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static double[,] ExtendHorizontal(double[,] m, int length)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int cc = (length - c0) / 2;
+            double[,] B = new double[r0, length];
+            int i, j;
+
+            // do job
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < length; j++)
+                    B[i, j] = m[Maths.Mod(i, r0), Maths.Mod(cc - j - 1, c0)];
+
+
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < c0; j++)
+                    B[i, cc + j] = m[i, j];
+
+            return B;
+        }
+
+        /// <summary>
+        /// Расширяет вектор до заданной длины.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="length">Длина</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Extend(this Complex[] v, int length)
+        {
+            int r0 = v.GetLength(0);
+            int rr = (length - r0) / 2;
+            int dr = length - rr;
+            Complex[] b = new Complex[length];
+            int i;
+
+            for (i = 0; i < rr; i++)
+                b[i] = v[rr - i];
+
+            for (i = 0; i < r0; i++)
+                b[i + rr] = v[i];
+
+            for (i = 0; i <= rr; i++)
+                b[i + dr - 1] = v[r0 - i - 1];
+
+            return b;
+        }
+        /// <summary>
+        /// Расширяет матрицу до заданных размеров.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="height">Высота</param>
+        /// <param name="width">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] Extend(this Complex[,] m, int height, int width)
+        {
+            int r = m.GetLength(0);
+            int c = m.GetLength(1);
+
+            if (height > r)
+                m = Matrice.ExtendVertical(m, height);
+            if (width > c)
+                m = Matrice.ExtendHorizontal(m, width);
+
+            return m;
+        }
+        /// <summary>
+        /// extend vertical.
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static Complex[,] ExtendVertical(Complex[,] m, int length)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int rr = (length - r0) / 2;
+            Complex[,] B = new Complex[length, c0];
+            int i, j;
+
+            // do job
+            for (i = 0; i < length; i++)
+                for (j = 0; j < c0; j++)
+                    B[i, j] = m[Maths.Mod(rr - i - 1, r0), Maths.Mod(j, c0)];
+
+
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < c0; j++)
+                    B[rr + i, j] = m[i, j];
+
+            return B;
+        }
+        /// <summary>
+        /// extend horizontal.
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static Complex[,] ExtendHorizontal(Complex[,] m, int length)
+        {
+            // params
+            int r0 = m.GetLength(0);
+            int c0 = m.GetLength(1);
+            int cc = (length - c0) / 2;
+            Complex[,] B = new Complex[r0, length];
+            int i, j;
+
+            // do job
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < length; j++)
+                    B[i, j] = m[Maths.Mod(i, r0), Maths.Mod(cc - j - 1, c0)];
+
+
+            for (i = 0; i < r0; i++)
+                for (j = 0; j < c0; j++)
+                    B[i, cc + j] = m[i, j];
+
+            return B;
         }
         #endregion
         #endregion
@@ -9032,306 +9502,6 @@ namespace UMapx.Core
                 result = zero;
                 return false;
             }
-        }
-        #endregion
-
-        #region Extend/cutend voids
-        /// <summary>
-        /// Расширяет вектор до заданной длины.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="length">Длина</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Extend(double[] v, int length)
-        {
-            int r0 = v.GetLength(0);
-            int rr = (length - r0) / 2;
-            int dr = length - rr;
-            double[] b = new double[length];
-            int i;
-
-            for (i = 0; i < rr; i++)
-                b[i] = v[rr - i];
-
-            for (i = 0; i < r0; i++)
-                b[i + rr] = v[i];
-
-            for (i = 0; i <= rr; i++)
-                b[i + dr - 1] = v[r0 - i - 1];
-
-            return b;
-        }
-        /// <summary>
-        /// Обрезает вектор до заданной длины.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="length">Длина</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Cutend(double[] v, int length)
-        {
-            // params
-            int r0 = v.GetLength(0);
-            int rr = (r0 - length) / 2;
-            double[] b = new double[length];
-            int i;
-
-            // do job
-            for (i = 0; i < length; i++)
-            {
-                b[i] = v[i + rr];
-            }
-
-            return b;
-        }
-        /// <summary>
-        /// Расширяет матрицу до заданных размеров.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="height">Высота</param>
-        /// <param name="width">Ширина</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Extend(double[,] m, int height, int width)
-        {
-            int r = m.GetLength(0);
-            int c = m.GetLength(1);
-
-            if (height >= r)
-                m = Matrice.ExtendVertical(m, height);
-            if (width >= c)
-                m = Matrice.ExtendHorizontal(m, width);
-
-            return m;
-        }
-        /// <summary>
-        /// extend vertical.
-        /// </summary>
-        /// <param name="m"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        private static double[,] ExtendVertical(double[,] m, int length)
-        {
-            // params
-            int r0 = m.GetLength(0);
-            int c0 = m.GetLength(1);
-            int rr = (length - r0) / 2;
-            double[,] B = new double[length, c0];
-            int i, j;
-
-            // do job
-            for (i = 0; i < length; i++)
-                for (j = 0; j < c0; j++)
-                    B[i, j] = m[Maths.Mod(rr - i - 1, r0), Maths.Mod(j, c0)];
-
-
-            for (i = 0; i < r0; i++)
-                for (j = 0; j < c0; j++)
-                    B[rr + i, j] = m[i, j];
-
-            return B;
-        }
-        /// <summary>
-        /// extend horizontal.
-        /// </summary>
-        /// <param name="m"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        private static double[,] ExtendHorizontal(double[,] m, int length)
-        {
-            // params
-            int r0 = m.GetLength(0);
-            int c0 = m.GetLength(1);
-            int cc = (length - c0) / 2;
-            double[,] B = new double[r0, length];
-            int i, j;
-
-            // do job
-            for (i = 0; i < r0; i++)
-                for (j = 0; j < length; j++)
-                    B[i, j] = m[Maths.Mod(i, r0), Maths.Mod(cc - j - 1, c0)];
-
-
-            for (i = 0; i < r0; i++)
-                for (j = 0; j < c0; j++)
-                    B[i, cc + j] = m[i, j];
-
-            return B;
-        }
-        /// <summary>
-        /// Обрезает матрицу до заданных размеров.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="height">Высота</param>
-        /// <param name="width">Ширина</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Cutend(double[,] m, int height, int width)
-        {
-            // params
-            int r0 = m.GetLength(0);
-            int c0 = m.GetLength(1);
-            int rr = (r0 - height) / 2;
-            int cc = (c0 - width) / 2;
-            double[,] B = new double[height, width];
-            int i, j;
-
-            // do job
-            for (i = 0; i < height; i++)
-            {
-                for (j = 0; j < width; j++)
-                {
-                    B[i, j] = m[i + rr, j + cc];
-                }
-            }
-
-            return B;
-        }
-
-        /// <summary>
-        /// Расширяет вектор до заданной длины.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="length">Длина</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Extend(Complex[] v, int length)
-        {
-            int r0 = v.GetLength(0);
-            int rr = (length - r0) / 2;
-            int dr = length - rr;
-            Complex[] b = new Complex[length];
-            int i;
-
-            for (i = 0; i < rr; i++)
-                b[i] = v[rr - i];
-
-            for (i = 0; i < r0; i++)
-                b[i + rr] = v[i];
-
-            for (i = 0; i <= rr; i++)
-                b[i + dr - 1] = v[r0 - i - 1];
-
-            return b;
-        }
-        /// <summary>
-        /// Обрезает вектор до заданной длины.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="length">Длина</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Cutend(Complex[] v, int length)
-        {
-            // params
-            int r0 = v.GetLength(0);
-            int rr = (r0 - length) / 2;
-            Complex[] b = new Complex[length];
-            int i;
-
-            // do job
-            for (i = 0; i < length; i++)
-            {
-                b[i] = v[i + rr];
-            }
-
-            return b;
-        }
-        /// <summary>
-        /// Расширяет матрицу до заданных размеров.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="height">Высота</param>
-        /// <param name="width">Ширина</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Extend(Complex[,] m, int height, int width)
-        {
-            int r = m.GetLength(0);
-            int c = m.GetLength(1);
-
-            if (height >= r)
-                m = Matrice.ExtendVertical(m, height);
-            if (width >= c)
-                m = Matrice.ExtendHorizontal(m, width);
-
-            return m;
-        }
-        /// <summary>
-        /// extend vertical.
-        /// </summary>
-        /// <param name="m"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        private static Complex[,] ExtendVertical(Complex[,] m, int length)
-        {
-            // params
-            int r0 = m.GetLength(0);
-            int c0 = m.GetLength(1);
-            int rr = (length - r0) / 2;
-            Complex[,] B = new Complex[length, c0];
-            int i, j;
-
-            // do job
-            for (i = 0; i < length; i++)
-                for (j = 0; j < c0; j++)
-                    B[i, j] = m[Maths.Mod(rr - i - 1, r0), Maths.Mod(j, c0)];
-
-
-            for (i = 0; i < r0; i++)
-                for (j = 0; j < c0; j++)
-                    B[rr + i, j] = m[i, j];
-
-            return B;
-        }
-        /// <summary>
-        /// extend horizontal.
-        /// </summary>
-        /// <param name="m"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        private static Complex[,] ExtendHorizontal(Complex[,] m, int length)
-        {
-            // params
-            int r0 = m.GetLength(0);
-            int c0 = m.GetLength(1);
-            int cc = (length - c0) / 2;
-            Complex[,] B = new Complex[r0, length];
-            int i, j;
-
-            // do job
-            for (i = 0; i < r0; i++)
-                for (j = 0; j < length; j++)
-                    B[i, j] = m[Maths.Mod(i, r0), Maths.Mod(cc - j - 1, c0)];
-
-
-            for (i = 0; i < r0; i++)
-                for (j = 0; j < c0; j++)
-                    B[i, cc + j] = m[i, j];
-
-            return B;
-        }
-        /// <summary>
-        /// Обрезает матрицу до заданных размеров.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="height">Высота</param>
-        /// <param name="width">Ширина</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Cutend(Complex[,] m, int height, int width)
-        {
-            // params
-            int r0 = m.GetLength(0);
-            int c0 = m.GetLength(1);
-            int rr = (r0 - height) / 2;
-            int cc = (c0 - width) / 2;
-            Complex[,] B = new Complex[height, width];
-            int i, j;
-
-            // do job
-            for (i = 0; i < height; i++)
-            {
-                for (j = 0; j < width; j++)
-                {
-                    B[i, j] = m[i + rr, j + cc];
-                }
-            }
-
-            return B;
         }
         #endregion
     }

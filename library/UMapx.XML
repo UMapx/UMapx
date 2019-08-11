@@ -8,7 +8,7 @@
             <summary>
             Определяет разложение с приведением к форме Хессенберга.
             <remarks>
-            Это представление квадратной матрицы в виде произведения трех матриц: A = P * H * P', где H - матрица Хессенберга, а P - унитарная матрица.
+            Это представление квадратной матрицы в виде произведения трех матриц: A = P * H * P', где H - форма Хессенберга, а P - унитарная матрица.
             Более подробную информацию можно найти на сайте:
             https://en.wikipedia.org/wiki/Hessenberg_matrix
             </remarks>
@@ -34,6 +34,187 @@
         <member name="P:UMapx.Decomposition.Hessenberg.H">
             <summary>
             Получает форму Хессенберга.
+            </summary>
+        </member>
+        <member name="T:UMapx.Decomposition.GEVD">
+            <summary>
+            Определяет обобщенное спектральное разложение квадратных матриц A и B.
+            <remarks>
+            Это задача нахождение такого вектора значений V, что справедливо представление: A * V = B * V * D. 
+            Более подробную информацию можно найти на сайте:
+            https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix#Generalized_eigenvalue_problem
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GEVD.#ctor(System.Double[0:,0:],System.Double[0:,0:],System.Double)">
+            <summary>
+            Инициализирует обобщенное спектральное разложение квадратных матриц A и B.
+            </summary>
+            <param name="a">Матрица A</param>
+            <param name="b">Матрица B</param>
+            <param name="eps">Погрешность [0, 1]</param>
+        </member>
+        <member name="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Double[0:,0:],System.Double[0:,0:],System.Boolean,System.Double[0:,0:])">
+             <summary>
+               Adaptation of the original Fortran QZHES routine from EISPACK.
+             </summary>
+             <remarks>
+               This subroutine is the first step of the qz algorithm
+               for solving generalized matrix eigenvalue problems,
+               Siam J. Numer. anal. 10, 241-256(1973) by Moler and Stewart.
+            
+               This subroutine accepts a pair of real general matrices and
+               reduces one of them to upper Hessenberg form and the other
+               to upper triangular form using orthogonal transformations.
+               it is usually followed by  qzit,  qzval  and, possibly,  qzvec.
+               
+               For the full documentation, please check the original function.
+             </remarks>
+             <param name="n"></param>
+             <param name="a"></param>
+             <param name="b"></param>
+             <param name="matz"></param>
+             <param name="z"></param>
+             <returns></returns>
+        </member>
+        <member name="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Double[0:,0:],System.Double[0:,0:],System.Double,System.Boolean,System.Double[0:,0:],System.Int32@)">
+            <summary>
+              Adaptation of the original Fortran QZIT routine from EISPACK.
+            </summary>
+            <remarks>
+              This subroutine is the second step of the qz algorithm
+              for solving generalized matrix eigenvalue problems,
+              Siam J. Numer. anal. 10, 241-256(1973) by Moler and Stewart,
+              as modified in technical note nasa tn d-7305(1973) by ward.
+              
+              This subroutine accepts a pair of real matrices, one of them
+              in upper Hessenberg form and the other in upper triangular form.
+              it reduces the Hessenberg matrix to quasi-triangular form using
+              orthogonal transformations while maintaining the triangular form
+              of the other matrix.  it is usually preceded by  qzhes  and
+              followed by  qzval  and, possibly,  qzvec.
+              
+              For the full documentation, please check the original function.
+            </remarks>
+            <param name="n"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="eps1"></param>
+            <param name="matz"></param>
+            <param name="z"></param>
+            <param name="ierr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[0:,0:],System.Double[0:,0:],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[0:,0:])">
+            <summary>
+              Adaptation of the original Fortran QZVAL routine from EISPACK.
+            </summary>
+            <remarks>
+              This subroutine is the third step of the qz algorithm
+              for solving generalized matrix eigenvalue problems,
+              Siam J. Numer. anal. 10, 241-256(1973) by Moler and Stewart.
+              
+              This subroutine accepts a pair of real matrices, one of them
+              in quasi-triangular form and the other in upper triangular form.
+              it reduces the quasi-triangular matrix further, so that any
+              remaining 2-by-2 blocks correspond to pairs of complex
+              Eigenvalues, and returns quantities whose ratios give the
+              generalized eigenvalues.  it is usually preceded by  qzhes
+              and  qzit  and may be followed by  qzvec.
+              
+              For the full documentation, please check the original function.
+            </remarks>
+            <param name="n"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="alfr"></param>
+            <param name="alfi"></param>
+            <param name="beta"></param>
+            <param name="matz"></param>
+            <param name="z"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Decomposition.GEVD.qzvec(System.Int32,System.Double[0:,0:],System.Double[0:,0:],System.Double[],System.Double[],System.Double[],System.Double[0:,0:])">
+            <summary>
+              Adaptation of the original Fortran QZVEC routine from EISPACK.
+            </summary>
+            <remarks>
+              This subroutine is the optional fourth step of the qz algorithm
+              for solving generalized matrix eigenvalue problems,
+              Siam J. Numer. anal. 10, 241-256(1973) by Moler and Stewart.
+              
+              This subroutine accepts a pair of real matrices, one of them in
+              quasi-triangular form (in which each 2-by-2 block corresponds to
+              a pair of complex eigenvalues) and the other in upper triangular
+              form.  It computes the eigenvectors of the triangular problem and
+              transforms the results back to the original coordinate system.
+              it is usually preceded by  qzhes,  qzit, and  qzval.
+              
+              For the full documentation, please check the original function.
+            </remarks>
+            <param name="n"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="alfr"></param>
+            <param name="alfi"></param>
+            <param name="beta"></param>
+            <param name="z"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Decomposition.GEVD.Epsilon(System.Double)">
+            <summary>
+              Estimates unit round-off in quantities of size x.
+            </summary>
+            <remarks>
+              This is a port of the epslon function from EISPACK.
+            </remarks>
+            
+            <param name="x"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Decomposition.GEVD.Sign(System.Double,System.Double)">
+            <summary>
+              Returns <paramref name="a"/> with the sign of <paramref name="b"/>. 
+            </summary>
+            
+            <remarks>
+              This is a port of the sign transfer function from EISPACK,
+              and is is equivalent to C++'s std::copysign function.
+            </remarks>
+            
+            <returns>If B > 0 then the result is ABS(A), else it is -ABS(A).</returns>
+            
+            <param name="a"></param>
+            <param name="b"></param>
+        </member>
+        <member name="P:UMapx.Decomposition.GEVD.Alpha">
+            <summary>
+            Возвращает вектор α.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GEVD.Beta">
+            <summary>
+            Возвращает вектор β.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GEVD.Eigenvalues">
+            <summary>
+            Возвращает вектор собственных значений.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GEVD.D">
+            <summary>
+            Возвращает матрицу собственных значений D.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GEVD.V">
+            <summary>
+            Возвращает матрицу значений V.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GEVD.IsSingular">
+            <summary>
+            Проверяет является ли одна из матриц сингулярной или нет.
             </summary>
         </member>
         <member name="T:UMapx.Decomposition.EVD">
@@ -663,20 +844,54 @@
         </member>
         <member name="M:UMapx.Decomposition.Arnoldi.arnoldi(System.Double[0:,0:],System.Int32,System.Int32)">
             <summary>
-            Разложение Арнольди.
+            Arnoldi decomposition.
             </summary>
-            <param name="a">Матрица</param>
-            <param name="n">Высота</param>
-            <param name="m">Ширина</param>
+            <param name="a">Matrix</param>
+            <param name="n">Height</param>
+            <param name="m">Width</param>
         </member>
         <member name="P:UMapx.Decomposition.Arnoldi.Q">
             <summary>
-            Возвращает ортогональную матрица.
+            Возвращает ортогональную матрицу.
             </summary>
         </member>
         <member name="P:UMapx.Decomposition.Arnoldi.H">
             <summary>
             Возвращает верхнюю треугольную матрицу Хессенберга.
+            </summary>
+        </member>
+        <member name="T:UMapx.Decomposition.Lanczos">
+            <summary>
+            Определяет преобразование Ланцоша.
+            <remarks>
+            Данное преобразование испольузется для представления симметричной матрицы A в виде произведения 
+            трех матриц: A = Q * T * Q', где H - трехдиагональная матрица, а Q - ортогональная матрица.
+            Более подробную информацию можно найти на сайте:
+            https://en.wikipedia.org/wiki/Lanczos_algorithm
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.Lanczos.#ctor(System.Double[0:,0:])">
+            <summary>
+            Инициализирует преобразование Ланцоша.
+            </summary>
+            <param name="A">Симметричная матрица</param>
+        </member>
+        <member name="M:UMapx.Decomposition.Lanczos.lanczos(System.Double[0:,0:],System.Int32)">
+            <summary>
+            Lanczos decomposition.
+            </summary>
+            <param name="a">Symmetric matrix</param>
+            <param name="n">Matrix length</param>
+        </member>
+        <member name="P:UMapx.Decomposition.Lanczos.Q">
+            <summary>
+            Возвращает ортогональную матрицу.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.Lanczos.T">
+            <summary>
+            Возвращает трехдиагональную матрицу.
             </summary>
         </member>
         <member name="T:UMapx.Transform.WalshHadamardTransform">
@@ -7298,28 +7513,6 @@
             Возвращает цветовую модель RGB.
             </summary>
         </member>
-        <member name="T:UMapx.Colorspace.IColorSheme">
-            <summary>
-            Определяет общий интерфейс цветовых схем.
-            </summary>
-        </member>
-        <member name="P:UMapx.Colorspace.IColorSheme.Scheme">
-            <summary>
-            Получает или задает массив цветов.
-            </summary>
-        </member>
-        <member name="P:UMapx.Colorspace.IColorSheme.Item(System.Int32)">
-            <summary>
-            Возвращает цвет под указанным номером индекса.
-            </summary>
-            <param name="i">Номер индекса</param>
-            <returns>Цвет в терминах красного, зеленого, синего и альфа каналов</returns>
-        </member>
-        <member name="P:UMapx.Colorspace.IColorSheme.Length">
-            <summary>
-            Получает значение размера цветовой схемы.
-            </summary>
-        </member>
         <member name="T:UMapx.Core.Complex">
             <summary>
             Определяет комплексное число.
@@ -9352,7 +9545,7 @@
         </member>
         <member name="P:UMapx.Imaging.Quantization.Levels">
             <summary>
-            Получает или задает значение гаммы [0, 20].
+            Получает или задает количество уровней.
             </summary>
         </member>
         <member name="T:UMapx.Imaging.LocalContrastEnhancement">
@@ -12951,17 +13144,17 @@
             Получает или задает размер фильтра.
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.HistogramScretch">
+        <member name="T:UMapx.Imaging.HistogramStretch">
             <summary>
             Определяет фильтр глобального сжатия гистограммы.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.HistogramScretch.range">
+        <member name="F:UMapx.Imaging.HistogramStretch.range">
             <summary>
             { Min, Max }.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HistogramScretch.#ctor(System.Double,System.Double,UMapx.Imaging.Space)">
+        <member name="M:UMapx.Imaging.HistogramStretch.#ctor(System.Double,System.Double,UMapx.Imaging.Space)">
             <summary>
             Инициализирует фильтр глобального сжатия гистограммы.
             </summary>
@@ -12969,24 +13162,24 @@
             <param name="max">Максимально значение яркости [0, 1]</param>
             <param name="space">Цветовое пространство</param>
         </member>
-        <member name="M:UMapx.Imaging.HistogramScretch.#ctor(UMapx.Core.RangeDouble,UMapx.Imaging.Space)">
+        <member name="M:UMapx.Imaging.HistogramStretch.#ctor(UMapx.Core.RangeDouble,UMapx.Imaging.Space)">
             <summary>
             Инициализирует фильтр глобального сжатия гистограммы.
             </summary>
             <param name="range">Диапазон значений яркости</param>
             <param name="space">Цветовое пространство</param>
         </member>
-        <member name="M:UMapx.Imaging.HistogramScretch.Rebuild">
+        <member name="M:UMapx.Imaging.HistogramStretch.Rebuild">
             <summary>
             Реализует перестроение данных фильтра.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.HistogramScretch.Range">
+        <member name="P:UMapx.Imaging.HistogramStretch.Range">
             <summary>
             Получает или задает диапазон значений, которые принимает сигнал.
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.LocalHistogramScretch">
+        <member name="T:UMapx.Imaging.LocalHistogramStretch">
             <summary>
             Определяет класс фильтра локального сжатия гистограммы.
             <remarks>
@@ -12996,37 +13189,37 @@
             </remarks>
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.LocalHistogramScretch.gb">
+        <member name="F:UMapx.Imaging.LocalHistogramStretch.gb">
             <summary>
             Фильтр локального усреднения.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.LocalHistogramScretch.er">
+        <member name="F:UMapx.Imaging.LocalHistogramStretch.er">
             <summary>
             Фильтр эрозии.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.LocalHistogramScretch.di">
+        <member name="F:UMapx.Imaging.LocalHistogramStretch.di">
             <summary>
             Фильтр приращения.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.LocalHistogramScretch.space">
+        <member name="F:UMapx.Imaging.LocalHistogramStretch.space">
             <summary>
             Цветовое пространство.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.LocalHistogramScretch.contrast">
+        <member name="F:UMapx.Imaging.LocalHistogramStretch.contrast">
             <summary>
             Коэффициент сжатия контраста.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.LocalHistogramScretch.smoothing">
+        <member name="F:UMapx.Imaging.LocalHistogramStretch.smoothing">
             <summary>
             Сглаживание.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.#ctor(System.Int32,UMapx.Imaging.Space,System.Double,System.Boolean)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.#ctor(System.Int32,UMapx.Imaging.Space,System.Double,System.Boolean)">
             <summary>
             Иницилазирует класс фильтра локального сжатия гистограммы.
             </summary>
@@ -13035,7 +13228,7 @@
             <param name="contrast">Коэффициент сжатия контраста [0, 1]</param>
             <param name="smoothing">Использовать сглаживание или нет</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.#ctor(System.Int32,System.Int32,UMapx.Imaging.Space,System.Double,System.Boolean)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.#ctor(System.Int32,System.Int32,UMapx.Imaging.Space,System.Double,System.Boolean)">
             <summary>
             Иницилазирует класс фильтра локального сжатия гистограммы.
             </summary>
@@ -13045,7 +13238,7 @@
             <param name="contrast">Коэффициент сжатия контраста [0, 1]</param>
             <param name="smoothing">Использовать сглаживание или нет</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.#ctor(UMapx.Core.SizeInt,UMapx.Imaging.Space,System.Double,System.Boolean)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.#ctor(UMapx.Core.SizeInt,UMapx.Imaging.Space,System.Double,System.Boolean)">
             <summary>
             Иницилазирует класс фильтра локального сжатия гистограммы.
             </summary>
@@ -13054,19 +13247,19 @@
             <param name="contrast">Коэффициент сжатия контраста [0, 1]</param>
             <param name="smoothing">Использовать сглаживание или нет</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.Apply(System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="bmData">Атрибуты точечного изображения</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.Apply(System.Drawing.Bitmap)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="Data">Точечный рисунок</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
@@ -13074,7 +13267,7 @@
             <param name="bmMax">Атрибуты точечного изображения</param>
             <param name="bmMin">Атрибуты точечного изображения</param> 
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.ApplyRGB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyRGB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
@@ -13082,7 +13275,7 @@
             <param name="bmMax">Атрибуты точечного изображения</param>
             <param name="bmMin">Атрибуты точечного изображения</param> 
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.ApplyHSB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyHSB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
@@ -13090,7 +13283,7 @@
             <param name="bmMax">Атрибуты точечного изображения</param>
             <param name="bmMin">Атрибуты точечного изображения</param> 
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.ApplyHSL(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyHSL(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
@@ -13098,7 +13291,7 @@
             <param name="bmMax">Атрибуты точечного изображения</param>
             <param name="bmMin">Атрибуты точечного изображения</param> 
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramScretch.ApplyYCbCr(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyYCbCr(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
@@ -13106,22 +13299,22 @@
             <param name="bmMax">Атрибуты точечного изображения</param>
             <param name="bmMin">Атрибуты точечного изображения</param> 
         </member>
-        <member name="P:UMapx.Imaging.LocalHistogramScretch.Size">
+        <member name="P:UMapx.Imaging.LocalHistogramStretch.Size">
             <summary>
             Получает или задает размер фильтра.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.LocalHistogramScretch.Space">
+        <member name="P:UMapx.Imaging.LocalHistogramStretch.Space">
             <summary>
             Получает или задает цветовое пространство.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.LocalHistogramScretch.Contrast">
+        <member name="P:UMapx.Imaging.LocalHistogramStretch.Contrast">
             <summary>
             Получает или задает значение коэффициента сжатия контраста [0, 1].
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.LocalHistogramScretch.Smoothing">
+        <member name="P:UMapx.Imaging.LocalHistogramStretch.Smoothing">
             <summary>
             Использовать сглаживание или нет.
             </summary>
@@ -23457,6 +23650,22 @@
             Используется для реализации стандартных алгебраических операций над матрицами и векторами.
             </summary>
         </member>
+        <member name="M:UMapx.Core.Matrice.IsEquals(System.Double[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Проверяет равенство двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsEquals(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Проверяет равенство двух матриц.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="n">Матрица</param>
+            <returns>Логическое значение</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.IsVector(System.Double[0:,0:])">
             <summary>
             Проверяет является ли матрица вектором.
@@ -24612,16 +24821,32 @@
             <param name="m">Прямоугольная матрица</param>
             <returns>Точечный рисунок</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.IsEquals(System.Double[],System.Double[])">
+            <summary>
+            Проверяет являются ли векторы одинаковыми.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.IsEquals(UMapx.Core.Complex[],System.Double[])">
+            <summary>
+            Проверяет являются ли векторы одинаковыми.
+            </summary>
+            <param name="a">Одномерный массив</param>
+            <param name="b">Одномерный массив</param>
+            <returns>Логическое значение</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.IsPositive(System.Double[])">
             <summary>
-            Проверяет являются ли вектора коллинеарными.
+            Проверяет являются ли векторы коллинеарными.
             </summary>
             <param name="v">Одномерный массив</param>
             <returns>Логическое значение</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.IsCollinear(System.Double[],System.Double[])">
             <summary>
-            Проверяет являются ли вектора коллинеарными.
+            Проверяет являются ли векторы коллинеарными.
             </summary>
             <param name="a">Одномерный массив</param>
             <param name="b">Одномерный массив</param>
@@ -24629,7 +24854,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.IsCollinear(UMapx.Core.Complex[],UMapx.Core.Complex[])">
             <summary>
-            Проверяет являются ли вектора коллинеарными.
+            Проверяет являются ли векторы коллинеарными.
             </summary>
             <param name="a">Одномерный массив</param>
             <param name="b">Одномерный массив</param>
@@ -24637,7 +24862,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.IsCollinear(UMapx.Core.Complex[],System.Double[])">
             <summary>
-            Проверяет являются ли вектора коллинеарными.
+            Проверяет являются ли векторы коллинеарными.
             </summary>
             <param name="a">Одномерный массив</param>
             <param name="b">Одномерный массив</param>
@@ -24645,7 +24870,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.IsCollinear(System.Double[],UMapx.Core.Complex[])">
             <summary>
-            Проверяет являются ли вектора коллинеарными.
+            Проверяет являются ли векторы коллинеарными.
             </summary>
             <param name="a">Одномерный массив</param>
             <param name="b">Одномерный массив</param>
@@ -25498,7 +25723,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Double[],System.Double[])">
             <summary>
-            Реализует скалярное произведение векторов.
+            Реализует скалярное произведение векторов вида: a * b'.
             </summary>
             <param name="a">Одномерный массив</param>
             <param name="b">Одномерный массив</param>
@@ -25506,7 +25731,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[],UMapx.Core.Complex[])">
             <summary>
-            Реализует скалярное произведение векторов.
+            Реализует скалярное произведение векторов вида: a * b'.
             </summary>
             <param name="a">Одномерный массив</param>
             <param name="b">Одномерный массив</param>
@@ -25514,7 +25739,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[],System.Double[])">
             <summary>
-            Реализует скалярное произведение векторов.
+            Реализует скалярное произведение векторов вида: a * b'.
             </summary>
             <param name="a">Одномерный массив</param>
             <param name="b">Одномерный массив</param>
@@ -25522,7 +25747,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Double[],UMapx.Core.Complex[])">
             <summary>
-            Реализует скалярное произведение векторов.
+            Реализует скалярное произведение векторов вида: a * b'.
             </summary>
             <param name="a">Одномерный массив</param>
             <param name="b">Одномерный массив</param>
@@ -25530,7 +25755,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Double[],System.Double[0:,0:])">
             <summary>
-            Реализует скалярное умножение вектора на матрицу.
+            Реализует скалярное умножение вектора на матрицу вида: 
             </summary>
             <param name="v">Одномерный массив</param>
             <param name="m">Двумерная матрица</param>
@@ -25877,6 +26102,28 @@
             <param name="length">Длина вектора</param>
             <returns>Одномерный массив</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Cut(System.Double[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Обрезает матрицу до заданных размеров.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="y">Начальная позиция по высоте</param>
+            <param name="x">Начальная позиция по ширине</param>
+            <param name="height">Высота</param>
+            <param name="width">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Cut(UMapx.Core.Complex[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Обрезает матрицу до заданных размеров.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="y">Начальная позиция по высоте</param>
+            <param name="x">Начальная позиция по ширине</param>
+            <param name="height">Высота</param>
+            <param name="width">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Reshape(System.Double[],System.Int32)">
             <summary>
             Возвращает матрицу, сформированную из вектора.
@@ -26025,39 +26272,141 @@
             <param name="n">Номер строки и столбца</param>
             <returns>Квадратная матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Diff(System.Double[0:,0:],System.Int32,UMapx.Core.Direction)">
+        <member name="M:UMapx.Core.Matrice.Diff(System.Double[0:,0:],System.Int32,UMapx.Core.Direction,System.Boolean)">
             <summary>
             Возвращает разность элементов массива.
             </summary>
             <param name="a">Матрица</param>
             <param name="n">Порядок</param>
             <param name="direction">Направление обработки</param>
+            <param name="reverse">Обратное направление обработки или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Diff(UMapx.Core.Complex[0:,0:],System.Int32,UMapx.Core.Direction)">
+        <member name="M:UMapx.Core.Matrice.DiffVertical(System.Double[0:,0:],System.Boolean)">
+            <summary>
+            Возвращает разность элементов массива.
+            </summary>
+            <param name="a">Матрица</param>
+            <param name="reverse">Обратное направление обработки или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.DiffHorizontal(System.Double[0:,0:],System.Boolean)">
+            <summary>
+            Возвращает разность элементов массива.
+            </summary>
+            <param name="a">Матрица</param>
+            <param name="reverse">Обратное направление обработки или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Diff(UMapx.Core.Complex[0:,0:],System.Int32,UMapx.Core.Direction,System.Boolean)">
             <summary>
             Возвращает разность элементов массива.
             </summary>
             <param name="a">Матрица</param>
             <param name="n">Порядок</param>
             <param name="direction">Направление обработки</param>
+            <param name="reverse">Обратное направление обработки или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Diff(System.Double[],System.Int32)">
+        <member name="M:UMapx.Core.Matrice.DiffVertical(UMapx.Core.Complex[0:,0:],System.Boolean)">
+            <summary>
+            Возвращает разность элементов массива.
+            </summary>
+            <param name="a">Матрица</param>
+            <param name="reverse">Обратное направление обработки или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.DiffHorizontal(UMapx.Core.Complex[0:,0:],System.Boolean)">
+            <summary>
+            Возвращает разность элементов массива.
+            </summary>
+            <param name="a">Матрица</param>
+            <param name="reverse">Обратное направление обработки или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Diff(System.Double[],System.Int32,System.Boolean)">
             <summary>
             Возвращает разность элементов массива.
             </summary>
             <param name="v">Одномерный массив</param>
             <param name="n">Порядок</param>
+            <param name="reverse">Обратное направление обработки или нет</param>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Diff(UMapx.Core.Complex[],System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Diff(UMapx.Core.Complex[],System.Int32,System.Boolean)">
             <summary>
             Возвращает разность элементов массива.
             </summary>
             <param name="v">Одномерный массив</param>
             <param name="n">Порядок</param>
+            <param name="reverse">Обратное направление обработки или нет</param>
             <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extend(System.Double[],System.Int32)">
+            <summary>
+            Расширяет вектор до заданной длины.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="length">Длина</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extend(System.Double[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Расширяет матрицу до заданных размеров.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="height">Высота</param>
+            <param name="width">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ExtendVertical(System.Double[0:,0:],System.Int32)">
+            <summary>
+            extend vertical.
+            </summary>
+            <param name="m"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ExtendHorizontal(System.Double[0:,0:],System.Int32)">
+            <summary>
+            extend horizontal.
+            </summary>
+            <param name="m"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extend(UMapx.Core.Complex[],System.Int32)">
+            <summary>
+            Расширяет вектор до заданной длины.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="length">Длина</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extend(UMapx.Core.Complex[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Расширяет матрицу до заданных размеров.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="height">Высота</param>
+            <param name="width">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ExtendVertical(UMapx.Core.Complex[0:,0:],System.Int32)">
+            <summary>
+            extend vertical.
+            </summary>
+            <param name="m"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ExtendHorizontal(UMapx.Core.Complex[0:,0:],System.Int32)">
+            <summary>
+            extend horizontal.
+            </summary>
+            <param name="m"></param>
+            <param name="length"></param>
+            <returns></returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Compute(System.Double,System.Double,System.Double)">
             <summary>
@@ -26522,106 +26871,6 @@
             <param name="s">Исходная строка</param>
             <param name="result">Матрица вещественных чисел</param>
             <returns>Логическое значение</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Extend(System.Double[],System.Int32)">
-            <summary>
-            Расширяет вектор до заданной длины.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="length">Длина</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cutend(System.Double[],System.Int32)">
-            <summary>
-            Обрезает вектор до заданной длины.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="length">Длина</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Extend(System.Double[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Расширяет матрицу до заданных размеров.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="height">Высота</param>
-            <param name="width">Ширина</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ExtendVertical(System.Double[0:,0:],System.Int32)">
-            <summary>
-            extend vertical.
-            </summary>
-            <param name="m"></param>
-            <param name="length"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ExtendHorizontal(System.Double[0:,0:],System.Int32)">
-            <summary>
-            extend horizontal.
-            </summary>
-            <param name="m"></param>
-            <param name="length"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cutend(System.Double[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Обрезает матрицу до заданных размеров.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="height">Высота</param>
-            <param name="width">Ширина</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Extend(UMapx.Core.Complex[],System.Int32)">
-            <summary>
-            Расширяет вектор до заданной длины.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="length">Длина</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cutend(UMapx.Core.Complex[],System.Int32)">
-            <summary>
-            Обрезает вектор до заданной длины.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="length">Длина</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Extend(UMapx.Core.Complex[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Расширяет матрицу до заданных размеров.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="height">Высота</param>
-            <param name="width">Ширина</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ExtendVertical(UMapx.Core.Complex[0:,0:],System.Int32)">
-            <summary>
-            extend vertical.
-            </summary>
-            <param name="m"></param>
-            <param name="length"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ExtendHorizontal(UMapx.Core.Complex[0:,0:],System.Int32)">
-            <summary>
-            extend horizontal.
-            </summary>
-            <param name="m"></param>
-            <param name="length"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cutend(UMapx.Core.Complex[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Обрезает матрицу до заданных размеров.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="height">Высота</param>
-            <param name="width">Ширина</param>
-            <returns>Матрица</returns>
         </member>
         <member name="T:UMapx.Core.LinealgOptions">
             <summary>

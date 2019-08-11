@@ -5541,21 +5541,19 @@ this.levels), DataLen2);
 
         public void Apply(double[,] data)
         {
-            // params
-            int r0 = data.GetLength(0), c0 = data.GetLength(1);
-
             // extend input
+            int r0 = data.GetLength(0), c0 = data.GetLength(1);
             int delta = (int)(Math.Min(r0, c0) * accuracy);
-            int rLength = GetLength(r0 + delta * 2, dwt.Levels);
-            int cLength = GetLength(c0 + delta * 2, dwt.Levels);
-            double[,] extd = Matrice.Extend(data, rLength, cLength);
-            int r = extd.GetLength(0), c = extd.GetLength(1);
+            int r = WaveletFilter.GetLength(r0 + delta * 2, dwt.Levels);
+            int c = WaveletFilter.GetLength(c0 + delta * 2, dwt.Levels);
+            double[,] extd = Matrice.Extend(data, r, c);
 
             // wavelets
             double[,] wave;
             double alfa = 1 + factor;
-            int powR = r >> dwt.Levels;
-            int powC = c >> dwt.Levels;
+            int maxl = WaveletFilter.GetMaxLevels(Math.Min(r, c), dwt.Levels);
+            int powR = r >> maxl;
+            int powC = c >> maxl;
             int j, k;
 
             // forward wavelet transform
@@ -5579,7 +5577,9 @@ this.levels), DataLen2);
             extd = dwt.Backward(extd);
 
             // cutend result
-            extd = Matrice.Cutend(extd, r0, c0);
+            int y0 = (r - r0) / 2;
+            int x0 = (c - c0) / 2;
+            extd = Matrice.Cut(extd, y0, x0, r0, c0);
 
             for (j = 0; j < r0; j++)
                 for (k = 0; k < c0; k++)
@@ -5595,17 +5595,15 @@ this.levels), DataLen2);
         {
             // params
             int r0 = data.GetLength(0);
-
-            // extend input
             int delta = (int)(r0 * accuracy);
-            int rLength = GetLength(r0 + delta * 2, dwt.Levels);
-            double[] extd = Matrice.Extend(data, rLength);
-            int r = extd.GetLength(0);
+            int r = WaveletFilter.GetLength(r0 + delta * 2, dwt.Levels);
+            double[] extd = Matrice.Extend(data, r);
 
             // wavelets
             double[] wave;
             double alfa = 1 + factor;
-            int powR = r >> dwt.Levels;
+            int maxl = WaveletFilter.GetMaxLevels(r, dwt.Levels);
+            int powR = r >> maxl;
             int j;
 
             // forward wavelet transform
@@ -5626,7 +5624,8 @@ this.levels), DataLen2);
             extd = dwt.Backward(extd);
 
             // cutend result
-            extd = Matrice.Cutend(extd, r0);
+            int y0 = (r - r0) / 2;
+            extd = Matrice.Cut(extd, y0, r0);
 
             for (j = 0; j < r0; j++)
                 data[j] = extd[j];
@@ -5640,21 +5639,19 @@ this.levels), DataLen2);
 
         public void Apply(Complex[,] data)
         {
-            // params
-            int r0 = data.GetLength(0), c0 = data.GetLength(1);
-
             // extend input
+            int r0 = data.GetLength(0), c0 = data.GetLength(1);
             int delta = (int)(Math.Min(r0, c0) * accuracy);
-            int rLength = GetLength(r0 + delta * 2, dwt.Levels);
-            int cLength = GetLength(c0 + delta * 2, dwt.Levels);
-            Complex[,] extd = Matrice.Extend(data, rLength, cLength);
-            int r = extd.GetLength(0), c = extd.GetLength(1);
+            int r = WaveletFilter.GetLength(r0 + delta * 2, dwt.Levels);
+            int c = WaveletFilter.GetLength(c0 + delta * 2, dwt.Levels);
+            Complex[,] extd = Matrice.Extend(data, r, c);
 
             // wavelets
             Complex[,] wave;
             double alfa = 1 + factor;
-            int powR = r >> dwt.Levels;
-            int powC = c >> dwt.Levels;
+            int maxl = WaveletFilter.GetMaxLevels(Math.Min(r, c), dwt.Levels);
+            int powR = r >> maxl;
+            int powC = c >> maxl;
             int j, k;
 
             // forward wavelet transform
@@ -5678,7 +5675,9 @@ this.levels), DataLen2);
             extd = dwt.Backward(extd);
 
             // cutend result
-            extd = Matrice.Cutend(extd, r0, c0);
+            int y0 = (r - r0) / 2;
+            int x0 = (c - c0) / 2;
+            extd = Matrice.Cut(extd, y0, x0, r0, c0);
 
             for (j = 0; j < r0; j++)
                 for (k = 0; k < c0; k++)
@@ -5694,17 +5693,15 @@ this.levels), DataLen2);
         {
             // params
             int r0 = data.GetLength(0);
-
-            // extend input
             int delta = (int)(r0 * accuracy);
-            int rLength = GetLength(r0 + delta * 2, dwt.Levels);
-            Complex[] extd = Matrice.Extend(data, rLength);
-            int r = extd.GetLength(0);
+            int r = WaveletFilter.GetLength(r0 + delta * 2, dwt.Levels);
+            Complex[] extd = Matrice.Extend(data, r);
 
             // wavelets
             Complex[] wave;
             double alfa = 1 + factor;
-            int powR = r >> dwt.Levels;
+            int maxl = WaveletFilter.GetMaxLevels(r, dwt.Levels);
+            int powR = r >> maxl;
             int j;
 
             // forward wavelet transform
@@ -5725,7 +5722,8 @@ this.levels), DataLen2);
             extd = dwt.Backward(extd);
 
             // cutend result
-            extd = Matrice.Cutend(extd, r0);
+            int y0 = (r - r0) / 2;
+            extd = Matrice.Cut(extd, y0, r0);
 
             for (j = 0; j < r0; j++)
                 data[j] = extd[j];
@@ -5750,15 +5748,16 @@ this.levels), DataLen2);
 
             // extend input
             int delta = (int)(Math.Min(r0, c0) * accuracy);
-            int r = GetLength(r0 + delta * 2, dwt.Levels);
-            int c = GetLength(c0 + delta * 2, dwt.Levels);
+            int r = WaveletFilter.GetLength(r0 + delta * 2, dwt.Levels);
+            int c = WaveletFilter.GetLength(c0 + delta * 2, dwt.Levels);
             double[,] sum = new double[r, c];
 
             // wavelets
             double[,] wave;
             double alfa = 1 + factor;
-            int powR = r >> dwt.Levels;
-            int powC = c >> dwt.Levels;
+            int maxl = WaveletFilter.GetMaxLevels(Math.Min(r, c), dwt.Levels);
+            int powR = r >> maxl;
+            int powC = c >> maxl;
             int j, k;
 
             // do job
@@ -5786,7 +5785,9 @@ this.levels), DataLen2);
             sum = dwt.Backward(sum);
 
             // cutend result
-            return Matrice.Cutend(sum, r0, c0);
+            int y0 = (r - r0) / 2;
+            int x0 = (c - c0) / 2;
+            return Matrice.Cut(sum, y0, x0, r0, c0);
         }
         /// <summary>
         /// Реализует двумерный вейвлет-фильтр.
@@ -5808,8 +5809,9 @@ this.levels), DataLen2);
 
             // wavelets
             double[] wave;
+            int maxl = WaveletFilter.GetMaxLevels(r, dwt.Levels);
             double alfa = 1 + factor;
-            int powR = r >> dwt.Levels;
+            int powR = r >> maxl;
             int j;
 
             // do job
@@ -5834,7 +5836,8 @@ this.levels), DataLen2);
             sum = dwt.Backward(sum);
 
             // cutend result
-            return Matrice.Cutend(sum, r0);
+            int y0 = (r - r0) / 2;
+            return Matrice.Cut(sum, y0, r0);
         }
         /// <summary>
         /// Реализует двумерный вейвлет-фильтр.
@@ -5851,15 +5854,16 @@ this.levels), DataLen2);
 
             // extend input
             int delta = (int)(Math.Min(r0, c0) * accuracy);
-            int r = GetLength(r0 + delta * 2, dwt.Levels);
-            int c = GetLength(c0 + delta * 2, dwt.Levels);
+            int r = WaveletFilter.GetLength(r0 + delta * 2, dwt.Levels);
+            int c = WaveletFilter.GetLength(c0 + delta * 2, dwt.Levels);
             Complex[,] sum = new Complex[r, c];
 
             // wavelets
             Complex[,] wave;
             double alfa = 1 + factor;
-            int powR = r >> dwt.Levels;
-            int powC = c >> dwt.Levels;
+            int maxl = WaveletFilter.GetMaxLevels(Math.Min(r, c), dwt.Levels);
+            int powR = r >> maxl;
+            int powC = c >> maxl;
             int j, k;
 
             // do job
@@ -5887,7 +5891,9 @@ this.levels), DataLen2);
             sum = dwt.Backward(sum);
 
             // cutend result
-            return Matrice.Cutend(sum, r0, c0);
+            int y0 = (r - r0) / 2;
+            int x0 = (c - c0) / 2;
+            return Matrice.Cut(sum, y0, x0, r0, c0);
         }
         /// <summary>
         /// Реализует двумерный вейвлет-фильтр.
@@ -5909,8 +5915,9 @@ this.levels), DataLen2);
 
             // wavelets
             Complex[] wave;
+            int maxl = WaveletFilter.GetMaxLevels(r, dwt.Levels);
             double alfa = 1 + factor;
-            int powR = r >> dwt.Levels;
+            int powR = r >> maxl;
             int j;
 
             // do job
@@ -5935,7 +5942,8 @@ this.levels), DataLen2);
             sum = dwt.Backward(sum);
 
             // cutend result
-            return Matrice.Cutend(sum, r0);
+            int y0 = (r - r0) / 2;
+            return Matrice.Cut(sum, y0, r0);
         }
         #endregion
 

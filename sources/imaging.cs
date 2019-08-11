@@ -2269,7 +2269,7 @@ namespace UMapx.Imaging
             Levels = 4;
         }
         /// <summary>
-        /// Получает или задает значение гаммы [0, 20].
+        /// Получает или задает количество уровней.
         /// </summary>
         public int Levels
         {
@@ -10795,7 +10795,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Определяет фильтр глобального сжатия гистограммы.
     /// </summary>
-    public class HistogramScretch : Correction, IBitmapFilter
+    public class HistogramStretch : Correction, IBitmapFilter
     {
         #region Private data
         /// <summary>
@@ -10811,7 +10811,7 @@ namespace UMapx.Imaging
         /// <param name="min">Минимальное значение яркости [0, 1]</param>
         /// <param name="max">Максимально значение яркости [0, 1]</param>
         /// <param name="space">Цветовое пространство</param>
-        public HistogramScretch(double min, double max, Space space)
+        public HistogramStretch(double min, double max, Space space)
         {
             Range = new RangeDouble(min, max);
             Space = space;
@@ -10821,7 +10821,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="range">Диапазон значений яркости</param>
         /// <param name="space">Цветовое пространство</param>
-        public HistogramScretch(RangeDouble range, Space space)
+        public HistogramStretch(RangeDouble range, Space space)
         {
             Range = range;
             Space = space;
@@ -10858,7 +10858,7 @@ namespace UMapx.Imaging
     /// http://www.academia.edu/7629047/Image_enhancement_by_local_histogram_stretching
     /// </remarks>
     /// </summary>
-    public class LocalHistogramScretch : IBitmapFilter
+    public class LocalHistogramStretch : IBitmapFilter
     {
         #region Private data
         /// <summary>
@@ -10895,7 +10895,7 @@ namespace UMapx.Imaging
         /// <param name="space">Цветовое пространство</param>
         /// <param name="contrast">Коэффициент сжатия контраста [0, 1]</param>
         /// <param name="smoothing">Использовать сглаживание или нет</param>
-        public LocalHistogramScretch(int radius, Space space, double contrast = 0.5, bool smoothing = true)
+        public LocalHistogramStretch(int radius, Space space, double contrast = 0.5, bool smoothing = true)
         {
             Size = new SizeInt(radius, radius);
             Space = space;
@@ -10910,7 +10910,7 @@ namespace UMapx.Imaging
         /// <param name="space">Цветовое пространство</param>
         /// <param name="contrast">Коэффициент сжатия контраста [0, 1]</param>
         /// <param name="smoothing">Использовать сглаживание или нет</param>
-        public LocalHistogramScretch(int width, int height, Space space, double contrast = 0.5, bool smoothing = true)
+        public LocalHistogramStretch(int width, int height, Space space, double contrast = 0.5, bool smoothing = true)
         {
             Size = new SizeInt(width, height);
             Space = space;
@@ -10924,7 +10924,7 @@ namespace UMapx.Imaging
         /// <param name="space">Цветовое пространство</param>
         /// <param name="contrast">Коэффициент сжатия контраста [0, 1]</param>
         /// <param name="smoothing">Использовать сглаживание или нет</param>
-        public LocalHistogramScretch(SizeInt size, Space space, double contrast = 0.5, bool smoothing = true)
+        public LocalHistogramStretch(SizeInt size, Space space, double contrast = 0.5, bool smoothing = true)
         {
             Size = size;
             Space = space;

@@ -4526,27 +4526,5 @@ namespace UMapx.Colorspace
         RGB ToRGB { get; }
         #endregion
     }
-    /// <summary>
-    /// Определяет общий интерфейс цветовых схем.
-    /// </summary>
-    public interface IColorSheme
-    {
-        #region Interface
-        /// <summary>
-        /// Получает или задает массив цветов.
-        /// </summary>
-        Color[] Scheme { get; }
-        /// <summary>
-        /// Возвращает цвет под указанным номером индекса.
-        /// </summary>
-        /// <param name="i">Номер индекса</param>
-        /// <returns>Цвет в терминах красного, зеленого, синего и альфа каналов</returns>
-        Color this[int i] { get; }
-        /// <summary>
-        /// Получает значение размера цветовой схемы.
-        /// </summary>
-        int Length { get; }
-        #endregion
-    }
     #endregion
 }
