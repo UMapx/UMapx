@@ -411,6 +411,13 @@ this.levels), DataLen2);
                 a = 0;
                 b = 0;
             }
+
+            // Normalized or not
+            if (normalized)
+            {
+                output = output.Div(Maths.Sqrt2);
+            }
+
             return output;
         }
         /// <summary>
@@ -471,6 +478,12 @@ this.levels), DataLen2);
                 hpStart += 1;
                 output[i] = s;
                 s = 0;
+            }
+
+            // Normalized or not
+            if (normalized)
+            {
+                output = output.Mul(Maths.Sqrt2);
             }
 
             return output;
@@ -534,6 +547,13 @@ this.levels), DataLen2);
                 a = 0;
                 b = 0;
             }
+
+            // Normalized or not
+            if (normalized)
+            {
+                output = output.Div(Maths.Sqrt2);
+            }
+
             return output;
         }
         /// <summary>
@@ -594,6 +614,12 @@ this.levels), DataLen2);
                 hpStart += 1;
                 output[i] = s;
                 s = 0;
+            }
+
+            // Normalized or not
+            if (normalized)
+            {
+                output = output.Mul(Maths.Sqrt2);
             }
 
             return output;
