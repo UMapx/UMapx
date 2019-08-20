@@ -22161,6 +22161,13 @@
             </summary>
             <returns>Одномерный массив</returns>
         </member>
+        <member name="M:UMapx.Window.WindowBase.Function(System.Double[])">
+            <summary>
+            Возвращает массив значений оконной функции.
+            </summary>
+            <param name="x">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
         <member name="M:UMapx.Window.WindowBase.Function(System.Double[],System.Int32)">
             <summary>
             Возвращает массив значений оконной функции.

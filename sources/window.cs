@@ -233,7 +233,7 @@ namespace UMapx.Window
             }
             set
             {
-                if (sigma <= 0)
+                if (value <= 0)
                     throw new Exception("Неверное значение аргумента");
 
                 this.sigma = value;
@@ -976,7 +976,7 @@ namespace UMapx.Window
             }
             set
             {
-                if (sigma <= 0)
+                if (value <= 0)
                     throw new Exception("Неверное значение аргумента");
 
                 this.sigma = value;
@@ -1058,6 +1058,15 @@ namespace UMapx.Window
         public double[] GetWindow()
         {
             return this.GetWindow(this.frameSize);
+        }
+        /// <summary>
+        /// Возвращает массив значений оконной функции.
+        /// </summary>
+        /// <param name="x">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public double[] Function(double[] x)
+        {
+            return this.Function(x, this.frameSize);
         }
         /// <summary>
         /// Возвращает массив значений оконной функции.
