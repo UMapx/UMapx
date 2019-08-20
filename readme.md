@@ -20,6 +20,7 @@ UMapx.NET Framework is a dynamic link library for digital signal processing and 
 
 ### Includes special math toolboxes:
 * Wavelet Toolbox. Provides wide functionality for the study of discrete and continuous wavelets. The toolbox also includes algorithms for discrete one-dimensional and two-dimensional wavelet transforms of real and complex signals.
+* Window Toolbox. Includes a set of tools for synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier transforms and Weyl-Heisenberg transforms for real and complex signals.
 * Image Processing Toolbox. Contains efficient algorithms for processing, correcting and analyzing 32-bit raster images.
 
 Asiryan Valeriy, © 2015-2019
@@ -47,6 +48,7 @@ UMapx.NET Framework - динамически подключаемая библи
 
 ### Включает специальные математические пакеты:
 * Wavelet Toolbox. Предоставляет широкий функционал для исследования дискретных и непрерывных вейвлетов. Набор инструментов включает также алгоритмы дискретных одномерных и двумерных вейвлет-преобразований вещественных и комплексных сигналов.
+* Window Toolbox. Включает набор инструментов для синтеза и ортогонализации оконных функций. Реализует дискретные оконные преобразования Фурье, а также преобразования Вейля-Гейзенберга для вещественных и комплексных сигналов.
 * Image Processing Toolbox. Содержит эффективные алгоритмы обработки, коррекции и анализа 32-битных растровых изображений.
 
 Асирян Валерий, © 2015-2019 гг.
