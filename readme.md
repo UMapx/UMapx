@@ -5,7 +5,7 @@ UMapx.NET Framework is a dynamic link library for digital signal processing and 
 ### The library contains ready-made software tools:
 * color spaces and their transformations,
 * real and complex algebra,
-* classes of statistical distributions,
+* statistical distributions,
 * special math functions,
 * digital response filters,
 * discrete orthogonal transforms and more.
@@ -33,7 +33,7 @@ UMapx.NET Framework - динамически подключаемая библи
 ### Библиотека содержит готовые программные инструменты:
 * цветовые пространства и их преобразования,
 * вещественная и комплексная алгебра,
-* классы статистических распределений,
+* статистические распределения,
 * специальные математические функции,
 * цифровые фильтры отклика,
 * дискретные ортогональные преобразования и многое другое.
