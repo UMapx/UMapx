@@ -4677,7 +4677,7 @@ namespace UMapx.Decomposition
         private void lanczos(double[,] a, int n)
         {
             // This function uses the Lanczos algorithm with full
-            // reorthogonalization to compute k x k symmetric tridiagonal
+            // re-orthogonalization to compute k x k symmetric tridiagonal
             // matrix T that approximates mat up to rank k with respect to
             // transformation Q. That is, A = Q * T * Q'.
 

@@ -14,7 +14,7 @@ using UMapx.Transform;
 namespace UMapx.Wavelet
 {
     // **************************************************************************
-    //                           WAVELET TOOLBOX 4.0.0
+    //                              WAVELET TOOLBOX
     //                            UMAPX.NET FRAMEWORK
     // **************************************************************************
     // Wavelet Toolbox provides a wide functionality for the study discrete 
@@ -406,16 +406,20 @@ this.levels), DataLen2);
                 }
                 lpStart += 2;
                 hpStart += 2;
-                output[r    ] = a;
-                output[r + h] = b;
+
+                if (normalized)
+                {
+                    output[r    ] = a / Maths.Sqrt2;
+                    output[r + h] = b / Maths.Sqrt2;
+                }
+                else
+                {
+                    output[r    ] = a;
+                    output[r + h] = b;
+                }
+
                 a = 0;
                 b = 0;
-            }
-
-            // Normalized or not
-            if (normalized)
-            {
-                output = output.Div(Maths.Sqrt2);
             }
 
             return output;
@@ -476,14 +480,8 @@ this.levels), DataLen2);
 
                 lpStart += 1;
                 hpStart += 1;
-                output[i] = s;
+                output[i] = (normalized) ? s * Maths.Sqrt2 : s;
                 s = 0;
-            }
-
-            // Normalized or not
-            if (normalized)
-            {
-                output = output.Mul(Maths.Sqrt2);
             }
 
             return output;
@@ -542,16 +540,20 @@ this.levels), DataLen2);
                 }
                 lpStart += 2;
                 hpStart += 2;
-                output[r] = a;
-                output[r + h] = b;
+
+                if (normalized)
+                {
+                    output[r] = a / Maths.Sqrt2;
+                    output[r + h] = b / Maths.Sqrt2;
+                }
+                else
+                {
+                    output[r] = a;
+                    output[r + h] = b;
+                }
+
                 a = 0;
                 b = 0;
-            }
-
-            // Normalized or not
-            if (normalized)
-            {
-                output = output.Div(Maths.Sqrt2);
             }
 
             return output;
@@ -612,14 +614,8 @@ this.levels), DataLen2);
 
                 lpStart += 1;
                 hpStart += 1;
-                output[i] = s;
+                output[i] = (normalized) ? s * Maths.Sqrt2 : s;
                 s = 0;
-            }
-
-            // Normalized or not
-            if (normalized)
-            {
-                output = output.Mul(Maths.Sqrt2);
             }
 
             return output;
@@ -5975,12 +5971,12 @@ this.levels), DataLen2);
 
         #region Static voids
         /// <summary>
-        /// Length of array for 2^K transform.
+        /// Возвращает значение длины для преобразования.
         /// </summary>
-        /// <param name="n">Length</param>
-        /// <param name="levels">Levels</param>
-        /// <returns>New length</returns>
-        private static int GetLength(int n, int levels)
+        /// <param name="n">Длина</param>
+        /// <param name="levels">Количество уровней</param>
+        /// <returns>Длина</returns>
+        public static int GetLength(int n, int levels)
         {
             // params
             int log2 = GetMaxLevels(n, levels);

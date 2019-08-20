@@ -2404,537 +2404,21 @@
             Получает или задает направление обработки.
             </summary>
         </member>
-        <member name="T:UMapx.Transform.FastShortTimeFourierTransform">
-            <summary>
-            Определяет быстрое оконное преобразование Фурье.
-            <remarks>
-            Более подробную информацию можно найти на сайте:
-            https://en.wikipedia.org/wiki/Short-time_Fourier_transform
-            </remarks>
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastShortTimeFourierTransform.FFT">
-            <summary>
-            Преобразование Фурье.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastShortTimeFourierTransform.window">
-            <summary>
-            Оконная функция.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastShortTimeFourierTransform.direction">
-            <summary>
-            Направление обработки.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastShortTimeFourierTransform.coefs">
-            <summary>
-            Коэффициенты оконной функции.
-            </summary>
-        </member>
-        <member name="M:UMapx.Transform.FastShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
-            <summary>
-            Инициализирует быстрое оконное преобразование Фурье.
-            </summary>
-            <param name="function">Оконная функция</param>
-            <param name="normalized">Нормализированное преобразование или нет</param>
-            <param name="direction">Направление обработки</param>
-        </member>
-        <member name="M:UMapx.Transform.FastShortTimeFourierTransform.Forward(UMapx.Core.Complex[])">
-            <summary>
-            Прямое дискретное оконное преобразование Фурье.
-            </summary>
-            <param name="A">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastShortTimeFourierTransform.Backward(UMapx.Core.Complex[])">
-            <summary>
-            Обратное дискретное оконное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastShortTimeFourierTransform.Forward(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Прямое дискретное оконное преобразование Фурье.
-            </summary>
-            <param name="A">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastShortTimeFourierTransform.Backward(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Обратное дискретное оконное преобразование Фурье.
-            </summary>
-            <param name="B">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastShortTimeFourierTransform.Forward(System.Double[])">
-            <summary>
-            Прямое дискретное преобразование Фурье.
-            </summary>
-            <param name="A">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastShortTimeFourierTransform.Backward(System.Double[])">
-            <summary>
-            Обратное дискретное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastShortTimeFourierTransform.Forward(System.Double[0:,0:])">
-            <summary>
-            Прямое дискретное преобразование Фурье.
-            </summary>
-            <param name="A">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastShortTimeFourierTransform.Backward(System.Double[0:,0:])">
-            <summary>
-            Обратное дискретное преобразование Фурье.
-            </summary>
-            <param name="B">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="P:UMapx.Transform.FastShortTimeFourierTransform.Normalized">
-            <summary>
-            Нормализированное преобразование или нет.
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.FastShortTimeFourierTransform.Direction">
-            <summary>
-            Получает или задает направление обработки.
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.FastShortTimeFourierTransform.Function">
-            <summary>
-            Получает или задает оконную функцию.
-            </summary>
-        </member>
-        <member name="T:UMapx.Transform.ShortTimeFourierTransform">
-            <summary>
-            Определяет оконное преобразование Фурье.
-            <remarks>
-            Более подробную информацию можно найти на сайте:
-            https://en.wikipedia.org/wiki/Short-time_Fourier_transform
-            </remarks>
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.ShortTimeFourierTransform.FFT">
-            <summary>
-            Преобразование Фурье.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.ShortTimeFourierTransform.window">
-            <summary>
-            Оконная функция.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.ShortTimeFourierTransform.direction">
-            <summary>
-            Направление обработки.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.ShortTimeFourierTransform.coefs">
-            <summary>
-            Коэффициенты оконной функции.
-            </summary>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
-            <summary>
-            Инициализирует оконное преобразование Фурье.
-            </summary>
-            <param name="function">Оконная функция</param>
-            <param name="normalized">Нормализированное преобразование или нет</param>
-            <param name="direction">Направление обработки</param>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.Forward(UMapx.Core.Complex[])">
-            <summary>
-            Прямое дискретное оконное преобразование Фурье.
-            </summary>
-            <param name="A">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.Backward(UMapx.Core.Complex[])">
-            <summary>
-            Обратное дискретное оконное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.Forward(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Прямое дискретное оконное преобразование Фурье.
-            </summary>
-            <param name="A">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.Backward(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Обратное дискретное оконное преобразование Фурье.
-            </summary>
-            <param name="B">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.Forward(System.Double[])">
-            <summary>
-            Прямое дискретное преобразование Фурье.
-            </summary>
-            <param name="A">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.Backward(System.Double[])">
-            <summary>
-            Обратное дискретное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.Forward(System.Double[0:,0:])">
-            <summary>
-            Прямое дискретное преобразование Фурье.
-            </summary>
-            <param name="A">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.Backward(System.Double[0:,0:])">
-            <summary>
-            Обратное дискретное преобразование Фурье.
-            </summary>
-            <param name="B">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.shortfourierf(UMapx.Core.Complex[],System.Int32,System.Double[])">
-            <summary>
-            Прямое оконное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <param name="N">Размерность</param>
-            <param name="coefs">Оконная функция</param>
-        </member>
-        <member name="M:UMapx.Transform.ShortTimeFourierTransform.shortfourierb(UMapx.Core.Complex[],System.Int32,System.Double[])">
-            <summary>
-            Обратное оконное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <param name="N">Размерность</param>
-            <param name="coefs">Оконная функция</param>
-        </member>
-        <member name="P:UMapx.Transform.ShortTimeFourierTransform.Normalized">
-            <summary>
-            Нормализированное преобразование или нет.
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.ShortTimeFourierTransform.Direction">
-            <summary>
-            Получает или задает направление обработки.
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.ShortTimeFourierTransform.Function">
-            <summary>
-            Получает или задает оконную функцию.
-            </summary>
-        </member>
-        <member name="T:UMapx.Transform.WeylHeisenbergTransform">
-            <summary>
-            Определяет группу ортогональных базисов и дискретных преобразований Вейля-Гейзенберга.
-            <remarks>
-            Базисы Вейля-Гейзенберга используются для получения частотно-временных характеристик сигнала.
-            Более подробную информацию можно найти на сайте:
-            https://elibrary.ru/item.asp?id=29767333
-            </remarks>
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.WeylHeisenbergTransform.m">
-            <summary>
-            Количество сдвигов по частоте.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.WeylHeisenbergTransform.sigma">
-            <summary>
-            Среднеквадратическое отклонение гауссиана.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.WeylHeisenbergTransform.direction">
-            <summary>
-            Направление обработки.
-            </summary>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.#ctor(System.Int32,System.Double,UMapx.Core.Direction)">
-            <summary>
-            Инициализирует группу ортогональных базисов и преобразований Вейля-Гейзенберга.
-            </summary>
-            <param name="m">Количество сдвигов по частоте [4, N].<remarks>
-            </remarks>Четное число</param>
-            <param name="sigma">Среднеквадратическое отклонение (0, +inf)</param>
-            <param name="direction">Направление обработки</param>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Gabor(System.Int32,System.Int32,System.Double)">
-            <summary>
-            Возвращает комплексную матрицу базиса Габора.
-            <remarks>
-            Размерность матрицы [N, N], где N = M * L.
-            Данный базис не является ортогональным.
-            </remarks>
-            </summary>
-            <param name="M">Количество сдвигов по частоте</param>
-            <param name="L">Количество сдвигов по времени</param>
-            <param name="sigma">Среднеквадратическое отклонение</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.WeylHeisenberg(System.Int32,System.Int32,System.Double)">
-            <summary>
-            Возвращает комплексную матрицу оптимального базиса Вейля-Гейзенберга.
-            <remarks>
-            Размерность матрицы [N, N], где N = M * L.
-            </remarks>
-            </summary>
-            <param name="M">Количество сдвигов по частоте</param>
-            <param name="L">Количество сдвигов по времени</param>
-            <param name="sigma">Среднеквадратическое отклонение</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.WeylHeisenberg(System.Double[],System.Int32)">
-            <summary>
-            Возвращает комплексную матрицу базиса Вейля-Гейзенберга.
-            <remarks>
-            Размерность матрицы [N, N], где N = M * L.
-            </remarks>
-            </summary>
-            <param name="g0">Формирующая функция</param>
-            <param name="M">Количество сдвигов по частоте</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Gabor(System.Int32,System.Double)">
-            <summary>
-            Возвращает вектор значений усеченного гауссиана.
-            </summary>
-            <param name="N">Количество отсчетов функции</param>
-            <param name="sigma">Среднеквадратическое отклонение</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Forward(UMapx.Core.Complex[])">
-            <summary>
-            Прямое дискретное преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="A">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Backward(UMapx.Core.Complex[])">
-            <summary>
-            Обратное дискретное преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Forward(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Прямое дискретное преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="A">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Backward(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Обратное дискретное преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="B">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Forward(System.Double[])">
-            <summary>
-            Прямое дискретное преобразование Фурье.
-            </summary>
-            <param name="A">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Backward(System.Double[])">
-            <summary>
-            Обратное дискретное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Forward(System.Double[0:,0:])">
-            <summary>
-            Прямое дискретное преобразование Фурье.
-            </summary>
-            <param name="A">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.WeylHeisenbergTransform.Backward(System.Double[0:,0:])">
-            <summary>
-            Обратное дискретное преобразование Фурье.
-            </summary>
-            <param name="B">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="P:UMapx.Transform.WeylHeisenbergTransform.M">
-            <summary>
-            Получает или задает количество сдвигов по частоте [4, N].
-            <remarks>
-            Четное число.
-            </remarks>
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.WeylHeisenbergTransform.Sigma">
-            <summary>
-            Получает или задает значение среднеквадратического отклонения (0, +inf).
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.WeylHeisenbergTransform.Direction">
-            <summary>
-            Получает или задает направление обработки.
-            </summary>
-        </member>
-        <member name="T:UMapx.Transform.FastWeylHeisenbergTransform">
-            <summary>
-            Определяет класс быстрого преобразования Вейля-Гейзенберга.
-            <remarks>
-            Класс представляет вычислительно эффективную реализацию одномерного и двумерного дикретных ортогональных
-            преобразований Вейля-Гейзенберга.
-            Более подробную информацию можно найти на сайте:
-            https://elibrary.ru/title_about.asp?id=58245
-            </remarks>
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastWeylHeisenbergTransform.FFT">
-            <summary>
-            Преобразование Фурье.
-            <remarks>
-            Используется как вспомогательный компонент.
-            </remarks>
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastWeylHeisenbergTransform.m">
-            <summary>
-            Количество сдвигов по частоте.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastWeylHeisenbergTransform.sigma">
-            <summary>
-            Среднеквадратическое отклонение гауссиана.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastWeylHeisenbergTransform.direction">
-            <summary>
-            Направление обработки.
-            </summary>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.#ctor(System.Int32,System.Double,UMapx.Core.Direction)">
-            <summary>
-            Инициализирует быстрое преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="m">Количество сдвигов по частоте [4, N].<remarks>
-            </remarks>Четное число</param>
-            <param name="sigma">Среднеквадратическое отклонение (0, +inf)</param>
-            <param name="direction">Направление обработки</param>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex[])">
-            <summary>
-            Прямое дискретное преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="A">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex[])">
-            <summary>
-            Обратное дискретное преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Прямое дискретное быстрое преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="A">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Обратное дискретное быстрое преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="B">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.Forward(System.Double[])">
-            <summary>
-            Прямое дискретное преобразование Фурье.
-            </summary>
-            <param name="A">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.Backward(System.Double[])">
-            <summary>
-            Обратное дискретное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.Forward(System.Double[0:,0:])">
-            <summary>
-            Прямое дискретное преобразование Фурье.
-            </summary>
-            <param name="A">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.Backward(System.Double[0:,0:])">
-            <summary>
-            Обратное дискретное преобразование Фурье.
-            </summary>
-            <param name="B">Двумерный массив</param>
-            <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.WHT(UMapx.Core.Complex[],System.Double[],System.Int32)">
-            <summary>
-            Прямое быстрое дискретное преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="input">Одномерный массив</param>
-            <param name="g0">Формирующая WH-функция</param>
-            <param name="M">Количество сдвигов по частоте</param>
-            <returns>Одноменый массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.IWHT(UMapx.Core.Complex[],System.Double[],System.Int32)">
-            <summary>
-            Обратное быстрое дискретное преобразование Вейля-Гейзенберга.
-            </summary>
-            <param name="input">Одномерный массив</param>
-            <param name="g0">Формирующая WH-функция</param>
-            <param name="M">Количество сдвигов по частоте</param>
-            <returns>Одноменый массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWeylHeisenbergTransform.GetRotation(System.Int32)">
-            <summary>
-            Возвращает одномерный массив фазовых поворотов.
-            </summary>
-            <param name="M">Количество сдвигов по частоте</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="P:UMapx.Transform.FastWeylHeisenbergTransform.M">
-            <summary>
-            Получает или задает количество сдвигов по частоте [4, N].
-            <remarks>
-            Четное число.
-            </remarks>
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.FastWeylHeisenbergTransform.Sigma">
-            <summary>
-            Получает или задает значение среднеквадратического отклонения (0, +inf).
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.FastWeylHeisenbergTransform.Direction">
-            <summary>
-            Получает или задает направление обработки.
-            </summary>
-        </member>
         <member name="T:UMapx.Transform.LaplacianPyramidTransform">
             <summary>
             Определяет класс представления сигнала в виде пирамиды Лапласа.
             Более подробную информацию можно найти на сайте:
             http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
+            </summary>
+        </member>
+        <member name="T:UMapx.Transform.ILevelTransform">
+            <summary>
+            Определяет класс многоуровнего преобразования.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.ILevelTransform.Levels">
+            <summary>
+            Получает или задает количество уровней представления.
             </summary>
         </member>
         <member name="T:UMapx.Transform.IPyramidTransform">
@@ -3993,11 +3477,11 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Transform.LaplacianPyramidFilter.#ctor(System.Int32,System.Double)">
+        <member name="M:UMapx.Transform.LaplacianPyramidFilter.#ctor(UMapx.Transform.LaplacianPyramidTransform,System.Double)">
             <summary>
             Инициализирует фильтр на основе пирамиды Лапласа.
             </summary>
-            <param name="levels">Количество уровней представления</param>
+            <param name="lap">Пирамида Лапласа</param>
             <param name="factor">Множитель [-1, 1]</param>
         </member>
         <member name="M:UMapx.Transform.LaplacianPyramidFilter.Apply(System.Double[][0:,0:])">
@@ -4052,9 +3536,9 @@
             </summary>
             <param name="data">Одномерный массив</param>
         </member>
-        <member name="P:UMapx.Transform.LaplacianPyramidFilter.Levels">
+        <member name="P:UMapx.Transform.LaplacianPyramidFilter.LaplacianPyramid">
             <summary>
-            Получает или задает количество уровней представления.
+            Получает или задает пирамиду Лапласа.
             </summary>
         </member>
         <member name="P:UMapx.Transform.LaplacianPyramidFilter.Factor">
@@ -5085,14 +4569,6 @@
             Возвращает значение генерализированной функции ошибок.
             </summary>
             <param name="x">Носитель</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Gabor(System.Double,System.Double)">
-            <summary>
-            Возвращает значение функции усеченного гауссиана.
-            </summary>
-            <param name="x">Носитель</param>
-            <param name="sigma">Среднеквадратическое отклонение (0, +inf)</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.Rademacher(System.Double,System.Int32)">
@@ -21331,11 +20807,11 @@
         </member>
         <member name="M:UMapx.Wavelet.WaveletFilter.GetLength(System.Int32,System.Int32)">
             <summary>
-            Length of array for 2^K transform.
+            Возвращает значение длины для преобразования.
             </summary>
-            <param name="n">Length</param>
-            <param name="levels">Levels</param>
-            <returns>New length</returns>
+            <param name="n">Длина</param>
+            <param name="levels">Количество уровней</param>
+            <returns>Длина</returns>
         </member>
         <member name="M:UMapx.Wavelet.WaveletFilter.GetMaxLevels(System.Int32,System.Int32)">
             <summary>
@@ -22647,6 +22123,21 @@
             </summary>
             <returns>Одномерный массив</returns>
         </member>
+        <member name="M:UMapx.Window.IWindow.GetWindow(System.Int32)">
+            <summary>
+            Возвращает оконную функцию.
+            </summary>
+            <param name="frameSize">Размер окна</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.IWindow.Function(System.Double[],System.Int32)">
+            <summary>
+            Возвращает массив значений оконной функции.
+            </summary>
+            <param name="x">Одномерный массив</param>
+            <param name="frameSize">Размер окна</param>
+            <returns>Одномерный массив</returns>
+        </member>
         <member name="P:UMapx.Window.IWindow.FrameSize">
             <summary>
             Получает или задает размер окна.
@@ -22670,34 +22161,59 @@
             </summary>
             <returns>Одномерный массив</returns>
         </member>
+        <member name="M:UMapx.Window.WindowBase.Function(System.Double[],System.Int32)">
+            <summary>
+            Возвращает массив значений оконной функции.
+            </summary>
+            <param name="x">Одномерный массив</param>
+            <param name="frameSize">Размер окна</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WindowBase.Function(System.Double,System.Int32)">
+            <summary>
+            Возвращает значение оконной функции.
+            </summary>
+            <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Window.WindowBase.GetWindow(System.Int32)">
+            <summary>
+            Возвращает оконную функцию.
+            </summary>
+            <param name="frameSize">Размер окна</param>
+            <returns>Одномерный массив</returns>
+        </member>
         <member name="P:UMapx.Window.WindowBase.FrameSize">
             <summary>
             Получает или задает размер окна.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Planck.#ctor(System.Double,System.Double)">
+        <member name="M:UMapx.Window.Planck.#ctor(System.Int32,System.Double)">
             <summary>
             Инициализирует оконную функцию Планка.
             </summary>
             <param name="frameSize">Размер окна</param>
-            <param name="a">Параметр формы</param>
+            <param name="a">Параметр формы [0, 1]</param>
         </member>
-        <member name="M:UMapx.Window.Planck.Function(System.Double)">
-            <summary>
-            Возвращает значение оконной функции.
-            </summary>
-            <param name="x">Носитель</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Window.Planck.Z(System.Double,System.Boolean)">
+        <member name="M:UMapx.Window.Planck.Z(System.Double,System.Boolean,System.Int32)">
             <summary>
             Функция Z+-(x, a).
             </summary>
             <param name="x">Носитель</param>
             <param name="p">Знак</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Planck.GetWindow">
+        <member name="M:UMapx.Window.Planck.Function(System.Double,System.Int32)">
+            <summary>
+            Возвращает значение оконной функции.
+            </summary>
+            <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Window.Planck.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
@@ -22705,7 +22221,7 @@
         </member>
         <member name="P:UMapx.Window.Planck.A">
             <summary>
-            Получает или задает значение параметра формы.
+            Получает или задает значение параметра формы [0, 1].
             </summary>
         </member>
         <member name="T:UMapx.Window.Tukey">
@@ -22713,21 +22229,22 @@
             Определяет оконную функцию Тьюки.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Tukey.#ctor(System.Double,System.Double)">
+        <member name="M:UMapx.Window.Tukey.#ctor(System.Int32,System.Double)">
             <summary>
             Инициализирует оконную функцию Тьюки.
             </summary>
             <param name="frameSize">Размер окна</param>
-            <param name="a">Параметр формы</param>
+            <param name="a">Параметр формы [0, 1]</param>
         </member>
-        <member name="M:UMapx.Window.Tukey.Function(System.Double)">
+        <member name="M:UMapx.Window.Tukey.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Tukey.GetWindow">
+        <member name="M:UMapx.Window.Tukey.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
@@ -22735,7 +22252,7 @@
         </member>
         <member name="P:UMapx.Window.Tukey.A">
             <summary>
-            Получает или задает значение параметра формы.
+            Получает или задает значение параметра формы [0, 1].
             </summary>
         </member>
         <member name="T:UMapx.Window.Confined">
@@ -22743,24 +22260,25 @@
             Определяет закрытую оконную функцию Гаусса.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Confined.#ctor(System.Double,System.Double)">
+        <member name="M:UMapx.Window.Confined.#ctor(System.Int32,System.Double)">
             <summary>
             Инициализирует закрытую оконную функцию Гаусса.
             </summary>
             <param name="frameSize">Размер окна</param>
             <param name="sigma">Среднеквадратическое отклонение (0.14 * N)</param>
         </member>
-        <member name="M:UMapx.Window.Confined.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Confined.#ctor(System.Int32)">
             <summary>
             Инициализирует закрытую оконную функцию Гаусса.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Confined.Function(System.Double)">
+        <member name="M:UMapx.Window.Confined.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Window.Confined.G(System.Double)">
@@ -22770,7 +22288,7 @@
             <param name="x">Носитель</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Confined.GetWindow">
+        <member name="M:UMapx.Window.Confined.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
@@ -22786,7 +22304,7 @@
             Определяет обобщенную оконную нормальную функцию.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Normal.#ctor(System.Double,System.Double,System.Double)">
+        <member name="M:UMapx.Window.Normal.#ctor(System.Int32,System.Double,System.Double)">
             <summary>
             Инициализирует обобщенную оконную нормальную функцию.
             </summary>
@@ -22794,14 +22312,15 @@
             <param name="sigma">Среднеквадратическое отклонение (>0)</param>
             <param name="pow">Степень<remarks>При p = 2 - окно Гаусса</remarks></param>
         </member>
-        <member name="M:UMapx.Window.Normal.Function(System.Double)">
+        <member name="M:UMapx.Window.Normal.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Normal.GetWindow">
+        <member name="M:UMapx.Window.Normal.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
@@ -22822,21 +22341,22 @@
             Определяет оконную функцию Кайзера.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Kaiser.#ctor(System.Double,System.Double)">
+        <member name="M:UMapx.Window.Kaiser.#ctor(System.Int32,System.Double)">
             <summary>
             Инициализирует оконную функцию Кайзера.
             </summary>
             <param name="frameSize">Размер окна</param>
             <param name="a">Параметр формы</param>
         </member>
-        <member name="M:UMapx.Window.Kaiser.Function(System.Double)">
+        <member name="M:UMapx.Window.Kaiser.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Kaiser.GetWindow">
+        <member name="M:UMapx.Window.Kaiser.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
@@ -22852,20 +22372,21 @@
             Определяет оконную функцию "Welch".
             </summary>
         </member>
-        <member name="M:UMapx.Window.Welch.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Welch.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию "Welch".
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Welch.Function(System.Double)">
+        <member name="M:UMapx.Window.Welch.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Welch.GetWindow">
+        <member name="M:UMapx.Window.Welch.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
@@ -22876,20 +22397,21 @@
             Определяет оконную функцию Ланцоша.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Lanzcos.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Lanzcos.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию Ланцоша.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Lanzcos.Function(System.Double)">
+        <member name="M:UMapx.Window.Lanzcos.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Lanzcos.GetWindow">
+        <member name="M:UMapx.Window.Lanzcos.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
@@ -22900,20 +22422,21 @@
             Определяет оконную функцию Парзена.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Parzen.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Parzen.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию Парзена.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Parzen.Function(System.Double)">
+        <member name="M:UMapx.Window.Parzen.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Parzen.GetWindow">
+        <member name="M:UMapx.Window.Parzen.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
@@ -22924,23 +22447,25 @@
             Определяет оконную функцию "Flat-Top".
             </summary>
         </member>
-        <member name="M:UMapx.Window.FlatTop.#ctor(System.Double)">
+        <member name="M:UMapx.Window.FlatTop.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию "Flat-Top".
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.FlatTop.Function(System.Double)">
+        <member name="M:UMapx.Window.FlatTop.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.FlatTop.GetWindow">
+        <member name="M:UMapx.Window.FlatTop.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
+            <param name="frameSize">Размер окна</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="T:UMapx.Window.Nuttall">
@@ -22948,23 +22473,25 @@
             Определяет оконную функцию Ньюттолла.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Nuttall.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Nuttall.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию Ньюттолла.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Nuttall.Function(System.Double)">
+        <member name="M:UMapx.Window.Nuttall.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Nuttall.GetWindow">
+        <member name="M:UMapx.Window.Nuttall.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
+            <param name="frameSize">Размер окна</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="T:UMapx.Window.BlackmanNuttall">
@@ -22972,23 +22499,25 @@
             Определяет оконную функцию Блэкмана-Ньюттолла.
             </summary>
         </member>
-        <member name="M:UMapx.Window.BlackmanNuttall.#ctor(System.Double)">
+        <member name="M:UMapx.Window.BlackmanNuttall.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию Блэкмана-Ньюттолла.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.BlackmanNuttall.Function(System.Double)">
+        <member name="M:UMapx.Window.BlackmanNuttall.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.BlackmanNuttall.GetWindow">
+        <member name="M:UMapx.Window.BlackmanNuttall.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
+            <param name="frameSize">Размер окна</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="T:UMapx.Window.BlackmanHarris">
@@ -22996,20 +22525,21 @@
             Определяет оконную функцию Блэкмана-Харриса.
             </summary>
         </member>
-        <member name="M:UMapx.Window.BlackmanHarris.#ctor(System.Double)">
+        <member name="M:UMapx.Window.BlackmanHarris.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию Блэкмана-Харриса.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.BlackmanHarris.Function(System.Double)">
+        <member name="M:UMapx.Window.BlackmanHarris.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.BlackmanHarris.GetWindow">
+        <member name="M:UMapx.Window.BlackmanHarris.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
@@ -23020,23 +22550,25 @@
             Определяет оконную функцию Блэкмана.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Blackman.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Blackman.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию Блэкмана.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Blackman.Function(System.Double)">
+        <member name="M:UMapx.Window.Blackman.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Blackman.GetWindow">
+        <member name="M:UMapx.Window.Blackman.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
+            <param name="frameSize">Размер окна</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="T:UMapx.Window.BarlettHann">
@@ -23044,23 +22576,25 @@
             Определяет оконную функцию Барлетта-Ханна.
             </summary>
         </member>
-        <member name="M:UMapx.Window.BarlettHann.#ctor(System.Double)">
+        <member name="M:UMapx.Window.BarlettHann.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию Барлетта-Ханна.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.BarlettHann.Function(System.Double)">
+        <member name="M:UMapx.Window.BarlettHann.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.BarlettHann.GetWindow">
+        <member name="M:UMapx.Window.BarlettHann.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
+            <param name="frameSize">Размер окна</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="T:UMapx.Window.Hann">
@@ -23068,23 +22602,25 @@
             Определяет оконную функцию Ханна (Хеннинга).
             </summary>
         </member>
-        <member name="M:UMapx.Window.Hann.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Hann.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию Ханна (Хеннинга).
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Hann.Function(System.Double)">
+        <member name="M:UMapx.Window.Hann.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Hann.GetWindow">
+        <member name="M:UMapx.Window.Hann.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
+            <param name="frameSize">Размер окна</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="T:UMapx.Window.Hamming">
@@ -23092,23 +22628,25 @@
             Определяет оконную функцию Хэмминга.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Hamming.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Hamming.#ctor(System.Int32)">
             <summary>
             Инициализирует оконную функцию Хэмминга.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Hamming.Function(System.Double)">
+        <member name="M:UMapx.Window.Hamming.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Hamming.GetWindow">
+        <member name="M:UMapx.Window.Hamming.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
+            <param name="frameSize">Размер окна</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="T:UMapx.Window.Cosine">
@@ -23116,26 +22654,28 @@
             Определяет косинусную оконную функцию.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Cosine.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Cosine.#ctor(System.Int32)">
             <summary>
             Инициализирует косинусную оконную функцию.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Cosine.Function(System.Double)">
+        <member name="M:UMapx.Window.Cosine.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Window.Cosine.GetWindow">
+        <member name="M:UMapx.Window.Cosine.GetWindow(System.Int32)">
             <summary>
             Возвращает оконную функцию.
             </summary>
+            <param name="frameSize">Размер окна</param>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Window.Cosine.Function(System.Double,System.Double)">
+        <member name="M:UMapx.Window.Cosine.cosinefunc(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
@@ -23148,32 +22688,634 @@
             Определяет синусную оконную функцию.
             </summary>
         </member>
-        <member name="M:UMapx.Window.Sine.#ctor(System.Double)">
+        <member name="M:UMapx.Window.Sine.#ctor(System.Int32)">
             <summary>
             Инициализирует синусную оконную функцию.
             </summary>
             <param name="frameSize">Размер окна</param>
         </member>
-        <member name="M:UMapx.Window.Sine.Function(System.Double)">
-            <summary>
-            Возвращает значение оконной функции.
-            </summary>
-            <param name="x">Носитель</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Window.Sine.GetWindow">
-            <summary>
-            Возвращает оконную функцию.
-            </summary>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Window.Sine.Function(System.Double,System.Double)">
+        <member name="M:UMapx.Window.Sine.Function(System.Double,System.Int32)">
             <summary>
             Возвращает значение оконной функции.
             </summary>
             <param name="x">Носитель</param>
             <param name="frameSize">Размер окна</param>
             <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Window.Sine.GetWindow(System.Int32)">
+            <summary>
+            Возвращает оконную функцию.
+            </summary>
+            <param name="frameSize">Размер окна</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.Sine.sinefunc(System.Double,System.Int32)">
+            <summary>
+            Возвращает значение оконной функции.
+            </summary>
+            <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="T:UMapx.Window.Gabor">
+            <summary>
+            Определяет оконную функцию Габора.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Gabor.#ctor(System.Int32,System.Double)">
+            <summary>
+            Инициализирует оконную функцию Габора.
+            </summary>
+            <param name="frameSize">Размер окна</param>
+            <param name="sigma">Параметр сжатия</param>
+        </member>
+        <member name="M:UMapx.Window.Gabor.Function(System.Double,System.Int32)">
+            <summary>
+            Возвращает значение оконной функции.
+            </summary>
+            <param name="x">Носитель</param>
+            <param name="frameSize">Размер окна</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Window.Gabor.GetWindow(System.Int32)">
+            <summary>
+            Возвращает оконную функцию.
+            </summary>
+            <param name="frameSize">Размер окна</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="P:UMapx.Window.Gabor.Sigma">
+            <summary>
+            Получает или задает значение среднеквадратического отклонения (>0).
+            </summary>
+        </member>
+        <member name="T:UMapx.Window.FastShortTimeFourierTransform">
+            <summary>
+            Определяет быстрое оконное преобразование Фурье.
+            <remarks>
+            Более подробную информацию можно найти на сайте:
+            https://en.wikipedia.org/wiki/Short-time_Fourier_transform
+            </remarks>
+            </summary>
+        </member>
+        <member name="T:UMapx.Window.IWindowTransform">
+            <summary>
+            Определяет общий интерфейс окнонных преобразований.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.IWindowTransform.Window">
+            <summary>
+            Получает или задает оконную функцию.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastShortTimeFourierTransform.FFT">
+            <summary>
+            Преобразование Фурье.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastShortTimeFourierTransform.window">
+            <summary>
+            Оконная функция.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastShortTimeFourierTransform.direction">
+            <summary>
+            Направление обработки.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastShortTimeFourierTransform.coefs">
+            <summary>
+            Коэффициенты оконной функции.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
+            <summary>
+            Инициализирует быстрое оконное преобразование Фурье.
+            </summary>
+            <param name="function">Оконная функция</param>
+            <param name="normalized">Нормализированное преобразование или нет</param>
+            <param name="direction">Направление обработки</param>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Forward(UMapx.Core.Complex[])">
+            <summary>
+            Прямое дискретное оконное преобразование Фурье.
+            </summary>
+            <param name="A">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Backward(UMapx.Core.Complex[])">
+            <summary>
+            Обратное дискретное оконное преобразование Фурье.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Forward(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Прямое дискретное оконное преобразование Фурье.
+            </summary>
+            <param name="A">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Backward(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Обратное дискретное оконное преобразование Фурье.
+            </summary>
+            <param name="B">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Forward(System.Double[])">
+            <summary>
+            Прямое дискретное преобразование Фурье.
+            </summary>
+            <param name="A">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Backward(System.Double[])">
+            <summary>
+            Обратное дискретное преобразование Фурье.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Forward(System.Double[0:,0:])">
+            <summary>
+            Прямое дискретное преобразование Фурье.
+            </summary>
+            <param name="A">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Backward(System.Double[0:,0:])">
+            <summary>
+            Обратное дискретное преобразование Фурье.
+            </summary>
+            <param name="B">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="P:UMapx.Window.FastShortTimeFourierTransform.Normalized">
+            <summary>
+            Нормализированное преобразование или нет.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.FastShortTimeFourierTransform.Direction">
+            <summary>
+            Получает или задает направление обработки.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.FastShortTimeFourierTransform.Window">
+            <summary>
+            Получает или задает оконную функцию.
+            </summary>
+        </member>
+        <member name="T:UMapx.Window.ShortTimeFourierTransform">
+            <summary>
+            Определяет оконное преобразование Фурье.
+            <remarks>
+            Более подробную информацию можно найти на сайте:
+            https://en.wikipedia.org/wiki/Short-time_Fourier_transform
+            </remarks>
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.ShortTimeFourierTransform.FFT">
+            <summary>
+            Преобразование Фурье.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.ShortTimeFourierTransform.window">
+            <summary>
+            Оконная функция.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.ShortTimeFourierTransform.direction">
+            <summary>
+            Направление обработки.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.ShortTimeFourierTransform.coefs">
+            <summary>
+            Коэффициенты оконной функции.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
+            <summary>
+            Инициализирует оконное преобразование Фурье.
+            </summary>
+            <param name="function">Оконная функция</param>
+            <param name="normalized">Нормализированное преобразование или нет</param>
+            <param name="direction">Направление обработки</param>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Forward(UMapx.Core.Complex[])">
+            <summary>
+            Прямое дискретное оконное преобразование Фурье.
+            </summary>
+            <param name="A">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Backward(UMapx.Core.Complex[])">
+            <summary>
+            Обратное дискретное оконное преобразование Фурье.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Forward(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Прямое дискретное оконное преобразование Фурье.
+            </summary>
+            <param name="A">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Backward(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Обратное дискретное оконное преобразование Фурье.
+            </summary>
+            <param name="B">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Forward(System.Double[])">
+            <summary>
+            Прямое дискретное преобразование Фурье.
+            </summary>
+            <param name="A">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Backward(System.Double[])">
+            <summary>
+            Обратное дискретное преобразование Фурье.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Forward(System.Double[0:,0:])">
+            <summary>
+            Прямое дискретное преобразование Фурье.
+            </summary>
+            <param name="A">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Backward(System.Double[0:,0:])">
+            <summary>
+            Обратное дискретное преобразование Фурье.
+            </summary>
+            <param name="B">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.shortfourierf(UMapx.Core.Complex[],System.Int32,System.Double[])">
+            <summary>
+            Прямое оконное преобразование Фурье.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <param name="N">Размерность</param>
+            <param name="coefs">Оконная функция</param>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.shortfourierb(UMapx.Core.Complex[],System.Int32,System.Double[])">
+            <summary>
+            Обратное оконное преобразование Фурье.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <param name="N">Размерность</param>
+            <param name="coefs">Оконная функция</param>
+        </member>
+        <member name="P:UMapx.Window.ShortTimeFourierTransform.Normalized">
+            <summary>
+            Нормализированное преобразование или нет.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.ShortTimeFourierTransform.Direction">
+            <summary>
+            Получает или задает направление обработки.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.ShortTimeFourierTransform.Window">
+            <summary>
+            Получает или задает оконную функцию.
+            </summary>
+        </member>
+        <member name="T:UMapx.Window.WeylHeisenbergTransform">
+            <summary>
+            Определяет группу ортогональных базисов и дискретных преобразований Вейля-Гейзенберга.
+            <remarks>
+            Базисы Вейля-Гейзенберга используются для получения частотно-временных характеристик сигнала.
+            Более подробную информацию можно найти на сайте:
+            https://elibrary.ru/item.asp?id=29767333
+            </remarks>
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.WeylHeisenbergTransform.window">
+            <summary>
+            Оконная функция.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.WeylHeisenbergTransform.m">
+            <summary>
+            Количество сдвигов по частоте.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.WeylHeisenbergTransform.direction">
+            <summary>
+            Направление обработки.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Инициализирует группу ортогональных базисов и преобразований Вейля-Гейзенберга.
+            </summary>
+            <param name="window">Оконная функция</param>
+            <param name="m">Количество сдвигов по частоте [4, N]</param>
+            <param name="direction">Направление обработки</param>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.WeylHeisenberg(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Возвращает комплексную матрицу базиса Вейля-Гейзенберга.
+            <remarks>
+            Размерность матрицы [N, N], где N = M * L.
+            </remarks>
+            </summary>
+            <param name="window">Оконная функция</param>
+            <param name="N">Количество отсчетов, вмещающих функцию</param>
+            <param name="M">Количество сдвигов по частоте</param>
+            <param name="orthogonalize">Ортогонализированная матрица или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.WeylHeisenberg(System.Double[],System.Int32,System.Boolean)">
+            <summary>
+            Возвращает комплексную матрицу базиса Вейля-Гейзенберга.
+            <remarks>
+            Размерность матрицы [N, N], где N = M * L.
+            </remarks>
+            </summary>
+            <param name="g0">Формирующая функция</param>
+            <param name="M">Количество сдвигов по частоте</param>
+            <param name="orthogonalize">Ортогонализированная матрица или нет</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.GetPacket(UMapx.Window.IWindow,System.Int32)">
+            <summary>
+            Возвращает вектор значений оконной функции.
+            </summary>
+            <param name="window">Оконная функция</param>
+            <param name="length">Количество отсчетов, вмещаемых функцию</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.nSymmetry(UMapx.Window.IWindow,System.Int32)">
+            <summary>
+            Возвращает вектор значений оконной функции, удовлетворяющей условию N-1 симметрии.
+            </summary>
+            <param name="window">Оконная функция</param>
+            <param name="length">Количество отсчетов функции</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.WeylHeisenberg(System.Double[],System.Int32)">
+            <summary>
+            Возвращает комплексную матрицу базиса Вейля-Гейзенберга.
+            <remarks>
+            Размерность матрицы [N, N], где N = M * L.
+            </remarks>
+            </summary>
+            <param name="g0">Формирующая функция</param>
+            <param name="M">Количество сдвигов по частоте</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(UMapx.Core.Complex[])">
+            <summary>
+            Прямое дискретное преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="A">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(UMapx.Core.Complex[])">
+            <summary>
+            Обратное дискретное преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Прямое дискретное преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="A">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Обратное дискретное преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="B">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(System.Double[])">
+            <summary>
+            Прямое дискретное преобразование Фурье.
+            </summary>
+            <param name="A">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(System.Double[])">
+            <summary>
+            Обратное дискретное преобразование Фурье.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(System.Double[0:,0:])">
+            <summary>
+            Прямое дискретное преобразование Фурье.
+            </summary>
+            <param name="A">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(System.Double[0:,0:])">
+            <summary>
+            Обратное дискретное преобразование Фурье.
+            </summary>
+            <param name="B">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="F:UMapx.Window.WeylHeisenbergTransform.DFT">
+            <summary>
+            Преобразование Фурье.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.WeylHeisenbergTransform.FFT">
+            <summary>
+            Быстрое преобразование Фурье.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Zak(System.Double[],System.Int32)">
+            <summary>
+            Реализует Zak-ортогонализацию вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="M">Количество сдвигов по частоте</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Zak(UMapx.Core.Complex[],System.Int32)">
+            <summary>
+            Реализует Zak-ортогонализацию вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="M">Количество сдвигов по частоте</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="P:UMapx.Window.WeylHeisenbergTransform.M">
+            <summary>
+            Получает или задает количество сдвигов по частоте [4, N].
+            <remarks>
+            Четное число.
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.WeylHeisenbergTransform.Direction">
+            <summary>
+            Получает или задает направление обработки.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.WeylHeisenbergTransform.Window">
+            <summary>
+            Получает или задает оконную функцию.
+            </summary>
+        </member>
+        <member name="T:UMapx.Window.FastWeylHeisenbergTransform">
+            <summary>
+            Определяет класс быстрого преобразования Вейля-Гейзенберга.
+            <remarks>
+            Класс представляет вычислительно эффективную реализацию одномерного и двумерного дикретных ортогональных
+            преобразований Вейля-Гейзенберга.
+            Более подробную информацию можно найти на сайте:
+            https://elibrary.ru/title_about.asp?id=58245
+            </remarks>
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.FFT">
+            <summary>
+            Преобразование Фурье.
+            <remarks>
+            Используется как вспомогательный компонент.
+            </remarks>
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.window">
+            <summary>
+            Оконная функция.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.m">
+            <summary>
+            Количество сдвигов по частоте.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.direction">
+            <summary>
+            Направление обработки.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Инициализирует быстрое преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="window">Оконная функция</param>
+            <param name="m">Количество сдвигов по частоте [4, N]</param>
+            <param name="direction">Направление обработки</param>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex[])">
+            <summary>
+            Прямое дискретное преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="A">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex[])">
+            <summary>
+            Обратное дискретное преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Прямое дискретное быстрое преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="A">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Обратное дискретное быстрое преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="B">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(System.Double[])">
+            <summary>
+            Прямое дискретное преобразование Фурье.
+            </summary>
+            <param name="A">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(System.Double[])">
+            <summary>
+            Обратное дискретное преобразование Фурье.
+            </summary>
+            <param name="B">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(System.Double[0:,0:])">
+            <summary>
+            Прямое дискретное преобразование Фурье.
+            </summary>
+            <param name="A">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(System.Double[0:,0:])">
+            <summary>
+            Обратное дискретное преобразование Фурье.
+            </summary>
+            <param name="B">Двумерный массив</param>
+            <returns>Двумерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.WHT(UMapx.Core.Complex[],System.Double[],System.Int32)">
+            <summary>
+            Прямое быстрое дискретное преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="input">Одномерный массив</param>
+            <param name="g0">Формирующая WH-функция</param>
+            <param name="M">Количество сдвигов по частоте</param>
+            <returns>Одноменый массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IWHT(UMapx.Core.Complex[],System.Double[],System.Int32)">
+            <summary>
+            Обратное быстрое дискретное преобразование Вейля-Гейзенберга.
+            </summary>
+            <param name="input">Одномерный массив</param>
+            <param name="g0">Формирующая WH-функция</param>
+            <param name="M">Количество сдвигов по частоте</param>
+            <returns>Одноменый массив</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.GetRotation(System.Int32)">
+            <summary>
+            Возвращает одномерный массив фазовых поворотов.
+            </summary>
+            <param name="M">Количество сдвигов по частоте</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="P:UMapx.Window.FastWeylHeisenbergTransform.M">
+            <summary>
+            Получает или задает количество сдвигов по частоте [4, N].
+            <remarks>
+            Четное число.
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.FastWeylHeisenbergTransform.Direction">
+            <summary>
+            Получает или задает направление обработки.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.FastWeylHeisenbergTransform.Window">
+            <summary>
+            Получает или задает оконную функцию.
+            </summary>
         </member>
         <member name="T:UMapx.Core.RangeDouble">
             <summary>
@@ -25894,32 +26036,6 @@
             <param name="v">Одномерный массив</param>
             <param name="r">Радиус</param>
         </member>
-        <member name="F:UMapx.Core.Matrice.DFT">
-            <summary>
-            Преобразование Фурье.
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Matrice.FFT">
-            <summary>
-            Быстрое преобразование Фурье.
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Zak(System.Double[],System.Int32)">
-            <summary>
-            Реализует Zak-ортогонализацию вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="M">Количество сдвигов по частоте</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Zak(UMapx.Core.Complex[],System.Int32)">
-            <summary>
-            Реализует Zak-ортогонализацию вектора.
-            </summary>
-            <param name="v">Одномерный массив</param>
-            <param name="M">Количество сдвигов по частоте</param>
-            <returns>Одномерный массив</returns>
-        </member>
         <member name="M:UMapx.Core.Matrice.GetCol(System.Double[0:,0:],System.Int32)">
             <summary>
             Возвращает вектор столбца матрицы.
@@ -25939,15 +26055,15 @@
         </member>
         <member name="M:UMapx.Core.Matrice.GetRow(System.Double[0:,0:],System.Int32)">
             <summary>
-            Возвращает вектор столбца матрицы.
+            Возвращает вектор строки матрицы.
             </summary>
             <param name="m">Матрица</param>
-            <param name="r">Одномерный массив</param>
-            <returns>Вектор</returns>
+            <param name="r">Номер строки</param>
+            <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.SetRow(System.Double[0:,0:],System.Double[],System.Int32)">
             <summary>
-            Задает вектор столбца матрицы.
+            Задает вектор строки матрицы.
             </summary>
             <param name="m">Матрица</param>
             <param name="n">Одномерный массив</param>
@@ -25973,15 +26089,15 @@
         </member>
         <member name="M:UMapx.Core.Matrice.GetRow(UMapx.Core.Complex[0:,0:],System.Int32)">
             <summary>
-            Возвращает вектор столбца матрицы.
+            Возвращает вектор строки матрицы.
             </summary>
             <param name="m">Матрица</param>
-            <param name="r">Одномерный массив</param>
-            <returns>Вектор</returns>
+            <param name="r">Номер строки</param>
+            <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.SetRow(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[],System.Int32)">
             <summary>
-            Задает вектор столбца матрицы.
+            Задает вектор строки матрицы.
             </summary>
             <param name="m">Матрица</param>
             <param name="n">Одномерный массив</param>

@@ -2997,19 +2997,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Gabor function
-        /// <summary>
-        /// Возвращает значение функции усеченного гауссиана.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="sigma">Среднеквадратическое отклонение (0, +inf)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Gabor(double x, double sigma)
-        {
-            return Maths.Sqrt(2 * sigma, 4) * Math.Exp(-Math.PI * sigma * x * x);
-        }
-        #endregion
-
         #region Rademacher function
         /// <summary>
         /// Возвращает значение функции Радамехера.

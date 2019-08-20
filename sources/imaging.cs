@@ -21,7 +21,7 @@ using UMapx.Transform;
 namespace UMapx.Imaging
 {
     // **************************************************************************
-    //                       IMAGE PROCESSING TOOLBOX 4.0.0
+    //                          IMAGE PROCESSING TOOLBOX
     //                            UMAPX.NET FRAMEWORK
     // **************************************************************************
     // Image Processing Toolbox provides a comprehensive set of reference-

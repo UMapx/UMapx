@@ -6369,169 +6369,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        // ZAK voids
-
-        #region Zak components
-        /// <summary>
-        /// Преобразование Фурье.
-        /// </summary>
-        private static FourierTransform DFT = new FourierTransform(false, Direction.Vertical);
-        /// <summary>
-        /// Быстрое преобразование Фурье.
-        /// </summary>
-        private static FastFourierTransform FFT = new FastFourierTransform(false, Direction.Vertical);
-        /// <summary>
-        /// Реализует Zak-ортогонализацию вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[] Zak(this double[] v, int M)
-        {
-            // Быстрый алгоритм ортогонализации формирующей 
-            // WH-функции с использованием дискретного Zak-преобразования.
-            // В.П. Волчков, Д.А. Петров и В.М. Асирян.
-            // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
-
-            int N = v.Length;
-            double[] vort = new double[N];
-            int L = N / M, L2 = L * 2, i, j;
-            Complex[,] G = new Complex[L2, N];
-            Complex[,] Z;
-
-            // Дискретное Zak-преобразование:
-            for (i = 0; i < L2; i++)
-            {
-                for (j = 0; j < N; j++)
-                {
-                    G[i, j] = v[Maths.Mod(j + M / 2 * i, N)];
-                }
-            }
-
-            // Быстрое или обычное 
-            // преобразование Фурье по столбцам:
-            if (Maths.IsPower(L2, 2))
-            {
-                Z = FFT.Forward(G);
-            }
-            else
-            {
-                Z = DFT.Forward(G);
-            }
-
-            // Параметры:
-            double w = 2 / Math.Sqrt(M);
-            double even, odd, phi;
-            Complex z1, z2;
-
-            // Вычисление формирующей WH-функции:
-            for (i = 0; i < L; i++)
-            {
-                for (j = 0; j < N; j++)
-                {
-                    z1 = Z[i, j];
-                    z2 = Z[L + i, j];
-
-                    even = Math.Pow(z1.Abs, 2);
-                    odd = Math.Pow(z2.Abs, 2);
-                    phi = w / Math.Sqrt(even + odd);
-
-                    Z[i, j] = z1 * phi;
-                    Z[L + i, j] = z2 * phi;
-                }
-            }
-
-            // Обратное дискретное Zak-преобразование:
-            Complex sum;
-            for (i = 0; i < N; i++)
-            {
-                sum = 0;
-                for (j = 0; j < L2; j++)
-                {
-                    sum += Z[j, i];
-                }
-                vort[i] = (sum / L2).Re;
-            }
-
-            return vort;
-        }
-        /// <summary>
-        /// Реализует Zak-ортогонализацию вектора.
-        /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[] Zak(this Complex[] v, int M)
-        {
-            // Быстрый алгоритм ортогонализации формирующей 
-            // WH-функции с использованием дискретного Zak-преобразования.
-            // В.П. Волчков, Д.А. Петров и В.М. Асирян.
-            // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
-
-            int N = v.Length;
-            Complex[] vort = new Complex[N];
-            int L = N / M, L2 = L * 2, i, j;
-            Complex[,] G = new Complex[L2, N];
-            Complex[,] Z;
-
-            // Дискретное Zak-преобразование:
-            for (i = 0; i < L2; i++)
-            {
-                for (j = 0; j < N; j++)
-                {
-                    G[i, j] = v[Maths.Mod(j + M / 2 * i, N)];
-                }
-            }
-
-            // Быстрое или обычное 
-            // преобразование Фурье по столбцам:
-            if (Maths.IsPower(L2, 2))
-            {
-                Z = FFT.Forward(G);
-            }
-            else
-            {
-                Z = DFT.Forward(G);
-            }
-
-            // Параметры:
-            double w = 2 / Math.Sqrt(M);
-            double even, odd, phi;
-            Complex z1, z2;
-
-            // Вычисление формирующей WH-функции:
-            for (i = 0; i < L; i++)
-            {
-                for (j = 0; j < N; j++)
-                {
-                    z1 = Z[i, j];
-                    z2 = Z[L + i, j];
-
-                    even = Math.Pow(z1.Abs, 2);
-                    odd = Math.Pow(z2.Abs, 2);
-                    phi = w / Math.Sqrt(even + odd);
-
-                    Z[i, j] = z1 * phi;
-                    Z[L + i, j] = z2 * phi;
-                }
-            }
-
-            // Обратное дискретное Zak-преобразование:
-            Complex sum;
-            for (i = 0; i < N; i++)
-            {
-                sum = 0;
-                for (j = 0; j < L2; j++)
-                {
-                    sum += Z[j, i];
-                }
-                vort[i] = sum / L2;
-            }
-
-            return vort;
-        }
-        #endregion
-
         // MATLAB voids
 
         #region MATLAB voids
@@ -6570,11 +6407,11 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Возвращает вектор столбца матрицы.
+        /// Возвращает вектор строки матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
-        /// <param name="r">Одномерный массив</param>
-        /// <returns>Вектор</returns>
+        /// <param name="r">Номер строки</param>
+        /// <returns>Одномерный массив</returns>
         public static double[] GetRow(this double[,] m, int r)
         {
             int w = m.GetLength(1);
@@ -6586,7 +6423,7 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Задает вектор столбца матрицы.
+        /// Задает вектор строки матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="n">Одномерный массив</param>
@@ -6636,11 +6473,11 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Возвращает вектор столбца матрицы.
+        /// Возвращает вектор строки матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
-        /// <param name="r">Одномерный массив</param>
-        /// <returns>Вектор</returns>
+        /// <param name="r">Номер строки</param>
+        /// <returns>Одномерный массив</returns>
         public static Complex[] GetRow(this Complex[,] m, int r)
         {
             int w = m.GetLength(1);
@@ -6652,7 +6489,7 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Задает вектор столбца матрицы.
+        /// Задает вектор строки матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="n">Одномерный массив</param>
@@ -8429,12 +8266,13 @@ namespace UMapx.Core
         public static double[] Householder(this double[] v)
         {
             int length = v.Length;
-            double norm = v.Norm();
-            double[] u = new double[length];
 
             // length checking:
             if (length > 0)
             {
+                double norm = v.Norm();
+                double[] u = new double[length];
+
                 // householder vector:
                 if (norm != 0)
                 {
