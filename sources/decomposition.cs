@@ -2602,13 +2602,13 @@ namespace UMapx.Decomposition
     /// Определяет диагональное разложение квадратной матрицы.
     /// <remarks>
     /// Это представление квадратной матрицы A в виде произведения двух матриц: A = B * D, где B - квадратная матрица, а D - диагональная матрица.
-    /// Данное разложение используется для выделения диагональных матриц в других разложениях (например, LDU-разложение).
+    /// Данное разложение используется для выделения диагональных матриц в других разложениях (например, LDU-, LDL- разложения).
     /// </remarks>
     /// </summary>
     public class Diagonal
     {
         #region Private data
-        private double[][] matrix;
+        private double[,] matrix;
         private double[] diag;
         #endregion
 
@@ -2622,33 +2622,14 @@ namespace UMapx.Decomposition
             if (!Matrice.IsSquare(A))
                 throw new Exception("Матрица должна быть квадратной");
 
-            int n = A.GetLength(0), i, j;
-            this.matrix = Matrice.ToJagged(A);
+            int n = A.GetLength(0), i;
             this.diag = new double[n];
 
-            // Определение значений диагональной матрицы:
             for (i = 0; i < n; i++)
-            {
-                diag[i] = matrix[i][i];
-            }
+                diag[i] = A[i, i];
 
-            double alpha;
-
-            // Вычисление новой матрицы:
-            for (j = 0; j < n; j++)
-            {
-                // digaonal element:
-                alpha = diag[j];
-
-                // dividing:
-                if (alpha != 0)
-                {
-                    for (i = 0; i < n; i++)
-                    {
-                        matrix[i][j] /= alpha;
-                    }
-                }
-            }
+            this.matrix = Matrice.DiagDiv(A, diag);
+            return;
         }
         #endregion
 
@@ -2658,7 +2639,7 @@ namespace UMapx.Decomposition
         /// </summary>
         public double[,] B
         {
-            get { return Matrice.FromJagged(matrix); }
+            get { return matrix; }
         }
         /// <summary>
         /// Получает вектор элментов диагонали.
@@ -4297,6 +4278,7 @@ namespace UMapx.Decomposition
                     matrices[i][j] = eye[i, j] - w[i] * w[j];
                 }
             }
+
             return;
         }
         /// <summary>

@@ -324,7 +324,7 @@
             Определяет диагональное разложение квадратной матрицы.
             <remarks>
             Это представление квадратной матрицы A в виде произведения двух матриц: A = B * D, где B - квадратная матрица, а D - диагональная матрица.
-            Данное разложение используется для выделения диагональных матриц в других разложениях (например, LDU-разложение).
+            Данное разложение используется для выделения диагональных матриц в других разложениях (например, LDU-, LDL- разложения).
             </remarks>
             </summary>
         </member>
@@ -22138,6 +22138,13 @@
             <param name="frameSize">Размер окна</param>
             <returns>Одномерный массив</returns>
         </member>
+        <member name="M:UMapx.Window.IWindow.Function(System.Double[])">
+            <summary>
+            Возвращает массив значений оконной функции.
+            </summary>
+            <param name="x">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
         <member name="P:UMapx.Window.IWindow.FrameSize">
             <summary>
             Получает или задает размер окна.
@@ -22161,19 +22168,19 @@
             </summary>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Window.WindowBase.Function(System.Double[])">
-            <summary>
-            Возвращает массив значений оконной функции.
-            </summary>
-            <param name="x">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
         <member name="M:UMapx.Window.WindowBase.Function(System.Double[],System.Int32)">
             <summary>
             Возвращает массив значений оконной функции.
             </summary>
             <param name="x">Одномерный массив</param>
             <param name="frameSize">Размер окна</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Window.WindowBase.Function(System.Double[])">
+            <summary>
+            Возвращает массив значений оконной функции.
+            </summary>
+            <param name="x">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Window.WindowBase.Function(System.Double,System.Int32)">
@@ -22201,7 +22208,7 @@
             Инициализирует оконную функцию Планка.
             </summary>
             <param name="frameSize">Размер окна</param>
-            <param name="a">Параметр формы [0, 1]</param>
+            <param name="a">Параметр формы [0, 0.5]</param>
         </member>
         <member name="M:UMapx.Window.Planck.Z(System.Double,System.Boolean,System.Int32)">
             <summary>
@@ -22228,7 +22235,7 @@
         </member>
         <member name="P:UMapx.Window.Planck.A">
             <summary>
-            Получает или задает значение параметра формы [0, 1].
+            Получает или задает значение параметра формы [0, 0.5].
             </summary>
         </member>
         <member name="T:UMapx.Window.Tukey">
@@ -22966,22 +22973,6 @@
             </summary>
             <param name="B">Двумерный массив</param>
             <returns>Двумерный массив</returns>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.shortfourierf(UMapx.Core.Complex[],System.Int32,System.Double[])">
-            <summary>
-            Прямое оконное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <param name="N">Размерность</param>
-            <param name="coefs">Оконная функция</param>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.shortfourierb(UMapx.Core.Complex[],System.Int32,System.Double[])">
-            <summary>
-            Обратное оконное преобразование Фурье.
-            </summary>
-            <param name="B">Одномерный массив</param>
-            <param name="N">Размерность</param>
-            <param name="coefs">Оконная функция</param>
         </member>
         <member name="P:UMapx.Window.ShortTimeFourierTransform.Normalized">
             <summary>
@@ -23998,11 +23989,20 @@
             <param name="lower">Приведение к нижнеугольной матрице или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.DiagMul(System.Double[0:,0:])">
+        <member name="M:UMapx.Core.Matrice.DiagMul(System.Double[0:,0:],System.Double[])">
             <summary>
-            Возвращает значение произведения на главной диагонали.
+            Возвращает произведение матрицы и диагональной матрицы.
             </summary>
             <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.DiagDiv(System.Double[0:,0:],System.Double[])">
+            <summary>
+            Возвращает произведение матрицы и диагональной матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
             <returns>Матрица</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Norm(System.Double[0:,0:],System.Double)">
@@ -24085,11 +24085,20 @@
             <param name="lower">Приведение к нижнеугольной матрице или нет</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.DiagMul(UMapx.Core.Complex[0:,0:])">
+        <member name="M:UMapx.Core.Matrice.DiagMul(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
             <summary>
-            Возвращает значение произведения на главной диагонали.
+            Возвращает произведение матрицы и диагональной матрицы.
             </summary>
             <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.DiagDiv(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает произведение матрицы и диагональной матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
             <returns>Матрица</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Fix(UMapx.Core.Complex[0:,0:])">
@@ -24679,6 +24688,34 @@
         <member name="M:UMapx.Core.Matrice.Sum(UMapx.Core.Complex[0:,0:])">
             <summary>
             Возвращает вектор сумм матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:])">
+            <summary>
+            Возвращает вектор произведений матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает вектор произведений матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[0:,0:])">
+            <summary>
+            Возвращает вектор частных матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает вектор частных матрицы.
             </summary>
             <param name="m">Матрица</param>
             <returns>Одномерный массив</returns>
@@ -25731,6 +25768,34 @@
             </summary>
             <param name="v">Одномерный массив</param>
             <returns>Комплексное число</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Double[])">
+            <summary>
+            Возвращает общее произведение вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает общее произведение вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[])">
+            <summary>
+            Возвращает общее частное вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает общее частное вектора.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Entropy(System.Double[])">
             <summary>

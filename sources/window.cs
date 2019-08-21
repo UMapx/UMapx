@@ -40,14 +40,14 @@ namespace UMapx.Window
         /// Инициализирует оконную функцию Планка.
         /// </summary>
         /// <param name="frameSize">Размер окна</param>
-        /// <param name="a">Параметр формы [0, 1]</param>
+        /// <param name="a">Параметр формы [0, 0.5]</param>
         public Planck(int frameSize, double a = 0.15)
         {
             this.FrameSize = frameSize;
             this.A = a;
         }
         /// <summary>
-        /// Получает или задает значение параметра формы [0, 1].
+        /// Получает или задает значение параметра формы [0, 0.5].
         /// </summary>
         public double A
         {
@@ -57,7 +57,7 @@ namespace UMapx.Window
             }
             set
             {
-                this.a = Maths.Double(value);
+                this.a = Maths.Range(value, 0, 0.5);
             }
         }
         /// <summary>
@@ -233,7 +233,7 @@ namespace UMapx.Window
             }
             set
             {
-                if (value <= 0)
+                if (sigma <= 0)
                     throw new Exception("Неверное значение аргумента");
 
                 this.sigma = value;
@@ -411,7 +411,7 @@ namespace UMapx.Window
         /// <returns>Одномерный массив</returns>
         public override double[] GetWindow(int frameSize)
         {
-            double t = (frameSize - 1) / 2;
+            double t = (frameSize - 1) / 2.0;
             double[] x = Matrice.Compute(-t, t, 1);
             return this.Function(x, frameSize);
         }
@@ -440,7 +440,7 @@ namespace UMapx.Window
         public override double Function(double x, int frameSize)
         {
             // Welch function:
-            double t = (frameSize - 1) / 2;
+            double t = (frameSize - 1) / 2.0;
             double a = (x - t) / t;
             return 1 - a * a;
         }
@@ -976,7 +976,7 @@ namespace UMapx.Window
             }
             set
             {
-                if (value <= 0)
+                if (sigma <= 0)
                     throw new Exception("Неверное значение аргумента");
 
                 this.sigma = value;
@@ -1063,15 +1063,6 @@ namespace UMapx.Window
         /// Возвращает массив значений оконной функции.
         /// </summary>
         /// <param name="x">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public double[] Function(double[] x)
-        {
-            return this.Function(x, this.frameSize);
-        }
-        /// <summary>
-        /// Возвращает массив значений оконной функции.
-        /// </summary>
-        /// <param name="x">Одномерный массив</param>
         /// <param name="frameSize">Размер окна</param>
         /// <returns>Одномерный массив</returns>
         public double[] Function(double[] x, int frameSize)
@@ -1085,6 +1076,15 @@ namespace UMapx.Window
             }
 
             return H;
+        }
+        /// <summary>
+        /// Возвращает массив значений оконной функции.
+        /// </summary>
+        /// <param name="x">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public double[] Function(double[] x)
+        {
+            return this.Function(x, this.frameSize);
         }
         /// <summary>
         /// Возвращает значение оконной функции.
@@ -1187,7 +1187,7 @@ namespace UMapx.Window
         }
         #endregion
 
-        #region Short-Time Fourier Discrete Transform
+        #region Short-time Fourier transform
         /// <summary>
         /// Прямое дискретное оконное преобразование Фурье.
         /// </summary>
@@ -1195,13 +1195,24 @@ namespace UMapx.Window
         /// <returns>Одномерный массив</returns>
         public Complex[] Forward(Complex[] A)
         {
-            int N = A.Length;
+            // params
+            int N = A.Length, i, j;
+            Complex[] B = new Complex[N];
+            int frame = coefs.Length;
 
-            // Быстрое преобразование Фурье:
-            Complex[] B = FFT.Forward(A);
+            // Short-Time Fourier Transform
+            for (i = 0; i < N; i += frame)
+            {
+                Complex[] data = new Complex[frame];
 
-            // Прямое оконное преобразование:
-            ShortTimeFourierTransform.shortfourierf(B, N, coefs);
+                for (j = 0; j < frame; j++)
+                    data[j] = A[i + j] * coefs[Maths.Mod(i - frame / 2, frame)];
+
+                data = FFT.Forward(data);
+
+                for (j = 0; j < frame; j++)
+                    B[i + j] = data[j];
+            }
 
             return B;
         }
@@ -1212,15 +1223,27 @@ namespace UMapx.Window
         /// <returns>Одномерный массив</returns>
         public Complex[] Backward(Complex[] B)
         {
-            int N = B.Length;
+            int N = B.Length, i, j;
+            Complex[] A = new Complex[N];
+            int frame = coefs.Length;
 
-            // Быстрое обратное преобразование Фурье:
-            Complex[] A = (Complex[])B.Clone();
+            for (i = 0; i < N; i += frame)
+            {
+                Complex[] data = new Complex[frame];
 
-            // Обратное оконное преобразование:
-            ShortTimeFourierTransform.shortfourierb(A, N, coefs);
+                for (j = 0; j < frame; j++)
+                {
+                    data[j] = B[i + j];
+                }
 
-            A = FFT.Backward(A);
+                data = FFT.Backward(data);
+
+                for (j = 0; j < frame; j++)
+                {
+                    A[i + j] = data[j] / coefs[Maths.Mod(i - frame / 2, frame)];
+                }
+            }
+
             return A;
         }
         /// <summary>
@@ -1231,7 +1254,7 @@ namespace UMapx.Window
         public Complex[,] Forward(Complex[,] A)
         {
             // Fourier transform:
-            Complex[,] B = FFT.Forward(A);
+            Complex[,] B = (Complex[,])A.Clone();
             int N = A.GetLength(0);
             int M = A.GetLength(1);
 
@@ -1248,7 +1271,7 @@ namespace UMapx.Window
                         row[j] = B[i, j];
                     }
 
-                    ShortTimeFourierTransform.shortfourierf(row, M, coefs);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -1267,7 +1290,7 @@ namespace UMapx.Window
                         col[i] = B[i, j];
                     }
 
-                    ShortTimeFourierTransform.shortfourierf(col, N, coefs);
+                    col = Forward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -1289,7 +1312,7 @@ namespace UMapx.Window
                         col[i] = B[i, j];
                     }
 
-                    ShortTimeFourierTransform.shortfourierf(col, N, coefs);
+                    col = Forward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -1310,7 +1333,7 @@ namespace UMapx.Window
                         row[j] = B[i, j];
                     }
 
-                    ShortTimeFourierTransform.shortfourierf(row, M, coefs);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -1344,7 +1367,8 @@ namespace UMapx.Window
                     {
                         col[i] = A[i, j];
                     }
-                    ShortTimeFourierTransform.shortfourierb(col, N, coefs);
+
+                    col = Backward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -1362,7 +1386,8 @@ namespace UMapx.Window
                     {
                         row[j] = A[i, j];
                     }
-                    ShortTimeFourierTransform.shortfourierb(row, M, coefs);
+
+                    row = Backward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -1382,7 +1407,8 @@ namespace UMapx.Window
                     {
                         col[i] = A[i, j];
                     }
-                    ShortTimeFourierTransform.shortfourierb(col, N, coefs);
+
+                    col = Backward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -1402,7 +1428,8 @@ namespace UMapx.Window
                     {
                         row[j] = A[i, j];
                     }
-                    ShortTimeFourierTransform.shortfourierb(row, M, coefs);
+
+                    row = Backward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -1410,8 +1437,6 @@ namespace UMapx.Window
                     }
                 });
             }
-
-            A = FFT.Backward(A);
 
             return A;
         }
@@ -1536,7 +1561,7 @@ namespace UMapx.Window
         }
         #endregion
 
-        #region Short-Time Fourier Discrete Transform
+        #region Short-time Fourier transform
         /// <summary>
         /// Прямое дискретное оконное преобразование Фурье.
         /// </summary>
@@ -1544,13 +1569,24 @@ namespace UMapx.Window
         /// <returns>Одномерный массив</returns>
         public Complex[] Forward(Complex[] A)
         {
-            int N = A.Length;
+            // params
+            int N = A.Length, i, j;
+            Complex[] B = new Complex[N];
+            int frame = coefs.Length;
 
-            // Быстрое преобразование Фурье:
-            Complex[] B = FFT.Forward(A);
+            // Short-Time Fourier Transform
+            for (i = 0; i < N; i += frame)
+            {
+                Complex[] data = new Complex[frame];
 
-            // Прямое оконное преобразование:
-            ShortTimeFourierTransform.shortfourierf(B, N, coefs);
+                for (j = 0; j < frame; j++)
+                    data[j] = A[i + j] * coefs[Maths.Mod(i - frame / 2, frame)];
+
+                data = FFT.Forward(data);
+
+                for (j = 0; j < frame; j++)
+                    B[i + j] = data[j];
+            }
 
             return B;
         }
@@ -1561,15 +1597,27 @@ namespace UMapx.Window
         /// <returns>Одномерный массив</returns>
         public Complex[] Backward(Complex[] B)
         {
-            int N = B.Length;
+            int N = B.Length, i, j;
+            Complex[] A = new Complex[N];
+            int frame = coefs.Length;
 
-            // Быстрое обратное преобразование Фурье:
-            Complex[] A = (Complex[])B.Clone();
+            for (i = 0; i < N; i += frame)
+            {
+                Complex[] data = new Complex[frame];
 
-            // Обратное оконное преобразование:
-            ShortTimeFourierTransform.shortfourierb(A, N, coefs);
+                for (j = 0; j < frame; j++)
+                {
+                    data[j] = B[i + j];
+                }
 
-            A = FFT.Backward(A);
+                data = FFT.Backward(data);
+
+                for (j = 0; j < frame; j++)
+                {
+                    A[i + j] = data[j] / coefs[Maths.Mod(i - frame / 2, frame)];
+                }
+            }
+
             return A;
         }
         /// <summary>
@@ -1580,7 +1628,7 @@ namespace UMapx.Window
         public Complex[,] Forward(Complex[,] A)
         {
             // Fourier transform:
-            Complex[,] B = FFT.Forward(A);
+            Complex[,] B = (Complex[,])A.Clone();
             int N = A.GetLength(0);
             int M = A.GetLength(1);
 
@@ -1597,7 +1645,7 @@ namespace UMapx.Window
                         row[j] = B[i, j];
                     }
 
-                    ShortTimeFourierTransform.shortfourierf(row, M, coefs);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -1616,7 +1664,7 @@ namespace UMapx.Window
                         col[i] = B[i, j];
                     }
 
-                    ShortTimeFourierTransform.shortfourierf(col, N, coefs);
+                    col = Forward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -1638,7 +1686,7 @@ namespace UMapx.Window
                         col[i] = B[i, j];
                     }
 
-                    ShortTimeFourierTransform.shortfourierf(col, N, coefs);
+                    col = Forward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -1659,7 +1707,7 @@ namespace UMapx.Window
                         row[j] = B[i, j];
                     }
 
-                    ShortTimeFourierTransform.shortfourierf(row, M, coefs);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -1693,7 +1741,8 @@ namespace UMapx.Window
                     {
                         col[i] = A[i, j];
                     }
-                    ShortTimeFourierTransform.shortfourierb(col, N, coefs);
+                    
+                    col = Backward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -1711,7 +1760,8 @@ namespace UMapx.Window
                     {
                         row[j] = A[i, j];
                     }
-                    ShortTimeFourierTransform.shortfourierb(row, M, coefs);
+
+                    row = Backward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -1731,7 +1781,8 @@ namespace UMapx.Window
                     {
                         col[i] = A[i, j];
                     }
-                    ShortTimeFourierTransform.shortfourierb(col, N, coefs);
+
+                    col = Backward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -1751,7 +1802,8 @@ namespace UMapx.Window
                     {
                         row[j] = A[i, j];
                     }
-                    ShortTimeFourierTransform.shortfourierb(row, M, coefs);
+                    
+                    row = Backward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -1759,8 +1811,6 @@ namespace UMapx.Window
                     }
                 });
             }
-
-            A = FFT.Backward(A);
 
             return A;
         }
@@ -1799,29 +1849,6 @@ namespace UMapx.Window
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
-        }
-        #endregion
-
-        #region Private voids
-        /// <summary>
-        /// Прямое оконное преобразование Фурье.
-        /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <param name="N">Размерность</param>
-        /// <param name="coefs">Оконная функция</param>
-        internal static void shortfourierf(Complex[] B, int N, double[] coefs)
-        {
-            int time = coefs.Length; for (int i = 0; i < N; i++) { B[i] *= coefs[Maths.Mod(i, time)]; } return;
-        }
-        /// <summary>
-        /// Обратное оконное преобразование Фурье.
-        /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <param name="N">Размерность</param>
-        /// <param name="coefs">Оконная функция</param>
-        internal static void shortfourierb(Complex[] B, int N, double[] coefs)
-        {
-            int time = coefs.Length; for (int i = 0; i < N; i++) { B[i] /= coefs[Maths.Mod(i, time)]; } return;
         }
         #endregion
     }
@@ -2941,6 +2968,12 @@ namespace UMapx.Window
         /// <param name="frameSize">Размер окна</param>
         /// <returns>Одномерный массив</returns>
         double[] Function(double[] x, int frameSize);
+        /// <summary>
+        /// Возвращает массив значений оконной функции.
+        /// </summary>
+        /// <param name="x">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        double[] Function(double[] x);
         #endregion
     }
     /// <summary>

@@ -12,7 +12,6 @@ using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using UMapx.Colorspace;
 using UMapx.Imaging;
-using UMapx.Transform;
 
 namespace UMapx.Core
 {
@@ -846,21 +845,61 @@ namespace UMapx.Core
             return Matrice.FromJagged(H);
         }
         /// <summary>
-        /// Возвращает значение произведения на главной диагонали.
+        /// Возвращает произведение матрицы и диагональной матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
         /// <returns>Матрица</returns>
-        public static double DiagMul(this double[,] m)
+        public static double[,] DiagMul(this double[,] m, double[] v)
         {
-            int n = m.GetLength(1);
-            double result = 1;
+            int c = m.GetLength(1);
+            int r = m.GetLength(0);
+            double[,] H = new double[r, c];
+            double alpha;
+            int i, j;
 
-            for (int i = 0; i < n; i++)
+            for (j = 0; j < c; j++)
             {
-                result = result * m[i, i];
-            }
+                // digaonal element:
+                alpha = v[j];
 
-            return result;
+                // mulptiplication:
+                for (i = 0; i < r; i++)
+                {
+                    H[i, j] = m[i, j] * alpha;
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает произведение матрицы и диагональной матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Матрица</returns>
+        public static double[,] DiagDiv(this double[,] m, double[] v)
+        {
+            int c = m.GetLength(1);
+            int r = m.GetLength(0);
+            double[,] H = new double[r, c];
+            double alpha;
+            int i, j;
+
+            for (j = 0; j < c; j++)
+            {
+                // digaonal element:
+                alpha = v[j];
+
+                // dividing:
+                if (alpha != 0)
+                {
+                    for (i = 0; i < r; i++)
+                    {
+                        H[i, j] = m[i, j] / alpha;
+                    }
+                }
+            }
+            return H;
         }
         /// <summary>
         /// Возвращает P-норму матрицы.
@@ -1196,21 +1235,61 @@ namespace UMapx.Core
             return Matrice.FromJagged(H);
         }
         /// <summary>
-        /// Возвращает значение произведения на главной диагонали.
+        /// Возвращает произведение матрицы и диагональной матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
         /// <returns>Матрица</returns>
-        public static Complex DiagMul(this Complex[,] m)
+        public static Complex[,] DiagMul(this Complex[,] m, Complex[] v)
         {
-            int n = m.GetLength(1);
-            Complex result = 1;
+            int c = m.GetLength(1);
+            int r = m.GetLength(0);
+            Complex[,] H = new Complex[r, c];
+            Complex alpha;
+            int i, j;
 
-            for (int i = 0; i < n; i++)
+            for (j = 0; j < c; j++)
             {
-                result *= m[i, i];
-            }
+                // digaonal element:
+                alpha = v[j];
 
-            return result;
+                // mulptiplication:
+                for (i = 0; i < r; i++)
+                {
+                    H[i, j] = m[i, j] * alpha;
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Возвращает произведение матрицы и диагональной матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] DiagDiv(this Complex[,] m, Complex[] v)
+        {
+            int c = m.GetLength(1);
+            int r = m.GetLength(0);
+            Complex[,] H = new Complex[r, c];
+            Complex alpha;
+            int i, j;
+
+            for (j = 0; j < c; j++)
+            {
+                // digaonal element:
+                alpha = v[j];
+
+                // dividing:
+                if (alpha != 0)
+                {
+                    for (i = 0; i < r; i++)
+                    {
+                        H[i, j] = m[i, j] / alpha;
+                    }
+                }
+            }
+            return H;
         }
         /// <summary>
         /// Выделяет целую часть двумерной матрицы.
@@ -2964,6 +3043,98 @@ namespace UMapx.Core
                 {
                     if (Maths.Singular(m[j, i])) continue;
                     kernel[i] += m[j, i];
+                }
+            }
+            return kernel;
+        }
+        /// <summary>
+        /// Возвращает вектор произведений матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Mul(this double[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            double[] kernel = new double[mr];
+            int i, j;
+
+            for (i = 0; i < mr; i++)
+            {
+                kernel[i] = 1;
+
+                for (j = 0; j < ml; j++)
+                {
+                    if (Maths.Singular(m[j, i])) continue;
+                    kernel[i] *= m[j, i];
+                }
+            }
+            return kernel;
+        }
+        /// <summary>
+        /// Возвращает вектор произведений матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Mul(this Complex[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            Complex[] kernel = new Complex[mr];
+            int i, j;
+
+            for (i = 0; i < mr; i++)
+            {
+                kernel[i] = 1;
+
+                for (j = 0; j < ml; j++)
+                {
+                    if (Maths.Singular(m[j, i])) continue;
+                    kernel[i] *= m[j, i];
+                }
+            }
+            return kernel;
+        }
+        /// <summary>
+        /// Возвращает вектор частных матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Div(this double[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            double[] kernel = new double[mr];
+            int i, j;
+
+            for (i = 0; i < mr; i++)
+            {
+                kernel[i] = 1;
+
+                for (j = 0; j < ml; j++)
+                {
+                    if (Maths.Singular(m[j, i])) continue;
+                    kernel[i] /= m[j, i];
+                }
+            }
+            return kernel;
+        }
+        /// <summary>
+        /// Возвращает вектор частных матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Div(this Complex[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            Complex[] kernel = new Complex[mr];
+            int i, j;
+
+            for (i = 0; i < mr; i++)
+            {
+                kernel[i] = 1;
+
+                for (j = 0; j < ml; j++)
+                {
+                    if (Maths.Singular(m[j, i])) continue;
+                    kernel[i] /= m[j, i];
                 }
             }
             return kernel;
@@ -5325,6 +5496,74 @@ namespace UMapx.Core
             {
                 if (Maths.Singular(v[i])) continue;
                 total += v[i];
+            }
+            return total;
+        }
+        /// <summary>
+        /// Возвращает общее произведение вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static double Mul(this double[] v)
+        {
+            double total = 1;
+            int length = v.Length;
+
+            for (int i = 0; i < length; i++)
+            {
+                if (Maths.Singular(v[i])) continue;
+                total *= v[i];
+            }
+            return total;
+        }
+        /// <summary>
+        /// Возвращает общее произведение вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static Complex Mul(this Complex[] v)
+        {
+            Complex total = 1;
+            int length = v.Length;
+
+            for (int i = 0; i < length; i++)
+            {
+                if (Maths.Singular(v[i])) continue;
+                total *= v[i];
+            }
+            return total;
+        }
+        /// <summary>
+        /// Возвращает общее частное вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static double Div(this double[] v)
+        {
+            double total = 1;
+            int length = v.Length;
+
+            for (int i = 0; i < length; i++)
+            {
+                if (Maths.Singular(v[i])) continue;
+                total /= v[i];
+            }
+            return total;
+        }
+        /// <summary>
+        /// Возвращает общее частное вектора.
+        /// </summary>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static Complex Div(this Complex[] v)
+        {
+            Complex total = 1;
+            int length = v.Length;
+
+            for (int i = 0; i < length; i++)
+            {
+                if (Maths.Singular(v[i])) continue;
+                total /= v[i];
             }
             return total;
         }
