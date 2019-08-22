@@ -20,7 +20,7 @@ namespace UMapx.Response
     // Moscow, Russia.
     // **************************************************************************
 
-    #region Filter with response impulse reaction
+    #region Filters with response impulse reaction
     /// <summary>
     /// Определяет фильтр с бесконечной импульсной характеристикой.
     /// <remarks>
@@ -45,11 +45,11 @@ namespace UMapx.Response
         /// <summary>
         /// Инициализирует фильтр с бесконечной импульсной характеристикой.
         /// </summary>
-        /// <param name="a">Массив коэффициентов обратной связи</param>
         /// <param name="b">Массив коэффициентов сигнала</param>
-        public IIR(double[] a, double[] b)
+        /// <param name="a">Массив коэффициентов обратной связи</param>
+        public IIR(double[] b, double[] a)
         {
-            A = a; B = b;
+            B = b; A = a;
         }
         /// <summary>
         /// Получает или задает массив коэффициентов обратной связи.
@@ -88,7 +88,6 @@ namespace UMapx.Response
         {
             int length = u.Length;
             double[] y = new double[length];
-
             double input, output;
             int t, P = b.Length, Q = a.Length;
             int n, i, k;
@@ -104,7 +103,7 @@ namespace UMapx.Response
                     input += b[i] * u[t];
                 }
 
-                for (k = 1; k < Q; k++)
+                for (k = 0; k < Q; k++)
                 {
                     t = n - k;
                     if (t < 0) continue;
@@ -126,15 +125,17 @@ namespace UMapx.Response
             int i, j;
             Complex K1;
             Complex K2;
-            double[] amplitude = new double[w.Length];
+            int length = w.Length;
+            int P = b.Length, Q = a.Length;
+            double[] amplitude = new double[length];
 
-            for (j = 0; j < w.Length; j++)
+            for (j = 0; j < length; j++)
             {
                 K1 = Complex.Zero;
                 K2 = Complex.One;
 
-                for (i = 0; i < b.Length; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
-                for (i = 0; i < a.Length; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
 
                 amplitude[j] = K1.Abs / K2.Abs;
             }
@@ -150,15 +151,17 @@ namespace UMapx.Response
             int i, j;
             Complex K1;
             Complex K2;
-            double[] phase = new double[w.Length];
+            int length = w.Length;
+            int P = b.Length, Q = a.Length;
+            double[] phase = new double[length];
 
             for (j = 0; j < w.Length; j++)
             {
                 K1 = Complex.Zero;
                 K2 = Complex.One;
 
-                for (i = 0; i < b.Length; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
-                for (i = 0; i < a.Length; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
 
                 phase[j] = K1.Angle - K2.Angle;
             }
@@ -190,9 +193,10 @@ namespace UMapx.Response
             int i;
             Complex K1 = new Complex(0, 0);
             Complex K2 = new Complex(1, 0);
+            int P = b.Length, Q = a.Length;
 
-            for (i = 0; i < b.Length; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
-            for (i = 0; i < a.Length; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
+            for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
+            for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
 
             return K1.Angle - K2.Angle;
         }
@@ -204,8 +208,13 @@ namespace UMapx.Response
             get
             {
                 Complex sum = Complex.Zero;
+                Complex exp = Maths.Exp(-Maths.I);
+                int length = a.Length;
 
-                for (int j = 0; j < a.Length; j++) { sum += a[j] * Maths.Exp(-Maths.I); }
+                for (int j = 0; j < length; j++) 
+                { 
+                    sum += a[j] * exp; 
+                }
 
                 if (sum == Complex.Zero)
                 {
@@ -225,8 +234,8 @@ namespace UMapx.Response
             get
             {
                 IIR cv = new IIR();
-                cv.A = new double[3] { 0, 0.5, 0.5 };
-                cv.B = new double[3] { 1, 1, 0 };
+                cv.B = new double[3] { 1.0, 1.0, 0.0 };
+                cv.A = new double[3] { 0.0, 0.5, 0.5 };
                 return cv;
             }
         }
@@ -238,8 +247,8 @@ namespace UMapx.Response
             get
             {
                 IIR cv = new IIR();
-                cv.A = new double[3] { 0, 0.5, 0.5 };
-                cv.B = new double[3] { 1, -1, 0 };
+                cv.B = new double[3] { 1.0, -1.0, 0.0 };
+                cv.A = new double[3] { 0.0,  0.5, 0.5 };
                 return cv;
             }
         }
@@ -251,8 +260,8 @@ namespace UMapx.Response
             get
             {
                 IIR cv = new IIR();
-                cv.A = new double[3] { 0, 0.5, -0.5 };
-                cv.B = new double[3] { 1, 1, -1 };
+                cv.B = new double[3] { 1.0, 1.0, -1.0 };
+                cv.A = new double[3] { 0.0, 0.5, -0.5 };
                 return cv;
             }
         }
@@ -264,8 +273,8 @@ namespace UMapx.Response
             get
             {
                 IIR cv = new IIR();
-                cv.A = new double[3] { 0, 0.5, 0.5 };
-                cv.B = new double[3] { 1, -1, 1 };
+                cv.B = new double[3] { 1.0, -1.0, 1.0 };
+                cv.A = new double[3] { 0.0,  0.5, 0.5 };
                 return cv;
             }
         }
@@ -466,7 +475,7 @@ namespace UMapx.Response
             get
             {
                 FIR cv = new FIR();
-                cv.B = new double[3] { 1, 1, 0 };
+                cv.B = new double[3] { 1.0, 1.0, 0.0 };
                 return cv;
             }
         }
@@ -478,7 +487,7 @@ namespace UMapx.Response
             get
             {
                 FIR cv = new FIR();
-                cv.B = new double[3] { 1, -1, 0 };
+                cv.B = new double[3] { 1.0, -1.0, 0.0 };
                 return cv;
             }
         }
@@ -490,7 +499,7 @@ namespace UMapx.Response
             get
             {
                 FIR cv = new FIR();
-                cv.B = new double[3] { 1, 1, -1 };
+                cv.B = new double[3] { 1.0, 1.0, -1.0 };
                 return cv;
             }
         }
@@ -502,7 +511,7 @@ namespace UMapx.Response
             get
             {
                 FIR cv = new FIR();
-                cv.B = new double[3] { 1, -1, 1 };
+                cv.B = new double[3] { 1.0, -1.0, 1.0 };
                 return cv;
             }
         }

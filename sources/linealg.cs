@@ -630,89 +630,6 @@ namespace UMapx.Core
 
         #region Matrix properties
         /// <summary>
-        /// Возвращает значение ранга матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static int Rank(this double[,] m)
-        {
-            int height = m.GetLength(0), width = m.GetLength(1);
-            int rank = width, row, col, i;
-            double mult;
-
-            for (row = 0; row < rank; row++)
-            {
-                // Before we visit current row 'row', we make
-                // sure that mat[row][0],....mat[row][row-1]
-                // are 0.
-
-                // Diagonal element is not zero
-                if (m[row, row] != 0)
-                {
-                    for (col = 0; col < height; col++)
-                    {
-                        if (col != row)
-                        {
-                            // This makes all entries of current
-                            // column as 0 except entry 'mat[row][row]'
-                            mult = (double)m[col, row] / m[row, row];
-                            for (i = 0; i < rank; i++)
-                            {
-                                m[col, i] -= mult * m[row, i];
-                            }
-                        }
-                    }
-                }
-
-                // Diagonal element is already zero. Two cases
-                // arise:
-                // 1) If there is a row below it with non-zero
-                //    entry, then swap this row with that row
-                //    and process that row
-                // 2) If all elements in current column below
-                //    mat[r][row] are 0, then remvoe this column
-                //    by swapping it with last column and
-                //    reducing number of columns by 1.
-                else
-                {
-                    bool reduce = true;
-
-                    /* Find the non-zero element in current
-                        column  */
-                    for (i = row + 1; i < height; i++)
-                    {
-                        // Swap the row with non-zero element
-                        // with this row.
-                        if (m[i, row] != 0)
-                        {
-                            LinealgOptions.Swap(m, row, i, rank);
-                            reduce = false;
-                            break;
-                        }
-                    }
-
-                    // If we did not find any row with non-zero
-                    // element in current columnm, then all
-                    // values in this column are 0.
-                    if (reduce)
-                    {
-                        // Reduce number of columns
-                        rank--;
-
-                        // Copy the last column here
-                        for (i = 0; i < height; i++)
-                        {
-                            m[i, row] = m[i, rank];
-                        }
-                    }
-
-                    // Process this row again
-                    row--;
-                }
-            }
-            return rank;
-        }
-        /// <summary>
         /// Возвращает значение следа квадратной матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
@@ -836,89 +753,6 @@ namespace UMapx.Core
                 }
             }
             return Matrice.FromJagged(perm);
-        }
-        /// <summary>
-        /// Возвращает значение ранга матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static int Rank(this Complex[,] m)
-        {
-            int height = m.GetLength(0), width = m.GetLength(1);
-            int rank = width, row, col, i;
-            Complex mult;
-
-            for (row = 0; row < rank; row++)
-            {
-                // Before we visit current row 'row', we make
-                // sure that mat[row][0],....mat[row][row-1]
-                // are 0.
-
-                // Diagonal element is not zero
-                if (m[row, row] != 0)
-                {
-                    for (col = 0; col < height; col++)
-                    {
-                        if (col != row)
-                        {
-                            // This makes all entries of current
-                            // column as 0 except entry 'mat[row][row]'
-                            mult = (Complex)m[col, row] / m[row, row];
-                            for (i = 0; i < rank; i++)
-                            {
-                                m[col, i] -= mult * m[row, i];
-                            }
-                        }
-                    }
-                }
-
-                // Diagonal element is already zero. Two cases
-                // arise:
-                // 1) If there is a row below it with non-zero
-                //    entry, then swap this row with that row
-                //    and process that row
-                // 2) If all elements in current column below
-                //    mat[r][row] are 0, then remvoe this column
-                //    by swapping it with last column and
-                //    reducing number of columns by 1.
-                else
-                {
-                    bool reduce = true;
-
-                    /* Find the non-zero element in current
-                        column  */
-                    for (i = row + 1; i < height; i++)
-                    {
-                        // Swap the row with non-zero element
-                        // with this row.
-                        if (m[i, row] != 0)
-                        {
-                            LinealgOptions.Swap(m, row, i, rank);
-                            reduce = false;
-                            break;
-                        }
-                    }
-
-                    // If we did not find any row with non-zero
-                    // element in current columnm, then all
-                    // values in this column are 0.
-                    if (reduce)
-                    {
-                        // Reduce number of columns
-                        rank--;
-
-                        // Copy the last column here
-                        for (i = 0; i < height; i++)
-                        {
-                            m[i, row] = m[i, rank];
-                        }
-                    }
-
-                    // Process this row again
-                    row--;
-                }
-            }
-            return rank;
         }
         /// <summary>
         /// Возвращает значение следа квадратной матрицы.
@@ -2718,7 +2552,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ml; j++)
                 {
-                    if (Maths.Singular(m[j, i])) continue;
+                    //if (Maths.IsSingular(m[j, i])) continue;
                     kernel[i] += m[j, i];
                 }
             }
@@ -2739,7 +2573,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ml; j++)
                 {
-                    if (Maths.Singular(m[j, i])) continue;
+                    //if (Maths.IsSingular(m[j, i])) continue;
                     kernel[i] += m[j, i];
                 }
             }
@@ -2762,7 +2596,7 @@ namespace UMapx.Core
 
                 for (j = 0; j < ml; j++)
                 {
-                    if (Maths.Singular(m[j, i])) continue;
+                    //if (Maths.IsSingular(m[j, i])) continue;
                     kernel[i] *= m[j, i];
                 }
             }
@@ -2785,7 +2619,7 @@ namespace UMapx.Core
 
                 for (j = 0; j < ml; j++)
                 {
-                    if (Maths.Singular(m[j, i])) continue;
+                    //if (Maths.IsSingular(m[j, i])) continue;
                     kernel[i] *= m[j, i];
                 }
             }
@@ -2808,7 +2642,7 @@ namespace UMapx.Core
 
                 for (j = 0; j < ml; j++)
                 {
-                    if (Maths.Singular(m[j, i])) continue;
+                    //if (Maths.IsSingular(m[j, i])) continue;
                     kernel[i] /= m[j, i];
                 }
             }
@@ -2831,7 +2665,7 @@ namespace UMapx.Core
 
                 for (j = 0; j < ml; j++)
                 {
-                    if (Maths.Singular(m[j, i])) continue;
+                    //if (Maths.IsSingular(m[j, i])) continue;
                     kernel[i] /= m[j, i];
                 }
             }
@@ -3520,7 +3354,7 @@ namespace UMapx.Core
         /// <param name="a">Одномерный массив</param>
         /// <param name="b">Одномерный массив</param>
         /// <returns>Логическое значение</returns>
-        public static bool IsEquals(this Complex[] a, double[] b)
+        public static bool IsEquals(this Complex[] a, Complex[] b)
         {
             int n = a.Length;
 
@@ -5296,7 +5130,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                if (Maths.Singular(v[i])) continue;
+                //if (Maths.IsSingular(v[i])) continue;
                 total += v[i];
             }
             return total;
@@ -5313,7 +5147,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                if (Maths.Singular(v[i])) continue;
+                //if (Maths.IsSingular(v[i])) continue;
                 total += v[i];
             }
             return total;
@@ -5330,7 +5164,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                if (Maths.Singular(v[i])) continue;
+                //if (Maths.IsSingular(v[i])) continue;
                 total *= v[i];
             }
             return total;
@@ -5347,7 +5181,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                if (Maths.Singular(v[i])) continue;
+                //if (Maths.IsSingular(v[i])) continue;
                 total *= v[i];
             }
             return total;
@@ -5364,7 +5198,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                if (Maths.Singular(v[i])) continue;
+                //if (Maths.IsSingular(v[i])) continue;
                 total /= v[i];
             }
             return total;
@@ -5381,7 +5215,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                if (Maths.Singular(v[i])) continue;
+                //if (Maths.IsSingular(v[i])) continue;
                 total /= v[i];
             }
             return total;
@@ -5594,15 +5428,18 @@ namespace UMapx.Core
         /// <returns>Пара целых чисел, представляющая отрезок</returns>
         public static RangeDouble Extremum(this double[] v)
         {
-            double max = int.MinValue, min = int.MaxValue;
+            double max = double.MinValue, min = double.MaxValue;
             int length = v.Length;
+            double c;
 
             for (int i = 0; i < length; i++)
             {
-                if (v[i] > max)
-                    max = v[i];
-                if (v[i] < min)
-                    min = v[i];
+                c = v[i];
+
+                if (c > max)
+                    max = c;
+                if (c < min)
+                    min = c;
             }
             return new RangeDouble(min, max);
         }
@@ -5614,13 +5451,16 @@ namespace UMapx.Core
         public static double Min(this double[] v)
         {
             int index = 0, length = v.Length;
-            double minimum = v[index];
+            double minimum = double.MaxValue;
+            double c;
 
-            for (int i = 1; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
-                if (v[i] < minimum)
+                c = v[i];
+
+                if (c < minimum)
                 {
-                    minimum = v[i];
+                    minimum = c;
                     index = i;
                 }
             }
@@ -5634,13 +5474,16 @@ namespace UMapx.Core
         public static double Max(this double[] v)
         {
             int index = 0, length = v.Length;
-            double maximum = v[index];
+            double maximum = double.MinValue;
+            double c;
 
-            for (int i = 1; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
-                if (v[i] > maximum)
+                c = v[i];
+
+                if (c > maximum)
                 {
-                    maximum = v[i];
+                    maximum = c;
                     index = i;
                 }
             }
@@ -5681,7 +5524,7 @@ namespace UMapx.Core
             return;
         }
         /// <summary>
-        /// Сортирует исходный вектор.
+        /// Сортирует исходный вектора.
         /// </summary>
         /// <param name="v">Одномерный массив</param>
         /// <param name="r">Определяет диапазон сортировки. Начальная точка</param>
@@ -5904,13 +5747,15 @@ namespace UMapx.Core
         {
             int l0 = a.Length, l1 = b.Length;
             double[,] H = new double[l0, l1];
+            double c;
             int i, j;
 
             for (j = 0; j < l0; j++)
             {
+                c = a[j];
                 for (i = 0; i < l1; i++)
                 {
-                    H[j, i] += a[j] * b[i];
+                    H[j, i] += c * b[i];
                 }
             }
             return H;
@@ -5926,35 +5771,15 @@ namespace UMapx.Core
         {
             int l0 = a.Length, l1 = b.Length;
             Complex[,] H = new Complex[l0, l1];
+            Complex c;
             int i, j;
 
             for (j = 0; j < l0; j++)
             {
+                c = a[j];
                 for (i = 0; i < l1; i++)
                 {
-                    H[j, i] += a[j] * b[i];
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует скалярное произведение векторов вида: a' * b, 
-        /// где ' - знак транспонирования.
-        /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Dotp(this double[] a, Complex[] b)
-        {
-            int l0 = a.Length, l1 = b.Length;
-            Complex[,] H = new Complex[l0, l1];
-            int i, j;
-
-            for (j = 0; j < l0; j++)
-            {
-                for (i = 0; i < l1; i++)
-                {
-                    H[j, i] += a[j] * b[i];
+                    H[j, i] += c * b[i];
                 }
             }
             return H;
@@ -5970,13 +5795,39 @@ namespace UMapx.Core
         {
             int l0 = a.Length, l1 = b.Length;
             Complex[,] H = new Complex[l0, l1];
+            Complex c;
             int i, j;
 
             for (j = 0; j < l0; j++)
             {
+                c = a[j];
                 for (i = 0; i < l1; i++)
                 {
-                    H[j, i] += a[j] * b[i];
+                    H[j, i] += c * b[i];
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует скалярное произведение векторов вида: a' * b, 
+        /// где ' - знак транспонирования.
+        /// </summary>
+        /// <param name="a">Одномерный массив</param>
+        /// <param name="b">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Dotp(this double[] a, Complex[] b)
+        {
+            int l0 = a.Length, l1 = b.Length;
+            Complex[,] H = new Complex[l0, l1];
+            Complex c;
+            int i, j;
+
+            for (j = 0; j < l0; j++)
+            {
+                c = a[j];
+                for (i = 0; i < l1; i++)
+                {
+                    H[j, i] += c * b[i];
                 }
             }
             return H;
@@ -11549,43 +11400,6 @@ namespace UMapx.Core
                 return new Complex32(a / b.Re, a / b.Im);
             }
             #endregion
-        }
-        #endregion
-
-        #region Swap voids
-        /// <summary>
-        /// Реализует перестановку векторов матрицы.
-        /// </summary>
-        /// <param name="A">Матрица</param>
-        /// <param name="row1">Первый ряд</param>
-        /// <param name="row2">Второй ряд</param>
-        /// <param name="col">Размерность столбца</param>
-        public static void Swap(double[,] A, int row1, int row2, int col)
-        {
-            double temp;
-            for (int i = 0; i < col; i++)
-            {
-                temp = A[row1, i];
-                A[row1, i] = A[row2, i];
-                A[row2, i] = temp;
-            }
-        }
-        /// <summary>
-        /// Реализует перестановку векторов матрицы.
-        /// </summary>
-        /// <param name="A">Матрица</param>
-        /// <param name="row1">Первый ряд</param>
-        /// <param name="row2">Второй ряд</param>
-        /// <param name="col">Размерность столбца</param>
-        public static void Swap(Complex[,] A, int row1, int row2, int col)
-        {
-            Complex temp;
-            for (int i = 0; i < col; i++)
-            {
-                temp = A[row1, i];
-                A[row1, i] = A[row2, i];
-                A[row2, i] = temp;
-            }
         }
         #endregion
 

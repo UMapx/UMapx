@@ -7662,8 +7662,8 @@
             <summary>
             Инициализирует фильтр с бесконечной импульсной характеристикой.
             </summary>
-            <param name="a">Массив коэффициентов обратной связи</param>
             <param name="b">Массив коэффициентов сигнала</param>
+            <param name="a">Массив коэффициентов обратной связи</param>
         </member>
         <member name="M:UMapx.Response.IIR.Reaction(System.Double[])">
             <summary>
@@ -20928,14 +20928,14 @@
             <param name="xmax">Максимальное значение</param>
             <returns>Логическое значение</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Singular(System.Double)">
+        <member name="M:UMapx.Core.Maths.IsSingular(System.Double)">
             <summary>
             Проверяет число на исключение.
             </summary>
             <param name="a">Число</param>
             <returns>Логическое значение</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Singular(UMapx.Core.Complex)">
+        <member name="M:UMapx.Core.Maths.IsSingular(UMapx.Core.Complex)">
             <summary>
             Проверяет комплексное число на исключение.
             </summary>
@@ -23924,13 +23924,6 @@
             <param name="jagged">Зубчатый массив</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Rank(System.Double[0:,0:])">
-            <summary>
-            Возвращает значение ранга матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
         <member name="M:UMapx.Core.Matrice.Trace(System.Double[0:,0:])">
             <summary>
             Возвращает значение следа квадратной матрицы.
@@ -23973,13 +23966,6 @@
             </summary>
             <param name="m">Квадратная матрица</param>
             <returns>Квадратная матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Rank(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Возвращает значение ранга матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Trace(UMapx.Core.Complex[0:,0:])">
             <summary>
@@ -24924,7 +24910,7 @@
             <param name="b">Одномерный массив</param>
             <returns>Логическое значение</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.IsEquals(UMapx.Core.Complex[],System.Double[])">
+        <member name="M:UMapx.Core.Matrice.IsEquals(UMapx.Core.Complex[],UMapx.Core.Complex[])">
             <summary>
             Проверяет являются ли векторы одинаковыми.
             </summary>
@@ -25870,7 +25856,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Sort(System.Double[],System.Int32,System.Int32)">
             <summary>
-            Сортирует исходный вектор.
+            Сортирует исходный вектора.
             </summary>
             <param name="v">Одномерный массив</param>
             <param name="r">Определяет диапазон сортировки. Начальная точка</param>
@@ -25958,7 +25944,7 @@
             <param name="b">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Dotp(System.Double[],UMapx.Core.Complex[])">
+        <member name="M:UMapx.Core.Matrice.Dotp(UMapx.Core.Complex[],System.Double[])">
             <summary>
             Реализует скалярное произведение векторов вида: a' * b, 
             где ' - знак транспонирования.
@@ -25967,7 +25953,7 @@
             <param name="b">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Dotp(UMapx.Core.Complex[],System.Double[])">
+        <member name="M:UMapx.Core.Matrice.Dotp(System.Double[],UMapx.Core.Complex[])">
             <summary>
             Реализует скалярное произведение векторов вида: a' * b, 
             где ' - знак транспонирования.
@@ -27319,24 +27305,6 @@
             </summary>
             <param name="jagged">Зубчатый массив</param>
             <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.Swap(System.Double[0:,0:],System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Реализует перестановку векторов матрицы.
-            </summary>
-            <param name="A">Матрица</param>
-            <param name="row1">Первый ряд</param>
-            <param name="row2">Второй ряд</param>
-            <param name="col">Размерность столбца</param>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.Swap(UMapx.Core.Complex[0:,0:],System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Реализует перестановку векторов матрицы.
-            </summary>
-            <param name="A">Матрица</param>
-            <param name="row1">Первый ряд</param>
-            <param name="row2">Второй ряд</param>
-            <param name="col">Размерность столбца</param>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[],System.Single[][],System.Single[])">
             <summary>

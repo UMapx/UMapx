@@ -7,8 +7,8 @@
 // Version 4.0.0
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UMapx.Core
 {
@@ -189,17 +189,13 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Число</param>
         /// <returns>Логическое значение</returns>
-        public static bool Singular(double a)
+        public static bool IsSingular(double a)
         {
             if (double.IsNaN(a))
             {
                 return true;
             }
-            else if (double.IsNegativeInfinity(a))
-            {
-                return true;
-            }
-            else if (double.IsPositiveInfinity(a))
+            else if (double.IsInfinity(a))
             {
                 return true;
             }
@@ -210,9 +206,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Комплексное число</param>
         /// <returns>Логическое значение</returns>
-        public static bool Singular(Complex a)
+        public static bool IsSingular(Complex a)
         {
-            if (Singular(a.Re) || Singular(a.Im))
+            if (IsSingular(a.Re) || IsSingular(a.Im))
             {
                 return true;
             }
