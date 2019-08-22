@@ -17,9 +17,10 @@ namespace UMapx.Window
     //                              WINDOW TOOLBOX
     //                            UMAPX.NET FRAMEWORK
     // **************************************************************************
-    // Window Toolbox provides a wide functionality for the study discrete 
-    // and continuous wavelets. It includes algorithms for discrete one- and two-
-    // dimensional wavelet transforms of real and complex signals.
+    // Window Toolbox includes a set of tools for synthesizing and 
+    // orthogonalizing window functions. It implements discrete short-time 
+    // Fourier transforms and Weyl-Heisenberg transforms (Gabor analysis) for 
+    // real and complex signals.
     // **************************************************************************
     // Designed by Asiryan Valeriy (c), 2015-2019
     // Moscow, Russia.

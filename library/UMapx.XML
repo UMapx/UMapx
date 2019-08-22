@@ -25870,7 +25870,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Sort(System.Double[],System.Int32,System.Int32)">
             <summary>
-            Сортирует исходный вектора.
+            Сортирует исходный вектор.
             </summary>
             <param name="v">Одномерный массив</param>
             <param name="r">Определяет диапазон сортировки. Начальная точка</param>
