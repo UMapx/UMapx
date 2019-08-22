@@ -733,173 +733,22 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает значение определителя квадратной матрицы.
+        /// Возвращает значение определителя матрицы.
         /// </summary>
-        /// <param name="m">Квадратная матрица</param>
+        /// <param name="m">Матрица</param>
         /// <returns>Число двойночй точности с плавающей запятой</returns>
         public static double Det(this double[,] m)
         {
-            if (!Matrice.IsSquare(m))
-                throw new Exception("Матрица должна быть квадратной");
-
-            unsafe
-            {
-                double[] temp = new double[m.Length];
-                int ml = m.GetLength(0), mr = m.GetLength(1);
-                int i, j, c = 0;
-
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++)
-                    {
-                        temp[c] = m[i, j];
-                        c++;
-                    }
-                }
-
-                // Определение детерминанта:
-                fixed (double* pm = &temp[0]) return LinealgOptions.Determinant(pm, mr); ;
-            }
-        }
-        /// <summary>
-        /// Возвращает значение перманента матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Число двойночй точности с плавающей запятой</returns>
-        public static double Perm(this double[,] m)
-        {
-            if (!Matrice.IsSquare(m))
-                throw new Exception("Матрица должна быть квадратной");
-
-            unsafe
-            {
-                double[] temp = new double[m.Length];
-                int ml = m.GetLength(0), mr = m.GetLength(1);
-                int i, j, c = 0;
-
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++)
-                    {
-                        temp[c] = m[i, j];
-                        c++;
-                    }
-                }
-
-                // Определение перманента:
-                fixed (double* pm = &temp[0]) return LinealgOptions.Permanent(pm, mr); ;
-            }
-        }
-        /// <summary>
-        /// Приводит матрицу к треугольному виду.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="lower">Приведение к нижнеугольной матрице или нет</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Triang(this double[,] m, bool lower = false)
-        {
-            double[][] H = Matrice.ToJagged(m);
             int ml = m.GetLength(0), mr = m.GetLength(1);
 
-            if (ml != mr)
+            if (mr != ml)
                 throw new Exception("Матрица должна быть квадратной");
 
-            int k, j, i;
-            double alpha;
-
-            // Matrix triangulation process:
-            if (lower)
+            unsafe
             {
-                // lower traingulate matrix:
-                for (k = 1; k <= ml; k++)
-                {
-                    for (i = k; i < mr; i++)
-                    {
-                        alpha = H[k - 1][i] / H[k - 1][k - 1];
-
-                        for (j = 0; j < mr; j++)
-                        {
-                            H[j][i] -= alpha * H[j][k - 1];
-                        }
-                    }
-                }
+                fixed (double* pm = &m[0, 0])
+                    return LinealgOptions.Determinant(pm, mr);
             }
-            else
-            {
-                // upper traingulate matrix:
-                for (k = 1; k <= ml; k++)
-                {
-                    for (i = k; i < mr; i++)
-                    {
-                        alpha = H[i][k - 1] / H[k - 1][k - 1];
-
-                        for (j = 0; j < mr; j++)
-                        {
-                            H[i][j] -= alpha * H[k - 1][j];
-                        }
-                    }
-                }
-            }
-
-            // result matrix:
-            return Matrice.FromJagged(H);
-        }
-        /// <summary>
-        /// Возвращает произведение матрицы и диагональной матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
-        public static double[,] DiagMul(this double[,] m, double[] v)
-        {
-            int c = m.GetLength(1);
-            int r = m.GetLength(0);
-            double[,] H = new double[r, c];
-            double alpha;
-            int i, j;
-
-            for (j = 0; j < c; j++)
-            {
-                // digaonal element:
-                alpha = v[j];
-
-                // mulptiplication:
-                for (i = 0; i < r; i++)
-                {
-                    H[i, j] = m[i, j] * alpha;
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает произведение матрицы и диагональной матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
-        public static double[,] DiagDiv(this double[,] m, double[] v)
-        {
-            int c = m.GetLength(1);
-            int r = m.GetLength(0);
-            double[,] H = new double[r, c];
-            double alpha;
-            int i, j;
-
-            for (j = 0; j < c; j++)
-            {
-                // digaonal element:
-                alpha = v[j];
-
-                // dividing:
-                if (alpha != 0)
-                {
-                    for (i = 0; i < r; i++)
-                    {
-                        H[i, j] = m[i, j] / alpha;
-                    }
-                }
-            }
-            return H;
         }
         /// <summary>
         /// Возвращает P-норму матрицы.
@@ -1092,61 +941,21 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает значение определителя квадратной матрицы.
-        /// </summary>
-        /// <param name="m">Квадратная матрица</param>
-        /// <returns>Комплексное число</returns>
-        public static Complex Det(this Complex[,] m)
-        {
-            if (!Matrice.IsSquare(m))
-                throw new Exception("Матрица должна быть квадратной");
-
-            unsafe
-            {
-                // Копирование в одномерный массив:
-                Complex[] temp = new Complex[m.Length];
-                int ml = m.GetLength(0), mr = m.GetLength(1);
-                int i, j, c = 0;
-
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++, c++)
-                    {
-                        temp[c] = m[i, j];
-                    }
-                }
-
-                // Определение детерминанта:
-                fixed (Complex* pm = &temp[0]) return LinealgOptions.Determinant(pm, mr); ;
-            }
-        }
-        /// <summary>
-        /// Возвращает значение перманента матрицы.
+        /// Возвращает значение определителя матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
-        /// <returns>Комплексное число</returns>
-        public static Complex Perm(this Complex[,] m)
+        /// <returns>Число двойночй точности с плавающей запятой</returns>
+        public static Complex Det(this Complex[,] m)
         {
-            if (!Matrice.IsSquare(m))
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+
+            if (mr != ml)
                 throw new Exception("Матрица должна быть квадратной");
 
             unsafe
             {
-                // Копирование в одномерный массив:
-                Complex[] temp = new Complex[m.Length];
-                int ml = m.GetLength(0), mr = m.GetLength(1);
-                int i, j, c = 0;
-
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++, c++)
-                    {
-                        temp[c] = m[i, j];
-                    }
-                }
-
-                // Определение перманента:
-                fixed (Complex* pm = &temp[0]) return LinealgOptions.Permanent(pm, mr); ;
+                fixed (Complex* pm = &m[0, 0])
+                    return LinealgOptions.Determinant(pm, mr);
             }
         }
         /// <summary>
@@ -1179,117 +988,6 @@ namespace UMapx.Core
         public static double Norm(this Complex[,] m)
         {
             return Matrice.Norm(m, 2);
-        }
-        /// <summary>
-        /// Приводит матрицу к треугольному виду.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="lower">Приведение к нижнеугольной матрице или нет</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] Triang(this Complex[,] m, bool lower = false)
-        {
-            Complex[][] H = Matrice.ToJagged(m);
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-
-            if (ml != mr)
-                throw new Exception("Матрица должна быть квадратной");
-
-            int k, j, i;
-            Complex alpha;
-
-            // Matrix triangulation process:
-            if (lower)
-            {
-                // lower traingulate matrix:
-                for (k = 1; k <= ml; k++)
-                {
-                    for (i = k; i < mr; i++)
-                    {
-                        alpha = H[k - 1][i] / H[k - 1][k - 1];
-
-                        for (j = 0; j < mr; j++)
-                        {
-                            H[j][i] -= alpha * H[j][k - 1];
-                        }
-                    }
-                }
-            }
-            else
-            {
-                // upper traingulate matrix:
-                for (k = 1; k <= ml; k++)
-                {
-                    for (i = k; i < mr; i++)
-                    {
-                        alpha = H[i][k - 1] / H[k - 1][k - 1];
-
-                        for (j = 0; j < mr; j++)
-                        {
-                            H[i][j] -= alpha * H[k - 1][j];
-                        }
-                    }
-                }
-            }
-
-            // result matrix:
-            return Matrice.FromJagged(H);
-        }
-        /// <summary>
-        /// Возвращает произведение матрицы и диагональной матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] DiagMul(this Complex[,] m, Complex[] v)
-        {
-            int c = m.GetLength(1);
-            int r = m.GetLength(0);
-            Complex[,] H = new Complex[r, c];
-            Complex alpha;
-            int i, j;
-
-            for (j = 0; j < c; j++)
-            {
-                // digaonal element:
-                alpha = v[j];
-
-                // mulptiplication:
-                for (i = 0; i < r; i++)
-                {
-                    H[i, j] = m[i, j] * alpha;
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Возвращает произведение матрицы и диагональной матрицы.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] DiagDiv(this Complex[,] m, Complex[] v)
-        {
-            int c = m.GetLength(1);
-            int r = m.GetLength(0);
-            Complex[,] H = new Complex[r, c];
-            Complex alpha;
-            int i, j;
-
-            for (j = 0; j < c; j++)
-            {
-                // digaonal element:
-                alpha = v[j];
-
-                // dividing:
-                if (alpha != 0)
-                {
-                    for (i = 0; i < r; i++)
-                    {
-                        H[i, j] = m[i, j] / alpha;
-                    }
-                }
-            }
-            return H;
         }
         /// <summary>
         /// Выделяет целую часть двумерной матрицы.
@@ -4550,7 +4248,7 @@ namespace UMapx.Core
         /// <summary>
         /// Реализует умножение матрицы на вектор вида: A * diag(v).
         /// </summary>
-        /// <param name="m">Двумерная матрица</param>
+        /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
         /// <returns>Одномерный массив</returns>
         public static double[,] Mul(this double[,] m, double[] v)
@@ -4575,7 +4273,7 @@ namespace UMapx.Core
         /// <summary>
         /// Реализует умножение матрицы на вектор вида: A * diag(v).
         /// </summary>
-        /// <param name="m">Двумерная матрица</param>
+        /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[,] Mul(this Complex[,] m, double[] v)
@@ -4600,7 +4298,7 @@ namespace UMapx.Core
         /// <summary>
         /// Реализует умножение матрицы на вектор вида: A * diag(v).
         /// </summary>
-        /// <param name="m">Двумерная матрица</param>
+        /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[,] Mul(this double[,] m, Complex[] v)
@@ -4625,7 +4323,7 @@ namespace UMapx.Core
         /// <summary>
         /// Реализует умножение матрицы на вектор вида: A * diag(v).
         /// </summary>
-        /// <param name="m">Двумерная матрица</param>
+        /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[,] Mul(this Complex[,] m, Complex[] v)
@@ -4857,6 +4555,127 @@ namespace UMapx.Core
         #endregion
 
         #region Vector div
+        /// <summary>
+        /// Реализует деление матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[,] Div(this double[,] m, double[] v)
+        {
+            int c = m.GetLength(1);
+            int r = m.GetLength(0);
+            double[,] H = new double[r, c];
+            double alpha;
+            int i, j;
+
+            for (j = 0; j < c; j++)
+            {
+                // digaonal element:
+                alpha = v[j];
+
+                // dividing:
+                if (alpha != 0)
+                {
+                    for (i = 0; i < r; i++)
+                    {
+                        H[i, j] = m[i, j] / alpha;
+                    }
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует деление матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Div(this Complex[,] m, double[] v)
+        {
+            int c = m.GetLength(1);
+            int r = m.GetLength(0);
+            Complex[,] H = new Complex[r, c];
+            Complex alpha;
+            int i, j;
+
+            for (j = 0; j < c; j++)
+            {
+                // digaonal element:
+                alpha = v[j];
+
+                // dividing:
+                if (alpha != 0)
+                {
+                    for (i = 0; i < r; i++)
+                    {
+                        H[i, j] = m[i, j] / alpha;
+                    }
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует деление матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Div(this double[,] m, Complex[] v)
+        {
+            int c = m.GetLength(1);
+            int r = m.GetLength(0);
+            Complex[,] H = new Complex[r, c];
+            Complex alpha;
+            int i, j;
+
+            for (j = 0; j < c; j++)
+            {
+                // digaonal element:
+                alpha = v[j];
+
+                // dividing:
+                if (alpha != 0)
+                {
+                    for (i = 0; i < r; i++)
+                    {
+                        H[i, j] = m[i, j] / alpha;
+                    }
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Реализует деление матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Div(this Complex[,] m, Complex[] v)
+        {
+            int c = m.GetLength(1);
+            int r = m.GetLength(0);
+            Complex[,] H = new Complex[r, c];
+            Complex alpha;
+            int i, j;
+
+            for (j = 0; j < c; j++)
+            {
+                // digaonal element:
+                alpha = v[j];
+
+                // dividing:
+                if (alpha != 0)
+                {
+                    for (i = 0; i < r; i++)
+                    {
+                        H[i, j] = m[i, j] / alpha;
+                    }
+                }
+            }
+            return H;
+        }
+
         /// <summary>
         /// Реализует поэлементное произведение векторов.
         /// </summary>
@@ -5971,7 +5790,7 @@ namespace UMapx.Core
         /// Реализует скалярное умножение вектора на матрицу вида: 
         /// </summary>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="m">Двумерная матрица</param>
+        /// <param name="m">Матрица</param>
         /// <returns>Одномерный массив</returns>
         public static double[] Dot(this double[] v, double[,] m)
         {
@@ -5997,7 +5816,7 @@ namespace UMapx.Core
         /// Реализует скалярное умножение вектора на матрицу.
         /// </summary>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="m">Двумерная матрица</param>
+        /// <param name="m">Матрица</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[] Dot(this double[] v, Complex[,] m)
         {
@@ -6023,7 +5842,7 @@ namespace UMapx.Core
         /// Реализует скалярное умножение вектора на матрицу.
         /// </summary>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="m">Двумерная матрица</param>
+        /// <param name="m">Матрица</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[] Dot(this Complex[] v, Complex[,] m)
         {
@@ -9609,7 +9428,7 @@ namespace UMapx.Core
         private static string exception = "Длина строки матрицы A должна быть равна длине столбца матрицы B";
         #endregion
 
-        #region Determinant and permanent
+        #region Determinant
         /// <summary>
         /// Итеративный расчет детерминанта.
         /// </summary>
@@ -9660,55 +9479,6 @@ namespace UMapx.Core
             return det * *element;
         }
         /// <summary>
-        /// Итеративный расчет перманента.
-        /// </summary>
-        /// <param name="element">"Элемент</param>
-        /// <param name="n">Радиус матрицы</param>
-        /// <returns>Число двойной точности</returns>
-        public unsafe static double Permanent(double* element, int n)
-        {
-            double* mtx_u_ii, mtx_ii_j;
-            double* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
-            double val, det = 1;
-            int d = 0;
-            // rmX указывает на (i,i) элемент на каждом шаге и называется ведущим
-            for (double* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
-            {
-                // Ищем максимальный элемент в столбце(под ведущим) 
-                {
-                    //Ищем максимальный элемент и его позицию
-                    val = Math.Abs(*(mtx_ii_j = element));
-                    for (mtx_u_ii = element + n; mtx_u_ii < mtx_end; mtx_u_ii += n)
-                    {
-                        if (val < Math.Abs(*mtx_u_ii))
-                            val = Math.Abs(*(mtx_ii_j = mtx_u_ii));
-                    }
-                    //Если максимальный элемент = 0 -> матрица вырожденная
-                    if (Math.Abs(val - 0) < double.Epsilon) return double.NaN;
-                    //Если ведущий элемент не является максимальным - делаем перестановку строк и меняем знак определителя
-                    if (mtx_ii_j != element)
-                    {
-                        //det = -det;
-                        for (mtx_u_ii = element; mtx_u_ii < mtx_ii_end; mtx_ii_j++, mtx_u_ii++)
-                        {
-                            val = *mtx_u_ii;
-                            *mtx_u_ii = *mtx_ii_j;
-                            *mtx_ii_j = val;
-                        }
-                    }
-                }
-                //Обнуляем элементы под ведущим
-                for (mtx_u_ii = element + n, mtx_u_ii_j = mtx_end + n; mtx_u_ii < mtx_u_ii_j; mtx_u_ii += d)
-                {
-                    val = *(mtx_u_ii++) / *element;
-                    for (mtx_ii_j = element + 1; mtx_ii_j < mtx_ii_end; mtx_u_ii++, mtx_ii_j++)
-                        *mtx_u_ii += *mtx_ii_j * val;
-                }
-                det *= *element;
-            }
-            return det * *element;
-        }
-        /// <summary>
         /// Итеративный расчет детерминанта.
         /// </summary>
         /// <param name="element">"Элемент</param>
@@ -9752,55 +9522,6 @@ namespace UMapx.Core
                     val = *(mtx_u_ii++) / *element;
                     for (mtx_ii_j = element + 1; mtx_ii_j < mtx_ii_end; mtx_u_ii++, mtx_ii_j++)
                         *mtx_u_ii -= *mtx_ii_j * val;
-                }
-                det *= *element;
-            }
-            return det * *element;
-        }
-        /// <summary>
-        /// Итеративный расчет перманента.
-        /// </summary>
-        /// <param name="element">"Элемент</param>
-        /// <param name="n">Радиус матрицы</param>
-        /// <returns>Комплексное число</returns>
-        public unsafe static Complex Permanent(Complex* element, int n)
-        {
-            Complex* mtx_u_ii, mtx_ii_j;
-            Complex* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
-            Complex val, det = (Complex)1;
-            int d = 0;
-            // rmX указывает на (i,i) элемент на каждом шаге и называется ведущим
-            for (Complex* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
-            {
-                // Ищем максимальный элемент в столбце(под ведущим) 
-                {
-                    //Ищем максимальный элемент и его позицию
-                    val = (Complex)Maths.Abs(*(mtx_ii_j = element));
-                    for (mtx_u_ii = element + n; mtx_u_ii < mtx_end; mtx_u_ii += n)
-                    {
-                        if (val.Abs < (Maths.Abs(*mtx_u_ii)))
-                            val = (Complex)Maths.Abs(*(mtx_ii_j = mtx_u_ii));
-                    }
-                    //Если максимальный элемент = 0 -> матрица вырожденная
-                    if (Maths.Abs(val - 0) < double.Epsilon) return (Complex)double.NaN;
-                    //Если ведущий элемент не является максимальным - делаем перестановку строк и меняем знак определителя
-                    if (mtx_ii_j != element)
-                    {
-                        //det = -det;
-                        for (mtx_u_ii = element; mtx_u_ii < mtx_ii_end; mtx_ii_j++, mtx_u_ii++)
-                        {
-                            val = *mtx_u_ii;
-                            *mtx_u_ii = *mtx_ii_j;
-                            *mtx_ii_j = val;
-                        }
-                    }
-                }
-                //Обнуляем элементы под ведущим
-                for (mtx_u_ii = element + n, mtx_u_ii_j = mtx_end + n; mtx_u_ii < mtx_u_ii_j; mtx_u_ii += d)
-                {
-                    val = *(mtx_u_ii++) / *element;
-                    for (mtx_ii_j = element + 1; mtx_ii_j < mtx_ii_end; mtx_u_ii++, mtx_ii_j++)
-                        *mtx_u_ii += *mtx_ii_j * val;
                 }
                 det *= *element;
             }

@@ -41,10 +41,6 @@ namespace UMapx.Analysis
         /// <summary>
         /// Инициализирует класс, реализующий численное интегрирование методом трапеций.
         /// </summary>
-        public TrapezoidIntegralSolution() { }
-        /// <summary>
-        /// Инициализирует класс, реализующий численное интегрирование методом трапеций.
-        /// </summary>
         /// <param name="function">Делегат непрерывной фукнции</param>
         /// <param name="eps">Погрешность [0, 1]</param>
         public TrapezoidIntegralSolution(IDouble function, double eps = 0.0001)
@@ -131,10 +127,6 @@ namespace UMapx.Analysis
         #endregion
 
         #region Class components
-        /// <summary>
-        /// Инициализирует класс, реализующий численное интегрирование методом Симпсона.
-        /// </summary>
-        public SimpsonIntegralSolution() { }
         /// <summary>
         /// Инициализирует класс, реализующий численное интегрирование методом Симпсона.
         /// </summary>
@@ -370,10 +362,6 @@ namespace UMapx.Analysis
         /// <summary>
         /// Инициализирует класс, реализующий решение нелинейного уравнения методом половинного деления.
         /// </summary>
-        public BisectionNonlinearSolution() { }
-        /// <summary>
-        /// Инициализирует класс, реализующий решение нелинейного уравнения методом половинного деления.
-        /// </summary>
         /// <param name="function">Делегат непрерывной функции</param>
         /// <param name="eps">Погрешность [0, 1]</param>
         public BisectionNonlinearSolution(IDouble function, double eps = 0.0001)
@@ -455,10 +443,6 @@ namespace UMapx.Analysis
         #endregion
 
         #region Class components
-        /// <summary>
-        /// Инициализирует класс, реализующий решение нелинейного уравнения методом хорд.
-        /// </summary>
-        public ChordNonlinearSolution() { }
         /// <summary>
         /// Инициализирует класс, реализующий решение нелинейного уравнения методом хорд.
         /// </summary>
@@ -750,10 +734,6 @@ namespace UMapx.Analysis
         /// <summary>
         /// Инициализирует класс, реализующий поиск минимума методом золотого сечения.
         /// </summary>
-        public GoldenOptimization() { }
-        /// <summary>
-        /// Инициализирует класс, реализующий поиск минимума методом золотого сечения.
-        /// </summary>
         /// <param name="function">Делегат непрерывной фукнции</param>
         /// <param name="eps">Погрешность [0, 1]</param>
         public GoldenOptimization(IDouble function, double eps = 0.0001)
@@ -838,10 +818,6 @@ namespace UMapx.Analysis
         #endregion
 
         #region Class components
-        /// <summary>
-        /// Инициализирует класс, реализующий поиск минимума методом дихотомии.
-        /// </summary>
-        public DichotomyOptimization() { }
         /// <summary>
         /// Инициализирует класс, реализующий поиск минимума методом дихотомии.
         /// </summary>
@@ -1602,9 +1578,6 @@ namespace UMapx.Analysis
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public static double SummaryPow(double[] x, double[] y, double powx, double powy)
         {
-            if (x.Length != y.Length)
-                throw new Exception("Размерности векторов должны быть одинаковыми");
-
             double sum = 0;
             int length = x.Length;
 

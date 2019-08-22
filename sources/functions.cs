@@ -1411,26 +1411,93 @@ namespace UMapx.Core
         /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
         public static double Erf(double x)
         {
-            double y = x * x;
-            double a = 0.147;
-            double b = -y * (4 / Math.PI + a * y) / (1 + a * y);
-            return Math.Sign(x) * Math.Sqrt(1 - Math.Exp(b));
+            return Erf(x, false);
         }
         /// <summary>
-        /// Возвращает значение обратной функции ошибок.
+        /// Возвращает значение интеграла Лапласа (функция ошибок).
+        /// </summary>
+        /// <param name="x">Значение верхнего предела интеграла</param>
+        /// <param name="inverse">Обратная функция или нет</param>
+        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        public static double Erf(double x, bool inverse)
+        {
+            // exception
+            if (x == 0.0)
+                return 0.0;
+
+            // params
+            int s = inverse ? 1 : -1;
+            double y = s * x * x;
+            double z = 2 / Math.Sqrt(Math.PI);
+            double a = 1, b = x, c;
+            double eps = 1e-16;
+            int i, iterations = 120, k = 3;
+
+            // Taylor series:
+            for (i = 1; i < iterations; i++, k += 2)
+            {
+                // series:
+                a *= y / i;
+                c = a * x / k;
+
+                // stop point:
+                if (Math.Abs(c) < eps)
+                {
+                    break;
+                }
+                else
+                {
+                    b += c;
+                }
+            }
+
+            // erf(x)
+            double erf = z * b;
+            if (!inverse)
+            {
+                if (Math.Abs(erf) > 1.0)
+                    return Math.Sign(erf);
+            }
+
+            return erf;
+        }
+        /// <summary>
+        /// Возвращает значение мнимой функции ошибок.
         /// </summary>
         /// <param name="x">Значение верхнего предела интеграла</param>
         /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
-        public static double Erfinv(double x)
+        public static double Erfi(double x)
         {
-            double y = x * x;
-            double a = 0.147;
-            double b = 2.0 / (Math.PI * a);
-            double c = Math.Log(1.0 - y) / 2.0;
-            double d = b + c;
-            double e = Math.Sqrt(d * d - c);
-            double f = Math.Sqrt(e - d);
-            return Math.Sign(x) * f;
+            // special cases:
+            if (x > 26.658987628)
+                return double.PositiveInfinity;
+            if (x < -26.658987628)
+                return double.NegativeInfinity;
+
+            // properties:
+            double s = x;
+            double m = x, t;
+            double z = x * x;
+            int k, iterations = 930;
+            double eps = 1e-16;
+            double p = 2.0 / Special.sqrtPI;
+
+            // Taylor series:
+            for (int i = 1; i < iterations; i++)
+            {
+                // value:
+                k = 2 * i + 1;
+                m *= z / i;
+                t = m / k;
+
+                // stop point:
+                if (Math.Abs(t) < eps)
+                { break; }
+                else { s += t; }
+            }
+
+            // construction:
+            return p * s;
         }
         /// <summary>
         /// Возвращает значение интеграла Лапласа (функция ошибок).
@@ -1488,44 +1555,6 @@ namespace UMapx.Core
         {
             return 1.0 - Erf(x, range.Min, range.Max);
         }
-        /// <summary>
-        /// Возвращает значение мнимой функции ошибок.
-        /// </summary>
-        /// <param name="x">Значение верхнего предела интеграла</param>
-        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
-        public static double Erfi(double x)
-        {
-            // special cases:
-            if (x > 26.658987628)
-                return double.PositiveInfinity;
-            if (x < -26.658987628)
-                return double.NegativeInfinity;
-
-            // properties:
-            double s = x;
-            double m = x, t;
-            double z = x * x;
-            int k, iterations = 930;
-            double eps = 1e-16;
-            double p = 2.0 / Special.sqrtPI;
-
-            // Taylor series:
-            for (int i = 1; i < iterations; i++)
-            {
-                // value:
-                k = 2 * i + 1;
-                m *= z / i;
-                t = m / k;
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
-            }
-
-            // construction:
-            return p * s;
-        }
         #endregion
 
         #region Q-functions
@@ -1545,7 +1574,7 @@ namespace UMapx.Core
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public static double Qinv(double x)
         {
-            return Math.Sqrt(2) * Erfinv(1 - 2 * x);
+            return Math.Sqrt(2) * Special.Erf(1 - 2 * x, true);
         }
         #endregion
 

@@ -2628,7 +2628,7 @@ namespace UMapx.Decomposition
             for (i = 0; i < n; i++)
                 diag[i] = A[i, i];
 
-            this.matrix = Matrice.DiagDiv(A, diag);
+            this.matrix = Matrice.Div(A, diag);
             return;
         }
         #endregion

@@ -35,7 +35,7 @@ namespace UMapx.Wavelet
     /// https://en.wikipedia.org/wiki/Discrete_wavelet_transform
     /// </remarks>
     /// </summary>
-    public class WaveletTransform : IWaveletTransform, ITransform
+    public class WaveletTransform : IWaveletTransform, ILevelTransform, ITransform
     {
         #region Private data
         private double[] lp;        // Low-Pass filter,
@@ -6059,9 +6059,9 @@ this.levels), DataLen2);
     {
         #region Interface
         /// <summary>
-        /// Получает или задает количество уровней вейвлет-преобразования.
+        /// Получает или задает дискретный вейвлет.
         /// </summary>
-        int Levels { get; set; }
+        WaveletPack Wavelet { get; set; }
         #endregion
     }
     #endregion

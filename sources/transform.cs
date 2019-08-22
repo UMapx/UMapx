@@ -8997,7 +8997,7 @@ namespace UMapx.Transform
 
     #region Interfaces
     /// <summary>
-    /// Определяет класс многоуровнего преобразования.
+    /// Определяет класс многоуровневого преобразования.
     /// </summary>
     public interface ILevelTransform
     {

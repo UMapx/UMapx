@@ -2413,7 +2413,7 @@
         </member>
         <member name="T:UMapx.Transform.ILevelTransform">
             <summary>
-            Определяет класс многоуровнего преобразования.
+            Определяет класс многоуровневого преобразования.
             </summary>
         </member>
         <member name="P:UMapx.Transform.ILevelTransform.Levels">
@@ -4053,9 +4053,17 @@
             <param name="x">Значение верхнего предела интеграла</param>
             <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Erfinv(System.Double)">
+        <member name="M:UMapx.Core.Special.Erf(System.Double,System.Boolean)">
             <summary>
-            Возвращает значение обратной функции ошибок.
+            Возвращает значение интеграла Лапласа (функция ошибок).
+            </summary>
+            <param name="x">Значение верхнего предела интеграла</param>
+            <param name="inverse">Обратная функция или нет</param>
+            <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfi(System.Double)">
+            <summary>
+            Возвращает значение мнимой функции ошибок.
             </summary>
             <param name="x">Значение верхнего предела интеграла</param>
             <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
@@ -4104,13 +4112,6 @@
             </summary>
             <param name="x">Значение верхнего предела интеграла</param>
             <param name="range">Пара дробных чисел, представляющих отрезок</param>
-            <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfi(System.Double)">
-            <summary>
-            Возвращает значение мнимой функции ошибок.
-            </summary>
-            <param name="x">Значение верхнего предела интеграла</param>
             <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
         </member>
         <member name="M:UMapx.Core.Special.Q(System.Double)">
@@ -14412,11 +14413,6 @@
             Погрешность вычислений.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.TrapezoidIntegralSolution.#ctor">
-            <summary>
-            Инициализирует класс, реализующий численное интегрирование методом трапеций.
-            </summary>
-        </member>
         <member name="M:UMapx.Analysis.TrapezoidIntegralSolution.#ctor(UMapx.Core.IDouble,System.Double)">
             <summary>
             Инициализирует класс, реализующий численное интегрирование методом трапеций.
@@ -14455,11 +14451,6 @@
         <member name="F:UMapx.Analysis.SimpsonIntegralSolution.eps">
             <summary>
             Погрешность вычислений.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.SimpsonIntegralSolution.#ctor">
-            <summary>
-            Инициализирует класс, реализующий численное интегрирование методом Симпсона.
             </summary>
         </member>
         <member name="M:UMapx.Analysis.SimpsonIntegralSolution.#ctor(UMapx.Core.IDouble,System.Double)">
@@ -14563,11 +14554,6 @@
             Погрешность вычислений.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.BisectionNonlinearSolution.#ctor">
-            <summary>
-            Инициализирует класс, реализующий решение нелинейного уравнения методом половинного деления.
-            </summary>
-        </member>
         <member name="M:UMapx.Analysis.BisectionNonlinearSolution.#ctor(UMapx.Core.IDouble,System.Double)">
             <summary>
             Инициализирует класс, реализующий решение нелинейного уравнения методом половинного деления.
@@ -14606,11 +14592,6 @@
         <member name="F:UMapx.Analysis.ChordNonlinearSolution.eps">
             <summary>
             Погрешность вычислений.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.ChordNonlinearSolution.#ctor">
-            <summary>
-            Инициализирует класс, реализующий решение нелинейного уравнения методом хорд.
             </summary>
         </member>
         <member name="M:UMapx.Analysis.ChordNonlinearSolution.#ctor(UMapx.Core.IDouble,System.Double)">
@@ -14780,11 +14761,6 @@
             Погрешность вычислений.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.GoldenOptimization.#ctor">
-            <summary>
-            Инициализирует класс, реализующий поиск минимума методом золотого сечения.
-            </summary>
-        </member>
         <member name="M:UMapx.Analysis.GoldenOptimization.#ctor(UMapx.Core.IDouble,System.Double)">
             <summary>
             Инициализирует класс, реализующий поиск минимума методом золотого сечения.
@@ -14823,11 +14799,6 @@
         <member name="F:UMapx.Analysis.DichotomyOptimization.eps">
             <summary>
             Погрешность вычислений.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.DichotomyOptimization.#ctor">
-            <summary>
-            Инициализирует класс, реализующий поиск минимума методом дихотомии.
             </summary>
         </member>
         <member name="M:UMapx.Analysis.DichotomyOptimization.#ctor(UMapx.Core.IDouble,System.Double)">
@@ -19508,9 +19479,9 @@
             Определяет общий интерфейс вейвлет-преобразований.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.IWaveletTransform.Levels">
+        <member name="P:UMapx.Wavelet.IWaveletTransform.Wavelet">
             <summary>
-            Получает или задает количество уровней вейвлет-преобразования.
+            Получает или задает дискретный вейвлет.
             </summary>
         </member>
         <member name="M:UMapx.Wavelet.WaveletTransform.#ctor(UMapx.Wavelet.WaveletPack,System.Int32,System.Boolean)">
@@ -23969,41 +23940,10 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Det(System.Double[0:,0:])">
             <summary>
-            Возвращает значение определителя квадратной матрицы.
-            </summary>
-            <param name="m">Квадратная матрица</param>
-            <returns>Число двойночй точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Perm(System.Double[0:,0:])">
-            <summary>
-            Возвращает значение перманента матрицы.
+            Возвращает значение определителя матрицы.
             </summary>
             <param name="m">Матрица</param>
             <returns>Число двойночй точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Triang(System.Double[0:,0:],System.Boolean)">
-            <summary>
-            Приводит матрицу к треугольному виду.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="lower">Приведение к нижнеугольной матрице или нет</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.DiagMul(System.Double[0:,0:],System.Double[])">
-            <summary>
-            Возвращает произведение матрицы и диагональной матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.DiagDiv(System.Double[0:,0:],System.Double[])">
-            <summary>
-            Возвращает произведение матрицы и диагональной матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Матрица</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Norm(System.Double[0:,0:],System.Double)">
             <summary>
@@ -24050,17 +23990,10 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Det(UMapx.Core.Complex[0:,0:])">
             <summary>
-            Возвращает значение определителя квадратной матрицы.
-            </summary>
-            <param name="m">Квадратная матрица</param>
-            <returns>Комплексное число</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Perm(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Возвращает значение перманента матрицы.
+            Возвращает значение определителя матрицы.
             </summary>
             <param name="m">Матрица</param>
-            <returns>Комплексное число</returns>
+            <returns>Число двойночй точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Norm(UMapx.Core.Complex[0:,0:],System.Double)">
             <summary>
@@ -24075,30 +24008,6 @@
             Возвращает норму двумерной матрицы.
             </summary>
             <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Triang(UMapx.Core.Complex[0:,0:],System.Boolean)">
-            <summary>
-            Приводит матрицу к треугольному виду.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="lower">Приведение к нижнеугольной матрице или нет</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.DiagMul(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает произведение матрицы и диагональной матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.DiagDiv(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
-            <summary>
-            Возвращает произведение матрицы и диагональной матрицы.
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
             <returns>Матрица</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Fix(UMapx.Core.Complex[0:,0:])">
@@ -25366,7 +25275,7 @@
             <summary>
             Реализует умножение матрицы на вектор вида: A * diag(v).
             </summary>
-            <param name="m">Двумерная матрица</param>
+            <param name="m">Матрица</param>
             <param name="v">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
@@ -25374,7 +25283,7 @@
             <summary>
             Реализует умножение матрицы на вектор вида: A * diag(v).
             </summary>
-            <param name="m">Двумерная матрица</param>
+            <param name="m">Матрица</param>
             <param name="v">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
@@ -25382,7 +25291,7 @@
             <summary>
             Реализует умножение матрицы на вектор вида: A * diag(v).
             </summary>
-            <param name="m">Двумерная матрица</param>
+            <param name="m">Матрица</param>
             <param name="v">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
@@ -25390,7 +25299,7 @@
             <summary>
             Реализует умножение матрицы на вектор вида: A * diag(v).
             </summary>
-            <param name="m">Двумерная матрица</param>
+            <param name="m">Матрица</param>
             <param name="v">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
@@ -25488,6 +25397,38 @@
             </summary>
             <param name="v">Одномерный массив</param>
             <param name="a">Число</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[0:,0:],System.Double[])">
+            <summary>
+            Реализует деление матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[0:,0:],System.Double[])">
+            <summary>
+            Реализует деление матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(System.Double[0:,0:],UMapx.Core.Complex[])">
+            <summary>
+            Реализует деление матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
+            <summary>
+            Реализует деление матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Double[],System.Double[])">
@@ -25972,7 +25913,7 @@
             Реализует скалярное умножение вектора на матрицу вида: 
             </summary>
             <param name="v">Одномерный массив</param>
-            <param name="m">Двумерная матрица</param>
+            <param name="m">Матрица</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Double[],UMapx.Core.Complex[0:,0:])">
@@ -25980,7 +25921,7 @@
             Реализует скалярное умножение вектора на матрицу.
             </summary>
             <param name="v">Одномерный массив</param>
-            <param name="m">Двумерная матрица</param>
+            <param name="m">Матрица</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[],UMapx.Core.Complex[0:,0:])">
@@ -25988,7 +25929,7 @@
             Реализует скалярное умножение вектора на матрицу.
             </summary>
             <param name="v">Одномерный массив</param>
-            <param name="m">Двумерная матрица</param>
+            <param name="m">Матрица</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[],System.Double[0:,0:])">
@@ -27093,25 +27034,9 @@
             <param name="n">Радиус матрицы</param>
             <returns>Число двойной точности</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Permanent(System.Double*,System.Int32)">
-            <summary>
-            Итеративный расчет перманента.
-            </summary>
-            <param name="element">"Элемент</param>
-            <param name="n">Радиус матрицы</param>
-            <returns>Число двойной точности</returns>
-        </member>
         <member name="M:UMapx.Core.LinealgOptions.Determinant(UMapx.Core.Complex*,System.Int32)">
             <summary>
             Итеративный расчет детерминанта.
-            </summary>
-            <param name="element">"Элемент</param>
-            <param name="n">Радиус матрицы</param>
-            <returns>Комплексное число</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.Permanent(UMapx.Core.Complex*,System.Int32)">
-            <summary>
-            Итеративный расчет перманента.
             </summary>
             <param name="element">"Элемент</param>
             <param name="n">Радиус матрицы</param>
