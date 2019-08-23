@@ -234,7 +234,7 @@ namespace UMapx.Window
             }
             set
             {
-                if (sigma <= 0)
+                if (value <= 0)
                     throw new Exception("Неверное значение аргумента");
 
                 this.sigma = value;
@@ -311,7 +311,7 @@ namespace UMapx.Window
             }
             set
             {
-                if (sigma <= 0)
+                if (value <= 0)
                     throw new Exception("Неверное значение аргумента");
 
                 this.sigma = value;
@@ -977,7 +977,7 @@ namespace UMapx.Window
             }
             set
             {
-                if (sigma <= 0)
+                if (value <= 0)
                     throw new Exception("Неверное значение аргумента");
 
                 this.sigma = value;

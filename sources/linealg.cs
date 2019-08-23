@@ -4080,107 +4080,6 @@ namespace UMapx.Core
 
         #region Vector mul
         /// <summary>
-        /// Реализует умножение матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[,] Mul(this double[,] m, double[] v)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] temp = new double[r0, r1];
-            double alpha;
-            int i, j;
-
-            // Вычисление новой матрицы:
-            for (j = 0; j < r1; j++)
-            {
-                alpha = v[j];
-                for (i = 0; i < r0; i++)
-                {
-                    temp[i, j] = m[i, j] * alpha;
-                }
-            }
-
-            return temp;
-        }
-        /// <summary>
-        /// Реализует умножение матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Mul(this Complex[,] m, double[] v)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] temp = new Complex[r0, r1];
-            Complex alpha;
-            int i, j;
-
-            // Вычисление новой матрицы:
-            for (j = 0; j < r1; j++)
-            {
-                alpha = v[j];
-                for (i = 0; i < r0; i++)
-                {
-                    temp[i, j] = m[i, j] * alpha;
-                }
-            }
-
-            return temp;
-        }
-        /// <summary>
-        /// Реализует умножение матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Mul(this double[,] m, Complex[] v)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] temp = new Complex[r0, r1];
-            Complex alpha;
-            int i, j;
-
-            // Вычисление новой матрицы:
-            for (j = 0; j < r1; j++)
-            {
-                alpha = v[j];
-                for (i = 0; i < r0; i++)
-                {
-                    temp[i, j] = m[i, j] * alpha;
-                }
-            }
-
-            return temp;
-        }
-        /// <summary>
-        /// Реализует умножение матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Mul(this Complex[,] m, Complex[] v)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] temp = new Complex[r0, r1];
-            Complex alpha;
-            int i, j;
-
-            // Вычисление новой матрицы:
-            for (j = 0; j < r1; j++)
-            {
-                alpha = v[j];
-                for (i = 0; i < r0; i++)
-                {
-                    temp[i, j] = m[i, j] * alpha;
-                }
-            }
-
-            return temp;
-        }
-
-        /// <summary>
         /// Реализует поэлементное произведение векторов.
         /// </summary>
         /// <param name="a">Одномерный массив</param>
@@ -4389,127 +4288,6 @@ namespace UMapx.Core
         #endregion
 
         #region Vector div
-        /// <summary>
-        /// Реализует деление матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static double[,] Div(this double[,] m, double[] v)
-        {
-            int c = m.GetLength(1);
-            int r = m.GetLength(0);
-            double[,] H = new double[r, c];
-            double alpha;
-            int i, j;
-
-            for (j = 0; j < c; j++)
-            {
-                // digaonal element:
-                alpha = v[j];
-
-                // dividing:
-                if (alpha != 0)
-                {
-                    for (i = 0; i < r; i++)
-                    {
-                        H[i, j] = m[i, j] / alpha;
-                    }
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует деление матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Div(this Complex[,] m, double[] v)
-        {
-            int c = m.GetLength(1);
-            int r = m.GetLength(0);
-            Complex[,] H = new Complex[r, c];
-            Complex alpha;
-            int i, j;
-
-            for (j = 0; j < c; j++)
-            {
-                // digaonal element:
-                alpha = v[j];
-
-                // dividing:
-                if (alpha != 0)
-                {
-                    for (i = 0; i < r; i++)
-                    {
-                        H[i, j] = m[i, j] / alpha;
-                    }
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует деление матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Div(this double[,] m, Complex[] v)
-        {
-            int c = m.GetLength(1);
-            int r = m.GetLength(0);
-            Complex[,] H = new Complex[r, c];
-            Complex alpha;
-            int i, j;
-
-            for (j = 0; j < c; j++)
-            {
-                // digaonal element:
-                alpha = v[j];
-
-                // dividing:
-                if (alpha != 0)
-                {
-                    for (i = 0; i < r; i++)
-                    {
-                        H[i, j] = m[i, j] / alpha;
-                    }
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Реализует деление матрицы на вектор вида: A * diag(v).
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
-        public static Complex[,] Div(this Complex[,] m, Complex[] v)
-        {
-            int c = m.GetLength(1);
-            int r = m.GetLength(0);
-            Complex[,] H = new Complex[r, c];
-            Complex alpha;
-            int i, j;
-
-            for (j = 0; j < c; j++)
-            {
-                // digaonal element:
-                alpha = v[j];
-
-                // dividing:
-                if (alpha != 0)
-                {
-                    for (i = 0; i < r; i++)
-                    {
-                        H[i, j] = m[i, j] / alpha;
-                    }
-                }
-            }
-            return H;
-        }
-
         /// <summary>
         /// Реализует поэлементное произведение векторов.
         /// </summary>
@@ -5555,6 +5333,354 @@ namespace UMapx.Core
             if (r < j)
                 Sort(v, r, j);
             return;
+        }
+        #endregion
+
+        #region Vector as diagonal matrix
+        /// <summary>
+        /// Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[,] Dot(this double[,] m, double[] v, bool inverse = false)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] temp = new double[r0, r1];
+            double alpha;
+            int i, j;
+
+            if (!inverse)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+                    for (i = 0; i < r0; i++)
+                    {
+                        temp[i, j] = m[i, j] * alpha;
+                    }
+                }
+            }
+            else
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+
+                    if (alpha != 0)
+                    {
+                        for (i = 0; i < r0; i++)
+                        {
+                            temp[i, j] = m[i, j] / alpha;
+                        }
+                    }
+                }
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Dot(this Complex[,] m, Complex[] v, bool inverse = false)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] temp = new Complex[r0, r1];
+            Complex alpha;
+            int i, j;
+
+            if (!inverse)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+                    for (i = 0; i < r0; i++)
+                    {
+                        temp[i, j] = m[i, j] * alpha;
+                    }
+                }
+            }
+            else
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+
+                    if (alpha != 0)
+                    {
+                        for (i = 0; i < r0; i++)
+                        {
+                            temp[i, j] = m[i, j] / alpha;
+                        }
+                    }
+                }
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Dot(this Complex[,] m, double[] v, bool inverse = false)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] temp = new Complex[r0, r1];
+            Complex alpha;
+            int i, j;
+
+            if (!inverse)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+                    for (i = 0; i < r0; i++)
+                    {
+                        temp[i, j] = m[i, j] * alpha;
+                    }
+                }
+            }
+            else
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+
+                    if (alpha != 0)
+                    {
+                        for (i = 0; i < r0; i++)
+                        {
+                            temp[i, j] = m[i, j] / alpha;
+                        }
+                    }
+                }
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Dot(this double[,] m, Complex[] v, bool inverse = false)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] temp = new Complex[r0, r1];
+            Complex alpha;
+            int i, j;
+
+            if (!inverse)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+                    for (i = 0; i < r0; i++)
+                    {
+                        temp[i, j] = m[i, j] * alpha;
+                    }
+                }
+            }
+            else
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+
+                    if (alpha != 0)
+                    {
+                        for (i = 0; i < r0; i++)
+                        {
+                            temp[i, j] = m[i, j] / alpha;
+                        }
+                    }
+                }
+            }
+
+            return temp;
+        }
+
+        /// <summary>
+        /// Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[,] Dot(this double[] v, double[,] m, bool inverse = false)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            double[,] temp = new double[r0, r1];
+            double alpha;
+            int i, j;
+
+            if (!inverse)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+                    for (i = 0; i < r0; i++)
+                    {
+                        temp[i, j] = m[i, j] * alpha;
+                    }
+                }
+            }
+            else
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+
+                    if (alpha != 0)
+                    {
+                        for (i = 0; i < r0; i++)
+                        {
+                            temp[i, j] = m[i, j] / alpha;
+                        }
+                    }
+                }
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Dot(this Complex[] v, Complex[,] m, bool inverse = false)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] temp = new Complex[r0, r1];
+            Complex alpha;
+            int i, j;
+
+            if (!inverse)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+                    for (i = 0; i < r0; i++)
+                    {
+                        temp[i, j] = m[i, j] * alpha;
+                    }
+                }
+            }
+            else
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+
+                    if (alpha != 0)
+                    {
+                        for (i = 0; i < r0; i++)
+                        {
+                            temp[i, j] = m[i, j] / alpha;
+                        }
+                    }
+                }
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Dot(this Complex[] v, double[,] m, bool inverse = false)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] temp = new Complex[r0, r1];
+            Complex alpha;
+            int i, j;
+
+            if (!inverse)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+                    for (i = 0; i < r0; i++)
+                    {
+                        temp[i, j] = m[i, j] * alpha;
+                    }
+                }
+            }
+            else
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+
+                    if (alpha != 0)
+                    {
+                        for (i = 0; i < r0; i++)
+                        {
+                            temp[i, j] = m[i, j] / alpha;
+                        }
+                    }
+                }
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <param name="v">Одномерный массив</param>
+        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[,] Dot(this double[] v, Complex[,] m, bool inverse = false)
+        {
+            int r0 = m.GetLength(0), r1 = m.GetLength(1);
+            Complex[,] temp = new Complex[r0, r1];
+            Complex alpha;
+            int i, j;
+
+            if (!inverse)
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+                    for (i = 0; i < r0; i++)
+                    {
+                        temp[i, j] = m[i, j] * alpha;
+                    }
+                }
+            }
+            else
+            {
+                for (j = 0; j < r1; j++)
+                {
+                    alpha = v[j];
+
+                    if (alpha != 0)
+                    {
+                        for (i = 0; i < r0; i++)
+                        {
+                            temp[i, j] = m[i, j] / alpha;
+                        }
+                    }
+                }
+            }
+
+            return temp;
         }
         #endregion
 
@@ -11186,6 +11312,70 @@ namespace UMapx.Core
                 m[i] = new Complex(mi.Re, mi.Im);
             }
             return m;
+        }
+        /// <summary>
+        /// Генератор случайных чисел.
+        /// </summary>
+        private static Random rnd = new Random();
+        /// <summary>
+        /// Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[][] JaggedRandom(int m, int l)
+        {
+            double[][] H = new double[m][];
+            int i, j;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new double[l];
+
+                for (j = 0; j < l; j++)
+                {
+                    H[i][j] = rnd.NextDouble();
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует построение нулевой матрицы.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[][] JaggedZero(int m, int l)
+        {
+            double[][] H = new double[m][];
+            int i;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new double[l];
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует построение единичной матрицы.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[][] JaggedEye(int m, int l)
+        {
+            double[][] H = new double[m][];
+            int i;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new double[l];
+                H[i][i] = 1.0;
+            }
+
+            return H;
         }
         #endregion
 

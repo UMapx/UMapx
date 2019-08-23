@@ -54,7 +54,7 @@
             <param name="b">Матрица B</param>
             <param name="eps">Погрешность [0, 1]</param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Double[0:,0:],System.Double[0:,0:],System.Boolean,System.Double[0:,0:])">
+        <member name="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][])">
              <summary>
                Adaptation of the original Fortran QZHES routine from EISPACK.
              </summary>
@@ -77,7 +77,7 @@
              <param name="z"></param>
              <returns></returns>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Double[0:,0:],System.Double[0:,0:],System.Double,System.Boolean,System.Double[0:,0:],System.Int32@)">
+        <member name="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@)">
             <summary>
               Adaptation of the original Fortran QZIT routine from EISPACK.
             </summary>
@@ -105,7 +105,7 @@
             <param name="ierr"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[0:,0:],System.Double[0:,0:],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[0:,0:])">
+        <member name="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])">
             <summary>
               Adaptation of the original Fortran QZVAL routine from EISPACK.
             </summary>
@@ -134,7 +134,7 @@
             <param name="z"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.qzvec(System.Int32,System.Double[0:,0:],System.Double[0:,0:],System.Double[],System.Double[],System.Double[],System.Double[0:,0:])">
+        <member name="M:UMapx.Decomposition.GEVD.qzvec(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Double[][])">
             <summary>
               Adaptation of the original Fortran QZVEC routine from EISPACK.
             </summary>
@@ -386,22 +386,15 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.Cholesky.#ctor(System.Double[0:,0:],System.Boolean)">
+        <member name="M:UMapx.Decomposition.Cholesky.#ctor(System.Double[0:,0:])">
             <summary>
             Инициализирует разложение Холецкого квадратной матрицы.
             </summary>
             <param name="A">Квадратная симметричная положительно-определенная матрица</param>
-            <param name="incomplete">Неполное разложение или нет</param>
         </member>
         <member name="M:UMapx.Decomposition.Cholesky.chol(System.Double[][])">
             <summary>
             Реализует разложение Холецкого.
-            </summary>
-            <param name="a">Квадратная матрица</param>
-        </member>
-        <member name="M:UMapx.Decomposition.Cholesky.ichol(System.Double[][])">
-            <summary>
-            Реализует неполное разложение Холецкого.
             </summary>
             <param name="a">Квадратная матрица</param>
         </member>
@@ -578,14 +571,11 @@
             <param name="r">Размерность новых матриц</param>
             <param name="iterations">Количество итераций</param>
         </member>
-        <member name="M:UMapx.Decomposition.NNMF.nnmf(System.Double[][],System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Decomposition.NNMF.nnmf(System.Double[0:,0:],System.Int32)">
             <summary>
             Представляет NNMF, основанный на мультипликативном методе.
             </summary>
-            <param name="X">Матрица</param>
-            <param name="m">Высота матрицы</param>
-            <param name="n">Ширина матрицы</param>
-            <param name="r">Новая размерность</param>
+            <param name="A">Матрица</param>
             <param name="iterations">Количество итераций</param>
         </member>
         <member name="P:UMapx.Decomposition.NNMF.W">
@@ -600,7 +590,7 @@
         </member>
         <member name="T:UMapx.Decomposition.QR">
             <summary>
-            Определяет QR-разложение квадратной матрицы.
+            Определяет QR-разложение матрицы.
             <remarks>
             Это представление матрицы в виде произведения двух матриц: A = Q * R, где Q - унитарная (или ортогональная) матрица, а R - верхняя треугольная матрица. 
             QR-разложение является основой одного из методов поиска собственных векторов и чисел матрицы — QR-алгоритма.
@@ -617,9 +607,14 @@
         </member>
         <member name="M:UMapx.Decomposition.QR.qrdecomp(System.Double[0:,0:])">
             <summary>
-            Реализует QR-разложение.
+            QR-decomposition.
             </summary>
             <param name="A">Квадратная матрица</param>
+        </member>
+        <member name="P:UMapx.Decomposition.QR.H">
+            <summary>
+            Возвращает матрицу, содержащую вектора отражений Хаусхолдера.
+            </summary>
         </member>
         <member name="P:UMapx.Decomposition.QR.R">
             <summary>
@@ -25257,38 +25252,6 @@
             <param name="b">Число</param>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],System.Double[])">
-            <summary>
-            Реализует умножение матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:],System.Double[])">
-            <summary>
-            Реализует умножение матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(System.Double[0:,0:],UMapx.Core.Complex[])">
-            <summary>
-            Реализует умножение матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
-            <summary>
-            Реализует умножение матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Double[],System.Double[])">
             <summary>
             Реализует поэлементное произведение векторов.
@@ -25383,38 +25346,6 @@
             </summary>
             <param name="v">Одномерный массив</param>
             <param name="a">Число</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(System.Double[0:,0:],System.Double[])">
-            <summary>
-            Реализует деление матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[0:,0:],System.Double[])">
-            <summary>
-            Реализует деление матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(System.Double[0:,0:],UMapx.Core.Complex[])">
-            <summary>
-            Реализует деление матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
-            <summary>
-            Реализует деление матрицы на вектор вида: A * diag(v).
-            </summary>
-            <param name="m">Матрица</param>
-            <param name="v">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Double[],System.Double[])">
@@ -25861,6 +25792,78 @@
             <param name="v">Одномерный массив</param>
             <param name="r">Определяет диапазон сортировки. Начальная точка</param>
             <param name="l">Определяет диапазон сортировки. Конечная точка</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(System.Double[0:,0:],System.Double[],System.Boolean)">
+            <summary>
+            Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[],System.Boolean)">
+            <summary>
+            Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[0:,0:],System.Double[],System.Boolean)">
+            <summary>
+            Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(System.Double[0:,0:],UMapx.Core.Complex[],System.Boolean)">
+            <summary>
+            Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(System.Double[],System.Double[0:,0:],System.Boolean)">
+            <summary>
+            Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[],UMapx.Core.Complex[0:,0:],System.Boolean)">
+            <summary>
+            Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex[],System.Double[0:,0:],System.Boolean)">
+            <summary>
+            Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Dot(System.Double[],UMapx.Core.Complex[0:,0:],System.Boolean)">
+            <summary>
+            Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+            </summary>
+            <param name="m">Матрица</param>
+            <param name="v">Одномерный массив</param>
+            <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+            <returns>Одномерный массив</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Double[],System.Double[])">
             <summary>
@@ -27304,6 +27307,35 @@
             Возвращает матрицу.
             </summary>
             <param name="jagged">Зубчатый массив</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="F:UMapx.Core.LinealgOptions.rnd">
+            <summary>
+            Генератор случайных чисел.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.JaggedRandom(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.JaggedZero(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение нулевой матрицы.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.JaggedEye(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение единичной матрицы.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
             <returns>Матрица</returns>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[],System.Single[][],System.Single[])">

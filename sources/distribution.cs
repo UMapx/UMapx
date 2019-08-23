@@ -5840,7 +5840,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (a < 0)
+                if (value < 0)
                     throw new Exception("Неверное значение аргумента");
 
                 this.a = value;

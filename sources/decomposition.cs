@@ -76,7 +76,7 @@ namespace UMapx.Decomposition
         {
             // Properties
             int n = A.GetLength(0);
-            this.matrices = Matrice.ToJagged(new double[n, n]);
+            this.matrices = LinealgOptions.JaggedZero(n, n);
             this.hessenberg = Matrice.ToJagged(A);
             double[] orthogonal = new double[n];
 
@@ -197,7 +197,7 @@ namespace UMapx.Decomposition
         private double[] ar;
         private double[] ai;
         private double[] beta;
-        private double[,] Z;
+        private double[][] Z;
         #endregion
 
         #region Initialize
@@ -223,9 +223,9 @@ namespace UMapx.Decomposition
             this.ar = new double[n];
             this.ai = new double[n];
             this.beta = new double[n];
-            this.Z = new double[n, n];
-            var A = (double[,])a.Clone();
-            var B = (double[,])b.Clone();
+            this.Z = LinealgOptions.JaggedEye(n, n);
+            var A = Matrice.ToJagged(a);
+            var B = Matrice.ToJagged(b);
             bool matz = true;
             int ierr = 0;
 
@@ -320,7 +320,7 @@ namespace UMapx.Decomposition
         {
             get
             {
-                return Z;
+                return Z.FromJagged();
             }
         }
         /// <summary>
@@ -360,7 +360,7 @@ namespace UMapx.Decomposition
         /// <param name="matz"></param>
         /// <param name="z"></param>
         /// <returns></returns>
-        private static void qzhes(int n, double[,] a, double[,] b, bool matz, double[,] z)
+        private static void qzhes(int n, double[][] a, double[][] b, bool matz, double[][] z)
         {
             int i, j, k, l;
             double r, s, t;
@@ -368,19 +368,6 @@ namespace UMapx.Decomposition
             double u1, u2, v1, v2;
             int lb, nk1;
             double rho;
-
-
-            if (matz)
-            {
-                // If we are interested in computing the
-                //  eigenvectors, set Z to identity(n,n)
-                for (j = 0; j < n; ++j)
-                {
-                    for (i = 0; i < n; ++i)
-                        z[i, j] = 0.0;
-                    z[j, j] = 1.0;
-                }
-            }
 
             // Reduce b to upper triangular form
             if (n <= 1) return;
@@ -390,46 +377,46 @@ namespace UMapx.Decomposition
                 s = 0.0;
 
                 for (i = l1; i < n; ++i)
-                    s += (System.Math.Abs(b[i, l]));
+                    s += (System.Math.Abs(b[i][l]));
 
                 if (s == 0.0) continue;
-                s += (System.Math.Abs(b[l, l]));
+                s += (System.Math.Abs(b[l][l]));
                 r = 0.0;
 
                 for (i = l; i < n; ++i)
                 {
                     // Computing 2nd power
-                    b[i, l] /= s;
-                    r += b[i, l] * b[i, l];
+                    b[i][l] /= s;
+                    r += b[i][l] * b[i][l];
                 }
 
-                r = Sign(System.Math.Sqrt(r), b[l, l]);
-                b[l, l] += r;
-                rho = r * b[l, l];
+                r = Sign(System.Math.Sqrt(r), b[l][l]);
+                b[l][l] += r;
+                rho = r * b[l][l];
 
                 for (j = l1; j < n; ++j)
                 {
                     t = 0.0;
                     for (i = l; i < n; ++i)
-                        t += b[i, l] * b[i, j];
+                        t += b[i][l] * b[i][j];
                     t = -t / rho;
                     for (i = l; i < n; ++i)
-                        b[i, j] += t * b[i, l];
+                        b[i][j] += t * b[i][l];
                 }
 
                 for (j = 0; j < n; ++j)
                 {
                     t = 0.0;
                     for (i = l; i < n; ++i)
-                        t += b[i, l] * a[i, j];
+                        t += b[i][l] * a[i][j];
                     t = -t / rho;
                     for (i = l; i < n; ++i)
-                        a[i, j] += t * b[i, l];
+                        a[i][j] += t * b[i][l];
                 }
 
-                b[l, l] = -s * r;
+                b[l][l] = -s * r;
                 for (i = l1; i < n; ++i)
-                    b[i, l] = 0.0;
+                    b[i][l] = 0.0;
             }
 
             // Reduce a to upper Hessenberg form, while keeping b triangular
@@ -445,11 +432,11 @@ namespace UMapx.Decomposition
                     l1 = l + 1;
 
                     // Zero a(l+1,k)
-                    s = (System.Math.Abs(a[l, k])) + (System.Math.Abs(a[l1, k]));
+                    s = (System.Math.Abs(a[l][k])) + (System.Math.Abs(a[l1][k]));
 
                     if (s == 0.0) continue;
-                    u1 = a[l, k] / s;
-                    u2 = a[l1, k] / s;
+                    u1 = a[l][k] / s;
+                    u2 = a[l1][k] / s;
                     r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
@@ -457,26 +444,26 @@ namespace UMapx.Decomposition
 
                     for (j = k; j < n; ++j)
                     {
-                        t = a[l, j] + u2 * a[l1, j];
-                        a[l, j] += t * v1;
-                        a[l1, j] += t * v2;
+                        t = a[l][j] + u2 * a[l1][j];
+                        a[l][j] += t * v1;
+                        a[l1][j] += t * v2;
                     }
 
-                    a[l1, k] = 0.0;
+                    a[l1][k] = 0.0;
 
                     for (j = l; j < n; ++j)
                     {
-                        t = b[l, j] + u2 * b[l1, j];
-                        b[l, j] += t * v1;
-                        b[l1, j] += t * v2;
+                        t = b[l][j] + u2 * b[l1][j];
+                        b[l][j] += t * v1;
+                        b[l1][j] += t * v2;
                     }
 
                     // Zero b(l+1,l)
-                    s = (System.Math.Abs(b[l1, l1])) + (System.Math.Abs(b[l1, l]));
+                    s = (System.Math.Abs(b[l1][l1])) + (System.Math.Abs(b[l1][l]));
 
                     if (s == 0.0) continue;
-                    u1 = b[l1, l1] / s;
-                    u2 = b[l1, l] / s;
+                    u1 = b[l1][l1] / s;
+                    u2 = b[l1][l] / s;
                     r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
@@ -484,27 +471,27 @@ namespace UMapx.Decomposition
 
                     for (i = 0; i <= l1; ++i)
                     {
-                        t = b[i, l1] + u2 * b[i, l];
-                        b[i, l1] += t * v1;
-                        b[i, l] += t * v2;
+                        t = b[i][l1] + u2 * b[i][l];
+                        b[i][l1] += t * v1;
+                        b[i][l] += t * v2;
                     }
 
-                    b[l1, l] = 0.0;
+                    b[l1][l] = 0.0;
 
                     for (i = 0; i < n; ++i)
                     {
-                        t = a[i, l1] + u2 * a[i, l];
-                        a[i, l1] += t * v1;
-                        a[i, l] += t * v2;
+                        t = a[i][l1] + u2 * a[i][l];
+                        a[i][l1] += t * v1;
+                        a[i][l] += t * v2;
                     }
 
                     if (matz)
                     {
                         for (i = 0; i < n; ++i)
                         {
-                            t = z[i, l1] + u2 * z[i, l];
-                            z[i, l1] += t * v1;
-                            z[i, l] += t * v2;
+                            t = z[i][l1] + u2 * z[i][l];
+                            z[i][l1] += t * v1;
+                            z[i][l] += t * v2;
                         }
                     }
                 }
@@ -538,7 +525,7 @@ namespace UMapx.Decomposition
         /// <param name="z"></param>
         /// <param name="ierr"></param>
         /// <returns></returns>
-        private static void qzit(int n, double[,] a, double[,] b, double eps1, bool matz, double[,] z, ref int ierr)
+        private static void qzit(int n, double[][] a, double[][] b, double eps1, bool matz, double[][] z, ref int ierr)
         {
 
             int i, j, k, l = 0;
@@ -568,12 +555,12 @@ namespace UMapx.Decomposition
                 bni = 0.0;
 
                 if (i != 0)
-                    ani = (Math.Abs(a[i, (i - 1)]));
+                    ani = (Math.Abs(a[i][(i - 1)]));
 
                 for (j = i; j < n; ++j)
                 {
-                    ani += Math.Abs(a[i, j]);
-                    bni += Math.Abs(b[i, j]);
+                    ani += Math.Abs(a[i][j]);
+                    bni += Math.Abs(b[i][j]);
                 }
 
                 if (ani > anorm) anorm = ani;
@@ -621,12 +608,12 @@ namespace UMapx.Decomposition
                 if (l + 1 == 1)
                     goto L95;
 
-                if ((Math.Abs(a[l, lm1])) <= epsa)
+                if ((Math.Abs(a[l][lm1])) <= epsa)
                     break;
             }
 
         L90:
-            a[l, lm1] = 0.0;
+            a[l][lm1] = 0.0;
             if (l < na) goto L95;
 
             // 1-by-1 or 2-by-2 block isolated
@@ -639,14 +626,14 @@ namespace UMapx.Decomposition
 
         L100:
             l1 = l + 1;
-            b11 = b[l, l];
+            b11 = b[l][l];
 
             if (Math.Abs(b11) > epsb) goto L120;
 
-            b[l, l] = 0.0;
-            s = (Math.Abs(a[l, l]) + Math.Abs(a[l1, l]));
-            u1 = a[l, l] / s;
-            u2 = a[l1, l] / s;
+            b[l][l] = 0.0;
+            s = (Math.Abs(a[l][l]) + Math.Abs(a[l1][l]));
+            u1 = a[l][l] / s;
+            u2 = a[l1][l] / s;
             r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
             v1 = -(u1 + r) / r;
             v2 = -u2 / r;
@@ -654,25 +641,25 @@ namespace UMapx.Decomposition
 
             for (j = l; j < enorn; ++j)
             {
-                t = a[l, j] + u2 * a[l1, j];
-                a[l, j] += t * v1;
-                a[l1, j] += t * v2;
+                t = a[l][j] + u2 * a[l1][j];
+                a[l][j] += t * v1;
+                a[l1][j] += t * v2;
 
-                t = b[l, j] + u2 * b[l1, j];
-                b[l, j] += t * v1;
-                b[l1, j] += t * v2;
+                t = b[l][j] + u2 * b[l1][j];
+                b[l][j] += t * v1;
+                b[l1][j] += t * v2;
             }
 
             if (l != 0)
-                a[l, lm1] = -a[l, lm1];
+                a[l][lm1] = -a[l][lm1];
 
             lm1 = l;
             l = l1;
             goto L90;
 
         L120:
-            a11 = a[l, l] / b11;
-            a21 = a[l1, l] / b11;
+            a11 = a[l][l] / b11;
+            a21 = a[l1][ l] / b11;
             if (ish == 1) goto L140;
 
             // Iteration strategy
@@ -680,17 +667,17 @@ namespace UMapx.Decomposition
             if (its == 10) goto L155;
 
             // Determine type of shift
-            b22 = b[l1, l1];
+            b22 = b[l1][l1];
             if (Math.Abs(b22) < epsb) b22 = epsb;
-            b33 = b[na, na];
+            b33 = b[na][na];
             if (Math.Abs(b33) < epsb) b33 = epsb;
-            b44 = b[en, en];
+            b44 = b[en][en];
             if (Math.Abs(b44) < epsb) b44 = epsb;
-            a33 = a[na, na] / b33;
-            a34 = a[na, en] / b44;
-            a43 = a[en, na] / b33;
-            a44 = a[en, en] / b44;
-            b34 = b[na, en] / b44;
+            a33 = a[na][na] / b33;
+            a34 = a[na][en] / b44;
+            a43 = a[en][na] / b33;
+            a44 = a[en][en] / b44;
+            b34 = b[na][en] / b44;
             t = (a43 * b34 - a33 - a44) * .5;
             r = t * t + a34 * a43 - a33 * a44;
             if (r < 0.0) goto L150;
@@ -713,12 +700,12 @@ namespace UMapx.Decomposition
 
                 lm1 = l - 1;
                 l1 = l + 1;
-                t = a[l + 1, l + 1];
+                t = a[l + 1][l + 1];
 
-                if (Math.Abs(b[l, l]) > epsb)
-                    t -= sh * b[l, l];
+                if (Math.Abs(b[l][l]) > epsb)
+                    t -= sh * b[l][l];
 
-                if (Math.Abs(a[l, lm1]) <= (Math.Abs(t / a[l1, l])) * epsa)
+                if (Math.Abs(a[l][lm1]) <= (Math.Abs(t / a[l1][l])) * epsa)
                     goto L100;
             }
 
@@ -726,17 +713,17 @@ namespace UMapx.Decomposition
             a1 = a11 - sh;
             a2 = a21;
             if (l != ld)
-                a[l, lm1] = -a[l, lm1];
+                a[l][lm1] = -a[l][lm1];
             goto L160;
 
         // Determine double shift zero-th column of a
         L150:
-            a12 = a[l, l1] / b22;
-            a22 = a[l1, l1] / b22;
-            b12 = b[l, l1] / b22;
+            a12 = a[l][l1] / b22;
+            a22 = a[l1][l1] / b22;
+            b12 = b[l][l1] / b22;
             a1 = ((a33 - a11) * (a44 - a11) - a34 * a43 + a43 * b34 * a11) / a21 + a12 - a11 * b12;
             a2 = a22 - a11 - a21 * b12 - (a33 - a11) - (a44 - a11) + a43 * b34;
-            a3 = a[l1 + 1, l1] / b22;
+            a3 = a[l1 + 1][l1] / b22;
             goto L160;
 
         // Ad hoc shift
@@ -765,8 +752,8 @@ namespace UMapx.Decomposition
 
                 // Zero a(k+1,k-1)
                 if (k == l) goto L170;
-                a1 = a[k, km1];
-                a2 = a[k1, km1];
+                a1 = a[k][km1];
+                a2 = a[k1][km1];
 
             L170:
                 s = Math.Abs(a1) + Math.Abs(a2);
@@ -780,25 +767,25 @@ namespace UMapx.Decomposition
 
                 for (j = km1; j < enorn; ++j)
                 {
-                    t = a[k, j] + u2 * a[k1, j];
-                    a[k, j] += t * v1;
-                    a[k1, j] += t * v2;
+                    t = a[k][j] + u2 * a[k1][j];
+                    a[k][j] += t * v1;
+                    a[k1][j] += t * v2;
 
-                    t = b[k, j] + u2 * b[k1, j];
-                    b[k, j] += t * v1;
-                    b[k1, j] += t * v2;
+                    t = b[k][j] + u2 * b[k1][j];
+                    b[k][j] += t * v1;
+                    b[k1][j] += t * v2;
                 }
 
                 if (k != l)
-                    a[k1, km1] = 0.0;
+                    a[k1][km1] = 0.0;
                 goto L240;
 
                 // Zero a(k+1,k-1) and a(k+2,k-1)
             L190:
                 if (k == l) goto L200;
-                a1 = a[k, km1];
-                a2 = a[k1, km1];
-                a3 = a[k2, km1];
+                a1 = a[k][ km1];
+                a2 = a[k1][km1];
+                a3 = a[k2][km1];
 
             L200:
                 s = Math.Abs(a1) + Math.Abs(a2) + Math.Abs(a3);
@@ -815,28 +802,28 @@ namespace UMapx.Decomposition
 
                 for (j = km1; j < enorn; ++j)
                 {
-                    t = a[k, j] + u2 * a[k1, j] + u3 * a[k2, j];
-                    a[k, j] += t * v1;
-                    a[k1, j] += t * v2;
-                    a[k2, j] += t * v3;
+                    t = a[k][j] + u2 * a[k1][j] + u3 * a[k2][j];
+                    a[k][j] += t * v1;
+                    a[k1][j] += t * v2;
+                    a[k2][j] += t * v3;
 
-                    t = b[k, j] + u2 * b[k1, j] + u3 * b[k2, j];
-                    b[k, j] += t * v1;
-                    b[k1, j] += t * v2;
-                    b[k2, j] += t * v3;
+                    t = b[k][j] + u2 * b[k1][j] + u3 * b[k2][j];
+                    b[k][j] += t * v1;
+                    b[k1][j] += t * v2;
+                    b[k2][j] += t * v3;
                 }
 
                 if (k == l) goto L220;
-                a[k1, km1] = 0.0;
-                a[k2, km1] = 0.0;
+                a[k1][km1] = 0.0;
+                a[k2][km1] = 0.0;
 
             // Zero b(k+2,k+1) and b(k+2,k)
             L220:
-                s = (Math.Abs(b[k2, k2])) + (Math.Abs(b[k2, k1])) + (Math.Abs(b[k2, k]));
+                s = (Math.Abs(b[k2][k2])) + (Math.Abs(b[k2][k1])) + (Math.Abs(b[k2][k]));
                 if (s == 0.0) goto L240;
-                u1 = b[k2, k2] / s;
-                u2 = b[k2, k1] / s;
-                u3 = b[k2, k] / s;
+                u1 = b[k2][k2] / s;
+                u2 = b[k2][k1] / s;
+                u3 = b[k2][k] / s;
                 r = Sign(Math.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
@@ -846,37 +833,37 @@ namespace UMapx.Decomposition
 
                 for (i = lor1; i < ll + 1; ++i)
                 {
-                    t = a[i, k2] + u2 * a[i, k1] + u3 * a[i, k];
-                    a[i, k2] += t * v1;
-                    a[i, k1] += t * v2;
-                    a[i, k] += t * v3;
+                    t = a[i][k2] + u2 * a[i][k1] + u3 * a[i][k];
+                    a[i][k2] += t * v1;
+                    a[i][k1] += t * v2;
+                    a[i][k] += t * v3;
 
-                    t = b[i, k2] + u2 * b[i, k1] + u3 * b[i, k];
-                    b[i, k2] += t * v1;
-                    b[i, k1] += t * v2;
-                    b[i, k] += t * v3;
+                    t = b[i][k2] + u2 * b[i][k1] + u3 * b[i][k];
+                    b[i][k2] += t * v1;
+                    b[i][k1] += t * v2;
+                    b[i][k] += t * v3;
                 }
 
-                b[k2, k] = 0.0;
-                b[k2, k1] = 0.0;
+                b[k2][k] = 0.0;
+                b[k2][k1] = 0.0;
 
                 if (matz)
                 {
                     for (i = 0; i < n; ++i)
                     {
-                        t = z[i, k2] + u2 * z[i, k1] + u3 * z[i, k];
-                        z[i, k2] += t * v1;
-                        z[i, k1] += t * v2;
-                        z[i, k] += t * v3;
+                        t = z[i][k2] + u2 * z[i][k1] + u3 * z[i][k];
+                        z[i][k2] += t * v1;
+                        z[i][k1] += t * v2;
+                        z[i][k] += t * v3;
                     }
                 }
 
             // Zero b(k+1,k)
             L240:
-                s = (Math.Abs(b[k1, k1])) + (Math.Abs(b[k1, k]));
+                s = (Math.Abs(b[k1][k1])) + (Math.Abs(b[k1][k]));
                 if (s == 0.0) goto L260;
-                u1 = b[k1, k1] / s;
-                u2 = b[k1, k] / s;
+                u1 = b[k1][k1] / s;
+                u2 = b[k1][k] / s;
                 r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
@@ -884,24 +871,24 @@ namespace UMapx.Decomposition
 
                 for (i = lor1; i < ll + 1; ++i)
                 {
-                    t = a[i, k1] + u2 * a[i, k];
-                    a[i, k1] += t * v1;
-                    a[i, k] += t * v2;
+                    t = a[i][k1] + u2 * a[i][k];
+                    a[i][k1] += t * v1;
+                    a[i][k] += t * v2;
 
-                    t = b[i, k1] + u2 * b[i, k];
-                    b[i, k1] += t * v1;
-                    b[i, k] += t * v2;
+                    t = b[i][k1] + u2 * b[i][k];
+                    b[i][k1] += t * v1;
+                    b[i][k] += t * v2;
                 }
 
-                b[k1, k] = 0.0;
+                b[k1][k] = 0.0;
 
                 if (matz)
                 {
                     for (i = 0; i < n; ++i)
                     {
-                        t = z[i, k1] + u2 * z[i, k];
-                        z[i, k1] += t * v1;
-                        z[i, k] += t * v2;
+                        t = z[i][k1] + u2 * z[i][k];
+                        z[i][k1] += t * v1;
+                        z[i][k] += t * v2;
                     }
                 }
 
@@ -918,7 +905,7 @@ namespace UMapx.Decomposition
         // Save epsb for use by qzval and qzvec
         L1001:
             if (n > 1)
-                b[n - 1, 0] = epsb;
+                b[n - 1][0] = epsb;
             return;
         }
         /// <summary>
@@ -948,7 +935,7 @@ namespace UMapx.Decomposition
         /// <param name="matz"></param>
         /// <param name="z"></param>
         /// <returns></returns>
-        private static void qzval(int n, double[,] a, double[,] b, double[] alfr, double[] alfi, double[] beta, bool matz, double[,] z)
+        private static void qzval(int n, double[][] a, double[][] b, double[] alfr, double[] alfi, double[] beta, bool matz, double[][] z)
         {
             int i, j;
             int na, en, nn;
@@ -964,7 +951,7 @@ namespace UMapx.Decomposition
             double a1i, a2i, a11i, a12i, a22i, a11r, a12r, a22r;
             double sqi, ssi, sqr, szi, ssr, szr;
 
-            double epsb = b[n - 1, 0];
+            double epsb = b[n - 1][0];
             int isw = 1;
 
 
@@ -976,38 +963,38 @@ namespace UMapx.Decomposition
 
                 if (isw == 2) goto L505;
                 if (en == 0) goto L410;
-                if (a[en, na] != 0.0) goto L420;
+                if (a[en][na] != 0.0) goto L420;
 
             // 1-by-1 block, one real root
             L410:
-                alfr[en] = a[en, en];
-                if (b[en, en] < 0.0)
+                alfr[en] = a[en][en];
+                if (b[en][ en] < 0.0)
                 {
                     alfr[en] = -alfr[en];
                 }
-                beta[en] = (Math.Abs(b[en, en]));
+                beta[en] = (Math.Abs(b[en][en]));
                 alfi[en] = 0.0;
                 goto L510;
 
             // 2-by-2 block
             L420:
-                if (Math.Abs(b[na, na]) <= epsb) goto L455;
-                if (Math.Abs(b[en, en]) > epsb) goto L430;
-                a1 = a[en, en];
-                a2 = a[en, na];
+                if (Math.Abs(b[na][na]) <= epsb) goto L455;
+                if (Math.Abs(b[en][ en]) > epsb) goto L430;
+                a1 = a[en][en];
+                a2 = a[en][na];
                 bn = 0.0;
                 goto L435;
 
             L430:
-                an = Math.Abs(a[na, na]) + Math.Abs(a[na, en]) + Math.Abs(a[en, na]) + Math.Abs(a[en, en]);
-                bn = Math.Abs(b[na, na]) + Math.Abs(b[na, en]) + Math.Abs(b[en, en]);
-                a11 = a[na, na] / an;
-                a12 = a[na, en] / an;
-                a21 = a[en, na] / an;
-                a22 = a[en, en] / an;
-                b11 = b[na, na] / bn;
-                b12 = b[na, en] / bn;
-                b22 = b[en, en] / bn;
+                an = Math.Abs(a[na][na]) + Math.Abs(a[na][en]) + Math.Abs(a[en][na]) + Math.Abs(a[en][en]);
+                bn = Math.Abs(b[na][na]) + Math.Abs(b[na][en]) + Math.Abs(b[en][en]);
+                a11 = a[na][na] / an;
+                a12 = a[na][en] / an;
+                a21 = a[en][na] / an;
+                a22 = a[en][en] / an;
+                b11 = b[na][na] / bn;
+                b12 = b[na][en] / bn;
+                b22 = b[en][en] / bn;
                 e = a11 / b11;
                 ei = a22 / b22;
                 s = a21 / (b11 * b22);
@@ -1053,34 +1040,34 @@ namespace UMapx.Decomposition
 
                 for (i = 0; i <= en; ++i)
                 {
-                    t = a[i, en] + u2 * a[i, na];
-                    a[i, en] += t * v1;
-                    a[i, na] += t * v2;
+                    t = a[i][en] + u2 * a[i][na];
+                    a[i][en] += t * v1;
+                    a[i][na] += t * v2;
 
-                    t = b[i, en] + u2 * b[i, na];
-                    b[i, en] += t * v1;
-                    b[i, na] += t * v2;
+                    t = b[i][en] + u2 * b[i][na];
+                    b[i][en] += t * v1;
+                    b[i][na] += t * v2;
                 }
 
                 if (matz)
                 {
                     for (i = 0; i < n; ++i)
                     {
-                        t = z[i, en] + u2 * z[i, na];
-                        z[i, en] += t * v1;
-                        z[i, na] += t * v2;
+                        t = z[i][en] + u2 * z[i][na];
+                        z[i][en] += t * v1;
+                        z[i][na] += t * v2;
                     }
                 }
 
                 if (bn == 0.0) goto L475;
                 if (an < System.Math.Abs(e) * bn) goto L455;
-                a1 = b[na, na];
-                a2 = b[en, na];
+                a1 = b[na][na];
+                a2 = b[en][na];
                 goto L460;
 
             L455:
-                a1 = a[na, na];
-                a2 = a[en, na];
+                a1 = a[na][na];
+                a2 = a[en][na];
 
             // Choose and apply real q
             L460:
@@ -1095,29 +1082,29 @@ namespace UMapx.Decomposition
 
                 for (j = na; j < n; ++j)
                 {
-                    t = a[na, j] + u2 * a[en, j];
-                    a[na, j] += t * v1;
-                    a[en, j] += t * v2;
+                    t = a[na][j] + u2 * a[en][j];
+                    a[na][j] += t * v1;
+                    a[en][j] += t * v2;
 
-                    t = b[na, j] + u2 * b[en, j];
-                    b[na, j] += t * v1;
-                    b[en, j] += t * v2;
+                    t = b[na][j] + u2 * b[en][j];
+                    b[na][j] += t * v1;
+                    b[en][j] += t * v2;
                 }
 
             L475:
-                a[en, na] = 0.0;
-                b[en, na] = 0.0;
-                alfr[na] = a[na, na];
-                alfr[en] = a[en, en];
+                a[en][na] = 0.0;
+                b[en][na] = 0.0;
+                alfr[na] = a[na][na];
+                alfr[en] = a[en][en];
 
-                if (b[na, na] < 0.0)
+                if (b[na][na] < 0.0)
                     alfr[na] = -alfr[na];
 
-                if (b[en, en] < 0.0)
+                if (b[en][en] < 0.0)
                     alfr[en] = -alfr[en];
 
-                beta[na] = (System.Math.Abs(b[na, na]));
-                beta[en] = (System.Math.Abs(b[en, en]));
+                beta[na] = (System.Math.Abs(b[na][na]));
+                beta[en] = (System.Math.Abs(b[en][en]));
                 alfi[en] = 0.0;
                 alfi[na] = 0.0;
                 goto L505;
@@ -1235,7 +1222,7 @@ namespace UMapx.Decomposition
                 ;
             }
 
-            b[n - 1, 0] = epsb;
+            b[n - 1][0] = epsb;
 
             return;
         }
@@ -1264,7 +1251,7 @@ namespace UMapx.Decomposition
         /// <param name="beta"></param>
         /// <param name="z"></param>
         /// <returns></returns>
-        private static void qzvec(int n, double[,] a, double[,] b, double[] alfr, double[] alfi, double[] beta, double[,] z)
+        private static void qzvec(int n, double[][] a, double[][] b, double[] alfr, double[] alfi, double[] beta, double[][] z)
         {
             int i, j, k, m;
             int na, ii, en, jj, nn, enm2;
@@ -1274,7 +1261,7 @@ namespace UMapx.Decomposition
             double ti, rr, tr, zz = 0;
             double alfm, almi, betm, almr;
 
-            double epsb = b[n - 1, 0];
+            double epsb = b[n - 1][0];
             int isw = 1;
 
 
@@ -1288,7 +1275,7 @@ namespace UMapx.Decomposition
 
                 // Real vector
                 m = en;
-                b[en, en] = 1.0;
+                b[en][en] = 1.0;
                 if (na == -1) goto L800;
                 alfm = alfr[m];
                 betm = beta[m];
@@ -1297,16 +1284,16 @@ namespace UMapx.Decomposition
                 for (ii = 0; ii <= na; ++ii)
                 {
                     i = en - ii - 1;
-                    w = betm * a[i, i] - alfm * b[i, i];
+                    w = betm * a[i][i] - alfm * b[i][i];
                     r = 0.0;
 
                     for (j = m; j <= en; ++j)
-                        r += (betm * a[i, j] - alfm * b[i, j]) * b[j, en];
+                        r += (betm * a[i][j] - alfm * b[i][j]) * b[j][en];
 
                     if (i == 0 || isw == 2)
                         goto L630;
 
-                    if (betm * a[i, i - 1] == 0.0)
+                    if (betm * a[i][i - 1] == 0.0)
                         goto L630;
 
                     zz = w;
@@ -1321,22 +1308,22 @@ namespace UMapx.Decomposition
                     t = w;
                     if (w == 0.0)
                         t = epsb;
-                    b[i, en] = -r / t;
+                    b[i][en] = -r / t;
                     goto L700;
 
                 // Real 2-by-2 block
                 L640:
-                    x = betm * a[i, i + 1] - alfm * b[i, i + 1];
-                    y = betm * a[i + 1, i];
+                    x = betm * a[i][i + 1] - alfm * b[i][i + 1];
+                    y = betm * a[i + 1][i];
                     q = w * zz - x * y;
                     t = (x * s - zz * r) / q;
-                    b[i, en] = t;
+                    b[i][en] = t;
                     if (Math.Abs(x) <= Math.Abs(zz)) goto L650;
-                    b[i + 1, en] = (-r - w * t) / x;
+                    b[i + 1][en] = (-r - w * t) / x;
                     goto L690;
 
                 L650:
-                    b[i + 1, en] = (-s - y * t) / zz;
+                    b[i + 1][en] = (-s - y * t) / zz;
 
                 L690:
                     isw = 3 - isw;
@@ -1355,11 +1342,11 @@ namespace UMapx.Decomposition
                 betm = beta[m];
 
                 // last vector component chosen imaginary so that eigenvector matrix is triangular
-                y = betm * a[en, na];
-                b[na, na] = -almi * b[en, en] / y;
-                b[na, en] = (almr * b[en, en] - betm * a[en, en]) / y;
-                b[en, na] = 0.0;
-                b[en, en] = 1.0;
+                y = betm * a[en][na];
+                b[na][na] = -almi * b[en][en] / y;
+                b[na][en] = (almr * b[en][en] - betm * a[en][en]) / y;
+                b[en][na] = 0.0;
+                b[en][en] = 1.0;
                 enm2 = na;
                 if (enm2 == 0) goto L795;
 
@@ -1367,21 +1354,21 @@ namespace UMapx.Decomposition
                 for (ii = 0; ii < enm2; ++ii)
                 {
                     i = na - ii - 1;
-                    w = betm * a[i, i] - almr * b[i, i];
-                    w1 = -almi * b[i, i];
+                    w = betm * a[i][i] - almr * b[i][i];
+                    w1 = -almi * b[i][i];
                     ra = 0.0;
                     sa = 0.0;
 
                     for (j = m; j <= en; ++j)
                     {
-                        x = betm * a[i, j] - almr * b[i, j];
-                        x1 = -almi * b[i, j];
-                        ra = ra + x * b[j, na] - x1 * b[j, en];
-                        sa = sa + x * b[j, en] + x1 * b[j, na];
+                        x = betm * a[i][j] - almr * b[i][j];
+                        x1 = -almi * b[i][j];
+                        ra = ra + x * b[j][na] - x1 * b[j][en];
+                        sa = sa + x * b[j][en] + x1 * b[j][na];
                     }
 
                     if (i == 0 || isw == 2) goto L770;
-                    if (betm * a[i, i - 1] == 0.0) goto L770;
+                    if (betm * a[i][i - 1] == 0.0) goto L770;
 
                     zz = w;
                     z1 = w1;
@@ -1429,9 +1416,9 @@ namespace UMapx.Decomposition
 
                    // Complex 2-by-2 block 
                 L780:
-                    x = betm * a[i, i + 1] - almr * b[i, i + 1];
-                    x1 = -almi * b[i, i + 1];
-                    y = betm * a[i + 1, i];
+                    x = betm * a[i][i + 1] - almr * b[i][i + 1];
+                    x1 = -almi * b[i][i + 1];
+                    y = betm * a[i + 1][i];
                     tr = y * ra - w * r + w1 * s;
                     ti = y * sa - w * s - w1 * r;
                     dr = w * zz - w1 * z1 - x * y;
@@ -1441,22 +1428,22 @@ namespace UMapx.Decomposition
                     goto L775;
 
                 L782:
-                    b[i + 1, na] = t1;
-                    b[i + 1, en] = t2;
+                    b[i + 1][na] = t1;
+                    b[i + 1][en] = t2;
                     isw = 1;
                     if (Math.Abs(y) > Math.Abs(w) + Math.Abs(w1))
                         goto L785;
-                    tr = -ra - x * b[(i + 1), na] + x1 * b[(i + 1), en];
-                    ti = -sa - x * b[(i + 1), en] - x1 * b[(i + 1), na];
+                    tr = -ra - x * b[(i + 1)][na] + x1 * b[(i + 1)][en];
+                    ti = -sa - x * b[(i + 1)][en] - x1 * b[(i + 1)][na];
                     goto L773;
 
                 L785:
-                    t1 = (-r - zz * b[(i + 1), na] + z1 * b[(i + 1), en]) / y;
-                    t2 = (-s - zz * b[(i + 1), en] - z1 * b[(i + 1), na]) / y;
+                    t1 = (-r - zz * b[(i + 1)][na] + z1 * b[(i + 1)][en]) / y;
+                    t2 = (-s - zz * b[(i + 1)][en] - z1 * b[(i + 1)][na]) / y;
 
                 L787:
-                    b[i, na] = t1;
-                    b[i, en] = t2;
+                    b[i][na] = t1;
+                    b[i][en] = t2;
 
                 L790:
                     ;
@@ -1479,8 +1466,8 @@ namespace UMapx.Decomposition
                 {
                     zz = 0.0;
                     for (k = 0; k <= j; ++k)
-                        zz += z[i, k] * b[k, j];
-                    z[i, j] = zz;
+                        zz += z[i][k] * b[k][j];
+                    z[i][j] = zz;
                 }
             }
 
@@ -1494,24 +1481,24 @@ namespace UMapx.Decomposition
 
                 for (i = 0; i < n; ++i)
                 {
-                    if ((Math.Abs(z[i, j])) > d)
-                        d = (Math.Abs(z[i, j]));
+                    if ((Math.Abs(z[i][j])) > d)
+                        d = (Math.Abs(z[i][j]));
                 }
 
                 for (i = 0; i < n; ++i)
-                    z[i, j] /= d;
+                    z[i][j] /= d;
 
                 goto L950;
 
             L920:
                 for (i = 0; i < n; ++i)
                 {
-                    r = System.Math.Abs(z[i, j - 1]) + System.Math.Abs(z[i, j]);
+                    r = System.Math.Abs(z[i][j - 1]) + System.Math.Abs(z[i][j]);
                     if (r != 0.0)
                     {
                         // Computing 2nd power
-                        double u1 = z[i, j - 1] / r;
-                        double u2 = z[i, j] / r;
+                        double u1 = z[i][j - 1] / r;
+                        double u2 = z[i][j] / r;
                         r *= Math.Sqrt(u1 * u1 + u2 * u2);
                     }
                     if (r > d)
@@ -1520,8 +1507,8 @@ namespace UMapx.Decomposition
 
                 for (i = 0; i < n; ++i)
                 {
-                    z[i, j - 1] /= d;
-                    z[i, j] /= d;
+                    z[i][j - 1] /= d;
+                    z[i][j] /= d;
                 }
 
             L945:
@@ -1620,7 +1607,7 @@ namespace UMapx.Decomposition
             // without Hessenberg form.
             if (Matrice.IsSymmetric(A))
             {
-                hessenberg = Matrice.ToJagged(new double[n, n]);
+                hessenberg = LinealgOptions.JaggedZero(n, n);
                 matrices = Matrice.ToJagged(A);
 
                 tred2(); // Tridiagonalize.
@@ -1629,7 +1616,7 @@ namespace UMapx.Decomposition
             // with Hessenberg form.
             else
             {
-                matrices = Matrice.ToJagged(new double[n, n]);
+                matrices = LinealgOptions.JaggedZero(n, n);
                 hessenberg = Matrice.ToJagged(A);
                 orthogonal = new double[n];
 
@@ -2628,7 +2615,7 @@ namespace UMapx.Decomposition
             for (i = 0; i < n; i++)
                 diag[i] = A[i, i];
 
-            this.matrix = Matrice.Div(A, diag);
+            this.matrix = Matrice.Dot(A, diag, true);
             return;
         }
         #endregion
@@ -2704,45 +2691,44 @@ namespace UMapx.Decomposition
         /// <param name="a">Квадратная матрица</param>
         private void ludecomp(double[][] a)
         {
+            // params
             int i, j, k;
             int n = a.GetLength(0);
             double alpha = 0, beta;
-            this.upper = Matrice.ToJagged(new double[n, n]);
-            this.lower = Matrice.ToJagged(new double[n, n]);
+            this.upper = new double[n][];
+            this.lower = new double[n][];
 
+            // matrices
             for (i = 0; i < n; i++)
             {
-                this.upper[i][i] = 1;
+                upper[i] = new double[n];
+                lower[i] = new double[n];
+                upper[i][i] = 1;
             }
 
+            // do job
             for (j = 0; j < n; j++)
             {
                 for (i = j; i < n; i++)
                 {
                     alpha = 0;
+
                     for (k = 0; k < j; k++)
                     {
-                        alpha = alpha + this.lower[i][k] * this.upper[k][j];
+                        alpha = alpha + lower[i][k] * upper[k][j];
                     }
-                    this.lower[i][j] = a[i][j] - alpha;
-                }
 
-                beta = lower[j][j];
-
-                for (i = j; i < n; i++)
-                {
-                    alpha = 0;
-                    for (k = 0; k < j; k++)
-                    {
-                        alpha = alpha + this.lower[j][k] * this.upper[k][i];
-                    }
+                    lower[i][j] = a[i][j] - alpha;
+                    beta = lower[j][j];
 
                     if (beta != 0)
                     {
-                        this.upper[j][i] = (a[j][i] - alpha) / beta;
+                        upper[j][i] = (a[j][i] - alpha) / beta;
                     }
                 }
             }
+
+            return;
         }
         #endregion
     }
@@ -2765,22 +2751,13 @@ namespace UMapx.Decomposition
         /// Инициализирует разложение Холецкого квадратной матрицы.
         /// </summary>
         /// <param name="A">Квадратная симметричная положительно-определенная матрица</param>
-        /// <param name="incomplete">Неполное разложение или нет</param>
-        public Cholesky(double[,] A, bool incomplete = false)
+        public Cholesky(double[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("Матрица должна быть квадратной");
 
             // Cholesky decomposition:
-            if (incomplete)
-            {
-                this.lower = A.ToJagged();
-                ichol(this.lower);
-            }
-            else
-            {
-                chol(A.ToJagged());
-            }
+            chol(A.ToJagged());
         }
         #endregion
 
@@ -2808,81 +2785,52 @@ namespace UMapx.Decomposition
         /// <param name="a">Квадратная матрица</param>
         private void chol(double[][] a)
         {
-            // full Cholesky decomposition
+            // Cholesky decomposition
             int n = a.GetLength(0);
-            this.lower = Matrice.ToJagged(new double[n, n]);
-            int j, i, k;
+            this.lower = new double[n][];
+            double[] v, w, z, d = new double[n];
             double alpha;
-
-            for (j = 0; j < n; j++)
-            {
-                for (i = 0; i <= j; i++)
-                {
-                    if (i == j)
-                    {
-                        alpha = 0;
-                        for (k = 0; k < i; k++)
-                        {
-                            alpha += lower[i][k] * lower[i][k];
-                        }
-                        lower[i][i] = Math.Sqrt(a[i][i] - alpha);
-                    }
-                    else if (i < j)
-                    {
-                        alpha = 0;
-                        for (k = 0; k < i; k++)
-                        {
-                            alpha += lower[i][k] * lower[j][k];
-                        }
-
-                        lower[j][i] = 1.0 / lower[i][i] * (a[j][i] - alpha);
-                    }
-                }
-            }
-            return;
-        }
-        /// <summary>
-        /// Реализует неполное разложение Холецкого.
-        /// </summary>
-        /// <param name="a">Квадратная матрица</param>
-        private void ichol(double[][] a)
-        {
-            // incomplete Cholesky decomposition
-            int n = a.GetLength(0);
             int j, i, k;
 
-            // cholesky:
-            for (k = 0; k < n; k++)
-            {
-                a[k][k] = Math.Sqrt(a[k][k]);
-
-                for (i = k + 1; i < n; i++)
-                {
-                    if (a[i][k] != 0)
-                    {
-                        a[i][k] /= a[k][k];
-                    }
-                }
-
-                for (j = k + 1; j < n; j++)
-                {
-                    for (i = j; i < n; i++)
-                    {
-                        if (a[i][j] != 0)
-                        {
-                            a[i][j] -= a[i][k] * a[j][k];
-                        }
-                    }
-                }
-            }
-
-            // apply zeros:
+            // get diagonal elements
             for (i = 0; i < n; i++)
             {
-                for (j = i + 1; j < n; j++)
+                d[i] = a[i][i];
+            }
+
+            // do job
+            for (j = 0; j < n; j++)
+            {
+                v = lower[j] = new double[n];
+                z = a[j];
+
+                for (i = 0; i <= j; i++)
                 {
-                    a[i][j] = 0;
+                    w = lower[i];
+                    alpha = 0;
+
+                    if (i == j)
+                    {
+                        for (k = 0; k < i; k++)
+                        {
+                            alpha += w[k] * w[k];
+                        }
+
+                        w[i] = Math.Sqrt(d[i] - alpha);
+                        lower[i] = w;
+                    }
+                    else
+                    {
+                        for (k = 0; k < i; k++)
+                        {
+                            alpha += w[k] * v[k];
+                        }
+
+                        v[i] = (z[i] - alpha) / w[i];
+                    }
                 }
+
+                lower[j] = v;
             }
             return;
         }
@@ -3143,7 +3091,7 @@ namespace UMapx.Decomposition
             {
                 // Moore–Penrose inverse:
                 // P = V * (I / S) * U'
-                return V.Mul(Matrice.One(m).Div(S)).Dot(U.Transponate());
+                return V.Dot(Matrice.One(m).Div(S)).Dot(U.Transponate());
             }
         }
         #endregion
@@ -3157,7 +3105,7 @@ namespace UMapx.Decomposition
         {
             this.Ur = Matrice.ToJagged(A);
             this.Sr = new double[m];
-            this.Vr = Matrice.ToJagged(new double[m, m]);
+            this.Vr = LinealgOptions.JaggedZero(m, m);
             double[] rv1 = new double[m];
 
             int flag, i, its, j, jj, k, l = 0, nm = 0;
@@ -3537,7 +3485,7 @@ namespace UMapx.Decomposition
             double[] S = svd.S;
 
             // Определение матриц U и P:
-            u = U.Dot(H); p = V.Mul(S).Dot(H);
+            u = U.Dot(H); p = V.Dot(S).Dot(H);
         }
         #endregion
 
@@ -3575,8 +3523,11 @@ namespace UMapx.Decomposition
     public class NNMF
     {
         #region Private data
-        private double[,] Wr;  // W is m x r (weights),
-        private double[,] Hr;  // H is r x n (transformed data) (transposed).
+        private double[,] w;  // W is m x r (weights)
+        private double[,] h;  // H is r x n (transformed data) (transposed)
+        private int n;   // number of input data vectors
+        private int m;   // dimension of input vector
+        private int r;   // dimension of output vector (reduced dimension)
         #endregion
 
         #region Initialize
@@ -3588,18 +3539,15 @@ namespace UMapx.Decomposition
         /// <param name="iterations">Количество итераций</param>
         public NNMF(double[,] A, int r, int iterations = 100)
         {
-            if (!Matrice.IsPositive(A))
-                throw new Exception("Матрица должна быть неотрицательной");
-
-            // properties:
-            int n = A.GetLength(0);
-            int m = A.GetLength(1);
+            this.n = A.GetLength(0);
+            this.m = A.GetLength(1);
 
             if (n < m)
                 throw new Exception("Высота матрицы должна быть больше ширины");
-            
-            // none-negative matrix factorization: 
-            nnmf(Matrice.ToJagged(A), n, m, r, iterations);
+
+            this.r = r;
+
+            nnmf(A, iterations);
         }
         #endregion
 
@@ -3609,50 +3557,50 @@ namespace UMapx.Decomposition
         /// </summary>
         public double[,] W
         {
-            get { return Wr; }
+            get { return w; }
         }
         /// <summary>
         /// Получает правую матрицу.
         /// </summary>
         public double[,] H
         {
-            get { return Hr; }
+            get { return h; }
         }
         #endregion
 
-        #region Private data
+        #region Private voids
         /// <summary>
         /// Представляет NNMF, основанный на мультипликативном методе.
         /// </summary>
-        /// <param name="X">Матрица</param>
-        /// <param name="m">Высота матрицы</param>
-        /// <param name="n">Ширина матрицы</param>
-        /// <param name="r">Новая размерность</param>
+        /// <param name="A">Матрица</param>
         /// <param name="iterations">Количество итераций</param>
-        private void nnmf(double[][] X, int n, int m, int r, int iterations)
+        private void nnmf(double[,] A, int iterations)
         {
-            // chose W and H randomly, W with unit norm:
-            Wr = Matrice.Rand(m, r);
-            Hr = Matrice.Rand(r, n);
-            double[,] newW, newH, Z = new double[r, r];
-            double eps = 10e-9, s, d;
-            int i, j, l;
+            // chose W and H randomly, W with unit norm
+            w = Matrice.Rand(m, r);
+            h = Matrice.Rand(r, n);
+            var Z = new double[r, r];
 
-            // Iterative algorithm:
-            for (int t = 0; t < iterations; t++)
+            // a small epsilon is added to the
+            //  denominator to avoid overflow.
+            double eps = 10e-9;
+            int i, j, l, t;
+            double s, d;
+
+            for (t = 0; t < iterations; t++)
             {
-                newW = new double[m, r];
-                newH = new double[r, n];
+                var newW = new double[m, r];
+                var newH = new double[r, n];
 
                 // Update H using the multiplicative
-                // H = H .* (W' * A) ./ (W' * W * H + eps) 
+                // H = H .* (W'*A) ./ (W'*W*H + eps) 
                 for (i = 0; i < r; i++)
                 {
                     for (j = i; j < r; j++)
                     {
                         s = 0.0;
                         for (l = 0; l < m; l++)
-                            s += Wr[l, i] * Wr[l, j];
+                            s += w[l, i] * w[l, j];
                         Z[i, j] = Z[j, i] = s;
                     }
 
@@ -3660,18 +3608,18 @@ namespace UMapx.Decomposition
                     {
                         d = 0.0;
                         for (l = 0; l < r; l++)
-                            d += Z[i, l] * Hr[l, j];
+                            d += Z[i, l] * h[l, j];
 
                         s = 0.0;
                         for (l = 0; l < m; l++)
-                            s += Wr[l, i] * X[j][l];
+                            s += w[l, i] * A[j, l];
 
-                        newH[i, j] = Hr[i, j] * s / (d + eps);
+                        newH[i, j] = h[i, j] * s / (d + eps);
                     }
                 }
 
                 // Update W using the multiplicative
-                //   W = W .* (A * H') ./ (W * H * H' + eps)
+                //   W = W .* (A*H') ./ (W*H*H' + eps)
                 for (j = 0; j < r; j++)
                 {
                     for (i = j; i < r; i++)
@@ -3686,24 +3634,24 @@ namespace UMapx.Decomposition
                     {
                         d = 0.0;
                         for (l = 0; l < r; l++)
-                            d += Wr[i, l] * Z[j, l];
+                            d += w[i, l] * Z[j, l];
 
                         s = 0.0;
                         for (l = 0; l < n; l++)
-                            s += X[l][i] * newH[j, l];
+                            s += A[l, i] * newH[j, l];
 
-                        newW[i, j] = Wr[i, j] * s / (d + eps);
+                        newW[i, j] = w[i, j] * s / (d + eps);
                     }
                 }
 
-                Wr = newW;
-                Hr = newH;
+                w = newW;
+                h = newH;
             }
         }
         #endregion
     }
     /// <summary>
-    /// Определяет QR-разложение квадратной матрицы.
+    /// Определяет QR-разложение матрицы.
     /// <remarks>
     /// Это представление матрицы в виде произведения двух матриц: A = Q * R, где Q - унитарная (или ортогональная) матрица, а R - верхняя треугольная матрица. 
     /// QR-разложение является основой одного из методов поиска собственных векторов и чисел матрицы — QR-алгоритма.
@@ -3714,10 +3662,9 @@ namespace UMapx.Decomposition
     public class QR
     {
         #region Private data
+        private int m, n;
         private double[][] qr;
         private double[] diag;
-        private double[,] q;
-        private double[,] r;
         #endregion
 
         #region Initialize
@@ -3727,14 +3674,37 @@ namespace UMapx.Decomposition
         /// <param name="A">Квадратная матрица</param>
         public QR(double[,] A)
         {
-            if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
-
             qrdecomp(A);
         }
         #endregion
 
         #region Standart voids
+        /// <summary>
+        /// Возвращает матрицу, содержащую вектора отражений Хаусхолдера.
+        /// </summary>
+        public double[,] H
+        {
+            get
+            {
+                double[,] H = new double[m, n];
+                for (int i = 0; i < m; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        if (i >= j)
+                        {
+                            H[i, j] = qr[i][j];
+                        }
+                        else
+                        {
+                            H[i, j] = 0.0f;
+                        }
+                    }
+                }
+                return H;
+            }
+
+        }
         /// <summary>
         /// Возвращает верхнюю треугольную матрицу R.
         /// </summary>
@@ -3742,6 +3712,26 @@ namespace UMapx.Decomposition
         {
             get
             {
+                var r = new double[n, n]; // GeneralMatrix X = new GeneralMatrix(n, n);
+
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        if (i < j)
+                        {
+                            r[i, j] = qr[i][j];
+                        }
+                        else if (i == j)
+                        {
+                            r[i, j] = diag[i];
+                        }
+                        else
+                        {
+                            r[i, j] = 0.0f;
+                        }
+                    }
+                }
                 return r;
             }
         }
@@ -3752,6 +3742,35 @@ namespace UMapx.Decomposition
         {
             get
             {
+                double[,] q = new double[m, n];
+                int i, j, k;
+                double s;
+
+                for (k = n - 1; k >= 0; k--)
+                {
+                    for (i = 0; i < m; i++)
+                    {
+                        q[i, k] = 0.0f;
+                    }
+                    q[k, k] = 1.0f;
+                    for (j = k; j < n; j++)
+                    {
+                        if (qr[k][k] != 0)
+                        {
+                            s = 0.0f;
+                            for (i = k; i < m; i++)
+                            {
+                                s += qr[i][k] * q[i, j];
+                            }
+                            s = (-s) / qr[k][k];
+
+                            for (i = k; i < m; i++)
+                            {
+                                q[i, j] += s * qr[i][k];
+                            }
+                        }
+                    }
+                }
                 return q;
             }
         }
@@ -3759,105 +3778,62 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Реализует QR-разложение.
+        /// QR-decomposition.
         /// </summary>
         /// <param name="A">Квадратная матрица</param>
         private void qrdecomp(double[,] A)
         {
-            int n = A.GetLength(0);
-            this.qr = Matrice.ToJagged(A);
+            // params
+            this.m = A.GetLength(0);
+            this.n = A.GetLength(1);
             this.diag = new double[n];
-            this.q = new double[n, n];
-            this.r = new double[n, n];
-            double norm, s;
+            this.qr = Matrice.ToJagged(A);
+            double nrm, s;
             int k, i, j;
 
-            // QR-decomposition with diagonal matrix and qr-matrix
+            // Main loop.
             for (k = 0; k < n; k++)
             {
                 // Compute 2-norm of k-th column without under/overflow.
-                norm = 0;
-                for (i = k; i < n; i++)
+                nrm = 0;
+
+                for (i = k; i < m; i++)
                 {
-                    norm = Maths.Hypotenuse(norm, qr[i][k]);
+                    nrm = Maths.Hypotenuse(nrm, qr[i][k]);
                 }
 
-                if (norm != 0)
+                if (nrm != 0.0)
                 {
-                    // Form k-th Householder Matrice.
+                    // Form k-th Householder vector.
                     if (qr[k][k] < 0)
                     {
-                        norm = -norm;
+                        nrm = -nrm;
                     }
-                    for (i = k; i < n; i++)
+                    for (i = k; i < m; i++)
                     {
-                        qr[i][k] /= norm;
+                        qr[i][k] /= nrm; // Make v a unit vector
                     }
-
-                    qr[k][k] += 1;
+                    qr[k][k] += 1.0f; // + the (e)kth vector
 
                     // Apply transformation to remaining columns.
-                    for (j = k + 1; j < n; j++)
+                    for (j = k + 1; j < n; j++) // For each column
                     {
-                        s = 0;
-                        for (i = k; i < n; i++)
+                        s = 0.0f;
+                        for (i = k; i < m; i++) // For each row
                         {
                             s += qr[i][k] * qr[i][j];
                         }
 
-                        s = -s / qr[k][k];
-                        for (i = k; i < n; i++)
+                        s = (-s) / qr[k][k]; // Unit vector product
+
+                        for (i = k; i < m; i++) // For each row
                         {
                             qr[i][j] += s * qr[i][k];
                         }
                     }
                 }
 
-                this.diag[k] = -norm;
-            }
-
-            // Finding Q-matrix:
-            for (k = n - 1; k >= 0; k--)
-            {
-                for (i = 0; i < n; i++)
-                {
-                    q[i, k] = 0;
-                }
-
-                q[k, k] = 1;
-                for (j = k; j < n; j++)
-                {
-                    if (qr[k][k] != 0)
-                    {
-                        s = 0;
-                        for (i = k; i < n; i++)
-                        {
-                            s += qr[i][k] * q[i, j];
-                        }
-
-                        s = -s / qr[k][k];
-                        for (i = k; i < n; i++)
-                        {
-                            q[i, j] += s * qr[i][k];
-                        }
-                    }
-                }
-            }
-
-            // Finding R-matrix:
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    if (i < j)
-                    {
-                        r[i, j] = qr[i][j];
-                    }
-                    else if (i == j)
-                    {
-                        r[i, j] = diag[i];
-                    }
-                }
+                diag[k] = -nrm;
             }
         }
         #endregion
