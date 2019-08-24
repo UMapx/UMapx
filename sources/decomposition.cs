@@ -3669,9 +3669,9 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует QR-разложение квадратной матрицы.
+        /// Инициализирует QR-разложение матрицы.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Матрица</param>
         public QR(double[,] A)
         {
             qrdecomp(A);
@@ -3680,7 +3680,7 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Возвращает матрицу, содержащую вектора отражений Хаусхолдера.
+        /// Возвращает матрицу, содержащую векторы отражений Хаусхолдера.
         /// </summary>
         public double[,] H
         {

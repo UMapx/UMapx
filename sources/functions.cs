@@ -329,7 +329,7 @@ namespace UMapx.Core
                 f *= j * (j - 1);
 
                 // sign and value:
-                p *= (-1);
+                p = -p;
                 m *= z;
                 t = p * m / (f * k);
 
@@ -370,7 +370,7 @@ namespace UMapx.Core
                 f *= j * (j + 1);
 
                 // sign and value:
-                p *= (-1);
+                p = -p;
                 m *= z;
                 t = p * m / f / k;
 
@@ -390,14 +390,14 @@ namespace UMapx.Core
         /// Возвращает значение функции Струве.
         /// </summary>
         /// <param name="x">Число</param>
-        /// <param name="a">Порядок</param>
+        /// <param name="a">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Struve(double x, double a)
+        public static double H(double x, int a)
         {
-            // Struve's function calculation method.
+            // Struve function calculation method.
             // special cases:
-            if (Math.Abs(x) > 35)
-                return double.NaN;
+            if (a < 0)
+                return 0.0;
 
             // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
             double x0 = 3.0 / 2.0, x1 = x0 + a;
@@ -430,12 +430,62 @@ namespace UMapx.Core
                     // for next step:
                     g0 *= b / (x0 + i);
                     g1 *= b / (x1 + i);
-                    p *= -1;
+                    p = -p;
                 }
             }
 
             // result:
             return s;
+        }
+        /// <summary>
+        /// Возвращает значение модифицированной функции Струве.
+        /// </summary>
+        /// <param name="x">Число</param>
+        /// <param name="v">Число</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static double L(double x, int v)
+        {
+            // Modified Struve function calculation method.
+            // special cases:
+            if (v < 0)
+                return 0.0;
+
+            // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
+            double x0 = 3.0 / 2.0, x1 = x0 + v;
+            double g0 = 1.0 / Special.Gamma(x0);
+            double g1 = 1.0 / Special.Gamma(x1);
+
+            // construction:
+            double b = x / 2.0;
+            double s = 0;
+            double u = Math.Pow(b, v);
+            double t, eps = 1e-16;
+            int i, iterations = 120;
+
+            // Taylor series:
+            for (i = 0; i < iterations; i++)
+            {
+                // value:
+                t = g0 * g1 * u;
+
+                // stop point:
+                if (Math.Abs(t) < eps)
+                {
+                    break;
+                }
+                else
+                {
+                    // summary:
+                    s += t;
+
+                    // for next step:
+                    g0 *= b / (x0 + i);
+                    g1 *= b / (x1 + i);
+                }
+            }
+
+            // result:
+            return b * u * s;
         }
         #endregion
 
@@ -1557,34 +1607,30 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Q-functions
+        #region Q-function
         /// <summary>
         /// Возвращает значение Q-функции.
         /// </summary>
         /// <param name="x">Носитель</param>
+        /// <param name="inverse">Обратная функция или нет</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Q(double x)
+        public static double Q(double x, bool inverse = false)
         {
+            if (inverse)
+            {
+                return Math.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+            }
             return 0.5 * Special.Erfc(x / Math.Sqrt(2));
-        }
-        /// <summary>
-        /// Возвращает значение обратной Q-функции.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Qinv(double x)
-        {
-            return Math.Sqrt(2) * Special.Erf(1 - 2 * x, true);
         }
         #endregion
 
-        #region Bessel function
+        #region Bessel functions
         /// <summary>
-        /// Возвращает значение функции Бесселя нулевого порядка.
+        /// Возвращает значение функции Бесселя первого рода при a = 0.
         /// </summary>
         /// <param name="x">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double J0(double x)
+        private static double J0(double x)
         {
             double ax;
 
@@ -1614,11 +1660,11 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции Бесселя первого порядка.
+        /// Возвращает значение функции Бесселя первого рода при a = 1.
         /// </summary>
         /// <param name="x">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double J(double x)
+        private static double J1(double x)
         {
             double ax;
             double y;
@@ -1651,23 +1697,23 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции Бесселя заданного порядка.
+        /// Возвращает значение функции Бесселя первого рода.
         /// </summary>
         /// <param name="x">Число</param>
-        /// <param name="a">Порядок</param>
+        /// <param name="a">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public static double J(double x, int a)
         {
+            if (a < 0 || x == 0) return 0;
+            if (a == 0) return J0(x);
+            if (a == 1) return J1(x);
+
             int j, m;
             double ax, bj, bjm, bjp, sum, tox, ans;
             bool jsum;
-
             double ACC = 40.0;
             double BIGNO = 1.0e+10;
             double BIGNI = 1.0e-10;
-
-            if (a == 0) return J0(x);
-            if (a == 1) return J(x);
 
             ax = System.Math.Abs(x);
             if (ax == 0.0) return 0.0;
@@ -1675,7 +1721,7 @@ namespace UMapx.Core
             {
                 tox = 2.0 / ax;
                 bjm = J0(ax);
-                bj = J(ax);
+                bj = J1(ax);
                 for (j = 1; j < a; j++)
                 {
                     bjp = j * tox * bj - bjm;
@@ -1714,11 +1760,11 @@ namespace UMapx.Core
             return x < 0.0 && a % 2 == 1 ? -ans : ans;
         }
         /// <summary>
-        /// Возвращает значение функции Неймана нулевого порядка.
+        /// Возвращает значение функции Бесселя второго рода при a = 0.
         /// </summary>
         /// <param name="x">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Y0(double x)
+        private static double Y0(double x)
         {
             if (x < 8.0)
             {
@@ -1747,11 +1793,11 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции Неймана первого порядка.
+        /// Возвращает значение функции Бесселя второго рода при a = 1.
         /// </summary>
         /// <param name="x">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Y(double x)
+        private static double Y1(double x)
         {
             if (x < 8.0)
             {
@@ -1762,7 +1808,7 @@ namespace UMapx.Core
                 double ans2 = 0.2499580570e14 + y * (0.4244419664e12
                     + y * (0.3733650367e10 + y * (0.2245904002e8
                     + y * (0.1020426050e6 + y * (0.3549632885e3 + y)))));
-                return (ans1 / ans2) + 0.636619772 * (J(x) * System.Math.Log(x) - 1.0 / x);
+                return (ans1 / ans2) + 0.636619772 * (J1(x) * System.Math.Log(x) - 1.0 / x);
             }
             else
             {
@@ -1779,22 +1825,22 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции Неймана заданного порядка.
+        /// Возвращает значение функции Бесселя второго рода.
         /// </summary>
         /// <param name="x">Число</param>
-        /// <param name="n">Порядок</param>
+        /// <param name="a">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Y(double x, int n)
+        public static double Y(double x, int a)
         {
+            if (a < 0 || x == 0) return 0;
+            if (a == 0) return Y0(x);
+            if (a == 1) return Y1(x);
+
             double by, bym, byp, tox;
-
-            if (n == 0) return Y0(x);
-            if (n == 1) return Y(x);
-
             tox = 2.0 / x;
-            by = Y(x);
+            by = Y1(x);
             bym = Y0(x);
-            for (int j = 1; j < n; j++)
+            for (int j = 1; j < a; j++)
             {
                 byp = j * tox * by - bym;
                 bym = by;
@@ -1803,11 +1849,11 @@ namespace UMapx.Core
             return by;
         }
         /// <summary>
-        /// Возвращает значение гиперболической функции Бесселя нулевого порядка.
+        /// Возвращает значение модифицированной функции Бесселя первого рода при a = 0.
         /// </summary>
         /// <param name="x">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double I0(double x)
+        private static double I0(double x)
         {
             double ans;
             double ax = Math.Abs(x);
@@ -1831,11 +1877,11 @@ namespace UMapx.Core
             return ans;
         }
         /// <summary>
-        /// Возвращает значение гиперболической функции Бесселя первого порядка.
+        /// Возвращает значение модифицированной функции Бесселя первого рода при a = 1.
         /// </summary>
         /// <param name="x">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double I(double x)
+        private static double I1(double x)
         {
             double ans;
 
@@ -1858,34 +1904,25 @@ namespace UMapx.Core
             return x < 0.0 ? -ans : ans;
         }
         /// <summary>
-        /// Возвращает значение гиперболической функции Бесселя заданного порядка.
+        /// Возвращает значение модифицированной функции Бесселя первого рода.
         /// </summary>
         /// <param name="x">Число</param>
-        /// <param name="n">Порядок (>=0)</param>
+        /// <param name="a">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double I(double x, int n)
+        public static double I(double x, int a)
         {
-            if (n < 0)
-                throw new ArgumentOutOfRangeException("Порядок функции долже быть либо больше, либо равен 0");
-
-            if (n == 0)
-                return I0(x);
-
-            if (n == 1)
-                return I(x);
-
-            if (x == 0.0)
-                return 0.0;
+            if (a < 0 || x == 0) return 0;
+            if (a == 0) return I0(x);
+            if (a == 1) return I1(x);
 
             double ACC = 40.0;
             double BIGNO = 1.0e+10;
             double BIGNI = 1.0e-10;
-
             double tox = 2.0 / Math.Abs(x);
             double bip = 0, ans = 0.0;
             double bi = 1.0;
 
-            for (int j = 2 * (n + (int)Math.Sqrt(ACC * n)); j > 0; j--)
+            for (int j = 2 * (a + (int)Math.Sqrt(ACC * a)); j > 0; j--)
             {
                 double bim = bip + j * tox * bi;
                 bip = bi;
@@ -1898,12 +1935,87 @@ namespace UMapx.Core
                     bip *= BIGNI;
                 }
 
-                if (j == n)
+                if (j == a)
                     ans = bip;
             }
 
             ans *= I0(x) / bi;
-            return x < 0.0 && n % 2 == 1 ? -ans : ans;
+            return x < 0.0 && a % 2 == 1 ? -ans : ans;
+        }
+        /// <summary>
+        /// Возвращает значение модифицированной функции Бесселя второго рода при a = 0.
+        /// </summary>
+        /// <param name="x">Число</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        private static double K0(double x)
+        {
+            double y, ans;
+
+            if (x <= 2.0)
+            {
+                y = x * x / 4.0;
+                ans = (-Math.Log(x / 2.0) * I0(x)) + (-0.57721566 + y * (0.42278420
+                   + y * (0.23069756 + y * (0.3488590e-1 + y * (0.262698e-2
+                   + y * (0.10750e-3 + y * 0.74e-5))))));
+            }
+            else
+            {
+                y = 2.0 / x;
+                ans = (Math.Exp(-x) / Math.Sqrt(x)) * (1.25331414 + y * (-0.7832358e-1
+                   + y * (0.2189568e-1 + y * (-0.1062446e-1 + y * (0.587872e-2
+                   + y * (-0.251540e-2 + y * 0.53208e-3))))));
+            }
+            return ans;
+        }
+        /// <summary>
+        /// Возвращает значение модифицированной функции Бесселя второго рода при a = 1.
+        /// </summary>
+        /// <param name="x">Число</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        private static double K1(double x)
+        {
+            double y, ans;
+
+            if (x <= 2.0)
+            {
+                y = x * x / 4.0;
+                ans = (Math.Log(x / 2.0) * I1(x)) + (1.0 / x) * (1.0 + y * (0.15443144
+                   + y * (-0.67278579 + y * (-0.18156897 + y * (-0.1919402e-1
+                   + y * (-0.110404e-2 + y * (-0.4686e-4)))))));
+            }
+            else
+            {
+                y = 2.0 / x;
+                ans = (Math.Exp(-x) / Math.Sqrt(x)) * (1.25331414 + y * (0.23498619
+                   + y * (-0.3655620e-1 + y * (0.1504268e-1 + y * (-0.780353e-2
+                   + y * (0.325614e-2 + y * (-0.68245e-3)))))));
+            }
+            return ans;
+        }
+        /// <summary>
+        /// Возвращает значение модифицированной функции Бесселя второго рода.
+        /// </summary>
+        /// <param name="x">Число</param>
+        /// <param name="a">Число</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static double K(double x, int a)
+        {
+            if (a < 0 || x == 0) return 0;
+            if (a == 0) return (K0(x));
+            if (a == 1) return (K1(x));
+
+            int j;
+            double bk, bkm, bkp, tox;
+            tox = 2.0 / x;
+            bkm = K0(x);
+            bk = K1(x);
+            for (j = 1; j < a; j++)
+            {
+                bkp = bkm + j * tox * bk;
+                bkm = bk;
+                bk = bkp;
+            }
+            return bk;
         }
         #endregion
 
@@ -2265,25 +2377,6 @@ namespace UMapx.Core
         #endregion
         #endregion
 
-        #region Zeta approximation
-        /// <summary>
-        /// Возвращает значение ζ-функции Римана для вещественных чисел, при s >= 1.
-        /// </summary>
-        /// <remarks>
-        /// В данном методе использется не сама функция Римана, а ее математическое приближение.
-        /// </remarks>
-        /// <param name="s">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Zeta(double s)
-        {
-            if (s > 1)
-            {
-                return 1.0 + (s + 3) / (s - 1) * 1.0 / (Math.Pow(2, s + 0.997));
-            }
-            return double.NaN;
-        }
-        #endregion
-
         #region Guderman & Hartley functions
         /// <summary>
         /// Возвращает значение обратной функции Гудермана.
@@ -2439,7 +2532,7 @@ namespace UMapx.Core
             return (int)(num / r);
         }
         /// <summary>
-        /// Возвращает значение числа Лукаса.
+        /// Возвращает значение числа Люка.
         /// </summary>
         /// <param name="n">Целое число</param>
         /// <returns>Целое число</returns>
@@ -2562,7 +2655,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Аргумент</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double H(int n)
+        public static double Harm(int n)
         {
             return Special.DiGamma(n) + 1.0 / n + Maths.Gamma;
         }
@@ -2572,7 +2665,7 @@ namespace UMapx.Core
         /// <param name="n">Порядок</param>
         /// <param name="m">Аргумент</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double H(int n, double m)
+        public static double Harm(int n, double m)
         {
             double sum = 0;
             for (int i = 0; i < n; i++)

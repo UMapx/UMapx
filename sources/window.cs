@@ -403,8 +403,8 @@ namespace UMapx.Window
             double r = 1 - u * u;
             double v = r >= 0 ? Math.Sqrt(1 - u * u) : 0;
             double z = Math.PI * this.a;
-            double q = Special.I0(z * v);
-            return q / Special.I0(z    );
+            double q = Special.I(z * v, 0);
+            return q / Special.I(z    , 0);
         }
         /// <summary>
         /// Возвращает оконную функцию.

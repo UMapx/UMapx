@@ -601,9 +601,9 @@
         </member>
         <member name="M:UMapx.Decomposition.QR.#ctor(System.Double[0:,0:])">
             <summary>
-            Инициализирует QR-разложение квадратной матрицы.
+            Инициализирует QR-разложение матрицы.
             </summary>
-            <param name="A">Квадратная матрица</param>
+            <param name="A">Матрица</param>
         </member>
         <member name="M:UMapx.Decomposition.QR.qrdecomp(System.Double[0:,0:])">
             <summary>
@@ -613,7 +613,7 @@
         </member>
         <member name="P:UMapx.Decomposition.QR.H">
             <summary>
-            Возвращает матрицу, содержащую вектора отражений Хаусхолдера.
+            Возвращает матрицу, содержащую векторы отражений Хаусхолдера.
             </summary>
         </member>
         <member name="P:UMapx.Decomposition.QR.R">
@@ -3861,12 +3861,20 @@
             <param name="x">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Struve(System.Double,System.Double)">
+        <member name="M:UMapx.Core.Special.H(System.Double,System.Int32)">
             <summary>
             Возвращает значение функции Струве.
             </summary>
             <param name="x">Число</param>
-            <param name="a">Порядок</param>
+            <param name="a">Число</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.L(System.Double,System.Int32)">
+            <summary>
+            Возвращает значение модифицированной функции Струве.
+            </summary>
+            <param name="x">Число</param>
+            <param name="v">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.Beta(System.Double,System.Double)">
@@ -4109,84 +4117,100 @@
             <param name="range">Пара дробных чисел, представляющих отрезок</param>
             <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Q(System.Double)">
+        <member name="M:UMapx.Core.Special.Q(System.Double,System.Boolean)">
             <summary>
             Возвращает значение Q-функции.
             </summary>
             <param name="x">Носитель</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Qinv(System.Double)">
-            <summary>
-            Возвращает значение обратной Q-функции.
-            </summary>
-            <param name="x">Носитель</param>
+            <param name="inverse">Обратная функция или нет</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.J0(System.Double)">
             <summary>
-            Возвращает значение функции Бесселя нулевого порядка.
+            Возвращает значение функции Бесселя первого рода при a = 0.
             </summary>
             <param name="x">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.Special.J(System.Double)">
+        <member name="M:UMapx.Core.Special.J1(System.Double)">
             <summary>
-            Возвращает значение функции Бесселя первого порядка.
+            Возвращает значение функции Бесселя первого рода при a = 1.
             </summary>
             <param name="x">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.J(System.Double,System.Int32)">
             <summary>
-            Возвращает значение функции Бесселя заданного порядка.
+            Возвращает значение функции Бесселя первого рода.
             </summary>
             <param name="x">Число</param>
-            <param name="a">Порядок</param>
+            <param name="a">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.Y0(System.Double)">
             <summary>
-            Возвращает значение функции Неймана нулевого порядка.
+            Возвращает значение функции Бесселя второго рода при a = 0.
             </summary>
             <param name="x">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Y(System.Double)">
+        <member name="M:UMapx.Core.Special.Y1(System.Double)">
             <summary>
-            Возвращает значение функции Неймана первого порядка.
+            Возвращает значение функции Бесселя второго рода при a = 1.
             </summary>
             <param name="x">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.Y(System.Double,System.Int32)">
             <summary>
-            Возвращает значение функции Неймана заданного порядка.
+            Возвращает значение функции Бесселя второго рода.
             </summary>
             <param name="x">Число</param>
-            <param name="n">Порядок</param>
+            <param name="a">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.I0(System.Double)">
             <summary>
-            Возвращает значение гиперболической функции Бесселя нулевого порядка.
+            Возвращает значение модифицированной функции Бесселя первого рода при a = 0.
             </summary>
             <param name="x">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.Special.I(System.Double)">
+        <member name="M:UMapx.Core.Special.I1(System.Double)">
             <summary>
-            Возвращает значение гиперболической функции Бесселя первого порядка.
+            Возвращает значение модифицированной функции Бесселя первого рода при a = 1.
             </summary>
             <param name="x">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.I(System.Double,System.Int32)">
             <summary>
-            Возвращает значение гиперболической функции Бесселя заданного порядка.
+            Возвращает значение модифицированной функции Бесселя первого рода.
             </summary>
             <param name="x">Число</param>
-            <param name="n">Порядок (>=0)</param>
+            <param name="a">Число</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.K0(System.Double)">
+            <summary>
+            Возвращает значение модифицированной функции Бесселя второго рода при a = 0.
+            </summary>
+            <param name="x">Число</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.K1(System.Double)">
+            <summary>
+            Возвращает значение модифицированной функции Бесселя второго рода при a = 1.
+            </summary>
+            <param name="x">Число</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.K(System.Double,System.Int32)">
+            <summary>
+            Возвращает значение модифицированной функции Бесселя второго рода.
+            </summary>
+            <param name="x">Число</param>
+            <param name="a">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.Owen(System.Double,System.Double)">
@@ -4245,16 +4269,6 @@
             <summary>
             Коэффициенты.
             </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.Zeta(System.Double)">
-            <summary>
-            Возвращает значение ζ-функции Римана для вещественных чисел, при s >= 1.
-            </summary>
-            <remarks>
-            В данном методе использется не сама функция Римана, а ее математическое приближение.
-            </remarks>
-            <param name="s">Число</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
         </member>
         <member name="M:UMapx.Core.Special.Agd(System.Double)">
             <summary>
@@ -4347,7 +4361,7 @@
         </member>
         <member name="M:UMapx.Core.Special.Lucas(System.Int32)">
             <summary>
-            Возвращает значение числа Лукаса.
+            Возвращает значение числа Люка.
             </summary>
             <param name="n">Целое число</param>
             <returns>Целое число</returns>
@@ -4382,14 +4396,14 @@
             <param name="x">Число</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.Special.H(System.Int32)">
+        <member name="M:UMapx.Core.Special.Harm(System.Int32)">
             <summary>
             Возвращает гармоническое число.
             </summary>
             <param name="n">Аргумент</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.Special.H(System.Int32,System.Double)">
+        <member name="M:UMapx.Core.Special.Harm(System.Int32,System.Double)">
             <summary>
             Возвращает гармоническое число.
             </summary>
