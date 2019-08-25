@@ -4244,16 +4244,22 @@ namespace UMapx.Decomposition
 
             // Get Householder matrix:
             int n = w.Length, i, j;
-            double[,] eye = Matrice.Eye(n, n);
-            this.matrices = LinealgOptions.JaggedZero(n, n);
-
+            double[] z;
+            this.matrices = new double[n][];
+            
             // M = I - w * w':
             for (i = 0; i < n; i++)
             {
+                // eye vector
+                z = new double[n];
+                z[i] = 1.0;
+
                 for (j = 0; j < n; j++)
                 {
-                    matrices[i][j] = eye[i, j] - w[i] * w[j];
+                    z[j] -= w[i] * w[j];
                 }
+
+                matrices[i] = z;
             }
 
             return;
