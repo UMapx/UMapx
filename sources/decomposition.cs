@@ -4245,7 +4245,7 @@ namespace UMapx.Decomposition
             // Get Householder matrix:
             int n = w.Length, i, j;
             double[,] eye = Matrice.Eye(n, n);
-            this.matrices = Matrice.ToJagged(new double[n, n]);
+            this.matrices = LinealgOptions.JaggedZero(n, n);
 
             // M = I - w * w':
             for (i = 0; i < n; i++)

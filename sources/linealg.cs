@@ -291,7 +291,7 @@ namespace UMapx.Core
             // Построение матрицы дополнения:
             int n = m.GetLength(0);
             int n2 = n * 2;
-            double[][] a = Matrice.ToJagged(new double[n, n2]);
+            double[][] a = LinealgOptions.JaggedZero(n, n2);
             int i, j;
 
             for (i = 0; i < n; i++)
