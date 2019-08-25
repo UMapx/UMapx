@@ -3520,7 +3520,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Non-negative_matrix_factorization
     /// </remarks>
     /// </summary>
-    public class NNMF
+    public class NMF
     {
         #region Private data
         private double[,] w;  // W is m x r (weights)
@@ -3537,16 +3537,17 @@ namespace UMapx.Decomposition
         /// <param name="A">Неотрицательная матрица</param>
         /// <param name="r">Размерность новых матриц</param>
         /// <param name="iterations">Количество итераций</param>
-        public NNMF(double[,] A, int r, int iterations = 100)
+        public NMF(double[,] A, int r, int iterations = 100)
         {
-            this.n = A.GetLength(0);
-            this.m = A.GetLength(1);
+            this.m = A.GetLength(0);
+            this.n = A.GetLength(1);
 
             if (n < m)
-                throw new Exception("Высота матрицы должна быть больше ширины");
+                throw new Exception("Ширина матрицы должна быть больше высоты");
 
             this.r = r;
 
+            // decompose
             nnmf(A, iterations);
         }
         #endregion
@@ -3612,7 +3613,7 @@ namespace UMapx.Decomposition
 
                         s = 0.0;
                         for (l = 0; l < m; l++)
-                            s += w[l, i] * A[j, l];
+                            s += w[l, i] * A[l, j];
 
                         newH[i, j] = h[i, j] * s / (d + eps);
                     }
@@ -3638,7 +3639,7 @@ namespace UMapx.Decomposition
 
                         s = 0.0;
                         for (l = 0; l < n; l++)
-                            s += A[l, i] * newH[j, l];
+                            s += A[i, l] * newH[j, l];
 
                         newW[i, j] = w[i, j] * s / (d + eps);
                     }
