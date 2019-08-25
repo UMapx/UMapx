@@ -56,14 +56,14 @@ namespace UMapx.Decomposition
         /// </summary>
         public double[,] P
         {
-            get { return Matrice.FromJagged(matrices); }
+            get { return Jagged.FromJagged(matrices); }
         }
         /// <summary>
         /// Получает форму Хессенберга.
         /// </summary>
         public double[,] H
         {
-            get { return Matrice.FromJagged(hessenberg); }
+            get { return Jagged.FromJagged(hessenberg); }
         }
         #endregion
 
@@ -76,8 +76,8 @@ namespace UMapx.Decomposition
         {
             // Properties
             int n = A.GetLength(0);
-            this.matrices = LinealgOptions.JaggedZero(n, n);
-            this.hessenberg = Matrice.ToJagged(A);
+            this.matrices = Jagged.Zero(n, n);
+            this.hessenberg = Jagged.ToJagged(A);
             double[] orthogonal = new double[n];
 
             // Nonsymmetric reduction to Hessenberg form.
@@ -223,9 +223,9 @@ namespace UMapx.Decomposition
             this.ar = new double[n];
             this.ai = new double[n];
             this.beta = new double[n];
-            this.Z = LinealgOptions.JaggedEye(n, n);
-            var A = Matrice.ToJagged(a);
-            var B = Matrice.ToJagged(b);
+            this.Z = Jagged.Zero(n, n);
+            var A = Jagged.ToJagged(a);
+            var B = Jagged.ToJagged(b);
             bool matz = true;
             int ierr = 0;
 
@@ -1607,8 +1607,8 @@ namespace UMapx.Decomposition
             // without Hessenberg form.
             if (Matrice.IsSymmetric(A))
             {
-                hessenberg = LinealgOptions.JaggedZero(n, n);
-                matrices = Matrice.ToJagged(A);
+                hessenberg = Jagged.Zero(n, n);
+                matrices = Jagged.ToJagged(A);
 
                 tred2(); // Tridiagonalize.
                 tql2();  // Diagonalize.
@@ -1616,8 +1616,8 @@ namespace UMapx.Decomposition
             // with Hessenberg form.
             else
             {
-                matrices = LinealgOptions.JaggedZero(n, n);
-                hessenberg = Matrice.ToJagged(A);
+                matrices = Jagged.Zero(n, n);
+                hessenberg = Jagged.ToJagged(A);
                 orthogonal = new double[n];
 
                 orthes(); // Reduce to Hessenberg form.
@@ -1632,7 +1632,7 @@ namespace UMapx.Decomposition
         /// </summary>
         public double[,] V
         {
-            get { return Matrice.FromJagged(matrices); }
+            get { return Jagged.FromJagged(matrices); }
         }
         /// <summary>
         /// Получает собственные значения.
@@ -1688,7 +1688,7 @@ namespace UMapx.Decomposition
         /// </summary>
         public double[,] H
         {
-            get { return Matrice.FromJagged(hessenberg); }
+            get { return Jagged.FromJagged(hessenberg); }
         }
         #endregion
 
@@ -2673,14 +2673,14 @@ namespace UMapx.Decomposition
         /// </summary>
         public double[,] L
         {
-            get { return Matrice.FromJagged(lower); }
+            get { return Jagged.FromJagged(lower); }
         }
         /// <summary>
         /// Получает верхнюю треугольную матрицу.
         /// </summary>
         public double[,] U
         {
-            get { return Matrice.FromJagged(upper); }
+            get { return Jagged.FromJagged(upper); }
         }
         #endregion
 
@@ -2767,7 +2767,7 @@ namespace UMapx.Decomposition
         /// </summary>
         public double[,] L
         {
-            get { return Matrice.FromJagged(lower); }
+            get { return Jagged.FromJagged(lower); }
         }
         /// <summary>
         /// Получает верхнюю треугольную матрицу U.
@@ -2905,7 +2905,7 @@ namespace UMapx.Decomposition
             int n = a.GetLength(0);
             this.upper = new double[n, n];
             this.diag = new double[n];
-            double[][] p = Matrice.ToJagged(a);
+            double[][] p = Jagged.ToJagged(a);
             double alpha, beta, gamma;
 
             // Mathematics in science and engineering, v.128,
@@ -3062,7 +3062,7 @@ namespace UMapx.Decomposition
         {
             get 
             {
-                return reversed ? Matrice.FromJagged(Vr) : Matrice.FromJagged(Ur); 
+                return reversed ? Jagged.FromJagged(Vr) : Jagged.FromJagged(Ur); 
             }
         }
         /// <summary>
@@ -3079,7 +3079,7 @@ namespace UMapx.Decomposition
         {
             get
             {
-                return reversed ? Matrice.FromJagged(Ur) : Matrice.FromJagged(Vr);
+                return reversed ? Jagged.FromJagged(Ur) : Jagged.FromJagged(Vr);
             }
         }
         /// <summary>
@@ -3103,9 +3103,9 @@ namespace UMapx.Decomposition
         /// <param name="A">Матрица</param>
         private void svdcmp(double[,] A)
         {
-            this.Ur = Matrice.ToJagged(A);
+            this.Ur = Jagged.ToJagged(A);
             this.Sr = new double[m];
-            this.Vr = LinealgOptions.JaggedZero(m, m);
+            this.Vr = Jagged.Zero(m, m);
             double[] rv1 = new double[m];
 
             int flag, i, its, j, jj, k, l = 0, nm = 0;
@@ -3788,7 +3788,7 @@ namespace UMapx.Decomposition
             this.m = A.GetLength(0);
             this.n = A.GetLength(1);
             this.diag = new double[n];
-            this.qr = Matrice.ToJagged(A);
+            this.qr = Jagged.ToJagged(A);
             double nrm, s;
             int k, i, j;
 
@@ -4197,7 +4197,7 @@ namespace UMapx.Decomposition
         {
             get
             {
-                return Matrice.FromJagged(matrices);
+                return Jagged.FromJagged(matrices);
             }
         }
         /// <summary>
@@ -4271,7 +4271,7 @@ namespace UMapx.Decomposition
         private void tred2(double[,] a)
         {
             int i, j, k;
-            this.matrices = Matrice.ToJagged(a);
+            this.matrices = Jagged.ToJagged(a);
 
             // Symmetric Householder reduction to tridiagonal form.
             // This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson, 
@@ -4601,15 +4601,16 @@ namespace UMapx.Decomposition
         /// Инициализирует преобразование Ланцоша.
         /// </summary>
         /// <param name="A">Симметричная матрица</param>
-        public Lanczos(double[,] A)
+        /// <param name="full">Полная реортогонализация или нет</param>
+        public Lanczos(double[,] A, bool full = false)
         {
             // exception
-            if (Matrice.IsSymmetric(A))
+            if (!Matrice.IsSymmetric(A))
                 throw new Exception("Матрица должна быть симметричной");
 
             // lanczos decomposition
             int n = A.GetLength(0);
-            lanczos(A, n);
+            lanczos(A, n, full);
         }
         /// <summary>
         /// Возвращает ортогональную матрицу.
@@ -4639,7 +4640,8 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="a">Symmetric matrix</param>
         /// <param name="n">Matrix length</param>
-        private void lanczos(double[,] a, int n)
+        /// <param name="full">Full re-orthogonalization</param>
+        private void lanczos(double[,] a, int n, bool full)
         {
             // This function uses the Lanczos algorithm with full
             // re-orthogonalization to compute k x k symmetric tridiagonal
@@ -4672,13 +4674,16 @@ namespace UMapx.Decomposition
                 }
 
                 // full re-orthogonalization (x2)
-                for (j = 0; j <= i; j++)
+                if (full)
                 {
-                    v = q.GetCol(j);
-                    alpha = v.Dot(z);
+                    for (j = 0; j <= i; j++)
+                    {
+                        v = q.GetCol(j);
+                        alpha = v.Dot(z);
 
-                    for (y = 0; y < n; y++)
-                        z[y] = z[y] - v[y] * alpha;
+                        for (y = 0; y < n; y++)
+                            z[y] = z[y] - v[y] * alpha;
+                    }
                 }
 
                 // tridiagonal matrix

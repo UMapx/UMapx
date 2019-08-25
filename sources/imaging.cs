@@ -7712,7 +7712,7 @@ namespace UMapx.Imaging
         {
             get
             {
-                return Matrice.FromJagged(this.kernel);
+                return Jagged.FromJagged(this.kernel);
             }
             set
             {
@@ -7757,7 +7757,7 @@ namespace UMapx.Imaging
             this.l1 = m.GetLength(1);
             this.radius0 = l0 >> 1;
             this.radius1 = l1 >> 1;
-            this.kernel = Matrice.ToJagged(m);
+            this.kernel = Jagged.ToJagged(m);
         }
         /// <summary>
         /// Применяет фильтр к точечному рисунку.
@@ -11746,14 +11746,14 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                t = BitmapConverter.Bitmap2RGB(Data[i], false);
+                t = BitmapConverter.ToRGB(Data[i], false);
 
                 r[i] = t[2];
                 g[i] = t[1];
                 b[i] = t[0];
             }
 
-            return BitmapConverter.RGB2Bitmap(new double[][,] { this.filter.Apply(b), this.filter.Apply(g), this.filter.Apply(r) });
+            return BitmapConverter.FromRGB(new double[][,] { this.filter.Apply(b), this.filter.Apply(g), this.filter.Apply(r) });
         }
         /// <summary>
         /// Применяет фильтр к массиву атрибутов точечных рисунков.
@@ -11770,14 +11770,14 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                t = BitmapConverter.Bitmap2RGB(bmData[i], false);
+                t = BitmapConverter.ToRGB(bmData[i], false);
 
                 r[i] = t[2];
                 g[i] = t[1];
                 b[i] = t[0];
             }
 
-            return BitmapConverter.RGB2Bitmap(new double[][,] { this.filter.Apply(b), this.filter.Apply(g), this.filter.Apply(r) });
+            return BitmapConverter.FromRGB(new double[][,] { this.filter.Apply(b), this.filter.Apply(g), this.filter.Apply(r) });
         }
         /// <summary>
         /// Применяет фильтр к массиву точечных рисунков.
@@ -11794,14 +11794,14 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                tt = BitmapConverter.Bitmap2YCbCr(Data[i], false);
+                tt = BitmapConverter.ToYCbCr(Data[i], false);
 
                 yy[i] = tt[0];
                 cb[i] = tt[1];
                 cr[i] = tt[2];
             }
 
-            return BitmapConverter.YCbCr2Bitmap(new double[][,] { this.filter.Apply(yy), MeanFilter.meanf(cb), MeanFilter.meanf(cr) });
+            return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), MeanFilter.meanf(cb), MeanFilter.meanf(cr) });
         }
         /// <summary>
         /// Применяет фильтр к массиву атрибутов точечных рисунков.
@@ -11818,14 +11818,14 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                tt = BitmapConverter.Bitmap2YCbCr(bmData[i], false);
+                tt = BitmapConverter.ToYCbCr(bmData[i], false);
 
                 yy[i] = tt[0];
                 cb[i] = tt[1];
                 cr[i] = tt[2];
             }
 
-            return BitmapConverter.YCbCr2Bitmap(new double[][,] { this.filter.Apply(yy), MeanFilter.meanf(cb), MeanFilter.meanf(cr) });
+            return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), MeanFilter.meanf(cb), MeanFilter.meanf(cr) });
         }
         /// <summary>
         /// Применяет фильтр к массиву точечных рисунков.
@@ -11842,14 +11842,14 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                t = BitmapConverter.Bitmap2HSB(Data[i], false);
+                t = BitmapConverter.ToHSB(Data[i], false);
 
                 h[i] = t[0];
                 s[i] = t[1];
                 b[i] = t[2];
             }
 
-            return BitmapConverter.HSB2Bitmap(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(b) });
+            return BitmapConverter.FromHSB(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(b) });
         }
         /// <summary>
         /// Применяет фильтр к массиву атрибутов точечных рисунков.
@@ -11866,14 +11866,14 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                t = BitmapConverter.Bitmap2HSB(bmData[i], false);
+                t = BitmapConverter.ToHSB(bmData[i], false);
 
                 h[i] = t[0];
                 s[i] = t[1];
                 b[i] = t[2];
             }
 
-            return BitmapConverter.HSB2Bitmap(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(b) });
+            return BitmapConverter.FromHSB(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(b) });
         }
         /// <summary>
         /// Применяет фильтр к массиву точечных рисунков.
@@ -11890,14 +11890,14 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                t = BitmapConverter.Bitmap2HSL(Data[i], false);
+                t = BitmapConverter.ToHSL(Data[i], false);
 
                 h[i] = t[0];
                 s[i] = t[1];
                 l[i] = t[2];
             }
 
-            return BitmapConverter.HSL2Bitmap(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(l) });
+            return BitmapConverter.FromHSL(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(l) });
         }
         /// <summary>
         /// Применяет фильтр к массиву атрибутов точечных рисунков.
@@ -11914,14 +11914,14 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                t = BitmapConverter.Bitmap2HSL(bmData[i], false);
+                t = BitmapConverter.ToHSL(bmData[i], false);
 
                 h[i] = t[0];
                 s[i] = t[1];
                 l[i] = t[2];
             }
 
-            return BitmapConverter.HSL2Bitmap(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(l) });
+            return BitmapConverter.FromHSL(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(l) });
         }
         #endregion
     }
@@ -12777,7 +12777,7 @@ namespace UMapx.Imaging
         /// <param name="b">Точечный рисунок</param>
         /// <param name="size">Размер (ширина = высота)</param>
         /// <returns>Файл значка</returns>
-        public static Icon Bitmap2Ico(Bitmap b, int size)
+        public static Icon ToIco(this Bitmap b, int size)
         {
             Bitmap bmp = new Bitmap(b, new Size(size, size));
             MemoryStream pngstream = new MemoryStream();
@@ -12810,7 +12810,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="b">Точечный рисунок</param>
         /// <returns>Точечный рисунок</returns>
-        public static Bitmap Bitmap2Jpeg(Bitmap b)
+        public static Bitmap ToJpeg(this Bitmap b)
         {
             Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
@@ -12823,7 +12823,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="b">Точечный рисунок</param>
         /// <returns>Точечный рисунок</returns>
-        public static Bitmap Bitmap2Bmp(Bitmap b)
+        public static Bitmap ToBmp(this Bitmap b)
         {
             Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
@@ -12836,7 +12836,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="b">Точечный рисунок</param>
         /// <returns>Точечный рисунок</returns>
-        public static Bitmap Bitmap2Gif(Bitmap b)
+        public static Bitmap ToGif(this Bitmap b)
         {
             Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
@@ -12849,7 +12849,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="b">Точечный рисунок</param>
         /// <returns>Точечный рисунок</returns>
-        public static Bitmap Bitmap2Png(Bitmap b)
+        public static Bitmap ToPng(this Bitmap b)
         {
             Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
@@ -12862,7 +12862,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="b">Точечный рисунок</param>
         /// <returns>Точечный рисунок</returns>
-        public static Bitmap Bitmap2Tiff(Bitmap b)
+        public static Bitmap ToTiff(this Bitmap b)
         {
             Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
@@ -12875,7 +12875,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="bmData">Атрибуты точечного изображения</param>
         /// <returns>Точечный рисунок</returns>
-        public static Bitmap Bitmap(BitmapData bmData)
+        public static Bitmap Bitmap(this BitmapData bmData)
         {
             return new Bitmap(bmData.Width, bmData.Height, bmData.Stride, bmData.PixelFormat, bmData.Scan0);
         }
@@ -12885,7 +12885,7 @@ namespace UMapx.Imaging
         /// <param name="b">Точечный рисунок</param>
         /// <param name="pixelformat">Формат данных о цвете для каждой точки точечного рисунка</param>
         /// <returns>Точечный рисунок</returns>
-        public static Bitmap Bitmap(Bitmap b, PixelFormat pixelformat)
+        public static Bitmap Bitmap(this Bitmap b, PixelFormat pixelformat)
         {
             return b.Clone(new Rectangle(0, 0, b.Width, b.Height), pixelformat);
         }
@@ -12897,7 +12897,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="b">Точечный рисунок</param>
         /// <returns>Атрибуты точечного изображения</returns>
-        public static BitmapData Lock32bpp(Bitmap b)
+        public static BitmapData Lock32bpp(this Bitmap b)
         {
             return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
         }
@@ -12906,7 +12906,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="b">Точечный рисунок</param>
         /// <returns>Атрибуты точечного изображения</returns>
-        public static BitmapData Lock8bpp(Bitmap b)
+        public static BitmapData Lock8bpp(this Bitmap b)
         {
             return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
         }
@@ -12915,7 +12915,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="b">Точечный рисунок</param>
         /// <param name="bmData">Атрибуты точечного изображения</param>
-        public static void Unlock(Bitmap b, BitmapData bmData)
+        public static void Unlock(this Bitmap b, BitmapData bmData)
         {
             b.UnlockBits(bmData);
             return;
@@ -12929,10 +12929,10 @@ namespace UMapx.Imaging
         /// <param name="Data">Точечный рисунок</param>
         /// <param name="alpha">Учитывать альфа-канал или нет</param>
         /// <returns>RGBA-структура</returns>
-        public static double[][,] Bitmap2RGB(Bitmap Data, bool alpha = false)
+        public static double[][,] ToRGB(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[][,] rgb = BitmapConverter.Bitmap2RGB(bmData, alpha);
+            double[][,] rgb = BitmapConverter.ToRGB(bmData, alpha);
             BitmapConverter.Unlock(Data, bmData);
             return rgb;
         }
@@ -12942,7 +12942,7 @@ namespace UMapx.Imaging
         /// <param name="bmData">Атрибуты точечного изображения</param>
         /// <param name="alpha">Учитывать альфа-канал или нет</param>
         /// <returns>RGBA-структура</returns>
-        public unsafe static double[][,] Bitmap2RGB(BitmapData bmData, bool alpha = false)
+        public unsafe static double[][,] ToRGB(this BitmapData bmData, bool alpha = false)
         {
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             int total = 4, length = (alpha) ? total : total - 1;
@@ -12977,7 +12977,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="array">RGBA-структура</param>
         /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap RGB2Bitmap(double[][,] array)
+        public unsafe static Bitmap FromRGB(this double[][,] array)
         {
             int total = 4, length = array.Length;
             int width = array[0].GetLength(1), height = array[0].GetLength(0);
@@ -13015,10 +13015,10 @@ namespace UMapx.Imaging
         /// <param name="Data">Точечный рисунок</param>
         /// <param name="alpha">Учитывать альфа-канал или нет</param>
         /// <returns>HSB-структура</returns>
-        public static double[][,] Bitmap2HSB(Bitmap Data, bool alpha = false)
+        public static double[][,] ToHSB(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[][,] rgb = BitmapConverter.Bitmap2HSB(bmData, alpha);
+            double[][,] rgb = BitmapConverter.ToHSB(bmData, alpha);
             BitmapConverter.Unlock(Data, bmData);
             return rgb;
         }
@@ -13028,7 +13028,7 @@ namespace UMapx.Imaging
         /// <param name="bmData">Атрибуты точечного изображения</param>
         /// <param name="alpha">Учитывать альфа-канал или нет</param>
         /// <returns>HSB-структура</returns>
-        public unsafe static double[][,] Bitmap2HSB(BitmapData bmData, bool alpha = false)
+        public unsafe static double[][,] ToHSB(this BitmapData bmData, bool alpha = false)
         {
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             int total = 4, length = (alpha) ? total : total - 1;
@@ -13068,7 +13068,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="array">HSB-структура</param>
         /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap HSB2Bitmap(double[][,] array)
+        public unsafe static Bitmap FromHSB(this double[][,] array)
         {
             int total = 4, length = array.Length;
             int width = array[0].GetLength(1), height = array[0].GetLength(0);
@@ -13111,10 +13111,10 @@ namespace UMapx.Imaging
         /// <param name="Data">Точечный рисунок</param>
         /// <param name="alpha">Учитывать альфа-канал или нет</param>
         /// <returns>HSL-структура</returns>
-        public static double[][,] Bitmap2HSL(Bitmap Data, bool alpha = false)
+        public static double[][,] ToHSL(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[][,] rgb = BitmapConverter.Bitmap2HSL(bmData, alpha);
+            double[][,] rgb = BitmapConverter.ToHSL(bmData, alpha);
             BitmapConverter.Unlock(Data, bmData);
             return rgb;
         }
@@ -13124,7 +13124,7 @@ namespace UMapx.Imaging
         /// <param name="bmData">Атрибуты точечного изображения</param>
         /// <param name="alpha">Учитывать альфа-канал или нет</param>
         /// <returns>HSL-структура</returns>
-        public unsafe static double[][,] Bitmap2HSL(BitmapData bmData, bool alpha = false)
+        public unsafe static double[][,] ToHSL(this BitmapData bmData, bool alpha = false)
         {
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             int total = 4, length = (alpha) ? total : total - 1;
@@ -13164,7 +13164,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="array">HSL-структура</param>
         /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap HSL2Bitmap(double[][,] array)
+        public unsafe static Bitmap FromHSL(this double[][,] array)
         {
             int total = 4, length = array.Length;
             int width = array[0].GetLength(1), height = array[0].GetLength(0);
@@ -13207,10 +13207,10 @@ namespace UMapx.Imaging
         /// <param name="Data">Точечный рисунок</param>
         /// <param name="alpha">Учитывать альфа-канал или нет</param>
         /// <returns>YCbCr-структура</returns>
-        public static double[][,] Bitmap2YCbCr(Bitmap Data, bool alpha = false)
+        public static double[][,] ToYCbCr(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[][,] rgb = BitmapConverter.Bitmap2YCbCr(bmData, alpha);
+            double[][,] rgb = BitmapConverter.ToYCbCr(bmData, alpha);
             BitmapConverter.Unlock(Data, bmData);
             return rgb;
         }
@@ -13220,7 +13220,7 @@ namespace UMapx.Imaging
         /// <param name="bmData">Атрибуты точечного изображения</param>
         /// <param name="alpha">Учитывать альфа-канал или нет</param>
         /// <returns>YCbCr-структура</returns>
-        public unsafe static double[][,] Bitmap2YCbCr(BitmapData bmData, bool alpha = false)
+        public unsafe static double[][,] ToYCbCr(this BitmapData bmData, bool alpha = false)
         {
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             int total = 4, length = (alpha) ? total : total - 1;
@@ -13260,7 +13260,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="array">YCbCr-структура</param>
         /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap YCbCr2Bitmap(double[][,] array)
+        public unsafe static Bitmap FromYCbCr(this double[][,] array)
         {
             int total = 4, length = array.Length;
             int width = array[0].GetLength(1), height = array[0].GetLength(0);
@@ -13313,6 +13313,73 @@ namespace UMapx.Imaging
                 matx[k] = new double[height, width];
             }
             return matx;
+        }
+        #endregion
+
+        #region Bitmap matrix voids
+        /// <summary>
+        /// Преобразовывает точечный рисунок в матрицу значений усредненного канала.
+        /// </summary>
+        /// <param name="Data">Точечный рисунок</param>
+        /// <returns>Прямоугольная матрица</returns>
+        public static double[,] FromBitmap(this Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            double[,] rgb = FromBitmap(bmData);
+            BitmapConverter.Unlock(Data, bmData);
+            return rgb;
+        }
+        /// <summary>
+        /// Преобразовывает точечный рисунок в матрицу значений усредненного канала.
+        /// </summary>
+        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <returns>Прямоугольная матрица</returns>
+        public unsafe static double[,] FromBitmap(this BitmapData bmData)
+        {
+            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            double[,] rgb = new double[height, width];
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            Parallel.For(0, height, j =>
+            {
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+                    rgb[j, i] = RGB.Average(p[k + 2], p[k + 1], p[k]) / 255.0;
+                }
+            });
+
+            return rgb;
+        }
+        /// <summary>
+        /// Преобразовывает прямоугольную матрицу значений каналов в монохромный точечный рисунок.
+        /// </summary>
+        /// <param name="m">Прямоугольная матрица</param>
+        /// <returns>Точечный рисунок</returns>
+        public unsafe static Bitmap ToBitmap(this double[,] m)
+        {
+            int width = m.GetLength(1), height = m.GetLength(0);
+            Bitmap bitmap = new Bitmap(width, height);
+            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            Parallel.For(0, height, j =>
+            {
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+                    p[k + 2] = p[k + 1] = p[k] = Maths.Byte(m[j, i] * 255.0);
+                    p[k + 3] = 255;
+                }
+            });
+
+            BitmapConverter.Unlock(bitmap, bmData);
+            return bitmap;
         }
         #endregion
     }

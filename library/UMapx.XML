@@ -866,18 +866,20 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.Lanczos.#ctor(System.Double[0:,0:])">
+        <member name="M:UMapx.Decomposition.Lanczos.#ctor(System.Double[0:,0:],System.Boolean)">
             <summary>
             Инициализирует преобразование Ланцоша.
             </summary>
             <param name="A">Симметричная матрица</param>
+            <param name="full">Полная реортогонализация или нет</param>
         </member>
-        <member name="M:UMapx.Decomposition.Lanczos.lanczos(System.Double[0:,0:],System.Int32)">
+        <member name="M:UMapx.Decomposition.Lanczos.lanczos(System.Double[0:,0:],System.Int32,System.Boolean)">
             <summary>
             Lanczos decomposition.
             </summary>
             <param name="a">Symmetric matrix</param>
             <param name="n">Matrix length</param>
+            <param name="full">Full re-orthogonalization</param>
         </member>
         <member name="P:UMapx.Decomposition.Lanczos.Q">
             <summary>
@@ -13244,7 +13246,7 @@
             Используется для работы с точечными изображениями.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2Ico(System.Drawing.Bitmap,System.Int32)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToIco(System.Drawing.Bitmap,System.Int32)">
             <summary>
             Конвертирует точечный рисунок в файл значка.
             </summary>
@@ -13252,35 +13254,35 @@
             <param name="size">Размер (ширина = высота)</param>
             <returns>Файл значка</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2Jpeg(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToJpeg(System.Drawing.Bitmap)">
             <summary>
             Конвертирует точечный рисунок в JPEG формат.
             </summary>
             <param name="b">Точечный рисунок</param>
             <returns>Точечный рисунок</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2Bmp(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToBmp(System.Drawing.Bitmap)">
             <summary>
             Конвертирует точечный рисунок в BMP формат.
             </summary>
             <param name="b">Точечный рисунок</param>
             <returns>Точечный рисунок</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2Gif(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToGif(System.Drawing.Bitmap)">
             <summary>
             Конвертирует точечный рисунок в GIF формат.
             </summary>
             <param name="b">Точечный рисунок</param>
             <returns>Точечный рисунок</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2Png(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToPng(System.Drawing.Bitmap)">
             <summary>
             Конвертирует точечный рисунок в Png формат.
             </summary>
             <param name="b">Точечный рисунок</param>
             <returns>Точечный рисунок</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2Tiff(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToTiff(System.Drawing.Bitmap)">
             <summary>
             Конвертирует точечный рисунок в Tiff формат.
             </summary>
@@ -13323,7 +13325,7 @@
             <param name="b">Точечный рисунок</param>
             <param name="bmData">Атрибуты точечного изображения</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2RGB(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToRGB(System.Drawing.Bitmap,System.Boolean)">
             <summary>
             Преобразовывает точечный рисунок в RGBA-структуру.
             </summary>
@@ -13331,7 +13333,7 @@
             <param name="alpha">Учитывать альфа-канал или нет</param>
             <returns>RGBA-структура</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2RGB(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToRGB(System.Drawing.Imaging.BitmapData,System.Boolean)">
             <summary>
             Преобразовывает точечный рисунок в RGBA-структуру.
             </summary>
@@ -13339,14 +13341,14 @@
             <param name="alpha">Учитывать альфа-канал или нет</param>
             <returns>RGBA-структура</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.RGB2Bitmap(System.Double[][0:,0:])">
+        <member name="M:UMapx.Imaging.BitmapConverter.FromRGB(System.Double[][0:,0:])">
             <summary>
             Преобразовывает RGBA-структуру в цветное изображение.
             </summary>
             <param name="array">RGBA-структура</param>
             <returns>Точечный рисунок</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2HSB(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToHSB(System.Drawing.Bitmap,System.Boolean)">
             <summary>
             Преобразовывает точечный рисунок в HSB-структуру.
             </summary>
@@ -13354,7 +13356,7 @@
             <param name="alpha">Учитывать альфа-канал или нет</param>
             <returns>HSB-структура</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2HSB(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToHSB(System.Drawing.Imaging.BitmapData,System.Boolean)">
             <summary>
             Преобразовывает точечный рисунок в HSB-структуру.
             </summary>
@@ -13362,14 +13364,14 @@
             <param name="alpha">Учитывать альфа-канал или нет</param>
             <returns>HSB-структура</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.HSB2Bitmap(System.Double[][0:,0:])">
+        <member name="M:UMapx.Imaging.BitmapConverter.FromHSB(System.Double[][0:,0:])">
             <summary>
             Преобразовывает HSB-структуру в цветное изображение.
             </summary>
             <param name="array">HSB-структура</param>
             <returns>Точечный рисунок</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2HSL(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToHSL(System.Drawing.Bitmap,System.Boolean)">
             <summary>
             Преобразовывает точечный рисунок в HSL-структуру.
             </summary>
@@ -13377,7 +13379,7 @@
             <param name="alpha">Учитывать альфа-канал или нет</param>
             <returns>HSL-структура</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2HSL(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToHSL(System.Drawing.Imaging.BitmapData,System.Boolean)">
             <summary>
             Преобразовывает точечный рисунок в HSL-структуру.
             </summary>
@@ -13385,14 +13387,14 @@
             <param name="alpha">Учитывать альфа-канал или нет</param>
             <returns>HSL-структура</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.HSL2Bitmap(System.Double[][0:,0:])">
+        <member name="M:UMapx.Imaging.BitmapConverter.FromHSL(System.Double[][0:,0:])">
             <summary>
             Преобразовывает HSL-структуру в цветное изображение.
             </summary>
             <param name="array">HSL-структура</param>
             <returns>Точечный рисунок</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2YCbCr(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToYCbCr(System.Drawing.Bitmap,System.Boolean)">
             <summary>
             Преобразовывает точечный рисунок в YCbCr-структуру.
             </summary>
@@ -13400,7 +13402,7 @@
             <param name="alpha">Учитывать альфа-канал или нет</param>
             <returns>YCbCr-структура</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.Bitmap2YCbCr(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapConverter.ToYCbCr(System.Drawing.Imaging.BitmapData,System.Boolean)">
             <summary>
             Преобразовывает точечный рисунок в YCbCr-структуру.
             </summary>
@@ -13408,7 +13410,7 @@
             <param name="alpha">Учитывать альфа-канал или нет</param>
             <returns>YCbCr-структура</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapConverter.YCbCr2Bitmap(System.Double[][0:,0:])">
+        <member name="M:UMapx.Imaging.BitmapConverter.FromYCbCr(System.Double[][0:,0:])">
             <summary>
             Преобразовывает YCbCr-структуру в цветное изображение.
             </summary>
@@ -13423,6 +13425,27 @@
             <param name="height">Высота матриц</param>
             <param name="width">Ширина матриц</param>
             <returns>Набор матриц</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapConverter.FromBitmap(System.Drawing.Bitmap)">
+            <summary>
+            Преобразовывает точечный рисунок в матрицу значений усредненного канала.
+            </summary>
+            <param name="Data">Точечный рисунок</param>
+            <returns>Прямоугольная матрица</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapConverter.FromBitmap(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Преобразовывает точечный рисунок в матрицу значений усредненного канала.
+            </summary>
+            <param name="bmData">Атрибуты точечного изображения</param>
+            <returns>Прямоугольная матрица</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapConverter.ToBitmap(System.Double[0:,0:])">
+            <summary>
+            Преобразовывает прямоугольную матрицу значений каналов в монохромный точечный рисунок.
+            </summary>
+            <param name="m">Прямоугольная матрица</param>
+            <returns>Точечный рисунок</returns>
         </member>
         <member name="T:UMapx.Imaging.Intensity">
             <summary>
@@ -23877,20 +23900,6 @@
             <param name="m">Матрица</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.ToJagged(System.Double[0:,0:])">
-            <summary>
-            Возвращает зубчатый массив.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Зубчатый массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.FromJagged(System.Double[][])">
-            <summary>
-            Возвращает матрицу.
-            </summary>
-            <param name="jagged">Зубчатый массив</param>
-            <returns>Матрица</returns>
-        </member>
         <member name="M:UMapx.Core.Matrice.Invert(UMapx.Core.Complex[0:,0:])">
             <summary>
             Реализует операцию инвертирования матрицы.
@@ -23917,20 +23926,6 @@
             Реализует операцию эрмитово-сопряжения матрицы.
             </summary>
             <param name="m">Матрица</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ToJagged(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Возвращает зубчатый массив.
-            </summary>
-            <param name="m">Матрица</param>
-            <returns>Зубчатый массив</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.FromJagged(UMapx.Core.Complex[][])">
-            <summary>
-            Возвращает матрицу.
-            </summary>
-            <param name="jagged">Зубчатый массив</param>
             <returns>Матрица</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Trace(System.Double[0:,0:])">
@@ -24889,27 +24884,6 @@
             <param name="m">Двумерный массив</param>
             <param name="r0">Радиус обработки по высоте</param>
             <param name="r1">Радиус обработки по ширине</param>
-        </member>
-        <member name="M:UMapx.Core.Matrice.FromBitmap(System.Drawing.Bitmap)">
-            <summary>
-            Преобразовывает точечный рисунок в матрицу значений усредненного канала.
-            </summary>
-            <param name="Data">Точечный рисунок</param>
-            <returns>Прямоугольная матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.FromBitmap(System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Преобразовывает точечный рисунок в матрицу значений усредненного канала.
-            </summary>
-            <param name="bmData">Атрибуты точечного изображения</param>
-            <returns>Прямоугольная матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.ToBitmap(System.Double[0:,0:])">
-            <summary>
-            Преобразовывает прямоугольную матрицу значений каналов в монохромный точечный рисунок.
-            </summary>
-            <param name="m">Прямоугольная матрица</param>
-            <returns>Точечный рисунок</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.IsEquals(System.Double[],System.Double[])">
             <summary>
@@ -26745,6 +26719,14 @@
             <param name="v">Одномерный массив</param>
             <returns>Матрица</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Zero(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение нулевой матрицы.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Eye(System.Int32,System.Int32)">
             <summary>
             Реализует построение единичной матрицы.
@@ -27007,21 +26989,6 @@
         <member name="T:UMapx.Core.LinealgOptions">
             <summary>
             Определяет класс оптимизаций матричных операций.
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.LinealgOptions.height">
-            <summary>
-            Высота матрицы.
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.LinealgOptions.width">
-            <summary>
-            Ширина матрицы.
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.LinealgOptions.length">
-            <summary>
-            Длина матрицы.
             </summary>
         </member>
         <member name="F:UMapx.Core.LinealgOptions.exception">
@@ -27323,66 +27290,45 @@
             <param name="jagged">Зубчатый массив</param>
             <returns>Матрица</returns>
         </member>
-        <member name="F:UMapx.Core.LinealgOptions.rnd">
-            <summary>
-            Генератор случайных чисел.
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.JaggedRandom(System.Int32,System.Int32)">
-            <summary>
-            Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
-            </summary>
-            <param name="m">Высота</param>
-            <param name="l">Ширина</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.JaggedZero(System.Int32,System.Int32)">
-            <summary>
-            Реализует построение нулевой матрицы.
-            </summary>
-            <param name="m">Высота</param>
-            <param name="l">Ширина</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.JaggedEye(System.Int32,System.Int32)">
-            <summary>
-            Реализует построение единичной матрицы.
-            </summary>
-            <param name="m">Высота</param>
-            <param name="l">Ширина</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[],System.Single[][],System.Single[])">
+        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[],System.Single[][],System.Single[],System.Int32,System.Int32)">
             <summary>
             Реализует умножние матриц с использованием модифицированной оптимизации Уиттла.
             </summary>
             <param name="iRowA">Строка матрицы A</param>
             <param name="B">Матрица B</param>
             <param name="iRowC">Строка матрицы C</param>
+            <param name="length">Длина</param>
+            <param name="width">Ширина</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.LinealgOptions.Complex32[],UMapx.Core.LinealgOptions.Complex32[][],UMapx.Core.LinealgOptions.Complex32[])">
+        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.LinealgOptions.Complex32[],UMapx.Core.LinealgOptions.Complex32[][],UMapx.Core.LinealgOptions.Complex32[],System.Int32,System.Int32)">
             <summary>
             Реализует умножние матриц с использованием модифицированной оптимизации Уиттла.
             </summary>
             <param name="iRowA">Строка матрицы A</param>
             <param name="B">Матрица B</param>
             <param name="iRowC">Строка матрицы C</param>
+            <param name="length">Длина</param>
+            <param name="width">Ширина</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.LinealgOptions.Complex32[],System.Single[][],UMapx.Core.LinealgOptions.Complex32[])">
+        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.LinealgOptions.Complex32[],System.Single[][],UMapx.Core.LinealgOptions.Complex32[],System.Int32,System.Int32)">
             <summary>
             Реализует умножние матриц с использованием модифицированной оптимизации Уиттла.
             </summary>
             <param name="iRowA">Строка матрицы A</param>
             <param name="B">Матрица B</param>
             <param name="iRowC">Строка матрицы C</param>
+            <param name="length">Длина</param>
+            <param name="width">Ширина</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[],UMapx.Core.LinealgOptions.Complex32[][],UMapx.Core.LinealgOptions.Complex32[])">
+        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[],UMapx.Core.LinealgOptions.Complex32[][],UMapx.Core.LinealgOptions.Complex32[],System.Int32,System.Int32)">
             <summary>
             Реализует умножние матриц с использованием модифицированной оптимизации Уиттла.
             </summary>
             <param name="iRowA">Строка матрицы A</param>
             <param name="B">Матрица B</param>
             <param name="iRowC">Строка матрицы C</param>
+            <param name="length">Длина</param>
+            <param name="width">Ширина</param>
         </member>
         <member name="T:UMapx.Core.LinealgOptions.Complex32">
             <summary>
@@ -27530,6 +27476,158 @@
             <param name="a">Числа</param>
             <param name="b">Комплексное число</param>
             <returns>Комплексное число</returns>
+        </member>
+        <member name="T:UMapx.Core.Jagged">
+            <summary>
+            Используется для работы с зубчатыми массивами.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Jagged.ToJagged(System.Double[0:,0:])">
+            <summary>
+            Возвращает зубчатый массив.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Зубчатый массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.FromJagged(System.Double[][])">
+            <summary>
+            Возвращает матрицу.
+            </summary>
+            <param name="jagged">Зубчатый массив</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.ToJagged(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает зубчатый массив.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Зубчатый массив</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.FromJagged(UMapx.Core.Complex[][])">
+            <summary>
+            Возвращает матрицу.
+            </summary>
+            <param name="jagged">Зубчатый массив</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="F:UMapx.Core.Jagged.rnd">
+            <summary>
+            Генератор случайных чисел.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Rand(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Randc(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Randi(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение матрицы случайных целых чисел.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Randi(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Реализует построение матрицы случайных целых чисел.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <param name="a">Нижний предел</param>
+            <param name="b">Верхний предел</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Randic(System.Int32,System.Int32)">
+            <summary>
+            Реализует комплексной построение матрицы случайных целых чисел.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Randic(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Реализует комплексной построение матрицы случайных целых чисел.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <param name="a">Нижний предел</param>
+            <param name="b">Верхний предел</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Zero(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение нулевой матрицы.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.One(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение матрицы единиц.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Eye(System.Int32,System.Int32)">
+            <summary>
+            Реализует построение единичной матрицы.
+            </summary>
+            <param name="m">Высота</param>
+            <param name="l">Ширина</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Parse(System.Double[][],System.String)">
+            <summary>
+            Переводит исходную строку в матрицу вещественных чисел.
+            <remarks>
+            Пример входной строки: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
+            </remarks>
+            </summary>
+            <param name="a">Матрица</param>
+            <param name="s">Исходная строка</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.TryParse(System.String,System.Double[][]@)">
+            <summary>
+            Пробует перевести исходную строку в матрицу вещественных чисел.
+            </summary>
+            <param name="s">Исходная строка</param>
+            <param name="result">Матрица вещественных чисел</param>
+            <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Parse(UMapx.Core.Complex[][],System.String)">
+            <summary>
+            Переводит исходную строку в матрицу комплексных чисел.
+            </summary>
+            <remarks>
+            Пример входной строки: "[1 + 2i, 2 + 4i; 3 + 6i, 4 + 8i]";
+            </remarks>
+            <param name="a">Матрица</param>
+            <param name="s">Исходная строка</param>
+            <returns>Матрица комплексных чисел</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.TryParse(System.String,UMapx.Core.Complex[][]@)">
+            <summary>
+            Пробует перевести исходную строку в матрицу комплексных чисел.
+            </summary>
+            <param name="s">Исходная строка</param>
+            <param name="result">Матрица комплексных чисел</param>
+            <returns>Логическое значение</returns>
         </member>
         <member name="T:UMapx.Core.Direction">
             <summary>

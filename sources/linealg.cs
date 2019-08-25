@@ -7,11 +7,7 @@
 // Version 4.0.0
 
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading.Tasks;
-using UMapx.Colorspace;
-using UMapx.Imaging;
 
 namespace UMapx.Core
 {
@@ -23,7 +19,7 @@ namespace UMapx.Core
     // Moscow, Russia.
     // **************************************************************************
 
-    #region Static components
+    #region Matrice
     /// <summary>
     /// Используется для реализации стандартных алгебраических операций над матрицами и векторами.
     /// </summary>
@@ -291,7 +287,7 @@ namespace UMapx.Core
             // Построение матрицы дополнения:
             int n = m.GetLength(0);
             int n2 = n * 2;
-            double[][] a = LinealgOptions.JaggedZero(n, n2);
+            double[][] a = Jagged.Zero(n, n2);
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -388,49 +384,6 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает зубчатый массив.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Зубчатый массив</returns>
-        public static double[][] ToJagged(this double[,] m)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[][] jagged = new double[ml][];
-            double[] data;
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                data = new double[mr];
-                for (j = 0; j < mr; j++)
-                {
-                    data[j] = m[i, j];
-                }
-                jagged[i] = data;
-            }
-            return jagged;
-        }
-        /// <summary>
-        /// Возвращает матрицу.
-        /// </summary>
-        /// <param name="jagged">Зубчатый массив</param>
-        /// <returns>Матрица</returns>
-        public static double[,] FromJagged(this double[][] jagged)
-        {
-            int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
-            double[,] m = new double[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    m[i, j] = jagged[i][j];
-                }
-            }
-            return m;
-        }
-        /// <summary>
         /// Реализует операцию инвертирования матрицы.
         /// </summary>
         /// <param name="m">Квадратная матрица</param>
@@ -445,7 +398,7 @@ namespace UMapx.Core
             // Построение матрицы дополнения:
             int n = m.GetLength(0);
             int n2 = n * 2;
-            Complex[][] a = Matrice.ToJagged(new Complex[n, n2]);
+            Complex[][] a = Jagged.ToJagged(new Complex[n, n2]);
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -583,49 +536,6 @@ namespace UMapx.Core
 
             return H;
         }
-        /// <summary>
-        /// Возвращает зубчатый массив.
-        /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Зубчатый массив</returns>
-        public static Complex[][] ToJagged(this Complex[,] m)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            Complex[][] jagged = new Complex[ml][];
-            Complex[] data;
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                data = new Complex[mr];
-                for (j = 0; j < mr; j++)
-                {
-                    data[j] = m[i, j];
-                }
-                jagged[i] = data;
-            }
-            return jagged;
-        }
-        /// <summary>
-        /// Возвращает матрицу.
-        /// </summary>
-        /// <param name="jagged">Зубчатый массив</param>
-        /// <returns>Матрица</returns>
-        public static Complex[,] FromJagged(this Complex[][] jagged)
-        {
-            int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
-            Complex[,] m = new Complex[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    m[i, j] = jagged[i][j];
-                }
-            }
-            return m;
-        }
         #endregion
 
         #region Matrix properties
@@ -731,7 +641,7 @@ namespace UMapx.Core
 
             int i, j, r, n = m.GetLength(0);
             double[] temp; double diagonal;
-            double[][] perm = Matrice.ToJagged(Matrice.Eye(n, n));
+            double[][] perm = Jagged.ToJagged(Matrice.Eye(n, n));
 
             for (i = 0; i < n; i++)
             {
@@ -752,7 +662,7 @@ namespace UMapx.Core
                     perm[r] = temp;
                 }
             }
-            return Matrice.FromJagged(perm);
+            return Jagged.FromJagged(perm);
         }
         /// <summary>
         /// Возвращает значение следа квадратной матрицы.
@@ -979,11 +889,6 @@ namespace UMapx.Core
         public static double[,] Add(this double[,] m, double[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
             double[,] H = new double[ml, mr];
             int i, j;
 
@@ -1005,11 +910,6 @@ namespace UMapx.Core
         public static Complex[,] Add(this Complex[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
             Complex[,] H = new Complex[ml, mr];
             int i, j;
 
@@ -1032,10 +932,6 @@ namespace UMapx.Core
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
             Complex[,] H = new Complex[ml, mr];
             int i, j;
 
@@ -1057,11 +953,6 @@ namespace UMapx.Core
         public static Complex[,] Add(this double[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
             Complex[,] H = new Complex[ml, mr];
             int i, j;
 
@@ -1262,11 +1153,6 @@ namespace UMapx.Core
         public static double[,] Sub(this double[,] m, double[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
             double[,] H = new double[ml, mr];
             int i, j;
 
@@ -1288,11 +1174,6 @@ namespace UMapx.Core
         public static Complex[,] Sub(this Complex[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
             Complex[,] H = new Complex[ml, mr];
             int i, j;
 
@@ -1314,11 +1195,6 @@ namespace UMapx.Core
         public static Complex[,] Sub(this Complex[,] m, double[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
             Complex[,] H = new Complex[ml, mr];
             int i, j;
 
@@ -1340,11 +1216,6 @@ namespace UMapx.Core
         public static Complex[,] Sub(this double[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
-
-            if (ml != nl || mr != nr)
-                throw new Exception("Матрицы должны быть одинаковых размеров");
-
             Complex[,] H = new Complex[ml, mr];
             int i, j;
 
@@ -3253,75 +3124,6 @@ namespace UMapx.Core
             LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
             return LinealgOptions.FromJagged(LinealgOptions.MeanVertical(
                                              LinealgOptions.MeanHorizontal(mm, r1), r0));
-        }
-        #endregion
-
-        // Matrix <-> Bitmap voids
-
-        #region Bitmap matrix voids
-        /// <summary>
-        /// Преобразовывает точечный рисунок в матрицу значений усредненного канала.
-        /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <returns>Прямоугольная матрица</returns>
-        public static double[,] FromBitmap(this Bitmap Data)
-        {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[,] rgb = FromBitmap(bmData);
-            BitmapConverter.Unlock(Data, bmData);
-            return rgb;
-        }
-        /// <summary>
-        /// Преобразовывает точечный рисунок в матрицу значений усредненного канала.
-        /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <returns>Прямоугольная матрица</returns>
-        public unsafe static double[,] FromBitmap(this BitmapData bmData)
-        {
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double[,] rgb = new double[height, width];
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    rgb[j, i] = RGB.Average(p[k + 2], p[k + 1], p[k]) / 255.0;
-                }
-            });
-
-            return rgb;
-        }
-        /// <summary>
-        /// Преобразовывает прямоугольную матрицу значений каналов в монохромный точечный рисунок.
-        /// </summary>
-        /// <param name="m">Прямоугольная матрица</param>
-        /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap ToBitmap(this double[,] m)
-        {
-            int width = m.GetLength(1), height = m.GetLength(0);
-            Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    p[k + 2] = p[k + 1] = p[k] = Maths.Byte(m[j, i] * 255.0);
-                    p[k + 3] = 255;
-                }
-            });
-
-            BitmapConverter.Unlock(bitmap, bmData);
-            return bitmap;
         }
         #endregion
 
@@ -5764,9 +5566,6 @@ namespace UMapx.Core
         public static double[] Dot(this double[] v, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            if (v.Length != r1)
-                throw new Exception("Размерность вектора должна быть равна ширине матрицы");
-
             double[] temp = new double[r0];
 
             Parallel.For(0, r0, i =>
@@ -5790,9 +5589,6 @@ namespace UMapx.Core
         public static Complex[] Dot(this double[] v, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            if (v.Length != r1)
-                throw new Exception("Размерность вектора должна быть равна ширине матрицы");
-
             Complex[] temp = new Complex[r0];
 
             Parallel.For(0, r0, i =>
@@ -5816,9 +5612,6 @@ namespace UMapx.Core
         public static Complex[] Dot(this Complex[] v, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            if (v.Length != r1)
-                throw new Exception("Размерность вектора должна быть равна ширине матрицы");
-
             Complex[] temp = new Complex[r0];
 
             Parallel.For(0, r0, i =>
@@ -5842,9 +5635,6 @@ namespace UMapx.Core
         public static Complex[] Dot(this Complex[] v, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            if (v.Length != r1)
-                throw new Exception("Размерность вектора должна быть равна ширине матрицы");
-
             Complex[] temp = new Complex[r0];
 
             Parallel.For(0, r0, i =>
@@ -8684,6 +8474,16 @@ namespace UMapx.Core
 
         #region Radius matrix
         /// <summary>
+        /// Реализует построение нулевой матрицы.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[,] Zero(int m, int l)
+        {
+            return new double[m, l];
+        }
+        /// <summary>
         /// Реализует построение единичной матрицы.
         /// </summary>
         /// <param name="m">Высота</param>
@@ -9182,17 +8982,23 @@ namespace UMapx.Core
         {
             string[] rows = StringOptions.Matpar(s);
             string[] nums = rows[0].Split('|');
-            int r = rows.Length, n = nums.Length;
+            int r = rows.Length, n = nums.Length, k;
             double[,] H = new double[r, n];
             int i, j;
 
-            // collecting rows:
-            for (i = 0; i < r; i++)
+            // first row
+            for (j = 0; j < n; j++)
+            {
+                H[0, j] = double.Parse(nums[j]);
+            }
+
+            // other rows
+            for (i = 1; i < r; i++)
             {
                 nums = rows[i].Split('|');
-                n = nums.Length;
-
-                for (j = 0; j < n; j++)
+                k = Math.Min(n, nums.Length);
+                
+                for (j = 0; j < k; j++)
                 {
                     H[i, j] = double.Parse(nums[j]);
                 }
@@ -9207,7 +9013,7 @@ namespace UMapx.Core
         /// <returns>Логическое значение</returns>
         public static bool TryParse(string s, ref double[,] result)
         {
-            double[,] zero = new double[0, 0];
+            double[,] zero = null;
             try
             {
                 result = Matrice.Parse(zero, s);
@@ -9232,21 +9038,28 @@ namespace UMapx.Core
         {
             string[] rows = StringOptions.Matpar(s);
             string[] nums = rows[0].Split('|');
-            int r = rows.Length, n = nums.Length;
+            int r = rows.Length, n = nums.Length, k;
             Complex[,] H = new Complex[r, n];
             int i, j;
 
-            // collecting rows:
-            for (i = 0; i < r; i++)
+            // first row
+            for (j = 0; j < n; j++)
+            {
+                H[0, j] = StringOptions.Compar(nums[j]);
+            }
+
+            // other rows
+            for (i = 1; i < r; i++)
             {
                 nums = rows[i].Split('|');
-                n = nums.Length;
+                k = Math.Min(n, nums.Length);
 
-                for (j = 0; j < n; j++)
+                for (j = 0; j < k; j++)
                 {
                     H[i, j] = StringOptions.Compar(nums[j]);
                 }
             }
+
             return H;
         }
         /// <summary>
@@ -9257,7 +9070,7 @@ namespace UMapx.Core
         /// <returns>Логическое значение</returns>
         public static bool TryParse(string s, ref Complex[,] result)
         {
-            Complex[,] zero = new Complex[0, 0];
+            Complex[,] zero = null;
             try
             {
                 result = Matrice.Parse(zero, s);
@@ -9282,12 +9095,12 @@ namespace UMapx.Core
         public static double[] Parse(this double[] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
-            string[] nums = rows[0].Split('|');
             int r = rows.Length;
 
             // vector?
             if (r < 2)
             {
+                string[] nums = rows[0].Split('|');
                 int n = nums.Length, i;
                 double[] H = new double[n];
 
@@ -9311,7 +9124,7 @@ namespace UMapx.Core
         /// <returns>Логическое значение</returns>
         public static bool TryParse(string s, ref double[] result)
         {
-            double[] zero = new double[0];
+            double[] zero = null;
             try
             {
                 result = Matrice.Parse(zero, s);
@@ -9335,12 +9148,12 @@ namespace UMapx.Core
         public static Complex[] Parse(this Complex[] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
-            string[] nums = rows[0].Split('|');
             int r = rows.Length;
 
             // vector?
             if (r < 2)
             {
+                string[] nums = rows[0].Split('|');
                 int n = nums.Length, i;
                 Complex[] H = new Complex[n];
 
@@ -9364,7 +9177,7 @@ namespace UMapx.Core
         /// <returns>Логическое значение</returns>
         public static bool TryParse(string s, ref Complex[] result)
         {
-            Complex[] zero = new Complex[0];
+            Complex[] zero = null;
             try
             {
                 result = Matrice.Parse(zero, s);
@@ -9387,18 +9200,6 @@ namespace UMapx.Core
     internal class LinealgOptions
     {
         #region Private data
-        /// <summary>
-        /// Высота матрицы.
-        /// </summary>
-        private static int height;
-        /// <summary>
-        /// Ширина матрицы.
-        /// </summary>
-        private static int width;
-        /// <summary>
-        /// Длина матрицы.
-        /// </summary>
-        private static int length;
         /// <summary>
         /// Текст исключения при умножении.
         /// </summary>
@@ -9518,12 +9319,15 @@ namespace UMapx.Core
             if (A[0].GetLength(0) != B.GetLength(0))
                 throw new Exception(exception);
 
-            height = A.GetLength(0); width = B[0].GetLength(0); length = B.GetLength(0);
-            float[][] C = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0);
+            int width = B[0].GetLength(0);
+            int length = B.GetLength(0);
+            float[][] C = new float[height][];
 
             Parallel.For(0, height, i =>
             {
-                LinealgOptions.Whittle_Mul(A[i], B, C[i]);
+                C[i] = new float[width];
+                LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
             });
 
             return C;
@@ -9539,12 +9343,15 @@ namespace UMapx.Core
             if (A[0].GetLength(0) != B.GetLength(0))
                 throw new Exception(exception);
 
-            height = A.GetLength(0); width = B[0].GetLength(0); length = B.GetLength(0);
-            Complex32[][] C = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0);
+            int width = B[0].GetLength(0);
+            int length = B.GetLength(0);
+            Complex32[][] C = new Complex32[height][];
 
             Parallel.For(0, height, i =>
             {
-                LinealgOptions.Whittle_Mul(A[i], B, C[i]);
+                C[i] = new Complex32[width];
+                LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
             });
 
             return C;
@@ -9560,12 +9367,15 @@ namespace UMapx.Core
             if (A[0].GetLength(0) != B.GetLength(0))
                 throw new Exception(exception);
 
-            height = A.GetLength(0); width = B[0].GetLength(0); length = B.GetLength(0);
-            Complex32[][] C = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0);
+            int width = B[0].GetLength(0);
+            int length = B.GetLength(0);
+            Complex32[][] C = new Complex32[height][];
 
             Parallel.For(0, height, i =>
             {
-                LinealgOptions.Whittle_Mul(A[i], B, C[i]);
+                C[i] = new Complex32[width];
+                LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
             });
 
             return C;
@@ -9581,12 +9391,15 @@ namespace UMapx.Core
             if (A[0].GetLength(0) != B.GetLength(0))
                 throw new Exception(exception);
 
-            height = A.GetLength(0); width = B[0].GetLength(0); length = B.GetLength(0);
-            Complex32[][] C = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0);
+            int width = B[0].GetLength(0); 
+            int length = B.GetLength(0);
+            Complex32[][] C = new Complex32[height][];
 
             Parallel.For(0, height, i =>
             {
-                LinealgOptions.Whittle_Mul(A[i], B, C[i]);
+                C[i] = new Complex32[width];
+                LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
             });
 
             return C;
@@ -11149,7 +10962,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Jagged Array Options
+        #region Jagged array
         /// <summary>
         /// Возвращает зубчатый массив.
         /// </summary>
@@ -11312,70 +11125,6 @@ namespace UMapx.Core
                 m[i] = new Complex(mi.Re, mi.Im);
             }
             return m;
-        }
-        /// <summary>
-        /// Генератор случайных чисел.
-        /// </summary>
-        private static Random rnd = new Random();
-        /// <summary>
-        /// Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
-        /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
-        public static double[][] JaggedRandom(int m, int l)
-        {
-            double[][] H = new double[m][];
-            int i, j;
-
-            for (i = 0; i < m; i++)
-            {
-                H[i] = new double[l];
-
-                for (j = 0; j < l; j++)
-                {
-                    H[i][j] = rnd.NextDouble();
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Реализует построение нулевой матрицы.
-        /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
-        public static double[][] JaggedZero(int m, int l)
-        {
-            double[][] H = new double[m][];
-            int i;
-
-            for (i = 0; i < m; i++)
-            {
-                H[i] = new double[l];
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Реализует построение единичной матрицы.
-        /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
-        public static double[][] JaggedEye(int m, int l)
-        {
-            double[][] H = new double[m][];
-            int i;
-
-            for (i = 0; i < m; i++)
-            {
-                H[i] = new double[l];
-                H[i][i] = 1.0;
-            }
-
-            return H;
         }
         #endregion
 
@@ -11593,14 +11342,16 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Modified Whittle's Multiply Optimizations
+        #region Modified Whittle multiply optimizations
         /// <summary>
         /// Реализует умножние матриц с использованием модифицированной оптимизации Уиттла.
         /// </summary>
         /// <param name="iRowA">Строка матрицы A</param>
         /// <param name="B">Матрица B</param>
         /// <param name="iRowC">Строка матрицы C</param>
-        private static void Whittle_Mul(float[] iRowA, float[][] B, float[] iRowC)
+        /// <param name="length">Длина</param>
+        /// <param name="width">Ширина</param>
+        private static void Whittle_Mul(float[] iRowA, float[][] B, float[] iRowC, int length, int width)
         {
             float[] kRowB;
             float ikA;
@@ -11622,7 +11373,9 @@ namespace UMapx.Core
         /// <param name="iRowA">Строка матрицы A</param>
         /// <param name="B">Матрица B</param>
         /// <param name="iRowC">Строка матрицы C</param>
-        private static void Whittle_Mul(Complex32[] iRowA, Complex32[][] B, Complex32[] iRowC)
+        /// <param name="length">Длина</param>
+        /// <param name="width">Ширина</param>
+        private static void Whittle_Mul(Complex32[] iRowA, Complex32[][] B, Complex32[] iRowC, int length, int width)
         {
             Complex32[] kRowB;
             Complex32 ikA;
@@ -11644,7 +11397,9 @@ namespace UMapx.Core
         /// <param name="iRowA">Строка матрицы A</param>
         /// <param name="B">Матрица B</param>
         /// <param name="iRowC">Строка матрицы C</param>
-        private static void Whittle_Mul(Complex32[] iRowA, float[][] B, Complex32[] iRowC)
+        /// <param name="length">Длина</param>
+        /// <param name="width">Ширина</param>
+        private static void Whittle_Mul(Complex32[] iRowA, float[][] B, Complex32[] iRowC, int length, int width)
         {
             float[] kRowB;
             Complex32 ikA;
@@ -11666,7 +11421,9 @@ namespace UMapx.Core
         /// <param name="iRowA">Строка матрицы A</param>
         /// <param name="B">Матрица B</param>
         /// <param name="iRowC">Строка матрицы C</param>
-        private static void Whittle_Mul(float[] iRowA, Complex32[][] B, Complex32[] iRowC)
+        /// <param name="length">Длина</param>
+        /// <param name="width">Ширина</param>
+        private static void Whittle_Mul(float[] iRowA, Complex32[][] B, Complex32[] iRowC, int length, int width)
         {
             Complex32[] kRowB;
             float ikA;
@@ -11680,6 +11437,391 @@ namespace UMapx.Core
                 {
                     iRowC[j] += ikA * kRowB[j];
                 }
+            }
+        }
+        #endregion
+    }
+    #endregion
+
+    #region Jagged array
+    /// <summary>
+    /// Используется для работы с зубчатыми массивами.
+    /// </summary>
+    public static class Jagged
+    {
+        #region Conversions
+        /// <summary>
+        /// Возвращает зубчатый массив.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Зубчатый массив</returns>
+        public static double[][] ToJagged(this double[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            double[][] jagged = new double[ml][];
+            double[] data;
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                data = new double[mr];
+                for (j = 0; j < mr; j++)
+                {
+                    data[j] = m[i, j];
+                }
+                jagged[i] = data;
+            }
+            return jagged;
+        }
+        /// <summary>
+        /// Возвращает матрицу.
+        /// </summary>
+        /// <param name="jagged">Зубчатый массив</param>
+        /// <returns>Матрица</returns>
+        public static double[,] FromJagged(this double[][] jagged)
+        {
+            int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
+            double[,] m = new double[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    m[i, j] = jagged[i][j];
+                }
+            }
+            return m;
+        }
+        /// <summary>
+        /// Возвращает зубчатый массив.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Зубчатый массив</returns>
+        public static Complex[][] ToJagged(this Complex[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            Complex[][] jagged = new Complex[ml][];
+            Complex[] data;
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                data = new Complex[mr];
+                for (j = 0; j < mr; j++)
+                {
+                    data[j] = m[i, j];
+                }
+                jagged[i] = data;
+            }
+            return jagged;
+        }
+        /// <summary>
+        /// Возвращает матрицу.
+        /// </summary>
+        /// <param name="jagged">Зубчатый массив</param>
+        /// <returns>Матрица</returns>
+        public static Complex[,] FromJagged(this Complex[][] jagged)
+        {
+            int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
+            Complex[,] m = new Complex[ml, mr];
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    m[i, j] = jagged[i][j];
+                }
+            }
+            return m;
+        }
+        #endregion
+
+        #region Jagged array
+        /// <summary>
+        /// Генератор случайных чисел.
+        /// </summary>
+        private static Random rnd = new Random();
+        /// <summary>
+        /// Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Rand(int m, int l)
+        {
+            double[][] H = new double[m][];
+            int i, j;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new double[l];
+
+                for (j = 0; j < l; j++)
+                {
+                    H[i][j] = rnd.NextDouble();
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static Complex[][] Randc(int m, int l)
+        {
+            Complex[][] H = new Complex[m][];
+            int i, j;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new Complex[l];
+                for (j = 0; j < l; j++)
+                {
+                    H[i][j] = new Complex(rnd.NextDouble(), rnd.NextDouble());
+                }
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Реализует построение матрицы случайных целых чисел.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Randi(int m, int l)
+        {
+            return Randi(m, l, 1, l + 1);
+        }
+        /// <summary>
+        /// Реализует построение матрицы случайных целых чисел.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <param name="a">Нижний предел</param>
+        /// <param name="b">Верхний предел</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Randi(int m, int l, int a, int b)
+        {
+            double[][] H = new double[m][];
+            int i, j;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new double[l];
+
+                for (j = 0; j < l; j++)
+                {
+                    H[i][j] = rnd.Next(a, b);
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует комплексной построение матрицы случайных целых чисел.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static Complex[][] Randic(int m, int l)
+        {
+            return Randic(m, l, 1, l + 1);
+        }
+        /// <summary>
+        /// Реализует комплексной построение матрицы случайных целых чисел.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <param name="a">Нижний предел</param>
+        /// <param name="b">Верхний предел</param>
+        /// <returns>Матрица</returns>
+        public static Complex[][] Randic(int m, int l, int a, int b)
+        {
+            Complex[][] H = new Complex[m][];
+            int i, j;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new Complex[l];
+
+                for (j = 0; j < l; j++)
+                {
+                    H[i][j] = new Complex(rnd.Next(a, b), rnd.Next(a, b));
+                }
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Реализует построение нулевой матрицы.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Zero(int m, int l)
+        {
+            double[][] H = new double[m][];
+            int i;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new double[l];
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует построение матрицы единиц.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[][] One(int m, int l)
+        {
+            double[][] H = new double[m][];
+            int i, j;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new double[l];
+                for (j = 0; j < l; j++)
+                {
+                    H[i][j] = 1.0;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Реализует построение единичной матрицы.
+        /// </summary>
+        /// <param name="m">Высота</param>
+        /// <param name="l">Ширина</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Eye(int m, int l)
+        {
+            double[][] H = new double[m][];
+            int i;
+
+            for (i = 0; i < m; i++)
+            {
+                H[i] = new double[l];
+                H[i][i] = 1.0;
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Parse methods
+        /// <summary>
+        /// Переводит исходную строку в матрицу вещественных чисел.
+        /// <remarks>
+        /// Пример входной строки: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Матрица</param>
+        /// <param name="s">Исходная строка</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Parse(this double[][] a, string s)
+        {
+            string[] rows = StringOptions.Matpar(s);
+            string[] nums;
+            int r = rows.Length, n;
+            double[][] H = new double[r][];
+            int i, j;
+
+            // collecting rows:
+            for (i = 0; i < r; i++)
+            {
+                nums = rows[i].Split('|');
+                n = nums.Length;
+                H[i] = new double[n];
+
+                for (j = 0; j < n; j++)
+                {
+                    H[i][j] = double.Parse(nums[j]);
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Пробует перевести исходную строку в матрицу вещественных чисел.
+        /// </summary>
+        /// <param name="s">Исходная строка</param>
+        /// <param name="result">Матрица вещественных чисел</param>
+        /// <returns>Логическое значение</returns>
+        public static bool TryParse(string s, ref double[][] result)
+        {
+            double[][] zero = null;
+            try
+            {
+                result = Jagged.Parse(zero, s);
+                return true;
+            }
+            catch (FormatException)
+            {
+                result = zero;
+                return false;
+            }
+        }
+        /// <summary>
+        /// Переводит исходную строку в матрицу комплексных чисел.
+        /// </summary>
+        /// <remarks>
+        /// Пример входной строки: "[1 + 2i, 2 + 4i; 3 + 6i, 4 + 8i]";
+        /// </remarks>
+        /// <param name="a">Матрица</param>
+        /// <param name="s">Исходная строка</param>
+        /// <returns>Матрица комплексных чисел</returns>
+        public static Complex[][] Parse(this Complex[][] a, string s)
+        {
+            string[] rows = StringOptions.Matpar(s);
+            string[] nums;
+            int r = rows.Length, n;
+            Complex[][] H = new Complex[r][];
+            int i, j;
+
+            // collecting rows:
+            for (i = 0; i < r; i++)
+            {
+                nums = rows[i].Split('|');
+                n = nums.Length;
+                H[i] = new Complex[n];
+
+                for (j = 0; j < n; j++)
+                {
+                    H[i][j] = StringOptions.Compar(nums[j]);
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Пробует перевести исходную строку в матрицу комплексных чисел.
+        /// </summary>
+        /// <param name="s">Исходная строка</param>
+        /// <param name="result">Матрица комплексных чисел</param>
+        /// <returns>Логическое значение</returns>
+        public static bool TryParse(string s, ref Complex[][] result)
+        {
+            Complex[][] zero = null;
+            try
+            {
+                result = Jagged.Parse(zero, s);
+                return true;
+            }
+            catch (FormatException)
+            {
+                result = zero;
+                return false;
             }
         }
         #endregion
