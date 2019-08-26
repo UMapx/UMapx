@@ -30,11 +30,11 @@ namespace UMapx.Core
         /// <summary>
         /// Действительная часть комплексного числа.
         /// </summary>
-        public double Re;
+        public double Real;
         /// <summary>
         /// Мнимая часть комплексного числа.
         /// </summary>
-        public double Im;
+        public double Imag;
         #endregion
 
         #region Structure components
@@ -45,8 +45,8 @@ namespace UMapx.Core
         /// <param name="im">Мнимая часть комплексного числа</param>
         public Complex(double re, double im)
         {
-            this.Re = re;
-            this.Im = im;
+            this.Real = re;
+            this.Imag = im;
         }
         /// <summary>
         /// Получает значение модуля.
@@ -55,7 +55,7 @@ namespace UMapx.Core
         {
             get
             {
-                return Math.Sqrt(Re * Re + Im * Im);
+                return Math.Sqrt(Real * Real + Imag * Imag);
             }
         }
         /// <summary>
@@ -65,7 +65,7 @@ namespace UMapx.Core
         {
             get
             {
-                return Math.Atan2(Im, Re);
+                return Math.Atan2(Imag, Real);
             }
         }
         /// <summary>
@@ -105,7 +105,7 @@ namespace UMapx.Core
         {
             get
             {
-                return new Complex(this.Re, -this.Im);
+                return new Complex(this.Real, -this.Imag);
             }
         }
         #endregion
@@ -117,7 +117,7 @@ namespace UMapx.Core
         /// <returns>Целое число со знаком</returns>
         public override int GetHashCode()
         {
-            return this.Re.GetHashCode() ^ this.Im.GetHashCode();
+            return this.Real.GetHashCode() ^ this.Imag.GetHashCode();
         }
         /// <summary>
         /// Возвращает значение, указывающее, равен ли данный экземляр заданному значению типа Complex.
@@ -143,7 +143,7 @@ namespace UMapx.Core
         /// <returns>Текст как последовательность знаков Юникода</returns>
         public string ToString(string format)
         {
-            return StringOptions.Disp(new double[] { this.Re, this.Im }, format, StringOptions.C);
+            return StringOptions.Disp(new double[] { this.Real, this.Imag }, format, StringOptions.C);
         }
         #endregion
 
@@ -156,7 +156,7 @@ namespace UMapx.Core
         /// <returns>Логическое значение</returns>
         public static bool operator ==(Complex a, Complex b)
         {
-            return ((a.Re == b.Re) && (a.Im == b.Im));
+            return ((a.Real == b.Real) && (a.Imag == b.Imag));
         }
         /// <summary>
         /// Проверяет не равны ли два объекта типа Complex между собой.
@@ -179,7 +179,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator +(Complex a, Complex b)
         {
-            return new Complex(a.Re + b.Re, a.Im + b.Im);
+            return new Complex(a.Real + b.Real, a.Imag + b.Imag);
         }
         /// <summary>
         /// Сумма комплексного числа и действительного числа.
@@ -189,7 +189,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator +(Complex a, double b)
         {
-            return new Complex(a.Re + b, a.Im);
+            return new Complex(a.Real + b, a.Imag);
         }
         /// <summary>
         /// Сумма комплексного числа и действительного числа.
@@ -199,7 +199,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator +(double a, Complex b)
         {
-            return new Complex(b.Re + a, b.Im);
+            return new Complex(b.Real + a, b.Imag);
         }
 
 
@@ -211,7 +211,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator -(Complex a, Complex b)
         {
-            return new Complex(a.Re - b.Re, a.Im - b.Im);
+            return new Complex(a.Real - b.Real, a.Imag - b.Imag);
         }
         /// <summary>
         /// Разность комплексного числа и действительного числа.
@@ -221,7 +221,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator -(Complex a, double b)
         {
-            return new Complex(a.Re - b, a.Im);
+            return new Complex(a.Real - b, a.Imag);
         }
         /// <summary>
         /// Разность комплексного числа и действительного числа.
@@ -231,7 +231,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator -(double a, Complex b)
         {
-            return new Complex(a - b.Re, b.Im);
+            return new Complex(a - b.Real, b.Imag);
         }
         /// <summary>
         /// Инвертирует комплексное число.
@@ -240,7 +240,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator -(Complex a)
         {
-            return new Complex(-a.Re, -a.Im);
+            return new Complex(-a.Real, -a.Imag);
         }
 
 
@@ -252,8 +252,8 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator *(Complex a, Complex b)
         {
-            double aRe = a.Re, aIm = a.Im;
-            double bRe = b.Re, bIm = b.Im;
+            double aRe = a.Real, aIm = a.Imag;
+            double bRe = b.Real, bIm = b.Imag;
 
             return new Complex(aRe * bRe - aIm * bIm, aRe * bIm + aIm * bRe);
         }
@@ -265,7 +265,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator *(double a, Complex b)
         {
-            return new Complex(b.Re * a, b.Im * a);
+            return new Complex(b.Real * a, b.Imag * a);
         }
         /// <summary>
         /// Произведение комплексного числа и действительного числа.
@@ -275,7 +275,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator *(Complex a, double b)
         {
-            return new Complex(a.Re * b, a.Im * b);
+            return new Complex(a.Real * b, a.Imag * b);
         }
 
 
@@ -287,8 +287,8 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator /(Complex a, Complex b)
         {
-            double aRe = a.Re, aIm = a.Im;
-            double bRe = b.Re, bIm = b.Im;
+            double aRe = a.Real, aIm = a.Imag;
+            double bRe = b.Real, bIm = b.Imag;
             double abs = bRe * bRe + bIm * bIm;
             double inv = 1 / abs;
 
@@ -302,7 +302,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator /(Complex a, double b)
         {
-            return new Complex(a.Re / b, a.Im / b);
+            return new Complex(a.Real / b, a.Imag / b);
         }
         /// <summary>
         /// Частное комплексного числа и действительного числа.
@@ -312,15 +312,15 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex operator /(double a, Complex b)
         {
-            if (b.Im == 0)
+            if (b.Imag == 0)
             {
-                return new Complex(a / b.Re, 0);
+                return new Complex(a / b.Real, 0);
             }
-            else if (b.Re == 0)
+            else if (b.Real == 0)
             {
-                return new Complex(0, a / b.Im);
+                return new Complex(0, a / b.Imag);
             }
-            return new Complex(a / b.Re, a / b.Im);
+            return new Complex(a / b.Real, a / b.Imag);
         }
         #endregion
 
@@ -467,7 +467,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         object ICloneable.Clone()
         {
-            return new Complex(this.Re, this.Im);
+            return new Complex(this.Real, this.Imag);
         }
         /// <summary>
         /// Создает копию комплексного числа.
@@ -475,7 +475,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public Complex Clone()
         {
-            return new Complex(this.Re, this.Im);
+            return new Complex(this.Real, this.Imag);
         }
         #endregion
 
@@ -487,8 +487,8 @@ namespace UMapx.Core
         /// <param name="context">Источник и назначение заданного потока</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("Real", this.Re);
-            info.AddValue("Imaginary", this.Im);
+            info.AddValue("Real", this.Real);
+            info.AddValue("Imaginary", this.Imag);
         }
         #endregion
     }

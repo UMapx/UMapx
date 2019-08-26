@@ -2691,44 +2691,45 @@ namespace UMapx.Decomposition
         /// <param name="a">Квадратная матрица</param>
         private void ludecomp(double[][] a)
         {
-            // params
             int i, j, k;
             int n = a.GetLength(0);
-            double alpha = 0, beta;
-            this.upper = new double[n][];
-            this.lower = new double[n][];
+            double alpha, beta;
+            this.upper = Jagged.Zero(n, n);
+            this.lower = Jagged.Zero(n, n);
 
-            // matrices
             for (i = 0; i < n; i++)
             {
-                upper[i] = new double[n];
-                lower[i] = new double[n];
-                upper[i][i] = 1;
+                this.upper[i][i] = 1;
             }
 
-            // do job
             for (j = 0; j < n; j++)
             {
                 for (i = j; i < n; i++)
                 {
                     alpha = 0;
-
                     for (k = 0; k < j; k++)
                     {
-                        alpha = alpha + lower[i][k] * upper[k][j];
+                        alpha = alpha + this.lower[i][k] * this.upper[k][j];
                     }
+                    this.lower[i][j] = a[i][j] - alpha;
+                }
 
-                    lower[i][j] = a[i][j] - alpha;
-                    beta = lower[j][j];
+                beta = lower[j][j];
+
+                for (i = j; i < n; i++)
+                {
+                    alpha = 0;
+                    for (k = 0; k < j; k++)
+                    {
+                        alpha = alpha + this.lower[j][k] * this.upper[k][i];
+                    }
 
                     if (beta != 0)
                     {
-                        upper[j][i] = (a[j][i] - alpha) / beta;
+                        this.upper[j][i] = (a[j][i] - alpha) / beta;
                     }
                 }
             }
-
-            return;
         }
         #endregion
     }

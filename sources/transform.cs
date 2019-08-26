@@ -1620,7 +1620,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < N; i++)
             {
-                A[i] = new Complex(B[i].Re, 0);
+                A[i] = new Complex(B[i].Real, 0);
             }
 
             return A;
@@ -1985,7 +1985,7 @@ namespace UMapx.Transform
             // Обратное преобразование в массив вещественных чисел:
             for (int i = 0; i < n; i++)
             {
-                B[i] = new Complex(a[i].Re, f[i].Im);
+                B[i] = new Complex(a[i].Real, f[i].Imag);
             }
 
             return B;
@@ -3101,14 +3101,14 @@ namespace UMapx.Transform
                         ce = data[even];
                         co = data[odd];
 
-                        tr = co.Re * t.Re - co.Im * t.Im;
-                        ti = co.Re * t.Im + co.Im * t.Re;
+                        tr = co.Real * t.Real - co.Imag * t.Imag;
+                        ti = co.Real * t.Imag + co.Imag * t.Real;
 
-                        data[even].Re += tr;
-                        data[even].Im += ti;
+                        data[even].Real += tr;
+                        data[even].Imag += ti;
 
-                        data[odd].Re = ce.Re - tr;
-                        data[odd].Im = ce.Im - ti;
+                        data[odd].Real = ce.Real - tr;
+                        data[odd].Imag = ce.Imag - ti;
                     }
                 }
             }
@@ -3146,14 +3146,14 @@ namespace UMapx.Transform
                         ce = data[even];
                         co = data[odd];
 
-                        tr = co.Re * t.Re - co.Im * t.Im;
-                        ti = co.Re * t.Im + co.Im * t.Re;
+                        tr = co.Real * t.Real - co.Imag * t.Imag;
+                        ti = co.Real * t.Imag + co.Imag * t.Real;
 
-                        data[even].Re += tr;
-                        data[even].Im += ti;
+                        data[even].Real += tr;
+                        data[even].Imag += ti;
 
-                        data[odd].Re = ce.Re - tr;
-                        data[odd].Im = ce.Im - ti;
+                        data[odd].Real = ce.Real - tr;
+                        data[odd].Imag = ce.Imag - ti;
                     }
                 }
             }
@@ -3375,7 +3375,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < length; i++)
             {
-                Hk[i] = B[i].Re + B[i].Im;
+                Hk[i] = B[i].Real + B[i].Imag;
             }
 
             return Hk;
@@ -3395,7 +3395,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < length; i++)
             {
-                Hk[i] = A[i].Re - A[i].Im;
+                Hk[i] = A[i].Real - A[i].Imag;
             }
 
             return Hk;
@@ -3418,7 +3418,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < width; j++)
                 {
-                    Hk[i, j] = B[i, j].Re + B[i, j].Im;
+                    Hk[i, j] = B[i, j].Real + B[i, j].Imag;
                 }
             }
 
@@ -3442,7 +3442,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < width; j++)
                 {
-                    Hk[i, j] = A[i, j].Re - A[i, j].Im;
+                    Hk[i, j] = A[i, j].Real - A[i, j].Imag;
                 }
             }
 
@@ -3461,7 +3461,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < length; i++)
             {
-                Hk[i] = B[i].Re + B[i].Im;
+                Hk[i] = B[i].Real + B[i].Imag;
             }
 
             return Hk;
@@ -3479,7 +3479,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < length; i++)
             {
-                Hk[i] = A[i].Re - A[i].Im;
+                Hk[i] = A[i].Real - A[i].Imag;
             }
 
             return Hk;
@@ -3500,7 +3500,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < width; j++)
                 {
-                    Hk[i, j] = B[i, j].Re + B[i, j].Im;
+                    Hk[i, j] = B[i, j].Real + B[i, j].Imag;
                 }
             }
 
@@ -3522,7 +3522,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < width; j++)
                 {
-                    Hk[i, j] = A[i, j].Re - A[i, j].Im;
+                    Hk[i, j] = A[i, j].Real - A[i, j].Imag;
                 }
             }
 
@@ -3632,7 +3632,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < N; i++)
             {
-                A[i] = new Complex(B[i].Re, 0);
+                A[i] = new Complex(B[i].Real, 0);
             }
 
             return A;
@@ -4031,7 +4031,7 @@ namespace UMapx.Transform
 
             for (k = 0; k < N; k++)
             {
-                C[k] = 2.0 * (B[k] * Maths.Exp(c * k)).Re;
+                C[k] = 2.0 * (B[k] * Maths.Exp(c * k)).Real;
             }
             C[0] = C[0] / Math.Sqrt(2); // DCT-I форма
 
@@ -4062,7 +4062,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < N; i++)
             {
-                C[i] = A[i].Re * 2;
+                C[i] = A[i].Real * 2;
             }
 
             return C;
@@ -4352,7 +4352,7 @@ namespace UMapx.Transform
 
             for (k = 0; k < N; k++)
             {
-                C[k] = 2.0 * (B[k] * Maths.Exp(c * k)).Im;
+                C[k] = 2.0 * (B[k] * Maths.Exp(c * k)).Imag;
             }
 
             // Перестановка:
@@ -4384,7 +4384,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < N; i++)
             {
-                C[i] = -A[i].Im * 2.0;
+                C[i] = -A[i].Imag * 2.0;
             }
 
             // Перестановка:
@@ -5983,8 +5983,8 @@ namespace UMapx.Transform
                     // Значения за пределами фильтра.
                     if ((d > max) || (d < min))
                     {
-                        data[i, j].Re = 0;
-                        data[i, j].Im = 0;
+                        data[i, j].Real = 0;
+                        data[i, j].Imag = 0;
                     }
                 }
             }
@@ -6012,8 +6012,8 @@ namespace UMapx.Transform
                 // Значения за пределами фильтра.
                 if ((d > max) || (d < min))
                 {
-                    data[i].Re = 0;
-                    data[i].Im = 0;
+                    data[i].Real = 0;
+                    data[i].Imag = 0;
                 }
             }
 
@@ -6147,13 +6147,13 @@ namespace UMapx.Transform
             {
                 for (i = 0; i < length; i++)
                 {
-                    if (data[i].Re > threshold)
+                    if (data[i].Real > threshold)
                     {
-                        data[i].Re = 0;
+                        data[i].Real = 0;
                     }
-                    if (data[i].Im > threshold)
+                    if (data[i].Imag > threshold)
                     {
-                        data[i].Im = 0;
+                        data[i].Imag = 0;
                     }
                 }
             }
@@ -6161,13 +6161,13 @@ namespace UMapx.Transform
             {
                 for (i = 0; i < length; i++)
                 {
-                    if (data[i].Re < threshold)
+                    if (data[i].Real < threshold)
                     {
-                        data[i].Re = 0;
+                        data[i].Real = 0;
                     }
-                    if (data[i].Im < threshold)
+                    if (data[i].Imag < threshold)
                     {
-                        data[i].Im = 0;
+                        data[i].Imag = 0;
                     }
                 }
             }
@@ -6254,11 +6254,11 @@ namespace UMapx.Transform
                 {
                     for (j = 0; j < width; j++)
                     {
-                        if (data[i, j].Re > threshold)
+                        if (data[i, j].Real > threshold)
                         {
                             data[i, j] = 0;
                         }
-                        if (data[i, j].Im > threshold)
+                        if (data[i, j].Imag > threshold)
                         {
                             data[i, j] = 0;
                         }
@@ -6271,11 +6271,11 @@ namespace UMapx.Transform
                 {
                     for (j = 0; j < width; j++)
                     {
-                        if (data[i, j].Re < threshold)
+                        if (data[i, j].Real < threshold)
                         {
                             data[i, j] = 0;
                         }
-                        if (data[i, j].Im < threshold)
+                        if (data[i, j].Imag < threshold)
                         {
                             data[i, j] = 0;
                         }

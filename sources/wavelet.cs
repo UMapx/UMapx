@@ -4976,7 +4976,7 @@ this.levels), DataLen2);
         /// <returns>Значение функции</returns>
         public double WaveletReal(double x)
         {
-            return Wavelet(x).Re;
+            return Wavelet(x).Real;
         }
         #endregion
     }

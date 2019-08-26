@@ -279,23 +279,30 @@ namespace UMapx.Core
         /// <returns>Матрица</returns>
         public static double[,] Invert(this double[,] m)
         {
-            if (!Matrice.IsSquare(m))
-            {
-                throw new Exception("Матрица должна быть квадратной");
-            }
-
             // Построение матрицы дополнения:
             int n = m.GetLength(0);
+
+            if (n != m.GetLength(1))
+                throw new Exception("Матрица должна быть квадратной");
+
+            double[][] z = m.ToJagged();
             int n2 = n * 2;
-            double[][] a = Jagged.Zero(n, n2);
+            double[] w;
+            double[] v;
+            double[][] a = new double[n][];
             int i, j;
 
             for (i = 0; i < n; i++)
             {
+                w = z[i];
+                v = new double[n2];
+
                 for (j = 0; j < n; j++)
                 {
-                    a[i][j] = m[i, j];
+                    v[j] = w[j];
                 }
+
+                a[i] = v;
                 a[i][i + n] = 1;
             }
 
@@ -306,43 +313,49 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
+                v = a[i];
+
                 // first decomposition:
                 for (k = i + 1; k < n; k++)
                 {
-                    if (Math.Abs(a[k][i]) > epsilon)
+                    w = a[k];
+
+                    if (Math.Abs(w[i]) > epsilon)
                     {
                         for (c = 0; c < n2; c++)
                         {
-                            temp = a[i][c];
-                            a[i][c] = a[k][c];
-                            a[k][c] = temp;
+                            temp = v[c];
+                            v[c] = w[c];
+                            w[c] = temp;
                         }
                         break;
                     }
                 }
                 {
                     // second decomposition:
-                    div1 = a[i][i];
+                    div1 = v[i];
 
                     for (j = 0; j < n2; j++)
                     {
                         if (j != i)
                         {
-                            a[i][j] /= div1;
+                            v[j] /= div1;
                         }
                     }
-                    a[i][i] = 1;
-                    div2 = a[i][i];
+
+                    v[i] = 1;
+                    div2 = v[i];
 
                     for (t = 0; t < n; t++)
                     {
                         if (t != i)
                         {
-                            factor = a[t][i] / div2;
+                            w = a[t];
+                            factor = w[i] / div2;
 
                             for (l = 0; l < n2; l++)
                             {
-                                a[t][l] -= factor * a[i][l];
+                                w[l] -= factor * v[l];
                             }
                         }
                     }
@@ -350,17 +363,22 @@ namespace UMapx.Core
             }
 
             // building invert matrix:
-            double[,] inv = new double[n, n];
+            double[][] inv = new double[n][];
 
             for (i = 0; i < n; i++)
             {
+                w = new double[n];
+                v = a[i];
+
                 for (j = 0; j < n; j++)
                 {
-                    inv[i, j] = a[i][j + n];
+                    w[j] = v[j + n];
                 }
+
+                inv[i] = w;
             }
 
-            return inv;
+            return inv.FromJagged();
         }
         /// <summary>
         /// Реализует операцию траспонирования матрицы.
@@ -390,23 +408,30 @@ namespace UMapx.Core
         /// <returns>Матрица</returns>
         public static Complex[,] Invert(this Complex[,] m)
         {
-            if (!Matrice.IsSquare(m))
-            {
-                throw new Exception("Матрица должна быть квадратной");
-            }
-
             // Построение матрицы дополнения:
             int n = m.GetLength(0);
+
+            if (n != m.GetLength(1))
+                throw new Exception("Матрица должна быть квадратной");
+
+            Complex[][] z = m.ToJagged();
             int n2 = n * 2;
-            Complex[][] a = Jagged.ToJagged(new Complex[n, n2]);
+            Complex[] w;
+            Complex[] v;
+            Complex[][] a = new Complex[n][];
             int i, j;
 
             for (i = 0; i < n; i++)
             {
+                w = z[i];
+                v = new Complex[n2];
+
                 for (j = 0; j < n; j++)
                 {
-                    a[i][j] = m[i, j];
+                    v[j] = w[j];
                 }
+
+                a[i] = v;
                 a[i][i + n] = 1;
             }
 
@@ -417,43 +442,49 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
+                v = a[i];
+
                 // first decomposition:
                 for (k = i + 1; k < n; k++)
                 {
-                    if (Maths.Abs(a[k][i]) > epsilon)
+                    w = a[k];
+
+                    if (Maths.Abs(w[i]) > epsilon)
                     {
                         for (c = 0; c < n2; c++)
                         {
-                            temp = a[i][c];
-                            a[i][c] = a[k][c];
-                            a[k][c] = temp;
+                            temp = v[c];
+                            v[c] = w[c];
+                            w[c] = temp;
                         }
                         break;
                     }
                 }
                 {
                     // second decomposition:
-                    div1 = a[i][i];
+                    div1 = v[i];
 
                     for (j = 0; j < n2; j++)
                     {
                         if (j != i)
                         {
-                            a[i][j] /= div1;
+                            v[j] /= div1;
                         }
                     }
-                    a[i][i] = 1;
-                    div2 = a[i][i];
+
+                    v[i] = 1;
+                    div2 = v[i];
 
                     for (t = 0; t < n; t++)
                     {
                         if (t != i)
                         {
-                            factor = a[t][i] / div2;
+                            w = a[t];
+                            factor = w[i] / div2;
 
                             for (l = 0; l < n2; l++)
                             {
-                                a[t][l] -= factor * a[i][l];
+                                w[l] -= factor * v[l];
                             }
                         }
                     }
@@ -461,17 +492,22 @@ namespace UMapx.Core
             }
 
             // building invert matrix:
-            Complex[,] inv = new Complex[n, n];
+            Complex[][] inv = new Complex[n][];
 
             for (i = 0; i < n; i++)
             {
+                w = new Complex[n];
+                v = a[i];
+
                 for (j = 0; j < n; j++)
                 {
-                    inv[i, j] = a[i][j + n];
+                    w[j] = v[j + n];
                 }
+
+                inv[i] = w;
             }
 
-            return inv;
+            return inv.FromJagged();
         }
         /// <summary>
         /// Реализует операцию траспонирования матрицы.
@@ -2351,7 +2387,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = m[i, j].Re;
+                    H[i, j] = m[i, j].Real;
                 }
             }
 
@@ -2362,7 +2398,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <returns>Матрица</returns>
-        public static double[,] Imaginary(this Complex[,] m)
+        public static double[,] Imag(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             double[,] H = new double[r0, r1];
@@ -2372,7 +2408,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = m[i, j].Im;
+                    H[i, j] = m[i, j].Imag;
                 }
             }
 
@@ -4623,7 +4659,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                H[i] = v[i].Re;
+                H[i] = v[i].Real;
             }
             return H;
         }
@@ -4632,14 +4668,14 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Одномерный массив</param>
         /// <returns>Одномерный массив</returns>
-        public static double[] Imaginary(this Complex[] v)
+        public static double[] Imag(this Complex[] v)
         {
             int length = v.Length;
             double[] H = new double[length];
 
             for (int i = 0; i < length; i++)
             {
-                H[i] = v[i].Im;
+                H[i] = v[i].Imag;
             }
             return H;
         }
@@ -9190,6 +9226,324 @@ namespace UMapx.Core
             }
         }
         #endregion
+
+        // Solvers
+
+        #region Gauss-Jordan elimination
+        /// <summary>
+        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// </summary>
+        /// <param name="A">Расширенная матрица</param>
+        /// <returns>Вектор-столбец</returns>
+        public static double[] Solve(this double[,] A)
+        {
+            // параметры
+            int height = A.GetLength(0);
+            int width = A.GetLength(1);
+
+            if (height + 1 != width)
+                throw new Exception("Исходная матрица имеет неверные размеры");
+
+            // инициализация
+            double[][] B = Jagged.ToJagged(A);
+            int i, j, k, l;
+            double[] x = new double[height];
+            double[] v, w;
+            double temp;
+
+            // Этап 1
+            for (i = 0; i < height; i++)
+            {
+                // Делаем главную диагональ единицами
+                w = B[i];
+                temp = w[i];
+
+                for (j = 0; j < width; j++)
+                {
+                    w[j] /= temp;
+                }
+
+                // Обнуляем числа под единицами главной диогoнали
+                for (k = i + 1; k < height; k++)
+                {
+                    v = B[k];
+                    temp = v[i];
+
+                    for (j = i; j < width; j++)
+                    {
+                        v[j] = v[j] - w[j] * temp;
+                    }
+
+                    B[k] = v;
+                }
+
+                B[i] = w;
+            }
+
+            // Этап 2
+            for (i = 0; i < height; i++)
+            {
+                l = (height - 1) - i;
+                w = B[l];
+
+                for (k = 0; k < l; k++)
+                {
+                    v = B[k];
+                    temp = v[l];
+
+                    for (j = l; j < width; j++)
+                    {
+                        v[j] = v[j] - w[j] * temp;
+                    }
+
+                    B[k] = v;
+                }
+
+                B[l] = w;
+            }
+
+            for (k = 0; k < height; k++)
+            {
+                x[k] = B[k][height];
+            }
+            return x;
+        }
+        /// <summary>
+        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// </summary>
+        /// <param name="A">Квадратная матрица</param>
+        /// <param name="b">Вектор-столбец</param>
+        /// <returns>Вектор-столбец</returns>
+        public static double[] Solve(this double[,] A, double[] b)
+        {
+            // параметры
+            int height = A.GetLength(0);
+            int width = A.GetLength(1);
+
+            if (height != width)
+                throw new Exception("Матрица должна быть квадратной");
+            if (height != b.Length)
+                throw new Exception("Длина вектора должна быть равна высоте матрицы");
+
+            // инициализация
+            double[][] B = Jagged.ToJagged(A);
+            int i, j, k, l;
+            double[] x = (double[])b.Clone();
+            double[] v, w;
+            double temp;
+
+            // Этап 1
+            for (i = 0; i < height; i++)
+            {
+                // Делаем главную диагональ единицами
+                w = B[i];
+                temp = w[i];
+
+                for (j = 0; j < width; j++)
+                {
+                    w[j] /= temp;
+                }
+                x[i] /= temp;
+
+                // Обнуляем числа под единицами главной диогoнали
+                for (k = i + 1; k < height; k++)
+                {
+                    v = B[k];
+                    temp = v[i];
+
+                    for (j = i; j < width; j++)
+                    {
+                        v[j] = v[j] - w[j] * temp;
+                    }
+
+                    x[k] -= x[i] * temp;
+                    B[k] = v;
+                }
+            }
+
+            // Этап 2
+            for (i = 0; i < height; i++)
+            {
+                l = (height - 1) - i;
+                w = B[l];
+
+                for (k = 0; k < l; k++)
+                {
+                    v = B[k];
+                    temp = v[l];
+
+                    for (j = l; j < width; j++)
+                    {
+                        v[j] = v[j] - w[j] * temp;
+                    }
+
+                    x[k] -= x[l] * temp;
+                    B[k] = v;
+                }
+
+                B[l] = w;
+            }
+
+            return x;
+        }
+
+        /// <summary>
+        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// </summary>
+        /// <param name="A">Расширенная матрица</param>
+        /// <returns>Вектор-столбец</returns>
+        public static Complex[] Solve(this Complex[,] A)
+        {
+            // параметры
+            int height = A.GetLength(0);
+            int width = A.GetLength(1);
+
+            if (height + 1 != width)
+                throw new Exception("Исходная матрица имеет неверные размеры");
+
+            // инициализация
+            Complex[][] B = Jagged.ToJagged(A);
+            int i, j, k, l;
+            Complex[] x = new Complex[height];
+            Complex[] v, w;
+            Complex temp;
+
+            // Этап 1
+            for (i = 0; i < height; i++)
+            {
+                // Делаем главную диагональ единицами
+                w = B[i];
+                temp = w[i];
+
+                for (j = 0; j < width; j++)
+                {
+                    w[j] /= temp;
+                }
+
+                // Обнуляем числа под единицами главной диогoнали
+                for (k = i + 1; k < height; k++)
+                {
+                    v = B[k];
+                    temp = v[i];
+
+                    for (j = i; j < width; j++)
+                    {
+                        v[j] = v[j] - w[j] * temp;
+                    }
+
+                    B[k] = v;
+                }
+
+                B[i] = w;
+            }
+
+            // Этап 2
+            for (i = 0; i < height; i++)
+            {
+                l = (height - 1) - i;
+                w = B[l];
+
+                for (k = 0; k < l; k++)
+                {
+                    v = B[k];
+                    temp = v[l];
+
+                    for (j = l; j < width; j++)
+                    {
+                        v[j] = v[j] - w[j] * temp;
+                    }
+
+                    B[k] = v;
+                }
+
+                B[l] = w;
+            }
+
+            for (k = 0; k < height; k++)
+            {
+                x[k] = B[k][height];
+            }
+            return x;
+        }
+        /// <summary>
+        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// </summary>
+        /// <param name="A">Квадратная матрица</param>
+        /// <param name="b">Вектор-столбец</param>
+        /// <returns>Вектор-столбец</returns>
+        public static Complex[] Solve(this Complex[,] A, Complex[] b)
+        {
+            // параметры
+            int height = A.GetLength(0);
+            int width = A.GetLength(1);
+
+            if (height != width)
+                throw new Exception("Матрица должна быть квадратной");
+            if (height != b.Length)
+                throw new Exception("Длина вектора должна быть равна высоте матрицы");
+
+            // инициализация
+            Complex[][] B = Jagged.ToJagged(A);
+            int i, j, k, l;
+            Complex[] x = (Complex[])b.Clone();
+            Complex[] v, w;
+            Complex temp;
+
+            // Этап 1
+            for (i = 0; i < height; i++)
+            {
+                // Делаем главную диагональ единицами
+                w = B[i];
+                temp = w[i];
+
+                for (j = 0; j < width; j++)
+                {
+                    w[j] /= temp;
+                }
+                x[i] /= temp;
+
+                // Обнуляем числа под единицами главной диогoнали
+                for (k = i + 1; k < height; k++)
+                {
+                    v = B[k];
+                    temp = v[i];
+
+                    for (j = i; j < width; j++)
+                    {
+                        v[j] = v[j] - w[j] * temp;
+                    }
+
+                    x[k] -= x[i] * temp;
+                    B[k] = v;
+                }
+            }
+
+            // Этап 2
+            for (i = 0; i < height; i++)
+            {
+                l = (height - 1) - i;
+                w = B[l];
+
+                for (k = 0; k < l; k++)
+                {
+                    v = B[k];
+                    temp = v[l];
+
+                    for (j = l; j < width; j++)
+                    {
+                        v[j] = v[j] - w[j] * temp;
+                    }
+
+                    x[k] -= x[l] * temp;
+                    B[k] = v;
+                }
+
+                B[l] = w;
+            }
+
+            return x;
+        }
+        #endregion
     }
     #endregion
 
@@ -11025,7 +11379,7 @@ namespace UMapx.Core
                 for (j = 0; j < mr; j++)
                 {
                     mij = m[i, j];
-                    dummy[j] = new Complex32((float)mij.Re, (float)mij.Im);
+                    dummy[j] = new Complex32((float)mij.Real, (float)mij.Imag);
                 }
                 jagged[i] = dummy;
             }
@@ -11103,7 +11457,7 @@ namespace UMapx.Core
             for (i = 0; i < n; i++)
             {
                 mi = m[i];
-                jagged[i] = new Complex32((float)mi.Re, (float)mi.Im);
+                jagged[i] = new Complex32((float)mi.Real, (float)mi.Imag);
             }
             return jagged;
         }
@@ -11823,6 +12177,277 @@ namespace UMapx.Core
                 result = zero;
                 return false;
             }
+        }
+        #endregion
+
+        #region Matrix conversions
+        /// <summary>
+        /// Инвертирует все элементы матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Negate(this double[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            double[][] H = new double[r0][];
+            double[] v;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = -v[j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Инвертирует все элементы матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[][] Negate(this Complex[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            Complex[][] H = new Complex[r0][];
+            Complex[] v;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = -v[j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает комплексную матрицу.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static Complex[][] ToComplex(this double[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            Complex[][] H = new Complex[r0][];
+            double[] v;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = v[j];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 255].
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[][] ToByte(this double[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            double[][] H = new double[r0][];
+            double[] v;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = Maths.Byte(v[j]);
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 1].
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[][] ToDouble(this double[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            double[][] H = new double[r0][];
+            double[] v; double c;
+            double min = double.MaxValue, max = double.MinValue;
+            int i, j;
+
+            // find min/max
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    c = v[j];
+                    if (c > max) max = c;
+                    if (c < min) min = c;
+                }
+            }
+
+            // scaling to [0, 1] range:
+            double range = max - min;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = (v[j] - min) / range;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Берет модуль для всех элементов матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Abs(this double[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            double[][] H = new double[r0][];
+            double[] v;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = Math.Abs(v[j]);
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Берет модуль для всех элементов матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Abs(this Complex[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            double[][] H = new double[r0][];
+            Complex[] v;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = v[j].Abs;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Берет угол для всех элементов матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Angle(this Complex[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            double[][] H = new double[r0][];
+            Complex[] v;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = v[j].Angle;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Берет действительную часть для всех элементов матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Real(this Complex[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            double[][] H = new double[r0][];
+            Complex[] v;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = v[j].Real;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Берет мнимую часть для всех элементов матрицы.
+        /// </summary>
+        /// <param name="m">Матрица</param>
+        /// <returns>Матрица</returns>
+        public static double[][] Imag(this Complex[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            double[][] H = new double[r0][];
+            Complex[] v;
+            int i, j;
+
+            for (i = 0; i < r0; i++)
+            {
+                v = m[i];
+                r1 = v.GetLength(0);
+
+                for (j = 0; j < r1; j++)
+                {
+                    H[i][j] = v[j].Imag;
+                }
+            }
+
+            return H;
         }
         #endregion
     }

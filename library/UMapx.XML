@@ -4455,6 +4455,14 @@
             <param name="m">Порядок многочлена</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Hermite(System.Double,System.Int32)">
+            <summary>
+            Возвращает значение многочлена Эрмита.
+            </summary>
+            <param name="x">Носитель</param>
+            <param name="m">Порядок многочлена</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Gegenbauer(System.Double,System.Double,System.Int32)">
             <summary>
             Возвращает значение многочлена Гегенбауэра.
@@ -7006,12 +7014,12 @@
             Определяет комплексное число.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Complex.Re">
+        <member name="F:UMapx.Core.Complex.Real">
             <summary>
             Действительная часть комплексного числа.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Complex.Im">
+        <member name="F:UMapx.Core.Complex.Imag">
             <summary>
             Мнимая часть комплексного числа.
             </summary>
@@ -14417,751 +14425,739 @@
             Северо-Восточное направление вектора градиента.
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.TrapezoidIntegralSolution">
+        <member name="T:UMapx.Core.Nonlinear">
             <summary>
-            Определяет класс, реализующий численное интегрирование методом трапеций.
+            Определяет класс, реализующий решение нелинейного уравнения.
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.INumericSolution">
+        <member name="M:UMapx.Core.Nonlinear.#ctor(System.Double,UMapx.Core.Nonlinear.Method)">
             <summary>
-            Определяет общий интерфейс численных методов.
+            Инициализирует класс, реализующий решение нелинейного уравнения.
             </summary>
+            <param name="eps">Погрещность [0, 1]</param>
+            <param name="method">Метод решения нелинейного уравнения</param>
         </member>
-        <member name="M:UMapx.Analysis.INumericSolution.Compute(System.Double,System.Double)">
-            <summary>
-            Возвращает значение функции.
-            </summary>
-            <param name="a">Нижний предел</param>
-            <param name="b">Верхний предел</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="F:UMapx.Analysis.TrapezoidIntegralSolution.f">
-            <summary>
-            Делегат непрерывной функции.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.TrapezoidIntegralSolution.eps">
-            <summary>
-            Погрешность вычислений.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.TrapezoidIntegralSolution.#ctor(UMapx.Core.IDouble,System.Double)">
-            <summary>
-            Инициализирует класс, реализующий численное интегрирование методом трапеций.
-            </summary>
-            <param name="function">Делегат непрерывной фукнции</param>
-            <param name="eps">Погрешность [0, 1]</param>
-        </member>
-        <member name="M:UMapx.Analysis.TrapezoidIntegralSolution.Compute(System.Double,System.Double)">
-            <summary>
-            Возвращает значение интеграла функции.
-            </summary>
-            <param name="a">Нижний предел</param>
-            <param name="b">Верхний предел</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="P:UMapx.Analysis.TrapezoidIntegralSolution.Function">
-            <summary>
-            Получает или задает делегат непрерывной функции.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.TrapezoidIntegralSolution.Eps">
-            <summary>
-            Получает или задает значение погрешности [0, 1].
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.SimpsonIntegralSolution">
-            <summary>
-            Определяет класс, реализующий численное интегрирование методом Симпсона.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.SimpsonIntegralSolution.f">
-            <summary>
-            Делегат непрерывной функции.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.SimpsonIntegralSolution.eps">
-            <summary>
-            Погрешность вычислений.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.SimpsonIntegralSolution.#ctor(UMapx.Core.IDouble,System.Double)">
-            <summary>
-            Инициализирует класс, реализующий численное интегрирование методом Симпсона.
-            </summary>
-            <param name="function">Делегат непрерывной функции</param>
-            <param name="eps">Погрешность [0, 1]</param>
-        </member>
-        <member name="M:UMapx.Analysis.SimpsonIntegralSolution.Compute(System.Double,System.Double)">
-            <summary>
-            Возвращает значение интеграла функции.
-            </summary>
-            <param name="a">Нижний предел</param>
-            <param name="b">Верхний предел</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="P:UMapx.Analysis.SimpsonIntegralSolution.Function">
-            <summary>
-            Получает или задает делегат непрерывной функции.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.SimpsonIntegralSolution.Eps">
-            <summary>
-            Получает или задает значение погрешности [0, 1].
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.RungeKuttaSolution">
-            <summary>
-            Определяет класс, реализующий решение дифференциального уравнения методом Рунге-Кутты.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.RungeKuttaSolution.f">
-            <summary>
-            Делегат непрерывной функции.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.RungeKuttaSolution.eps">
-            <summary>
-            Погрешность вычислений.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.RungeKuttaSolution.y0">
-            <summary>
-            Значение функции.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.RungeKuttaSolution.#ctor(UMapx.Core.IDoubleMesh,System.Double,System.Double)">
-            <summary>
-            Инициализирует класс, реализующий решение дифференциального уравнения методом Рунге-Кутты.
-            </summary>
-            <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
-            <param name="y0">Значение функции</param>
-            <param name="eps">Погрешность [0, 1]</param>
-        </member>
-        <member name="M:UMapx.Analysis.RungeKuttaSolution.Compute(System.Double,System.Double)">
-            <summary>
-            Возвращает значение дифференциального уравнения.
-            </summary>
-            <param name="a">Нижний предел</param>
-            <param name="b">Верхний предел</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="M:UMapx.Analysis.RungeKuttaSolution.rk4(System.Double,System.Double,System.Double,System.Int32)">
-            <summary>
-            Реализует алгоритм Рунге-Кутты для решения дифференциального уравнения.
-            </summary>
-            <param name="x0">Аргумент</param>
-            <param name="y0">Функция</param>
-            <param name="h">Шаг</param>
-            <param name="m">Порядок</param>
-            <returns>Значение функции</returns>
-        </member>
-        <member name="P:UMapx.Analysis.RungeKuttaSolution.Function">
-            <summary>
-            Получает или задает делегат непрерывной функции, зависящей от двух переменных.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.RungeKuttaSolution.Y0">
-            <summary>
-            Получает или задает значение функции.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.RungeKuttaSolution.Eps">
-            <summary>
-            Получает или задает значение погрешности [0, 1].
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.BisectionNonlinearSolution">
-            <summary>
-            Определяет класс, реализующий решение нелинейного уравнения методом половинного деления.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.BisectionNonlinearSolution.f">
-            <summary>
-            Делегат непрерывной функции.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.BisectionNonlinearSolution.eps">
-            <summary>
-            Погрешность вычислений.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.BisectionNonlinearSolution.#ctor(UMapx.Core.IDouble,System.Double)">
-            <summary>
-            Инициализирует класс, реализующий решение нелинейного уравнения методом половинного деления.
-            </summary>
-            <param name="function">Делегат непрерывной функции</param>
-            <param name="eps">Погрешность [0, 1]</param>
-        </member>
-        <member name="M:UMapx.Analysis.BisectionNonlinearSolution.Compute(System.Double,System.Double)">
+        <member name="M:UMapx.Core.Nonlinear.Compute(UMapx.Core.IDouble,System.Double,System.Double)">
             <summary>
             Получает значения корня нелинейного уравнения.
             </summary>
+            <param name="function">Делегат непрерывной функции</param>
             <param name="a">Начало отрезка</param>
             <param name="b">Конец отрезка</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="P:UMapx.Analysis.BisectionNonlinearSolution.Function">
+        <member name="M:UMapx.Core.Nonlinear.bisec(UMapx.Core.IDouble,System.Double,System.Double,System.Double)">
             <summary>
-            Получает или задает делегат непрерывной функции.
+            
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="eps"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Nonlinear.secan(UMapx.Core.IDouble,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="eps"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Nonlinear.falpo(UMapx.Core.IDouble,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="eps"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Nonlinear.chord(UMapx.Core.IDouble,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="eps"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UMapx.Core.Nonlinear.MethodType">
+            <summary>
+            Получает или задает метод решения нелинейного уравнения.
             </summary>
         </member>
-        <member name="P:UMapx.Analysis.BisectionNonlinearSolution.Eps">
+        <member name="P:UMapx.Core.Nonlinear.Eps">
             <summary>
             Получает или задает значение погрешности [0, 1].
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.ChordNonlinearSolution">
+        <member name="T:UMapx.Core.Nonlinear.Method">
             <summary>
-            Определяет класс, реализующий решение нелинейного уравнения методом хорд.
+            Метод решения нелинейного уравнения.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.ChordNonlinearSolution.f">
+        <member name="F:UMapx.Core.Nonlinear.Method.Bisection">
             <summary>
-            Делегат непрерывной функции.
+            Метод половинного деления.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.ChordNonlinearSolution.eps">
+        <member name="F:UMapx.Core.Nonlinear.Method.Chord">
+            <summary>
+            Метод Ньютона.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Nonlinear.Method.Secant">
+            <summary>
+            Метод секансов.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Nonlinear.Method.FalsePosition">
+            <summary>
+            Метод ложной точки.
+            </summary>
+        </member>
+        <member name="T:UMapx.Core.Interpolation">
+            <summary>
+            Определяет класс, реализующий интерполяцию.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Interpolation.#ctor(UMapx.Core.Interpolation.Method)">
+            <summary>
+            Инициализирует класс, реализующий интерполяцию.
+            </summary>
+            <param name="method">Метод интерполяции</param>
+        </member>
+        <member name="M:UMapx.Core.Interpolation.Compute(System.Double[],System.Double[],System.Double[0:,0:],System.Double,System.Double)">
+            <summary>
+            Возвращает значение функции в точке.
+            <remarks>
+            В данном случае используется только биленейная интерполяция.
+            </remarks>
+            </summary>
+            <param name="x">Массив значений первого аргумента</param>
+            <param name="y">Массив значений второго аргумента</param>
+            <param name="z">Матрица значений функции</param>
+            <param name="xl">Значение первого аргумента для вычисления</param>
+            <param name="yl">Значение второго аргумента для вычисления</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Interpolation.Compute(System.Double[],System.Double[],System.Double)">
+            <summary>
+            Возвращает значение функции в точке.
+            </summary>
+            <param name="x">Массив значений аргумента</param>
+            <param name="y">Массив значений функции</param>
+            <param name="xl">Значение аргумента для вычисления</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.Interpolation.linear(System.Double[],System.Double[],System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="xl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Interpolation.bilinear(System.Double[],System.Double[],System.Double[0:,0:],System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="xval"></param>
+            <param name="yval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Interpolation.lagra(System.Double[],System.Double[],System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="xval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Interpolation.newto(System.Double[],System.Double[],System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="xval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Interpolation.baryc(System.Double[],System.Double[],System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="xval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UMapx.Core.Interpolation.MethodType">
+            <summary>
+            Получает или задает метод интерполяции.
+            </summary>
+        </member>
+        <member name="T:UMapx.Core.Interpolation.Method">
+            <summary>
+            Метод интерполяции.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Interpolation.Method.Linear">
+            <summary>
+            Линейный метод.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Interpolation.Method.Lagrange">
+            <summary>
+            Метод Лагранжа.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Interpolation.Method.Newton">
+            <summary>
+            Метод Ньютона.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Interpolation.Method.Barycentric">
+            <summary>
+            Барицентрический метод.
+            </summary>
+        </member>
+        <member name="T:UMapx.Core.Optimization">
+            <summary>
+            Определяет класс, реализующий поиск экстремума.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Optimization.eps">
             <summary>
             Погрешность вычислений.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.ChordNonlinearSolution.#ctor(UMapx.Core.IDouble,System.Double)">
+        <member name="M:UMapx.Core.Optimization.#ctor(System.Double)">
             <summary>
-            Инициализирует класс, реализующий решение нелинейного уравнения методом хорд.
+            Инициализирует класс, реализующий поиск экстремума.
             </summary>
-            <param name="function">Делегат непрерывной функции</param>
             <param name="eps">Погрешность [0, 1]</param>
         </member>
-        <member name="M:UMapx.Analysis.ChordNonlinearSolution.Compute(System.Double,System.Double)">
+        <member name="M:UMapx.Core.Optimization.Compute(UMapx.Core.IDouble,System.Double,System.Double,System.Boolean)">
             <summary>
-            Возвращает значения корня нелинейного уравнения.
+            Возвращает соответствующий минимум функции на отреке.
             </summary>
+            <param name="function">Делегат непрерывной функции</param>
             <param name="a">Начало отрезка</param>
             <param name="b">Конец отрезка</param>
+            <param name="max">Искать максимум или минимум</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="P:UMapx.Analysis.ChordNonlinearSolution.Function">
+        <member name="M:UMapx.Core.Optimization.goldenMin(UMapx.Core.IDouble,System.Double,System.Double,System.Double)">
             <summary>
-            Получает или задает делегат непрерывной функции.
+            
             </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="eps"></param>
+            <returns></returns>
         </member>
-        <member name="P:UMapx.Analysis.ChordNonlinearSolution.Eps">
+        <member name="M:UMapx.Core.Optimization.goldenMax(UMapx.Core.IDouble,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="eps"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UMapx.Core.Optimization.Eps">
             <summary>
             Получает или задает значение погрешности [0, 1].
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.LagrangeInterpolation">
+        <member name="T:UMapx.Core.Integration">
             <summary>
-            Определяет класс для интерполяции методом Лагранжа.
+            Определяет класс, реализующий численное интегрирование.
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.IInterpolation">
+        <member name="M:UMapx.Core.Integration.#ctor(UMapx.Core.Integration.Method)">
             <summary>
-            Определяет общий интерфейс методов интерполяции.
+            Инициализирует класс, реализующий численное интегрирование.
             </summary>
+            <param name="method">Метод интегрирования</param>
         </member>
-        <member name="M:UMapx.Analysis.IInterpolation.Compute(System.Double)">
+        <member name="M:UMapx.Core.Integration.Compute(UMapx.Core.IDouble,System.Double,System.Double,System.Int32)">
             <summary>
-            Возвращает значение функции в точке.
-            </summary>
-            <param name="xl">Значение аргумента для вычисления</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="P:UMapx.Analysis.IInterpolation.X">
-            <summary>
-            Получает или задает массив значений аргумента.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.IInterpolation.Y">
-            <summary>
-            Получает или задает массив значений функции.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.IInterpolation.Iterations">
-            <summary>
-            Получает или задает количество итераций.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.LagrangeInterpolation.x">
-            <summary>
-            Массив значений аргумента.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.LagrangeInterpolation.y">
-            <summary>
-            Массив значений функции.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.LagrangeInterpolation.iterations">
-            <summary>
-            Количество итераций.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.LagrangeInterpolation.#ctor(System.Double[],System.Double[],System.Int32)">
-            <summary>
-            Инициализирует класс для интерполяции методом Лагранжа.
-            </summary>
-            <param name="x">Массив значений аргумента</param>
-            <param name="y">Массив значений функции</param>
-            <param name="iterations">Количество итераций</param>
-        </member>
-        <member name="M:UMapx.Analysis.LagrangeInterpolation.Compute(System.Double)">
-            <summary>
-            Возвращает значение функции в точке.
-            </summary>
-            <param name="xl">Значение аргумента для вычисления</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="P:UMapx.Analysis.LagrangeInterpolation.X">
-            <summary>
-            Получает или задает массив значений аргумента.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.LagrangeInterpolation.Y">
-            <summary>
-            Получает или задает массив значений функции.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.LagrangeInterpolation.Iterations">
-            <summary>
-            Получает или задает количество итераций.
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.NewtonInterpolation">
-            <summary>
-            Определяет класс для интерполяции по первой формуле Ньютона.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.NewtonInterpolation.x">
-            <summary>
-            Массив значений аргумента.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.NewtonInterpolation.y">
-            <summary>
-            Массив значений функции.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.NewtonInterpolation.iterations">
-            <summary>
-            Количество итераций.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.NewtonInterpolation.#ctor(System.Double[],System.Double[],System.Int32)">
-            <summary>
-            Инициализирует класс для интерполяции по первой формуле Ньютона.
-            </summary>
-            <param name="x">Массив значений аргумента</param>
-            <param name="y">Массив значений функции</param>
-            <param name="iterations">Количество итераций</param>
-        </member>
-        <member name="M:UMapx.Analysis.NewtonInterpolation.Compute(System.Double)">
-            <summary>
-            Возвращает значение функции в точке.
-            </summary>
-            <param name="xl">Значение аргумента для вычисления</param>
-            <returns>Число двойной точности с плавающей запятой</returns>
-        </member>
-        <member name="P:UMapx.Analysis.NewtonInterpolation.X">
-            <summary>
-            Получает или задает массив значений аргумента.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.NewtonInterpolation.Y">
-            <summary>
-            Получает или задает массив значений функции.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.NewtonInterpolation.Iterations">
-            <summary>
-            Получает или задает количество итераций.
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.GoldenOptimization">
-            <summary>
-            Определяет класс, реализующий поиск минимума методом золотого сечения.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.GoldenOptimization.f">
-            <summary>
-            Делегат непрерывной функции.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.GoldenOptimization.eps">
-            <summary>
-            Погрешность вычислений.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.GoldenOptimization.#ctor(UMapx.Core.IDouble,System.Double)">
-            <summary>
-            Инициализирует класс, реализующий поиск минимума методом золотого сечения.
+            Возвращает значение интеграла функции.
             </summary>
             <param name="function">Делегат непрерывной фукнции</param>
-            <param name="eps">Погрешность [0, 1]</param>
-        </member>
-        <member name="M:UMapx.Analysis.GoldenOptimization.Compute(System.Double,System.Double)">
-            <summary>
-            Возвращает соответствующий минимум функции на отреке.
-            </summary>
-            <param name="a">Начало отрезка</param>
-            <param name="b">Конец отрезка</param>
+            <param name="a">Нижний предел</param>
+            <param name="b">Верхний предел</param>
+            <param name="n">Количество разбиений</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="P:UMapx.Analysis.GoldenOptimization.Function">
+        <member name="M:UMapx.Core.Integration.Compute(System.Double[],System.Double,System.Double,System.Int32)">
             <summary>
-            Получает или задает делегат непрерывной функции.
+            Возвращает значение интеграла функции.
             </summary>
+            <param name="y">Вектор значений фукнции</param>
+            <param name="a">Нижний предел</param>
+            <param name="b">Верхний предел</param>
+            <param name="n">Количество разбиений</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="P:UMapx.Analysis.GoldenOptimization.Eps">
+        <member name="M:UMapx.Core.Integration.rect(UMapx.Core.IDouble,System.Double,System.Double,System.Int32)">
             <summary>
-            Получает или задает значение погрешности [0, 1].
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.DichotomyOptimization">
-            <summary>
-            Определяет класс, реализующий поиск минимума методом дихотомии.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.DichotomyOptimization.f">
-            <summary>
-            Делегат непрерывной функции.
-            </summary>
-        </member>
-        <member name="F:UMapx.Analysis.DichotomyOptimization.eps">
-            <summary>
-            Погрешность вычислений.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.DichotomyOptimization.#ctor(UMapx.Core.IDouble,System.Double)">
-            <summary>
-            Инициализирует класс, реализующий поиск минимума методом дихотомии.
-            </summary>
-            <param name="function">Делегат непрерывной функции</param>
-            <param name="eps">Погрешность [0, 1]</param>
-        </member>
-        <member name="M:UMapx.Analysis.DichotomyOptimization.Compute(System.Double,System.Double)">
-            <summary>
-            Возвращает соответствующий минимум функции на отреке.
-            </summary>
-            <param name="c">Нижний предел</param>
-            <param name="d">Верхний предел</param>
-            <returns>Пара дробных чисел X, Y</returns>
-        </member>
-        <member name="P:UMapx.Analysis.DichotomyOptimization.Function">
-            <summary>
-            Получает или задает делегат непрерывной функции.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.DichotomyOptimization.Eps">
-            <summary>
-            Получает или задает значение погрешности [0, 1].
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.GaussJordanElimination">
-            <summary>
-            Определяет класс, реализующий решение квадратных систем линейных алгебраических уравнений методом Гаусса-Йордана (метод полного исключения неизвестных).
-            <remarks>
-            Метод является модификацией метода Гаусса. Назван в честь Карла Фридриха Гаусса и Вильгельма Йордана. 
-            Этот метод также может быть использован для нахождения ранга матрицы, вычисления определителя матрицы и вычисления обратного к обратимой квадратной матрице. 
             
-            Более подробную информацию можно найти на сайте:
-            https://en.wikipedia.org/wiki/Gauss%E2%80%93Jordan_elimination
-            </remarks>
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Integration.rect(System.Double[],System.Double,System.Double,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="y"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Integration.midp(UMapx.Core.IDouble,System.Double,System.Double,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Integration.midp(System.Double[],System.Double,System.Double,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="y"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Integration.trap(UMapx.Core.IDouble,System.Double,System.Double,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Integration.trap(System.Double[],System.Double,System.Double,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="y"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Integration.simp(UMapx.Core.IDouble,System.Double,System.Double,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Integration.simp(System.Double[],System.Double,System.Double,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="y"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Integration.romb(UMapx.Core.IDouble,System.Double,System.Double,System.Int32,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="iterations"></param>
+            <param name="eps"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UMapx.Core.Integration.MethodType">
+            <summary>
+            Получает или задает метод интегрирования.
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.IMatrixSolution">
+        <member name="T:UMapx.Core.Integration.Method">
             <summary>
-            Определяет общий интерфейс решений системы линейных алгебраических уравнений.
+            Метод интегрирования.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.IMatrixSolution.Compute(System.Double[0:,0:])">
+        <member name="F:UMapx.Core.Integration.Method.Rectangle">
             <summary>
-            Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
-            </summary>
-            <param name="A">Расширенная матрица</param>
-            <returns>Вектор-столбец</returns>
-        </member>
-        <member name="M:UMapx.Analysis.IMatrixSolution.Compute(System.Double[0:,0:],System.Double[])">
-            <summary>
-            Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
-            </summary>
-            <param name="A">Квадратная матрица</param>
-            <param name="b">Вектор-столбец</param>
-            <returns>Вектор-столбец</returns>
-        </member>
-        <member name="M:UMapx.Analysis.GaussJordanElimination.#ctor">
-            <summary>
-            Инициализирует класс, реализующий решение квадратных систем линейных алгебраических уравнений методом Гаусса-Йордана.
+            Метод прямоугольников.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.GaussJordanElimination.Compute(System.Double[0:,0:])">
+        <member name="F:UMapx.Core.Integration.Method.Midpoint">
             <summary>
-            Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
-            <remarks>
-            По завершению процедуры исходная расширенная матрица A будет представлять собой верхнеугольную матрицу.
-            </remarks>
-            </summary>
-            <param name="A">Расширенная матрица</param>
-            <returns>Вектор-столбец</returns>
-        </member>
-        <member name="M:UMapx.Analysis.GaussJordanElimination.Compute(System.Double[0:,0:],System.Double[])">
-            <summary>
-            Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
-            <remarks>
-            По завершению процедуры исходная расширенная матрица A будет представлять собой верхнеугольную матрицу.
-            </remarks>
-            </summary>
-            <param name="A">Квадратная матрица</param>
-            <param name="b">Вектор-столбец</param>
-            <returns>Вектор-столбец</returns>
-        </member>
-        <member name="T:UMapx.Analysis.EigenRootsSolution">
-            <summary>
-            Определяет класс решения уравнений с использованием спектрального разложения матрицы.
-            <remarks>
-            Более подробную информацию можно найти на сайте:
-            https://www.mathworks.com/help/matlab/ref/roots.html
-            </remarks>
+            Метод средней точки.
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.IRootsSolution">
+        <member name="F:UMapx.Core.Integration.Method.Trapezoidal">
             <summary>
-            Определяет общий интерфейс решения уравнений.
+            Метод трапеций.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.IRootsSolution.Compute(System.Double[])">
+        <member name="F:UMapx.Core.Integration.Method.Simpson">
             <summary>
-            Возвращает вектор-столбец, соотвествующий численному полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
-            </summary>
-            <param name="polynomial">Полином</param>
-            <returns>Вектор-столбец</returns>
-        </member>
-        <member name="M:UMapx.Analysis.IRootsSolution.Compute(UMapx.Core.Complex[])">
-            <summary>
-            Возвращает вектор-столбец коэффициентов полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
-            </summary>
-            <param name="roots">Корни полинома</param>
-            <returns>Вектор-столбец</returns>
-        </member>
-        <member name="F:UMapx.Analysis.EigenRootsSolution.eig">
-            <summary>
-            Спектральное разложение матрицы.
+            Метод Симпсона.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.EigenRootsSolution.eps">
+        <member name="F:UMapx.Core.Integration.Method.Romberg">
             <summary>
-            Погрешность вычислений.
+            Метод Ромберга.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.EigenRootsSolution.#ctor(System.Double)">
+        <member name="T:UMapx.Core.Diferentiation">
             <summary>
-            Инициализирует класс решения уравнений с использованием спектрального разложения матрицы.
-            </summary>
-            <param name="eps">Погрешность [0, 1]</param>
-        </member>
-        <member name="M:UMapx.Analysis.EigenRootsSolution.Compute(System.Double[])">
-            <summary>
-            Возвращает вектор-столбец, соотвествующий численному решению полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
-            </summary>
-            <param name="polynomial">Полином</param>
-            <returns>Вектор-столбец</returns>
-        </member>
-        <member name="M:UMapx.Analysis.EigenRootsSolution.Compute(UMapx.Core.Complex[])">
-            <summary>
-            Возвращает вектор-столбец коэффициентов полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
-            </summary>
-            <param name="roots">Корни полинома</param>
-            <returns>Вектор-столбец</returns>
-        </member>
-        <member name="P:UMapx.Analysis.EigenRootsSolution.Eps">
-            <summary>
-            Получает или задает погрешность [0, 1].
+            Определяет класс, реализующий решение дифференциального уравнения.
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.PolynomialApproximation">
+        <member name="M:UMapx.Core.Diferentiation.#ctor(UMapx.Core.Diferentiation.Method)">
             <summary>
-            Определяет класс полиномиальной аппроксимации.
-            <remarks>
-            Более подробную информацию можно найти на сайте:
-            http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
-            </remarks>
+            Инициализирует класс, реализующий решение дифференциального уравнения.
+            </summary>
+            <param name="method">Метод дифференцирования</param>
+        </member>
+        <member name="M:UMapx.Core.Diferentiation.Compute(UMapx.Core.IDoubleMesh,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Возвращает значение дифференциального уравнения.
+            </summary>
+            <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
+            <param name="x0">Начало отрезка</param>
+            <param name="x1">Конец отрезка</param>
+            <param name="h">Шаг</param>
+            <param name="y0">Значение</param>
+            <returns>Значение функции</returns>
+        </member>
+        <member name="M:UMapx.Core.Diferentiation.euler(UMapx.Core.IDoubleMesh,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="x0"></param>
+            <param name="x"></param>
+            <param name="h"></param>
+            <param name="y0"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Diferentiation.rungeKutta2(UMapx.Core.IDoubleMesh,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="x0"></param>
+            <param name="x"></param>
+            <param name="h"></param>
+            <param name="y0"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Diferentiation.rungeKutta4(UMapx.Core.IDoubleMesh,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="x0"></param>
+            <param name="x"></param>
+            <param name="h"></param>
+            <param name="y0"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Diferentiation.rungeKuttaFehlberg(UMapx.Core.IDoubleMesh,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="f"></param>
+            <param name="x0"></param>
+            <param name="x"></param>
+            <param name="h"></param>
+            <param name="y0"></param>
+            <param name="tolerance"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UMapx.Core.Diferentiation.MethodType">
+            <summary>
+            Получает или задает метод дифференцирования.
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.IApproximation">
+        <member name="T:UMapx.Core.Diferentiation.Method">
             <summary>
-            Определяет общий интерфейс методов аппроксимации.
+            Метод дифферецирования.
             </summary>
         </member>
-        <member name="P:UMapx.Analysis.IApproximation.Error">
+        <member name="F:UMapx.Core.Diferentiation.Method.Euler">
             <summary>
-            Возвращает значение погрешности аппроксимации.
+            Метод Эйлера.
             </summary>
         </member>
-        <member name="P:UMapx.Analysis.IApproximation.Coefficients">
+        <member name="F:UMapx.Core.Diferentiation.Method.RungeKutta2">
             <summary>
-            Возвращает коэффициенты полинома.
+            Метод Рунге-Кутты второго порядка.
             </summary>
         </member>
-        <member name="P:UMapx.Analysis.IApproximation.Approximation">
+        <member name="F:UMapx.Core.Diferentiation.Method.RungeKutta4">
             <summary>
-            Возвращает аппроксимацию функции.
+            Метод Рунге-Кутты четвертого порядка.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.PolynomialApproximation.#ctor(System.Double[],System.Double[],System.Int32)">
+        <member name="F:UMapx.Core.Diferentiation.Method.Fehlberg">
             <summary>
-            Инициализирует класс полиномиальной аппроксимации.
-            </summary>
-            <param name="x">Массив значений аргумента</param>
-            <param name="y">Массив значений функции</param>
-            <param name="power">Степень полинома</param>
-        </member>
-        <member name="M:UMapx.Analysis.PolynomialApproximation.ToString">
-            <summary>
-            Возвращает уравнение аппроксимации.
-            </summary>
-            <returns>Текст как последовательность знаков юникода</returns>
-        </member>
-        <member name="P:UMapx.Analysis.PolynomialApproximation.Error">
-            <summary>
-            Возвращает значение погрешности аппроксимации.
+            Метод Фелберга.
             </summary>
         </member>
-        <member name="P:UMapx.Analysis.PolynomialApproximation.Coefficients">
+        <member name="T:UMapx.Core.Approximation">
             <summary>
-            Возвращает коэффициенты полинома.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.PolynomialApproximation.Approximation">
-            <summary>
-            Возвращает аппроксимацию функции.
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.LogarithmicApproximation">
-            <summary>
-            Определяет класс логарифмической аппроксимации.
-            <remarks>
-            Более подробную информацию можно найти на сайте:
-            http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
-            </remarks>
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.LogarithmicApproximation.#ctor(System.Double[],System.Double[],System.Int32)">
-            <summary>
-            Инициализирует класс логарифмической аппроксимации.
-            </summary>
-            <param name="x">Массив значений аргумента</param>
-            <param name="y">Массив значений функции</param>
-            <param name="power">Степень полинома</param>
-        </member>
-        <member name="M:UMapx.Analysis.LogarithmicApproximation.ToString">
-            <summary>
-            Возвращает уравнение аппроксимации.
-            </summary>
-            <returns>Текст как последовательность знаков юникода</returns>
-        </member>
-        <member name="P:UMapx.Analysis.LogarithmicApproximation.Error">
-            <summary>
-            Возвращает значение погрешности аппроксимации.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.LogarithmicApproximation.Coefficients">
-            <summary>
-            Возвращает коэффициенты полинома.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.LogarithmicApproximation.Approximation">
-            <summary>
-            Возвращает аппроксимацию функции.
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.ExponentialApproximation">
-            <summary>
-            Определяет класс экспоненциальной аппроксимации.
-            <remarks>
-            Более подробную информацию можно найти на сайте:
-            http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
-            </remarks>
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.ExponentialApproximation.#ctor(System.Double[],System.Double[],System.Int32)">
-            <summary>
-            Инициализирует класс экспоненциальной аппроксимации.
-            </summary>
-            <param name="x">Массив значений аргумента</param>
-            <param name="y">Массив значений функции</param>
-            <param name="power">Степень полинома</param>
-        </member>
-        <member name="M:UMapx.Analysis.ExponentialApproximation.ToString">
-            <summary>
-            Возвращает уравнение аппроксимации.
-            </summary>
-            <returns>Текст как последовательность знаков юникода</returns>
-        </member>
-        <member name="P:UMapx.Analysis.ExponentialApproximation.Error">
-            <summary>
-            Возвращает значение погрешности аппроксимации.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.ExponentialApproximation.Coefficients">
-            <summary>
-            Возвращает коэффициенты полинома.
-            </summary>
-        </member>
-        <member name="P:UMapx.Analysis.ExponentialApproximation.Approximation">
-            <summary>
-            Возвращает аппроксимацию функции.
-            </summary>
-        </member>
-        <member name="T:UMapx.Analysis.PowerApproximation">
-            <summary>
-            Определяет класс степенной аппроксимации.
+            Определяет класс аппроксимации методом наименьших квадратов.
             <remarks>
             Более подробную информацию можно найти на сайте:
             http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.PowerApproximation.#ctor(System.Double[],System.Double[],System.Int32)">
+        <member name="M:UMapx.Core.Approximation.#ctor(System.Int32,UMapx.Core.Approximation.Method)">
             <summary>
-            Инициализирует класс степенной аппроксимации.
+            Инициализирует класс аппроксимации методом наименьших квадратов.
+            </summary>
+            <param name="power">Степень полинома</param>
+            <param name="method">Метод аппроксимации</param>
+        </member>
+        <member name="M:UMapx.Core.Approximation.Compute(System.Double[],System.Double[])">
+            <summary>
+            Возвращает значение аппроксимации.
             </summary>
             <param name="x">Массив значений аргумента</param>
             <param name="y">Массив значений функции</param>
-            <param name="power">Степень полинома</param>
         </member>
-        <member name="M:UMapx.Analysis.PowerApproximation.ToString">
+        <member name="M:UMapx.Core.Approximation.Compute(System.Double[],System.Double[],System.Double[]@)">
             <summary>
-            Возвращает уравнение аппроксимации.
+            Возвращает значение аппроксимации.
             </summary>
-            <returns>Текст как последовательность знаков юникода</returns>
+            <param name="x">Массив значений аргумента</param>
+            <param name="y">Массив значений функции</param>
+            <param name="cf">Коэффициенты аппроксимации</param>
         </member>
-        <member name="P:UMapx.Analysis.PowerApproximation.Error">
+        <member name="M:UMapx.Core.Approximation.Compute(System.Double[],System.Double[],System.Double[]@,System.Double@)">
             <summary>
-            Возвращает значение погрешности аппроксимации.
+            Возвращает значение аппроксимации.
             </summary>
+            <param name="x">Массив значений аргумента</param>
+            <param name="y">Массив значений функции</param>
+            <param name="cf">Коэффициенты аппроксимации</param>
+            <param name="error">Погрешность аппроксимации</param>
         </member>
-        <member name="P:UMapx.Analysis.PowerApproximation.Coefficients">
+        <member name="M:UMapx.Core.Approximation.Compute(System.Double[],System.Double[],System.Double[]@,System.Double@,System.String@)">
             <summary>
-            Возвращает коэффициенты полинома.
+            Возвращает значение аппроксимации.
             </summary>
+            <param name="x">Массив значений аргумента</param>
+            <param name="y">Массив значений функции</param>
+            <param name="cf">Коэффициенты аппроксимации</param>
+            <param name="error">Погрешность аппроксимации</param>
+            <param name="equation">Уравнение аппроксимации</param>
         </member>
-        <member name="P:UMapx.Analysis.PowerApproximation.Approximation">
+        <member name="M:UMapx.Core.Approximation.Compute(UMapx.Core.Complex[],UMapx.Core.Complex[])">
             <summary>
-            Возвращает аппроксимацию функции.
+            Возвращает значение аппроксимации.
+            </summary>
+            <param name="x">Массив значений аргумента</param>
+            <param name="y">Массив значений функции</param>
+        </member>
+        <member name="M:UMapx.Core.Approximation.Compute(UMapx.Core.Complex[],UMapx.Core.Complex[],UMapx.Core.Complex[]@)">
+            <summary>
+            Возвращает значение аппроксимации.
+            </summary>
+            <param name="x">Массив значений аргумента</param>
+            <param name="y">Массив значений функции</param>
+            <param name="cf">Коэффициенты аппроксимации</param>
+        </member>
+        <member name="M:UMapx.Core.Approximation.Compute(UMapx.Core.Complex[],UMapx.Core.Complex[],UMapx.Core.Complex[]@,UMapx.Core.Complex@)">
+            <summary>
+            Возвращает значение аппроксимации.
+            </summary>
+            <param name="x">Массив значений аргумента</param>
+            <param name="y">Массив значений функции</param>
+            <param name="cf">Коэффициенты аппроксимации</param>
+            <param name="error">Погрешность аппроксимации</param>
+        </member>
+        <member name="M:UMapx.Core.Approximation.Compute(UMapx.Core.Complex[],UMapx.Core.Complex[],UMapx.Core.Complex[]@,UMapx.Core.Complex@,System.String@)">
+            <summary>
+            Возвращает значение аппроксимации.
+            </summary>
+            <param name="x">Массив значений аргумента</param>
+            <param name="y">Массив значений функции</param>
+            <param name="cf">Коэффициенты аппроксимации</param>
+            <param name="error">Погрешность аппроксимации</param>
+            <param name="equation">Уравнение аппроксимации</param>
+        </member>
+        <member name="M:UMapx.Core.Approximation.poly(System.Double[],System.Double[],System.Int32,System.Double[]@,System.Double@,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="power"></param>
+            <param name="cf"></param>
+            <param name="error"></param>
+            <param name="equation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Approximation.poly(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Int32,UMapx.Core.Complex[]@,UMapx.Core.Complex@,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="power"></param>
+            <param name="cf"></param>
+            <param name="error"></param>
+            <param name="equation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Approximation.logc(System.Double[],System.Double[],System.Int32,System.Double[]@,System.Double@,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="power"></param>
+            <param name="cf"></param>
+            <param name="error"></param>
+            <param name="equation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Approximation.logc(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Int32,UMapx.Core.Complex[]@,UMapx.Core.Complex@,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="power"></param>
+            <param name="cf"></param>
+            <param name="error"></param>
+            <param name="equation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Approximation.expn(System.Double[],System.Double[],System.Int32,System.Double[]@,System.Double@,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="power"></param>
+            <param name="cf"></param>
+            <param name="error"></param>
+            <param name="equation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Approximation.expn(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Int32,UMapx.Core.Complex[]@,UMapx.Core.Complex@,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="power"></param>
+            <param name="cf"></param>
+            <param name="error"></param>
+            <param name="equation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Approximation.powr(System.Double[],System.Double[],System.Int32,System.Double[]@,System.Double@,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="power"></param>
+            <param name="cf"></param>
+            <param name="error"></param>
+            <param name="equation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Approximation.powr(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Int32,UMapx.Core.Complex[]@,UMapx.Core.Complex@,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="power"></param>
+            <param name="cf"></param>
+            <param name="error"></param>
+            <param name="equation"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UMapx.Core.Approximation.Power">
+            <summary>
+            Получает или задает степень полинома.
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.LeastSquares">
+        <member name="P:UMapx.Core.Approximation.MethodType">
+            <summary>
+            Получает или задает метод аппроксимации.
+            </summary>
+        </member>
+        <member name="T:UMapx.Core.Approximation.Method">
+            <summary>
+            Метод аппроксимации.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Approximation.Method.Polynomial">
+            <summary>
+            Полиномиальная аппроксимация.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Approximation.Method.Logarithmic">
+            <summary>
+            Логарифимическая аппроксимация.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Approximation.Method.Exponential">
+            <summary>
+            Экспоненциальная аппроксимация.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Approximation.Method.Power">
+            <summary>
+            Степенная аппроксимация.
+            </summary>
+        </member>
+        <member name="T:UMapx.Core.LeastSquares">
             <summary>
             Определяет класс, реализующий метод наименьших квадратов.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.LeastSquares.gje">
-            <summary>
-            Метод Гаусса-Йордана.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.LeastSquares.Polynomial(System.Double,System.Double[])">
+        <member name="M:UMapx.Core.LeastSquares.Polynomial(System.Double,System.Double[])">
             <summary>
             Возвращает значение полиномиала.
             </summary>
@@ -15169,7 +15165,7 @@
             <param name="c">Коэффициенты аппроксимации</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Analysis.LeastSquares.Polynomial(System.Double[],System.Double[])">
+        <member name="M:UMapx.Core.LeastSquares.Polynomial(System.Double[],System.Double[])">
             <summary>
             Возвращает массив значений полиномиала.
             </summary>
@@ -15177,7 +15173,7 @@
             <param name="c">Коэффициенты аппроксимации</param>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Analysis.LeastSquares.Coefficients(System.Double[],System.Double[],System.Int32)">
+        <member name="M:UMapx.Core.LeastSquares.Coefficients(System.Double[],System.Double[],System.Int32)">
             <summary>
             Возвращает коэффициенты аппроксимации.
             </summary>
@@ -15185,7 +15181,7 @@
             <param name="y">Массив значений функции</param>
             <param name="iterations">Количество итераций</param>
         </member>
-        <member name="M:UMapx.Analysis.LeastSquares.SummaryPow(System.Double[],System.Double)">
+        <member name="M:UMapx.Core.LeastSquares.SummaryPow(System.Double[],System.Double)">
             <summary>
             Возвращает значение выражения: s += v(i) ^ pow.
             </summary>
@@ -15193,7 +15189,7 @@
             <param name="pow">Степень</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Analysis.LeastSquares.SummaryPow(System.Double[],System.Double[],System.Double,System.Double)">
+        <member name="M:UMapx.Core.LeastSquares.SummaryPow(System.Double[],System.Double[],System.Double,System.Double)">
             <summary>
             Возвращает значение выражения: s += {x(i) ^ powx} * {y(i) ^ powy}.
             </summary>
@@ -15203,7 +15199,7 @@
             <param name="powy">Степень</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Analysis.LeastSquares.Error(System.Double[],System.Double[])">
+        <member name="M:UMapx.Core.LeastSquares.Error(System.Double[],System.Double[])">
             <summary>
             Возвращает погрешность аппроксимации функции.
             </summary>
@@ -15211,20 +15207,129 @@
             <param name="b">Функция</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Analysis.LeastSquares.Equation(System.Double[])">
+        <member name="M:UMapx.Core.LeastSquares.Equation(System.Double[])">
             <summary>
             Возвращает уравнение полинома, представленного в виде строки.
             </summary>
             <param name="p">Коэффициенты полинома</param>
             <returns>Текст как последовательность знаков Юникода</returns>
         </member>
-        <member name="M:UMapx.Analysis.LeastSquares.Equation(System.Double[],System.String)">
+        <member name="M:UMapx.Core.LeastSquares.Equation(System.Double[],System.String)">
             <summary>
             Возвращает уравнение полинома, представленного в виде строки.
             </summary>
             <param name="p">Коэффициенты полинома</param>
             <param name="function">Функция</param>
             <returns>Текст как последовательность знаков Юникода</returns>
+        </member>
+        <member name="M:UMapx.Core.LeastSquares.Polynomial(UMapx.Core.Complex,UMapx.Core.Complex[])">
+            <summary>
+            Возвращает значение полиномиала.
+            </summary>
+            <param name="x">Аргумент</param>
+            <param name="c">Коэффициенты аппроксимации</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.LeastSquares.Polynomial(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает массив значений полиномиала.
+            </summary>
+            <param name="x">Массив значений аргумента</param>
+            <param name="c">Коэффициенты аппроксимации</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Core.LeastSquares.Coefficients(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Int32)">
+            <summary>
+            Возвращает коэффициенты аппроксимации.
+            </summary>
+            <param name="x">Массив значений аргмента</param>
+            <param name="y">Массив значений функции</param>
+            <param name="iterations">Количество итераций</param>
+        </member>
+        <member name="M:UMapx.Core.LeastSquares.SummaryPow(UMapx.Core.Complex[],System.Double)">
+            <summary>
+            Возвращает значение выражения: s += v(i) ^ pow.
+            </summary>
+            <param name="v">Одномерный массив</param>
+            <param name="pow">Степень</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.LeastSquares.SummaryPow(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Double,System.Double)">
+            <summary>
+            Возвращает значение выражения: s += {x(i) ^ powx} * {y(i) ^ powy}.
+            </summary>
+            <param name="x">Одномерный массив</param>
+            <param name="y">Одномерный массив</param>
+            <param name="powx">Степень</param>
+            <param name="powy">Степень</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.LeastSquares.Error(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает погрешность аппроксимации функции.
+            </summary>
+            <param name="a">Аппроксимация</param>
+            <param name="b">Функция</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Core.LeastSquares.Equation(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает уравнение полинома, представленного в виде строки.
+            </summary>
+            <param name="p">Коэффициенты полинома</param>
+            <returns>Текст как последовательность знаков Юникода</returns>
+        </member>
+        <member name="M:UMapx.Core.LeastSquares.Equation(UMapx.Core.Complex[],System.String)">
+            <summary>
+            Возвращает уравнение полинома, представленного в виде строки.
+            </summary>
+            <param name="p">Коэффициенты полинома</param>
+            <param name="function">Функция</param>
+            <returns>Текст как последовательность знаков Юникода</returns>
+        </member>
+        <member name="T:UMapx.Core.Roots">
+            <summary>
+            Определяет класс решения уравнений с использованием спектрального разложения матрицы.
+            <remarks>
+            Более подробную информацию можно найти на сайте:
+            https://www.mathworks.com/help/matlab/ref/roots.html
+            </remarks>
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Roots.eig">
+            <summary>
+            Спектральное разложение матрицы.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Roots.eps">
+            <summary>
+            Погрешность вычислений.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Roots.#ctor(System.Double)">
+            <summary>
+            Инициализирует класс решения уравнений с использованием спектрального разложения матрицы.
+            </summary>
+            <param name="eps">Погрешность [0, 1]</param>
+        </member>
+        <member name="M:UMapx.Core.Roots.Compute(System.Double[])">
+            <summary>
+            Возвращает вектор-столбец, соотвествующий численному решению полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
+            </summary>
+            <param name="polynomial">Полином</param>
+            <returns>Вектор-столбец</returns>
+        </member>
+        <member name="M:UMapx.Core.Roots.Compute(UMapx.Core.Complex[])">
+            <summary>
+            Возвращает вектор-столбец коэффициентов полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
+            </summary>
+            <param name="roots">Корни полинома</param>
+            <returns>Вектор-столбец</returns>
+        </member>
+        <member name="P:UMapx.Core.Roots.Eps">
+            <summary>
+            Получает или задает погрешность [0, 1].
+            </summary>
         </member>
         <member name="T:UMapx.Distribution.Gaussian">
             <summary>
@@ -24564,7 +24669,7 @@
             <param name="m">Матрица</param>
             <returns>Матрица</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Imaginary(UMapx.Core.Complex[0:,0:])">
+        <member name="M:UMapx.Core.Matrice.Imag(UMapx.Core.Complex[0:,0:])">
             <summary>
             Берет мнимую часть для всех элементов матрицы.
             </summary>
@@ -25573,7 +25678,7 @@
             <param name="v">Одномерный массив</param>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Imaginary(UMapx.Core.Complex[])">
+        <member name="M:UMapx.Core.Matrice.Imag(UMapx.Core.Complex[])">
             <summary>
             Возвращает мнимую часть элементов комплексного вектора.
             </summary>
@@ -26986,6 +27091,36 @@
             <param name="result">Матрица вещественных чисел</param>
             <returns>Логическое значение</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Solve(System.Double[0:,0:])">
+            <summary>
+            Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+            </summary>
+            <param name="A">Расширенная матрица</param>
+            <returns>Вектор-столбец</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Solve(System.Double[0:,0:],System.Double[])">
+            <summary>
+            Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+            </summary>
+            <param name="A">Квадратная матрица</param>
+            <param name="b">Вектор-столбец</param>
+            <returns>Вектор-столбец</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Solve(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+            </summary>
+            <param name="A">Расширенная матрица</param>
+            <returns>Вектор-столбец</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Solve(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[])">
+            <summary>
+            Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+            </summary>
+            <param name="A">Квадратная матрица</param>
+            <param name="b">Вектор-столбец</param>
+            <returns>Вектор-столбец</returns>
+        </member>
         <member name="T:UMapx.Core.LinealgOptions">
             <summary>
             Определяет класс оптимизаций матричных операций.
@@ -27628,6 +27763,76 @@
             <param name="s">Исходная строка</param>
             <param name="result">Матрица комплексных чисел</param>
             <returns>Логическое значение</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Negate(System.Double[][])">
+            <summary>
+            Инвертирует все элементы матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Negate(UMapx.Core.Complex[][])">
+            <summary>
+            Инвертирует все элементы матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.ToComplex(System.Double[][])">
+            <summary>
+            Возвращает комплексную матрицу.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.ToByte(System.Double[][])">
+            <summary>
+            Возвращает матрицу, значения которой принадлежат интервалу [0, 255].
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.ToDouble(System.Double[][])">
+            <summary>
+            Возвращает матрицу, значения которой принадлежат интервалу [0, 1].
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Abs(System.Double[][])">
+            <summary>
+            Берет модуль для всех элементов матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Abs(UMapx.Core.Complex[][])">
+            <summary>
+            Берет модуль для всех элементов матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Angle(UMapx.Core.Complex[][])">
+            <summary>
+            Берет угол для всех элементов матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Real(UMapx.Core.Complex[][])">
+            <summary>
+            Берет действительную часть для всех элементов матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Core.Jagged.Imag(UMapx.Core.Complex[][])">
+            <summary>
+            Берет мнимую часть для всех элементов матрицы.
+            </summary>
+            <param name="m">Матрица</param>
+            <returns>Матрица</returns>
         </member>
         <member name="T:UMapx.Core.Direction">
             <summary>

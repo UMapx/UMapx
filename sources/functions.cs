@@ -2726,7 +2726,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Laguerre polynomials
+        #region Laguerre polynomial
         /// <summary>
         /// Возвращает значение многочлена Лагерра.
         /// </summary>
@@ -2769,6 +2769,26 @@ namespace UMapx.Core
             double ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
             double psi = m + 1;
             return ksi / psi;
+        }
+        #endregion
+
+        #region Hermite polynomial
+        /// <summary>
+        /// Возвращает значение многочлена Эрмита.
+        /// </summary>
+        /// <param name="x">Носитель</param>
+        /// <param name="m">Порядок многочлена</param>
+        /// <returns>Число двойной точности с плавающей запятой</returns>
+        public static double Hermite(double x, int m)
+        {
+            if (m == 0)
+                return 1;
+            if (m == 1)
+                return x;
+
+            // recursion formula for Hermite polynomials
+            double ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
+            return 2 * ksi;
         }
         #endregion
 

@@ -2059,8 +2059,8 @@ namespace UMapx.Window
                         j = Maths.Mod(n + M / 2 - l * M, N);            // сдвиг по частоте,
 
                         psi = new Complex(
-                            (g0[i] * exp).Re,                           // Комлпексный сигнальный базис,
-                            (Maths.I * g0[j] * exp).Re);                // < Ψ Re, Ψ Im >
+                            (g0[i] * exp).Real,                           // Комлпексный сигнальный базис,
+                            (Maths.I * g0[j] * exp).Real);                // < Ψ Re, Ψ Im >
 
                         G[n, u] = psi;
                     }
@@ -2265,7 +2265,7 @@ namespace UMapx.Window
                 {
                     sum += Z[j, i];
                 }
-                vort[i] = (sum / L2).Re;
+                vort[i] = (sum / L2).Real;
             }
 
             return vort;
@@ -2800,8 +2800,8 @@ namespace UMapx.Window
                     y = B1[l, k];
 
                     // Вычисление элементов вектора:
-                    output[i] = x.Re + Maths.I * y.Re;
-                    output[j] = x.Im + Maths.I * y.Im;
+                    output[i] = x.Real + Maths.I * y.Real;
+                    output[j] = x.Imag + Maths.I * y.Imag;
                 }
             }
 
@@ -2841,8 +2841,8 @@ namespace UMapx.Window
                     s = input[k + l * M];
 
                     // Вычисление элементов матриц:
-                    A1[l, k] = s.Re;
-                    B1[l, k] = s.Im;
+                    A1[l, k] = s.Real;
+                    B1[l, k] = s.Imag;
                 }
             }
 

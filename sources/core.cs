@@ -208,7 +208,7 @@ namespace UMapx.Core
         /// <returns>Логическое значение</returns>
         public static bool IsSingular(Complex a)
         {
-            if (IsSingular(a.Re) || IsSingular(a.Im))
+            if (IsSingular(a.Real) || IsSingular(a.Imag))
             {
                 return true;
             }
@@ -570,8 +570,8 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex Pow(double a, Complex b)
         {
-            double r = Math.Pow(a, b.Re);
-            return new Complex(r * Math.Cos(b.Im), r * Math.Sin(b.Im));
+            double r = Math.Pow(a, b.Real);
+            return new Complex(r * Math.Cos(b.Imag), r * Math.Sin(b.Imag));
         }
         /// <summary>
         /// Возвращает число, возведенное в степень.
@@ -629,7 +629,7 @@ namespace UMapx.Core
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public static Complex Round(Complex a, int dig)
         {
-            return new Complex(Math.Round(a.Re, dig), Math.Round(a.Im, dig));
+            return new Complex(Math.Round(a.Real, dig), Math.Round(a.Imag, dig));
         }
         /// <summary>
         /// Возвращает число с отброшенной дробной частью.
@@ -638,7 +638,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex Fix(Complex a)
         {
-            return new Complex(Fix(a.Re), Fix(a.Im));
+            return new Complex(Fix(a.Real), Fix(a.Imag));
         }
         #endregion
         #endregion
@@ -763,7 +763,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex Cos(Complex a)
         {
-            return new Complex(Math.Cos(a.Re) * Math.Cosh(a.Im), -(Math.Sin(a.Re) * Math.Sinh(a.Im)));
+            return new Complex(Math.Cos(a.Real) * Math.Cosh(a.Imag), -(Math.Sin(a.Real) * Math.Sinh(a.Imag)));
         }
         /// <summary>
         /// Возвращает синус угла.
@@ -772,7 +772,7 @@ namespace UMapx.Core
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public static Complex Sin(Complex a)
         {
-            return new Complex(Math.Sin(a.Re) * Math.Cosh(a.Im), Math.Cos(a.Re) * Math.Sinh(a.Im));
+            return new Complex(Math.Sin(a.Real) * Math.Cosh(a.Imag), Math.Cos(a.Real) * Math.Sinh(a.Imag));
         }
         /// <summary>
         /// Возвращает тангенс угла.
@@ -999,7 +999,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex Sh(Complex a)
         {
-            return new Complex(Math.Sinh(a.Re) * Math.Cos(a.Im), Math.Cosh(a.Re) * Math.Sin(a.Im));
+            return new Complex(Math.Sinh(a.Real) * Math.Cos(a.Imag), Math.Cosh(a.Real) * Math.Sin(a.Imag));
         }
         /// <summary>
         /// Возвращает гиперболический косинус угла.
@@ -1008,7 +1008,7 @@ namespace UMapx.Core
         /// <returns>Комплексное число</returns>
         public static Complex Ch(Complex a)
         {
-            return new Complex(Math.Cosh(a.Re) * Math.Cos(a.Im), Math.Sinh(a.Re) * Math.Sin(a.Im));
+            return new Complex(Math.Cosh(a.Real) * Math.Cos(a.Imag), Math.Sinh(a.Real) * Math.Sin(a.Imag));
         }
         /// <summary>
         /// Возвращает гиперболический тангенс угла.
