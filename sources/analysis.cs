@@ -365,7 +365,7 @@ namespace UMapx.Core
         /// <param name="y"></param>
         /// <param name="xval"></param>
         /// <returns></returns>
-        public static double lagra(double[] x, double[] y, double xval)
+        private static double lagra(double[] x, double[] y, double xval)
         {
             double yval = 0.0;
             double Products = y[0];
@@ -393,7 +393,7 @@ namespace UMapx.Core
         /// <param name="y"></param>
         /// <param name="xval"></param>
         /// <returns></returns>
-        public static double newto(double[] x, double[] y, double xval)
+        private static double newto(double[] x, double[] y, double xval)
         {
             double yval;
             int length = x.Length;
@@ -425,7 +425,7 @@ namespace UMapx.Core
         /// <param name="y"></param>
         /// <param name="xval"></param>
         /// <returns></returns>
-        public static double baryc(double[] x, double[] y, double xval)
+        private static double baryc(double[] x, double[] y, double xval)
         {
             double product;
             double deltaX;
