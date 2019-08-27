@@ -648,8 +648,10 @@ namespace UMapx.Core
         /// Выделяет целую часть матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
+        /// <param name="digits">Количество десятичных разрядов в возвращаемом значении</param>
+        /// <param name="mode">Значение, задающее правило округления</param>
         /// <returns>Матрица</returns>
-        public static double[,] Fix(this double[,] m)
+        public static double[,] Round(this double[,] m, int digits, MidpointRounding mode)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             double[,] H = new double[ml, mr];
@@ -659,7 +661,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < mr; j++)
                 {
-                    H[i, j] = Maths.Fix(m[i, j]);
+                    H[i, j] = Math.Round(m[i, j], digits, mode);
                 }
             }
 
@@ -770,21 +772,25 @@ namespace UMapx.Core
             return Matrice.Norm(m, 2);
         }
         /// <summary>
-        /// Выделяет целую часть двумерной матрицы.
+        /// Выделяет целую часть матрицы.
         /// </summary>
         /// <param name="m">Матрица</param>
+        /// <param name="digits">Количество десятичных разрядов в возвращаемом значении</param>
+        /// <param name="mode">Значение, задающее правило округления</param>
         /// <returns>Матрица</returns>
-        public static Complex[,] Fix(this Complex[,] m)
+        public static Complex[,] Round(this Complex[,] m, int digits, MidpointRounding mode)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             Complex[,] H = new Complex[ml, mr];
+            Complex c;
             int i, j;
 
             for (i = 0; i < ml; i++)
             {
                 for (j = 0; j < mr; j++)
                 {
-                    H[i, j] = Maths.Fix(m[i, j]);
+                    c = m[i, j];
+                    H[i, j] = new Complex(Math.Round(c.Real, digits, mode), Math.Round(c.Imag, digits, mode));
                 }
             }
 
@@ -3378,6 +3384,48 @@ namespace UMapx.Core
         public static double Norm(this Complex[] a)
         {
             return Norm(a, 2);
+        }
+        /// <summary>
+        /// Выделяет целую часть матрицы.
+        /// </summary>
+        /// <param name="m">Одномерный массив</param>
+        /// <param name="digits">Количество десятичных разрядов в возвращаемом значении</param>
+        /// <param name="mode">Значение, задающее правило округления</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Round(this double[] m, int digits, MidpointRounding mode)
+        {
+            int ml = m.GetLength(0);
+            double[] H = new double[ml];
+            int i;
+
+            for (i = 0; i < ml; i++)
+            {
+                H[i] = Math.Round(H[i], digits, mode);
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Выделяет целую часть матрицы.
+        /// </summary>
+        /// <param name="m">Одномерный массив</param>
+        /// <param name="digits">Количество десятичных разрядов в возвращаемом значении</param>
+        /// <param name="mode">Значение, задающее правило округления</param>
+        /// <returns>Одномерный массив</returns>
+        public static Complex[] Round(this Complex[] m, int digits, MidpointRounding mode)
+        {
+            int ml = m.GetLength(0);
+            Complex[] H = new Complex[ml];
+            Complex c;
+            int i;
+
+            for (i = 0; i < ml; i++)
+            {
+                c = m[i];
+                H[i] = new Complex(Math.Round(c.Real, digits, mode), Math.Round(c.Imag, digits, mode));
+            }
+
+            return H;
         }
         #endregion
 
@@ -8115,6 +8163,15 @@ namespace UMapx.Core
             }
 
             return v;
+        }
+        /// <summary>
+        /// Реализует построение вектора нулей.
+        /// </summary>
+        /// <param name="n">Размерность</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] Zero(int n)
+        {
+            return new double[n];
         }
         #endregion
 
