@@ -1116,7 +1116,7 @@ namespace UMapx.Core
         {
             // exception
             if (order > this.points)
-                throw new Exception("Порядок производной не может быть больше количества точек");
+                throw new Exception("Порядок производной не может быть больше количества точек интерполяции");
             if (order < 0)
                 throw new Exception("Порядок производной не может меньше 0");
 
@@ -1147,7 +1147,7 @@ namespace UMapx.Core
         {
             // exception
             if (order > this.points)
-                throw new Exception("Порядок производной не может быть больше количества точек");
+                throw new Exception("Порядок производной не может быть больше количества точек интерполяции");
             if (order < 0)
                 throw new Exception("Порядок производной не может меньше 0");
 
@@ -1178,7 +1178,7 @@ namespace UMapx.Core
         {
             // exception
             if (order > this.points)
-                throw new Exception("Порядок производной не может быть больше количества точек");
+                throw new Exception("Порядок производной не может быть больше количества точек интерполяции");
             if (order < 0)
                 throw new Exception("Порядок производной не может меньше 0");
 
@@ -1209,7 +1209,7 @@ namespace UMapx.Core
         {
             // exception
             if (order > this.points)
-                throw new Exception("Порядок производной не может быть больше количества точек");
+                throw new Exception("Порядок производной не может быть больше количества точек интерполяции");
             if (order < 0)
                 throw new Exception("Порядок производной не может меньше 0");
 
@@ -1359,7 +1359,172 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Private double voids
+        #region Recompute voids
+        /// <summary>
+        /// Возвращает значение дифференциального уравнения, вычисленное по методу Адамса-Башфорта.
+        /// </summary>
+        /// <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
+        /// <param name="x">Массив значений аргумент</param>
+        /// <param name="y0">Значение</param>
+        /// <param name="order">Порядок метода</param>
+        /// <returns>Массив значений функции</returns>
+        public double[] Compute(IDoubleMesh function, double[] x, double y0, int order = 2)
+        {
+            int n = x.Length - 1;
+
+            // if order more than 1
+            // Adams-Bashfort method
+            if (order > 1 && order < n)
+            {
+                int z = Math.Min(order, 5);
+                int i, k = z + 1;
+                double[] y = new double[n];
+                double[] r = new double[k];
+                double h, t;
+
+                // compute first points by order
+                for (i = 0; i < k; i++)
+                    r[i] = x[i];
+
+                // classic differential
+                r = this.Compute(function, r, y0);
+
+                for (i = 0; i < z; i++)
+                    y[i] = r[i];
+
+                // Adams-Bashforth method
+                // for order
+                if (z == 2)
+                {
+                    for (i = z; i < n; i++)
+                    {
+                        h = x[i + 1] - x[i];
+                        t = x[i];
+
+                        y[i] = y[i - 1] + h * (3 * function(t + h, y[i - 1]) - function(t, y[i - 2])) / 2;
+                    }
+                }
+                else if (z == 3)
+                {
+                    for (i = z; i < n; i++)
+                    {
+                        h = x[i + 1] - x[i];
+                        t = x[i];
+
+                        y[i] = y[i - 1] + h * (23 * function(t, y[i - 1]) - 16 * function(t - h, y[i - 2]) + 5 * function(t - 2 * h, y[i - 3])) / 12.0;
+                    }
+                }
+                else if (z == 4)
+                {
+                    for (i = z; i < n; i++)
+                    {
+                        h = x[i + 1] - x[i];
+                        t = x[i];
+
+                        y[i] = y[i - 1] + h * (55 * function(t, y[i - 1]) - 59 * function(t - h, y[i - 2]) + 37 * function(t - 2 * h, y[i - 3]) - 9 * function(t - 3 * h, y[i - 4])) / 24.0;
+                    }
+                }
+                else
+                {
+                    for (i = z; i < n; i++)
+                    {
+                        h = x[i + 1] - x[i];
+                        t = x[i];
+
+                        y[i] = y[i - 1] + h * (1901 * function(t, y[i - 1]) - 2774 * function(t - h, y[i - 2]) + 2616 * function(t - 2 * h, y[i - 3]) - 1274 * function(t - 3 * h, y[i - 4]) + 251 * function(t - 4 * h, y[i - 5])) / 720.0;
+                    }
+                }
+
+                return y;
+            }
+
+            // classic differential
+            return this.Compute(function, x, y0);
+        }
+        /// <summary>
+        /// Возвращает значение дифференциального уравнения, вычисленное по методу Адамса-Башфорта.
+        /// </summary>
+        /// <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
+        /// <param name="x">Массив значений аргумент</param>
+        /// <param name="y0">Значение</param>
+        /// <param name="order">Порядок метода</param>
+        /// <returns>Массив значений функции</returns>
+        public Complex[] Compute(IComplexMesh function, Complex[] x, Complex y0, int order = 2)
+        {
+            int n = x.Length - 1;
+
+            // if order more than 1
+            // Adams-Bashfort method
+            if (order > 1 && order < n)
+            {
+                int z = Math.Min(order, 5);
+                int i, k = z + 1;
+                Complex[] y = new Complex[n];
+                Complex[] r = new Complex[k];
+                Complex h, t;
+
+                // compute first points by order
+                for (i = 0; i < k; i++)
+                    r[i] = x[i];
+
+                // classic differential
+                r = this.Compute(function, r, y0);
+
+                for (i = 0; i < z; i++)
+                    y[i] = r[i];
+
+                // Adams-Bashforth method
+                // for order
+                if (z == 2)
+                {
+                    for (i = z; i < n; i++)
+                    {
+                        h = x[i + 1] - x[i];
+                        t = x[i];
+
+                        y[i] = y[i - 1] + h * (3 * function(t + h, y[i - 1]) - function(t, y[i - 2])) / 2;
+                    }
+                }
+                else if (z == 3)
+                {
+                    for (i = z; i < n; i++)
+                    {
+                        h = x[i + 1] - x[i];
+                        t = x[i];
+
+                        y[i] = y[i - 1] + h * (23 * function(t, y[i - 1]) - 16 * function(t - h, y[i - 2]) + 5 * function(t - 2 * h, y[i - 3])) / 12.0;
+                    }
+                }
+                else if (z == 4)
+                {
+                    for (i = z; i < n; i++)
+                    {
+                        h = x[i + 1] - x[i];
+                        t = x[i];
+
+                        y[i] = y[i - 1] + h * (55 * function(t, y[i - 1]) - 59 * function(t - h, y[i - 2]) + 37 * function(t - 2 * h, y[i - 3]) - 9 * function(t - 3 * h, y[i - 4])) / 24.0;
+                    }
+                }
+                else
+                {
+                    for (i = z; i < n; i++)
+                    {
+                        h = x[i + 1] - x[i];
+                        t = x[i];
+
+                        y[i] = y[i - 1] + h * (1901 * function(t, y[i - 1]) - 2774 * function(t - h, y[i - 2]) + 2616 * function(t - 2 * h, y[i - 3]) - 1274 * function(t - 3 * h, y[i - 4]) + 251 * function(t - 4 * h, y[i - 5])) / 720.0;
+                    }
+                }
+
+                return y;
+            }
+
+            // classic differential
+            return this.Compute(function, x, y0);
+        }
+        #endregion
+
+        #region runge-kutta voids
         /// <summary>
         /// 
         /// </summary>

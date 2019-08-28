@@ -14983,6 +14983,26 @@
             <param name="y0">Значение</param>
             <returns>Массив значений функции</returns>
         </member>
+        <member name="M:UMapx.Core.Differential.Compute(UMapx.Core.IDoubleMesh,System.Double[],System.Double,System.Int32)">
+            <summary>
+            Возвращает значение дифференциального уравнения, вычисленное по методу Адамса-Башфорта.
+            </summary>
+            <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
+            <param name="x">Массив значений аргумент</param>
+            <param name="y0">Значение</param>
+            <param name="order">Порядок метода</param>
+            <returns>Массив значений функции</returns>
+        </member>
+        <member name="M:UMapx.Core.Differential.Compute(UMapx.Core.IComplexMesh,UMapx.Core.Complex[],UMapx.Core.Complex,System.Int32)">
+            <summary>
+            Возвращает значение дифференциального уравнения, вычисленное по методу Адамса-Башфорта.
+            </summary>
+            <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
+            <param name="x">Массив значений аргумент</param>
+            <param name="y0">Значение</param>
+            <param name="order">Порядок метода</param>
+            <returns>Массив значений функции</returns>
+        </member>
         <member name="M:UMapx.Core.Differential.euler(UMapx.Core.IDoubleMesh,System.Double[],System.Double)">
             <summary>
             
