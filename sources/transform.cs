@@ -5507,7 +5507,7 @@ namespace UMapx.Transform
                 }
             }
 
-            MeanFilter.boxf(v, Direction.Both, 4);
+            BoxFilterOptions.boxf(v, Direction.Both, 4);
 
             return v;
         }
@@ -5529,7 +5529,7 @@ namespace UMapx.Transform
                 v[k + 1] = u[i];
             }
 
-            MeanFilter.boxf(v, r, 4);
+            BoxFilterOptions.boxf(v, r, 4);
 
             return v;
         }
@@ -5554,7 +5554,7 @@ namespace UMapx.Transform
                 }
             }
 
-            MeanFilter.boxf(v, Direction.Both, 4);
+            BoxFilterOptions.boxf(v, Direction.Both, 4);
 
             return v;
         }
@@ -5575,7 +5575,7 @@ namespace UMapx.Transform
                 v[k] = u[i];
             }
 
-            MeanFilter.boxf(v, r, 4);
+            BoxFilterOptions.boxf(v, r, 4);
 
             return v;
         }
@@ -5682,7 +5682,7 @@ namespace UMapx.Transform
                 }
             }
 
-            MeanFilter.boxf(v, Direction.Both, 4);
+            BoxFilterOptions.boxf(v, Direction.Both, 4);
 
             return v;
         }
@@ -5704,7 +5704,7 @@ namespace UMapx.Transform
                 v[k + 1] = u[i];
             }
 
-            MeanFilter.boxf(v, r, 4);
+            BoxFilterOptions.boxf(v, r, 4);
 
             return v;
         }
@@ -5729,7 +5729,7 @@ namespace UMapx.Transform
                 }
             }
 
-            MeanFilter.boxf(v, Direction.Both, 4);
+            BoxFilterOptions.boxf(v, Direction.Both, 4);
 
             return v;
         }
@@ -5750,7 +5750,7 @@ namespace UMapx.Transform
                 v[k] = u[i];
             }
 
-            MeanFilter.boxf(v, r, 4);
+            BoxFilterOptions.boxf(v, r, 4);
 
             return v;
         }
@@ -6312,335 +6312,11 @@ namespace UMapx.Transform
     /// <summary>
     /// Определяет фильтр локального усреднения.
     /// <remarks>
-    /// Фильтр вычисляет средние значения в локальных областях сигнала.
-    /// Более подробную информацию можно найти на сайте:
-    /// https://en.wikipedia.org/wiki/Box_blur
+    /// Используется только для вычисления других фильтров и является внутренним классом.
     /// </remarks>
     /// </summary>
-    public class MeanFilter : IFilter, IBlendFilter
+    internal static class BoxFilterOptions
     {
-        #region Private data
-        /// <summary>
-        /// Радиус фильтра.
-        /// </summary>
-        private int r;
-        /// <summary>
-        /// Направление обработки.
-        /// </summary>
-        private Direction direction;
-        /// <summary>
-        /// Множитель.
-        /// </summary>
-        private double factor;
-        #endregion
-
-        #region Filter components
-        /// <summary>
-        /// Инициализирует фильтр локального усреднения.
-        /// </summary>
-        /// <param name="radius">Радиус фильтра (>1)</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="factor">Множитель [-1, 1]</param>
-        public MeanFilter(int radius, Direction direction = Direction.Both, double factor = -1.0)
-        {
-            this.Radius = radius;
-            this.direction = direction;
-            this.factor = factor;
-        }
-        /// <summary>
-        /// Получает или задает значение радиуса фильтра.
-        /// </summary>
-        public int Radius
-        {
-            get
-            {
-                return this.r;
-            }
-            set
-            {
-                if (value < 1)
-                    throw new Exception("Неверное значение аргумента");
-
-                this.r = value;
-            }
-        }
-        /// <summary>
-        /// Получает или задает направление обработки.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
-        }
-        /// <summary>
-        /// Получает или задает значение множителя [-1, 1].
-        /// </summary>
-        public double Factor
-        {
-            get
-            {
-                return this.factor;
-            }
-            set
-            {
-                this.factor = value;
-            }
-        }
-        #endregion
-
-        #region Public apply voids
-        /// <summary>
-        /// Реализует двумерный фильтр.
-        /// </summary>
-        /// <param name="data">Матрица</param>
-        public void Apply(double[,] data)
-        {
-            if (this.factor != 0)
-            {
-                int N = data.GetLength(0);
-                int M = data.GetLength(1);
-                int i, j;
-
-                double[,] copy = (double[,])data.Clone();
-                MeanFilter.boxf(copy, this.direction, this.r);
-
-                for (i = 0; i < N; i++)
-                {
-                    for (j = 0; j < M; j++)
-                    {
-                        data[i, j] = (1.0 + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
-                    }
-                }
-
-                return;
-            }
-
-            return;
-        }
-        /// <summary>
-        /// Реализует одномерный фильтр.
-        /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        public void Apply(double[] data)
-        {
-            int l = data.Length;
-
-            if (this.factor != 0)
-            {
-                double[] copy = (double[])data.Clone();
-                MeanFilter.boxf(copy, l, r);
-
-                for (int i = 0; i < l; i++)
-                {
-                    data[i] = (1.0 + this.factor) * (data[i] - copy[i]) + copy[i];
-                }
-
-                return;
-            }
-
-            return;
-        }
-        /// <summary>
-        /// Реализует двумерный фильтр.
-        /// </summary>
-        /// <param name="data">Матрица</param>
-        public void Apply(Complex[,] data)
-        {
-            if (this.factor != 0)
-            {
-                int N = data.GetLength(0);
-                int M = data.GetLength(1);
-                int i, j;
-
-                Complex[,] copy = (Complex[,])data.Clone();
-                MeanFilter.boxf(copy, this.direction, this.r);
-
-                for (i = 0; i < N; i++)
-                {
-                    for (j = 0; j < M; j++)
-                    {
-                        data[i, j] = (1.0 + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
-                    }
-                }
-
-                return;
-            }
-
-            return;
-        }
-        /// <summary>
-        /// Реализует одномерный фильтр.
-        /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        public void Apply(Complex[] data)
-        {
-            int l = data.Length;
-
-            if (this.factor != 0)
-            {
-                double[] copy = (double[])data.Clone();
-                MeanFilter.boxf(copy, l, r);
-
-                for (int i = 0; i < l; i++)
-                {
-                    data[i] = (1.0 + this.factor) * (data[i] - copy[i]) + copy[i];
-                }
-
-                return;
-            }
-
-            return;
-        }
-        #endregion
-
-        #region Blender apply voids
-        /// <summary>
-        /// Реализует двумерный фильтр.
-        /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
-        public double[,] Apply(double[][,] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            double[,] sum = new double[r, c], cur, low;
-            int i, j, k;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (double[,])cur.Clone();
-                MeanFilter.boxf(low, this.direction, this.r);
-
-                for (j = 0; j < r; j++)
-                {
-                    for (k = 0; k < c; k++)
-                    {
-                        // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + (low[j, k] / length);
-                    }
-                }
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// Реализует двумерный фильтр.
-        /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
-        public Complex[,] Apply(Complex[][,] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            Complex[,] sum = new Complex[r, c], cur, low;
-            int i, j, k;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (Complex[,])cur.Clone();
-                MeanFilter.boxf(low, this.direction, this.r);
-
-                for (j = 0; j < r; j++)
-                {
-                    for (k = 0; k < c; k++)
-                    {
-                        // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + (low[j, k] / length);
-
-                    }
-                }
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// Реализует одномерный фильтр.
-        /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
-        public double[] Apply(double[][] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0);
-            double[] sum = new double[r], cur, low;
-            int i, j;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (double[])cur.Clone();
-                MeanFilter.boxf(low, length, this.r);
-
-                for (j = 0; j < r; j++)
-                {
-                    // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
-                }
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// Реализует одномерный фильтр.
-        /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
-        public Complex[] Apply(Complex[][] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0);
-            Complex[] sum = new Complex[r], cur, low;
-            int i, j;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (Complex[])cur.Clone();
-                MeanFilter.boxf(low, length, this.r);
-
-                for (j = 0; j < r; j++)
-                {
-                    // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
-                }
-            }
-
-            return sum;
-        }
-        #endregion
-
         #region Private voids
         /// <summary>
         /// Реализует двумерный фильтр.
@@ -6648,7 +6324,7 @@ namespace UMapx.Transform
         /// <param name="data">Матрица</param>
         /// <param name="direction">Направление обработки</param>
         /// <param name="r">Радиус обработки</param>
-        internal static void boxf(double[,] data, Direction direction, int r)
+        public static void boxf(double[,] data, Direction direction, int r)
         {
             int N = data.GetLength(0);
             int M = data.GetLength(1);
@@ -6665,7 +6341,7 @@ namespace UMapx.Transform
                         row[j] = data[i, j];
                     }
 
-                    MeanFilter.boxf(row, M, r);
+                    BoxFilterOptions.boxf(row, M, r);
 
                     for (j = 0; j < M; j++)
                     {
@@ -6684,7 +6360,7 @@ namespace UMapx.Transform
                         col[i] = data[i, j];
                     }
 
-                    MeanFilter.boxf(col, N, r);
+                    BoxFilterOptions.boxf(col, N, r);
 
                     for (i = 0; i < N; i++)
                     {
@@ -6704,7 +6380,7 @@ namespace UMapx.Transform
                         col[i] = data[i, j];
                     }
 
-                    MeanFilter.boxf(col, N, r);
+                    BoxFilterOptions.boxf(col, N, r);
 
                     for (i = 0; i < N; i++)
                     {
@@ -6724,7 +6400,7 @@ namespace UMapx.Transform
                         row[j] = data[i, j];
                     }
 
-                    MeanFilter.boxf(row, M, r);
+                    BoxFilterOptions.boxf(row, M, r);
 
                     for (j = 0; j < M; j++)
                     {
@@ -6741,7 +6417,7 @@ namespace UMapx.Transform
         /// <param name="data">Матрица</param>
         /// <param name="direction">Направление обработки</param>
         /// <param name="r">Радиус обработки</param>
-        internal static void boxf(Complex[,] data, Direction direction, int r)
+        public static void boxf(Complex[,] data, Direction direction, int r)
         {
             int N = data.GetLength(0);
             int M = data.GetLength(1);
@@ -6758,7 +6434,7 @@ namespace UMapx.Transform
                         row[j] = data[i, j];
                     }
 
-                    MeanFilter.boxf(row, M, r);
+                    BoxFilterOptions.boxf(row, M, r);
 
                     for (j = 0; j < M; j++)
                     {
@@ -6777,7 +6453,7 @@ namespace UMapx.Transform
                         col[i] = data[i, j];
                     }
 
-                    MeanFilter.boxf(col, N, r);
+                    BoxFilterOptions.boxf(col, N, r);
 
                     for (i = 0; i < N; i++)
                     {
@@ -6797,7 +6473,7 @@ namespace UMapx.Transform
                         col[i] = data[i, j];
                     }
 
-                    MeanFilter.boxf(col, N, r);
+                    BoxFilterOptions.boxf(col, N, r);
 
                     for (i = 0; i < N; i++)
                     {
@@ -6817,7 +6493,7 @@ namespace UMapx.Transform
                         row[j] = data[i, j];
                     }
 
-                    MeanFilter.boxf(row, M, r);
+                    BoxFilterOptions.boxf(row, M, r);
 
                     for (j = 0; j < M; j++)
                     {
@@ -6834,7 +6510,7 @@ namespace UMapx.Transform
         /// <param name="input">Одномерный массив</param>
         /// <param name="l">Длина сигнала</param>
         /// <param name="r">Ядро фильтра</param>
-        internal static void boxf(double[] input, int l, int r)
+        public static void boxf(double[] input, int l, int r)
         {
             // Исключение по размерности:
             if (l == 1) return;
@@ -6877,7 +6553,7 @@ namespace UMapx.Transform
         /// <param name="input">Одномерный массив</param>
         /// <param name="l">Длина сигнала</param>
         /// <param name="r">Ядро фильтра</param>
-        internal static void boxf(Complex[] input, int l, int r)
+        public static void boxf(Complex[] input, int l, int r)
         {
             // Исключение по размерности:
             if (l == 1) return;
@@ -6919,7 +6595,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Набор матриц</param>
         /// <returns>Матрица</returns>
-        internal static double[,] meanf(double[][,] data)
+        public static double[,] boxf(double[][,] data)
         {
             // exception
             int length = data.Length;
@@ -6951,7 +6627,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Набор матриц</param>
         /// <returns>Матрица</returns>
-        internal static Complex[,] meanf(Complex[][,] data)
+        public static Complex[,] boxf(Complex[][,] data)
         {
             // exception
             int length = data.Length;
@@ -6982,7 +6658,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Набор векторов</param>
         /// <returns>Одномерный массив</returns>
-        internal static double[] meanf(double[][] data)
+        public static double[] boxf(double[][] data)
         {
             // exception
             int length = data.Length;
@@ -7010,7 +6686,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Набор векторов</param>
         /// <returns>Одномерный массив</returns>
-        internal static Complex[] meanf(Complex[][] data)
+        public static Complex[] boxf(Complex[][] data)
         {
             // exception
             int length = data.Length;
@@ -7404,8 +7080,8 @@ namespace UMapx.Transform
             double[,] y = Matrice.Pow(input, 2.0);
 
             // Applying fast box filter:
-            MeanFilter.boxf(x, Direction.Both, r);
-            MeanFilter.boxf(y, Direction.Both, r);
+            BoxFilterOptions.boxf(x, Direction.Both, r);
+            BoxFilterOptions.boxf(y, Direction.Both, r);
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
@@ -7425,8 +7101,8 @@ namespace UMapx.Transform
                 }
 
             // Applying fast box filter:
-            MeanFilter.boxf(a, Direction.Both, r);
-            MeanFilter.boxf(b, Direction.Both, r);
+            BoxFilterOptions.boxf(a, Direction.Both, r);
+            BoxFilterOptions.boxf(b, Direction.Both, r);
 
             // Calculating μ(a) * I + μ(b):
             double[,] q = new double[l0, l1];
@@ -7452,8 +7128,8 @@ namespace UMapx.Transform
             Complex[,] y = Matrice.Pow(input, 2.0);
 
             // Applying fast box filter:
-            MeanFilter.boxf(x, Direction.Both, r);
-            MeanFilter.boxf(y, Direction.Both, r);
+            BoxFilterOptions.boxf(x, Direction.Both, r);
+            BoxFilterOptions.boxf(y, Direction.Both, r);
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
@@ -7473,8 +7149,8 @@ namespace UMapx.Transform
                 }
 
             // Applying fast box filter:
-            MeanFilter.boxf(a, Direction.Both, r);
-            MeanFilter.boxf(b, Direction.Both, r);
+            BoxFilterOptions.boxf(a, Direction.Both, r);
+            BoxFilterOptions.boxf(b, Direction.Both, r);
 
             // Calculating μ(a) * I + μ(b):
             Complex[,] q = new Complex[l0, l1];
@@ -7500,8 +7176,8 @@ namespace UMapx.Transform
             double[] y = Matrice.Pow(input, 2.0);
 
             // Applying fast box filter:
-            MeanFilter.boxf(x, length, r);
-            MeanFilter.boxf(y, length, r);
+            BoxFilterOptions.boxf(x, length, r);
+            BoxFilterOptions.boxf(y, length, r);
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
@@ -7519,8 +7195,8 @@ namespace UMapx.Transform
             }
 
             // Applying fast box filter:
-            MeanFilter.boxf(a, length, r);
-            MeanFilter.boxf(b, length, r);
+            BoxFilterOptions.boxf(a, length, r);
+            BoxFilterOptions.boxf(b, length, r);
 
             // Calculating μ(a) * I + μ(b):
             double[] q = new double[length];
@@ -7545,8 +7221,8 @@ namespace UMapx.Transform
             Complex[] y = Matrice.Pow(input, 2.0);
 
             // Applying fast box filter:
-            MeanFilter.boxf(x, length, r);
-            MeanFilter.boxf(y, length, r);
+            BoxFilterOptions.boxf(x, length, r);
+            BoxFilterOptions.boxf(y, length, r);
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
@@ -7564,8 +7240,8 @@ namespace UMapx.Transform
             }
 
             // Applying fast box filter:
-            MeanFilter.boxf(a, length, r);
-            MeanFilter.boxf(b, length, r);
+            BoxFilterOptions.boxf(a, length, r);
+            BoxFilterOptions.boxf(b, length, r);
 
             // Calculating μ(a) * I + μ(b):
             Complex[] q = new Complex[length];
@@ -8677,7 +8353,7 @@ namespace UMapx.Transform
         public double[,] Apply(double[][,] data)
         {
             // local laplcian filter blending
-            double[,] output = MeanFilter.meanf(data);
+            double[,] output = BoxFilterOptions.boxf(data);
             LocalLaplacianFilter.llfilter(output, this.sigma, this.factor, this.n, this.levels);
             return output;
         }
@@ -8698,7 +8374,7 @@ namespace UMapx.Transform
         public double[] Apply(double[][] data)
         {
             // local laplcian filter blending
-            double[] output = MeanFilter.meanf(data);
+            double[] output = BoxFilterOptions.boxf(data);
             LocalLaplacianFilter.llfilter(output, this.sigma, this.factor, this.n, this.levels);
             return output;
         }

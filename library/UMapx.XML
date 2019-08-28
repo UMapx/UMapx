@@ -2954,13 +2954,81 @@
             Сжатие значений больше порогового.
             </summary>
         </member>
-        <member name="T:UMapx.Transform.MeanFilter">
+        <member name="T:UMapx.Transform.BoxFilterOptions">
             <summary>
             Определяет фильтр локального усреднения.
             <remarks>
-            Фильтр вычисляет средние значения в локальных областях сигнала.
+            Используется только для вычисления других фильтров и является внутренним классом.
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.BoxFilterOptions.boxf(System.Double[0:,0:],UMapx.Core.Direction,System.Int32)">
+            <summary>
+            Реализует двумерный фильтр.
+            </summary>
+            <param name="data">Матрица</param>
+            <param name="direction">Направление обработки</param>
+            <param name="r">Радиус обработки</param>
+        </member>
+        <member name="M:UMapx.Transform.BoxFilterOptions.boxf(UMapx.Core.Complex[0:,0:],UMapx.Core.Direction,System.Int32)">
+            <summary>
+            Реализует двумерный фильтр.
+            </summary>
+            <param name="data">Матрица</param>
+            <param name="direction">Направление обработки</param>
+            <param name="r">Радиус обработки</param>
+        </member>
+        <member name="M:UMapx.Transform.BoxFilterOptions.boxf(System.Double[],System.Int32,System.Int32)">
+            <summary>
+            Реализует одномерный фильтр арифметического локального усреднения.
+            </summary>
+            <param name="input">Одномерный массив</param>
+            <param name="l">Длина сигнала</param>
+            <param name="r">Ядро фильтра</param>
+        </member>
+        <member name="M:UMapx.Transform.BoxFilterOptions.boxf(UMapx.Core.Complex[],System.Int32,System.Int32)">
+            <summary>
+            Реализует одномерный фильтр арифметического локального усреднения.
+            </summary>
+            <param name="input">Одномерный массив</param>
+            <param name="l">Длина сигнала</param>
+            <param name="r">Ядро фильтра</param>
+        </member>
+        <member name="M:UMapx.Transform.BoxFilterOptions.boxf(System.Double[][0:,0:])">
+            <summary>
+            Реализует двумерный фильтр математического усреднения.
+            </summary>
+            <param name="data">Набор матриц</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Transform.BoxFilterOptions.boxf(UMapx.Core.Complex[][0:,0:])">
+            <summary>
+            Реализует двумерный фильтр математического усреднения.
+            </summary>
+            <param name="data">Набор матриц</param>
+            <returns>Матрица</returns>
+        </member>
+        <member name="M:UMapx.Transform.BoxFilterOptions.boxf(System.Double[][])">
+            <summary>
+            Реализует одномерный фильтр математического усреднения.
+            </summary>
+            <param name="data">Набор векторов</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="M:UMapx.Transform.BoxFilterOptions.boxf(UMapx.Core.Complex[][])">
+            <summary>
+            Реализует одномерный фильтр математического усреднения.
+            </summary>
+            <param name="data">Набор векторов</param>
+            <returns>Одномерный массив</returns>
+        </member>
+        <member name="T:UMapx.Transform.GuidedFilter">
+            <summary>
+            Определяет направленный фильтр.
+            <remarks>
+            Данный фильтр представляет собой вычислительно эффективный аналог билатерального фильтра (bilateral filter).
             Более подробную информацию можно найти на сайте:
-            https://en.wikipedia.org/wiki/Box_blur
+            http://kaiminghe.com/eccv10/index.html
             </remarks>
             </summary>
         </member>
@@ -2996,166 +3064,6 @@
             </summary>
             <param name="data">Набор векторов</param>
             <returns>Одномерный массив</returns>
-        </member>
-        <member name="F:UMapx.Transform.MeanFilter.r">
-            <summary>
-            Радиус фильтра.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.MeanFilter.direction">
-            <summary>
-            Направление обработки.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.MeanFilter.factor">
-            <summary>
-            Множитель.
-            </summary>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.#ctor(System.Int32,UMapx.Core.Direction,System.Double)">
-            <summary>
-            Инициализирует фильтр локального усреднения.
-            </summary>
-            <param name="radius">Радиус фильтра (>1)</param>
-            <param name="direction">Направление обработки</param>
-            <param name="factor">Множитель [-1, 1]</param>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.Apply(System.Double[0:,0:])">
-            <summary>
-            Реализует двумерный фильтр.
-            </summary>
-            <param name="data">Матрица</param>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.Apply(System.Double[])">
-            <summary>
-            Реализует одномерный фильтр.
-            </summary>
-            <param name="data">Одномерный массив</param>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.Apply(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Реализует двумерный фильтр.
-            </summary>
-            <param name="data">Матрица</param>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.Apply(UMapx.Core.Complex[])">
-            <summary>
-            Реализует одномерный фильтр.
-            </summary>
-            <param name="data">Одномерный массив</param>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.Apply(System.Double[][0:,0:])">
-            <summary>
-            Реализует двумерный фильтр.
-            </summary>
-            <param name="data">Набор матриц</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.Apply(UMapx.Core.Complex[][0:,0:])">
-            <summary>
-            Реализует двумерный фильтр.
-            </summary>
-            <param name="data">Набор матриц</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.Apply(System.Double[][])">
-            <summary>
-            Реализует одномерный фильтр.
-            </summary>
-            <param name="data">Набор векторов</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.Apply(UMapx.Core.Complex[][])">
-            <summary>
-            Реализует одномерный фильтр.
-            </summary>
-            <param name="data">Набор векторов</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.boxf(System.Double[0:,0:],UMapx.Core.Direction,System.Int32)">
-            <summary>
-            Реализует двумерный фильтр.
-            </summary>
-            <param name="data">Матрица</param>
-            <param name="direction">Направление обработки</param>
-            <param name="r">Радиус обработки</param>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.boxf(UMapx.Core.Complex[0:,0:],UMapx.Core.Direction,System.Int32)">
-            <summary>
-            Реализует двумерный фильтр.
-            </summary>
-            <param name="data">Матрица</param>
-            <param name="direction">Направление обработки</param>
-            <param name="r">Радиус обработки</param>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.boxf(System.Double[],System.Int32,System.Int32)">
-            <summary>
-            Реализует одномерный фильтр арифметического локального усреднения.
-            </summary>
-            <param name="input">Одномерный массив</param>
-            <param name="l">Длина сигнала</param>
-            <param name="r">Ядро фильтра</param>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.boxf(UMapx.Core.Complex[],System.Int32,System.Int32)">
-            <summary>
-            Реализует одномерный фильтр арифметического локального усреднения.
-            </summary>
-            <param name="input">Одномерный массив</param>
-            <param name="l">Длина сигнала</param>
-            <param name="r">Ядро фильтра</param>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.meanf(System.Double[][0:,0:])">
-            <summary>
-            Реализует двумерный фильтр математического усреднения.
-            </summary>
-            <param name="data">Набор матриц</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.meanf(UMapx.Core.Complex[][0:,0:])">
-            <summary>
-            Реализует двумерный фильтр математического усреднения.
-            </summary>
-            <param name="data">Набор матриц</param>
-            <returns>Матрица</returns>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.meanf(System.Double[][])">
-            <summary>
-            Реализует одномерный фильтр математического усреднения.
-            </summary>
-            <param name="data">Набор векторов</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="M:UMapx.Transform.MeanFilter.meanf(UMapx.Core.Complex[][])">
-            <summary>
-            Реализует одномерный фильтр математического усреднения.
-            </summary>
-            <param name="data">Набор векторов</param>
-            <returns>Одномерный массив</returns>
-        </member>
-        <member name="P:UMapx.Transform.MeanFilter.Radius">
-            <summary>
-            Получает или задает значение радиуса фильтра.
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.MeanFilter.Direction">
-            <summary>
-            Получает или задает направление обработки.
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.MeanFilter.Factor">
-            <summary>
-            Получает или задает значение множителя [-1, 1].
-            </summary>
-        </member>
-        <member name="T:UMapx.Transform.GuidedFilter">
-            <summary>
-            Определяет направленный фильтр.
-            <remarks>
-            Данный фильтр представляет собой вычислительно эффективный аналог билатерального фильтра (bilateral filter).
-            Более подробную информацию можно найти на сайте:
-            http://kaiminghe.com/eccv10/index.html
-            </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.GuidedFilter.eps">
             <summary>

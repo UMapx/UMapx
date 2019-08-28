@@ -601,7 +601,7 @@ namespace UMapx.Imaging
         public LocalCorrection(int radius, double[,] values, Space space)
         {
             gb = new BoxBlur(radius);
-            Space = space; 
+            Space = space;
             Values = values;
         }
         /// <summary>
@@ -614,7 +614,7 @@ namespace UMapx.Imaging
         public LocalCorrection(int width, int height, double[,] values, Space space)
         {
             gb = new BoxBlur(width, height);
-            Space = space; 
+            Space = space;
             Values = values;
         }
         /// <summary>
@@ -626,7 +626,7 @@ namespace UMapx.Imaging
         public LocalCorrection(SizeInt size, double[,] values, Space space)
         {
             gb = new BoxBlur(size);
-            Space = space; 
+            Space = space;
             Values = values;
         }
         /// <summary>
@@ -11801,7 +11801,7 @@ namespace UMapx.Imaging
                 cr[i] = tt[2];
             }
 
-            return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), MeanFilter.meanf(cb), MeanFilter.meanf(cr) });
+            return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), BoxFilterOptions.boxf(cb), BoxFilterOptions.boxf(cr) });
         }
         /// <summary>
         /// Применяет фильтр к массиву атрибутов точечных рисунков.
@@ -11825,7 +11825,7 @@ namespace UMapx.Imaging
                 cr[i] = tt[2];
             }
 
-            return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), MeanFilter.meanf(cb), MeanFilter.meanf(cr) });
+            return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), BoxFilterOptions.boxf(cb), BoxFilterOptions.boxf(cr) });
         }
         /// <summary>
         /// Применяет фильтр к массиву точечных рисунков.
@@ -11849,7 +11849,7 @@ namespace UMapx.Imaging
                 b[i] = t[2];
             }
 
-            return BitmapConverter.FromHSB(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(b) });
+            return BitmapConverter.FromHSB(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(b) });
         }
         /// <summary>
         /// Применяет фильтр к массиву атрибутов точечных рисунков.
@@ -11873,7 +11873,7 @@ namespace UMapx.Imaging
                 b[i] = t[2];
             }
 
-            return BitmapConverter.FromHSB(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(b) });
+            return BitmapConverter.FromHSB(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(b) });
         }
         /// <summary>
         /// Применяет фильтр к массиву точечных рисунков.
@@ -11897,7 +11897,7 @@ namespace UMapx.Imaging
                 l[i] = t[2];
             }
 
-            return BitmapConverter.FromHSL(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(l) });
+            return BitmapConverter.FromHSL(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(l) });
         }
         /// <summary>
         /// Применяет фильтр к массиву атрибутов точечных рисунков.
@@ -11921,7 +11921,7 @@ namespace UMapx.Imaging
                 l[i] = t[2];
             }
 
-            return BitmapConverter.FromHSL(new double[][,] { MeanFilter.meanf(h), MeanFilter.meanf(s), this.filter.Apply(l) });
+            return BitmapConverter.FromHSL(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(l) });
         }
         #endregion
     }
