@@ -1376,11 +1376,12 @@ namespace UMapx.Core
             // Adams-Bashfort method
             if (order > 1 && order < n)
             {
-                int z = Math.Min(order, 5);
-                int i, k = z + 1;
+                // params
+                int i, j, k = order + 1;
                 double[] y = new double[n];
                 double[] r = new double[k];
-                double h, t;
+                double[] c = Differential.GetCoefficients(order);
+                double h, t, sum;
 
                 // compute first points by order
                 for (i = 0; i < k; i++)
@@ -1389,50 +1390,23 @@ namespace UMapx.Core
                 // classic differential
                 r = this.Compute(function, r, y0);
 
-                for (i = 0; i < z; i++)
+                for (i = 0; i < order; i++)
                     y[i] = r[i];
 
                 // Adams-Bashforth method
                 // for order
-                if (z == 2)
+                for (i = order; i < n; i++)
                 {
-                    for (i = z; i < n; i++)
-                    {
-                        h = x[i + 1] - x[i];
-                        t = x[i];
+                    sum = y[i - 1];
 
-                        y[i] = y[i - 1] + h * (3 * function(t + h, y[i - 1]) - function(t, y[i - 2])) / 2;
-                    }
-                }
-                else if (z == 3)
-                {
-                    for (i = z; i < n; i++)
+                    for (j = 0; j < order; j++)
                     {
-                        h = x[i + 1] - x[i];
-                        t = x[i];
-
-                        y[i] = y[i - 1] + h * (23 * function(t, y[i - 1]) - 16 * function(t - h, y[i - 2]) + 5 * function(t - 2 * h, y[i - 3])) / 12.0;
+                        t = x[i - j];
+                        h = t - x[i - j - 1];
+                        sum += h * c[j] * function(t, y[i - j - 1]);
                     }
-                }
-                else if (z == 4)
-                {
-                    for (i = z; i < n; i++)
-                    {
-                        h = x[i + 1] - x[i];
-                        t = x[i];
 
-                        y[i] = y[i - 1] + h * (55 * function(t, y[i - 1]) - 59 * function(t - h, y[i - 2]) + 37 * function(t - 2 * h, y[i - 3]) - 9 * function(t - 3 * h, y[i - 4])) / 24.0;
-                    }
-                }
-                else
-                {
-                    for (i = z; i < n; i++)
-                    {
-                        h = x[i + 1] - x[i];
-                        t = x[i];
-
-                        y[i] = y[i - 1] + h * (1901 * function(t, y[i - 1]) - 2774 * function(t - h, y[i - 2]) + 2616 * function(t - 2 * h, y[i - 3]) - 1274 * function(t - 3 * h, y[i - 4]) + 251 * function(t - 4 * h, y[i - 5])) / 720.0;
-                    }
+                    y[i] = sum;
                 }
 
                 return y;
@@ -1457,11 +1431,12 @@ namespace UMapx.Core
             // Adams-Bashfort method
             if (order > 1 && order < n)
             {
-                int z = Math.Min(order, 5);
-                int i, k = z + 1;
+                // params
+                int i, j, k = order + 1;
                 Complex[] y = new Complex[n];
                 Complex[] r = new Complex[k];
-                Complex h, t;
+                double[] c = Differential.GetCoefficients(order);
+                Complex h, t, sum;
 
                 // compute first points by order
                 for (i = 0; i < k; i++)
@@ -1470,50 +1445,23 @@ namespace UMapx.Core
                 // classic differential
                 r = this.Compute(function, r, y0);
 
-                for (i = 0; i < z; i++)
+                for (i = 0; i < order; i++)
                     y[i] = r[i];
 
                 // Adams-Bashforth method
                 // for order
-                if (z == 2)
+                for (i = order; i < n; i++)
                 {
-                    for (i = z; i < n; i++)
-                    {
-                        h = x[i + 1] - x[i];
-                        t = x[i];
+                    sum = y[i - 1];
 
-                        y[i] = y[i - 1] + h * (3 * function(t + h, y[i - 1]) - function(t, y[i - 2])) / 2;
-                    }
-                }
-                else if (z == 3)
-                {
-                    for (i = z; i < n; i++)
+                    for (j = 0; j < order; j++)
                     {
-                        h = x[i + 1] - x[i];
-                        t = x[i];
-
-                        y[i] = y[i - 1] + h * (23 * function(t, y[i - 1]) - 16 * function(t - h, y[i - 2]) + 5 * function(t - 2 * h, y[i - 3])) / 12.0;
+                        t = x[i - j];
+                        h = t - x[i - j - 1];
+                        sum += h * c[j] * function(t, y[i - j - 1]);
                     }
-                }
-                else if (z == 4)
-                {
-                    for (i = z; i < n; i++)
-                    {
-                        h = x[i + 1] - x[i];
-                        t = x[i];
 
-                        y[i] = y[i - 1] + h * (55 * function(t, y[i - 1]) - 59 * function(t - h, y[i - 2]) + 37 * function(t - 2 * h, y[i - 3]) - 9 * function(t - 3 * h, y[i - 4])) / 24.0;
-                    }
-                }
-                else
-                {
-                    for (i = z; i < n; i++)
-                    {
-                        h = x[i + 1] - x[i];
-                        t = x[i];
-
-                        y[i] = y[i - 1] + h * (1901 * function(t, y[i - 1]) - 2774 * function(t - h, y[i - 2]) + 2616 * function(t - 2 * h, y[i - 3]) - 1274 * function(t - 3 * h, y[i - 4]) + 251 * function(t - 4 * h, y[i - 5])) / 720.0;
-                    }
+                    y[i] = sum;
                 }
 
                 return y;
@@ -1521,6 +1469,31 @@ namespace UMapx.Core
 
             // classic differential
             return this.Compute(function, x, y0);
+        }
+        #endregion
+
+        #region Adams-Bashforth
+        /// <summary>
+        /// Возвращает массив значений коэффициентов для формулы Адамса-Башфорта.
+        /// </summary>
+        /// <param name="order">Порядок</param>
+        /// <returns>Одномерный массив</returns>
+        public static double[] GetCoefficients(int order)
+        {
+            double[,] A = new double[order, order];
+            double[] c = new double[order];
+            int i, j;
+
+            for (i = 0; i < order; i++)
+            {
+                for (j = 0; j < order; j++)
+                {
+                    A[i, j] = Math.Pow(j, i);
+                }
+                c[i] = Math.Pow(-1, i) / (i + 1);
+            }
+
+            return c.Dot(A.Invert());
         }
         #endregion
 

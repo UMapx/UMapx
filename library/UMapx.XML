@@ -14911,6 +14911,13 @@
             <param name="order">Порядок метода</param>
             <returns>Массив значений функции</returns>
         </member>
+        <member name="M:UMapx.Core.Differential.GetCoefficients(System.Int32)">
+            <summary>
+            Возвращает массив значений коэффициентов для формулы Адамса-Башфорта.
+            </summary>
+            <param name="order">Порядок</param>
+            <returns>Одномерный массив</returns>
+        </member>
         <member name="M:UMapx.Core.Differential.euler(UMapx.Core.IDoubleMesh,System.Double[],System.Double)">
             <summary>
             
