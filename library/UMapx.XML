@@ -7912,6 +7912,12 @@
             </summary>
             <param name="bmData">Атрибуты точечного изображения</param>
         </member>
+        <member name="M:UMapx.Imaging.Correction.ApplyGrayscale(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Применяет фильтр к точечному рисунку.
+            </summary>
+            <param name="bmData">Атрибуты точечного изображения</param>
+        </member>
         <member name="P:UMapx.Imaging.Correction.Values">
             <summary>
             Получает или задает табулированную маску.
@@ -7920,49 +7926,6 @@
         <member name="P:UMapx.Imaging.Correction.Space">
             <summary>
             Получает или задает цветовое пространство.
-            </summary>
-        </member>
-        <member name="T:UMapx.Imaging.GrayscaleCorrection">
-            <summary>
-            Определяет фильтр масочной коррекции в оттенках серого.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.GrayscaleCorrection.values">
-            <summary>
-            Значения.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.GrayscaleCorrection.Rebuild">
-            <summary>
-            Реализует перестроение данных фильтра.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.GrayscaleCorrection.#ctor(System.Double[])">
-            <summary>
-            Инициализирует фильтр масочной коррекции в оттенках серого.
-            </summary>
-            <param name="values">Одномерная маска</param>
-        </member>
-        <member name="M:UMapx.Imaging.GrayscaleCorrection.#ctor">
-            <summary>
-            Инициализирует фильтр масочной коррекции в оттенках серого.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.GrayscaleCorrection.Apply(System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Применяет фильтр к точечному рисунку.
-            </summary>
-            <param name="bmData">Атрибуты точечного изображения</param>
-        </member>
-        <member name="M:UMapx.Imaging.GrayscaleCorrection.Apply(System.Drawing.Bitmap)">
-            <summary>
-            Применяет фильтр к точечному рисунку.
-            </summary>
-            <param name="Data">Точечный рисунок</param>
-        </member>
-        <member name="P:UMapx.Imaging.GrayscaleCorrection.Values">
-            <summary>
-            Получает или задает табулированную маску.
             </summary>
         </member>
         <member name="T:UMapx.Imaging.RGBACorrection">
@@ -8122,6 +8085,13 @@
             <param name="bmData">Атрибуты точечного изображения</param>
             <param name="bmSrc">Атрибуты точечного изображения</param>
         </member>
+        <member name="M:UMapx.Imaging.LocalCorrection.ApplyGrayscale(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Применяет фильтр к точечному рисунку.
+            </summary>
+            <param name="bmData">Атрибуты точечного изображения</param>
+            <param name="bmSrc">Атрибуты точечного изображения</param>
+        </member>
         <member name="P:UMapx.Imaging.LocalCorrection.Size">
             <summary>
             Получает или задает размер фильтра.
@@ -8137,114 +8107,37 @@
             Получает или задает значение коэффициента сжатия контраста [-1, 1].
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.LocalGrayscaleCorrection">
-            <summary>
-            Определяет фильтр локальной масочной коррекции в оттенках серого.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.LocalGrayscaleCorrection.gb">
-            <summary>
-            Фильтр локального усреднения.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.LocalGrayscaleCorrection.values">
-            <summary>
-            Коэффициент сжатия контраста.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.LocalGrayscaleCorrection.Rebuild">
-            <summary>
-            Реализует перестроение данных фильтра.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.LocalGrayscaleCorrection.#ctor">
-            <summary>
-            Инициализирует фильтр локальной масочной коррекции в оттенках серого.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.LocalGrayscaleCorrection.#ctor(System.Int32,System.Double[0:,0:])">
-            <summary>
-            Инициализирует фильтр локальной масочной коррекции в оттенках серого.
-            </summary>
-            <param name="radius">Размер фильтра</param>
-            <param name="values">Двумерная маска</param>
-        </member>
-        <member name="M:UMapx.Imaging.LocalGrayscaleCorrection.#ctor(System.Int32,System.Int32,System.Double[0:,0:])">
-            <summary>
-            Инициализирует фильтр локальной масочной коррекции в оттенках серого.
-            </summary>
-            <param name="width">Ширина фильтра</param>
-            <param name="height">Высота фильтра</param>
-            <param name="values">Двумерная маска</param>
-        </member>
-        <member name="M:UMapx.Imaging.LocalGrayscaleCorrection.#ctor(UMapx.Core.SizeInt,System.Double[0:,0:])">
-            <summary>
-            Инициализирует фильтр локальной масочной коррекции в оттенках серого.
-            </summary>
-            <param name="size">Размеры фильтра</param>
-            <param name="values">Двумерная маска</param>
-        </member>
-        <member name="M:UMapx.Imaging.LocalGrayscaleCorrection.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Применяет фильтр к точечному рисунку.
-            </summary>
-            <param name="bmData">Атрибуты точечного изображения</param>
-            <param name="bmSrc">Атрибуты точечного изображения</param>
-        </member>
-        <member name="M:UMapx.Imaging.LocalGrayscaleCorrection.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
-            <summary>
-            Применяет фильтр к точечному рисунку.
-            </summary>
-            <param name="Data">Точечный рисунок</param>
-            <param name="Src">Точечный рисунок</param>
-        </member>
-        <member name="M:UMapx.Imaging.LocalGrayscaleCorrection.Apply(System.Drawing.Bitmap)">
-            <summary>
-            Применяет фильтр к точечному рисунку.
-            </summary>
-            <param name="Data">Точечный рисунок</param>
-        </member>
-        <member name="P:UMapx.Imaging.LocalGrayscaleCorrection.Size">
-            <summary>
-            Получает или задает размер фильтра.
-            </summary>
-        </member>
-        <member name="P:UMapx.Imaging.LocalGrayscaleCorrection.Values">
-            <summary>
-            Получает или задает значение коэффициента сжатия контраста [-1, 1].
-            </summary>
-        </member>
-        <member name="T:UMapx.Imaging.LocalRGBACorrection">
+        <member name="T:UMapx.Imaging.RGBALocalCorrection">
             <summary>
             Определяет фильтр локальной масочной коррекции каналов.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.LocalRGBACorrection.gb">
+        <member name="F:UMapx.Imaging.RGBALocalCorrection.gb">
             <summary>
             Фильтр локального усреднения.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.LocalRGBACorrection.values">
+        <member name="F:UMapx.Imaging.RGBALocalCorrection.values">
             <summary>
             Коэффициент сжатия контраста.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.LocalRGBACorrection.channel">
+        <member name="F:UMapx.Imaging.RGBALocalCorrection.channel">
             <summary>
             Канал.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.LocalRGBACorrection.Rebuild">
+        <member name="M:UMapx.Imaging.RGBALocalCorrection.Rebuild">
             <summary>
             Реализует перестроение данных фильтра.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.LocalRGBACorrection.#ctor">
+        <member name="M:UMapx.Imaging.RGBALocalCorrection.#ctor">
             <summary>
             Инициализирует фильтр локальной масочной коррекции каналов.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.LocalRGBACorrection.#ctor(System.Int32,System.Double[0:,0:],UMapx.Imaging.RGBA)">
+        <member name="M:UMapx.Imaging.RGBALocalCorrection.#ctor(System.Int32,System.Double[0:,0:],UMapx.Imaging.RGBA)">
             <summary>
             Инициализирует фильтр локальной масочной коррекции каналов.
             </summary>
@@ -8252,7 +8145,7 @@
             <param name="channel">Канал</param>
             <param name="values">Двумерная маска</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalRGBACorrection.#ctor(System.Int32,System.Int32,System.Double[0:,0:],UMapx.Imaging.RGBA)">
+        <member name="M:UMapx.Imaging.RGBALocalCorrection.#ctor(System.Int32,System.Int32,System.Double[0:,0:],UMapx.Imaging.RGBA)">
             <summary>
             Инициализирует фильтр локальной масочной коррекции каналов.
             </summary>
@@ -8261,7 +8154,7 @@
             <param name="channel">Канал</param>
             <param name="values">Двумерная маска</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalRGBACorrection.#ctor(UMapx.Core.SizeInt,System.Double[0:,0:],UMapx.Imaging.RGBA)">
+        <member name="M:UMapx.Imaging.RGBALocalCorrection.#ctor(UMapx.Core.SizeInt,System.Double[0:,0:],UMapx.Imaging.RGBA)">
             <summary>
             Инициализирует фильтр локальной масочной коррекции каналов.
             </summary>
@@ -8269,37 +8162,37 @@
             <param name="channel">Канал</param>
             <param name="values">Двумерная маска</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalRGBACorrection.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.RGBALocalCorrection.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="bmData">Атрибуты точечного изображения</param>
             <param name="bmSrc">Атрибуты точечного изображения</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalRGBACorrection.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.RGBALocalCorrection.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="Data">Точечный рисунок</param>
             <param name="Src">Точечный рисунок</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalRGBACorrection.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.RGBALocalCorrection.Apply(System.Drawing.Bitmap)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="Data">Точечный рисунок</param>
         </member>
-        <member name="P:UMapx.Imaging.LocalRGBACorrection.Size">
+        <member name="P:UMapx.Imaging.RGBALocalCorrection.Size">
             <summary>
             Получает или задает размер фильтра.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.LocalRGBACorrection.Channel">
+        <member name="P:UMapx.Imaging.RGBALocalCorrection.Channel">
             <summary>
             Получает или задает цветовой канал модели RGBA.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.LocalRGBACorrection.Values">
+        <member name="P:UMapx.Imaging.RGBALocalCorrection.Values">
             <summary>
             Получает или задает значение коэффициента сжатия контраста [-1, 1].
             </summary>
@@ -8426,37 +8319,6 @@
             Получает или задает массив упорядоченных пар чисел X и Y.
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.GrayscaleThreshold">
-            <summary>
-            Определяет фильтр бинариазции в оттенках серого.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.GrayscaleThreshold.threshold">
-            <summary>
-            Порог.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.GrayscaleThreshold.#ctor(System.Double)">
-            <summary>
-            Инициализирует новый фильтр.
-            </summary>
-            <param name="threshold">Пороговое значение [0, 1]</param>
-        </member>
-        <member name="M:UMapx.Imaging.GrayscaleThreshold.#ctor">
-            <summary>
-            Инициализирует новый фильтр.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.GrayscaleThreshold.Rebuild">
-            <summary>
-            Реализует перестроение данных фильтра.
-            </summary>
-        </member>
-        <member name="P:UMapx.Imaging.GrayscaleThreshold.Threshold">
-            <summary>
-            Получает или задает значение порогового значения [0, 1].
-            </summary>
-        </member>
         <member name="T:UMapx.Imaging.InvertChannels">
             <summary>
             Определяет фильтр инверсии яркости.
@@ -8472,34 +8334,34 @@
             Реализует перестроение данных фильтра.
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.ColorThreshold">
+        <member name="T:UMapx.Imaging.Threshold">
             <summary>
             Определяет фильтр бинариазции.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.ColorThreshold.threshold">
+        <member name="F:UMapx.Imaging.Threshold.threshold">
             <summary>
             Порог.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ColorThreshold.#ctor(System.Int32,UMapx.Imaging.Space)">
+        <member name="M:UMapx.Imaging.Threshold.#ctor(System.Double,UMapx.Imaging.Space)">
             <summary>
             Инициализирует новый фильтр.
             </summary>
             <param name="threshold">Пороговое значение [0, 1]</param>
             <param name="space">Цветовое пространство</param>
         </member>
-        <member name="M:UMapx.Imaging.ColorThreshold.#ctor">
+        <member name="M:UMapx.Imaging.Threshold.#ctor">
             <summary>
             Инициализирует новый фильтр.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ColorThreshold.Rebuild">
+        <member name="M:UMapx.Imaging.Threshold.Rebuild">
             <summary>
             Реализует перестроение данных фильтра.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.ColorThreshold.Threshold">
+        <member name="P:UMapx.Imaging.Threshold.Value">
             <summary>
             Получает или задает значение порогового значения [0, 1].
             </summary>
@@ -8942,12 +8804,60 @@
             Получает или задает количество уровней.
             </summary>
         </member>
+        <member name="T:UMapx.Imaging.LocalThreshold">
+            <summary>
+            Определяет фильтр локальной бинаризации Брэдли.
+            <remarks>
+            Более подробную информацию можно найти на сайте:
+            http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
+            </remarks>
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.LocalThreshold.difference">
+            <summary>
+            Предел разницы яркости между пикселем обработки и средним значением локальных пикселей.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.LocalThreshold.#ctor(System.Int32,UMapx.Imaging.Space,System.Double)">
+            <summary>
+            Инициализирует фильтр локальной бинаризации Брэдли.
+            </summary>
+            <param name="radius">Размер фильтра</param>
+            <param name="space">Цветовое пространство</param>
+            <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
+        </member>
+        <member name="M:UMapx.Imaging.LocalThreshold.#ctor(System.Int32,System.Int32,UMapx.Imaging.Space,System.Double)">
+            <summary>
+            Инициализирует фильтр локальной бинаризации Брэдли.
+            </summary>
+            <param name="width">Ширина фильтра</param>
+            <param name="height">Высота фильтра</param>
+            <param name="space">Цветовое пространство</param>
+            <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
+        </member>
+        <member name="M:UMapx.Imaging.LocalThreshold.#ctor(UMapx.Core.SizeInt,UMapx.Imaging.Space,System.Double)">
+            <summary>
+            Инициализирует фильтр локальной бинаризации Брэдли.
+            </summary>
+            <param name="size">Размер фильтра</param>
+            <param name="space">Цветовое пространство</param>
+            <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
+        </member>
+        <member name="M:UMapx.Imaging.LocalThreshold.Rebuild">
+            <summary>
+            Реализует перестроение данных фильтра.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.LocalThreshold.Difference">
+            <summary>
+            Получает или задает предел разницы яркости между пикселем обработки и средним значением локальных пикселей.
+            </summary>
+        </member>
         <member name="T:UMapx.Imaging.LocalContrastEnhancement">
             <summary>
             Определяет фильтр локального улучшения контраста.
             <remarks>
-            Данный фильтр также известен под названием "Unsharp Masking".
-            
+            Данный фильтр также известен под названием "Unsharp Masking". 
             Подробное описание алгоритма можно найти на сайте:
             http://www.cambridgeincolour.com/tutorials/local-contrast-enhancement.htm
             Примеры использования:
@@ -9470,11 +9380,6 @@
             Получает или задает диапазон оттенков [0, 359].
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.GrayscaleY">
-            <summary>
-            Определяет фильтр градаций серого (Y).
-            </summary>
-        </member>
         <member name="T:UMapx.Imaging.Grayscale">
             <summary>
             Определяет фильтр градаций серого.
@@ -9542,29 +9447,19 @@
             Получает или задает значение коэффициента синего канала.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.GrayscaleY.#ctor">
+        <member name="P:UMapx.Imaging.Grayscale.BT709">
             <summary>
-            Инициализирует фильтр градаций серого (Y).
+            Инициализирует фильтр градаций серого (BT709).
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.GrayscaleRY">
+        <member name="P:UMapx.Imaging.Grayscale.RY">
             <summary>
             Определяет фильтр градаций серого (R-Y).
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.GrayscaleRY.#ctor">
+        <member name="P:UMapx.Imaging.Grayscale.Y">
             <summary>
-            Инициализирует фильтр градаций серого (R-Y).
-            </summary>
-        </member>
-        <member name="T:UMapx.Imaging.GrayscaleBT709">
-            <summary>
-            Определяет фильтр градаций серого (BT709).
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.GrayscaleBT709.#ctor">
-            <summary>
-            Инициализирует фильтр градаций серого (BT709).
+            Определяет фильтр градаций серого Y.
             </summary>
         </member>
         <member name="T:UMapx.Imaging.Photofilter">
@@ -12135,93 +12030,6 @@
             Получает или задает размеры фильтра.
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.BradleyLocalThreshold">
-            <summary>
-            Определяет фильтр локальной бинаризации Брэдли.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.BradleyLocalThreshold.gb">
-            <summary>
-            Фильтр локального усреднения.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.BradleyLocalThreshold.difference">
-            <summary>
-            Предел разницы яркости между пикселем обработки и средним значением локальных пикселей.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.BradleyLocalThreshold.averaging">
-            <summary>
-            Усреднять значения пикселей или нет.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.BradleyLocalThreshold.#ctor(System.Int32,System.Double,System.Boolean)">
-            <summary>
-            Инициализирует фильтр локальной бинаризации Брэдли.
-            </summary>
-            <param name="radius">Размер фильтра</param>
-            <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
-            <param name="averaging">Усреднять значения пикселей или нет</param>
-        </member>
-        <member name="M:UMapx.Imaging.BradleyLocalThreshold.#ctor(System.Int32,System.Int32,System.Double,System.Boolean)">
-            <summary>
-            Инициализирует фильтр локальной бинаризации Брэдли.
-            </summary>
-            <param name="width">Ширина фильтра</param>
-            <param name="height">Высота фильтра</param>
-            <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
-            <param name="averaging">Усреднять значения пикселей или нет</param>
-        </member>
-        <member name="M:UMapx.Imaging.BradleyLocalThreshold.#ctor(UMapx.Core.SizeInt,System.Double,System.Boolean)">
-            <summary>
-            Инициализирует фильтр локальной бинаризации Брэдли.
-            </summary>
-            <param name="size">Размер фильтра</param>
-            <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
-            <param name="averaging">Усреднять значения пикселей или нет</param>
-        </member>
-        <member name="M:UMapx.Imaging.BradleyLocalThreshold.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Применяет фильтр к точечному рисунку.
-            </summary>
-            <param name="bmData">Атрибуты точечного изображения</param>
-            <param name="bmSrc">Атрибуты точечного изображения</param>
-        </member>
-        <member name="M:UMapx.Imaging.BradleyLocalThreshold.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
-            <summary>
-            Применяет фильтр к точечному рисунку.
-            </summary>
-            <param name="Data">Точечный рисунок</param>
-            <param name="Src">Точечный рисунок</param>
-        </member>
-        <member name="M:UMapx.Imaging.BradleyLocalThreshold.Apply(System.Drawing.Bitmap)">
-            <summary>
-            Применяет фильтр к точечному рисунку.
-            </summary>
-            <param name="Data">Точечный рисунок</param>
-        </member>
-        <member name="M:UMapx.Imaging.BradleyLocalThreshold.bradley(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Применяет фильтр к точечному рисунку.
-            </summary>
-            <param name="bmData">Атрибуты точечного изображения</param>
-            <param name="bmSrc">Атрибуты точечного изображения</param>
-        </member>
-        <member name="P:UMapx.Imaging.BradleyLocalThreshold.Difference">
-            <summary>
-            Получает или задает предел разницы яркости между пикселем обработки и средним значением локальных пикселей.
-            </summary>
-        </member>
-        <member name="P:UMapx.Imaging.BradleyLocalThreshold.Size">
-            <summary>
-            Получает или задает размер фильтра.
-            </summary>
-        </member>
-        <member name="P:UMapx.Imaging.BradleyLocalThreshold.Averaging">
-            <summary>
-            Усреднять значения пикселей или нет.
-            </summary>
-        </member>
         <member name="T:UMapx.Imaging.HSBFilter">
             <summary>
             Определяет фильтр на основе структуры HSB.
@@ -12693,6 +12501,14 @@
             <param name="bmMax">Атрибуты точечного изображения</param>
             <param name="bmMin">Атрибуты точечного изображения</param> 
         </member>
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyGrayscale(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Применяет фильтр к точечному рисунку.
+            </summary>
+            <param name="bmData">Атрибуты точечного изображения</param>
+            <param name="bmMax">Атрибуты точечного изображения</param>
+            <param name="bmMin">Атрибуты точечного изображения</param> 
+        </member>
         <member name="P:UMapx.Imaging.LocalHistogramStretch.Size">
             <summary>
             Получает или задает размер фильтра.
@@ -12771,6 +12587,12 @@
             </summary>
             <param name="bmData">Атрибуты точечного изображения</param>
         </member>
+        <member name="M:UMapx.Imaging.BitmapFilter.ApplyGrayscale(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Применяет фильтр к точечному рисунку.
+            </summary>
+            <param name="bmData">Атрибуты точечного изображения</param>
+        </member>
         <member name="P:UMapx.Imaging.BitmapFilter.Filter">
             <summary>
             Получает или задает фильтр.
@@ -12832,6 +12654,20 @@
             <returns>Точечный рисунок</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapBlender.ApplyRGB(System.Drawing.Imaging.BitmapData[])">
+            <summary>
+            Применяет фильтр к массиву атрибутов точечных рисунков.
+            </summary>
+            <param name="bmData">Массив точечных рисунков</param>
+            <returns>Точечный рисунок</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapBlender.ApplyGrayscale(System.Drawing.Bitmap[])">
+            <summary>
+            Применяет фильтр к массиву точечных рисунков.
+            </summary>
+            <param name="Data">Массив точечных рисунков</param>
+            <returns>Точечный рисунок</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapBlender.ApplyGrayscale(System.Drawing.Imaging.BitmapData[])">
             <summary>
             Применяет фильтр к массиву атрибутов точечных рисунков.
             </summary>
@@ -13750,6 +13586,23 @@
             <param name="length">Количество уровней представления</param>
             <returns>Одномерный массив</returns>
         </member>
+        <member name="M:UMapx.Imaging.Intensity.Bradley(System.Double,System.Double,System.Double)">
+            <summary>
+            Реализует алгоритм коррекции яркости Single Scale Retinex.
+            </summary>
+            <param name="x">Яркость</param>
+            <param name="xlow">Яркость под воздействием фильтра</param>
+            <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
+            <returns>Число двойной точности с плавающей запятой</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Intensity.Bradley(System.Double,System.Int32)">
+            <summary>
+            Возвращает маску коррекции яркости Single Scale Retinex.
+            </summary>
+            <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
+            <param name="length">Размерность массива</param>
+            <returns>Матрица</returns>
+        </member>
         <member name="T:UMapx.Imaging.BlendMode">
             <summary>
             Используется для смешивания слоев.
@@ -14251,6 +14104,11 @@
         <member name="F:UMapx.Imaging.Space.YCbCr">
             <summary>
             Цветовое пространство YCbCr.
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.Space.Grayscale">
+            <summary>
+            Оттенки серого.
             </summary>
         </member>
         <member name="T:UMapx.Imaging.RGBA">
