@@ -6610,11 +6610,11 @@ namespace UMapx.Transform
             // process
             for (i = 0; i < length; i++)
             {
+                // summarize all signals:
                 for (j = 0; j < r; j++)
                 {
                     for (k = 0; k < c; k++)
                     {
-                        // summarize all signals:
                         sum[j, k] += data[i][j, k] / length;
                     }
                 }
@@ -8440,6 +8440,7 @@ namespace UMapx.Transform
         // Designed by Asiryan Valeriy (c), 2015-2019
         // Moscow, Russia.
         // **************************************************
+
 
         /// <summary>
         /// Local laplacian filter.
