@@ -5000,7 +5000,7 @@ namespace UMapx.Transform
     /// Более подробную информацию можно найти на сайте:
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
     /// </summary>
-    public class LaplacianPyramidTransform : ILevelTransform, IPyramidTransform
+    public class LaplacianPyramidTransform : IPyramidTransform
     {
         #region Private data
         int levels;
@@ -5292,7 +5292,7 @@ namespace UMapx.Transform
     /// Более подробную информацию можно найти на сайте:
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
     /// </summary>
-    public class GaussianPyramidTransform : ILevelTransform, IPyramidTransform
+    public class GaussianPyramidTransform : IPyramidTransform
     {
         #region Private data
         int levels;
@@ -8250,7 +8250,7 @@ namespace UMapx.Transform
     /// https://people.csail.mit.edu/sparis/publi/2011/siggraph/
     /// </remarks>
     /// </summary>
-    public class LocalLaplacianFilter : ILevelTransform, IFilter, IBlendFilter
+    public class LocalLaplacianFilter : IFilter, IBlendFilter
     {
         #region Private data
         /// <summary>
@@ -8672,18 +8672,6 @@ namespace UMapx.Transform
     #endregion
 
     #region Interfaces
-    /// <summary>
-    /// Определяет класс многоуровневого преобразования.
-    /// </summary>
-    public interface ILevelTransform
-    {
-        #region Interface
-        /// <summary>
-        /// Получает или задает количество уровней представления.
-        /// </summary>
-        int Levels { get; set; } 
-        #endregion
-    }
     /// <summary>
     /// Определяет общий интерфейс дискретных преобразований.
     /// </summary>

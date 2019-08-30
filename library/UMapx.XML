@@ -2408,16 +2408,6 @@
             http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
             </summary>
         </member>
-        <member name="T:UMapx.Transform.ILevelTransform">
-            <summary>
-            Определяет класс многоуровневого преобразования.
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.ILevelTransform.Levels">
-            <summary>
-            Получает или задает количество уровней представления.
-            </summary>
-        </member>
         <member name="T:UMapx.Transform.IPyramidTransform">
             <summary>
             Определяет общий вид пирамидоидальных преобразований.

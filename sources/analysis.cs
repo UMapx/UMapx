@@ -1260,10 +1260,10 @@ namespace UMapx.Core
             // matrix invert
             deltas = Matrice.Invert(deltas);
 
-            // rounding
-            for (j = 0; j < points; j++)
-                for (k = 0; k < points; k++)
-                    deltas[j, k] = (Math.Round(deltas[j, k] * fac, MidpointRounding.AwayFromZero)) / fac;
+            //// rounding
+            //for (j = 0; j < points; j++)
+            //    for (k = 0; k < points; k++)
+            //        deltas[j, k] = (Math.Round(deltas[j, k] * fac, MidpointRounding.AwayFromZero)) / fac;
 
             return deltas;
         }
@@ -1493,11 +1493,12 @@ namespace UMapx.Core
                 c[i] = Math.Pow(-1, i) / (i + 1);
             }
 
-            return c.Dot(A.Invert());
+            return A.Solve(c);
+            //return c.Dot(A.Invert());
         }
         #endregion
 
-        #region runge-kutta voids
+        #region Runge-Kutta
         /// <summary>
         /// 
         /// </summary>

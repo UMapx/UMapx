@@ -35,7 +35,7 @@ namespace UMapx.Wavelet
     /// https://en.wikipedia.org/wiki/Discrete_wavelet_transform
     /// </remarks>
     /// </summary>
-    public class WaveletTransform : IWaveletTransform, ILevelTransform, ITransform
+    public class WaveletTransform : IWaveletTransform, ITransform
     {
         #region Private data
         private double[] lp;        // Low-Pass filter,
