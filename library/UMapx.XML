@@ -9304,7 +9304,7 @@
             Получает или задает размер фильтра.
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.HSBGrayscaleFilter">
+        <member name="T:UMapx.Imaging.HSBGrayscale">
             <summary>
             Определяет фильтр на основе структуры HSB.
             <remarks>
@@ -9312,37 +9312,37 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HSBGrayscaleFilter.#ctor(UMapx.Core.RangeInt)">
+        <member name="M:UMapx.Imaging.HSBGrayscale.#ctor(UMapx.Core.RangeInt)">
             <summary>
             Инициализирует фильтр на основе структуры HSB.
             </summary>
             <param name="hue">Диапазон оттенков [0, 359]</param>
         </member>
-        <member name="M:UMapx.Imaging.HSBGrayscaleFilter.#ctor(System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.HSBGrayscale.#ctor(System.Int32,System.Int32)">
             <summary>
             Инициализирует фильтр на основе структуры HSB.
             </summary>
             <param name="min">Нижний предел [0, 359]</param>
             <param name="max">Верхний предел [0, 359]</param>
         </member>
-        <member name="M:UMapx.Imaging.HSBGrayscaleFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.HSBGrayscale.Apply(System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="bmData">Атрибуты точечного изображения</param>
         </member>
-        <member name="M:UMapx.Imaging.HSBGrayscaleFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.HSBGrayscale.Apply(System.Drawing.Bitmap)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="Data">Точечный рисунок</param>
         </member>
-        <member name="P:UMapx.Imaging.HSBGrayscaleFilter.Hue">
+        <member name="P:UMapx.Imaging.HSBGrayscale.Hue">
             <summary>
             Получает или задает диапазон оттенков [0, 359].
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.HSLGrayscaleFilter">
+        <member name="T:UMapx.Imaging.HSLGrayscale">
             <summary>
             Определяет фильтр на основе структуры HSL.
             <remarks>
@@ -9350,32 +9350,32 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HSLGrayscaleFilter.#ctor(UMapx.Core.RangeInt)">
+        <member name="M:UMapx.Imaging.HSLGrayscale.#ctor(UMapx.Core.RangeInt)">
             <summary>
             Инициализирует фильтр на основе структуры HSB.
             </summary>
             <param name="hue">Диапазон оттенков [0, 359]</param>
         </member>
-        <member name="M:UMapx.Imaging.HSLGrayscaleFilter.#ctor(System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.HSLGrayscale.#ctor(System.Int32,System.Int32)">
             <summary>
             Инициализирует фильтр на основе структуры HSB.
             </summary>
             <param name="min">Нижний предел [0, 359]</param>
             <param name="max">Верхний предел [0, 359]</param>
         </member>
-        <member name="M:UMapx.Imaging.HSLGrayscaleFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.HSLGrayscale.Apply(System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="bmData">Атрибуты точечного изображения</param>
         </member>
-        <member name="M:UMapx.Imaging.HSLGrayscaleFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.HSLGrayscale.Apply(System.Drawing.Bitmap)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="Data">Точечный рисунок</param>
         </member>
-        <member name="P:UMapx.Imaging.HSLGrayscaleFilter.Hue">
+        <member name="P:UMapx.Imaging.HSLGrayscale.Hue">
             <summary>
             Получает или задает диапазон оттенков [0, 359].
             </summary>
@@ -9462,27 +9462,27 @@
             Определяет фильтр градаций серого Y.
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.Photofilter">
+        <member name="T:UMapx.Imaging.PhotoFilter">
             <summary>
             Определяет цветовой фотофильтр.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.Photofilter.s">
+        <member name="F:UMapx.Imaging.PhotoFilter.s">
             <summary>
             Сила фильтра.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.Photofilter.color">
+        <member name="F:UMapx.Imaging.PhotoFilter.color">
             <summary>
             Цвет.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.Photofilter.blendf">
+        <member name="F:UMapx.Imaging.PhotoFilter.blendf">
             <summary>
             Функция смешивания.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Photofilter.#ctor(UMapx.Core.IDoubleMesh,System.Drawing.Color,System.Double)">
+        <member name="M:UMapx.Imaging.PhotoFilter.#ctor(UMapx.Core.IDoubleMesh,System.Drawing.Color,System.Double)">
             <summary>
             Инициализирует цветовой фотофильтр.
             </summary>
@@ -9490,101 +9490,101 @@
             <param name="color">Цвет фильтра</param>
             <param name="strength">Сила фильтра [0, 1]</param>
         </member>
-        <member name="M:UMapx.Imaging.Photofilter.#ctor(System.Drawing.Color,System.Double)">
+        <member name="M:UMapx.Imaging.PhotoFilter.#ctor(System.Drawing.Color,System.Double)">
             <summary>
             Инициализирует цветовой фотофильтр.
             </summary>
             <param name="color">Цвет фильтра</param>
             <param name="strength">Сила фильтра [0, 1]</param>
         </member>
-        <member name="M:UMapx.Imaging.Photofilter.#ctor">
+        <member name="M:UMapx.Imaging.PhotoFilter.#ctor">
             <summary>
             Инициализирует цветовой фотофильтр.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Photofilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.PhotoFilter.Apply(System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="bmData">Атрибуты точечного изображения</param>
         </member>
-        <member name="M:UMapx.Imaging.Photofilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.PhotoFilter.Apply(System.Drawing.Bitmap)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="Data">Точечный рисунок</param>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.BlendFunction">
+        <member name="P:UMapx.Imaging.PhotoFilter.BlendFunction">
             <summary>
             Получает или задает цвет фильтра.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Color">
+        <member name="P:UMapx.Imaging.PhotoFilter.Color">
             <summary>
             Получает или задает цвет фильтра.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Strength">
+        <member name="P:UMapx.Imaging.PhotoFilter.Strength">
             <summary>
             Получает или задает силу фильтра [0, 1].
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Cold82">
+        <member name="P:UMapx.Imaging.PhotoFilter.Cold82">
             <summary>
             Инициализирует холодный фильтр (82).
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.ColdLBB">
+        <member name="P:UMapx.Imaging.PhotoFilter.ColdLBB">
             <summary>
             Инициализирует холодный фильтр LBB.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Warm81">
+        <member name="P:UMapx.Imaging.PhotoFilter.Warm81">
             <summary>
             Инициализирует теплый фильтр (81).
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.WarmLBA">
+        <member name="P:UMapx.Imaging.PhotoFilter.WarmLBA">
             <summary>
             Инициализирует теплый фильтр LBA.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Sepia">
+        <member name="P:UMapx.Imaging.PhotoFilter.Sepia">
             <summary>
             Инициализирует фильтр сепии.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Red">
+        <member name="P:UMapx.Imaging.PhotoFilter.Red">
             <summary>
             Инициализирует красный фильтр.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Blue">
+        <member name="P:UMapx.Imaging.PhotoFilter.Blue">
             <summary>
             Инициализирует синий фильтр.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Green">
+        <member name="P:UMapx.Imaging.PhotoFilter.Green">
             <summary>
             Инициализирует зеленый фильтр.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Underwater">
+        <member name="P:UMapx.Imaging.PhotoFilter.Underwater">
             <summary>
             Инициализирует подводный фильтр.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Purple">
+        <member name="P:UMapx.Imaging.PhotoFilter.Purple">
             <summary>
             Инициализирует пурпурный фильтр.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Orange">
+        <member name="P:UMapx.Imaging.PhotoFilter.Orange">
             <summary>
             Инициализирует оранжевый фильтр.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Photofilter.Yellow">
+        <member name="P:UMapx.Imaging.PhotoFilter.Yellow">
             <summary>
             Инициализирует желтый фильтр.
             </summary>
@@ -9619,53 +9619,53 @@
             Получает или задает значение температуры [1E3К, 1E4К].
             </summary>
         </member>
-        <member name="T:UMapx.Imaging.YUVPhotofilter">
+        <member name="T:UMapx.Imaging.YUVPhotoFilter">
             <summary>
             Определяет цветовой фотофильтр на основе модели YUV.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.YUVPhotofilter.s">
+        <member name="F:UMapx.Imaging.YUVPhotoFilter.s">
             <summary>
             Сила фильтра.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.YUVPhotofilter.color">
+        <member name="F:UMapx.Imaging.YUVPhotoFilter.color">
             <summary>
             Цвет.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotofilter.#ctor(System.Drawing.Color,System.Double)">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.#ctor(System.Drawing.Color,System.Double)">
             <summary>
             Инициализирует цветовой фотофильтр на основе модели YUV.
             </summary>
             <param name="color">Цвет фильтра</param>
             <param name="strength">Сила фильтра [0, 1]</param>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotofilter.#ctor">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.#ctor">
             <summary>
             Инициализирует цветовой фотофильтр на основе модели YUV.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotofilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.Apply(System.Drawing.Imaging.BitmapData)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="bmData">Атрибуты точечного изображения</param>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotofilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.Apply(System.Drawing.Bitmap)">
             <summary>
             Применяет фильтр к точечному рисунку.
             </summary>
             <param name="Data">Точечный рисунок</param>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotofilter.IsGrayColor(System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.IsGrayColor(System.Drawing.Color)">
             <summary>
             Проверяет является ли цвет оттенком серого.
             </summary>
             <param name="color">Цвет в терминах красного, зеленого и синего каналов</param>
             <returns>Логическое значение</returns>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotofilter.AddColor(UMapx.Colorspace.YUV,UMapx.Colorspace.YUV)">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.AddColor(UMapx.Colorspace.YUV,UMapx.Colorspace.YUV)">
             <summary>
             Смешивает два цвета в пространстве YUV.
             </summary>
@@ -9673,27 +9673,27 @@
             <param name="yuv2">Второй цвет</param>
             <returns>Результат</returns>
         </member>
-        <member name="P:UMapx.Imaging.YUVPhotofilter.Color">
+        <member name="P:UMapx.Imaging.YUVPhotoFilter.Color">
             <summary>
             Получает или задает цвет фильтра.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.YUVPhotofilter.Strength">
+        <member name="P:UMapx.Imaging.YUVPhotoFilter.Strength">
             <summary>
             Получает или задает силу фильтра [0, 1].
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.YUVPhotofilter.Sepia">
+        <member name="P:UMapx.Imaging.YUVPhotoFilter.Sepia">
             <summary>
             Инициализирует фильтр сепии.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.YUVPhotofilter.Orange">
+        <member name="P:UMapx.Imaging.YUVPhotoFilter.Orange">
             <summary>
             Инициализирует оранжевый фильтр.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.YUVPhotofilter.Yellow">
+        <member name="P:UMapx.Imaging.YUVPhotoFilter.Yellow">
             <summary>
             Инициализирует желтый фильтр.
             </summary>
@@ -9873,11 +9873,6 @@
             </remarks>
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.ErrorDiffusionDithering.useCaching">
-            <summary>
-            Сглаживание.
-            </summary>
-        </member>
         <member name="F:UMapx.Imaging.ErrorDiffusionDithering.x">
             <summary>
             Координата X.
@@ -9903,16 +9898,6 @@
             Шаг изображения.
             </summary>
         </member>
-        <member name="F:UMapx.Imaging.ErrorDiffusionDithering.pixelSize">
-            <summary>
-            Размер пикселя
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.ErrorDiffusionDithering.table">
-            <summary>
-            Таблица цветов.
-            </summary>
-        </member>
         <member name="F:UMapx.Imaging.ErrorDiffusionDithering.matrix">
             <summary>
             Матрица.
@@ -9923,10 +9908,21 @@
             Суммарное значение.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ErrorDiffusionDithering.#ctor(System.Int32[][])">
+        <member name="F:UMapx.Imaging.ErrorDiffusionDithering.levels">
+            <summary>
+            Количество уровней квантования.
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.ErrorDiffusionDithering.table">
+            <summary>
+            Таблица квантования.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.ErrorDiffusionDithering.#ctor(System.Int32,System.Double[][])">
             <summary>
             Инициализирует фильтр дитеринга диффузии ошибки.
             </summary>
+            <param name="levels">Количество уровней квантования</param>
             <param name="matrix">Матрица</param>
         </member>
         <member name="M:UMapx.Imaging.ErrorDiffusionDithering.Apply(System.Drawing.Imaging.BitmapData)">
@@ -9943,6 +9939,11 @@
             <param name="Data">Точечный рисунок</param>
             <returns>Точечный рисунок</returns>
         </member>
+        <member name="M:UMapx.Imaging.ErrorDiffusionDithering.Rebuild">
+            <summary>
+            Реализует перестроение данных фильтра.
+            </summary>
+        </member>
         <member name="M:UMapx.Imaging.ErrorDiffusionDithering.Diffuse(System.Int32,System.Int32,System.Int32,System.Byte*)">
             <summary>
             Выполняет диффузию ошибки.
@@ -9952,30 +9953,25 @@
             <param name="bError">Ошибка синего канала</param>
             <param name="ptr">Текущий пиксель</param>
         </member>
-        <member name="M:UMapx.Imaging.ErrorDiffusionDithering.GetClosestColor(System.Int32,System.Int32,System.Int32,System.Byte@)">
+        <member name="M:UMapx.Imaging.ErrorDiffusionDithering.GetColor(System.Int32,System.Int32,System.Int32,System.Double[])">
             <summary>
             Вычисляет ближайший цвет для заданных значений каналов.
             </summary>
             <param name="red">Красный</param>
             <param name="green">Зеленый</param>
             <param name="blue">Синий</param>
-            <param name="index">Индекс</param>
+            <param name="table">Таблица цветов</param>
             <returns>Цвет в терминах красного, зеленого и синего каналов</returns>
+        </member>
+        <member name="P:UMapx.Imaging.ErrorDiffusionDithering.Levels">
+            <summary>
+            Получает или задает количество уровней квантования.
+            </summary>
         </member>
         <member name="P:UMapx.Imaging.ErrorDiffusionDithering.Matrix">
             <summary>
             Получает или задает матрицу преобразования.
             </summary>
-        </member>
-        <member name="P:UMapx.Imaging.ErrorDiffusionDithering.Table">
-            <summary>
-            Таблица цветов дитеринга изображения, размерность таблицы должна быть в пределах 2-256.
-            </summary>
-        </member>
-        <member name="P:UMapx.Imaging.ErrorDiffusionDithering.Caching">
-            <summary>
-            Использовать кеширование цвета во время сглаживания цвета или нет.
-            </summary> 
         </member>
         <member name="P:UMapx.Imaging.ErrorDiffusionDithering.Atkinson">
             <summary>

@@ -2920,7 +2920,7 @@ namespace UMapx.Imaging
     /// Фильтр обесцвечивает указанную часть изображения.
     /// </remarks>
     /// </summary>
-    public class HSBGrayscaleFilter : IBitmapFilter
+    public class HSBGrayscale : IBitmapFilter
     {
         #region Private data
         private int min;
@@ -2932,7 +2932,7 @@ namespace UMapx.Imaging
         /// Инициализирует фильтр на основе структуры HSB.
         /// </summary>
         /// <param name="hue">Диапазон оттенков [0, 359]</param>
-        public HSBGrayscaleFilter(RangeInt hue)
+        public HSBGrayscale(RangeInt hue)
         {
             Hue = hue;
         }
@@ -2941,7 +2941,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="min">Нижний предел [0, 359]</param>
         /// <param name="max">Верхний предел [0, 359]</param>
-        public HSBGrayscaleFilter(int min, int max)
+        public HSBGrayscale(int min, int max)
         {
             this.min = min;
             this.max = max;
@@ -3033,7 +3033,7 @@ namespace UMapx.Imaging
     /// Фильтр обесцвечивает указанную часть изображения.
     /// </remarks>
     /// </summary>
-    public class HSLGrayscaleFilter : IBitmapFilter
+    public class HSLGrayscale : IBitmapFilter
     {
         #region Private data
         private int min;
@@ -3045,7 +3045,7 @@ namespace UMapx.Imaging
         /// Инициализирует фильтр на основе структуры HSB.
         /// </summary>
         /// <param name="hue">Диапазон оттенков [0, 359]</param>
-        public HSLGrayscaleFilter(RangeInt hue)
+        public HSLGrayscale(RangeInt hue)
         {
             Hue = hue;
         }
@@ -3054,7 +3054,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="min">Нижний предел [0, 359]</param>
         /// <param name="max">Верхний предел [0, 359]</param>
-        public HSLGrayscaleFilter(int min, int max)
+        public HSLGrayscale(int min, int max)
         {
             this.min = min;
             this.max = max;
@@ -3321,7 +3321,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Определяет цветовой фотофильтр.
     /// </summary>
-    public class Photofilter : IBitmapFilter
+    public class PhotoFilter : IBitmapFilter
     {
         #region Private data
         /// <summary>
@@ -3345,7 +3345,7 @@ namespace UMapx.Imaging
         /// <param name="blendf">Функция смешивания</param>
         /// <param name="color">Цвет фильтра</param>
         /// <param name="strength">Сила фильтра [0, 1]</param>
-        public Photofilter(IDoubleMesh blendf, Color color, double strength = 0.5)
+        public PhotoFilter(IDoubleMesh blendf, Color color, double strength = 0.5)
         {
             BlendFunction = blendf;
             Color = color;
@@ -3356,7 +3356,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="color">Цвет фильтра</param>
         /// <param name="strength">Сила фильтра [0, 1]</param>
-        public Photofilter(Color color, double strength = 0.5)
+        public PhotoFilter(Color color, double strength = 0.5)
         {
             BlendFunction = BlendMode.Pegtop;
             Color = color;
@@ -3365,7 +3365,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Инициализирует цветовой фотофильтр.
         /// </summary>
-        public Photofilter()
+        public PhotoFilter()
         {
             BlendFunction = BlendMode.Pegtop;
             Color = Color.White;
@@ -3478,121 +3478,121 @@ namespace UMapx.Imaging
         /// <summary>
         /// Инициализирует холодный фильтр (82).
         /// </summary>
-        public static Photofilter Cold82
+        public static PhotoFilter Cold82
         {
             get
             {
-                return new Photofilter(Color.FromArgb(0, 181, 255));
+                return new PhotoFilter(Color.FromArgb(0, 181, 255));
             }
         }
         /// <summary>
         /// Инициализирует холодный фильтр LBB.
         /// </summary>
-        public static Photofilter ColdLBB
+        public static PhotoFilter ColdLBB
         {
             get
             {
-                return new Photofilter(Color.FromArgb(0, 93, 255));
+                return new PhotoFilter(Color.FromArgb(0, 93, 255));
             }
         }
         /// <summary>
         /// Инициализирует теплый фильтр (81).
         /// </summary>
-        public static Photofilter Warm81
+        public static PhotoFilter Warm81
         {
             get
             {
-                return new Photofilter(Color.FromArgb(235, 177, 19));
+                return new PhotoFilter(Color.FromArgb(235, 177, 19));
             }
         }
         /// <summary>
         /// Инициализирует теплый фильтр LBA.
         /// </summary>
-        public static Photofilter WarmLBA
+        public static PhotoFilter WarmLBA
         {
             get
             {
-                return new Photofilter(Color.FromArgb(250, 150, 0));
+                return new PhotoFilter(Color.FromArgb(250, 150, 0));
             }
         }
         /// <summary>
         /// Инициализирует фильтр сепии.
         /// </summary>
-        public static Photofilter Sepia
+        public static PhotoFilter Sepia
         {
             get
             {
-                return new Photofilter(Color.FromArgb(172, 122, 51));
+                return new PhotoFilter(Color.FromArgb(172, 122, 51));
             }
         }
         /// <summary>
         /// Инициализирует красный фильтр.
         /// </summary>
-        public static Photofilter Red
+        public static PhotoFilter Red
         {
             get
             {
-                return new Photofilter(Color.FromArgb(234, 26, 26));
+                return new PhotoFilter(Color.FromArgb(234, 26, 26));
             }
         }
         /// <summary>
         /// Инициализирует синий фильтр.
         /// </summary>
-        public static Photofilter Blue
+        public static PhotoFilter Blue
         {
             get
             {
-                return new Photofilter(Color.FromArgb(29, 53, 234));
+                return new PhotoFilter(Color.FromArgb(29, 53, 234));
             }
         }
         /// <summary>
         /// Инициализирует зеленый фильтр.
         /// </summary>
-        public static Photofilter Green
+        public static PhotoFilter Green
         {
             get
             {
-                return new Photofilter(Color.FromArgb(25, 201, 25));
+                return new PhotoFilter(Color.FromArgb(25, 201, 25));
             }
         }
         /// <summary>
         /// Инициализирует подводный фильтр.
         /// </summary>
-        public static Photofilter Underwater
+        public static PhotoFilter Underwater
         {
             get
             {
-                return new Photofilter(Color.FromArgb(0, 194, 177));
+                return new PhotoFilter(Color.FromArgb(0, 194, 177));
             }
         }
         /// <summary>
         /// Инициализирует пурпурный фильтр.
         /// </summary>
-        public static Photofilter Purple
+        public static PhotoFilter Purple
         {
             get
             {
-                return new Photofilter(Color.FromArgb(227, 24, 227));
+                return new PhotoFilter(Color.FromArgb(227, 24, 227));
             }
         }
         /// <summary>
         /// Инициализирует оранжевый фильтр.
         /// </summary>
-        public static Photofilter Orange
+        public static PhotoFilter Orange
         {
             get
             {
-                return new Photofilter(Color.Orange);
+                return new PhotoFilter(Color.Orange);
             }
         }
         /// <summary>
         /// Инициализирует желтый фильтр.
         /// </summary>
-        public static Photofilter Yellow
+        public static PhotoFilter Yellow
         {
             get
             {
-                return new Photofilter(Color.Yellow);
+                return new PhotoFilter(Color.Yellow);
             }
         }
         #endregion
@@ -3603,7 +3603,7 @@ namespace UMapx.Imaging
     /// Фильтр использует аппроксимацию кривой Планка.
     /// </remarks>
     /// </summary>
-    public class TemperatureCorrection : Photofilter, IBitmapFilter
+    public class TemperatureCorrection : PhotoFilter, IBitmapFilter
     {
         #region Private data
         /// <summary>
@@ -3649,7 +3649,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Определяет цветовой фотофильтр на основе модели YUV.
     /// </summary>
-    public class YUVPhotofilter : IBitmapFilter
+    public class YUVPhotoFilter : IBitmapFilter
     {
         #region Private data
         /// <summary>
@@ -3668,14 +3668,14 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="color">Цвет фильтра</param>
         /// <param name="strength">Сила фильтра [0, 1]</param>
-        public YUVPhotofilter(Color color, double strength = 0.5)
+        public YUVPhotoFilter(Color color, double strength = 0.5)
         {
             Color = color; Strength = strength;
         }
         /// <summary>
         /// Инициализирует цветовой фотофильтр на основе модели YUV.
         /// </summary>
-        public YUVPhotofilter()
+        public YUVPhotoFilter()
         {
             Color = Color.White; Strength = 0.5;
         }
@@ -3788,31 +3788,31 @@ namespace UMapx.Imaging
         /// <summary>
         /// Инициализирует фильтр сепии.
         /// </summary>
-        public static YUVPhotofilter Sepia
+        public static YUVPhotoFilter Sepia
         {
             get
             {
-                return new YUVPhotofilter(Color.FromArgb(172, 122, 51));
+                return new YUVPhotoFilter(Color.FromArgb(172, 122, 51));
             }
         }
         /// <summary>
         /// Инициализирует оранжевый фильтр.
         /// </summary>
-        public static YUVPhotofilter Orange
+        public static YUVPhotoFilter Orange
         {
             get
             {
-                return new YUVPhotofilter(Color.Orange);
+                return new YUVPhotoFilter(Color.Orange);
             }
         }
         /// <summary>
         /// Инициализирует желтый фильтр.
         /// </summary>
-        public static YUVPhotofilter Yellow
+        public static YUVPhotoFilter Yellow
         {
             get
             {
-                return new YUVPhotofilter(Color.Yellow);
+                return new YUVPhotoFilter(Color.Yellow);
             }
         }
         #endregion
@@ -4167,13 +4167,9 @@ namespace UMapx.Imaging
     /// https://en.wikipedia.org/wiki/Dither
     /// </remarks>
     /// </summary>
-    public class ErrorDiffusionDithering
+    public class ErrorDiffusionDithering : Rebuilder, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Сглаживание.
-        /// </summary>
-        private bool useCaching = false;
         /// <summary>
         /// Координата X.
         /// </summary>
@@ -4195,97 +4191,76 @@ namespace UMapx.Imaging
         /// </summary>
         protected int stride;
         /// <summary>
-        /// Размер пикселя
-        /// </summary>
-        protected int pixelSize;
-        /// <summary>
-        /// Таблица цветов.
-        /// </summary>
-        private Color[] table = new Color[16]
-        {
-            Color.Black,   Color.DarkBlue,    Color.DarkGreen, Color.DarkCyan,
-            Color.DarkRed, Color.DarkMagenta, Color.DarkKhaki, Color.LightGray,
-            Color.Gray,    Color.Blue,        Color.Green,     Color.Cyan,
-            Color.Red,     Color.Magenta,     Color.Yellow,    Color.White
-        };
-        /// <summary>
         /// Матрица.
         /// </summary>
-        protected int[][] matrix;
+        protected double[][] matrix;
         /// <summary>
         /// Суммарное значение.
         /// </summary>
-        private int summary;
-        private Dictionary<Color, byte> cache = new Dictionary<Color, byte>();
+        private double summary;
+        /// <summary>
+        /// Количество уровней квантования.
+        /// </summary>
+        protected int levels;
+        /// <summary>
+        /// Таблица квантования.
+        /// </summary>
+        private double[] table;
         #endregion
 
         #region Class components
         /// <summary>
         /// Инициализирует фильтр дитеринга диффузии ошибки.
         /// </summary>
+        /// <param name="levels">Количество уровней квантования</param>
         /// <param name="matrix">Матрица</param>
-        public ErrorDiffusionDithering(int[][] matrix)
+        public ErrorDiffusionDithering(int levels, double[][] matrix)
         {
+            this.Levels = levels;
             this.Matrix = matrix;
+        }
+        /// <summary>
+        /// Получает или задает количество уровней квантования.
+        /// </summary>
+        public int Levels
+        {
+            get
+            {
+                return this.levels;
+            }
+            set
+            {
+                this.levels = value;
+                this.rebuild = true;
+            }
         }
         /// <summary>
         /// Получает или задает матрицу преобразования.
         /// </summary>
-        public int[][] Matrix
+        public double[][] Matrix
         {
-            get 
-            { 
-                return matrix; 
+            get
+            {
+                return this.matrix;
             }
             set
             {
                 this.matrix = value;
                 this.summary = 0;
                 int n = matrix.Length;
-                int[] coefficientsRow;
+                double[] row;
                 int i, j, k;
 
                 for (i = 0; i < n; i++)
                 {
-                    coefficientsRow = matrix[i];
-                    k = coefficientsRow.Length;
+                    row = matrix[i];
+                    k = row.Length;
 
                     for (j = 0; j < k; j++)
                     {
-                        summary += coefficientsRow[j];
+                        summary += row[j];
                     }
                 }
-            }
-        }
-        /// <summary>
-        /// Таблица цветов дитеринга изображения, размерность таблицы должна быть в пределах 2-256.
-        /// </summary>
-        public Color[] Table
-        {
-            get
-            {
-                return table;
-            }
-            set
-            {
-                if ((value.Length < 2) || (value.Length > 256))
-                    throw new ArgumentException("Размерность таблицы цветов дитеринга должна быть не менее 2 и не более 256");
-
-                table = value;
-            }
-        }
-        /// <summary>
-        /// Использовать кеширование цвета во время сглаживания цвета или нет.
-        /// </summary> 
-        public bool Caching
-        {
-            get
-            {
-                return useCaching;
-            }
-            set
-            {
-                useCaching = value;
             }
         }
         /// <summary>
@@ -4293,87 +4268,64 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="bmData">Атрибуты точечного изображения</param>
         /// <returns>Точечный рисунок</returns>
-        public unsafe Bitmap Apply(BitmapData bmData)
+        public unsafe void Apply(BitmapData bmData)
         {
-            cache.Clear();
-            width = bmData.Width; height = bmData.Height;
-            stride = bmData.Stride; pixelSize = 4;
-            int offset = stride - width * pixelSize;
-            int length = table.Length;
-            bool is8bpp = (length > 16);
-
-            Bitmap Src = new Bitmap(width, height, is8bpp ? PixelFormat.Format8bppIndexed : PixelFormat.Format4bppIndexed);
-            ColorPalette cp = Src.Palette;
-
-            for (int i = 0, n = length; i < n; i++)
+            // rebuild?
+            if (rebuild == true)
             {
-                cp.Entries[i] = table[i];
+                this.Rebuild(); this.rebuild = false;
             }
 
-            Src.Palette = cp;
-
-            BitmapData bmSrc = Src.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, Src.PixelFormat);
-            int r, g, b;
+            // params
+            this.width = bmData.Width;
+            this.height = bmData.Height;
+            this.stride = bmData.Stride;
+            int length = table.Length;
             byte* ptr = (byte*)bmData.Scan0.ToPointer();
-            byte* dstBase = (byte*)bmSrc.Scan0.ToPointer();
-            byte colorIndex;
-            byte* dst;
-            Color closestColor;
+            int r, g, b;
+            Color color;
 
             // for each line
             for (y = 0; y < height; y++)
             {
-                dst = dstBase + y * bmSrc.Stride;
-
                 // for each pixels
-                for (x = 0; x < width; x++, ptr += pixelSize)
+                for (x = 0; x < width; x++, ptr += 4)
                 {
+                    // current
                     r = ptr[2];
                     g = ptr[1];
                     b = ptr[0];
 
                     // get color from palette, which is the closest to current pixel's value
-                    closestColor = GetClosestColor(r, g, b, out colorIndex);
+                    color = GetColor(r, g, b, table);
+                    ptr[2] = color.R;
+                    ptr[1] = color.G;
+                    ptr[0] = color.B;
 
                     // do error diffusion
-                    Diffuse(r - closestColor.R, g - closestColor.G, b - closestColor.B, ptr);
-
-                    // write color index as pixel's value to destination image
-                    if (is8bpp)
-                    {
-                        *dst = colorIndex;
-                        dst++;
-                    }
-                    else
-                    {
-                        if (x % 2 == 0)
-                        {
-                            *dst |= (byte)(colorIndex << 4);
-                        }
-                        else
-                        {
-                            *dst |= (colorIndex);
-                            dst++;
-                        }
-                    }
+                    Diffuse(r - color.R, g - color.G, b - color.B, ptr);
                 }
-                ptr += offset;
             }
-
-            Src.UnlockBits(bmSrc);
-            return Src;
+            return;
         }
         /// <summary>
         /// Применяет фильтр к точечному рисунку.
         /// </summary>
         /// <param name="Data">Точечный рисунок</param>
         /// <returns>Точечный рисунок</returns>
-        public Bitmap Apply(Bitmap Data)
+        public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            Bitmap image = Apply(bmData);
+            Apply(bmData);
             BitmapConverter.Unlock(Data, bmData);
-            return image;
+            return;
+        }
+        /// <summary>
+        /// Реализует перестроение данных фильтра.
+        /// </summary>
+        protected override void Rebuild()
+        {
+            this.table = Intensity.Quantize(this.levels, 256).Mul(255);
         }
         #endregion
 
@@ -4387,17 +4339,17 @@ namespace UMapx.Imaging
         /// <param name="ptr">Текущий пиксель</param>
         protected unsafe void Diffuse(int rError, int gError, int bError, byte* ptr)
         {
-            int edR;	// error diffusion
-            int edG;	// error diffusion
-            int edB;	// error diffusion
+            double edR;	// error diffusion
+            double edG;	// error diffusion
+            double edB;	// error diffusion
 
             // do error diffusion to right-standing neighbors
-            int[] row = matrix[0];
+            double[] row = matrix[0];
             int jI, jP, i, k, jC, n;
             int length = matrix.Length;
 
 
-            for (jI = 1, jP = pixelSize, jC = 0, k = row.Length; jC < k; jI++, jC++, jP += pixelSize)
+            for (jI = 1, jP = 4, jC = 0, k = row.Length; jC < k; jI++, jC++, jP += 4)
             {
                 if (x + jI >= width)
                     break;
@@ -4425,7 +4377,7 @@ namespace UMapx.Imaging
                 row = matrix[i];
 
                 // process the row
-                for (jC = 0, k = row.Length, jI = -(k >> 1), jP = -(k >> 1) * pixelSize; jC < k; jI++, jC++, jP += pixelSize)
+                for (jC = 0, k = row.Length, jI = -(k >> 1), jP = -(k >> 1) * 4; jC < k; jI++, jC++, jP += 4)
                 {
                     if (x + jI >= width)
                         break;
@@ -4450,43 +4402,14 @@ namespace UMapx.Imaging
         /// <param name="red">Красный</param>
         /// <param name="green">Зеленый</param>
         /// <param name="blue">Синий</param>
-        /// <param name="index">Индекс</param>
+        /// <param name="table">Таблица цветов</param>
         /// <returns>Цвет в терминах красного, зеленого и синего каналов</returns>
-        private Color GetClosestColor(int red, int green, int blue, out byte index)
+        private Color GetColor(int red, int green, int blue, double[] table)
         {
-            Color color = Color.FromArgb(red, green, blue);
-
-            if ((useCaching) && (cache.ContainsKey(color)))
-            {
-                index = cache[color];
-            }
-            else
-            {
-                index = 0;
-                int minError = int.MaxValue;
-
-                for (int i = 0, n = table.Length; i < n; i++)
-                {
-                    int dr = red - table[i].R;
-                    int dg = green - table[i].G;
-                    int db = blue - table[i].B;
-
-                    int error = dr * dr + dg * dg + db * db;
-
-                    if (error < minError)
-                    {
-                        minError = error;
-                        index = (byte)i;
-                    }
-                }
-
-                if (useCaching)
-                {
-                    cache.Add(color, index);
-                }
-            }
-
-            return table[index];
+            byte r = Maths.Byte(table[red]);
+            byte g = Maths.Byte(table[green]);
+            byte b = Maths.Byte(table[blue]);
+            return Color.FromArgb(r, g, b);
         }
         #endregion
 
@@ -4499,11 +4422,11 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[3][] {
-                new int[2]   {          1, 1 },
-                new int[5]   { 0, 1, 1, 1, 0 },
-                new int[5]   { 0, 0, 1, 0, 0 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[3][] {
+                new double[2]   {          1, 1 },
+                new double[5]   { 0, 1, 1, 1, 0 },
+                new double[5]   { 0, 0, 1, 0, 0 } });
             }
         }
         /// <summary>
@@ -4514,10 +4437,10 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[2][] {
-                    new int[2] { 8, 4 },
-                    new int[5] { 2, 4, 8, 4, 2 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[2][] {
+                    new double[2] { 8, 4 },
+                    new double[5] { 2, 4, 8, 4, 2 } });
             }
         }
         /// <summary>
@@ -4528,10 +4451,10 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[2][] {
-                    new int[1] { 8 },
-                    new int[4] { 1, 1, 2, 4 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[2][] {
+                    new double[1] { 8 },
+                    new double[4] { 1, 1, 2, 4 } });
             }
         }
         /// <summary>
@@ -4542,10 +4465,10 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[2][] {
-                new int[1] { 2 },
-                new int[2] { 1, 1 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[2][] {
+                new double[1] { 2 },
+                new double[2] { 1, 1 } });
             }
         }
         /// <summary>
@@ -4556,11 +4479,11 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[3][] {
-                new int[2] { 5, 3 },
-                new int[5] { 2, 4, 5, 4, 2 },
-                new int[3] { 2, 3, 2 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[3][] {
+                new double[2] { 5, 3 },
+                new double[5] { 2, 4, 5, 4, 2 },
+                new double[3] { 2, 3, 2 } });
             }
         }
         /// <summary>
@@ -4571,10 +4494,10 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[2][] {
-                new int[2] { 4, 3 },
-                new int[5] { 1, 2, 3, 2, 1 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[2][] {
+                new double[2] { 4, 3 },
+                new double[5] { 1, 2, 3, 2, 1 } });
             }
         }
         /// <summary>
@@ -4585,10 +4508,10 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[2][] {
-                new int[1] {       7 },
-                new int[3] { 3, 5, 1 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[2][] {
+                new double[1] {       7 },
+                new double[3] { 3, 5, 1 } });
             }
         }
         /// <summary>
@@ -4599,11 +4522,11 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[3][] {
-                new int[2] {          7, 5 },
-                new int[5] { 3, 5, 7, 5, 3 },
-                new int[5] { 1, 3, 5, 3, 1 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[3][] {
+                new double[2] {          7, 5 },
+                new double[5] { 3, 5, 7, 5, 3 },
+                new double[5] { 1, 3, 5, 3, 1 } });
             }
         }
         /// <summary>
@@ -4614,11 +4537,11 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[3][] {
-                new int[4] { 12, 26, 30, 16 },
-                new int[3] { 12, 26, 12   },
-                new int[4] { 5, 12, 12, 5 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[3][] {
+                new double[4] { 12, 26, 30, 16 },
+                new double[3] { 12, 26, 12   },
+                new double[4] { 5, 12, 12, 5 } });
             }
         }
         /// <summary>
@@ -4629,10 +4552,10 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[2][] {
-                new int[1] { 4 },
-                new int[3] { 1, 1, 2 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[2][] {
+                new double[1] { 4 },
+                new double[3] { 1, 1, 2 } });
             }
         }
         /// <summary>
@@ -4643,11 +4566,11 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new ErrorDiffusionDithering(
-                    new int[3][] {
-                new int[2] { 8, 4 },
-                new int[5] { 2, 4, 8, 4, 2 },
-                new int[5] { 1, 2, 4, 2, 1 } });
+                return new ErrorDiffusionDithering(2,
+                    new double[3][] {
+                new double[2] { 8, 4 },
+                new double[5] { 2, 4, 8, 4, 2 },
+                new double[5] { 1, 2, 4, 2, 1 } });
             }
         }
         #endregion
@@ -13178,10 +13101,8 @@ namespace UMapx.Imaging
         /// <returns>Число двойной точности с плавающей запятой</returns>
         public static double SingleScaleRetinex(double x, double xlow, double nbase, double a, double b)
         {
-            //return a * (Math.Log(x / (xlow + b), nbase) + 0.5);
-
             // Singe scale retinex modified algorithm
-            // by Asiryan Valeriy:
+            // by Asiryan Valeriy
             // 
             return Math.Exp(a * Math.Log(x / xlow, nbase) + b) - 0.5f;
         }
@@ -13425,7 +13346,7 @@ namespace UMapx.Imaging
                 {
                     v = y / (double)length;
 
-                    table[x, y] = Intensity.LocalContrastEnhancement(w, v, a);
+                    table[x, y] = Intensity.SAUCE(w, v, a);
                 }
             }
 

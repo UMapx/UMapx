@@ -609,7 +609,10 @@ namespace UMapx.Core
 
             unsafe
             {
-                fixed (double* pm = &m[0, 0])
+                // copy array
+                double[,] n = (double[,])m.Clone();
+
+                fixed (double* pm = &n[0, 0])
                     return LinealgOptions.Determinant(pm, mr);
             }
         }
@@ -736,7 +739,10 @@ namespace UMapx.Core
 
             unsafe
             {
-                fixed (Complex* pm = &m[0, 0])
+                // copy array
+                Complex[,] n = (Complex[,])m.Clone();
+
+                fixed (Complex* pm = &n[0, 0])
                     return LinealgOptions.Determinant(pm, mr);
             }
         }

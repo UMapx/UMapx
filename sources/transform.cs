@@ -9,7 +9,6 @@
 using System;
 using System.Threading.Tasks;
 using UMapx.Core;
-using UMapx.Window;
 
 namespace UMapx.Transform
 {
