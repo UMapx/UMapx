@@ -20,120 +20,6 @@ namespace UMapx.Core
 
     #region Functions
     /// <summary>
-    /// Используется для работы с активационными функциями.
-    /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
-    /// https://en.wikipedia.org/wiki/Activation_function
-    /// </remarks>
-    /// </summary>
-    public static class Activation
-    {
-        #region Activation functions
-        /// <summary>
-        /// Возвращает значение функции Бернулли.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Bernoulli(double x)
-        {
-            return 1.0 / (1.0 + Math.Exp(-x));
-        }
-        /// <summary>
-        /// Возвращает значение бинарной функции.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Binary(double x)
-        {
-            if (x < 0)
-            {
-                return 0.0;
-            }
-            return 1.0;
-        }
-        /// <summary>
-        /// Возвращает значение логистической функции.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Logistic(double x)
-        {
-            return 1.0 / (1.0 + Math.Exp(x));
-        }
-        /// <summary>
-        /// Возвращает значение функции гиперболического тангенса.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Tanh(double x)
-        {
-            return 2.0 / (1.0 + Math.Exp(-2 * x)) - 1;
-        }
-        /// <summary>
-        /// Возвращает значение "Softsign" функции.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Softsign(double x)
-        {
-            return x / (1.0 + Math.Abs(x));
-        }
-        /// <summary>
-        /// Возвращает значение функции выпрямленной линейной единицы.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double ReLU(double x)
-        {
-            if (x < 0)
-            {
-                return 0;
-            }
-            return x;
-        }
-        /// <summary>
-        /// Возвращает значение "Softplus" функции.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Softplus(double x)
-        {
-            return Math.Log(1.0 + Math.Exp(x));
-        }
-        /// <summary>
-        /// Возвращает значение согнутой функции.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Bent(double x)
-        {
-            return (Math.Sqrt(x * x + 1.0) - 1.0) / 2.0 + x;
-        }
-        /// <summary>
-        /// Возвращает значение функции Гаусса.
-        /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Gaussian(double x)
-        {
-            return Math.Exp(-x * x);
-        }
-        /// <summary>
-        /// Возвращает значение функции математического кардинального синуса.
-        /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Sinc(double x)
-        {
-            if (x == 0)
-            {
-                return 1.0;
-            }
-            return Math.Sin(x) / x;
-        }
-        #endregion
-    }
-    /// <summary>
     /// Используется для реализации специальных математических функций.
     /// <remarks>
     /// Более подробную информацию можно найти на сайте:
@@ -3695,7 +3581,7 @@ namespace UMapx.Core
         #endregion
     }
     /// <summary>
-    /// Используется для работы с кернфункциями.
+    /// Используется для работы с ядерными функциями.
     /// <remarks>
     /// Более подробную информацию можно найти на сайте:
     /// https://en.wikipedia.org/wiki/Kernel_(statistics)
