@@ -15151,12 +15151,12 @@
             Степенная аппроксимация.
             </summary>
         </member>
-        <member name="T:UMapx.Core.LeastSquares">
+        <member name="T:UMapx.Core.LeastSquaresOptions">
             <summary>
             Определяет класс, реализующий метод наименьших квадратов.
             </summary>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Polynomial(System.Double,System.Double[])">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Polynomial(System.Double,System.Double[])">
             <summary>
             Возвращает значение полиномиала.
             </summary>
@@ -15164,7 +15164,7 @@
             <param name="c">Коэффициенты аппроксимации</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Polynomial(System.Double[],System.Double[])">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Polynomial(System.Double[],System.Double[])">
             <summary>
             Возвращает массив значений полиномиала.
             </summary>
@@ -15172,7 +15172,7 @@
             <param name="c">Коэффициенты аппроксимации</param>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Coefficients(System.Double[],System.Double[],System.Int32)">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Coefficients(System.Double[],System.Double[],System.Int32)">
             <summary>
             Возвращает коэффициенты аппроксимации.
             </summary>
@@ -15180,7 +15180,7 @@
             <param name="y">Массив значений функции</param>
             <param name="iterations">Количество итераций</param>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.SummaryPow(System.Double[],System.Double)">
+        <member name="M:UMapx.Core.LeastSquaresOptions.SummaryPow(System.Double[],System.Double)">
             <summary>
             Возвращает значение выражения: s += v(i) ^ pow.
             </summary>
@@ -15188,7 +15188,7 @@
             <param name="pow">Степень</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.SummaryPow(System.Double[],System.Double[],System.Double,System.Double)">
+        <member name="M:UMapx.Core.LeastSquaresOptions.SummaryPow(System.Double[],System.Double[],System.Double,System.Double)">
             <summary>
             Возвращает значение выражения: s += {x(i) ^ powx} * {y(i) ^ powy}.
             </summary>
@@ -15198,7 +15198,7 @@
             <param name="powy">Степень</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Error(System.Double[],System.Double[])">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Error(System.Double[],System.Double[])">
             <summary>
             Возвращает погрешность аппроксимации функции.
             </summary>
@@ -15206,14 +15206,14 @@
             <param name="b">Функция</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Equation(System.Double[])">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Equation(System.Double[])">
             <summary>
             Возвращает уравнение полинома, представленного в виде строки.
             </summary>
             <param name="p">Коэффициенты полинома</param>
             <returns>Текст как последовательность знаков Юникода</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Equation(System.Double[],System.String)">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Equation(System.Double[],System.String)">
             <summary>
             Возвращает уравнение полинома, представленного в виде строки.
             </summary>
@@ -15221,7 +15221,7 @@
             <param name="function">Функция</param>
             <returns>Текст как последовательность знаков Юникода</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Polynomial(UMapx.Core.Complex,UMapx.Core.Complex[])">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Polynomial(UMapx.Core.Complex,UMapx.Core.Complex[])">
             <summary>
             Возвращает значение полиномиала.
             </summary>
@@ -15229,7 +15229,7 @@
             <param name="c">Коэффициенты аппроксимации</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Polynomial(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Polynomial(UMapx.Core.Complex[],UMapx.Core.Complex[])">
             <summary>
             Возвращает массив значений полиномиала.
             </summary>
@@ -15237,7 +15237,7 @@
             <param name="c">Коэффициенты аппроксимации</param>
             <returns>Одномерный массив</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Coefficients(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Int32)">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Coefficients(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Int32)">
             <summary>
             Возвращает коэффициенты аппроксимации.
             </summary>
@@ -15245,7 +15245,7 @@
             <param name="y">Массив значений функции</param>
             <param name="iterations">Количество итераций</param>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.SummaryPow(UMapx.Core.Complex[],System.Double)">
+        <member name="M:UMapx.Core.LeastSquaresOptions.SummaryPow(UMapx.Core.Complex[],System.Double)">
             <summary>
             Возвращает значение выражения: s += v(i) ^ pow.
             </summary>
@@ -15253,7 +15253,7 @@
             <param name="pow">Степень</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.SummaryPow(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Double,System.Double)">
+        <member name="M:UMapx.Core.LeastSquaresOptions.SummaryPow(UMapx.Core.Complex[],UMapx.Core.Complex[],System.Double,System.Double)">
             <summary>
             Возвращает значение выражения: s += {x(i) ^ powx} * {y(i) ^ powy}.
             </summary>
@@ -15263,7 +15263,7 @@
             <param name="powy">Степень</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Error(UMapx.Core.Complex[],UMapx.Core.Complex[])">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Error(UMapx.Core.Complex[],UMapx.Core.Complex[])">
             <summary>
             Возвращает погрешность аппроксимации функции.
             </summary>
@@ -15271,14 +15271,14 @@
             <param name="b">Функция</param>
             <returns>Число двойной точности с плавающей запятой</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Equation(UMapx.Core.Complex[])">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Equation(UMapx.Core.Complex[])">
             <summary>
             Возвращает уравнение полинома, представленного в виде строки.
             </summary>
             <param name="p">Коэффициенты полинома</param>
             <returns>Текст как последовательность знаков Юникода</returns>
         </member>
-        <member name="M:UMapx.Core.LeastSquares.Equation(UMapx.Core.Complex[],System.String)">
+        <member name="M:UMapx.Core.LeastSquaresOptions.Equation(UMapx.Core.Complex[],System.String)">
             <summary>
             Возвращает уравнение полинома, представленного в виде строки.
             </summary>

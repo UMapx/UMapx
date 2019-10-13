@@ -2409,10 +2409,10 @@ namespace UMapx.Core
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
-            cf = LeastSquares.Coefficients(x, y, m);
-            double[] ya = LeastSquares.Polynomial(x, cf);
-            error = LeastSquares.Error(ya, y);
-            equation = LeastSquares.Equation(cf);
+            cf = LeastSquaresOptions.Coefficients(x, y, m);
+            double[] ya = LeastSquaresOptions.Polynomial(x, cf);
+            error = LeastSquaresOptions.Error(ya, y);
+            equation = LeastSquaresOptions.Equation(cf);
             return ya;
         }
         /// <summary>
@@ -2429,10 +2429,10 @@ namespace UMapx.Core
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
-            cf = LeastSquares.Coefficients(x, y, m);
-            Complex[] ya = LeastSquares.Polynomial(x, cf);
-            error = LeastSquares.Error(ya, y);
-            equation = LeastSquares.Equation(cf);
+            cf = LeastSquaresOptions.Coefficients(x, y, m);
+            Complex[] ya = LeastSquaresOptions.Polynomial(x, cf);
+            error = LeastSquaresOptions.Error(ya, y);
+            equation = LeastSquaresOptions.Equation(cf);
             return ya;
         }
         /// <summary>
@@ -2460,10 +2460,10 @@ namespace UMapx.Core
             }
 
             // approximation:
-            cf = LeastSquares.Coefficients(xa, y, m);
-            ya = LeastSquares.Polynomial(xa, cf);
-            error = LeastSquares.Error(ya, y);
-            equation = LeastSquares.Equation(cf, " * LN(X)^");
+            cf = LeastSquaresOptions.Coefficients(xa, y, m);
+            ya = LeastSquaresOptions.Polynomial(xa, cf);
+            error = LeastSquaresOptions.Error(ya, y);
+            equation = LeastSquaresOptions.Equation(cf, " * LN(X)^");
             return ya;
         }
         /// <summary>
@@ -2491,10 +2491,10 @@ namespace UMapx.Core
             }
 
             // approximation:
-            cf = LeastSquares.Coefficients(xa, y, m);
-            ya = LeastSquares.Polynomial(xa, cf);
-            error = LeastSquares.Error(ya, y);
-            equation = LeastSquares.Equation(cf, " * LN(X)^");
+            cf = LeastSquaresOptions.Coefficients(xa, y, m);
+            ya = LeastSquaresOptions.Polynomial(xa, cf);
+            error = LeastSquaresOptions.Error(ya, y);
+            equation = LeastSquaresOptions.Equation(cf, " * LN(X)^");
             return ya;
         }
         /// <summary>
@@ -2521,8 +2521,8 @@ namespace UMapx.Core
             }
 
             // approximation:
-            cf = LeastSquares.Coefficients(x, ya, m);
-            double[] p = LeastSquares.Polynomial(x, cf);
+            cf = LeastSquaresOptions.Coefficients(x, ya, m);
+            double[] p = LeastSquaresOptions.Polynomial(x, cf);
 
             // exponential-scale:
             for (i = 0; i < n; i++)
@@ -2530,8 +2530,8 @@ namespace UMapx.Core
                 ya[i] = Maths.Pow(Math.E, p[i]);
             }
 
-            error = LeastSquares.Error(ya, y);
-            equation = "EXP" + '(' + LeastSquares.Equation(cf) + ')';
+            error = LeastSquaresOptions.Error(ya, y);
+            equation = "EXP" + '(' + LeastSquaresOptions.Equation(cf) + ')';
             return ya;
         }
         /// <summary>
@@ -2558,8 +2558,8 @@ namespace UMapx.Core
             }
 
             // approximation:
-            cf = LeastSquares.Coefficients(x, ya, m);
-            Complex[] p = LeastSquares.Polynomial(x, cf);
+            cf = LeastSquaresOptions.Coefficients(x, ya, m);
+            Complex[] p = LeastSquaresOptions.Polynomial(x, cf);
 
             // exponential-scale:
             for (i = 0; i < n; i++)
@@ -2567,8 +2567,8 @@ namespace UMapx.Core
                 ya[i] = Maths.Pow(Math.E, p[i]);
             }
 
-            error = LeastSquares.Error(ya, y);
-            equation = "EXP" + '(' + LeastSquares.Equation(cf) + ')';
+            error = LeastSquaresOptions.Error(ya, y);
+            equation = "EXP" + '(' + LeastSquaresOptions.Equation(cf) + ')';
             return ya;
         }
         /// <summary>
@@ -2597,8 +2597,8 @@ namespace UMapx.Core
             }
 
             // approximation:
-            cf = LeastSquares.Coefficients(xa, ya, m);
-            double[] p = LeastSquares.Polynomial(xa, cf);
+            cf = LeastSquaresOptions.Coefficients(xa, ya, m);
+            double[] p = LeastSquaresOptions.Polynomial(xa, cf);
 
             // exponential-scale:
             for (i = 0; i < n; i++)
@@ -2606,8 +2606,8 @@ namespace UMapx.Core
                 ya[i] = Maths.Exp(p[i]);
             }
 
-            error = LeastSquares.Error(ya, y);
-            equation = "EXP" + '(' + LeastSquares.Equation(cf, " * LN(X)^") + ')';
+            error = LeastSquaresOptions.Error(ya, y);
+            equation = "EXP" + '(' + LeastSquaresOptions.Equation(cf, " * LN(X)^") + ')';
             return ya;
         }
         /// <summary>
@@ -2636,8 +2636,8 @@ namespace UMapx.Core
             }
 
             // approximation:
-            cf = LeastSquares.Coefficients(xa, ya, m);
-            Complex[] p = LeastSquares.Polynomial(xa, cf);
+            cf = LeastSquaresOptions.Coefficients(xa, ya, m);
+            Complex[] p = LeastSquaresOptions.Polynomial(xa, cf);
 
             // exponential-scale:
             for (i = 0; i < n; i++)
@@ -2645,8 +2645,8 @@ namespace UMapx.Core
                 ya[i] = Maths.Exp(p[i]);
             }
 
-            error = LeastSquares.Error(ya, y);
-            equation = "EXP" + '(' + LeastSquares.Equation(cf, " * LN(X)^") + ')';
+            error = LeastSquaresOptions.Error(ya, y);
+            equation = "EXP" + '(' + LeastSquaresOptions.Equation(cf, " * LN(X)^") + ')';
             return ya;
         }
         #endregion
@@ -2681,7 +2681,7 @@ namespace UMapx.Core
     /// <summary>
     /// Определяет класс, реализующий метод наименьших квадратов.
     /// </summary>
-    internal static class LeastSquares
+    internal static class LeastSquaresOptions
     {
         #region double components
         /// <summary>
@@ -2714,7 +2714,7 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
-                y[i] = LeastSquares.Polynomial(x[i], c);
+                y[i] = LeastSquaresOptions.Polynomial(x[i], c);
             }
             return y;
         }
@@ -2736,9 +2736,9 @@ namespace UMapx.Core
             {
                 for (j = 0; j < m; j++)
                 {
-                    matrix[i, j] = LeastSquares.SummaryPow(x, j + i);
+                    matrix[i, j] = LeastSquaresOptions.SummaryPow(x, j + i);
                 }
-                matrix[i, m] = LeastSquares.SummaryPow(y, x, 1, i);
+                matrix[i, m] = LeastSquaresOptions.SummaryPow(y, x, 1, i);
             }
 
             // Решение системы линейных уравнений:
@@ -2869,7 +2869,7 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
-                y[i] = LeastSquares.Polynomial(x[i], c);
+                y[i] = LeastSquaresOptions.Polynomial(x[i], c);
             }
             return y;
         }
@@ -2891,9 +2891,9 @@ namespace UMapx.Core
             {
                 for (j = 0; j < m; j++)
                 {
-                    matrix[i, j] = LeastSquares.SummaryPow(x, j + i);
+                    matrix[i, j] = LeastSquaresOptions.SummaryPow(x, j + i);
                 }
-                matrix[i, m] = LeastSquares.SummaryPow(y, x, 1, i);
+                matrix[i, m] = LeastSquaresOptions.SummaryPow(y, x, 1, i);
             }
 
             // Решение системы линейных уравнений:
