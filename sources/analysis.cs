@@ -37,7 +37,7 @@ namespace UMapx.Core
         /// <summary>
         /// Инициализирует класс, реализующий решение нелинейного уравнения.
         /// </summary>
-        /// <param name="eps">Погрещность [0, 1]</param>
+        /// <param name="eps">Погрешность [0, 1]</param>
         /// <param name="method">Метод решения нелинейного уравнения</param>
         public Nonlinear(double eps = 1e-8, Nonlinear.Method method = Method.Secant)
         {
@@ -484,7 +484,7 @@ namespace UMapx.Core
         /// <summary>
         /// Возвращает значение интеграла функции.
         /// </summary>
-        /// <param name="function">Делегат непрерывной фукнции</param>
+        /// <param name="function">Делегат непрерывной функции</param>
         /// <param name="a">Нижний предел</param>
         /// <param name="b">Верхний предел</param>
         /// <param name="n">Количество разбиений</param>
@@ -513,7 +513,7 @@ namespace UMapx.Core
         /// <summary>
         /// Возвращает значение интеграла функции.
         /// </summary>
-        /// <param name="y">Вектор значений фукнции</param>
+        /// <param name="y">Вектор значений функции</param>
         /// <param name="a">Нижний предел</param>
         /// <param name="b">Верхний предел</param>
         /// <param name="n">Количество разбиений</param>
@@ -539,7 +539,7 @@ namespace UMapx.Core
         /// <summary>
         /// Возвращает значение интеграла функции.
         /// </summary>
-        /// <param name="function">Делегат непрерывной фукнции</param>
+        /// <param name="function">Делегат непрерывной функции</param>
         /// <param name="a">Нижний предел</param>
         /// <param name="b">Верхний предел</param>
         /// <param name="n">Количество разбиений</param>
@@ -568,7 +568,7 @@ namespace UMapx.Core
         /// <summary>
         /// Возвращает значение интеграла функции.
         /// </summary>
-        /// <param name="y">Вектор значений фукнции</param>
+        /// <param name="y">Вектор значений функции</param>
         /// <param name="a">Нижний предел</param>
         /// <param name="b">Верхний предел</param>
         /// <param name="n">Количество разбиений</param>
@@ -1709,7 +1709,7 @@ namespace UMapx.Core
 
         #region Enums
         /// <summary>
-        /// Метод дифферецирования.
+        /// Метод дифференцирования.
         /// </summary>
         public enum Method
         {
@@ -1775,7 +1775,7 @@ namespace UMapx.Core
         /// <summary>
         /// Возвращает значение функции в точке.
         /// <remarks>
-        /// В данном случае используется только биленейная интерполяция.
+        /// В данном случае используется только билинейная интерполяция.
         /// </remarks>
         /// </summary>
         /// <param name="x">Массив значений первого аргумента</param>
@@ -2721,7 +2721,7 @@ namespace UMapx.Core
         /// <summary>
         /// Возвращает коэффициенты аппроксимации.
         /// </summary>
-        /// <param name="x">Массив значений аргмента</param>
+        /// <param name="x">Массив значений аргумента</param>
         /// <param name="y">Массив значений функции</param>
         /// <param name="iterations">Количество итераций</param>
         public static double[] Coefficients(double[] x, double[] y, int iterations)
@@ -2876,7 +2876,7 @@ namespace UMapx.Core
         /// <summary>
         /// Возвращает коэффициенты аппроксимации.
         /// </summary>
-        /// <param name="x">Массив значений аргмента</param>
+        /// <param name="x">Массив значений аргумента</param>
         /// <param name="y">Массив значений функции</param>
         /// <param name="iterations">Количество итераций</param>
         public static Complex[] Coefficients(Complex[] x, Complex[] y, int iterations)
@@ -3040,7 +3040,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает вектор-столбец, соотвествующий численному решению полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
+        /// Возвращает вектор-столбец, соответствующий численному решению полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
         /// </summary>
         /// <param name="polynomial">Полином</param>
         /// <returns>Вектор-столбец</returns>

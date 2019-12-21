@@ -1285,7 +1285,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр бинариазции.
+    /// Определяет фильтр бинаризации.
     /// </summary>
     public class Threshold : Correction, IBitmapFilter
     {
@@ -1749,7 +1749,7 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции якрости.
+        /// Инициализирует фильтр коррекции яркости.
         /// </summary>
         /// <param name="brightness">Яркость [-1, 1]</param>
         /// <param name="space">Цветовое пространство</param>
@@ -1758,14 +1758,14 @@ namespace UMapx.Imaging
             Brightness = brightness;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции якрости.
+        /// Инициализирует фильтр коррекции яркости.
         /// </summary>
         public BrightnessCorrection()
         {
             Brightness = 0.5;
         }
         /// <summary>
-        /// Получает или задает значение якрости [-1, 1].
+        /// Получает или задает значение яркости [-1, 1].
         /// </summary>
         public double Brightness
         {
@@ -10441,7 +10441,7 @@ namespace UMapx.Imaging
 
         #region Filter componetns
         /// <summary>
-        /// Иницилазирует класс фильтра локального сжатия гистограммы.
+        /// Инициализирует класс фильтра локального сжатия гистограммы.
         /// </summary>
         /// <param name="radius">Размер фильтра</param>
         /// <param name="space">Цветовое пространство</param>
@@ -10455,7 +10455,7 @@ namespace UMapx.Imaging
             Contrast = contrast;
         }
         /// <summary>
-        /// Иницилазирует класс фильтра локального сжатия гистограммы.
+        /// Инициализирует класс фильтра локального сжатия гистограммы.
         /// </summary>
         /// <param name="width">Ширина фильтра</param>
         /// <param name="height">Высота фильтра</param>
@@ -10470,7 +10470,7 @@ namespace UMapx.Imaging
             Contrast = contrast;
         }
         /// <summary>
-        /// Иницилазирует класс фильтра локального сжатия гистограммы.
+        /// Инициализирует класс фильтра локального сжатия гистограммы.
         /// </summary>
         /// <param name="size">Размер фильтра</param>
         /// <param name="space">Цветовое пространство</param>
@@ -11755,7 +11755,7 @@ namespace UMapx.Imaging
 
         #region Initialize
         /// <summary>
-        /// Иницилизирует фильтр преобразования Хафа.
+        /// Инициализирует фильтр преобразования Хафа.
         /// </summary>
         public HoughLineTransform()
         {
@@ -11836,7 +11836,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Возвращает массив линий с относительной интенсивностью.
         /// </summary>
-        /// <param name="minRelativeIntensity">Минимальная относительная интесивность</param>
+        /// <param name="minRelativeIntensity">Минимальная относительная интенсивность</param>
         /// <returns>Одномерный массив</returns>
         public HoughLine[] GetLinesByRelativeIntensity(double minRelativeIntensity)
         {
@@ -12114,7 +12114,7 @@ namespace UMapx.Imaging
 
         #region Initialize
         /// <summary>
-        /// Иницилизирует фильтр преобразования Хафа.
+        /// Инициализирует фильтр преобразования Хафа.
         /// </summary>
         /// <param name="radiusToDetect">Радиус поиска</param>
         public HoughCircleTransform(int radiusToDetect)
@@ -12173,7 +12173,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Возвращает массив окружностей с относительной интенсивностью.
         /// </summary>
-        /// <param name="minRelativeIntensity">Минимальная относительная интесивность</param>
+        /// <param name="minRelativeIntensity">Минимальная относительная интенсивность</param>
         /// <returns>Одномерный массив</returns>
         public HoughCircle[] GetCirclesByRelativeIntensity(double minRelativeIntensity)
         {
@@ -13364,7 +13364,7 @@ namespace UMapx.Imaging
         /// </summary>
         public const double logEpsilon = 1e-9;
         /// <summary>
-        /// Реализует логарифимическое сжатие случайной величины.
+        /// Реализует логарифмическое сжатие случайной величины.
         /// </summary>
         /// <param name="x">Яркость</param>
         /// <param name="mu">Математическое ожидание</param>
@@ -13376,7 +13376,7 @@ namespace UMapx.Imaging
             return Intensity.LogPow(x, Maths.Range(Intensity.log05 / Math.Log(mu), s, l));
         }
         /// <summary>
-        /// Возвращает маску логарифимического сжатия.
+        /// Возвращает маску логарифмического сжатия.
         /// </summary>
         /// <param name="s">Уровень теней</param>
         /// <param name="l">Уровень светов</param>

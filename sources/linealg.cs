@@ -5234,7 +5234,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
         /// <returns>Одномерный массив</returns>
         public static double[,] Dot(this double[,] m, double[] v, bool inverse = false)
         {
@@ -5277,7 +5277,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[,] Dot(this Complex[,] m, Complex[] v, bool inverse = false)
         {
@@ -5320,7 +5320,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[,] Dot(this Complex[,] m, double[] v, bool inverse = false)
         {
@@ -5363,7 +5363,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[,] Dot(this double[,] m, Complex[] v, bool inverse = false)
         {
@@ -5407,7 +5407,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
         /// <returns>Одномерный массив</returns>
         public static double[,] Dot(this double[] v, double[,] m, bool inverse = false)
         {
@@ -5450,7 +5450,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[,] Dot(this Complex[] v, Complex[,] m, bool inverse = false)
         {
@@ -5493,7 +5493,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[,] Dot(this Complex[] v, double[,] m, bool inverse = false)
         {
@@ -5536,7 +5536,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Матрица</param>
         /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к даигональной матрицу или нет</param>
+        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
         /// <returns>Одномерный массив</returns>
         public static Complex[,] Dot(this double[] v, Complex[,] m, bool inverse = false)
         {
@@ -8439,7 +8439,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение неплоной матрицы Ганкеля.
+        /// Реализует построение неполной матрицы Ганкеля.
         /// </summary>
         /// <param name="v">Одномерный массив</param>
         /// <returns>Матрица</returns>
@@ -9294,7 +9294,7 @@ namespace UMapx.Core
 
         #region Gauss-Jordan elimination
         /// <summary>
-        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Возвращает вектор-столбец, соответствующий решению системы линейных алгебраических уравнений: Ax = b.
         /// </summary>
         /// <param name="A">Расширенная матрица</param>
         /// <returns>Вектор-столбец</returns>
@@ -9372,7 +9372,7 @@ namespace UMapx.Core
             return x;
         }
         /// <summary>
-        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Возвращает вектор-столбец, соответствующий решению системы линейных алгебраических уравнений: Ax = b.
         /// </summary>
         /// <param name="A">Квадратная матрица</param>
         /// <param name="b">Вектор-столбец</param>
@@ -9451,7 +9451,7 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Возвращает вектор-столбец, соответствующий решению системы линейных алгебраических уравнений: Ax = b.
         /// </summary>
         /// <param name="A">Расширенная матрица</param>
         /// <returns>Вектор-столбец</returns>
@@ -9529,7 +9529,7 @@ namespace UMapx.Core
             return x;
         }
         /// <summary>
-        /// Возвращает вектор-столбец, соотвествующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Возвращает вектор-столбец, соответствующий решению системы линейных алгебраических уравнений: Ax = b.
         /// </summary>
         /// <param name="A">Квадратная матрица</param>
         /// <param name="b">Вектор-столбец</param>
@@ -11584,7 +11584,7 @@ namespace UMapx.Core
                 return Re.GetHashCode() ^ Im.GetHashCode();
             }
             /// <summary>
-            /// Возвращает значение, указывающее, равен ли данный экземляр заданному значению типа Complex.
+            /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа Complex.
             /// </summary>
             /// <param name="obj">Объект</param>
             /// <returns>Логическое значение</returns>
@@ -11596,7 +11596,7 @@ namespace UMapx.Core
 
             #region Bools
             /// <summary>
-            /// Проверяет равны ли два объекта типа Comlex между собой.
+            /// Проверяет равны ли два объекта типа Complex между собой.
             /// </summary>
             /// <param name="a">Комплексное число</param>
             /// <param name="b">Комплексное число</param>

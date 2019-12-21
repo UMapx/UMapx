@@ -102,7 +102,7 @@ namespace UMapx.Core
             return string.Format("({0}, {1})", min, max);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземляр заданному значению типа RangeDouble.
+        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа RangeDouble.
         /// </summary>
         /// <param name="obj">Объект</param>
         /// <returns>Логическое значение</returns>
@@ -249,7 +249,7 @@ namespace UMapx.Core
             return string.Format("({0}, {1})", min, max);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземляр заданному значению типа RangeInt.
+        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа RangeInt.
         /// </summary>
         /// <param name="obj">Объект</param>
         /// <returns>Логическое значение</returns>
@@ -383,7 +383,7 @@ namespace UMapx.Core
             return string.Format("({0}, {1})", x, y);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземляр заданному значению типа PointDouble.
+        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа PointDouble.
         /// </summary>
         /// <param name="obj">Объект</param>
         /// <returns>Логическое значение</returns>
@@ -517,7 +517,7 @@ namespace UMapx.Core
             return string.Format("({0}, {1})", x, y);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземляр заданному значению типа PointInt.
+        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа PointInt.
         /// </summary>
         /// <param name="obj">Объект</param>
         /// <returns>Логическое значение</returns>
@@ -651,7 +651,7 @@ namespace UMapx.Core
             return string.Format("({0}, {1})", width, height);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземляр заданному значению типа SizeDouble.
+        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа SizeDouble.
         /// </summary>
         /// <param name="obj">Объект</param>
         /// <returns>Логическое значение</returns>
@@ -785,7 +785,7 @@ namespace UMapx.Core
             return string.Format("({0}, {1})", width, height);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземляр заданному значению типа SizeInt.
+        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа SizeInt.
         /// </summary>
         /// <param name="obj">Объект</param>
         /// <returns>Логическое значение</returns>

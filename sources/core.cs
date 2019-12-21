@@ -48,7 +48,7 @@ namespace UMapx.Core
         /// </summary>
         public const double Gamma = 0.577215664901532860606512090;
         /// <summary>
-        /// Кадратный корень из числа 2.
+        /// Квадратный корень из числа 2.
         /// </summary>
         public const double Sqrt2 = 1.4142135623730950488016887242097;
         /// <summary>
@@ -745,7 +745,7 @@ namespace UMapx.Core
             return Math.Acos(1.0 / a);
         }
         /// <summary>
-        /// Возвращает аркосеканс числа.
+        /// Возвращает арккосеканс числа.
         /// </summary>
         /// <param name="a">Число</param>
         /// <returns>Число двойной точности с плавающей запятой</returns>
@@ -1160,7 +1160,7 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает взаимнопростое с "a" число.
+        /// Возвращает взаимно простое с "a" число.
         /// </summary>
         /// <param name="a">Целое число</param>
         /// <param name="increment">Начальный вброс</param>
@@ -1179,7 +1179,7 @@ namespace UMapx.Core
             return p;
         }
         /// <summary>
-        /// Возвращает взаимнопростое с "a" число.
+        /// Возвращает взаимно простое с "a" число.
         /// </summary>
         /// <param name="a">Целое число</param>
         /// <param name="increment">Начальный вброс</param>

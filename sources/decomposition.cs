@@ -2577,7 +2577,7 @@ namespace UMapx.Decomposition
             get { return upper; }
         }
         /// <summary>
-        /// Получает вектор элментов диагонали.
+        /// Получает вектор элементов диагонали.
         /// </summary>
         public double[] D
         {
@@ -2629,7 +2629,7 @@ namespace UMapx.Decomposition
             get { return matrix; }
         }
         /// <summary>
-        /// Получает вектор элментов диагонали.
+        /// Получает вектор элементов диагонали.
         /// </summary>
         public double[] D
         {
@@ -3028,7 +3028,7 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Реализует сигнулярное разложение матрицы.
+        /// Реализует сингулярное разложение матрицы.
         /// </summary>
         /// <param name="A">Матрица</param>
         /// <param name="iterations">Количество итераций</param>

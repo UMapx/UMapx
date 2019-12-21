@@ -354,7 +354,7 @@ namespace UMapx.Transform
     /// <summary>
     /// Определяет дискретное косинусоидальное преобразование.
     /// <remarks>
-    /// Дискретное консинусное преобразование (ДКП) тесно связано с дискретным преобразованием Фурье и является гомоморфизмом его векторного пространства.
+    /// Дискретное косинусное преобразование (ДКП) тесно связано с дискретным преобразованием Фурье и является гомоморфизмом его векторного пространства.
     /// 
     /// Более подробную информацию можно найти на сайте:
     /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
@@ -3290,7 +3290,7 @@ namespace UMapx.Transform
             return ((power >= 0) && (power <= 30)) ? (1 << power) : 0;
         }
         /// <summary>
-        /// Выисляет логарифм по основанию 2.
+        /// Вычисляет логарифм по основанию 2.
         /// </summary>
         /// <param name="x">Целое число</param>
         /// <returns>Целое число</returns>
@@ -6085,7 +6085,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Реализует одномерный фильтр.
         /// </summary>
-        /// <param name="data">Одомерный массив</param>
+        /// <param name="data">Одномерный массив</param>
         public void Apply(double[] data)
         {
             int length = data.Length;
@@ -6126,7 +6126,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Реализует одномерный фильтр.
         /// </summary>
-        /// <param name="data">Одомерный массив</param>
+        /// <param name="data">Одномерный массив</param>
         public void Apply(Complex[] data)
         {
             int length = data.Length;

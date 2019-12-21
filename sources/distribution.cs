@@ -134,7 +134,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -330,7 +330,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -510,7 +510,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -632,13 +632,13 @@ namespace UMapx.Distribution
         /// <summary>
         /// Инициализирует логарифмическое распределение Рэлея.
         /// </summary>
-        /// <param name="sigma">Параметр мастаба</param>
+        /// <param name="sigma">Параметр масштаба</param>
         public Rayleigh(double sigma)
         {
             Sigma = sigma;
         }
         /// <summary>
-        /// Получает или задает значение параметра мастаба.
+        /// Получает или задает значение параметра масштаба.
         /// </summary>
         public double Sigma
         {
@@ -705,7 +705,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -891,7 +891,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -1091,7 +1091,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -1281,7 +1281,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -1488,7 +1488,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -1669,7 +1669,7 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -1856,7 +1856,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -2077,7 +2077,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -2287,7 +2287,7 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -2500,7 +2500,7 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -2710,7 +2710,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -2920,7 +2920,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -3124,7 +3124,7 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -3322,7 +3322,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -3552,7 +3552,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -3760,7 +3760,7 @@ namespace UMapx.Distribution
             get { return mu; }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -3906,7 +3906,7 @@ namespace UMapx.Distribution
             get { return double.NaN; }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -4116,7 +4116,7 @@ namespace UMapx.Distribution
             get { return c; }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -4358,7 +4358,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -4545,7 +4545,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -4722,7 +4722,7 @@ namespace UMapx.Distribution
             get { return 1; }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -4938,7 +4938,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -5142,7 +5142,7 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -5324,7 +5324,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -5518,7 +5518,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -5696,7 +5696,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -5895,7 +5895,7 @@ namespace UMapx.Distribution
             get { return (3.0d / 20.0) * Math.Pow(b - a, 2.0); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -6114,7 +6114,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -6322,7 +6322,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -6504,7 +6504,7 @@ namespace UMapx.Distribution
             get { return new RangeDouble(-Math.PI, Math.PI); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -6697,7 +6697,7 @@ namespace UMapx.Distribution
             get { return double.NaN; }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -6889,7 +6889,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -6993,7 +6993,7 @@ namespace UMapx.Distribution
     {
         #region Distribution
         /// <summary>
-        /// Ицинициализирует гиперболическое секансное распределение.
+        /// Инициализирует гиперболическое секансное распределение.
         /// </summary>
         public HyperbolicSecant() { }
         /// <summary>
@@ -7025,7 +7025,7 @@ namespace UMapx.Distribution
             get { return 0; }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -7112,7 +7112,7 @@ namespace UMapx.Distribution
     {
         #region Distribution
         /// <summary>
-        /// Ицинициализирует арксинусное распределение.
+        /// Инициализирует арксинусное распределение.
         /// </summary>
         public Arcsine() { }
         /// <summary>
@@ -7144,7 +7144,7 @@ namespace UMapx.Distribution
             get { return double.NaN; }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -7316,7 +7316,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -7498,7 +7498,7 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -7666,7 +7666,7 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -7820,7 +7820,7 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         public double Skewness
         {
@@ -7998,7 +7998,7 @@ namespace UMapx.Distribution
         /// </summary>
         double Mode { get; }
         /// <summary>
-        /// Получает значение коэффициента ассиметрии.
+        /// Получает значение коэффициента асимметрии.
         /// </summary>
         double Skewness { get; }
         /// <summary>
