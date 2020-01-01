@@ -1,6 +1,6 @@
 # UMapx.NET Framework
 
-<p align="center"><img width="30%" src="docs/umapx_logo.png" /></p>
+<p align="center"><img width="30%" src="docs/umapx.png" /></p>
 
 UMapx.NET Framework is a dynamic link library for digital signal processing and analysis developed in C#.
 
