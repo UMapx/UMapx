@@ -23,4 +23,7 @@ UMapx.NET Framework is a dynamic link library for digital signal processing and 
 * Window Toolbox. Includes a set of tools for synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier transforms and Weyl-Heisenberg transforms (Gabor analysis) for real and complex signals.
 * Image Processing Toolbox. Contains efficient algorithms for processing, correcting and analyzing 32-bit raster images.
 
+## References
+A full list of references is given in a separate [file]().
+
 Asiryan Valeriy, © 2015-2019
