@@ -21,7 +21,7 @@ namespace UMapx.Core
 
     #region Structures: Range, Point, Size
     /// <summary>
-    /// Определяет пару дробных чисел, представляющих отрезок.
+    /// Defines a pair of double numbers representing a line segment.
     /// </summary>
     public struct RangeDouble : ICloneable, ISerializable
     {
@@ -32,17 +32,17 @@ namespace UMapx.Core
 
         #region Structure components
         /// <summary>
-        /// Инициализирует пару целых чисел, представляющих отрезок.
+        /// Initializes a pair of double numbers representing a line segment.
         /// </summary>
-        /// <param name="min">Нижняя граница отрезка</param>
-        /// <param name="max">Верхняя граница отрезка</param>
+        /// <param name="min">Lower bound of the segment</param>
+        /// <param name="max">Upper bound of the segment</param>
         public RangeDouble(double min, double max)
         {
             this.min = min;
             this.max = max;
         }
         /// <summary>
-        /// Получает или задает нижнюю границу отрезка.
+        /// Gets or sets the lower bound of the line segment.
         /// </summary>
         public double Min
         {
@@ -56,7 +56,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает или задает верхнюю границу отрезка.
+        /// Gets or sets the upper bound of the line segment.
         /// </summary>
         public double Max
         {
@@ -70,10 +70,10 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Проверяет находится ли случайная величина в заданном интервале.
+        /// Checks if the value is in the specified interval.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Boolean</returns>
         public bool IsOnRange(double x)
         {
             if ((x >= this.min) && (x <= this.max))
@@ -86,26 +86,26 @@ namespace UMapx.Core
 
         #region Overrides
         /// <summary>
-        /// Возвращает хэш-код для данного объекта.
+        /// Returns the hash code for this object.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return min.GetHashCode() ^ max.GetHashCode();
         }
         /// <summary>
-        /// Преобразует логическое значение в соответствующее ему строковое представление.
+        /// Converts RangeDouble to its corresponding string representation.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return string.Format("({0}, {1})", min, max);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа RangeDouble.
+        /// Gets a value indicating whether this instance is equal to the specified value of type RangeDouble.
         /// </summary>
-        /// <param name="obj">Объект</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Object</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
             return (obj is RangeDouble) ? (this == (RangeDouble)obj) : false;
@@ -114,21 +114,21 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Проверяет равны ли два объекта типа RangeDouble между собой.
+        /// Checks if two RangeDouble objects are equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(RangeDouble a, RangeDouble b)
         {
             return (a.Max == b.Max && a.Min == b.Min);
         }
         /// <summary>
-        /// Проверяет не равны ли два объекта типа RangeDouble между собой.
+        /// Checks if two RangeDouble objects are not equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(RangeDouble a, RangeDouble b)
         {
             return !(a == b);
@@ -137,17 +137,17 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of RangeDouble.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         object ICloneable.Clone()
         {
             return new RangeDouble(min, max);
         }
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of RangeDouble.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         public RangeDouble Clone()
         {
             return new RangeDouble(min, max);
@@ -156,10 +156,10 @@ namespace UMapx.Core
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Min", this.Min);
@@ -168,7 +168,7 @@ namespace UMapx.Core
         #endregion
     }
     /// <summary>
-    /// Определяет пару целых чисел, представляющих отрезок.
+    /// Defines a pair of integer numbers representing a line segment.
     /// </summary>
     public struct RangeInt : ICloneable, ISerializable
     {
@@ -179,17 +179,17 @@ namespace UMapx.Core
 
         #region Structure components
         /// <summary>
-        /// Инициализирует пару целых чисел, представляющих отрезок.
+        /// Initializes a pair of integer numbers representing a line segment.
         /// </summary>
-        /// <param name="min">Нижняя граница отрезка</param>
-        /// <param name="max">Верхняя граница отрезка</param>
+        /// <param name="min">Lower bound of the segment</param>
+        /// <param name="max">Upper bound of the segment</param>
         public RangeInt(int min, int max)
         {
             this.min = min;
             this.max = max;
         }
         /// <summary>
-        /// Получает или задает нижнюю границу отрезка.
+        /// Gets or sets the lower bound of the line segment.
         /// </summary>
         public int Min
         {
@@ -203,7 +203,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает или задает верхнюю границу отрезка.
+        /// Gets or sets the upper bound of the line segment.
         /// </summary>
         public int Max
         {
@@ -217,10 +217,10 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Проверяет находится ли случайная величина в заданном интервале.
+        /// Checks if the value is in the specified interval.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Boolean</returns>
         public bool IsOnRange(int x)
         {
             if ((x >= this.min) && (x <= this.max))
@@ -233,26 +233,26 @@ namespace UMapx.Core
 
         #region Overrides
         /// <summary>
-        /// Возвращает хэш-код для данного объекта.
+        /// Returns the hash code for this object.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return min.GetHashCode() ^ max.GetHashCode();
         }
         /// <summary>
-        /// Преобразует логическое значение в соответствующее ему строковое представление.
+        /// Converts RangeInt to its corresponding string representation.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return string.Format("({0}, {1})", min, max);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа RangeInt.
+        /// Gets a value indicating whether this instance is equal to the specified value of type RangeInt.
         /// </summary>
-        /// <param name="obj">Объект</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Object</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
             return (obj is RangeInt) ? (this == (RangeInt)obj) : false;
@@ -261,21 +261,21 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Проверяет равны ли два объекта типа RangeInt между собой.
+        /// Checks if two RangeDouble objects are equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(RangeInt a, RangeInt b)
         {
             return (a.Max == b.Max && a.Min == b.Min);
         }
         /// <summary>
-        /// Проверяет не равны ли два объекта типа RangeInt между собой.
+        /// Checks if two RangeDouble objects are not equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(RangeInt a, RangeInt b)
         {
             return !(a == b);
@@ -284,17 +284,17 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of RangeInt.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         object ICloneable.Clone()
         {
             return new RangeInt(min, max);
         }
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of RangeInt.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         public RangeInt Clone()
         {
             return new RangeInt(min, max);
@@ -303,10 +303,10 @@ namespace UMapx.Core
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Min", this.Min);
@@ -315,7 +315,7 @@ namespace UMapx.Core
         #endregion
     }
     /// <summary>
-    /// Определяет пару дробных чисел, представляющих упорядоченную пару координат X и Y.
+    /// Defines a pair of double numbers representing an ordered pair of X and Y coordinates.
     /// </summary>
     public struct PointDouble : ICloneable, ISerializable
     {
@@ -326,17 +326,17 @@ namespace UMapx.Core
 
         #region Structure components
         /// <summary>
-        /// Инициализирует пару целых чисел, представляющих упорядоченную пару координат X и Y.
+        /// Initializes a pair of double numbers representing an ordered pair of X and Y coordinates.
         /// </summary>
-        /// <param name="x">Координата X</param>
-        /// <param name="y">Координата Y</param>
+        /// <param name="x">Coordinate X</param>
+        /// <param name="y">Coordinate Y</param>
         public PointDouble(double x, double y)
         {
             this.x = x;
             this.y = y;
         }
         /// <summary>
-        /// Получает или задает координату X.
+        /// Gets or sets the coordinate X.
         /// </summary>
         public double X
         {
@@ -350,7 +350,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает или задает координату Y.
+        /// Gets or sets the coordinate Y.
         /// </summary>
         public double Y
         {
@@ -367,26 +367,26 @@ namespace UMapx.Core
 
         #region Overrides
         /// <summary>
-        /// Возвращает хэш-код для данного объекта.
+        /// Returns the hash code for this object.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return x.GetHashCode() ^ y.GetHashCode();
         }
         /// <summary>
-        /// Преобразует логическое значение в соответствующее ему строковое представление.
+        /// Converts a PointDouble to its corresponding string representation.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return string.Format("({0}, {1})", x, y);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа PointDouble.
+        /// Gets a value indicating whether this instance is equal to the specified value of type PointDouble.
         /// </summary>
-        /// <param name="obj">Объект</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Object</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
             return (obj is PointDouble) ? (this == (PointDouble)obj) : false;
@@ -395,21 +395,21 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Проверяет равны ли два объекта типа PointDouble между собой.
+        /// Checks if two PointDouble objects are equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(PointDouble a, PointDouble b)
         {
             return (a.X == b.X && a.Y == b.Y);
         }
         /// <summary>
-        /// Проверяет не равны ли два объекта типа PointDouble между собой.
+        /// Checks if two PointDouble objects are not equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(PointDouble a, PointDouble b)
         {
             return !(a == b);
@@ -418,17 +418,17 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of PointDouble.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         object ICloneable.Clone()
         {
             return new PointDouble(x, y);
         }
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of PointDouble.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         public PointDouble Clone()
         {
             return new PointDouble(x, y);
@@ -437,10 +437,10 @@ namespace UMapx.Core
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("X", this.x);
@@ -449,7 +449,7 @@ namespace UMapx.Core
         #endregion
     }
     /// <summary>
-    /// Определяет пару целых чисел, представляющих упорядоченную пару координат X и Y.
+    /// Defines a pair of integer numbers representing an ordered pair of X and Y coordinates.
     /// </summary>
     public struct PointInt : ICloneable, ISerializable
     {
@@ -460,17 +460,17 @@ namespace UMapx.Core
 
         #region Structure components
         /// <summary>
-        /// Инициализирует пару целых чисел, представляющих упорядоченную пару координат X и Y.
+        /// Initializes a pair of integer numbers representing an ordered pair of X and Y coordinates.
         /// </summary>
-        /// <param name="x">Координата X</param>
-        /// <param name="y">Координата Y</param>
+        /// <param name="x">Coordinate X</param>
+        /// <param name="y">Coordinate Y</param>
         public PointInt(int x, int y)
         {
             this.x = x;
             this.y = y;
         }
         /// <summary>
-        /// Получает или задает координату X.
+        /// Gets or sets the coordinate X.
         /// </summary>
         public int X
         {
@@ -484,7 +484,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает или задает координату Y.
+        /// Gets or sets the coordinate Y.
         /// </summary>
         public int Y
         {
@@ -501,26 +501,26 @@ namespace UMapx.Core
 
         #region Overrides
         /// <summary>
-        /// Возвращает хэш-код для данного объекта.
+        /// Returns the hash code for this object.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return x.GetHashCode() ^ y.GetHashCode();
         }
         /// <summary>
-        /// Преобразует логическое значение в соответствующее ему строковое представление.
+        /// Converts a PointInt to its corresponding string representation.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return string.Format("({0}, {1})", x, y);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа PointInt.
+        /// Gets a value indicating whether this instance is equal to the specified value of type PointInt.
         /// </summary>
-        /// <param name="obj">Объект</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Object</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
             return (obj is PointInt) ? (this == (PointInt)obj) : false;
@@ -529,21 +529,21 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Проверяет равны ли два объекта типа PointInt между собой.
+        /// Checks if two PointDouble objects are equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(PointInt a, PointInt b)
         {
             return (a.X == b.X && a.Y == b.Y);
         }
         /// <summary>
-        /// Проверяет не равны ли два объекта типа PointInt между собой.
+        /// Checks if two PointDouble objects are not equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(PointInt a, PointInt b)
         {
             return !(a == b);
@@ -552,17 +552,17 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of PointInt.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         object ICloneable.Clone()
         {
             return new PointInt(x, y);
         }
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of PointInt.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         public PointInt Clone()
         {
             return new PointInt(x, y);
@@ -571,10 +571,10 @@ namespace UMapx.Core
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("X", this.x);
@@ -583,7 +583,7 @@ namespace UMapx.Core
         #endregion
     }
     /// <summary>
-    /// Определяет пару дробных чисел, представляющих упорядоченную пару ширины и высоты.
+    /// Defines a pair of double numbers representing an ordered pair of width and height.
     /// </summary>
     public struct SizeDouble : ICloneable, ISerializable
     {
@@ -594,17 +594,17 @@ namespace UMapx.Core
 
         #region Structure components
         /// <summary>
-        /// Инициализирует пару целых чисел, представляющих упорядоченную пару ширины и высоты.
+        /// Initializes a pair of double numbers representing an ordered pair of width and height.
         /// </summary>
-        /// <param name="width">Ширина</param>
-        /// <param name="height">Высота</param>
+        /// <param name="width">Width</param>
+        /// <param name="height">Height</param>
         public SizeDouble(double width, double height)
         {
             this.height = height;
             this.width = width;
         }
         /// <summary>
-        /// Получает или задает нижнюю границу отрезка.
+        /// Gets or sets the height.
         /// </summary>
         public double Height
         {
@@ -618,7 +618,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает или задает верхнюю границу отрезка.
+        /// Gets or sets the width.
         /// </summary>
         public double Width
         {
@@ -635,26 +635,26 @@ namespace UMapx.Core
 
         #region Overrides
         /// <summary>
-        /// Возвращает хэш-код для данного объекта.
+        /// Returns the hash code for this object.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return width.GetHashCode() ^ height.GetHashCode();
         }
         /// <summary>
-        /// Преобразует логическое значение в соответствующее ему строковое представление.
+        /// Converts a SizeDouble to its corresponding string representation.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return string.Format("({0}, {1})", width, height);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа SizeDouble.
+        /// Gets a value indicating whether this instance is equal to the specified value of type SizeDouble.
         /// </summary>
-        /// <param name="obj">Объект</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Object</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
             return (obj is SizeDouble) ? (this == (SizeDouble)obj) : false;
@@ -663,21 +663,21 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Проверяет равны ли два объекта типа SizeDouble между собой.
+        /// Checks if two SizeDouble objects are equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(SizeDouble a, SizeDouble b)
         {
             return (a.Width == b.Width && a.Height == b.Height);
         }
         /// <summary>
-        /// Проверяет не равны ли два объекта типа SizeDouble между собой.
+        /// Checks if two SizeDouble objects are not equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(SizeDouble a, SizeDouble b)
         {
             return !(a == b);
@@ -686,17 +686,17 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of SizeDouble.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         object ICloneable.Clone()
         {
             return new SizeDouble(width, height);
         }
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of SizeDouble.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         public SizeDouble Clone()
         {
             return new SizeDouble(width, height);
@@ -705,10 +705,10 @@ namespace UMapx.Core
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Width", this.width);
@@ -717,7 +717,7 @@ namespace UMapx.Core
         #endregion
     }
     /// <summary>
-    /// Определяет пару целых чисел, представляющих упорядоченную пару ширины и высоты.
+    /// Defines a pair of integer numbers representing an ordered pair of width and height.
     /// </summary>
     public struct SizeInt : ICloneable, ISerializable
     {
@@ -728,17 +728,17 @@ namespace UMapx.Core
 
         #region Structure components
         /// <summary>
-        /// Инициализирует пару целых чисел, представляющих упорядоченную пару ширины и высоты.
+        /// Initializes a pair of integer numbers representing an ordered pair of width and height.
         /// </summary>
-        /// <param name="width">Ширина</param>
-        /// <param name="height">Высота</param>
+        /// <param name="width">Width</param>
+        /// <param name="height">Height</param>
         public SizeInt(int width, int height)
         {
             this.height = height;
             this.width = width;
         }
         /// <summary>
-        /// Получает или задает нижнюю границу отрезка.
+        /// Gets or sets the height.
         /// </summary>
         public int Height
         {
@@ -752,7 +752,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает или задает верхнюю границу отрезка.
+        /// Gets or sets the width.
         /// </summary>
         public int Width
         {
@@ -769,26 +769,26 @@ namespace UMapx.Core
 
         #region Overrides
         /// <summary>
-        /// Возвращает хэш-код для данного объекта.
+        /// Returns the hash code for this object.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return width.GetHashCode() ^ height.GetHashCode();
         }
         /// <summary>
-        /// Преобразует логическое значение в соответствующее ему строковое представление.
+        /// Converts a SizeInt to its corresponding string representation.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return string.Format("({0}, {1})", width, height);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа SizeInt.
+        /// Gets a value indicating whether this instance is equal to the specified value of type SizeInt.
         /// </summary>
-        /// <param name="obj">Объект</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Object</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
             return (obj is SizeInt) ? (this == (SizeInt)obj) : false;
@@ -797,21 +797,21 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Проверяет равны ли два объекта типа SizeInt между собой.
+        /// Checks if two SizeInt objects are equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(SizeInt a, SizeInt b)
         {
             return (a.Width == b.Width && a.Height == b.Height);
         }
         /// <summary>
-        /// Проверяет не равны ли два объекта типа SizeDouble между собой.
+        /// Checks if two SizeInt objects are not equal.
         /// </summary>
-        /// <param name="a">Пара чисел</param>
-        /// <param name="b">Пара чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Pair of numbers</param>
+        /// <param name="b">Pair of numbers</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(SizeInt a, SizeInt b)
         {
             return !(a == b);
@@ -820,17 +820,17 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of SizeInt.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         object ICloneable.Clone()
         {
             return new SizeInt(width, height);
         }
         /// <summary>
-        /// Создает копию пары чисел.
+        /// Creates a copy of SizeInt.
         /// </summary>
-        /// <returns>Пара чисел</returns>
+        /// <returns>Pair of numbers</returns>
         public SizeInt Clone()
         {
             return new SizeInt(width, height);
@@ -839,10 +839,10 @@ namespace UMapx.Core
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Width", this.width);

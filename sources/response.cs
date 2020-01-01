@@ -22,12 +22,12 @@ namespace UMapx.Response
 
     #region Filters with response impulse reaction
     /// <summary>
-    /// Определяет фильтр с бесконечной импульсной характеристикой.
+    /// Defines a filter with an infinite impulse response.
     /// <remarks>
-    /// Фильтр с бесконечной импульсной характеристикой (рекурсивный фильтр, БИХ-фильтр или IIR-фильтр) — линейный электронный фильтр, 
-    /// использующий один или более своих выходов в качестве входа, то есть образует обратную связь. Основным свойством таких фильтров 
-    /// является то, что их импульсная переходная характеристика имеет бесконечную длину во временной области, а передаточная функция 
-    /// имеет дробно-рациональный вид.
+    /// Filter with infinite impulse response (recursive filter, IIR filter or IIR filter) - a linear electronic filter,
+    /// using one or more of its outputs as an input, i.e. forms a feedback. The main property of such filters
+    /// is that their impulse response is of infinite length in the time domain, and the transfer function
+    /// has a fractional rational look.
     /// </remarks>
     /// </summary>
     public class IIR : IResponse, ICloneable, ISerializable
@@ -39,20 +39,20 @@ namespace UMapx.Response
 
         #region IIR Components
         /// <summary>
-        /// Инициализирует фильтр с бесконечной импульсной характеристикой.
+        /// Initializes a filter with an infinite impulse response.
         /// </summary>
         public IIR() { }
         /// <summary>
-        /// Инициализирует фильтр с бесконечной импульсной характеристикой.
+        /// Initializes a filter with an infinite impulse response.
         /// </summary>
-        /// <param name="b">Массив коэффициентов сигнала</param>
-        /// <param name="a">Массив коэффициентов обратной связи</param>
+        /// <param name="b">Array of signal coefficients</param>
+        /// <param name="a">Array of feedback coefficients</param>
         public IIR(double[] b, double[] a)
         {
             B = b; A = a;
         }
         /// <summary>
-        /// Получает или задает массив коэффициентов обратной связи.
+        /// Gets or sets the array of feedback coefficients.
         /// </summary>
         public double[] A
         {
@@ -66,7 +66,7 @@ namespace UMapx.Response
             }
         }
         /// <summary>
-        /// Получает или задает массив коэффициентов сигнала.
+        /// Gets or sets the array of signal coefficients.
         /// </summary>
         public double[] B
         {
@@ -80,10 +80,10 @@ namespace UMapx.Response
             }
         }
         /// <summary>
-        /// Возвращает массив значений реакции фильтра, при подаче дискретной функции.
+        /// Returns an array of filter response values when a discrete function is supplied.
         /// </summary>
-        /// <param name="u">Одномерный массив</param>
-        /// <returns>Дискретная функция в декартовой системе координат</returns>
+        /// <param name="u">Array</param>
+        /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public double[] Reaction(double[] u)
         {
             int length = u.Length;
@@ -116,10 +116,10 @@ namespace UMapx.Response
             return y;
         }
         /// <summary>
-        /// Возвращает амплитудно-частотную характеристику фильтра.
+        /// Returns the frequency response of the filter.
         /// </summary>
-        /// <param name="w">Массив частот (рад/с)</param>
-        /// <returns>Дискретная функция в декартовой системе координат</returns>
+        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public double[] Amplitude(double[] w)
         {
             int i, j;
@@ -142,10 +142,10 @@ namespace UMapx.Response
             return amplitude;
         }
         /// <summary>
-        /// Возвращает фазо-частотную характеристику фильтра.
+        /// Returns the phase-frequency response of a filter.
         /// </summary>
-        /// <param name="w">Массив частот (рад/с)</param>
-        /// <returns>Дискретная функция в декартовой системе координат</returns>
+        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public double[] Phase(double[] w)
         {
             int i, j;
@@ -168,10 +168,10 @@ namespace UMapx.Response
             return phase;
         }
         /// <summary>
-        /// Возвращает значение амплитуды на заданной частоте.
+        /// Returns the amplitude value at the given frequency.
         /// </summary>
-        /// <param name="w">Частота (рад/с)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="w">Frequency (rad / s)</param>
+        /// <returns>Double precision floating point number</returns>
         public double Amplitude(double w)
         {
             int i;
@@ -184,10 +184,10 @@ namespace UMapx.Response
             return K1.Abs / K2.Abs;
         }
         /// <summary>
-        /// Возвращает значение фазы на заданной частоте.
+        /// Returns the phase value at the given frequency.
         /// </summary>
-        /// <param name="w">Частота (рад/с)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="w">Frequency (rad / s)</param>
+        /// <returns>Double precision floating point number</returns>
         public double Phase(double w)
         {
             int i;
@@ -201,7 +201,7 @@ namespace UMapx.Response
             return K1.Angle - K2.Angle;
         }
         /// <summary>
-        /// Проверяет является ли заданный фильтр устойчивым.
+        /// Checks if the specified filter is stable.
         /// </summary>
         public bool Stability
         {
@@ -227,7 +227,7 @@ namespace UMapx.Response
 
         #region Sample filters
         /// <summary>
-        /// Получает готовый фильтр нижних частот.
+        /// Gets the finished low pass filter.
         /// </summary>
         public static IIR LowPass
         {
@@ -240,7 +240,7 @@ namespace UMapx.Response
             }
         }
         /// <summary>
-        /// Получает готовый фильтр верхних частот.
+        /// Gets the finished high-pass filter.
         /// </summary>
         public static IIR HighPass
         {
@@ -253,7 +253,7 @@ namespace UMapx.Response
             }
         }
         /// <summary>
-        /// Получает готовый полосовой фильтр.
+        /// Gets the finished bandpass filter.
         /// </summary>
         public static IIR BandPass
         {
@@ -266,7 +266,7 @@ namespace UMapx.Response
             }
         }
         /// <summary>
-        /// Получает готовый режекторный фильтр.
+        /// Gets the finished notch filter.
         /// </summary>
         public static IIR Notch
         {
@@ -282,17 +282,17 @@ namespace UMapx.Response
 
         #region Clone members
         /// <summary>
-        /// Создает копию фильтра.
+        /// Creates a copy of the filter.
         /// </summary>
-        /// <returns>Фильтр</returns>
+        /// <returns>Filter</returns>
         object ICloneable.Clone()
         {
             return new IIR(this.A, this.B);
         }
         /// <summary>
-        /// Создает копию фильтра.
+        /// Creates a copy of the filter.
         /// </summary>
-        /// <returns>Фильтр</returns>
+        /// <returns>Filter</returns>
         public IIR Clone()
         {
             return new IIR(this.A, this.B);
@@ -301,10 +301,10 @@ namespace UMapx.Response
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("A", this.A);
@@ -313,12 +313,12 @@ namespace UMapx.Response
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр с конечной импульсной характеристикой.
+    /// Defines a filter with a finite impulse response.
     /// <remarks>
-    /// Фильтр с конечной импульсной характеристикой (трансверсальный фильтр, КИХ-фильтр или FIR-фильтр) — один из видов линейных 
-    /// цифровых фильтров, характерной особенностью которого является ограниченность по времени его импульсной характеристики 
-    /// (с какого-то момента времени она становится точно равной нулю). Такой фильтр называют ещё нерекурсивным из-за отсутствия обратной связи. 
-    /// Знаменатель передаточной функции такого фильтра — некая константа.
+    /// A filter with a finite impulse response (transverse filter, FIR filter or FIR filter) is one of the types of linear
+    /// digital filters, a characteristic feature of which is the limited time of its impulse response
+    /// (from some point in time it becomes exactly equal to zero). Such a filter is also called non-recursive due to the lack of feedback.
+    /// The denominator of the transfer function of such a filter is a certain constant.
     /// </remarks>
     /// </summary>
     public class FIR : IResponse, ICloneable, ISerializable
@@ -329,19 +329,19 @@ namespace UMapx.Response
 
         #region FIR Components
         /// <summary>
-        /// Инициализирует фильтр с конечной импульсной характеристикой.
+        /// Initializes a filter with a finite impulse response.
         /// </summary>
         public FIR() { }
         /// <summary>
-        /// Инициализирует фильтр с конечной импульсной характеристикой.
+        /// Initializes a filter with a finite impulse response.
         /// </summary>
-        /// <param name="b">Массив коэффициентов сигнала</param>
+        /// <param name="b">Array of signal coefficients</param>
         public FIR(double[] b)
         {
             B = b;
         }
         /// <summary>
-        /// Получает или задает массив коэффициентов сигнала.
+        /// Gets or sets the array of signal coefficients.
         /// </summary>
         public double[] B
         {
@@ -355,10 +355,10 @@ namespace UMapx.Response
             }
         }
         /// <summary>
-        /// Возвращает массив значений реакции фильтра, при подаче дискретной функции.
+        /// Returns an array of filter response values when a discrete function is supplied.
         /// </summary>
-        /// <param name="u">Одномерный массив</param>
-        /// <returns>Дискретная функция в декартовой системе координат</returns>
+        /// <param name="u">Array</param>
+        /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public double[] Reaction(double[] u)
         {
             int length = u.Length;
@@ -385,10 +385,10 @@ namespace UMapx.Response
             return y;
         }
         /// <summary>
-        /// Возвращает амплитудно-частотную характеристику фильтра.
+        /// Returns the frequency response of the filter.
         /// </summary>
-        /// <param name="w">Массив частот (рад/с)</param>
-        /// <returns>Дискретная функция в декартовой системе координат</returns>
+        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public double[] Amplitude(double[] w)
         {
             int i, j, length = b.Length;
@@ -408,10 +408,10 @@ namespace UMapx.Response
             return amplitude;
         }
         /// <summary>
-        /// Возвращает фазо-частотную характеристику фильтра.
+        /// Returns the phase-frequency response of a filter.
         /// </summary>
-        /// <param name="w">Массив частот (рад/с)</param>
-        /// <returns>Дискретная функция в декартовой системе координат</returns>
+        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public double[] Phase(double[] w)
         {
             int j, i, length = b.Length;
@@ -431,10 +431,10 @@ namespace UMapx.Response
             return phase;
         }
         /// <summary>
-        /// Возвращает значение амплитуды на заданной частоте.
+        /// Returns the amplitude value at the given frequency.
         /// </summary>
-        /// <param name="w">Частота (рад/с)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="w">Frequency (rad / s)</param>
+        /// <returns>Double precision floating point number</returns>
         public double Amplitude(double w)
         {
             int i;
@@ -448,10 +448,10 @@ namespace UMapx.Response
             return K1.Abs;
         }
         /// <summary>
-        /// Возвращает значение фазы на заданной частоте.
+        /// Returns the phase value at the given frequency.
         /// </summary>
-        /// <param name="w">Частота (рад/с)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="w">Frequency (rad / s)</param>
+        /// <returns>Double precision floating point number</returns>
         public double Phase(double w)
         {
             int i;
@@ -468,7 +468,7 @@ namespace UMapx.Response
 
         #region Sample filters
         /// <summary>
-        /// Получает готовый фильтр нижних частот.
+        /// Gets the finished low pass filter.
         /// </summary>
         public static FIR LowPass
         {
@@ -480,7 +480,7 @@ namespace UMapx.Response
             }
         }
         /// <summary>
-        /// Получает готовый фильтр верхних частот.
+        /// Gets the finished high-pass filter.
         /// </summary>
         public static FIR HighPass
         {
@@ -492,7 +492,7 @@ namespace UMapx.Response
             }
         }
         /// <summary>
-        /// Получает готовый полосовой фильтр.
+        /// Gets the finished bandpass filter.
         /// </summary>
         public static FIR BandPass
         {
@@ -504,7 +504,7 @@ namespace UMapx.Response
             }
         }
         /// <summary>
-        /// Получает готовый режекторный фильтр.
+        /// Gets the finished notch filter.
         /// </summary>
         public static FIR Notch
         {
@@ -519,17 +519,17 @@ namespace UMapx.Response
 
         #region Clone members
         /// <summary>
-        /// Создает копию фильтра.
+        /// Creates a copy of the filter.
         /// </summary>
-        /// <returns>Фильтр</returns>
+        /// <returns>Filter</returns>
         object ICloneable.Clone()
         {
             return new FIR(this.B);
         }
         /// <summary>
-        /// Создает копию фильтра.
+        /// Creates a copy of the filter.
         /// </summary>
-        /// <returns>Фильтр</returns>
+        /// <returns>Filter</returns>
         public FIR Clone()
         {
             return new FIR(this.B);
@@ -538,10 +538,10 @@ namespace UMapx.Response
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("B", this.B);
@@ -552,40 +552,40 @@ namespace UMapx.Response
 
     #region Interfaces
     /// <summary>
-    /// Определяет общий интерфейс фильтров отклика.
+    /// Defines the general interface of response Filters.
     /// </summary>
     public interface IResponse
     {
         #region Interface Components
         /// <summary>
-        /// Возвращает массив значений реакции фильтра, при подаче дискретной функции.
+        /// Returns an array of filter response values when a discrete function is supplied.
         /// </summary>
-        /// <param name="u">Одномерный массив</param>
-        /// <returns>Дискретная функция в декартовой системе координат</returns>
+        /// <param name="u">Array</param>
+        /// <returns>Discrete function in a Cartesian coordinate system</returns>
         double[] Reaction(double[] u);
         /// <summary>
-        /// Возвращает амплитудно-частотную характеристику фильтра.
+        /// Returns the frequency response of the filter.
         /// </summary>
-        /// <param name="w">Массив частот (рад/с)</param>
-        /// <returns>Дискретная функция в декартовой системе координат</returns>
+        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <returns>Discrete function in a Cartesian coordinate system</returns>
         double[] Amplitude(double[] w);
         /// <summary>
-        /// Возвращает фазо-частотную характеристику фильтра.
+        /// Returns the phase-frequency response of a filter.
         /// </summary>
-        /// <param name="w">Массив частот (рад/с)</param>
-        /// <returns>Дискретная функция в декартовой системе координат</returns>
+        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <returns>Discrete function in a Cartesian coordinate system</returns>
         double[] Phase(double[] w);
         /// <summary>
-        /// Возвращает значение амплитуды на заданной частоте.
+        /// Returns the amplitude value at the given frequency.
         /// </summary>
-        /// <param name="w">Частота (рад/с)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="w">Frequency (rad / s)</param>
+        /// <returns>Double precision floating point number</returns>
         double Amplitude(double w);
         /// <summary>
-        /// Возвращает значение фазы на заданной частоте.
+        /// Returns the phase value at the given frequency.
         /// </summary>
-        /// <param name="w">Частота (рад/с)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="w">Frequency (rad / s)</param>
+        /// <returns>Double precision floating point number</returns>
         double Phase(double w);
         #endregion
     }

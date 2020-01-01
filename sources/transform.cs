@@ -22,12 +22,9 @@ namespace UMapx.Transform
 
     #region Orthogonal transforms
     /// <summary>
-    /// Определяет преобразование Уолша-Адамара.
+    /// Defines the Walsh-Hadamard transform.
     /// <remarks>
-    /// Дискретное преобразование Уолша-Адамара - это одно из первых дискретных ортогональных преобразований. Оно активно используется для сжатия сигналов, размерность которых
-    /// равна степени 2 (например 64, 128, 256 и так далее).
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// http://kibia.ru/teachers/kreindelin/pdf/2.pdf
     /// </remarks>
     /// </summary>
@@ -35,27 +32,27 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Нормализованное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         private bool normalized;
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует преобразование Уолша-Адамара.
+        /// Initializes the Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public WalshHadamardTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.normalized = normalized; this.direction = direction;
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -69,7 +66,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -86,15 +83,13 @@ namespace UMapx.Transform
 
         #region Walsh-Hadamard static components
         /// <summary>
-        /// Реализует построение матрицы Уолша-Адамара.
+        /// Implements the construction of the Walsh-Hadamard matrix.
         /// </summary>
-        /// <param name="powOf2">Степень двойки</param>
-        /// <returns>Матрица</returns>
+        /// <param name="powOf2">Power of 2</param>
+        /// <returns>Matrix</returns>
         public static double[,] Hadamard(int powOf2)
         {
-            // Количество необходимых итераций:
             int iterations = powOf2 - 1;
-            // Пораждающая матрица Адамара:
             double[,] hadamard = WalshHadamardTransform.Hadamard();
 
             if (iterations > 0)
@@ -111,9 +106,9 @@ namespace UMapx.Transform
             return hadamard;
         }
         /// <summary>
-        /// Реализует построение матрицы Уолша-Адамара [2 x 2].
+        /// Implements the construction of the Walsh-Hadamard matrix [2 x 2].
         /// </summary>
-        /// <returns>Матрица</returns>
+        /// <returns>Matrix</returns>
         public static double[,] Hadamard()
         {
             return (new double[2, 2] { { 1, 1 }, { 1, -1 } });
@@ -122,16 +117,16 @@ namespace UMapx.Transform
 
         #region Walsh-Hadamard Transform
         /// <summary>
-        /// Прямое дискретное преобразование Уолша-Адамара.
+        /// Forward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             int N = A.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
             double[,] U = WalshHadamardTransform.Hadamard(n);
@@ -145,16 +140,16 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Уолша-Адамара.
+        /// Backward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             int N = B.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
             double[,] U = WalshHadamardTransform.Hadamard(n);
@@ -168,16 +163,16 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Уолша-Адамара.
+        /// Forward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
 
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             double[,] U = WalshHadamardTransform.Hadamard((int)Maths.Log2(N));
             double[,] V = WalshHadamardTransform.Hadamard((int)Maths.Log2(M));
@@ -202,16 +197,16 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Уолша-Адамара.
+        /// Backward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
 
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             double[,] U = WalshHadamardTransform.Hadamard((int)Maths.Log2(N));
             double[,] V = WalshHadamardTransform.Hadamard((int)Maths.Log2(M));
@@ -236,16 +231,16 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Уолша-Адамара.
+        /// Forward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
             double[,] U = WalshHadamardTransform.Hadamard(n);
@@ -259,16 +254,16 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Уолша-Адамара.
+        /// Backward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
             double[,] U = WalshHadamardTransform.Hadamard(n);
@@ -282,16 +277,16 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Уолша-Адамара.
+        /// Forward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
 
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             double[,] U = WalshHadamardTransform.Hadamard((int)Maths.Log2(N));
             double[,] V = WalshHadamardTransform.Hadamard((int)Maths.Log2(M));
@@ -316,16 +311,16 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Уолша-Адамара.
+        /// Backward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
 
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             double[,] U = WalshHadamardTransform.Hadamard((int)Maths.Log2(N));
             double[,] V = WalshHadamardTransform.Hadamard((int)Maths.Log2(M));
@@ -352,11 +347,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет дискретное косинусоидальное преобразование.
+    /// Defines the cosine transform.
     /// <remarks>
-    /// Дискретное косинусное преобразование (ДКП) тесно связано с дискретным преобразованием Фурье и является гомоморфизмом его векторного пространства.
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
     /// </remarks>
     /// </summary>
@@ -364,22 +357,22 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует дискретное косинусоидальное преобразование.
+        /// Initializes the cosine transform.
         /// </summary>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="direction">Processing direction</param>
         public CosineTransform(Direction direction = Direction.Vertical) 
         {
             this.direction = direction;
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -396,10 +389,10 @@ namespace UMapx.Transform
 
         #region Cosine static components
         /// <summary>
-        /// Реализует построение матрицы косинусного преобразования.
+        /// Implements the construction of the cosine transform matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] Cosine(int n)
         {
             int j, i;
@@ -420,12 +413,12 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Cosine Discrete Transform
+        #region Cosine Transform
         /// <summary>
-        /// Прямое дискретное косинусоидальное преобразование.
+        /// Forward cosine transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             int N = A.Length;
@@ -433,10 +426,10 @@ namespace UMapx.Transform
             return Matrice.Dot(A, U);
         }
         /// <summary>
-        /// Обратное дискретное косинусоидальное преобразование.
+        /// Backward cosine transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             int N = B.Length;
@@ -444,10 +437,10 @@ namespace UMapx.Transform
             return Matrice.Dot(B, U.Transponate());
         }
         /// <summary>
-        /// Прямое дискретное косинусоидальное преобразование.
+        /// Forward cosine transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -465,10 +458,10 @@ namespace UMapx.Transform
             return A.Dot(V.Transponate());
         }
         /// <summary>
-        /// Обратное дискретное косинусоидальное преобразование.
+        /// Backward cosine transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -486,10 +479,10 @@ namespace UMapx.Transform
             return B.Dot(V);
         }
         /// <summary>
-        /// Прямое дискретное косинусоидальное преобразование.
+        /// Forward cosine transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
@@ -497,10 +490,10 @@ namespace UMapx.Transform
             return Matrice.Dot(A, U);
         }
         /// <summary>
-        /// Обратное дискретное косинусоидальное преобразование.
+        /// Backward cosine transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
@@ -508,10 +501,10 @@ namespace UMapx.Transform
             return Matrice.Dot(B, U.Transponate());
         }
         /// <summary>
-        /// Прямое дискретное косинусоидальное преобразование.
+        /// Forward cosine transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -529,10 +522,10 @@ namespace UMapx.Transform
             return A.Dot(V.Transponate());
         }
         /// <summary>
-        /// Обратное дискретное косинусоидальное преобразование.
+        /// Backward cosine transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -552,11 +545,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет дискретное синусоидальное преобразование.
+    /// Defines the sine transform.
     /// <remarks>
-    /// Дискретное ортогональное синусное преобразование было предложено Джейном в качестве аппроксимации преобразования Карунена-Лоэва для марковского процесса.
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// http://sernam.ru/book_prett1.php?id=91
     /// </remarks>
     /// </summary>
@@ -564,22 +555,22 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует дискретное синусоидальное преобразование.
+        /// Initializes the sine transform.
         /// </summary>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="direction">Processing direction</param>
         public SineTransform(Direction direction = Direction.Vertical) 
         {
             this.direction = direction;
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -596,10 +587,10 @@ namespace UMapx.Transform
 
         #region Sine static components
         /// <summary>
-        /// Реализует построение матрицы синусного преобразования.
+        /// Implements the construction of the sine transform matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] Sine(int n)
         {
             int j, i;
@@ -619,12 +610,12 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Sine Discrete Transform
+        #region Sine Transform
         /// <summary>
-        /// Прямое дискретное синусоидальное преобразование.
+        /// Forward sine transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             int N = A.Length;
@@ -632,10 +623,10 @@ namespace UMapx.Transform
             return Matrice.Dot(A, U);
         }
         /// <summary>
-        /// Обратное дискретное синусоидальное преобразование.
+        /// Backward sine transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             int N = B.Length;
@@ -643,10 +634,10 @@ namespace UMapx.Transform
             return Matrice.Dot(B, U.Transponate());
         }
         /// <summary>
-        /// Прямое дискретное синусоидальное преобразование.
+        /// Forward sine transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -664,10 +655,10 @@ namespace UMapx.Transform
             return A.Dot(V.Transponate());
         }
         /// <summary>
-        /// Обратное дискретное синусоидальное преобразование.
+        /// Backward sine transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -685,10 +676,10 @@ namespace UMapx.Transform
             return B.Dot(V);
         }
         /// <summary>
-        /// Прямое дискретное синусоидальное преобразование.
+        /// Forward sine transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
@@ -696,10 +687,10 @@ namespace UMapx.Transform
             return Matrice.Dot(A, U);
         }
         /// <summary>
-        /// Обратное дискретное синусоидальное преобразование.
+        /// Backward sine transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
@@ -707,10 +698,10 @@ namespace UMapx.Transform
             return Matrice.Dot(B, U.Transponate());
         }
         /// <summary>
-        /// Прямое дискретное синусоидальное преобразование.
+        /// Forward sine transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -728,10 +719,10 @@ namespace UMapx.Transform
             return A.Dot(V.Transponate());
         }
         /// <summary>
-        /// Обратное дискретное синусоидальное преобразование.
+        /// Backward sine transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -751,13 +742,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет дискретное преобразование Хартли.
+    /// Defines the Hartley transform.
     /// <remarks>
-    /// Данное дискретное ортогональное преобразование служит своего рода заменой дискретного преобразования Фурье для вещественных сигналов, однако, может применяться
-    /// и для анализа комплексных.
-    /// Кроме того, в данном программном модуле реализовано быстрое преобразование Хартли (БПХ), вычисляемое через быстрое преобразование Фурье (алгоритм Кули-Тьюки).
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Discrete_Hartley_transform
     /// </remarks>
     /// </summary>
@@ -765,27 +752,27 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Нормализованное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         private bool normalized;
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует дискретное преобразование Хартли.
+        /// Initializes the Hartley transform.
         /// </summary>
-        /// <param name="normalized">Нормализованное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public HartleyTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.normalized = normalized; this.direction = direction;
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -799,7 +786,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -816,10 +803,10 @@ namespace UMapx.Transform
 
         #region Hartley static components
         /// <summary>
-        /// Реализует построение матрицы преобразования Хартли.
+        /// Implements the construction of the Hartley transform matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] Hartley(int n)
         {
             int j, i;
@@ -838,12 +825,12 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Hartley Discrete Transform
+        #region Hartley Transform
         /// <summary>
-        /// Прямое дискретное преобразование Хартли.
+        /// Forward Hartley transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             int N = A.Length;
@@ -858,10 +845,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Хартли.
+        /// Backward Hartley transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             int N = B.Length;
@@ -876,10 +863,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Хартли.
+        /// Forward Hartley transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -906,10 +893,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Хартли.
+        /// Backward Hartley transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -936,10 +923,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Хартли.
+        /// Forward Hartley transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
@@ -954,10 +941,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Хартли.
+        /// Backward Hartley transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
@@ -972,10 +959,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Хартли.
+        /// Forward Hartley transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -1002,10 +989,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Хартли.
+        /// Backward Hartley transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -1034,13 +1021,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет дискретное преобразование Фурье.
+    /// Defines the Fourier transform.
     /// <remarks>
-    /// Это одно из преобразований Фурье, широко применяемых в алгоритмах цифровой обработки сигналов. Дискретные преобразования Фурье помогают решать дифференциальные уравнения 
-    /// в частных производных и выполнять такие операции, как свёртки. Дискретные преобразования Фурье также активно используются в статистике, при анализе временных рядов.
-    /// Кроме того, в данном программном модуле реализовано быстрое преобразование Фурье (алгоритм Кули-Тьюки).
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Discrete_Fourier_transform
     /// </remarks>
     /// </summary>
@@ -1048,27 +1031,27 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Нормализованное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         private bool normalized;
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует дискретное преобразование Фурье.
+        /// Initializes the Fourier transform.
         /// </summary>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public FourierTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.normalized = normalized; this.direction = direction;
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -1082,7 +1065,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -1099,10 +1082,10 @@ namespace UMapx.Transform
 
         #region Fourier static components
         /// <summary>
-        /// Реализует построение матрицы Фурье.
+        /// Implements the construction of the Fourier matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Fourier(int n)
         {
             Complex[,] H = new Complex[n, n];
@@ -1119,12 +1102,12 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Fourier Discrete Transform
+        #region Fourier Transform
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
@@ -1139,10 +1122,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
@@ -1157,10 +1140,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -1187,10 +1170,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -1217,37 +1200,37 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -1255,13 +1238,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет дискретное преобразование Лапласа.
+    /// Defines the Laplace transform.
     /// <remarks>
-    /// Данный класс реализует дискретный эквивалент непрерывного преобразования Лапласа.
-    /// Непрерывное преобразование Лапласа тесно связано с преобразованием Фурье. Иными словами, преобразование Фурье эквивалентно двустороннему преобразованию Лапласа с комплексным 
-    /// аргументом: s = iω. Эта связь между преобразованиями часто используется для того, чтобы определить частотный спектр сигнала.
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Laplace_transform
     /// </remarks>
     /// </summary>
@@ -1269,34 +1248,34 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Среднеквадратическое отклонение.
+        /// Standard deviation.
         /// </summary>
         private double sigma;
         /// <summary>
-        /// Нормализованное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         private bool normalized;
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует дискретное преобразование Лапласа.
+        /// Initializes the Laplace transform.
         /// </summary>
-        /// <param name="sigma">Среднеквадратическое отклонение (0, 1)</param>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="sigma">Standard deviation (0, 1)</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public LaplaceTransform(double sigma = 0.0005, bool normalized = true, Direction direction = Direction.Vertical)
         {
             Sigma = sigma; this.normalized = normalized; this.direction = direction;
         }
         /// <summary>
-        /// Получает или задает значение среднеквадратического отклонения (0, 1).
+        /// Gets or sets the standard deviation (0, 1).
         /// <remarks>
-        /// В случае, если σ = 0, то преобразование Лапласа принимает вид преобразования Фурье.
+        /// If σ = 0, then the Laplace transform takes the form of a Fourier transform.
         /// </remarks>
         /// </summary>
         public double Sigma
@@ -1308,13 +1287,13 @@ namespace UMapx.Transform
             set
             {
                 if (value < 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.sigma = value;
             }
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -1328,7 +1307,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -1345,12 +1324,12 @@ namespace UMapx.Transform
 
         #region Laplace static components
         /// <summary>
-        /// Реализует построение матрицы Лапласа.
+        /// Implements the construction of the Laplace matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <param name="sigma">Среднеквадратическое отклонение (0, 1)</param>
-        /// <param name="backward">Возвращать матрицу обратного преобразования или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <param name="sigma">Standard deviation (0, 1)</param>
+        /// <param name="backward">Return backward transformation matrix or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Laplace(int n, double sigma, bool backward = false)
         {
             Complex[,] H = new Complex[n, n];
@@ -1386,12 +1365,12 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Laplace Discrete Transform
+        #region Laplace Transform
         /// <summary>
-        /// Прямое дискретное преобразование Лапласа.
+        /// Forward Laplace transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
@@ -1406,10 +1385,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Лапласа.
+        /// Backward Laplace transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
@@ -1424,10 +1403,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Лапласа.
+        /// Forward Laplace transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -1454,10 +1433,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Лапласа.
+        /// Backward Laplace transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -1484,37 +1463,37 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -1522,12 +1501,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет преобразование Гильберта.
+    /// Defines the Hilbert transform.
     /// <remarks>
-    /// Суть преобразования заключается в том, что при прямом преобразовании Гильберта происходит усиление положительных частот и обнуление отрицательных.
-    /// В свою очередь, обратное преобразование Гильберта вычисляется путем отображения прямого преобразования: H^–1{h(t)} = –H{h(t)}.
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Hilbert_transform
     /// </remarks>
     /// </summary>
@@ -1535,23 +1511,23 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Преобразование Фурье.
+        /// Fourier transform.
         /// </summary>
         private FourierTransform FFT;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует преобразование Гильберта.
+        /// Initializes the Hilbert transform.
         /// </summary>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public HilbertTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.FFT = new FourierTransform(normalized, direction);
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -1565,7 +1541,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -1580,40 +1556,27 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Hilbert Discrete Transform
+        #region Hilbert Transform
         /// <summary>
-        /// Прямое дискретное преобразование Гильберта.
+        /// Forward Hilbert transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
-
-            // Перевод массива вещественных чисел в массив комплексных
-            // и быстрое преобразование Фурье
             Complex[] F = FFT.Forward(A);
-
-            // Перегруппировка:
             HilbertTransform.hilbertf(F, N);
-
-            // Обратное преобразование Фурье:
             F = FFT.Backward(F);
-
-            // Группировка:
             return HilbertTransform.hilbertb(A, F, N);
         }
         /// <summary>
-        /// Обратное дискретное преобразование Гильберта.
+        /// Backward Hilbert transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
-            // Обратное преобразование Гильберта вычисляется путем
-            // отображения прямого преобразования:
-            // H^–1{h(t)} = –H{h(t)}
-
             int N = B.Length, i;
             Complex[] A = new Complex[N];
 
@@ -1625,10 +1588,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Гильберта.
+        /// Forward Hilbert transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             Complex[,] B = (Complex[,])A.Clone();
@@ -1824,10 +1787,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Гильберта.
+        /// Backward Hilbert transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             Complex[,] A = (Complex[,])B.Clone();
@@ -1915,37 +1878,37 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -1954,13 +1917,12 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// Реализует перегруппировку спектра по Гильберту.
+        /// Implements the rearrangement of the spectrum according to Hilbert.
         /// </summary>
-        /// <param name="f">Спектр</param>
-        /// <param name="n">Размерность</param>
+        /// <param name="f">Spectrum</param>
+        /// <param name="n">Length</param>
         internal static void hilbertf(Complex[] f, int n)
         {
-            // Усиление положительных частот и обнуление отрицательных:
             int n2 = n / 2;
 
             for (int i = 0; i < n2; i++)
@@ -1971,17 +1933,16 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует группировку по Гильберту.
+        /// Implements the rearrangement of the spectrum according to Hilbert.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="f">Спектр, упорядоченный по Гильберту</param>
-        /// <param name="n">Размерность</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="f">Spectrum</param>
+        /// <param name="n">Length</param>
+        /// <returns>Array</returns>
         internal static Complex[] hilbertb(Complex[] a, Complex[] f, int n)
         {
             Complex[] B = new Complex[n];
 
-            // Обратное преобразование в массив вещественных чисел:
             for (int i = 0; i < n; i++)
             {
                 B[i] = new Complex(a[i].Real, f[i].Imag);
@@ -1995,12 +1956,9 @@ namespace UMapx.Transform
 
     #region Fast orthogonal transforms
     /// <summary>
-    /// Определяет быстрое преобразование Уолша-Адамара.
+    /// Defines the fast Walsh-Hadamard transform.
     /// <remarks>
-    /// Данная оптимизация преобразования Уолша-Адамара сложностью O(N^2) позволяет произвести вычисления за O(Nlog(N)). Алгоритм быстрого преобразования 
-    /// Уолша-Адамара имеет схожую структуру с быстрым преобразованием Фурье (алгоритм Кули-Тьюки).
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// http://www.mathworks.com/matlabcentral/fileexchange/6879-fast-walsh-hadamard-transform
     /// </remarks>
     /// </summary>
@@ -2008,27 +1966,27 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         /// <summary>
-        /// Нормализованное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         private bool normalized;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует быстрое преобразование Уолша-Адамара.
+        /// Initializes the fast Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public FastWalshHadamardTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.normalized = normalized; this.direction = direction;
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -2042,7 +2000,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -2057,17 +2015,17 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Fast Walsh-Hadamard Discrete Transform
+        #region Fast Walsh-Hadamard Transform
         /// <summary>
-        /// Прямое быстрое преобразование Уолша-Адамара.
+        /// Forward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             int N = A.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размер сигнала должен быть равен степени 2.");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             double[] B = (double[])A.Clone();
             fwht(B);
@@ -2080,15 +2038,15 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное быстрое преобразование Уолша-Адамара.
+        /// Backward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             int N = B.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размер сигнала должен быть равен степени 2.");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             double[] A = (double[])B.Clone();
             fwht(B);
@@ -2101,10 +2059,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое быстрое преобразование Уолша-Адамара.
+        /// Forward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             double[,] B = (double[,])A.Clone();
@@ -2114,7 +2072,7 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, N, i =>
                 {
@@ -2163,7 +2121,7 @@ namespace UMapx.Transform
             {
 
                 if (!Maths.IsPower(N, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, M, j =>
                 {
@@ -2192,7 +2150,7 @@ namespace UMapx.Transform
             else
             {
                 if (!Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, N, i =>
                 {
@@ -2221,10 +2179,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное быстрое преобразование Уолша-Адамара.
+        /// Backward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             double[,] A = (double[,])B.Clone();
@@ -2234,7 +2192,7 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, M, j =>
                 {
@@ -2279,7 +2237,7 @@ namespace UMapx.Transform
             else if (direction == Direction.Vertical)
             {
                 if (!Maths.IsPower(N, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, M, j =>
                 {
@@ -2306,7 +2264,7 @@ namespace UMapx.Transform
             else
             {
                 if (!Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, N, i =>
                 {
@@ -2334,15 +2292,15 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое быстрое преобразование Уолша-Адамара.
+        /// Forward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размер сигнала должен быть равен степени 2.");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             Complex[] B = (Complex[])A.Clone();
             fwht(B);
@@ -2355,15 +2313,15 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное быстрое преобразование Уолша-Адамара.
+        /// Backward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размер сигнала должен быть равен степени 2.");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             Complex[] A = (Complex[])B.Clone();
             fwht(B);
@@ -2376,10 +2334,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое быстрое преобразование Уолша-Адамара.
+        /// Forward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             Complex[,] B = (Complex[,])A.Clone();
@@ -2389,7 +2347,7 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, N, i =>
                 {
@@ -2437,7 +2395,7 @@ namespace UMapx.Transform
             else if (direction == Direction.Vertical)
             {
                 if (!Maths.IsPower(N, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, M, j =>
                 {
@@ -2466,7 +2424,7 @@ namespace UMapx.Transform
             else
             {
                 if (!Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, N, i =>
                 {
@@ -2495,10 +2453,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное быстрое преобразование Уолша-Адамара.
+        /// Backward Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             Complex[,] A = (Complex[,])B.Clone();
@@ -2508,7 +2466,7 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, M, j =>
                 {
@@ -2553,7 +2511,7 @@ namespace UMapx.Transform
             else if (direction == Direction.Vertical)
             {
                 if (!Maths.IsPower(N, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, M, j =>
                 {
@@ -2580,7 +2538,7 @@ namespace UMapx.Transform
             else
             {
                 if (!Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, N, i =>
                 {
@@ -2611,9 +2569,9 @@ namespace UMapx.Transform
 
         #region Private data
         /// <summary>
-        /// Реализует быстрое преобразование Уолша-Адамара.
+        ///
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         private void fwht(double[] data)
         {
             int N = data.Length;
@@ -2646,9 +2604,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует быстрое преобразование Уолша-Адамара.
+        /// 
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         private void fwht(Complex[] data)
         {
             int N = data.Length;
@@ -2683,11 +2641,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет быстрое преобразование Фурье по алгоритму Кули-Тюки.
+    /// Defines the fast Fourier transform using the Cooley-Tukey algorithm.
     /// <remarks>
-    /// Данная оптимизация алгоритма Кули-Тьюки для вычисления преобразования Фурье предназначена для анализа крупных сигналов.
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
     /// </remarks>
     /// </summary>
@@ -2695,27 +2651,27 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         /// <summary>
-        /// Нормализованное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         private bool normalized;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует быстрое преобразование Фурье по алгоритму Кули-Тюки.
+        /// Initializes the fast Fourier transform using the Cooley-Tukey algorithm.
         /// </summary>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public FastFourierTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.normalized = normalized; this.direction = direction;
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -2729,7 +2685,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -2746,15 +2702,15 @@ namespace UMapx.Transform
 
         #region Fast Fourier Transform
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             Complex[] B = (Complex[])A.Clone();
             fft(B);
@@ -2767,15 +2723,15 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Размерность сигнала должна быть степенью 2");
+                throw new Exception("Dimension of the signal must be a power of 2");
 
             Complex[] A = (Complex[])B.Clone();
             ifft(A);
@@ -2788,10 +2744,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             Complex[,] B = (Complex[,])A.Clone();
@@ -2801,7 +2757,7 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, N, i =>
                 {
@@ -2849,7 +2805,7 @@ namespace UMapx.Transform
             else if (direction == Direction.Vertical)
             {
                 if (!Maths.IsPower(N, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, M, j =>
                 {
@@ -2878,7 +2834,7 @@ namespace UMapx.Transform
             else
             {
                 if (!Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, N, i =>
                 {
@@ -2907,10 +2863,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             Complex[,] A = (Complex[,])B.Clone();
@@ -2920,7 +2876,7 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, M, j =>
                 {
@@ -2965,7 +2921,7 @@ namespace UMapx.Transform
             else if (direction == Direction.Vertical)
             {
                 if (!Maths.IsPower(N, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, M, j =>
                 {
@@ -2992,7 +2948,7 @@ namespace UMapx.Transform
             else
             {
                 if (!Maths.IsPower(M, 2))
-                    throw new Exception("Размерность сигнала должна быть степенью 2");
+                    throw new Exception("Dimension of the signal must be a power of 2");
 
                 Parallel.For(0, N, i =>
                 {
@@ -3020,37 +2976,37 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -3068,9 +3024,9 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         private static void fft(Complex[] data)
         {
             int n = data.Length;
@@ -3113,9 +3069,9 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         private static void ifft(Complex[] data)
         {
             int n = data.Length;
@@ -3158,10 +3114,10 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает массив с указателями на члены данных, которые должны быть заменены перед БПФ.
+        /// Gets an array with pointers to data members that must be replaced before the FFT.
         /// </summary>
-        /// <param name="numberOfBits">Количество битов</param>
-        /// <returns>Массив</returns>
+        /// <param name="numberOfBits">Number of bits</param>
+        /// <returns>Array</returns>
         private static int[] GetReversedBits(int numberOfBits)
         {
             if ((numberOfBits < minBits) || (numberOfBits > maxBits))
@@ -3192,10 +3148,10 @@ namespace UMapx.Transform
             return reversedBits[numberOfBits - 1];
         }
         /// <summary>
-        /// Получает прямое вращение комплексного числа.
+        /// Gets the forward rotation of a complex number.
         /// </summary>
-        /// <param name="numberOfBits">Количество битов</param>
-        /// <returns>Массив</returns>
+        /// <param name="numberOfBits">Number of bits</param>
+        /// <returns>Array</returns>
         private static Complex[] ForwardComplexRotation(int numberOfBits)
         {
             int directionIndex = 0;
@@ -3225,10 +3181,10 @@ namespace UMapx.Transform
             return complexRotation[numberOfBits - 1, directionIndex];
         }
         /// <summary>
-        /// Получает обратное вращение комплексного числа.
+        /// Gets the backward rotation of a complex number.
         /// </summary>
-        /// <param name="numberOfBits">Количество битов</param>
-        /// <returns>Массив</returns>
+        /// <param name="numberOfBits">Number of bits</param>
+        /// <returns>Array</returns>
         private static Complex[] BackwardComplexRotation(int numberOfBits)
         {
             int directionIndex = 1;
@@ -3258,9 +3214,9 @@ namespace UMapx.Transform
             return complexRotation[numberOfBits - 1, directionIndex];
         }
         /// <summary>
-        /// Переупорядочивает данные для использования БПФ.
+        /// Reorders data to use FFT.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         private static void ReorderData(Complex[] data)
         {
             int length = data.Length;
@@ -3281,19 +3237,19 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Вычисляет степень двойки.
+        /// Computes power of 2.
         /// </summary>
-        /// <param name="power">Степень</param>
-        /// <returns>Целое число</returns>
+        /// <param name="power">Power</param>
+        /// <returns>Integer number</returns>
         private static int Pow2(int power)
         {
             return ((power >= 0) && (power <= 30)) ? (1 << power) : 0;
         }
         /// <summary>
-        /// Вычисляет логарифм по основанию 2.
+        /// Calculates the base 2 logarithm.
         /// </summary>
-        /// <param name="x">Целое число</param>
-        /// <returns>Целое число</returns>
+        /// <param name="x">Integer number</param>
+        /// <returns>Integer number</returns>
         private static int Log2(int x)
         {
             return (int)(Math.Log10(x) / 0.30102999566398);
@@ -3301,11 +3257,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет быстрое преобразование Хартли.
+    /// Defines the fast Hartley transform.
     /// <remarks>
-    /// Алгоритм быстрого преобразования Хартли (БПХ) построен на основе быстрого преобразования Фурье (алгоритм Кули-Тьюки).
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Discrete_Hartley_transform
     /// </remarks>
     /// </summary>
@@ -3313,23 +3267,23 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Преобразование Фурье.
+        /// Fourier transform.
         /// </summary>
         private FastFourierTransform FFT;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует быстрое преобразование Хартли.
+        /// Initializes the fast Hartley transform.
         /// </summary>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public FastHartleyTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.FFT = new FastFourierTransform(normalized, direction);
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -3343,7 +3297,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -3358,12 +3312,12 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Fast Hartley Discrete Transform
+        #region Fast Hartley Transform
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Хартли.
+        /// Forward Hartley transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             Complex[] B = Matrice.ToComplex(A);
@@ -3380,10 +3334,10 @@ namespace UMapx.Transform
             return Hk;
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Хартли.
+        /// Backward Hartley transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             Complex[] A = Matrice.ToComplex(B);
@@ -3400,10 +3354,10 @@ namespace UMapx.Transform
             return Hk;
         }
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Хартли.
+        /// Forward Hartley transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             Complex[,] B = Matrice.ToComplex(A);
@@ -3424,10 +3378,10 @@ namespace UMapx.Transform
             return Hk;
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Хартли.
+        /// Backward Hartley transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             Complex[,] A = Matrice.ToComplex(B);
@@ -3448,10 +3402,10 @@ namespace UMapx.Transform
             return Hk;
         }
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Хартли.
+        /// Forward Hartley transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int length = A.Length, i;
@@ -3466,10 +3420,10 @@ namespace UMapx.Transform
             return Hk;
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Хартли.
+        /// Backward Hartley transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int length = B.Length, i;
@@ -3484,10 +3438,10 @@ namespace UMapx.Transform
             return Hk;
         }
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Хартли.
+        /// Forward Hartley transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             Complex[,] B = FFT.Forward(A);
@@ -3506,10 +3460,10 @@ namespace UMapx.Transform
             return Hk;
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Хартли.
+        /// Backward Hartley transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             Complex[,] A = FFT.Backward(B);
@@ -3530,11 +3484,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет быстрое преобразование Гильберта.
+    /// Defines the fast Hilbert transform.
     /// <remarks>
-    /// Данная вычислительная оптимизация реализована за счет быстрого преобразования Фурье (алгоритм Кули-Тьюки), сложность которого составляет O(Nlog(N)).
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Hilbert_transform
     /// </remarks>
     /// </summary>
@@ -3542,28 +3494,28 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Преобразование Фурье.
+        /// Fourier transform.
         /// </summary>
         private FastFourierTransform FFT;
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует быстрое преобразование Гильберта.
+        /// Initializes the fast Hilbert transform.
         /// </summary>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public FastHilbertTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.FFT = new FastFourierTransform(normalized, Direction.Both);
             this.direction = direction;
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -3577,7 +3529,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -3592,40 +3544,27 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Fast Hilbert Discrete Transform
+        #region Fast Hilbert Transform
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Гильберта.
+        /// Forward Hilbert transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
-
-            // Перевод массива вещественных чисел в массив комплексных
-            // и быстрое преобразование Фурье
             Complex[] F = FFT.Forward(A);
-
-            // Перегруппировка:
             HilbertTransform.hilbertf(F, N);
-
-            // Обратное преобразование Фурье:
             F = FFT.Backward(F);
-
-            // Группировка:
             return HilbertTransform.hilbertb(A, F, N);
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Гильберта.
+        /// Backward Hilbert transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
-            // Обратное преобразование Гильберта вычисляется путем
-            // отображения прямого преобразования:
-            // H^–1{h(t)} = –H{h(t)}
-
             int N = B.Length, i;
             Complex[] A = new Complex[N];
 
@@ -3637,10 +3576,10 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Гильберта.
+        /// Forward Hilbert transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             Complex[,] B = (Complex[,])A.Clone();
@@ -3836,10 +3775,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Гильберта.
+        /// Backward Hilbert transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             Complex[,] A = (Complex[,])B.Clone();
@@ -3927,37 +3866,37 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -3965,33 +3904,37 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет быстрое дискретное косинусное преобразование.
+    /// Defines the fast cosine transform.
+    /// <remarks>
+    /// More information can be found on the website:
+    /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
+    /// </remarks>
     /// </summary>
     public class FastCosineTransform : ITransform
     {
         #region Private data
         /// <summary>
-        /// Преобразование Фурье.
+        /// Fourier transform.
         /// </summary>
         private FastFourierTransform FFT;
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует быстрое дискретное косинусное преобразование.
+        /// Initializes the fast cosine transform.
         /// </summary>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="direction">Processing direction</param>
         public FastCosineTransform(Direction direction = Direction.Vertical)
         {
             this.FFT = new FastFourierTransform(true, Direction.Both);
             this.direction = direction;
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -4006,12 +3949,12 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Fast Cosine Discrete Transform
+        #region Fast Cosine Transform
         /// <summary>
-        /// Прямое быстрое дискретное косинусное преобразование.
+        /// Forward cosine transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             int N = A.Length, N2 = N * 2, i, k;
@@ -4022,7 +3965,6 @@ namespace UMapx.Transform
                 B[i] = A[i];
             }
 
-            // Преобразование Фурье:
             B = FFT.Forward(B);
 
             double[] C = new double[N];
@@ -4032,22 +3974,22 @@ namespace UMapx.Transform
             {
                 C[k] = 2.0 * (B[k] * Maths.Exp(c * k)).Real;
             }
-            C[0] = C[0] / Math.Sqrt(2); // DCT-I форма
+            C[0] = C[0] / Math.Sqrt(2); // DCT-I
 
             return C;
         }
         /// <summary>
-        /// Обратное быстрое дискретное косинусное преобразование.
+        /// Backward cosine transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             int N = B.Length, N2 = N * 2, i, k;
             Complex[] A = new Complex[N2];
             double Bk, temp, c = Maths.Pi / N2;
 
-            B[0] /= Math.Sqrt(2); // DCT-I форма
+            B[0] /= Math.Sqrt(2); // DCT-I
 
             for (k = 0; k < N; k++)
             {
@@ -4067,10 +4009,10 @@ namespace UMapx.Transform
             return C;
         }
         /// <summary>
-        /// Прямое быстрое дискретное косинусное преобразование.
+        /// Forward cosine transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             double[,] B = (double[,])A.Clone();
@@ -4160,10 +4102,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное быстрое дискретное косинусное преобразование.
+        /// Backward cosine transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             double[,] A = (double[,])B.Clone();
@@ -4248,37 +4190,37 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             throw new NotSupportedException();
@@ -4286,33 +4228,37 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет быстрое дискретное синусное преобразование.
+    /// Defines the fast sine transform.
+    /// <remarks>
+    /// More information can be found on the website:
+    /// http://sernam.ru/book_prett1.php?id=91
+    /// </remarks>
     /// </summary>
     public class FastSineTransform : ITransform
     {
         #region Private data
         /// <summary>
-        /// Преобразование Фурье.
+        /// Fourier transform.
         /// </summary>
         private FastFourierTransform FFT;
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует быстрое дискретное синусное преобразование.
+        /// Defines the fast sine transform.
         /// </summary>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="direction">Processing direction</param>
         public FastSineTransform(Direction direction = Direction.Vertical)
         {
             this.FFT = new FastFourierTransform(true, Direction.Both);
             this.direction = direction;
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -4327,12 +4273,12 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Fast Sine Discrete Transform
+        #region Fast Sine Transform
         /// <summary>
-        /// Прямое быстрое дискретное синусное преобразование.
+        /// Forward cosine transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             int N = A.Length, N2 = N * 2, i, k;
@@ -4343,7 +4289,6 @@ namespace UMapx.Transform
                 B[i] = A[i];
             }
 
-            // Преобразование Фурье:
             B = FFT.Forward(B);
 
             double[] C = new double[N];
@@ -4354,16 +4299,15 @@ namespace UMapx.Transform
                 C[k] = 2.0 * (B[k] * Maths.Exp(c * k)).Imag;
             }
 
-            // Перестановка:
             C[0] = A[N - 1] / Math.Sqrt(2);
 
             return C;
         }
         /// <summary>
-        /// Обратное быстрое дискретное синусное преобразование.
+        /// Backward cosine transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             int N = B.Length, N2 = N * 2, i, k;
@@ -4377,7 +4321,6 @@ namespace UMapx.Transform
                 A[k] = new Complex(Bk * Math.Cos(temp), Bk * Math.Sin(temp));
             }
 
-            // Преобразование Фурье:
             A = FFT.Backward(A);
             double[] C = new double[N];
 
@@ -4386,16 +4329,15 @@ namespace UMapx.Transform
                 C[i] = -A[i].Imag * 2.0;
             }
 
-            // Перестановка:
             C[N - 1] = B[0] * Math.Sqrt(2);
 
             return C;
         }
         /// <summary>
-        /// Прямое быстрое дискретное синусное преобразование.
+        /// Forward cosine transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             double[,] B = (double[,])A.Clone();
@@ -4485,10 +4427,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное быстрое дискретное синусное преобразование.
+        /// Backward cosine transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             double[,] A = (double[,])B.Clone();
@@ -4573,37 +4515,37 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Fourier transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Fourier transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             throw new NotSupportedException();
@@ -4611,13 +4553,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет быстрое дискретное преобразование Лапласа.
+    /// Defines the fast Laplace transform.
     /// <remarks>
-    /// Данный класс реализует дискретный эквивалент непрерывного преобразования Лапласа.
-    /// Непрерывное преобразование Лапласа тесно связано с преобразованием Фурье. Иными словами, преобразование Фурье эквивалентно двустороннему преобразованию Лапласа с комплексным 
-    /// аргументом: s = iω. Эта связь между преобразованиями часто используется для того, чтобы определить частотный спектр сигнала.
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Laplace_transform
     /// </remarks>
     /// </summary>
@@ -4625,39 +4563,39 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Преобразование Фурье.
+        /// Fourier transform.
         /// </summary>
         private FastFourierTransform FFT;
         /// <summary>
-        /// Среднеквадратическое отклонение.
+        /// Standard deviation.
         /// </summary>
         private double sigma;
         /// <summary>
-        /// Нормализованное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         private bool normalized;
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует быстрое дискретное преобразование Лапласа.
+        /// Initializes the fast Laplace transform.
         /// </summary>
-        /// <param name="sigma">Среднеквадратическое отклонение (0, 1)</param>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="sigma">Standard deviation (0, 1)</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public FastLaplaceTransform(double sigma = 0.0005, bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.FFT = new FastFourierTransform(true, Direction.Vertical);
             Sigma = sigma; this.normalized = normalized; this.direction = direction;
         }
         /// <summary>
-        /// Получает или задает значение среднеквадратического отклонения (0, 1).
+        /// Gets or sets the standard deviation (0, 1).
         /// <remarks>
-        /// В случае, если σ = 0, то преобразование Лапласа принимает вид преобразования Фурье.
+        /// If σ = 0, then the Laplace transform takes the form of a Fourier transform.
         /// </remarks>
         /// </summary>
         public double Sigma
@@ -4669,13 +4607,13 @@ namespace UMapx.Transform
             set
             {
                 if (value < 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.sigma = value;
             }
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -4689,7 +4627,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -4704,12 +4642,12 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Laplace Discrete Transform
+        #region Laplace Transform
         /// <summary>
-        /// Прямое дискретное преобразование Лапласа.
+        /// Forward Laplace transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             // Fourier transform:
@@ -4720,10 +4658,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Лапласа.
+        /// Backward Laplace transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             // Laplace to Fourier transform:
@@ -4734,10 +4672,10 @@ namespace UMapx.Transform
             return FFT.Backward(A);
         }
         /// <summary>
-        /// Прямое быстрое дискретное преобразование Лапласа.
+        /// Forward Laplace transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             Complex[,] B = (Complex[,])A.Clone();
@@ -4827,10 +4765,10 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Обратное быстрое дискретное преобразование Лапласа.
+        /// Backward Laplace transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             Complex[,] A = (Complex[,])B.Clone();
@@ -4915,37 +4853,37 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Laplace transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Laplace transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Laplace transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Laplace transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -4954,14 +4892,14 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// Прямое преобразование Лапласа.
+        /// 
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="sigma">Сигма</param>
+        /// <param name="v">Array</param>
+        /// <param name="sigma">Sigma</param>
         internal static void laplace(Complex[] v, double sigma = 0.003)
         {
             // forward laplacian transform
-            // for discrete signal:
+            // for signal:
             int N = v.Length;
 
             for (int i = 0; i < N; i++)
@@ -4972,14 +4910,14 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Обратное преобразование Лапласа.
+        /// 
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="sigma">Сигма</param>
+        /// <param name="v">Array</param>
+        /// <param name="sigma">Sigma</param>
         internal static void invlaplace(Complex[] v, double sigma = 0.003)
         {
             // inverse laplacian transform
-            // for discrete signal:
+            // for signal:
             int N = v.Length;
 
             for (int i = 0; i < N; i++)
@@ -4995,9 +4933,11 @@ namespace UMapx.Transform
 
     #region Pyramid transforms
     /// <summary>
-    /// Определяет класс представления сигнала в виде пирамиды Лапласа.
-    /// Более подробную информацию можно найти на сайте:
+    /// Defines the Laplacian pyramid transform.
+    /// <remarks>
+    /// More information can be found on the website:
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
+    /// </remarks>
     /// </summary>
     public class LaplacianPyramidTransform : IPyramidTransform
     {
@@ -5007,22 +4947,22 @@ namespace UMapx.Transform
 
         #region Pyramid components
         /// <summary>
-        /// Инициализирует класс представления сигнала в виде пирамиды Лапласа.
+        /// Initializes the Laplacian pyramid transform.
         /// </summary>
-        /// <param name="levels">Количество уровней представления</param>
+        /// <param name="levels">Number of levels</param>
         public LaplacianPyramidTransform(int levels)
         {
             this.Levels = levels;
         }
         /// <summary>
-        /// Инициализирует класс представления сигнала в виде пирамиды Лапласа.
+        /// Initializes the Laplacian pyramid transform.
         /// </summary>
         public LaplacianPyramidTransform()
         {
             this.Levels = int.MaxValue;
         }
         /// <summary>
-        /// Получает или задает количество уровней представления.
+        /// Gets or sets number of levels.
         /// </summary>
         public int Levels
         {
@@ -5033,7 +4973,7 @@ namespace UMapx.Transform
             set
             {
                 if (value <= 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.levels = value;
             }
@@ -5052,10 +4992,10 @@ namespace UMapx.Transform
         // **************************************************
 
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Лапласа.
+        /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Pyramid</returns>
         public double[][,] Forward(double[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
@@ -5074,10 +5014,10 @@ namespace UMapx.Transform
             return lapl;
         }
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Лапласа.
+        /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Pyramid</returns>
         public double[][] Forward(double[] data)
         {
             int r = data.Length;
@@ -5097,10 +5037,10 @@ namespace UMapx.Transform
             return lapl;
         }
         /// <summary>
-        /// Обратное пирамидоидальное преобразование Лапласа.
+        /// Backward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[][,] pyramid)
         {
             int nlev = pyramid.Length - 1;
@@ -5114,10 +5054,10 @@ namespace UMapx.Transform
             return I;
         }
         /// <summary>
-        /// Обратное пирамидоидальное преобразование Лапласа.
+        /// Backward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[][] pyramid)
         {
             int nlev = pyramid.Length;
@@ -5131,10 +5071,10 @@ namespace UMapx.Transform
             return I;
         }
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Лапласа.
+        /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Pyramid</returns>
         public Complex[][,] Forward(Complex[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
@@ -5153,10 +5093,10 @@ namespace UMapx.Transform
             return lapl;
         }
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Лапласа.
+        /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Pyramid</returns>
         public Complex[][] Forward(Complex[] data)
         {
             int r = data.Length;
@@ -5176,10 +5116,10 @@ namespace UMapx.Transform
             return lapl;
         }
         /// <summary>
-        /// Обратное пирамидоидальное преобразование Лапласа.
+        /// Backward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[][,] pyramid)
         {
             int nlev = pyramid.Length - 1;
@@ -5193,10 +5133,10 @@ namespace UMapx.Transform
             return I;
         }
         /// <summary>
-        /// Обратное пирамидоидальное преобразование Лапласа.
+        /// Backward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[][] pyramid)
         {
             int nlev = pyramid.Length;
@@ -5213,10 +5153,10 @@ namespace UMapx.Transform
 
         #region Gaussian pyramid to Laplacian pyramid
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Лапласа.
+        /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Пирамида Гусса</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Gaussian pyramid</param>
+        /// <returns>Pyramid</returns>
         public double[][,] Forward(double[][,] data)
         {
             int nlev = data.Length;
@@ -5231,10 +5171,10 @@ namespace UMapx.Transform
             return lapl;
         }
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Лапласа.
+        /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Пирамида Гусса</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Gaussian pyramid</param>
+        /// <returns>Pyramid</returns>
         public double[][] Forward(double[][] data)
         {
             int nlev = data.Length;
@@ -5249,10 +5189,10 @@ namespace UMapx.Transform
             return lapl;
         }
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Лапласа.
+        /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Пирамида Гусса</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Gaussian pyramid</param>
+        /// <returns>Pyramid</returns>
         public Complex[][,] Forward(Complex[][,] data)
         {
             int nlev = data.Length;
@@ -5267,10 +5207,10 @@ namespace UMapx.Transform
             return lapl;
         }
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Лапласа.
+        /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Пирамида Гусса</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Gaussian pyramid</param>
+        /// <returns>Pyramid</returns>
         public Complex[][] Forward(Complex[][] data)
         {
             int nlev = data.Length;
@@ -5287,9 +5227,11 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет класс представления сигнала в виде пирамиды Гаусса.
-    /// Более подробную информацию можно найти на сайте:
+    /// Defines the Gaussian pyramid transform.
+    /// <remarks>
+    /// More information can be found on the website:
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
+    /// </remarks>
     /// </summary>
     public class GaussianPyramidTransform : IPyramidTransform
     {
@@ -5299,22 +5241,22 @@ namespace UMapx.Transform
 
         #region Pyramid components
         /// <summary>
-        /// Инициализирует класс представления сигнала в виде пирамиды Гаусса.
+        /// Initializes the Gaussian pyramid transform.
         /// </summary>
         public GaussianPyramidTransform()
         {
             this.Levels = int.MaxValue;
         }
         /// <summary>
-        /// Инициализирует класс представления сигнала в виде пирамиды Гаусса.
+        /// Initializes the Gaussian pyramid transform.
         /// </summary>
-        /// <param name="levels">Количество уровней представления</param>
+        /// <param name="levels">Number of levels</param>
         public GaussianPyramidTransform(int levels)
         {
             this.Levels = levels;
         }
         /// <summary>
-        /// Получает или задает количество уровней представления.
+        /// Gets or sets number of levels.
         /// </summary>
         public int Levels
         {
@@ -5325,7 +5267,7 @@ namespace UMapx.Transform
             set
             {
                 if (value <= 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.levels = value;
             }
@@ -5345,10 +5287,10 @@ namespace UMapx.Transform
         // **************************************************
 
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Гаусса.
+        /// Forward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Pyramid</returns>
         public double[][,] Forward(double[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
@@ -5367,10 +5309,10 @@ namespace UMapx.Transform
             return pyr;
         }
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Гаусса.
+        /// Forward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Pyramid</returns>
         public double[][] Forward(double[] data)
         {
             int r = data.Length;
@@ -5388,28 +5330,28 @@ namespace UMapx.Transform
             return pyr;
         }
         /// <summary>
-        /// Обратное пирамидоидальное преобразование Гаусса (не поддерживается).
+        /// Backward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[][,] pyramid)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное пирамидоидальное преобразование Гаусса (не поддерживается).
+        /// Backward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[][] pyramid)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Гаусса.
+        /// Forward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Pyramid</returns>
         public Complex[][,] Forward(Complex[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
@@ -5428,10 +5370,10 @@ namespace UMapx.Transform
             return pyr;
         }
         /// <summary>
-        /// Прямое пирамидоидальное преобразование Гаусса.
+        /// Forward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Pyramid</returns>
         public Complex[][] Forward(Complex[] data)
         {
             int r = data.Length;
@@ -5449,19 +5391,19 @@ namespace UMapx.Transform
             return pyr;
         }
         /// <summary>
-        /// Обратное пирамидоидальное преобразование Гаусса (не поддерживается).
+        /// Backward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[][,] pyramid)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное пирамидоидальное преобразование Гаусса (не поддерживается).
+        /// Backward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[][] pyramid)
         {
             throw new NotSupportedException();
@@ -5470,9 +5412,9 @@ namespace UMapx.Transform
 
         #region Static methods
         /// <summary>
-        /// Возвращает одномерный фильтр Гаусса.
+        /// Gaussian filter.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public static double[] Filter
         {
             get
@@ -5484,10 +5426,10 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// Увеличивает размерность в два раза. 
+        /// 
         /// </summary>
-        /// <param name="u">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="u">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static double[,] upsample(double[,] u)
         {
             int r = u.GetLength(0), c = u.GetLength(1);
@@ -5511,10 +5453,10 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Увеличивает размерность в два раза. 
+        ///  
         /// </summary>
-        /// <param name="u">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="u">Array</param>
+        /// <returns>Array</returns>
         internal static double[] upsample(double[] u)
         {
             int r = u.GetLength(0);
@@ -5533,10 +5475,10 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Уменьшает размерность в два раза. 
+        /// 
         /// </summary>
-        /// <param name="u">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="u">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static double[,] downsample(double[,] u)
         {
             int r = u.GetLength(0);
@@ -5558,10 +5500,10 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Уменьшает размерность в два раза. 
+        /// 
         /// </summary>
-        /// <param name="u">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="u">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static double[] downsample(double[] u)
         {
             int r = u.Length;
@@ -5579,11 +5521,11 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Складывает две матрицы.
+        /// 
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static double[,] add(double[,] m, double[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -5601,11 +5543,11 @@ namespace UMapx.Transform
             return H;
         }
         /// <summary>
-        /// Складывает два вектора.
+        /// 
         /// </summary>
-        /// <param name="m">Одномерный массив</param>
-        /// <param name="n">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Array</param>
+        /// <param name="n">Array</param>
+        /// <returns>Array</returns>
         internal static double[] add(double[] m, double[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -5619,11 +5561,11 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Вычитает две матрицы.
+        /// 
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static double[,] sub(double[,] m, double[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -5641,11 +5583,11 @@ namespace UMapx.Transform
             return H;
         }
         /// <summary>
-        /// Вычитает два вектора.
+        /// 
         /// </summary>
-        /// <param name="m">Одномерный массив</param>
-        /// <param name="n">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Array</param>
+        /// <param name="n">Array</param>
+        /// <returns>Array</returns>
         internal static double[] sub(double[] m, double[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -5659,10 +5601,10 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Увеличивает размерность в два раза. 
+        /// 
         /// </summary>
-        /// <param name="u">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="u">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static Complex[,] upsample(Complex[,] u)
         {
             int r = u.GetLength(0), c = u.GetLength(1);
@@ -5686,10 +5628,10 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Увеличивает размерность в два раза. 
+        /// 
         /// </summary>
-        /// <param name="u">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="u">Array</param>
+        /// <returns>Array</returns>
         internal static Complex[] upsample(Complex[] u)
         {
             int r = u.GetLength(0);
@@ -5708,10 +5650,10 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Уменьшает размерность в два раза. 
+        /// 
         /// </summary>
-        /// <param name="u">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="u">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static Complex[,] downsample(Complex[,] u)
         {
             int r = u.GetLength(0);
@@ -5733,10 +5675,10 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Уменьшает размерность в два раза. 
+        /// 
         /// </summary>
-        /// <param name="u">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="u">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static Complex[] downsample(Complex[] u)
         {
             int r = u.Length;
@@ -5754,11 +5696,11 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Складывает две матрицы.
+        /// 
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static Complex[,] add(Complex[,] m, Complex[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -5776,11 +5718,11 @@ namespace UMapx.Transform
             return H;
         }
         /// <summary>
-        /// Складывает два вектора.
+        /// 
         /// </summary>
-        /// <param name="m">Одномерный массив</param>
-        /// <param name="n">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Array</param>
+        /// <param name="n">Array</param>
+        /// <returns>Array</returns>
         internal static Complex[] add(Complex[] m, Complex[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -5794,11 +5736,11 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// Вычитает две матрицы.
+        /// 
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         internal static Complex[,] sub(Complex[,] m, Complex[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -5816,11 +5758,11 @@ namespace UMapx.Transform
             return H;
         }
         /// <summary>
-        /// Вычитает два вектора.
+        /// 
         /// </summary>
-        /// <param name="m">Одномерный массив</param>
-        /// <param name="n">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Array</param>
+        /// <param name="n">Array</param>
+        /// <returns>Array</returns>
         internal static Complex[] sub(Complex[] m, Complex[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -5839,20 +5781,17 @@ namespace UMapx.Transform
     
     #region Processing filters
     /// <summary>
-    /// Определяет фильтр частот.
+    /// Defines the frequency filter.
     /// </summary>
     public class FrequencyFilter : IFilter
     {
         #region Private data
-        /// <summary>
-        /// Минимальные и максимальные частоты.
-        /// </summary>
-        protected RangeInt frequencyRange = new RangeInt(0, 64);
+        private RangeInt frequencyRange = new RangeInt(0, 64);
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Получает или задает диапазон частот.
+        /// Gets or sets the frequency range.
         /// </summary>
         public RangeInt FrequencyRange
         {
@@ -5866,40 +5805,38 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Инициализирует фильтр частот.
+        /// Initializes the frequency filter.
         /// </summary>
         public FrequencyFilter() { }
         /// <summary>
-        /// Инициализирует фильтр частот.
+        /// Initializes the frequency filter.
         /// </summary>
-        /// <param name="frequencyRange">Диапазон частот</param>
+        /// <param name="frequencyRange">Frequency range</param>
         public FrequencyFilter(RangeInt frequencyRange)
         {
             this.frequencyRange = frequencyRange;
         }
         /// <summary>
-        /// Инициализирует фильтр частот.
+        /// Initializes the frequency filter.
         /// </summary>
-        /// <param name="min">Минимальная частота</param>
-        /// <param name="max">Максимальная частота</param>
+        /// <param name="min">Minimum frequency</param>
+        /// <param name="max">Maximum frequency</param>
         public FrequencyFilter(int min, int max)
         {
             this.frequencyRange = new RangeInt(min, max);
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(double[,] data)
         {
             int height = data.GetLength(0);
             int width = data.GetLength(1);
 
-            // Половины измерений:
             int hh = height >> 1;
             int hw = width >> 1;
 
-            // Минимальные и максимальные частоты:
             int min = frequencyRange.Min;
             int max = frequencyRange.Max;
 
@@ -5914,7 +5851,6 @@ namespace UMapx.Transform
                     x = j - hw;
                     d = (int)Math.Sqrt(x * x + y * y);
 
-                    // Значения за пределами фильтра.
                     if ((d > max) || (d < min))
                     {
                         data[i, j] = 0;
@@ -5924,15 +5860,14 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(double[] data)
         {
             int length = data.Length;
             int hh = length >> 1;
 
-            // Минимальные и максимальные частоты:
             int min = frequencyRange.Min;
             int max = frequencyRange.Max;
 
@@ -5942,7 +5877,6 @@ namespace UMapx.Transform
             {
                 d = i - hh;
 
-                // Значения за пределами фильтра.
                 if ((d > max) || (d < min))
                 {
                     data[i] = 0;
@@ -5952,19 +5886,17 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(Complex[,] data)
         {
             int height = data.GetLength(0);
             int width = data.GetLength(1);
 
-            // Половины измерений:
             int hh = height >> 1;
             int hw = width >> 1;
 
-            // Минимальные и максимальные частоты:
             int min = frequencyRange.Min;
             int max = frequencyRange.Max;
 
@@ -5979,7 +5911,6 @@ namespace UMapx.Transform
                     x = j - hw;
                     d = (int)Math.Sqrt(x * x + y * y);
 
-                    // Значения за пределами фильтра.
                     if ((d > max) || (d < min))
                     {
                         data[i, j].Real = 0;
@@ -5990,15 +5921,14 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(Complex[] data)
         {
             int length = data.Length;
             int hh = length >> 1;
 
-            // Минимальные и максимальные частоты:
             int min = frequencyRange.Min;
             int max = frequencyRange.Max;
 
@@ -6008,7 +5938,6 @@ namespace UMapx.Transform
             {
                 d = i - hh;
 
-                // Значения за пределами фильтра.
                 if ((d > max) || (d < min))
                 {
                     data[i].Real = 0;
@@ -6021,41 +5950,38 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр сжатия по пороговому значению.
-    /// <remarks>
-    /// Суть фильтра заключается в обнулении всех тех значений сигнала, модуль которых лежит ниже определенного значения - порога.
-    /// </remarks>
+    /// Defines the compression filter by threshold value.
     /// </summary>
     public class CompressFilter : IFilter
     {
         #region Private data
         /// <summary>
-        /// Пороговое значение.
+        /// Threshold value.
         /// </summary>
         private double threshold = 0;
         /// <summary>
-        /// Тип сжатия.
+        /// Compress type.
         /// </summary>
         private Compress compresstype = Compress.Abs;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр сжатия по пороговому значению.
+        /// Initializes the compression filter by threshold value.
         /// </summary>
         public CompressFilter() { }
         /// <summary>
-        /// Инициализирует фильтр сжатия по пороговому значению.
+        /// Initializes the compression filter by threshold value.
         /// </summary>
-        /// <param name="threshold">Пороговое значение</param>
-        /// <param name="compresstype">Тип сжатия</param>
+        /// <param name="threshold">Threshold value</param>
+        /// <param name="compresstype">Compress type</param>
         public CompressFilter(double threshold, Compress compresstype = Compress.Abs)
         {
             this.threshold = threshold;
             this.compresstype = compresstype;
         }
         /// <summary>
-        /// Получает или задает тип сжатия.
+        /// Gets or sets the compress type.
         /// </summary>
         public Compress CompressType
         {
@@ -6069,7 +5995,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает пороговое значение.
+        /// Gets or sets the threshold value.
         /// </summary>
         public double Threshold
         {
@@ -6083,9 +6009,9 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(double[] data)
         {
             int length = data.Length;
@@ -6124,9 +6050,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(Complex[] data)
         {
             int length = data.Length;
@@ -6174,9 +6100,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(double[,] data)
         {
             int width = data.GetLength(1);
@@ -6225,9 +6151,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(Complex[,] data)
         {
             int width = data.GetLength(1);
@@ -6287,21 +6213,21 @@ namespace UMapx.Transform
 
         #region Compress type
         /// <summary>
-        /// Определяет тип сжатия.
+        /// Defines the compress type.
         /// </summary>
         public enum Compress
         {
             #region Types
             /// <summary>
-            /// Сжатие по модулю.
+            /// Absolute compression.
             /// </summary>
             Abs,
             /// <summary>
-            /// Сжатие значений меньше порогового.
+            /// ompression of values is less than threshold.
             /// </summary>
             Under,
             /// <summary>
-            /// Сжатие значений больше порогового.
+            /// Compression of values is greater than the threshold.
             /// </summary>
             Over,
             #endregion
@@ -6309,20 +6235,17 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр локального усреднения.
-    /// <remarks>
-    /// Используется только для вычисления других фильтров и является внутренним классом.
-    /// </remarks>
+    /// Defines a local averaging filter.
     /// </summary>
     internal static class BoxFilterOptions
     {
         #region Private voids
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="r">Радиус обработки</param>
+        /// <param name="data">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="r">Radius</param>
         public static void boxf(double[,] data, Direction direction, int r)
         {
             int N = data.GetLength(0);
@@ -6411,11 +6334,11 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="r">Радиус обработки</param>
+        /// <param name="data">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="r">Radius</param>
         public static void boxf(Complex[,] data, Direction direction, int r)
         {
             int N = data.GetLength(0);
@@ -6504,40 +6427,34 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует одномерный фильтр арифметического локального усреднения.
+        /// Apply filter.
         /// </summary>
-        /// <param name="input">Одномерный массив</param>
-        /// <param name="l">Длина сигнала</param>
-        /// <param name="r">Ядро фильтра</param>
+        /// <param name="input">Array</param>
+        /// <param name="l">Length</param>
+        /// <param name="r">Radius</param>
         public static void boxf(double[] input, int l, int r)
         {
-            // Исключение по размерности:
             if (l == 1) return;
             int h = r >= l ? l - 1 : r;
 
-            // Определение параметров фильтра:
             int v = h >> 1;
             int dl = l - v;
             double s = 0;
             int i;
 
-            // Вычисление глобальной суммы [0, h):
             for (i = 0; i < h; i++)
             {
                 s += input[i];
             }
-            // Вычисление фильтра на отрезке [0, v):
             for (i = 0; i < v; i++)
             {
                 input[i] = s / h;
             }
-            // Вычисление фильтра на отрезке [v, l-v):
             for (i = v; i < dl; i++)
             {
                 s = s - input[i - v] + input[i + v];
                 input[i] = s / h;
             }
-            // Вычисление фильтра на отрезке [l-v, l):
             for (i = dl; i < l; i++)
             {
                 s = s - input[i - v] + input[i];
@@ -6547,40 +6464,34 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует одномерный фильтр арифметического локального усреднения.
+        /// Apply filter.
         /// </summary>
-        /// <param name="input">Одномерный массив</param>
-        /// <param name="l">Длина сигнала</param>
-        /// <param name="r">Ядро фильтра</param>
+        /// <param name="input">Array</param>
+        /// <param name="l">Length</param>
+        /// <param name="r">Radius</param>
         public static void boxf(Complex[] input, int l, int r)
         {
-            // Исключение по размерности:
             if (l == 1) return;
             int h = r >= l ? l - 1 : r;
 
-            // Определение параметров фильтра:
             int v = h >> 1;
             int dl = l - v;
             Complex s = 0;
             int i;
 
-            // Вычисление глобальной суммы [0, h):
             for (i = 0; i < h; i++)
             {
                 s += input[i];
             }
-            // Вычисление фильтра на отрезке [0, v):
             for (i = 0; i < v; i++)
             {
                 input[i] = s / h;
             }
-            // Вычисление фильтра на отрезке [v, l-v):
             for (i = v; i < dl; i++)
             {
                 s = s - input[i - v] + input[i + v];
                 input[i] = s / h;
             }
-            // Вычисление фильтра на отрезке [l-v, l):
             for (i = dl; i < l; i++)
             {
                 s = s - input[i - v] + input[i];
@@ -6590,10 +6501,10 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный фильтр математического усреднения.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public static double[,] boxf(double[][,] data)
         {
             // exception
@@ -6622,10 +6533,10 @@ namespace UMapx.Transform
             return sum;
         }
         /// <summary>
-        /// Реализует двумерный фильтр математического усреднения.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] boxf(Complex[][,] data)
         {
             // exception
@@ -6653,10 +6564,10 @@ namespace UMapx.Transform
             return sum;
         }
         /// <summary>
-        /// Реализует одномерный фильтр математического усреднения.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public static double[] boxf(double[][] data)
         {
             // exception
@@ -6681,10 +6592,10 @@ namespace UMapx.Transform
             return sum;
         }
         /// <summary>
-        /// Реализует одномерный фильтр математического усреднения.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public static Complex[] boxf(Complex[][] data)
         {
             // exception
@@ -6711,10 +6622,10 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет направленный фильтр.
+    /// Defines the guided filter.
     /// <remarks>
-    /// Данный фильтр представляет собой вычислительно эффективный аналог билатерального фильтра (bilateral filter).
-    /// Более подробную информацию можно найти на сайте:
+    /// This filter is a computationally effective analogue of a bilateral filter.
+    /// More information can be found on the website:
     /// http://kaiminghe.com/eccv10/index.html
     /// </remarks>
     /// </summary>
@@ -6722,26 +6633,26 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Погрешность.
+        /// Epsilon.
         /// </summary>
         private double eps;
         /// <summary>
-        /// Множитель.
+        /// Factor.
         /// </summary>
         private double factor;
         /// <summary>
-        /// Радиус фильтра.
+        /// Radius.
         /// </summary>
         private int radius;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует направленный фильтр.
+        /// Initializes the guided filter.
         /// </summary>
-        /// <param name="radius">Радиус фильтра (>1)</param>
-        /// <param name="eps">Погрешность (0, 1)</param>
-        /// <param name="factor">Множитель [-1, 1]</param>
+        /// <param name="radius">Radius (>1)</param>
+        /// <param name="eps">Epsilon (0, 1)</param>
+        /// <param name="factor">Factor [-1, 1]</param>
         public GuidedFilter(int radius, double eps = 0.025, double factor = -1.0)
         {
             this.radius = radius;
@@ -6749,7 +6660,7 @@ namespace UMapx.Transform
             this.factor = factor;
         }
         /// <summary>
-        /// Получает или задает значение радиуса фильтра.
+        /// Gets or sets the radius.
         /// </summary>
         public int Radius
         {
@@ -6763,9 +6674,9 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает значение погрешности (0, 1).
+        /// Gets or sets the value of the epsilon (0, 1).
         /// <remarks>
-        /// Оптимальное значение ε = 0.025.
+        /// Optimal value ε = 0.025.
         /// </remarks>
         /// </summary>
         public double Eps
@@ -6780,7 +6691,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает значение множителя [-1, 1].
+        /// Gets or sets the factor [-1, 1].
         /// </summary>
         public double Factor
         {
@@ -6797,11 +6708,11 @@ namespace UMapx.Transform
 
         #region Static voids
         /// <summary>
-        /// Создает направленный фильтр с заданными параметрами для билатерального фильтра.
+        /// Creates a guided filter with the specified parameters for a bilateral filter.
         /// </summary>
-        /// <param name="s">Значение первой сигмы σs</param>
-        /// <param name="r">Значение второй сигмы σr</param>
-        /// <returns>Направленный фильтр</returns>
+        /// <param name="s">σs</param>
+        /// <param name="r">σr</param>
+        /// <returns>Guided filter</returns>
         public static GuidedFilter FromBilateral(int s, double r)
         {
             return new GuidedFilter(s, r * r);
@@ -6810,9 +6721,9 @@ namespace UMapx.Transform
 
         #region Public apply voids
         /// <summary>
-        /// Реализует одномерный направленный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(double[] data)
         {
             // enhancement or not?
@@ -6834,9 +6745,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный направленный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(double[,] data)
         {
             // enhancement or not?
@@ -6860,9 +6771,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует одномерный направленный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(Complex[] data)
         {
             // enhancement or not?
@@ -6884,9 +6795,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный направленный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(Complex[,] data)
         {
             // enhancement or not?
@@ -6913,10 +6824,10 @@ namespace UMapx.Transform
 
         #region Blender apply voids
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public double[,] Apply(double[][,] data)
         {
             // exception
@@ -6950,10 +6861,10 @@ namespace UMapx.Transform
             return sum;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Apply(Complex[][,] data)
         {
             // exception
@@ -6987,10 +6898,10 @@ namespace UMapx.Transform
             return sum;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public double[] Apply(double[][] data)
         {
             // exception
@@ -7020,10 +6931,10 @@ namespace UMapx.Transform
             return sum;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public Complex[] Apply(Complex[][] data)
         {
             // exception
@@ -7252,10 +7163,10 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет "Domain transform" фильтр.
+    /// Defines the domain transform filter.
     /// <remarks>
-    /// Данный фильтр представляет собой вычислительно эффективный аналог билатерального фильтра (bilateral filter).
-    /// Более подробную информацию можно найти на сайте:
+    /// This filter is a computationally effective analogue of a bilateral filter.
+    /// More information can be found on the website:
     /// http://www.inf.ufrgs.br/~eslgastal/DomainTransform/Gastal_Oliveira_SIGGRAPH2011_Domain_Transform.pdf
     /// </remarks>
     /// </summary>
@@ -7270,12 +7181,12 @@ namespace UMapx.Transform
 
         #region Filter components
         /// <summary>
-        /// Инициализирует "Domain transform" фильтр.
+        /// Initializes the domain transform filter.
         /// </summary>
-        /// <param name="sigma_s">Значение σs</param>
-        /// <param name="sigma_r">Значение σr</param>
-        /// <param name="iterations">Количество итераций</param>
-        /// <param name="factor">Множитель [-1, 1]</param>
+        /// <param name="sigma_s">σs</param>
+        /// <param name="sigma_r">σr</param>
+        /// <param name="iterations">Number of iterations</param>
+        /// <param name="factor">Factor [-1, 1]</param>
         public DomainTransformFilter(double sigma_s, double sigma_r, int iterations = 3, double factor = -1.0)
         {
             SigmaS = sigma_s;
@@ -7284,7 +7195,7 @@ namespace UMapx.Transform
             Factor = factor;
         }
         /// <summary>
-        /// Получает или задает значение σs.
+        /// Gets or sets the value of σs.
         /// </summary>
         public double SigmaS
         {
@@ -7298,7 +7209,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает значение σr.
+        /// Gets or sets the value of σr.
         /// </summary>
         public double SigmaR
         {
@@ -7312,7 +7223,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает количество итераций.
+        /// Gets or sets the number of iterations.
         /// </summary>
         public int Iterations
         {
@@ -7326,7 +7237,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает значение множителя [-1, 1].
+        /// Gets or sets the factor [-1, 1].
         /// </summary>
         public double Factor
         {
@@ -7343,9 +7254,9 @@ namespace UMapx.Transform
 
         #region Public apply voids
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(double[] data)
         {
             // enhancement or not?
@@ -7367,9 +7278,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(double[,] data)
         {
             // enhancement or not?
@@ -7393,9 +7304,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(Complex[] data)
         {
             // enhancement or not?
@@ -7417,9 +7328,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(Complex[,] data)
         {
             // enhancement or not?
@@ -7446,10 +7357,10 @@ namespace UMapx.Transform
 
         #region Blender apply voids
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public double[,] Apply(double[][,] data)
         {
             // exception
@@ -7483,10 +7394,10 @@ namespace UMapx.Transform
             return sum;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public double[] Apply(double[][] data)
         {
             // exception
@@ -7516,10 +7427,10 @@ namespace UMapx.Transform
             return sum;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Apply(Complex[][,] data)
         {
             // exception
@@ -7553,10 +7464,10 @@ namespace UMapx.Transform
             return sum;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public Complex[] Apply(Complex[][] data)
         {
             // exception
@@ -7948,9 +7859,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр на основе пирамиды Лапласа.
+    /// Defines the Laplace pyramid filter.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
     /// </remarks>
     /// </summary>
@@ -7963,17 +7874,17 @@ namespace UMapx.Transform
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр на основе пирамиды Лапласа.
+        /// Initializes the Laplace pyramid filter.
         /// </summary>
-        /// <param name="lap">Пирамида Лапласа</param>
-        /// <param name="factor">Множитель [-1, 1]</param>
+        /// <param name="lap">Laplacian pyramid</param>
+        /// <param name="factor">Factor [-1, 1]</param>
         public LaplacianPyramidFilter(LaplacianPyramidTransform lap, double factor = -1.0)
         {
             this.lap = lap;
             this.factor = factor;
         }
         /// <summary>
-        /// Получает или задает пирамиду Лапласа.
+        /// Gets or sets the Laplacian pyramid.
         /// </summary>
         public LaplacianPyramidTransform LaplacianPyramid
         {
@@ -7987,7 +7898,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает значение множителя [-1, 1].
+        /// Gets or sets the factor [-1, 1].
         /// </summary>
         public double Factor
         {
@@ -8004,10 +7915,10 @@ namespace UMapx.Transform
 
         #region Blender apply voids
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public double[,] Apply(double[][,] data)
         {
             int length = data.Length;
@@ -8034,10 +7945,10 @@ namespace UMapx.Transform
             return lap.Backward(zero);
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Apply(Complex[][,] data)
         {
             int length = data.Length;
@@ -8064,10 +7975,10 @@ namespace UMapx.Transform
             return lap.Backward(zero);
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Вектор</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public double[] Apply(double[][] data)
         {
             int length = data.Length;
@@ -8094,10 +8005,10 @@ namespace UMapx.Transform
             return lap.Backward(zero);
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Вектор</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public Complex[] Apply(Complex[][] data)
         {
             int length = data.Length;
@@ -8127,9 +8038,9 @@ namespace UMapx.Transform
 
         #region Apply voids
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(double[,] data)
         {
             // forward pyramid transform
@@ -8157,9 +8068,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(Complex[,] data)
         {
             // forward pyramid transform
@@ -8187,9 +8098,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(double[] data)
         {
             // forward pyramid transform
@@ -8214,9 +8125,9 @@ namespace UMapx.Transform
             return;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(Complex[] data)
         {
             // forward pyramid transform
@@ -8243,9 +8154,9 @@ namespace UMapx.Transform
         #endregion
     }
     /// <summary>
-    /// Определяет локальный фильтр Лапласа.
+    /// Defines the local Laplace pyramid filter.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://people.csail.mit.edu/sparis/publi/2011/siggraph/
     /// </remarks>
     /// </summary>
@@ -8253,31 +8164,31 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Параметр сигма.
+        /// Sigma.
         /// </summary>
-        protected double sigma;
+        private double sigma;
         /// <summary>
-        /// Множитель.
+        /// Factor.
         /// </summary>
-        protected double factor;
+        private double factor;
         /// <summary>
-        /// Количество отсчетов.
+        /// Number of samples.
         /// </summary>
-        protected int n;
+        private int n;
         /// <summary>
-        /// Количество уровней
+        /// Number of levels.
         /// </summary>
-        protected int levels;
+        private int levels;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует локальный фильтр Лапласа.
+        /// Initializes the local Laplace pyramid filter.
         /// </summary>
-        /// <param name="sigma">σ-параметр</param>
-        /// <param name="n">Количество отсчетов</param>
-        /// <param name="levels">Количество уровней</param>
-        /// <param name="factor">Множитель [-1, 1]</param>
+        /// <param name="sigma">σ-parameter</param>
+        /// <param name="n">Number of samples</param>
+        /// <param name="levels">Number of levels</param>
+        /// <param name="factor">Factor [-1, 1]</param>
         public LocalLaplacianFilter(double sigma = 0.05, int n = 10, int levels = 10, double factor = -1.0)
         {
             this.Sigma = sigma;
@@ -8286,7 +8197,7 @@ namespace UMapx.Transform
             this.Factor = factor;
         }
         /// <summary>
-        /// Получает или задает значение σ-параметра.
+        /// Gets or sets the value of σ-parameter.
         /// </summary>
         public double Sigma
         {
@@ -8300,7 +8211,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает значение множителя.
+        /// Gets or sets the factor.
         /// </summary>
         public double Factor
         {
@@ -8314,7 +8225,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает количество отсчетов.
+        /// Gets or sets the number of samples.
         /// </summary>
         public int N
         {
@@ -8328,7 +8239,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Получает или задает количество уровней.
+        /// Gets or sets the number of levels.
         /// </summary>
         public int Levels
         {
@@ -8345,10 +8256,10 @@ namespace UMapx.Transform
 
         #region Blender apply voids
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public double[,] Apply(double[][,] data)
         {
             // local laplcian filter blending
@@ -8357,19 +8268,19 @@ namespace UMapx.Transform
             return output;
         }
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Apply(Complex[][,] data)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public double[] Apply(double[][] data)
         {
             // local laplcian filter blending
@@ -8378,10 +8289,10 @@ namespace UMapx.Transform
             return output;
         }
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         public Complex[] Apply(Complex[][] data)
         {
             throw new NotSupportedException();
@@ -8390,35 +8301,35 @@ namespace UMapx.Transform
 
         #region Apply voids
         /// <summary>
-        /// Реализует двумерный локальный фильтр Лапласа.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(double[,] data)
         {
             llfilter(data, this.sigma, this.factor, this.n, this.levels);
             return;
         }
         /// <summary>
-        /// Реализует одномерный локальный фильтр Лапласа.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(double[] data)
         {
             llfilter(data, this.sigma, this.factor, this.n, this.levels);
             return;
         }
         /// <summary>
-        /// Реализует двумерный локальный фильтр Лапласа.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(Complex[,] data)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Реализует одномерный локальный фильтр Лапласа.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         public void Apply(Complex[] data)
         {
             throw new NotSupportedException();
@@ -8673,174 +8584,174 @@ namespace UMapx.Transform
 
     #region Interfaces
     /// <summary>
-    /// Определяет общий интерфейс дискретных преобразований.
+    /// Defines the transform interface.
     /// </summary>
     public interface ITransform
     {
         #region Interface
         /// <summary>
-        /// Прямое преобразование.
+        /// Forward transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Array</returns>
         double[] Forward(double[] data);
         /// <summary>
-        /// Прямое преобразование.
+        /// Forward transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Array</returns>
         double[,] Forward(double[,] data);
         /// <summary>
-        /// Обратное преобразование.
+        /// Backward transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Array</returns>
         double[] Backward(double[] data);
         /// <summary>
-        /// Обратное преобразование.
+        /// Backward transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Matrix</returns>
         double[,] Backward(double[,] data);
         /// <summary>
-        /// Прямое преобразование.
+        /// Forward transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Array</returns>
         Complex[] Forward(Complex[] data);
         /// <summary>
-        /// Прямое преобразование.
+        /// Forward transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Array</returns>
         Complex[,] Forward(Complex[,] data);
         /// <summary>
-        /// Обратное преобразование.
+        /// Backward transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Array</returns>
         Complex[] Backward(Complex[] data);
         /// <summary>
-        /// Обратное преобразование.
+        /// Backward transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Matrix</returns>
         Complex[,] Backward(Complex[,] data);
         #endregion
     }
     /// <summary>
-    /// Определяет общий вид пирамидоидальных преобразований.
+    /// Defines the pyramid transform interface.
     /// </summary>
     public interface IPyramidTransform
     {
         #region Interface
         /// <summary>
-        /// Прямое пирамидоидальное преобразование.
+        /// Forward pyramid transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Pyramid</returns>
         double[][,] Forward(double[,] data);
         /// <summary>
-        /// Обратное пирамидоидальное преобразование.
+        /// Backward pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Matrix</returns>
         double[,] Backward(double[][,] pyramid);
         /// <summary>
-        /// Прямое пирамидоидальное преобразование.
+        /// Forward pyramid transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Pyramid</returns>
         double[][] Forward(double[] data);
         /// <summary>
-        /// Обратное пирамидоидальное преобразование.
+        /// Backward pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Array</returns>
         double[] Backward(double[][] pyramid);
         /// <summary>
-        /// Прямое пирамидоидальное преобразование.
+        /// Forward pyramid transform.
         /// </summary>
-        /// <param name="data">Двумерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Matrix</param>
+        /// <returns>Pyramid</returns>
         Complex[][,] Forward(Complex[,] data);
         /// <summary>
-        /// Обратное пирамидоидальное преобразование.
+        /// Backward pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Matrix</returns>
         Complex[,] Backward(Complex[][,] pyramid);
         /// <summary>
-        /// Прямое пирамидоидальное преобразование.
+        /// Forward pyramid transform.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Пирамида</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Pyramid</returns>
         Complex[][] Forward(Complex[] data);
         /// <summary>
-        /// Обратное пирамидоидальное преобразование.
+        /// Backward pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Пирамида</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="pyramid">Pyramid</param>
+        /// <returns>Array</returns>
         Complex[] Backward(Complex[][] pyramid);
         #endregion
     }
     /// <summary>
-    /// Определяет общий вид фильтров.
+    /// Defines the filter interface.
     /// </summary>
     public interface IFilter
     {
         #region Interface
         /// <summary>
-        /// Применяет фильтр к вектору вещественных чисел.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         void Apply(double[] data);
         /// <summary>
-        /// Применяет фильтр к матрице вещественных чисел.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         void Apply(double[,] data);
         /// <summary>
-        /// Применяет фильтр к вектору комплексных чисел.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         void Apply(Complex[] data);
         /// <summary>
-        /// Применяет фильтр к матрице комплексных чисел.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
         void Apply(Complex[,] data);
         #endregion
     }
     /// <summary>
-    /// Определяет общий вид фильтров смешивания.
+    /// Defines the blend filter interface.
     /// </summary>
     public interface IBlendFilter
     {
         #region Interface
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         double[,] Apply(double[][,] data);
         /// <summary>
-        /// Реализует двумерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
         Complex[,] Apply(Complex[][,] data);
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         double[] Apply(double[][] data);
         /// <summary>
-        /// Реализует одномерный фильтр.
+        /// Apply filter.
         /// </summary>
-        /// <param name="data">Набор векторов</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Array</returns>
         Complex[] Apply(Complex[][] data);
         #endregion
     }

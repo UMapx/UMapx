@@ -28,7 +28,7 @@ namespace UMapx.Window
 
     #region Window functions
     /// <summary>
-    /// Определяет оконную функцию Планка.
+    /// Defines the window function of Planck.
     /// </summary>
     public class Planck : WindowBase
     {
@@ -38,17 +38,17 @@ namespace UMapx.Window
 
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Планка.
+        /// Initializes the Planck window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <param name="a">Параметр формы [0, 0.5]</param>
+        /// <param name="frameSize">Window size</param>
+        /// <param name="a">Form parameter [0, 0.5]</param>
         public Planck(int frameSize, double a = 0.15)
         {
             this.FrameSize = frameSize;
             this.A = a;
         }
         /// <summary>
-        /// Получает или задает значение параметра формы [0, 0.5].
+        /// Gets or sets the value of the form parameter [0, 0.5].
         /// </summary>
         public double A
         {
@@ -62,12 +62,12 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Функция Z+-(x, a).
+        /// Function Z+-(x, a).
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="p">Знак</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="p">Sign</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         private double Z(double x, bool p, int frameSize)
         {
             // params:
@@ -80,11 +80,11 @@ namespace UMapx.Window
             return 2 * a * (u + v);
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             // Planck taper window:
@@ -108,9 +108,9 @@ namespace UMapx.Window
             return 0;
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = (frameSize - 1);
@@ -120,7 +120,7 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Тьюки.
+    /// Defines the window function of Tukey.
     /// </summary>
     public class Tukey : WindowBase
     {
@@ -130,17 +130,17 @@ namespace UMapx.Window
 
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Тьюки.
+        /// Initializes the Tukey window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <param name="a">Параметр формы [0, 1]</param>
+        /// <param name="frameSize">Window size</param>
+        /// <param name="a">Form parameter [0, 1]</param>
         public Tukey(int frameSize, double a = 1)
         {
             this.FrameSize = frameSize;
             this.A = a;
         }
         /// <summary>
-        /// Получает или задает значение параметра формы [0, 1].
+        /// Gets or sets the value of the form parameter [0, 1].
         /// </summary>
         public double A
         {
@@ -154,11 +154,11 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             // Tukey window:
@@ -183,9 +183,9 @@ namespace UMapx.Window
             return 0;
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = (frameSize - 1);
@@ -195,7 +195,7 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет закрытую оконную функцию Гаусса.
+    /// Defines the closed Gaussian window.
     /// </summary>
     public class Confined : WindowBase
     {
@@ -205,26 +205,26 @@ namespace UMapx.Window
 
         #region Window components
         /// <summary>
-        /// Инициализирует закрытую оконную функцию Гаусса.
+        /// Initializes the closed Gaussian window.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <param name="sigma">Среднеквадратическое отклонение (0.14 * N)</param>
+        /// <param name="frameSize">Window size</param>
+        /// <param name="sigma">Standard deviation (0.14 * N)</param>
         public Confined(int frameSize, double sigma = 1)
         {
             this.Sigma = sigma;
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Инициализирует закрытую оконную функцию Гаусса.
+        /// Initializes a Gaussian window function closed.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Confined(int frameSize)
         {
             this.Sigma = 0.14 * frameSize;
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Получает или задает значение среднеквадратического отклонения (>0).
+        /// Gets or sets the standard deviation (>0).
         /// </summary>
         public double Sigma
         {
@@ -235,17 +235,17 @@ namespace UMapx.Window
             set
             {
                 if (value <= 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.sigma = value;
             }
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             // Вычисление функции:
@@ -256,8 +256,8 @@ namespace UMapx.Window
         /// <summary>
         /// Функция G(x).
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         private double G(double x)
         {
             double a = (frameSize - 1) / 2;
@@ -265,9 +265,9 @@ namespace UMapx.Window
             return Math.Exp(-t * t);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             // window function on a discrete time:
@@ -278,7 +278,7 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет обобщенную оконную нормальную функцию.
+    /// Defines a generalized window normal function.
     /// </summary>
     public class Normal : WindowBase
     {
@@ -289,11 +289,11 @@ namespace UMapx.Window
 
         #region Window components
         /// <summary>
-        /// Инициализирует обобщенную оконную нормальную функцию.
+        /// Initializes a generalized window normal function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <param name="sigma">Среднеквадратическое отклонение (>0)</param>
-        /// <param name="pow">Степень<remarks>При p = 2 - окно Гаусса</remarks></param>
+        /// <param name="frameSize">Window size</param>
+        /// <param name="sigma">Standard deviation (>0)</param>
+        /// <param name="pow">Power<remarks>For p = 2 - Gaussian window</remarks></param>
         public Normal(int frameSize, double sigma = 1, double pow = 2)
         {
             this.Sigma = sigma;
@@ -301,7 +301,7 @@ namespace UMapx.Window
             this.p = pow;
         }
         /// <summary>
-        /// Получает или задает значение среднеквадратического отклонения (>0).
+        /// Gets or sets the standard deviation (>0).
         /// </summary>
         public double Sigma
         {
@@ -312,13 +312,13 @@ namespace UMapx.Window
             set
             {
                 if (value <= 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.sigma = value;
             }
         }
         /// <summary>
-        /// Степень.
+        /// Power.
         /// </summary>
         public double Pow
         {
@@ -332,11 +332,11 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             double a = (frameSize - 1) / 2;
@@ -344,9 +344,9 @@ namespace UMapx.Window
             return Math.Exp(-Math.Pow(t, p));
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             // window function on a discrete time:
@@ -357,27 +357,27 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Кайзера.
+    /// Defines the Kaiser window function.
     /// </summary>
     public class Kaiser : WindowBase
     {
         #region Private data
         private double a = 3;
         #endregion
-        
+
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Кайзера.
+        /// Initializes the Kaiser window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <param name="a">Параметр формы</param>
+        /// <param name="frameSize">Window size</param>
+        /// <param name="a">Form parameter</param>
         public Kaiser(int frameSize, double a = 3)
         {
             this.FrameSize = frameSize;
             this.A = a;
         }
         /// <summary>
-        /// Получает или задает значение параметра формы.
+        /// Gets or sets the value of the form parameter.
         /// </summary>
         public double A
         {
@@ -391,11 +391,11 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             // Kaiser window:
@@ -407,9 +407,9 @@ namespace UMapx.Window
             return q / Special.I(z    , 0);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = (frameSize - 1) / 2.0;
@@ -419,25 +419,25 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию "Welch".
+    /// Defines the Welch window function.
     /// </summary>
     public class Welch : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию "Welch".
+        /// Initializes the Welch window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Welch(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             // Welch function:
@@ -446,9 +446,9 @@ namespace UMapx.Window
             return 1 - a * a;
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = (frameSize - 1);
@@ -458,34 +458,34 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Ланцоша.
+    /// Defines the Lanczos window function.
     /// </summary>
     public class Lanzcos : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Ланцоша.
+        /// Initializes the Lanczos window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Lanzcos(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             // Lanczos function:
             return Special.Sinc(2 * x / (frameSize - 1) - 1, Math.PI);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = (frameSize - 1);
@@ -495,25 +495,25 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Парзена.
+    /// Defines the Parzen window function.
     /// </summary>
     public class Parzen : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Парзена.
+        /// Initializes the Parzen window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Parzen(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             // coefficients:
@@ -536,9 +536,9 @@ namespace UMapx.Window
             return 0.0;
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = (frameSize - 1) / 2.0;
@@ -548,34 +548,34 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию "Flat-Top".
+    /// Defines the "Flat-Top" window function.
     /// </summary>
     public class FlatTop : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию "Flat-Top".
+        /// Initializes the "Flat-Top" window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public FlatTop(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             return 1 - 1.93 * Cosine.cosinefunc(2 * x, frameSize) + 1.29 * Cosine.cosinefunc(4 * x, frameSize) - 0.388 * Cosine.cosinefunc(6 * x, frameSize) + 0.028 * Cosine.cosinefunc(8 * x, frameSize);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             // window function on a discrete time:
@@ -586,34 +586,34 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Ньюттолла.
+    /// Defines the Nuttall window function.
     /// </summary>
     public class Nuttall : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Ньюттолла.
+        /// Initializes the Nuttall window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Nuttall(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             return 0.355768 - 0.487396 * Cosine.cosinefunc(2 * x, frameSize) + 0.144232 * Cosine.cosinefunc(4 * x, frameSize) - 0.012604 * Cosine.cosinefunc(6 * x, frameSize);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = frameSize - 1;
@@ -623,34 +623,34 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Блэкмана-Ньюттолла.
+    /// Defines the Blackman-Nuttall window function.
     /// </summary>
     public class BlackmanNuttall : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Блэкмана-Ньюттолла.
+        /// Initializes the Blackman-Nuttall window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public BlackmanNuttall(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             return 0.3635819 - 0.4891775 * Cosine.cosinefunc(2 * x, frameSize) + 0.1365995 * Cosine.cosinefunc(4 * x, frameSize) - 0.0106411 * Cosine.cosinefunc(6 * x, frameSize);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             // window function on a discrete time:
@@ -661,33 +661,33 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Блэкмана-Харриса.
+    /// Defines the Blackman-Harris window function.
     /// </summary>
     public class BlackmanHarris : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Блэкмана-Харриса.
+        /// Initializes the Blackman-Harris window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public BlackmanHarris(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             return 0.35875 - 0.48829 * Cosine.cosinefunc(2 * x, frameSize) + 0.14128 * Cosine.cosinefunc(4 * x, frameSize) - 0.01168 * Cosine.cosinefunc(6 * x, frameSize);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = frameSize - 1;
@@ -697,34 +697,34 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Блэкмана.
+    /// Defines the Blackman window function.
     /// </summary>
     public class Blackman : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Блэкмана.
+        /// Initializes the Blackman window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Blackman(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             return 0.42 - 0.5 * Cosine.cosinefunc(2 * x, frameSize) + 0.08 * Cosine.cosinefunc(4 * x, frameSize);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = frameSize - 1;
@@ -734,25 +734,25 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Барлетта-Ханна.
+    /// Defines the Barlett-Hann window function.
     /// </summary>
     public class BarlettHann : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Барлетта-Ханна.
+        /// Initializes the Barlett-Hann window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public BarlettHann(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             // Berlett-Hann function:
@@ -760,10 +760,10 @@ namespace UMapx.Window
             return 0.62 - 0.48 * a - 0.38 * Cosine.cosinefunc(2 * x, frameSize);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = frameSize - 1;
@@ -773,34 +773,34 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Ханна (Хеннинга).
+    /// Defines the Hann window function (Hanning).
     /// </summary>
     public class Hann : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Ханна (Хеннинга).
+        /// Initializes the Hann window function (Hanning).
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Hann(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             return Math.Pow(Sine.sinefunc(x, frameSize), 2);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = frameSize - 1;
@@ -810,34 +810,34 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Хэмминга.
+    /// Defines the Hamming window function.
     /// </summary>
     public class Hamming : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Хэмминга.
+        /// Initializes the Hamming window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Hamming(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             return 0.53836 - 0.46164 * Cosine.cosinefunc(2 * x, frameSize);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = frameSize - 1;
@@ -847,34 +847,34 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет косинусную оконную функцию.
+    /// Defines the cosine window function.
     /// </summary>
     public class Cosine : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует косинусную оконную функцию.
+        /// Initializes the cosine window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Cosine(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             return Math.Cos(Math.PI * x / (frameSize - 1));
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = (frameSize - 1) / 2.0;
@@ -885,11 +885,11 @@ namespace UMapx.Window
 
         #region Static components
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Множитель окна</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Factor</returns>
         internal static double cosinefunc(double x, int frameSize)
         {
             return Math.Cos(Math.PI * x / (frameSize - 1));
@@ -897,34 +897,34 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет синусную оконную функцию.
+    /// Defines the sine window function.
     /// </summary>
     public class Sine : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Инициализирует синусную оконную функцию.
+        /// Initializes the sine window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
+        /// <param name="frameSize">Window size</param>
         public Sine(int frameSize)
         {
             this.FrameSize = frameSize;
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             return Math.Sin(Math.PI * x / (frameSize - 1));
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = frameSize - 1;
@@ -935,11 +935,11 @@ namespace UMapx.Window
 
         #region Static components
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         internal static double sinefunc(double x, int frameSize)
         {
             return Math.Sin(Math.PI * x / (frameSize - 1));
@@ -947,7 +947,7 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконную функцию Габора.
+    /// Defines the Gabor window function.
     /// </summary>
     public class Gabor : WindowBase
     {
@@ -957,17 +957,17 @@ namespace UMapx.Window
 
         #region Window components
         /// <summary>
-        /// Инициализирует оконную функцию Габора.
+        /// Initializes the Gabor window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <param name="sigma">Параметр сжатия</param>
+        /// <param name="frameSize">Window size</param>
+        /// <param name="sigma">Scale parameter</param>
         public Gabor(int frameSize, double sigma = 1)
         {
             this.FrameSize = frameSize;
             this.Sigma = sigma;
         }
         /// <summary>
-        /// Получает или задает значение среднеквадратического отклонения (>0).
+        /// Gets or sets the standard deviation (>0).
         /// </summary>
         public double Sigma
         {
@@ -978,17 +978,17 @@ namespace UMapx.Window
             set
             {
                 if (value <= 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.sigma = value;
             }
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
             // Gabor window function
@@ -997,10 +997,10 @@ namespace UMapx.Window
             return Math.Exp(-z);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public override double[] GetWindow(int frameSize)
         {
             double t = (frameSize - 1) / 2.0;
@@ -1010,9 +1010,9 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет общий класс для оконных функций.
+    /// Defines the class for window functions.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Window_function
     /// </remarks>
     /// </summary>
@@ -1020,14 +1020,14 @@ namespace UMapx.Window
     {
         #region Private data
         /// <summary>
-        /// Размер окна.
+        /// Window size.
         /// </summary>
         protected int frameSize;
         #endregion
 
         #region Window components
         /// <summary>
-        /// Получает или задает размер окна.
+        /// Gets or sets the window size.
         /// </summary>
         public int FrameSize
         {
@@ -1038,34 +1038,34 @@ namespace UMapx.Window
             set
             {
                 if (value <= 0)
-                    throw new Exception("Размер окна должен быть строго больше 0");
+                    throw new Exception("Window size must be greater than 0");
 
                 this.frameSize = value;
             }
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public double Function(double x)
         {
             return this.Function(x, this.frameSize);
         }
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         public double[] GetWindow()
         {
             return this.GetWindow(this.frameSize);
         }
         /// <summary>
-        /// Возвращает массив значений оконной функции.
+        /// Returns an array of window function values.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="x">Array</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public double[] Function(double[] x, int frameSize)
         {
             int length = x.Length;
@@ -1079,26 +1079,26 @@ namespace UMapx.Window
             return H;
         }
         /// <summary>
-        /// Возвращает массив значений оконной функции.
+        /// Returns an array of window function values.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="x">Array</param>
+        /// <returns>Array</returns>
         public double[] Function(double[] x)
         {
             return this.Function(x, this.frameSize);
         }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Double precision floating point number</returns>
         public abstract double Function(double x, int frameSize);
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         public abstract double[] GetWindow(int frameSize);
         #endregion
     }
@@ -1106,40 +1106,28 @@ namespace UMapx.Window
 
     #region Short-time Fourier analysis
     /// <summary>
-    /// Определяет быстрое оконное преобразование Фурье.
+    /// Defines fast short-time Fourier transform.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Short-time_Fourier_transform
     /// </remarks>
     /// </summary>
     public class FastShortTimeFourierTransform : IWindowTransform, ITransform
     {
         #region Private data
-        /// <summary>
-        /// Преобразование Фурье.
-        /// </summary>
         private FastFourierTransform FFT;
-        /// <summary>
-        /// Оконная функция.
-        /// </summary>
         private IWindow window;
-        /// <summary>
-        /// Направление обработки.
-        /// </summary>
         private Direction direction;
-        /// <summary>
-        /// Коэффициенты оконной функции.
-        /// </summary>
         private double[] coefs;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует быстрое оконное преобразование Фурье.
+        /// Initializes fast short-time Fourier transform.
         /// </summary>
-        /// <param name="function">Оконная функция</param>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="function">Windows function</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public FastShortTimeFourierTransform(IWindow function, bool normalized = true, Direction direction = Direction.Vertical)
         {
             // fourier transform initialization:
@@ -1151,7 +1139,7 @@ namespace UMapx.Window
             this.coefs = function.GetWindow().Add(1e-64);
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -1165,7 +1153,7 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -1179,7 +1167,7 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Получает или задает оконную функцию.
+        /// Gets or sets the window function.
         /// </summary>
         public IWindow Window
         {
@@ -1190,10 +1178,10 @@ namespace UMapx.Window
 
         #region Short-time Fourier transform
         /// <summary>
-        /// Прямое дискретное оконное преобразование Фурье.
+        /// Forward short-time Fourier Transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             // params
@@ -1218,10 +1206,10 @@ namespace UMapx.Window
             return B;
         }
         /// <summary>
-        /// Обратное дискретное оконное преобразование Фурье.
+        /// Backward short-time Fourier Transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length, i, j;
@@ -1248,10 +1236,10 @@ namespace UMapx.Window
             return A;
         }
         /// <summary>
-        /// Прямое дискретное оконное преобразование Фурье.
+        /// Forward short-time Fourier Transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             // Fourier transform:
@@ -1346,10 +1334,10 @@ namespace UMapx.Window
             return B;
         }
         /// <summary>
-        /// Обратное дискретное оконное преобразование Фурье.
+        /// Backward short-time Fourier Transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             Complex[,] A = (Complex[,])B.Clone();
@@ -1442,37 +1430,37 @@ namespace UMapx.Window
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward short-time Fourier Transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward short-time Fourier Transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward short-time Fourier Transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward short-time Fourier Transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -1480,40 +1468,28 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет оконное преобразование Фурье.
+    /// Defines short-time Fourier transform.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Short-time_Fourier_transform
     /// </remarks>
     /// </summary>
     public class ShortTimeFourierTransform : IWindowTransform, ITransform
     {
         #region Private data
-        /// <summary>
-        /// Преобразование Фурье.
-        /// </summary>
         private FourierTransform FFT;
-        /// <summary>
-        /// Оконная функция.
-        /// </summary>
         private IWindow window;
-        /// <summary>
-        /// Направление обработки.
-        /// </summary>
         private Direction direction;
-        /// <summary>
-        /// Коэффициенты оконной функции.
-        /// </summary>
         private double[] coefs;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует оконное преобразование Фурье.
+        /// Initializes short-time Fourier transform.
         /// </summary>
-        /// <param name="function">Оконная функция</param>
-        /// <param name="normalized">Нормализированное преобразование или нет</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="function">Windows function</param>
+        /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="direction">Processing direction</param>
         public ShortTimeFourierTransform(IWindow function, bool normalized = true, Direction direction = Direction.Vertical)
         {
             // fourier transform initialization:
@@ -1525,7 +1501,7 @@ namespace UMapx.Window
             this.coefs = function.GetWindow().Add(1e-64);
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -1539,7 +1515,7 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -1553,7 +1529,7 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Получает или задает оконную функцию.
+        /// Gets or sets the window function.
         /// </summary>
         public IWindow Window
         {
@@ -1564,10 +1540,10 @@ namespace UMapx.Window
 
         #region Short-time Fourier transform
         /// <summary>
-        /// Прямое дискретное оконное преобразование Фурье.
+        /// Forward short-time Fourier Transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             // params
@@ -1592,10 +1568,10 @@ namespace UMapx.Window
             return B;
         }
         /// <summary>
-        /// Обратное дискретное оконное преобразование Фурье.
+        /// Backward short-time Fourier Transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length, i, j;
@@ -1622,10 +1598,10 @@ namespace UMapx.Window
             return A;
         }
         /// <summary>
-        /// Прямое дискретное оконное преобразование Фурье.
+        /// Forward short-time Fourier Transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             // Fourier transform:
@@ -1720,10 +1696,10 @@ namespace UMapx.Window
             return B;
         }
         /// <summary>
-        /// Обратное дискретное оконное преобразование Фурье.
+        /// Backward short-time Fourier Transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             Complex[,] A = (Complex[,])B.Clone();
@@ -1816,37 +1792,37 @@ namespace UMapx.Window
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward short-time Fourier Transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward short-time Fourier Transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward short-time Fourier Transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward short-time Fourier Transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -1857,10 +1833,9 @@ namespace UMapx.Window
 
     #region Gabor analysis
     /// <summary>
-    /// Определяет группу ортогональных базисов и дискретных преобразований Вейля-Гейзенберга.
+    /// Defines a group of orthogonal bases and discrete Weyl-Heisenberg transforms.
     /// <remarks>
-    /// Базисы Вейля-Гейзенберга используются для получения частотно-временных характеристик сигнала.
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://elibrary.ru/item.asp?id=29767333
     /// </remarks>
     /// </summary>
@@ -1868,34 +1843,34 @@ namespace UMapx.Window
     {
         #region Private data
         /// <summary>
-        /// Оконная функция.
+        /// Windows function.
         /// </summary>
         private IWindow window;
         /// <summary>
-        /// Количество сдвигов по частоте.
+        /// Number of frequency shifts.
         /// </summary>
         private int m;
         /// <summary>
-        /// Направление обработки.
+        /// Processing direction.
         /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует группу ортогональных базисов и преобразований Вейля-Гейзенберга.
+        /// Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
         /// </summary>
-        /// <param name="window">Оконная функция</param>
-        /// <param name="m">Количество сдвигов по частоте [4, N]</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="window">Windows function</param>
+        /// <param name="m">Number of frequency shifts [4, N]</param>
+        /// <param name="direction">Processing direction</param>
         public WeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical)
         {
             Window = window; M = m; Direction = direction;
         }
         /// <summary>
-        /// Получает или задает количество сдвигов по частоте [4, N].
+        /// Gets or sets number of frequency shifts [4, N].
         /// <remarks>
-        /// Четное число.
+        /// Even number.
         /// </remarks>
         /// </summary>
         public int M
@@ -1907,13 +1882,13 @@ namespace UMapx.Window
             set
             {
                 if (value <= 2 || !Maths.IsEven(value))
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.m = value;
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -1927,7 +1902,7 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Получает или задает оконную функцию.
+        /// Gets or sets the window function.
         /// </summary>
         public IWindow Window
         {
@@ -1938,30 +1913,30 @@ namespace UMapx.Window
 
         #region Weyl-Heisenberg static components
         /// <summary>
-        /// Возвращает комплексную матрицу базиса Вейля-Гейзенберга.
+        /// Returns the complex Weyl-Heisenberg basis matrix.
         /// <remarks>
-        /// Размерность матрицы [N, N], где N = M * L.
+        /// Matrix dimension[N, N], where N = M * L.
         /// </remarks>
         /// </summary>
-        /// <param name="window">Оконная функция</param>
-        /// <param name="N">Количество отсчетов, вмещающих функцию</param>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <param name="orthogonalize">Ортогонализированная матрица или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="window">Windows function</param>
+        /// <param name="N">Number of samples</param>
+        /// <param name="M">Number of frequency shifts</param>
+        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] WeylHeisenberg(IWindow window, int N, int M, bool orthogonalize = true)
         {
             return WeylHeisenbergTransform.WeylHeisenberg(WeylHeisenbergTransform.GetPacket(window, N), M, orthogonalize);
         }
         /// <summary>
-        /// Возвращает комплексную матрицу базиса Вейля-Гейзенберга.
+        /// Returns the complex Weyl-Heisenberg basis matrix.
         /// <remarks>
-        /// Размерность матрицы [N, N], где N = M * L.
+        /// Matrix dimension[N, N], where N = M * L.
         /// </remarks>
         /// </summary>
-        /// <param name="g0">Формирующая функция</param>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <param name="orthogonalize">Ортогонализированная матрица или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="g0">Function</param>
+        /// <param name="M">Number of frequency shifts</param>
+        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] WeylHeisenberg(double[] g0, int M, bool orthogonalize = true)
         {
             if (orthogonalize)
@@ -1972,11 +1947,11 @@ namespace UMapx.Window
             return WeylHeisenbergTransform.WeylHeisenberg(g0, M);
         }
         /// <summary>
-        /// Возвращает вектор значений оконной функции.
+        /// Returns a vector of window function values.
         /// </summary>
-        /// <param name="window">Оконная функция</param>
-        /// <param name="length">Количество отсчетов, вмещаемых функцию</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="window">Windows function</param>
+        /// <param name="length">Number of samples</param>
+        /// <returns>Array</returns>
         public static double[] GetPacket(IWindow window, int length)
         {
             // exeption by length
@@ -2005,11 +1980,11 @@ namespace UMapx.Window
             return g;
         }
         /// <summary>
-        /// Возвращает вектор значений оконной функции, удовлетворяющей условию N-1 симметрии.
+        /// Returns a vector of values of a window function that satisfies the N-1 symmetry condition.
         /// </summary>
-        /// <param name="window">Оконная функция</param>
-        /// <param name="length">Количество отсчетов функции</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="window">Windows function</param>
+        /// <param name="length">Number of samples</param>
+        /// <returns>Array</returns>
         private static double[] nSymmetry(IWindow window, int length)
         {
             // creaing window function
@@ -2023,44 +1998,44 @@ namespace UMapx.Window
             return w;
         }
         /// <summary>
-        /// Возвращает комплексную матрицу базиса Вейля-Гейзенберга.
+        /// Returns the complex Weyl-Heisenberg basis matrix.
         /// <remarks>
-        /// Размерность матрицы [N, N], где N = M * L.
+        /// Matrix dimension[N, N], where N = M * L.
         /// </remarks>
         /// </summary>
-        /// <param name="g0">Формирующая функция</param>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <returns>Матрица</returns>
+        /// <param name="g0">Function</param>
+        /// <param name="M">Number of frequency shifts</param>
+        /// <returns>Matrix</returns>
         private static Complex[,] WeylHeisenberg(double[] g0, int M)
         {
-            int N = g0.Length, L = N / M;                               // Определение параметров,
+            int N = g0.Length, L = N / M;
 
             if (L <= 0)
-                throw new Exception("Количество сдвигов по частоте определено неверно");
+                throw new Exception("Number of frequency shifts not defined correctly");
 
-            Complex[,] G = new Complex[N, N];                           // комплексный прямоугольный сигнальный базис,
-            Complex c = 2 * Maths.Pi * Maths.I;                         // комплексный коэффициент преобразования,
-            double a = M / 2.0;                                         // вычисление оптимального фазового параметра.
+            Complex[,] G = new Complex[N, N];
+            Complex c = 2 * Maths.Pi * Maths.I;
+            double a = M / 2.0;
 
-            Parallel.For(0, N, n =>                                     // Использование параллельных циклов.
+            Parallel.For(0, N, n =>   
             {
-                double phase = n - a / 2.0;                             // Фазовый сдвиг.
+                double phase = n - a / 2.0;            
                 int k, l, u, i, j;
                 Complex exp, psi;
 
                 for (k = 0; k < M; k++)
                 {
-                    exp = Maths.Exp(c * k / M * phase);                 // Экспоненциальный коэффициент.
+                    exp = Maths.Exp(c * k / M * phase);
 
                     for (l = 0; l < L; l++)
                     {
-                        u = l * M + k;                                  // Элемент матрицы,
-                        i = Maths.Mod(n - l * M, N);                    // сдвиг по времени,
-                        j = Maths.Mod(n + M / 2 - l * M, N);            // сдвиг по частоте,
+                        u = l * M + k;                
+                        i = Maths.Mod(n - l * M, N);            
+                        j = Maths.Mod(n + M / 2 - l * M, N);     
 
                         psi = new Complex(
-                            (g0[i] * exp).Real,                           // Комлпексный сигнальный базис,
-                            (Maths.I * g0[j] * exp).Real);                // < Ψ Re, Ψ Im >
+                            (g0[i] * exp).Real,                    
+                            (Maths.I * g0[j] * exp).Real);              
 
                         G[n, u] = psi;
                     }
@@ -2073,10 +2048,10 @@ namespace UMapx.Window
 
         #region Weyl-Heisenberg Transform
         /// <summary>
-        /// Прямое дискретное преобразование Вейля-Гейзенберга.
+        /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
@@ -2085,10 +2060,10 @@ namespace UMapx.Window
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Вейля-Гейзенберга.
+        /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
@@ -2097,10 +2072,10 @@ namespace UMapx.Window
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Вейля-Гейзенберга.
+        /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -2123,10 +2098,10 @@ namespace UMapx.Window
             return B;
         }
         /// <summary>
-        /// Обратное дискретное преобразование Вейля-Гейзенберга.
+        /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -2149,37 +2124,37 @@ namespace UMapx.Window
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -2187,25 +2162,20 @@ namespace UMapx.Window
         #endregion
 
         #region Zak components
-        /// <summary>
-        /// Преобразование Фурье.
-        /// </summary>
         private static FourierTransform DFT = new FourierTransform(false, Direction.Vertical);
-        /// <summary>
-        /// Быстрое преобразование Фурье.
-        /// </summary>
         private static FastFourierTransform FFT = new FastFourierTransform(false, Direction.Vertical);
+
         /// <summary>
-        /// Реализует Zak-ортогонализацию вектора.
+        /// Implements Zak-orthogonalization of the vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="M">Number of frequency shifts</param>
+        /// <returns>Array</returns>
         public static double[] Zak(double[] v, int M)
         {
-            // Быстрый алгоритм ортогонализации формирующей 
-            // WH-функции с использованием дискретного Zak-преобразования.
-            // В.П. Волчков, Д.А. Петров и В.М. Асирян.
+            // Fast shaping orthogonalization algorithm
+            // WH functions using a discrete Zak transform.
+            // V.P. Volchkov, D.A. Petrov and V.M. Asiryan.
             // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
 
             int N = v.Length;
@@ -2214,7 +2184,6 @@ namespace UMapx.Window
             Complex[,] G = new Complex[L2, N];
             Complex[,] Z;
 
-            // Дискретное Zak-преобразование:
             for (i = 0; i < L2; i++)
             {
                 for (j = 0; j < N; j++)
@@ -2223,8 +2192,6 @@ namespace UMapx.Window
                 }
             }
 
-            // Быстрое или обычное 
-            // преобразование Фурье по столбцам:
             if (Maths.IsPower(L2, 2))
             {
                 Z = FFT.Forward(G);
@@ -2234,12 +2201,10 @@ namespace UMapx.Window
                 Z = DFT.Forward(G);
             }
 
-            // Параметры:
             double w = 2 / Math.Sqrt(M);
             double even, odd, phi;
             Complex z1, z2;
 
-            // Вычисление формирующей WH-функции:
             for (i = 0; i < L; i++)
             {
                 for (j = 0; j < N; j++)
@@ -2256,7 +2221,6 @@ namespace UMapx.Window
                 }
             }
 
-            // Обратное дискретное Zak-преобразование:
             Complex sum;
             for (i = 0; i < N; i++)
             {
@@ -2271,16 +2235,16 @@ namespace UMapx.Window
             return vort;
         }
         /// <summary>
-        /// Реализует Zak-ортогонализацию вектора.
+        /// Implements Zak-orthogonalization of the vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="M">Number of frequency shifts</param>
+        /// <returns>Array</returns>
         public static Complex[] Zak(Complex[] v, int M)
         {
-            // Быстрый алгоритм ортогонализации формирующей 
-            // WH-функции с использованием дискретного Zak-преобразования.
-            // В.П. Волчков, Д.А. Петров и В.М. Асирян.
+            // Fast shaping orthogonalization algorithm
+            // WH functions using a discrete Zak transform.
+            // V.P. Volchkov, D.A. Petrov and V.M. Asiryan.
             // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
 
             int N = v.Length;
@@ -2289,7 +2253,6 @@ namespace UMapx.Window
             Complex[,] G = new Complex[L2, N];
             Complex[,] Z;
 
-            // Дискретное Zak-преобразование:
             for (i = 0; i < L2; i++)
             {
                 for (j = 0; j < N; j++)
@@ -2298,8 +2261,6 @@ namespace UMapx.Window
                 }
             }
 
-            // Быстрое или обычное 
-            // преобразование Фурье по столбцам:
             if (Maths.IsPower(L2, 2))
             {
                 Z = FFT.Forward(G);
@@ -2309,12 +2270,10 @@ namespace UMapx.Window
                 Z = DFT.Forward(G);
             }
 
-            // Параметры:
             double w = 2 / Math.Sqrt(M);
             double even, odd, phi;
             Complex z1, z2;
 
-            // Вычисление формирующей WH-функции:
             for (i = 0; i < L; i++)
             {
                 for (j = 0; j < N; j++)
@@ -2331,7 +2290,6 @@ namespace UMapx.Window
                 }
             }
 
-            // Обратное дискретное Zak-преобразование:
             Complex sum;
             for (i = 0; i < N; i++)
             {
@@ -2348,53 +2306,38 @@ namespace UMapx.Window
         #endregion
     }
     /// <summary>
-    /// Определяет класс быстрого преобразования Вейля-Гейзенберга.
+    /// Defines fast Weyl-Heisenberg transform.
     /// <remarks>
-    /// Класс представляет вычислительно эффективную реализацию одномерного и двумерного дикретных ортогональных
-    /// преобразований Вейля-Гейзенберга.
-    /// Более подробную информацию можно найти на сайте:
+    /// The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
+    /// Weyl-Heisenberg transforms.
+    /// More information can be found on the website:
     /// https://elibrary.ru/title_about.asp?id=58245
     /// </remarks>
     /// </summary>
     public class FastWeylHeisenbergTransform : IWindowTransform, ITransform
     {
         #region Private data
-        /// <summary>
-        /// Преобразование Фурье.
-        /// <remarks>
-        /// Используется как вспомогательный компонент.
-        /// </remarks>
-        /// </summary>
         private static FastFourierTransform FFT = new FastFourierTransform(false, Direction.Horizontal);
-        /// <summary>
-        /// Оконная функция.
-        /// </summary>
         private IWindow window;
-        /// <summary>
-        /// Количество сдвигов по частоте.
-        /// </summary>
         private int m;
-        /// <summary>
-        /// Направление обработки.
-        /// </summary>
         private Direction direction;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует быстрое преобразование Вейля-Гейзенберга.
+        /// Initializes fast Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="window">Оконная функция</param>
-        /// <param name="m">Количество сдвигов по частоте [4, N]</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="window">Windows function</param>
+        /// <param name="m">Number of frequency shifts [4, N]</param>
+        /// <param name="direction">Processing direction</param>
         public FastWeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical)
         {
             Window = window; M = m; Direction = direction;
         }
         /// <summary>
-        /// Получает или задает количество сдвигов по частоте [4, N].
+        /// Gets or sets number of frequency shifts [4, N].
         /// <remarks>
-        /// Четное число.
+        /// Even number.
         /// </remarks>
         /// </summary>
         public int M
@@ -2406,13 +2349,13 @@ namespace UMapx.Window
             set
             {
                 if (value <= 2 || !Maths.IsEven(value))
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.m = value;
             }
         }
         /// <summary>
-        /// Получает или задает направление обработки.
+        /// Gets or sets the processing direction.
         /// </summary>
         public Direction Direction
         {
@@ -2426,7 +2369,7 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Получает или задает оконную функцию.
+        /// Gets or sets the window function.
         /// </summary>
         public IWindow Window
         {
@@ -2437,30 +2380,30 @@ namespace UMapx.Window
 
         #region Weyl-Heisenberg Transform
         /// <summary>
-        /// Прямое дискретное преобразование Вейля-Гейзенберга.
+        /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             double[] g0 = WeylHeisenbergTransform.Zak(WeylHeisenbergTransform.GetPacket(this.window, A.Length), this.m);
             return FastWeylHeisenbergTransform.WHT(A, g0, m);
         }
         /// <summary>
-        /// Обратное дискретное преобразование Вейля-Гейзенберга.
+        /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             double[] g0 = WeylHeisenbergTransform.Zak(WeylHeisenbergTransform.GetPacket(this.window, B.Length), this.m);
             return FastWeylHeisenbergTransform.IWHT(B, g0, m);
         }
         /// <summary>
-        /// Прямое дискретное быстрое преобразование Вейля-Гейзенберга.
+        /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             Complex[,] B = (Complex[,])A.Clone();
@@ -2551,10 +2494,10 @@ namespace UMapx.Window
             return B;
         }
         /// <summary>
-        /// Обратное дискретное быстрое преобразование Вейля-Гейзенберга.
+        /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             Complex[,] A = (Complex[,])B.Clone();
@@ -2646,37 +2589,37 @@ namespace UMapx.Window
             return A;
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Прямое дискретное преобразование Фурье.
+        /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Обратное дискретное преобразование Фурье.
+        /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
@@ -2685,26 +2628,24 @@ namespace UMapx.Window
 
         #region Public static components
         /// <summary>
-        /// Прямое быстрое дискретное преобразование Вейля-Гейзенберга.
+        /// Fast forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="input">Одномерный массив</param>
-        /// <param name="g0">Формирующая WH-функция</param>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <returns>Одноменый массив</returns>
+        /// <param name="input">Array</param>
+        /// <param name="g0">Function</param>
+        /// <param name="M">Number of frequency shifts</param>
+        /// <returns>Array</returns>
         public static Complex[] WHT(Complex[] input, double[] g0, int M)
         {
-            // Функция реализует быстрый алгоритм прямого преобразования Вейля-Гейзенберга, 
-            // изложенный в следующих статьях:
+            // The function implements a fast Weil-Heisenberg direct transformation algorithm,
+            // stated in the following articles:
             // A. Vahlin, "EFFICIENT ALGORITHMS FOR MODULATION AND DEMODULATION IN OFDM-SYSTEMS" [1].
-            // В.М. Асирян, В.П. Волчков, "ЭФФЕКТИВНАЯ РЕАЛИЗАЦИЯ ПРЯМОГО ПРЕОБРАЗОВАНИЯ ВЕЙЛЯ-ГЕЙЗЕНБЕРГА" [2].
-            // Алгоритм является вычислительно эффективным при больших значениях M.
+            // V.M. Asiryan, V.P. Volchkov, "EFFECTIVE IMPLEMENTATION OF THE DIRECT TRANSFORMATION OF WEIL-HEISENBERG" [2].
+            // The algorithm is computationally efficient for large M.
 
-            // Параметры преобразования и выходной сигнал:
             int N = input.Length, L = N / M, M2 = M / 2, M4 = M2 / 2;
             Complex[] output = new Complex[N];
             Complex[] exp = FastWeylHeisenbergTransform.GetRotation(M);
 
-            // Вспомогательные матрицы и переменные:
             Complex[,] s0 = new Complex[M, L];
             Complex[,] a0 = new Complex[M, L];
             Complex[,] b0 = new Complex[M, L];
@@ -2716,7 +2657,6 @@ namespace UMapx.Window
             Complex c1im, c2im;
             int k, i, j, u, n, m, l;
 
-            // 1. Формирование матриц перестановок:
             for (m = 0; m < M; m++)
             {
                 for (n = 0; n < L; n++)
@@ -2732,8 +2672,6 @@ namespace UMapx.Window
                 }
             }
 
-            // 2. Вычисление циклической свертки для матриц
-            // полученных в пункте 1:
             for (l = 0; l < L; l++)
             {
                 for (n = 0; n < L; n++)
@@ -2748,82 +2686,68 @@ namespace UMapx.Window
                 }
             }
 
-            // Переменные замены:
             Complex x, y, z, w;
 
-            // 3. Вычисление новых последовательностей:
             for (l = 0; l < L; l++)
             {
                 for (m = 0; m < M2; m++)
                 {
-                    // Замена переменных для действительной части:
                     x = A0[l, m];
                     y = A0[l, m + M2];
                     z = A0[l, M2 - m].Conjugate;
                     w = A0[l, Maths.Mod(M - m, M)].Conjugate;
 
-                    // Вычисление выражений:
                     c1re = x + y + z + w;
                     c2re = x - y - z + w;
 
-                    // Аналогичная замена переменных для мнимой части:
                     x = B0[l, m];
                     y = B0[l, m + M2];
                     z = B0[l, M2 - m].Conjugate;
                     w = B0[l, Maths.Mod(M - m, M)].Conjugate;
 
-                    // Вычисление выражений:
                     c1im = x + y - z - w;
                     c2im = x - y + z - w;
 
-                    // Вычисление элементов матриц:
                     A1[l, m] = 1.0 / (2) * (c1re + Maths.I * c2re * exp[m]);
                     B1[l, m] = 1.0 / (2 * Maths.I) * (c1im + Maths.I * c2im * exp[m]);
                 }
             }
 
-            // 4. Быстрое обратное M/2- точечное преобразование Фурье по строкам:
             A1 = FFT.Backward(Matrice.Conjugate(A1));
             B1 = FFT.Backward(Matrice.Conjugate(B1));
 
-            // 5. Формирование комплексного вектора сигнала:
             for (k = 0; k < M2; k++)
             {
                 for (l = 0; l < L; l++)
                 {
-                    // Четные и нечетные индексы фильтра:
                     i = l * M + 2 * k;
                     j = l * M + 2 * k + 1;
 
-                    // Замена переменных:
                     x = A1[l, k];
                     y = B1[l, k];
 
-                    // Вычисление элементов вектора:
                     output[i] = x.Real + Maths.I * y.Real;
                     output[j] = x.Imag + Maths.I * y.Imag;
                 }
             }
 
-            // Результат прямого WH-преобразования.
             return output;
         }
         /// <summary>
-        /// Обратное быстрое дискретное преобразование Вейля-Гейзенберга.
+        /// Fast backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="input">Одномерный массив</param>
-        /// <param name="g0">Формирующая WH-функция</param>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <returns>Одноменый массив</returns>
+        /// <param name="input">Array</param>
+        /// <param name="g0">Function</param>
+        /// <param name="M">Number of frequency shifts</param>
+        /// <returns>Array</returns>
         public static Complex[] IWHT(Complex[] input, double[] g0, int M)
         {
-            // Функция реализует быстрый алгоритм обратного преобразования Вейля-Гейзенберга, 
-            // изложенный в следующих статьях:
+            // The function implements a fast Weil-Heisenberg direct transformation algorithm,
+            // stated in the following articles:
             // A. Vahlin, "EFFICIENT ALGORITHMS FOR MODULATION AND DEMODULATION IN OFDM-SYSTEMS" [1].
-            // В.М. Асирян, В.П. Волчков, "ЭФФЕКТИВНАЯ РЕАЛИЗАЦИЯ ПРЯМОГО ПРЕОБРАЗОВАНИЯ ВЕЙЛЯ-ГЕЙЗЕНБЕРГА" [2].
-            // Алгоритм является вычислительно эффективным при больших значениях M.
+            // V.M. Asiryan, V.P. Volchkov, "EFFECTIVE IMPLEMENTATION OF THE DIRECT TRANSFORMATION OF WEIL-HEISENBERG" [2].
+            // The algorithm is computationally efficient for large M.
 
-            // Вспомогательные матрицы и переменные:
             int N = input.Length, L = N / M, M2 = M / 2, M4 = M2 / 2;
             Complex[] output = new Complex[N];
             Complex[,] A1 = new Complex[L, M];
@@ -2832,21 +2756,17 @@ namespace UMapx.Window
             Complex s;
             int n, k, l;
 
-            // 1. Формирование вещественных матриц сдвигов:
             for (k = 0; k < M; k++)
             {
                 for (l = 0; l < L; l++)
                 {
-                    // Замена переменных:
                     s = input[k + l * M];
 
-                    // Вычисление элементов матриц:
                     A1[l, k] = s.Real;
                     B1[l, k] = s.Imag;
                 }
             }
 
-            // 2. Вычисление матриц:
             Complex[,] Za = new Complex[L, M2];
             Complex[,] Zb = new Complex[L, M2];
 
@@ -2859,67 +2779,52 @@ namespace UMapx.Window
                 }
             }
 
-            // 3. Быстрое обратное M/2- точечное преобразование Фурье.
             Za = Matrice.Conjugate(FFT.Backward(Za));
             Zb = Matrice.Conjugate(FFT.Backward(Zb));
 
-            // Переменные замены:
             Complex a0, a1, b0, b1;
             Complex x, y, u, v;
 
-            // 4. Формирование новых матриц:
             for (k = 0; k < M2; k++)
             {
                 for (l = 0; l < L; l++)
                 {
-                    // Для матрицы A(l, k)
-                    // Замена переменных:
                     a0 = Za[l, k]; a1 = Za[l, Maths.Mod(M - k, M2)].Conjugate;
 
-                    // Вычисление выражений:
                     x = 1.0 / (2) * (a0 + a1);
                     y = 1.0 / (2 * Maths.I) * (a0 - a1);
                     y *= exp[k];
 
-                    // Формирование матрицы:
                     A1[l, k] = x + y;
                     A1[l, k + M2] = x - y;
 
-
-                    // Для матрицы B(l, k)
-                    // Замена переменных:
                     b0 = Zb[l, k]; b1 = Zb[l, Maths.Mod(M - k, M2)].Conjugate;
 
-                    // Вычисление выражений:
                     u = 1.0 / (2) * (b0 + b1);
                     v = 1.0 / (2 * Maths.I) * (b0 - b1);
                     v *= exp[k];
 
-                    // Формирование матрицы:
                     B1[l, k] = u + v;
                     B1[l, k + M2] = u - v;
                 }
             }
 
-            // 5. Формирование выходного сигнала:
             for (l = 0; l < L; l++)
             {
                 for (n = 0; n < N; n++)
                 {
-                    // Вычисление выражения:
                     output[n] += A1[l, Maths.Mod(n - M4, M)] * g0[Maths.Mod(n - l * M, N)] - Maths.I
                                * B1[l, Maths.Mod(n - M4, M)] * g0[Maths.Mod(n - l * M + M2, N)];
                 }
             }
 
-            // Результат обратного WH-преобразования.
             return output;
         }
         /// <summary>
-        /// Возвращает одномерный массив фазовых поворотов.
+        /// Returns an array of phase rotations.
         /// </summary>
-        /// <param name="M">Количество сдвигов по частоте</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="M">Number of frequency shifts</param>
+        /// <returns>Array</returns>
         private static Complex[] GetRotation(int M)
         {
             int M2 = M / 2;
@@ -2936,55 +2841,55 @@ namespace UMapx.Window
 
     #region Window interfaces
     /// <summary>
-    /// Определяет общий вид оконных функций.
+    /// Defines the interface of window functions.
     /// </summary>
     public interface IWindow
     {
         #region Interface
         /// <summary>
-        /// Получает или задает размер окна.
+        /// Gets or sets the window size.
         /// </summary>
         int FrameSize { get; set; }
         /// <summary>
-        /// Возвращает значение оконной функции.
+        /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         double Function(double x);
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <returns>Одномерный массив</returns>
+        /// <returns>Array</returns>
         double[] GetWindow();
         /// <summary>
-        /// Возвращает оконную функцию.
+        /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         double[] GetWindow(int frameSize);
         /// <summary>
-        /// Возвращает массив значений оконной функции.
+        /// Returns an array of window function values.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="frameSize">Размер окна</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="x">Array</param>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Array</returns>
         double[] Function(double[] x, int frameSize);
         /// <summary>
-        /// Возвращает массив значений оконной функции.
+        /// Returns an array of window function values.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="x">Array</param>
+        /// <returns>Array</returns>
         double[] Function(double[] x);
         #endregion
     }
     /// <summary>
-    /// Определяет общий интерфейс окнонных преобразований.
+    /// Defines the general window transform interface.
     /// </summary>
     public interface IWindowTransform
     {
         #region Interface
         /// <summary>
-        /// Получает или задает оконную функцию.
+        /// Gets or sets the window function.
         /// </summary>
         IWindow Window { get; set; }
         #endregion

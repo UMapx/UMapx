@@ -22,34 +22,34 @@ namespace UMapx.Core
 
     #region Complex
     /// <summary>
-    /// Определяет комплексное число.
+    /// Defines a complex number.
     /// </summary>
     public struct Complex : ICloneable, ISerializable
     {
         #region Private data
         /// <summary>
-        /// Действительная часть комплексного числа.
+        /// The real part of the complex number.
         /// </summary>
         public double Real;
         /// <summary>
-        /// Мнимая часть комплексного числа.
+        /// The imaginary part of a complex number.
         /// </summary>
         public double Imag;
         #endregion
 
         #region Structure components
         /// <summary>
-        /// Инициализирует комплексное число.
+        /// Initializes the complex number.
         /// </summary>
-        /// <param name="re">Действительная часть комплексного числа</param>
-        /// <param name="im">Мнимая часть комплексного числа</param>
+        /// <param name="re">Real part of the complex number</param>
+        /// <param name="im">Imaginary part of a complex number</param>
         public Complex(double re, double im)
         {
             this.Real = re;
             this.Imag = im;
         }
         /// <summary>
-        /// Получает значение модуля.
+        /// Gets the value of the module.
         /// </summary>
         public double Abs
         {
@@ -59,7 +59,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает значение угла фазы (аргумента).
+        /// Gets the value of the phase.
         /// </summary>
         public double Angle
         {
@@ -69,7 +69,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает мнимую единицу.
+        /// Returns the imaginary one.
         /// </summary>
         public static Complex I
         {
@@ -79,7 +79,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает действительную единицу.
+        /// Returns the real one.
         /// </summary>
         public static Complex One
         {
@@ -89,7 +89,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает комплексный ноль.
+        /// Returns the complex zero.
         /// </summary>
         public static Complex Zero
         {
@@ -99,7 +99,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает комплексно-сопряженное число.
+        /// Returns the complex conjugate number.
         /// </summary>
         public Complex Conjugate
         {
@@ -112,35 +112,35 @@ namespace UMapx.Core
 
         #region Overrides
         /// <summary>
-        /// Возвращает хэш-код для данного объекта.
+        /// Returns the hash code for this object.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return this.Real.GetHashCode() ^ this.Imag.GetHashCode();
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа Complex.
+        /// Gets a value indicating whether this instance is equal to the given value of type Complex.
         /// </summary>
-        /// <param name="obj">Объект</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Object</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
             return (obj is Complex) ? (this == (Complex)obj) : false;
         }
         /// <summary>
-        /// Преобразует комплексное число в соответствующее ему строковое представление.
+        /// Converts complex number to its corresponding string representation.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return this.ToString("G3");
         }
         /// <summary>
-        /// Преобразует комплексное число в соответствующее ему строковое представление.
+        /// Converts complex number to its corresponding string representation.
         /// </summary>
-        /// <param name="format">Строка числового формата</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="format">Format string</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public string ToString(string format)
         {
             return StringOptions.Disp(new double[] { this.Real, this.Imag }, format, StringOptions.C);
@@ -149,21 +149,21 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Проверяет равны ли два объекта типа Complex между собой.
+        /// Checks if two complex numbers are equal.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(Complex a, Complex b)
         {
             return ((a.Real == b.Real) && (a.Imag == b.Imag));
         }
         /// <summary>
-        /// Проверяет не равны ли два объекта типа Complex между собой.
+        /// Checks if two complex numbers are not equal.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(Complex a, Complex b)
         {
             return !(a == b);
@@ -172,31 +172,31 @@ namespace UMapx.Core
 
         #region Operators
         /// <summary>
-        /// Сумма двух комплексных чисел
+        /// The sum of two complex numbers.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator +(Complex a, Complex b)
         {
             return new Complex(a.Real + b.Real, a.Imag + b.Imag);
         }
         /// <summary>
-        /// Сумма комплексного числа и действительного числа.
+        /// The sum of a complex number and a real number.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator +(Complex a, double b)
         {
             return new Complex(a.Real + b, a.Imag);
         }
         /// <summary>
-        /// Сумма комплексного числа и действительного числа.
+        /// The sum of a complex number and a real number.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator +(double a, Complex b)
         {
             return new Complex(b.Real + a, b.Imag);
@@ -204,40 +204,40 @@ namespace UMapx.Core
 
 
         /// <summary>
-        /// Разность двух комплексных чисел
+        /// The difference of two complex numbers.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator -(Complex a, Complex b)
         {
             return new Complex(a.Real - b.Real, a.Imag - b.Imag);
         }
         /// <summary>
-        /// Разность комплексного числа и действительного числа.
+        /// The difference between a complex number and a real number.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator -(Complex a, double b)
         {
             return new Complex(a.Real - b, a.Imag);
         }
         /// <summary>
-        /// Разность комплексного числа и действительного числа.
+        /// The difference between a complex number and a real number.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator -(double a, Complex b)
         {
             return new Complex(a - b.Real, b.Imag);
         }
         /// <summary>
-        /// Инвертирует комплексное число.
+        /// Inverts complex number.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Complex number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator -(Complex a)
         {
             return new Complex(-a.Real, -a.Imag);
@@ -245,11 +245,11 @@ namespace UMapx.Core
 
 
         /// <summary>
-        /// Произведение двух комплексных чисел
+        /// Multiplies one complex number by another.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator *(Complex a, Complex b)
         {
             double aRe = a.Real, aIm = a.Imag;
@@ -258,21 +258,21 @@ namespace UMapx.Core
             return new Complex(aRe * bRe - aIm * bIm, aRe * bIm + aIm * bRe);
         }
         /// <summary>
-        /// Произведение комплексного числа и действительного числа.
+        /// Multiplies real number by complex number.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator *(double a, Complex b)
         {
             return new Complex(b.Real * a, b.Imag * a);
         }
         /// <summary>
-        /// Произведение комплексного числа и действительного числа.
+        /// Multiplies complex number by real number.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator *(Complex a, double b)
         {
             return new Complex(a.Real * b, a.Imag * b);
@@ -280,11 +280,11 @@ namespace UMapx.Core
 
 
         /// <summary>
-        /// Частное двух комплексных чисел
+        /// Divides one complex number by another.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator /(Complex a, Complex b)
         {
             double aRe = a.Real, aIm = a.Imag;
@@ -295,21 +295,21 @@ namespace UMapx.Core
             return new Complex((aRe * bRe + aIm * bIm) * inv, (aIm * bRe - aRe * bIm) * inv);
         }
         /// <summary>
-        /// Частное комплексного числа и действительного числа.
+        /// Divides complex number by real number.
         /// </summary>
-        /// <param name="a">Комплексное число</param>
-        /// <param name="b">Число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator /(Complex a, double b)
         {
             return new Complex(a.Real / b, a.Imag / b);
         }
         /// <summary>
-        /// Частное комплексного числа и действительного числа.
+        /// Divides real number by complex number.
         /// </summary>
-        /// <param name="a">Числа</param>
-        /// <param name="b">Комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="a">Number</param>
+        /// <param name="b">Complex number</param>
+        /// <returns>Complex number</returns>
         public static Complex operator /(double a, Complex b)
         {
             if (b.Imag == 0)
@@ -326,100 +326,100 @@ namespace UMapx.Core
 
         #region Conversion operators
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(double value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(float value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(long value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(ulong value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(short value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(ushort value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(int value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(uint value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(byte value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(sbyte value)
         {
             return new Complex(value, 0);
         }
         /// <summary>
-        /// Определяет явное преобразование числа в комплексное число.
+        /// Defines an explicit conversion of a number to complex number.
         /// </summary>
-        /// <param name="value">Значение, преобразуемое в комплексное число</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex(decimal value)
         {
             return new Complex((double)value, 0);
@@ -428,23 +428,23 @@ namespace UMapx.Core
 
         #region Parsing
         /// <summary>
-        /// Переводит исходную строку в комплексное число.
+        /// Parses the string to complex number.
         /// <remarks>
-        /// Примеры входной строки: "1 + 2i", "0.321 + 11i", ".1i".
+        /// Example: "1 + 2i", "0.321 + 11i", ".1i".
         /// </remarks>
         /// </summary>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="s">Input string</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static Complex Parse(string s)
         {
             return StringOptions.Compar(s);
         }
         /// <summary>
-        /// Пробует перевести исходную строку в комплексное число.
+        /// Tries to parse the string to complex number.
         /// </summary>
-        /// <param name="complex">Исходная строка</param>
-        /// <param name="result">Комплексное число</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="complex">Input string</param>
+        /// <param name="result">Complex number</param>
+        /// <returns>Boolean</returns>
         public static bool TryParse(string complex, ref Complex result)
         {
             try
@@ -462,17 +462,17 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Создает копию комплексного числа.
+        /// Creates a copy of a complex number.
         /// </summary>
-        /// <returns>Комплексное число</returns>
+        /// <returns>Complex number</returns>
         object ICloneable.Clone()
         {
             return new Complex(this.Real, this.Imag);
         }
         /// <summary>
-        /// Создает копию комплексного числа.
+        /// Creates a copy of a complex number.
         /// </summary>
-        /// <returns>Комплексное число</returns>
+        /// <returns>Complex number</returns>
         public Complex Clone()
         {
             return new Complex(this.Real, this.Imag);
@@ -481,10 +481,10 @@ namespace UMapx.Core
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about an object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for object serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Real", this.Real);
@@ -496,40 +496,40 @@ namespace UMapx.Core
 
     #region Quaternion
     /// <summary>
-    /// Определяет кватернион.
+    /// Defines a quaternion.
     /// <remarks>
-    /// Кватернион - это система гиперкомплексных чисел, образующая векторное пространство размерностью четыре над полем вещественных чисел.
+    /// A quaternion is a system of hypercomplex numbers that forms a four-dimensional vector space over a field of real numbers.
     /// </remarks>
     /// </summary>
     public struct Quaternion : ICloneable, ISerializable
     {
         #region Public data
         /// <summary>
-        /// Значение X координаты вектора кватерниона.
+        /// X coordinate.
         /// </summary>
         public double X;
         /// <summary>
-        /// Значение Y координаты вектора кватерниона.
+        /// Y coordinate.
         /// </summary>
         public double Y;
         /// <summary>
-        /// Значение Z координаты вектора кватерниона.
+        /// Z coordinate.
         /// </summary>
         public double Z;
         /// <summary>
-        /// Получает координату поворота кватерниона.
+        /// W coordinate.
         /// </summary>
         public double W;
         #endregion
 
         #region Quaternion components
         /// <summary>
-        /// Создает кватернион на основе заданных координат.
+        /// Creates a quaternion based on the given coordinates.
         /// </summary>
-        /// <param name="x">Координата X</param>
-        /// <param name="y">Координата Y</param>
-        /// <param name="z">Координата Z</param>
-        /// <param name="w">Координата поворота</param>
+        /// <param name="x">Coordinate X</param>
+        /// <param name="y">Coordinate Y</param>
+        /// <param name="z">Coordinate Z</param>
+        /// <param name="w">Coordinate W</param>
         public Quaternion(double x, double y, double z, double w)
         {
             this.X = x;
@@ -538,7 +538,7 @@ namespace UMapx.Core
             this.W = w;
         }
         /// <summary>
-        /// Получает кватернион, который представляет отсутствие вращения.
+        /// Gets a quaternion that represents a lack of rotation.
         /// </summary>
         public static Quaternion Identity
         {
@@ -549,7 +549,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает значение, указывающее, является ли текущий экземпляр единичным Кватернионм.
+        /// Gets a value indicating whether the current instance is a single Quaternion.
         /// </summary>
         public bool IsIdentity
         {
@@ -559,7 +559,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение модуля кватерниона.
+        /// Returns the value of the quaternion module.
         /// </summary>
         public double Abs
         {
@@ -569,7 +569,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Вычисляет модуля кватерниона в квадрате.
+        /// Calculates the quaternion modulus squared.
         /// </summary>
         public double SquaredAbs
         {
@@ -582,7 +582,7 @@ namespace UMapx.Core
 
         #region Operations
         /// <summary>
-        /// Делит каждую координату указанного кватерниона на его длину.
+        /// Divides each coordinate of the specified quaternion by its length.
         /// </summary>
         public Quaternion Normalize
         {
@@ -593,7 +593,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает сопряженный объект заданного кватерниона.
+        /// Returns the conjugate object of the specified quaternion.
         /// </summary>
         public Quaternion Conjugate
         {
@@ -603,7 +603,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает инверсный объект кватерниона.
+        /// Returns the inverse object of the quaternion.
         /// </summary>
         public Quaternion Inverse
         {
@@ -614,12 +614,12 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Создает новый кватернион на основе заданного значения нутации, прецессии и собственного вращения.
+        /// Creates a new quaternion based on a given value of nutation, precession, and proper rotation.
         /// </summary>
-        /// <param name="yaw">Угол нутации вокруг оси Y в радианах</param>
-        /// <param name="pitch">Угол прецессии вокруг оси X в радианах</param>
-        /// <param name="roll">Угол собственного вращения вокруг оси Z в радианах</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="yaw">The nutation angle around the Y axis in radians</param>
+        /// <param name="pitch">The precession angle around the X axis in radians</param>
+        /// <param name="roll">The angle of rotation around the Z axis in radians</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion FromYPR(double yaw, double pitch, double roll)
         {
             double a = roll * 0.5;
@@ -639,22 +639,22 @@ namespace UMapx.Core
                 i * f * c + h * e * b);
         }
         /// <summary>
-        /// Вычисляет скалярное произведение двух Кватернионв.
+        /// Computes the scalar product of two quaternion.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <returns>Quaternion</returns>
         public static double Dot(Quaternion a, Quaternion b)
         {
             return a.X * b.X + a.Y * b.Y + a.Z * b.Z + a.W * b.W;
         }
         /// <summary>
-        /// Выполняет интерполяцию между двумя кватернионами, используя сферическую линейную интерполяцию.
+        /// Performs interpolation between two quaternions using spherical linear interpolation.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <param name="amount">Относительный вес второго кватерниона в интерполяции</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <param name="amount">Relative weight of the second quaternion in interpolation</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion Slerp(Quaternion a, Quaternion b, double amount)
         {
             double d, e, dot = Quaternion.Dot(a, b);
@@ -685,12 +685,12 @@ namespace UMapx.Core
                 d * a.W + e * b.W);
         }
         /// <summary>
-        /// Выполняет линейную интерполяцию между двумя кватернионами на основе значения, указывающего взвешивание второго кватерниона.
+        /// Performs linear interpolation between two quaternions based on a value indicating the weighting of the second quaternion.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <param name="amount">Относительный вес второго кватерниона в интерполяции</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <param name="amount">Relative weight of the second quaternion in interpolation</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion Lerp(Quaternion a, Quaternion b, double amount)
         {
             double f = 1.0 - amount;
@@ -720,11 +720,11 @@ namespace UMapx.Core
             return quaternion3;
         }
         /// <summary>
-        /// Сцепляет два кватерниона.
+        /// Concatenates two quaternions.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion Concatenate(Quaternion a, Quaternion b)
         {
             double x = b.X, y = b.Y, z = b.Z, w = b.W;
@@ -745,20 +745,20 @@ namespace UMapx.Core
 
         #region Operators
         /// <summary>
-        /// Обращает знак каждой координаты кватерниона.
+        /// Reverses the sign of each quaternion coordinate.
         /// </summary>
-        /// <param name="q">Кватернион</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="q">Quaternion</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion operator -(Quaternion q)
         {
             return new Quaternion(-q.X, -q.Y, -q.Z, -q.W);
         }
         /// <summary>
-        /// Складывает каждый элемент в одном кватернионе с соответствующим элементом во втором кватернионе.
+        /// Adds each element in one quaternion with the corresponding element in the second quaternion.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion operator +(Quaternion a, Quaternion b)
         {
             return new Quaternion(
@@ -768,11 +768,11 @@ namespace UMapx.Core
                 a.W + b.W);
         }
         /// <summary>
-        /// Вычитает каждый элемент во втором кватернионе из соответствующего элемента в первом кватернионе.
+        /// Subtracts each element in the second quaternion from the corresponding element in the first quaternion.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion operator -(Quaternion a, Quaternion b)
         {
             return new Quaternion(
@@ -782,11 +782,11 @@ namespace UMapx.Core
                 a.W - b.W);
         }
         /// <summary>
-        /// Возвращает кватернион, являющийся результатом перемножения двух Кватернионв.
+        /// Returns the quaternion resulting from the multiplication of two quaternions.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion operator *(Quaternion a, Quaternion b)
         {
             double x = a.X;
@@ -810,11 +810,11 @@ namespace UMapx.Core
                 );
         }
         /// <summary>
-        /// Возвращает кватернион, получаемый в результате масштабирования всех координат заданного кватерниона на скалярный множитель.
+        /// Returns the quaternion obtained by scaling all the coordinates of the specified quaternion by a scalar factor.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Множитель</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Factor</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion operator *(Quaternion a, double b)
         {
             return new Quaternion(
@@ -824,11 +824,11 @@ namespace UMapx.Core
                 a.W * b);
         }
         /// <summary>
-        /// Делит один кватернион на второй кватернион.
+        /// Divides one quaternion into a second quaternion.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion operator /(Quaternion a, Quaternion b)
         {
             double x = a.X;
@@ -852,11 +852,11 @@ namespace UMapx.Core
                 w * i - m);
         }
         /// <summary>
-        /// Возвращает кватернион, получаемый в результате масштабирования всех координат заданного кватерниона на скалярный множитель.
+        /// Returns the quaternion obtained by scaling all the coordinates of the specified quaternion by a scalar factor.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Делитель</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Factor</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion operator /(Quaternion a, double b)
         {
             return new Quaternion(
@@ -869,55 +869,55 @@ namespace UMapx.Core
 
         #region Bools & overrides
         /// <summary>
-        /// Проверяет равны ли два объекта типа Кватернион между собой.
+        /// Checks if two quaternions are equal.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(Quaternion a, Quaternion b)
         {
             return a.X == b.X && a.Y == b.Y && a.Z == b.Z && a.W == b.W;
         }
         /// <summary>
-        /// Проверяет не равны ли два объекта типа Кватернион между собой.
+        /// Checks if two quaternions are not equal.
         /// </summary>
-        /// <param name="a">Кватернион</param>
-        /// <param name="b">Кватернион</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Quaternion</param>
+        /// <param name="b">Quaternion</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(Quaternion a, Quaternion b)
         {
             return !(a == b);
         }
         /// <summary>
-        /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа Кватернион.
+        /// Gets a value indicating whether this instance is equal to the specified value of type quaternion.
         /// </summary>
-        /// <param name="obj">Объект</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Object</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
             return (obj is Quaternion) ? (this == (Quaternion)obj) : false;
         }
         /// <summary>
-        /// Преобразует комплексное число в соответствующее ему строковое представление.
+        /// Converts quaternion to its corresponding string representation.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return this.ToString("G3");
         }
         /// <summary>
-        /// Преобразует комплексное число в соответствующее ему строковое представление.
+        /// Converts quaternion to its corresponding string representation.
         /// </summary>
-        /// <param name="format">Строка числового формата</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="format">Format string</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public string ToString(string format)
         {
             return StringOptions.Disp(new double[] { this.X, this.Y, this.Z, this.W }, format, StringOptions.Q);
         }
         /// <summary>
-        /// Возвращает хэш-код для данного объекта.
+        /// Returns the hash code for this object.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return this.X.GetHashCode() + this.Y.GetHashCode() + this.Z.GetHashCode() + this.W.GetHashCode();
@@ -926,17 +926,17 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Создает копию кватерниона.
+        /// Creates a copy of quaternion.
         /// </summary>
-        /// <returns>Кватернион</returns>
+        /// <returns>Quaternion</returns>
         object ICloneable.Clone()
         {
             return new Quaternion(this.X, this.Y, this.Z, this.W);
         }
         /// <summary>
-        /// Создает копию кватерниона.
+        /// Creates a copy of quaternion.
         /// </summary>
-        /// <returns>Кватернион</returns>
+        /// <returns>Quaternion</returns>
         public Quaternion Clone()
         {
             return new Quaternion(this.X, this.Y, this.Z, this.W);
@@ -945,10 +945,10 @@ namespace UMapx.Core
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about an object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for object serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("X", this.X);
@@ -960,21 +960,21 @@ namespace UMapx.Core
 
         #region Parsing
         /// <summary>
-        /// Переводит исходную строку в кватернион.
+        /// Parses the string to quaternion.
         /// </summary>
         /// <remarks>
-        /// Пример входной строки: "[1, -2; 3.2, -.13]";
-        /// Размерность вектора должна быть равна 4.
+        /// Example: "[1, -2; 3.2, -.13]";
+        /// The dimension of the vector must be 4.
         /// </remarks>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Кватернион</returns>
+        /// <param name="s">Input string</param>
+        /// <returns>Quaternion</returns>
         public static Quaternion Parse(string s)
         {
             string[] cols = StringOptions.Matpar(s);
             string[] nums = cols[0].Split('|');
 
             if (cols.Length > 1 || nums.Length != 4)
-                throw new Exception("Входная строка имела неверный формат");
+                throw new Exception("The input string was in the wrong format");
 
             return new Quaternion(double.Parse(nums[0]),
                                   double.Parse(nums[1]),
@@ -982,11 +982,11 @@ namespace UMapx.Core
                                   double.Parse(nums[3]));
         }
         /// <summary>
-        /// Пробует перевести исходную строку в кватернион.
+        /// Tries to parse the string into Quaternion.
         /// </summary>
-        /// <param name="quaternion">Исходная строка</param>
-        /// <param name="result">Кватернион</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="quaternion">Input string</param>
+        /// <param name="result">Quaternion</param>
+        /// <returns>Boolean</returns>
         public static bool TryParse(string quaternion, ref Quaternion result)
         {
             try
@@ -1006,13 +1006,13 @@ namespace UMapx.Core
 
     #region Internal class
     /// <summary>
-    /// Определяет класс операций со строками.
+    /// Defines a class of string operations.
     /// </summary>
     internal class StringOptions
     {
         #region String voids
         /// <summary>
-        /// Формат комплексного числа.
+        /// Complex number format.
         /// </summary>
         public static string[] C
         {
@@ -1022,7 +1022,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Формат кватерниона.
+        /// Quaternion format.
         /// </summary>
         public static string[] Q
         {
@@ -1032,20 +1032,17 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Функция преобразования массива чисел в строку.
+        /// The function of converting an array of numbers to a string.
         /// </summary>
-        /// <param name="v">Массив чисел</param>
-        /// <param name="format">Строка числового формата</param>
-        /// <param name="symbol">Массив символов</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="v">Array</param>
+        /// <param name="format">Format string</param>
+        /// <param name="symbol">String array</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Disp(double[] v, string format, string[] symbol)
         {
-            // Переменые:
             int length = v.Length, i;
             int start = -1;
 
-            // Вычисление индекса первого
-            // ненулевого элемента:
             for (i = 0; i < length; i++)
             {
                 if (v[i] != 0)
@@ -1055,10 +1052,8 @@ namespace UMapx.Core
                 }
             }
 
-            // Если был найден ненулевой элемент:
             if (start != -1)
             {
-                // Отображение первого ненуевого элемента:
                 string result = Disp(v[start], format, true, symbol[start]);
 
                 for (i = start + 1; i < length; i++)
@@ -1070,13 +1065,13 @@ namespace UMapx.Core
             return "0";
         }
         /// <summary>
-        /// Функция преобразования числового значения в строку.
+        /// The function of converting number to a string
         /// </summary>
-        /// <param name="v">Число</param>
-        /// <param name="format">Строка числового формата</param>
-        /// <param name="s">Первое в ряду или нет</param>
-        /// <param name="symbol">Символ</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="v">Number</param>
+        /// <param name="format">Format string</param>
+        /// <param name="s">First in a row or not</param>
+        /// <param name="symbol">Symbol</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Disp(double v, string format, bool s, string symbol)
         {
             if (v == 0)
@@ -1090,10 +1085,10 @@ namespace UMapx.Core
             return (s) ? v.ToString(format) + symbol : " + " + v.ToString(format) + symbol;
         }
         /// <summary>
-        /// Определяет общий метод приведения исходной строки к матричному виду.
+        /// Defines a general method for casting the original row to the matrix form.
         /// </summary>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Массив строк</returns>
+        /// <param name="s">Input string</param>
+        /// <returns>String array</returns>
         public static string[] Matpar(string s)
         {
             // example: s = "[1,2,3,4]".
@@ -1107,26 +1102,24 @@ namespace UMapx.Core
                 // get new string:
                 return Regex.Split(match.Result("${matrice}").Replace(",", "|"), ";");
             }
-            throw new Exception("Входная строка имела неверный формат");
+            throw new Exception("The input string was in the wrong format");
         }
         /// <summary>
-        /// Переводит исходную строку в комплексное число.
+        /// Translates the original string to complex number.
         /// <remarks>
-        /// Примеры входной строки: "1 + 2i", "0.321 + 11i", ".1i".
+        /// Example: "1 + 2i", "0.321 + 11i", ".1i".
         /// </remarks>
         /// </summary>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="s">Input string</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static Complex Compar(string s)
         {
-            string u = s.Replace(" ", ""); // приведение строки к каноничному виду,
-            int i, k = 0;                  // переменные,
-            int length = u.Length;         // новая длина строки,
-            string re = "" + u[0];         // действительная часть числа,
-            string im = "";                // мнимая часть числа.
+            string u = s.Replace(" ", "");
+            int i, k = 0;            
+            int length = u.Length;     
+            string re = "" + u[0];       
+            string im = "";            
 
-            // Случай, когда строка не содержит мнимой единицы,
-            // значит комплексное число не содержит мнимой части:
             if (!u.Contains("i"))
             {
                 for (i = 1; i < length; i++)
@@ -1140,11 +1133,8 @@ namespace UMapx.Core
 
                 return new Complex(double.Parse(re), 0);
             }
-            // случай, когда строка содержит мнимую единицу,
-            // значит комплексное число содержит мнимую часть:
             else
             {
-                // случай, когда строка содержит только мнимую единицу:
                 if (u == "i") return new Complex(0, 1);
 
                 for (i = 1; i < length; i++)
@@ -1156,13 +1146,10 @@ namespace UMapx.Core
                     else break;
                 }
 
-                // случай, когда комплексное число содержит действительную часть и
-                // мнимую часть: c = re + im * i.
                 if (k != length - 1)
                 {
                     int k1 = k + 1, k2 = k + 2; im += u[k1];
 
-                    // случай, когда мнимая единица обозначена, только как 'i'.
                     if (u[k2] == 'i') return new Complex(double.Parse(re), double.Parse(im + '1'));
 
                     for (i = k2; i < length; i++)
@@ -1175,7 +1162,7 @@ namespace UMapx.Core
                     }
                     return new Complex(double.Parse(re), double.Parse(im));
                 }
-                else // случай, когда комплексное число содержит только мнимую часть: c = re * i.
+                else
                 {
                     return new Complex(0, double.Parse(re.Replace("i", "")));
                 }

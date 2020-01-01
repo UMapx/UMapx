@@ -21,10 +21,10 @@ namespace UMapx.Decomposition
 
     #region Matrix decompositions
     /// <summary>
-    /// Определяет разложение с приведением к форме Хессенберга.
+    /// Defines decomposition with a cast to Hessenberg form.
     /// <remarks>
-    /// Это представление квадратной матрицы в виде произведения трех матриц: A = P * H * P', где H - форма Хессенберга, а P - унитарная матрица.
-    /// Более подробную информацию можно найти на сайте:
+    /// This is a representation of a square matrix in the form of a product of three matrices: A = P * H * P', where H is the Hessenberg form and P is the unitary matrix.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Hessenberg_matrix
     /// </remarks>
     /// </summary>
@@ -37,13 +37,13 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует разложение с приведением к форме Хессенберга.
+        /// Initializes decomposition to a Hessenberg form.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Square matrix</param>
         public Hessenberg(double[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             // Reduce to Hessenberg form.
             orthes(A);
@@ -52,14 +52,14 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает унитарную матрицу.
+        /// Gets the unitary matrix.
         /// </summary>
         public double[,] P
         {
             get { return Jagged.FromJagged(matrices); }
         }
         /// <summary>
-        /// Получает форму Хессенберга.
+        /// Gets the Hessenberg form.
         /// </summary>
         public double[,] H
         {
@@ -69,9 +69,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Несимметричное сокращение до формы Хессенберга.
+        /// 
         /// </summary>
-        /// <param name="A">Матрица</param>
+        /// <param name="A"></param>
         private void orthes(double[,] A)
         {
             // Properties
@@ -183,10 +183,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет обобщенное спектральное разложение квадратных матриц A и B.
+    /// Defines generalized eigenvalue decomposition.
     /// <remarks>
-    /// Это задача нахождение такого вектора значений V, что справедливо представление: A * V = B * V * D. 
-    /// Более подробную информацию можно найти на сайте:
+    /// It is the task of finding a vector of values of V such that the representation: A * V = B * V * D.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix#Generalized_eigenvalue_problem
     /// </remarks>
     /// </summary>
@@ -202,21 +202,21 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует обобщенное спектральное разложение квадратных матриц A и B.
+        /// Initializes generalized eigenvalue decomposition.
         /// </summary>
-        /// <param name="a">Матрица A</param>
-        /// <param name="b">Матрица B</param>
-        /// <param name="eps">Погрешность [0, 1]</param>
+        /// <param name="a">Matrix A</param>
+        /// <param name="b">Matrix B</param>
+        /// <param name="eps">Epsilon [0, 1]</param>
         public GEVD(double[,] a, double[,] b, double eps = 1e-16)
         {
             if (a.GetLength(0) != a.GetLength(1))
-                throw new ArgumentException("Матрица должна быть квадратной");
+                throw new ArgumentException("The matrix must be square");
 
             if (b.GetLength(0) != b.GetLength(1))
-                throw new ArgumentException("Матрица должна быть квадратной");
+                throw new ArgumentException("The matrix must be square");
 
             if (a.GetLength(0) != b.GetLength(0) || a.GetLength(1) != b.GetLength(1))
-                throw new ArgumentException("Матрицы должны быть одинаковых размеров");
+                throw new ArgumentException("Matrices should be the same size");
 
             // params
             this.n = a.GetLength(0);
@@ -253,7 +253,7 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Возвращает вектор α.
+        /// Returns vector α.
         /// </summary>
         public Complex[] Alpha
         {
@@ -268,14 +268,14 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает вектор β.
+        /// Returns vector β.
         /// </summary>
         public double[] Beta
         {
             get { return beta; }
         }
         /// <summary>
-        /// Возвращает вектор собственных значений.
+        /// Returns a vector of eigenvalues.
         /// </summary>
         public Complex[] Eigenvalues
         {
@@ -290,7 +290,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает матрицу собственных значений D.
+        /// Returns an eigenvalue matrix D.
         /// </summary>
         public double[,] D
         {
@@ -314,7 +314,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает матрицу значений V.
+        /// Returns a matrix of values V.
         /// </summary>
         public double[,] V
         {
@@ -324,7 +324,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Проверяет является ли одна из матриц сингулярной или нет.
+        /// Checks whether one of the matrices is singular or not.
         /// </summary>
         public bool IsSingular
         {
@@ -1566,37 +1566,37 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет спектральное разложение квадратной матрицы.
+    /// Defines eigenvalue decomposition.
     /// <remarks>
-    /// Спектральное разложение - это представление квадратной матрицы A в виде произведения трёх матриц A = V * D * inv(V), где V - матрица спектральных векторов, а D - диагональная (в общем виде комплексная) матрица собственных значений.
-    /// Матрица A может быть также представлена в виде произведения трех матриц: A = V * R * inv(V), где R - вещественная почти диагональная матрица собственных значений.
-    /// Не все матрицы могут быть представлены в таком виде, а только те, которые обладают полным набором собственных векторов. 
-    /// Спектральное разложение может использоваться для нахождения собственных значений и собственных векторов матрицы, решения систем линейных уравнений, обращения матрицы, нахождения определителя матрицы и вычисления аналитических функций от матриц.
-    /// Более подробную информацию можно найти на сайте:
+    /// The eigenvalue decomposition is the representation of the square matrix A in the form of the product of three matrices A = V * D * inv (V), where V is the matrix of spectral vectors and D is the diagonal (generally complex) matrix of eigenvalues.
+    /// The matrix A can also be represented as the product of three matrices: A = V * R * inv (V), where R is a real almost diagonal eigenvalue matrix.
+    /// Not all matrices can be represented in this form, but only those that have a complete set of eigenvectors.
+    /// Eigenvalue decomposition can be used to find the eigenvalues ​​and eigenvectors of the matrix, solve linear systems of equations, invert the matrix, find the determinant of the matrix, and calculate the analytic functions of the matrices.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix
     /// </remarks>
     /// </summary>
     public class EVD
     {
         #region Private data
-        private int n;                    // Размерность матрицы
-        private double[] Re, Im;          // Спектральные значения [Re, Im]
-        private double[][] matrices;      // Спектральные вектора
-        private double[][] hessenberg;    // Несимметричная форма Гейзенберга
-        private double[] orthogonal;      // Ортогональные вектора
-        private double eps;               // Погрешность
+        private int n;
+        private double[] Re, Im;
+        private double[][] matrices;
+        private double[][] hessenberg;
+        private double[] orthogonal;
+        private double eps;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует спектральное разложение квадратной матрицы.
+        /// Initializes eigenvalue decomposition.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
-        /// <param name="eps">Погрешность [0, 1]</param>
+        /// <param name="A">Square matrix</param>
+        /// <param name="eps">Epsilon [0, 1]</param>
         public EVD(double[,] A, double eps = 1e-16)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             this.n = A.GetLength(0);
             this.Re = new double[n];
@@ -1628,14 +1628,14 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает спектральные вектора.
+        /// Gets eigenvectors.
         /// </summary>
         public double[,] V
         {
             get { return Jagged.FromJagged(matrices); }
         }
         /// <summary>
-        /// Получает собственные значения.
+        /// Gets eigenvalues.
         /// </summary>
         public Complex[] D
         {
@@ -1652,7 +1652,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Получает вещественную диагональную матрицу собственных значений.
+        /// Gets the real diagonal eigenvalue matrix.
         /// </summary>
         public double[,] R
         {
@@ -1684,7 +1684,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Получает форму Хессенберга.
+        /// Gets the Hessenberg form.
         /// </summary>
         public double[,] H
         {
@@ -1694,7 +1694,7 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Сокращение до трехдиагональной формы. Для симметричного случая.
+        /// 
         /// </summary>
         private void tred2()
         {
@@ -1821,7 +1821,7 @@ namespace UMapx.Decomposition
             Im[0] = 0;
         }
         /// <summary>
-        /// Приведение к трехдиагональной QL-форме. Для симметричного случая.
+        /// 
         /// </summary>
         private void tql2()
         {
@@ -1951,7 +1951,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Несимметричное сокращение до формы Хессенберга.
+        /// 
         /// </summary>
         private void orthes()
         {
@@ -2043,7 +2043,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Сокращение Хессенберга до реальной формы Шура.
+        /// 
         /// </summary>
         private void hqr2()
         {
@@ -2489,7 +2489,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Скалярное деление комплексных чисел.
+        /// 
         /// </summary>
         /// <param name="xr"></param>
         /// <param name="xi"></param>
@@ -2521,10 +2521,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет LDU-разложение квадратной матрицы.
+    /// Defines LDU decomposition.
     /// <remarks>
-    /// Это представление квадратной матрицы A в виде произведения трех матриц: A = L * D * U, где L - нижняя треугольная матрица, D - диагональная матрица, а U - верхняя треугольная матрица.
-    /// Более подробную информацию можно найти на сайте:
+    /// This is the representation of a square matrix A as the product of three matrices: A = L * D * U, where L is the lower triangular matrix, D is the diagonal matrix, and U is the upper triangular matrix.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/LU_decomposition
     /// </remarks>
     /// </summary>
@@ -2535,18 +2535,18 @@ namespace UMapx.Decomposition
         private Diagonal diagdecomp;
         private double[,] lower;
         private double[,] upper;
-        private double[]     diag;
+        private double[]  diag;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Инициализирует LDU-разложение квадратной матрицы.
+        /// Initializes LDU decomposition.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Square matrix</param>
         public LDU(double[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             // LDU algorithm:
             // LU-decomposition:
@@ -2563,21 +2563,21 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает нижнюю треугольную матрицу.
+        /// Gets the lower triangular matrix.
         /// </summary>
         public double[,] L
         {
             get { return lower; }
         }
         /// <summary>
-        /// Получает верхнюю треугольную матрицу.
+        /// Gets the upper triangular matrix.
         /// </summary>
         public double[,] U
         {
             get { return upper; }
         }
         /// <summary>
-        /// Получает вектор элементов диагонали.
+        /// Gets the vector of diagonal elements.
         /// </summary>
         public double[] D
         {
@@ -2586,10 +2586,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет диагональное разложение квадратной матрицы.
+    /// Defines diagonal decomposition.
     /// <remarks>
-    /// Это представление квадратной матрицы A в виде произведения двух матриц: A = B * D, где B - квадратная матрица, а D - диагональная матрица.
-    /// Данное разложение используется для выделения диагональных матриц в других разложениях (например, LDU-, LDL- разложения).
+    /// This is a representation of the square matrix A as the product of two matrices: A = B * D, where B is the Square matrix and D is the diagonal matrix.
+    /// This decomposition is used to highlight diagonal matrices in other decompositions (for example, LDU-, LDL-decompositions).
     /// </remarks>
     /// </summary>
     public class Diagonal
@@ -2601,13 +2601,13 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует диагональное разложение квадратной матрицы.
+        /// Initializes diagonal decomposition.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Square matrix</param>
         public Diagonal(double[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             int n = A.GetLength(0), i;
             this.diag = new double[n];
@@ -2622,14 +2622,14 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает квадратную матрицу.
+        /// Gets the square matrix.
         /// </summary>
         public double[,] B
         {
             get { return matrix; }
         }
         /// <summary>
-        /// Получает вектор элементов диагонали.
+        /// Gets the vector of diagonal elements.
         /// </summary>
         public double[] D
         {
@@ -2638,10 +2638,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет LU-разложение квадратной матрицы.
+    /// Defines LU decomposition.
     /// <remarks>
-    /// Это представление квадратной матрицы A в виде произведения двух матриц: A = L * U, где L - нижняя треугольная матрица, U - верхняя треугольная матрица.
-    /// Более подробную информацию можно найти на сайте:
+    /// This is a representation of the square matrix A as the product of two matrices: A = L * U, where L is the lower triangular matrix, U is the upper triangular matrix.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/LU_decomposition
     /// </remarks>
     /// </summary>
@@ -2654,13 +2654,13 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует LU-разложение квадратной матрицы.
+        /// Initializes LU decomposition.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Square matrix</param>
         public LU(double[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             // LU-decomposition:
             ludecomp(A.ToJagged());
@@ -2669,14 +2669,14 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает нижнюю треугольную матрицу.
+        /// Gets the lower triangular matrix.
         /// </summary>
         public double[,] L
         {
             get { return Jagged.FromJagged(lower); }
         }
         /// <summary>
-        /// Получает верхнюю треугольную матрицу.
+        /// Gets the upper triangular matrix.
         /// </summary>
         public double[,] U
         {
@@ -2686,9 +2686,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Реализует LU-разложение квадратной матрицы.
+        /// 
         /// </summary>
-        /// <param name="a">Квадратная матрица</param>
+        /// <param name="a"></param>
         private void ludecomp(double[][] a)
         {
             int i, j, k;
@@ -2734,10 +2734,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет разложение Холецкого квадратной матрицы.
+    /// Defines Cholesky decomposition.
     /// <remarks>
-    /// Это представление симметричной положительно-определённой квадратной матрицы в виде произведения: A = L * L', где L - нижняя треугольная матрица со строго положительными элементами на диагонали. 
-    /// Более подробную информацию можно найти на сайте:
+    /// This is a representation of a symmetric positive definite square matrix in the form of a product: A = L * L ', where L is a lower triangular matrix with strictly positive elements on the diagonal.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Cholesky_decomposition
     /// </remarks>
     /// </summary>
@@ -2749,13 +2749,13 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует разложение Холецкого квадратной матрицы.
+        /// Initializes Cholesky decomposition.
         /// </summary>
-        /// <param name="A">Квадратная симметричная положительно-определенная матрица</param>
+        /// <param name="A">Square symmetric positive definite matrix</param>
         public Cholesky(double[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             // Cholesky decomposition:
             chol(A.ToJagged());
@@ -2764,14 +2764,14 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает нижнюю треугольную матрицу L.
+        /// Gets the lower triangular matrix L.
         /// </summary>
         public double[,] L
         {
             get { return Jagged.FromJagged(lower); }
         }
         /// <summary>
-        /// Получает верхнюю треугольную матрицу U.
+        /// Gets the upper triangular matrix U.
         /// </summary>
         public double[,] U
         {
@@ -2781,9 +2781,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Реализует разложение Холецкого.
+        /// 
         /// </summary>
-        /// <param name="a">Квадратная матрица</param>
+        /// <param name="a"></param>
         private void chol(double[][] a)
         {
             // Cholesky decomposition
@@ -2838,10 +2838,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет UDL-разложение квадратной матрицы.
+    /// Defines UDL decomposition.
     /// <remarks>
-    /// Это представление симметричной квадратной матрицы в виде произведения трех матриц: A = U * D * L, где U - верхняя треугольная матрица, D - диагональная матрица, а L - нижняя треугольная матрица.
-    /// Данное разложение представляет собой специфичную форму разложения Холецкого.
+    /// This is the representation of a symmetric square matrix as the product of three matrices: A = U * D * L, where U is the upper triangular matrix, D is the diagonal matrix, and L is the lower triangular matrix.
+    /// This decomposition is a specific form of Cholesky decomposition.
     /// </remarks>
     /// </summary>
     public class UDL
@@ -2853,18 +2853,18 @@ namespace UMapx.Decomposition
 
         #region UDL components
         /// <summary>
-        /// Инициализирует UDL-разложение квадратной матрицы.
+        /// Initializes UDL decomposition.
         /// </summary>
-        /// <param name="A">Квадратная симметричная матрица</param>
+        /// <param name="A">Square symmetric matrix</param>
         public UDL(double[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             udldecomp(A);
         }
         /// <summary>
-        /// Возвращает верхнюю треугольную матрицу.
+        /// Returns the top triangular matrix.
         /// </summary>
         public double[,] U
         {
@@ -2874,7 +2874,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает диагональную матрицу.
+        /// Returns the diagonal matrix.
         /// </summary>
         public double[] D
         {
@@ -2884,7 +2884,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает нижнюю треугольную матрицу.
+        /// Returns the lower triangular matrix.
         /// </summary>
         public double[,] L
         {
@@ -2897,9 +2897,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// UDL-разложение.
+        /// 
         /// </summary>
-        /// <param name="a">Симметричная матрица</param>
+        /// <param name="a"></param>
         private void udldecomp(double[,] a)
         {
             int i, j, k;
@@ -2942,12 +2942,13 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет LDL'-разложение квадратной матрицы.
-    /// Это представление симметричной положительно-определённой квадратной матрицы в виде произведения трех матриц: A = L * D * L', где L - нижняя треугольная матрица со строго положительными элементами на диагонали, 
-    /// а D - диагональная матрица.
-    /// Более подробную информацию можно найти на сайте:
+    /// Defines LDL decomposition.
+    /// <remarks>
+    /// This is a representation of a symmetric positive definite square matrix in the form of a product of three matrices: A = L * D * L ', where L is a lower triangular matrix with strictly positive elements on the diagonal,
+    /// and D is the diagonal matrix.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Cholesky_decomposition#LDL_decomposition_2
-    /// <remarks></remarks>
+    /// </remarks>
     /// </summary>
     public class LDL
     {
@@ -2960,13 +2961,13 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует LDL-разложение квадратной матрицы.
+        /// Initializes LDL decomposition.
         /// </summary>
-        /// <param name="A">Квадратная симметричная положительно-определенная матрица</param>
+        /// <param name="A">Square symmetric positive definite matrix</param>
         public LDL(double[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             // LDL'-decomposition algorithm
             // Cholesky decomposition:
@@ -2985,21 +2986,21 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает нижнюю треугольную матрицу L.
+        /// Gets the lower triangular matrix L.
         /// </summary>
         public double[,] L
         {
             get { return lower; }
         }
         /// <summary>
-        /// Получает верхнюю треугольную матрицу U.
+        /// Gets the upper triangular matrix U.
         /// </summary>
         public double[,] U
         {
             get { return Matrice.Transponate(lower); }
         }
         /// <summary>
-        /// Получает диагональную матрицу.
+        /// Gets the diagonal matrix.
         /// </summary>
         public double[] D
         {
@@ -3008,10 +3009,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет сингулярное разложение матрицы. 
+    /// Defines singular value decomposition.
     /// <remarks>
-    /// Это представление прямоугольной матрицы A в виде произведения трёх матриц A = U * S * V', где U - левые вектора, V - правые вектора, а S - сингулярные значения.
-    /// Более подробную информацию можно найти на сайте:
+    /// This is a representation of a rectangular matrix A in the form of the product of three matrices A = U * S * V ', where U are left vectors, V are right vectors, and S are singular values.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Singular_value_decomposition
     /// </remarks>
     /// </summary>
@@ -3028,10 +3029,10 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Реализует сингулярное разложение матрицы.
+        /// Initializes singular value decomposition.
         /// </summary>
-        /// <param name="A">Матрица</param>
-        /// <param name="iterations">Количество итераций</param>
+        /// <param name="A">Matrix</param>
+        /// <param name="iterations">Number of iterations</param>
         public SVD(double[,] A, int iterations = 10)
         {
             // set:
@@ -3057,7 +3058,7 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает левые вектора.
+        /// Gets the left vectors.
         /// </summary>
         public double[,] U
         {
@@ -3067,14 +3068,14 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Получает сингулярные значения.
+        /// Gets singular values.
         /// </summary>
         public double[] S
         {
             get { return Sr; }
         }
         /// <summary>
-        /// Получает правые вектора.
+        /// Gets the right vectors.
         /// </summary>
         public double[,] V
         {
@@ -3084,7 +3085,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Получает псевдообратную матрицу к исходной.
+        /// Gets the pseudoinverse matrix.
         /// </summary>
         public double[,] P
         {
@@ -3099,9 +3100,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Реализует сингулярное разложение матрицы.
+        /// 
         /// </summary>
-        /// <param name="A">Матрица</param>
+        /// <param name="A"></param>
         private void svdcmp(double[,] A)
         {
             this.Ur = Jagged.ToJagged(A);
@@ -3376,7 +3377,7 @@ namespace UMapx.Decomposition
 
                     if (its == iterations)
                     {
-                        throw new ApplicationException("Нет сходимости в " + iterations.ToString() + " итерациях сингулярного разложения");
+                        throw new ApplicationException("No convergence in " + iterations.ToString() + " iterations of singular decomposition");
                     }
 
                     // shift from bottom 2-by-2 minor
@@ -3445,11 +3446,11 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Определение знака числа.
+        /// 
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="b">Знак</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         private static double Sign(double a, double b)
         {
             return (b >= 0.0) ? System.Math.Abs(a) : -System.Math.Abs(a);
@@ -3457,10 +3458,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет полярное разложение матрицы.
+    /// Defines polar decomposition.
     /// <remarks>
-    /// Это представление прямоугольной матрицы A в виде произведения двух матриц: A = U * P, где U - унитарная матрица, P - положительно-определенная матрица.
-    /// Более подробную информацию можно найти на сайте:
+    /// This is a representation of a rectangular matrix A in the form of a product of two matrices: A = U * P, where U is a unitary matrix, P is a positive definite matrix.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Polar_decomposition
     /// </remarks>
     /// </summary>
@@ -3474,25 +3475,23 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Реализует полярное разложение матрицы.
+        /// Initializes polar decomposition.
         /// </summary>
-        /// <param name="A">Матрица</param>
-        /// <param name="iterations">Количество итераций</param>
+        /// <param name="A">Matrix</param>
+        /// <param name="iterations">Number of iterations</param>
         public Polar(double[,] A, int iterations = 10)
         {
-            // Сингулярное разложение матрицы:
             svd = new SVD(A, iterations);
             double[,] U = svd.U, V = svd.V, H = V.Transponate();
             double[] S = svd.S;
 
-            // Определение матриц U и P:
             u = U.Dot(H); p = V.Dot(S).Dot(H);
         }
         #endregion
 
         #region Standart voids
         /// <summary>
-        /// Получает унитарную матрицу.
+        /// Gets the unitary matrix.
         /// </summary>
         public double[,] U
         {
@@ -3502,7 +3501,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Получает положительно-определенную матрицу
+        /// Gets a positive definite matrix.
         /// </summary>
         public double[,] P
         {
@@ -3514,10 +3513,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет неотрицательную матричную факторизацию.
+    /// Defines non-negative matrix factorization.
     /// <remarks>
-    /// Это представление прямоугольной матрицы A в виде произведения двух матриц: A = W * H.
-    /// Более подробную информацию можно найти на сайте:
+    /// This is a representation of a rectangular matrix A as the product of two matrices: A = W * H.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Non-negative_matrix_factorization
     /// </remarks>
     /// </summary>
@@ -3533,18 +3532,18 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует неотрицательную матричную факторизацию.
+        /// Initializes non-negative matrix factorization.
         /// </summary>
-        /// <param name="A">Неотрицательная матрица</param>
-        /// <param name="r">Размерность новых матриц</param>
-        /// <param name="iterations">Количество итераций</param>
+        /// <param name="A">Non-negative matrix</param>
+        /// <param name="r">The dimension of new matrices</param>
+        /// <param name="iterations">Number of iterations</param>
         public NMF(double[,] A, int r, int iterations = 100)
         {
             this.m = A.GetLength(0);
             this.n = A.GetLength(1);
 
             if (n < m)
-                throw new Exception("Ширина матрицы должна быть больше высоты");
+                throw new Exception("The width of the matrix must be greater than the height");
 
             this.r = r;
 
@@ -3555,14 +3554,14 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает левую матрицу.
+        /// Gets the left matrix.
         /// </summary>
         public double[,] W
         {
             get { return w; }
         }
         /// <summary>
-        /// Получает правую матрицу.
+        /// Gets the right matrix.
         /// </summary>
         public double[,] H
         {
@@ -3572,10 +3571,10 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Представляет NNMF, основанный на мультипликативном методе.
+        /// 
         /// </summary>
-        /// <param name="A">Матрица</param>
-        /// <param name="iterations">Количество итераций</param>
+        /// <param name="A"></param>
+        /// <param name="iterations"></param>
         private void nnmf(double[,] A, int iterations)
         {
             // chose W and H randomly, W with unit norm
@@ -3653,11 +3652,11 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет QR-разложение матрицы.
+    /// Defines QR decomposition.
     /// <remarks>
-    /// Это представление матрицы в виде произведения двух матриц: A = Q * R, где Q - унитарная (или ортогональная) матрица, а R - верхняя треугольная матрица. 
-    /// QR-разложение является основой одного из методов поиска собственных векторов и чисел матрицы — QR-алгоритма.
-    /// Более подробную информацию можно найти на сайте:
+    /// This is a matrix representation in the form of a product of two matrices: A = Q * R, where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
+    /// QR decomposition is the basis of one of the search methods for eigenvectors and matrix numbers - the QR algorithm.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
     /// </summary>
@@ -3671,9 +3670,9 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует QR-разложение матрицы.
+        /// Initializes QR decomposition.
         /// </summary>
-        /// <param name="A">Матрица</param>
+        /// <param name="A">Matrix</param>
         public QR(double[,] A)
         {
             qrdecomp(A);
@@ -3682,7 +3681,7 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Возвращает матрицу, содержащую векторы отражений Хаусхолдера.
+        /// Returns a matrix containing Householder reflection vectors.
         /// </summary>
         public double[,] H
         {
@@ -3708,7 +3707,7 @@ namespace UMapx.Decomposition
 
         }
         /// <summary>
-        /// Возвращает верхнюю треугольную матрицу R.
+        /// Returns the upper triangular matrix R.
         /// </summary>
         public double[,] R
         {
@@ -3738,7 +3737,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает ортогональную матрицу Q.
+        /// Returns the orthogonal matrix Q.
         /// </summary>
         public double[,] Q
         {
@@ -3780,9 +3779,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// QR-decomposition.
+        /// 
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A"></param>
         private void qrdecomp(double[,] A)
         {
             // params
@@ -3841,11 +3840,11 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет RQ-разложение квадратной матрицы.
+    /// Defines RQ decomposition.
     /// <remarks>
-    /// Это представление матрицы в виде произведения двух матриц: A = R * Q, где Q - унитарная (или ортогональная) матрица, а R - верхняя треугольная матрица. 
-    /// RQ-разложение является одной из модификаций QR-алгоритма.
-    /// Более подробную информацию можно найти на сайте:
+    /// This is a matrix representation in the form of a product of two matrices: A = R * Q, where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
+    /// RQ decomposition is one of the modifications of the QR algorithm.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
     /// </summary>
@@ -3859,19 +3858,16 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует RQ-разложение квадратной матрицы.
+        /// Initializes RQ decomposition.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Matrix</param>
         public RQ(double[,] A)
         {
-            // QR-разложение матрицы A':
             qr = new QR(A.Flip(Direction.Vertical).Transponate());
 
-            // Вычисление матриц R и Q:
             r = qr.R.Transponate();
             q = qr.Q.Transponate();
 
-            // Отображение матриц:
             r = r.Flip(Direction.Both);
             q = q.Flip(Direction.Vertical);
         }
@@ -3879,7 +3875,7 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Возвращает нижнюю треугольную матрицу R.
+        /// Returns the lower triangular matrix R.
         /// </summary>
         public double[,] R
         {
@@ -3889,7 +3885,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает ортогональную матрицу Q.
+        /// Returns the orthogonal matrix Q.
         /// </summary>
         public double[,] Q
         {
@@ -3901,10 +3897,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет QL-разложение квадратной матрицы.
+    /// Defines the QL decomposition of a square matrix.
     /// <remarks>
-    /// Это представление матрицы в виде произведения двух матриц: A = Q * L, где Q - унитарная (или ортогональная) матрица, а L - нижняя треугольная матрица. 
-    /// Более подробную информацию можно найти на сайте:
+    /// This is a representation of a matrix in the form of a product of two matrices: A = Q * L, where Q is a unitary (or orthogonal) matrix and L is a lower triangular matrix.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
     /// </summary>
@@ -3918,15 +3914,12 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует QL-разложение квадратной матрицы.
+        /// Initializes the QL decomposition of a square matrix.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Square matrix</param>
         public QL(double[,] A)
         {
-            // QR-разложение матрицы A':
             qr = new QR(A.Flip(Direction.Horizontal));
-
-            // Вычисление матриц L и Q:
             q = qr.Q.Flip(Direction.Horizontal);
             l = qr.R.Flip(Direction.Both);
         }
@@ -3934,7 +3927,7 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Возвращает нижнюю треугольную матрицу L.
+        /// Returns the lower triangular matrix L.
         /// </summary>
         public double[,] L
         {
@@ -3944,7 +3937,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает ортогональную матрицу Q.
+        /// Returns the orthogonal matrix Q.
         /// </summary>
         public double[,] Q
         {
@@ -3956,10 +3949,10 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет LQ-разложение квадратной матрицы.
+    /// Defines LQ decomposition.
     /// <remarks>
-    /// Это представление матрицы в виде произведения двух матриц: A = L * Q, где Q - унитарная (или ортогональная) матрица, а L - нижняя треугольная матрица. 
-    /// Более подробную информацию можно найти на сайте:
+    /// This is the representation of a matrix in the form of a product of two matrices: A = L * Q, where Q is a unitary (or orthogonal) matrix, and L is a lower triangular matrix.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
     /// </summary>
@@ -3973,15 +3966,13 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует LQ-разложение квадратной матрицы.
+        /// Initializes LQ decomposition.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Square matrix</param>
         public LQ(double[,] A)
         {
-            // QR-разложение матрицы A':
             qr = new QR(A.Transponate());
 
-            // Вычисление матриц L и Q:
             l = qr.R.Transponate();
             q = qr.Q.Transponate();
         }
@@ -3989,7 +3980,7 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Возвращает нижнюю треугольную матрицу L.
+        /// Returns the lower triangular matrix L.
         /// </summary>
         public double[,] L
         {
@@ -3999,7 +3990,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает ортогональную матрицу Q.
+        /// Returns the orthogonal matrix Q.
         /// </summary>
         public double[,] Q
         {
@@ -4011,11 +4002,11 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет процесс ортогонализации Грама-Шмидта.
+    /// Defines the Gram-Schmidt orthogonalization process.
     /// <remarks>
-    /// В математике, в частности линейной алгебре и численном анализе, процесс Грама-Шмидта является методом ортонормирования множества векторов 
-    /// в пространстве внутренних произведений. Данная процедура активно используется для ортогонализации базисов.
-    /// Более подробную информацию можно найти на сайте: 
+    /// In mathematics, in particular linear algebra and numerical analysis, the Gram-Schmidt process is a method of orthonormalizing a set of vectors
+    /// in the space of internal works. This procedure is actively used for orthogonalization of bases.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process
     /// </remarks>
     /// </summary>
@@ -4030,13 +4021,13 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует процесс ортогонализации Грама-Шмидта.
+        /// Initializes the Gram-Schmidt orthogonalization process.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Square matrix</param>
         public GramSchmidt(double[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             // UMapx.NET
             // gram-schmidt result matrix:
@@ -4064,7 +4055,7 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Получает ортогональную матрицу Q.
+        /// Gets the orthogonal matrix Q.
         /// </summary>
         public double[,] Q
         {
@@ -4074,12 +4065,12 @@ namespace UMapx.Decomposition
 
         #region Static voids
         /// <summary>
-        /// Возвращает проекцию горизонтальных векторов.
+        /// Returns the projection of horizontal vectors.
         /// proj[e, a]' = (e * a') / (e * e') .* e
         /// </summary>
-        /// <param name="e">Одномерный массив</param>
-        /// <param name="a">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="e">Array</param>
+        /// <param name="a">Array</param>
+        /// <returns>Array</returns>
         public static double[] Proj(double[] e, double[] a)
         {
             int length = e.Length;
@@ -4103,12 +4094,12 @@ namespace UMapx.Decomposition
             return proj;
         }
         /// <summary>
-        /// Возвращает проекцию горизонтальных векторов.
+        /// Returns the projection of horizontal vectors.
         /// proj[e, a]' = (e * a') / (e * e') .* e
         /// </summary>
-        /// <param name="e">Одномерный массив</param>
-        /// <param name="a">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="e">Array</param>
+        /// <param name="a">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Proj(Complex[] e, Complex[] a)
         {
             int length = e.Length;
@@ -4134,15 +4125,15 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет преобразование Хаусхолдера.
+    /// Defines Householder transformation.
     /// <remarks>
-    /// Это линейное преобразование H(u) векторного пространства V, которое описывает его отображение относительно гиперплоскости, 
-    /// которая проходит через начало координат. Было предложено в 1958 американским математиком Элстоном Скоттом Хаусхолдером. Широко применяется в линейной алгебре для QR разложения матрицы.
-    /// Кроме того, преобразование Хаусхолдера активно используется для ортогонализации базисов, в конечном счете матрица Хаусхолдера обладает свойствами: 
+    /// This is a linear transformation H (u) of the vector space V, which describes its mapping with respect to the hyperplane,
+    /// which passes through the origin. It was proposed in 1958 by the American mathematician Elston Scott Householder. Widely used in linear algebra for QR decomposition of a matrix.
+    /// In addition, the Householder transform is actively used for orthogonalization of bases; ultimately, the Householder matrix has the following properties:
     /// H = H', H' * H = I; det(H) = -1.
-    /// В данном классе реализовано два вида преобразования Хаусхолдера: редукция до трехдиагональной матрицы и построение матрицы Хаусхолдера по заданному вектору.
-    /// В первом случае исходная квадратная матрица определяется как: A = H * T * H'.
-    /// Более подробную информацию можно найти на сайте: 
+    /// In this class, two types of the Householder transform are implemented: reduction to a three-diagonal matrix and construction of the Householder matrix from a given vector.
+    /// In the first case, the original Square matrix is defined as: A = H * T * H '.
+    /// More information can be found on the website: 
     /// https://en.wikipedia.org/wiki/Householder_transformation
     /// </remarks>
     /// </summary>
@@ -4156,9 +4147,9 @@ namespace UMapx.Decomposition
 
         #region Initialize
         /// <summary>
-        /// Инициализирует преобразование Хаусхолдера.
+        /// Initializes Householder transformation.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
+        /// <param name="v">Array</param>
         public Householder(double[] v)
         {
             // properties:
@@ -4171,13 +4162,13 @@ namespace UMapx.Decomposition
             hmatx(v);
         }
         /// <summary>
-        /// Инициализирует преобразование Хаусхолдера.
+        /// Initializes Householder transformation.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Square matrix</param>
         public Householder(double[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             // properties:
             this.n = A.GetLength(0);
@@ -4192,7 +4183,7 @@ namespace UMapx.Decomposition
 
         #region Standart voids
         /// <summary>
-        /// Возвращает матрицу Хаусхолдера.
+        /// Returns the Householder matrix.
         /// </summary>
         public double[,] H
         {
@@ -4202,7 +4193,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Получает диагональную матрицу.
+        /// Gets the diagonal matrix.
         /// </summary>
         public double[,] T
         {
@@ -4231,9 +4222,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Реализует генерацию матрицы Хаусхолдера.
+        /// 
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
+        /// <param name="v"></param>
         private void hmatx(double[] v)
         {
             // [1] Alston S. Householder, "Unitary Triangularization of a Nonsymmetric Matrix", 
@@ -4266,9 +4257,9 @@ namespace UMapx.Decomposition
             return;
         }
         /// <summary>
-        /// Реализует сокращение Хаусхолдера до трехдиагональной формы.
+        /// 
         /// </summary>
-        /// <param name="a">Матрица</param>
+        /// <param name="a"></param>
         private void tred2(double[,] a)
         {
             int i, j, k;
@@ -4399,9 +4390,9 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет итерационный алгоритм вычисления собственных значений матрицы.
+    /// Defines power iteration.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Power_iteration
     /// </remarks>
     /// </summary>
@@ -4413,14 +4404,14 @@ namespace UMapx.Decomposition
 
         #region Power iteration components
         /// <summary>
-        /// Инициалазирует итерационный алгоритм вычисления собственных значений матрицы.
+        /// Initializes power iteration.
         /// </summary>
-        /// <param name="A">Матрица</param>
-        /// <param name="iterations">Количество итераций</param>
+        /// <param name="A">Matrix</param>
+        /// <param name="iterations">Number of iterations</param>
         public Power(double[,] A, int iterations = 10)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             // eigenvalue power algorithm:
             int n = A.GetLength(0);
@@ -4440,7 +4431,7 @@ namespace UMapx.Decomposition
             return;
         }
         /// <summary>
-        /// Возвращает вектор собственных значений.
+        /// Returns a vector of eigenvalues.
         /// </summary>
         public double[] V
         {
@@ -4450,7 +4441,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает диагонализированную матрицу собственных значений.
+        /// Returns the diagonalized matrix of eigenvalues.
         /// </summary>
         public double[,] J
         {
@@ -4462,11 +4453,11 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет преобразование Арнольди.
+    /// Defines Arnoldi transform.
     /// <remarks>
-    /// Данное преобразование испольузется для приведения квадратной матрицы к форме Хессенберга.
-    /// Матрица A представляется в виде произведения трех матриц: A = Q * H * Q', где H - верхняя треугольная матрица Хессенберга, Q - ортогональная матрица.
-    /// Более подробную информацию можно найти на сайте:
+    /// This transformation is used to reduce the square matrix to the Hessenberg form.
+    /// The matrix A is represented as the product of three matrices: A = Q * H * Q', where H is the upper Hessenberg triangular matrix, Q is the orthogonal matrix.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Arnoldi_iteration
     /// </remarks>
     /// </summary>
@@ -4479,9 +4470,9 @@ namespace UMapx.Decomposition
 
         #region Arnoldi components
         /// <summary>
-        /// Инициализирует преобразование Арнольди.
+        /// Initializes Arnoldi transformation.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
+        /// <param name="A">Square matrix</param>
         public Arnoldi(double[,] A)
         {
             // matrix properties
@@ -4489,13 +4480,13 @@ namespace UMapx.Decomposition
             int m = A.GetLength(1);
 
             if (n != m)
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             // arnoldi decomposition
             arnoldi(A, n, m);
         }
         /// <summary>
-        /// Возвращает ортогональную матрицу.
+        /// Returns the orthogonal matrix.
         /// </summary>
         public double[,] Q
         {
@@ -4505,7 +4496,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает верхнюю треугольную матрицу Хессенберга.
+        /// Returns the upper triangular Hessenberg matrix.
         /// </summary>
         public double[,] H
         {
@@ -4518,11 +4509,11 @@ namespace UMapx.Decomposition
 
         #region Private data
         /// <summary>
-        /// Arnoldi decomposition.
+        /// 
         /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="n">Height</param>
-        /// <param name="m">Width</param>
+        /// <param name="a"></param>
+        /// <param name="n"></param>
+        /// <param name="m"></param>
         private void arnoldi(double[,] a, int n, int m)
         {
             // vectors and matrices:
@@ -4582,11 +4573,11 @@ namespace UMapx.Decomposition
         #endregion
     }
     /// <summary>
-    /// Определяет преобразование Ланцоша.
+    /// Defines Lanczos transform.
     /// <remarks>
-    /// Данное преобразование испольузется для представления симметричной матрицы A в виде произведения 
-    /// трех матриц: A = Q * T * Q', где T - трехдиагональная матрица, а Q - ортогональная матрица.
-    /// Более подробную информацию можно найти на сайте:
+    /// This transformation is used to represent the symmetric matrix A as a product
+    /// of three matrices: A = Q * T * Q', where T is a tridiagonal matrix, and Q is an orthogonal matrix.
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Lanczos_algorithm
     /// </remarks>
     /// </summary>
@@ -4599,22 +4590,22 @@ namespace UMapx.Decomposition
 
         #region Lanczos components
         /// <summary>
-        /// Инициализирует преобразование Ланцоша.
+        /// Initializes Lanczos transformation.
         /// </summary>
-        /// <param name="A">Симметричная матрица</param>
-        /// <param name="full">Полная реортогонализация или нет</param>
+        /// <param name="A">Symmetric matrix</param>
+        /// <param name="full">Full reorthogonalization or not</param>
         public Lanczos(double[,] A, bool full = false)
         {
             // exception
             if (!Matrice.IsSymmetric(A))
-                throw new Exception("Матрица должна быть симметричной");
+                throw new Exception("The matrix must be symmetrical");
 
             // lanczos decomposition
             int n = A.GetLength(0);
             lanczos(A, n, full);
         }
         /// <summary>
-        /// Возвращает ортогональную матрицу.
+        /// Returns the orthogonal matrix.
         /// </summary>
         public double[,] Q
         {
@@ -4624,7 +4615,7 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Возвращает трехдиагональную матрицу.
+        /// Returns a tridiagonal matrix.
         /// </summary>
         public double[,] T
         {
@@ -4637,11 +4628,11 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Lanczos decomposition.
+        /// 
         /// </summary>
-        /// <param name="a">Symmetric matrix</param>
-        /// <param name="n">Matrix length</param>
-        /// <param name="full">Full re-orthogonalization</param>
+        /// <param name="a"></param>
+        /// <param name="n"></param>
+        /// <param name="full"></param>
         private void lanczos(double[,] a, int n, bool full)
         {
             // This function uses the Lanczos algorithm with full

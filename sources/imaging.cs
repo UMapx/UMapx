@@ -8,7 +8,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -36,61 +35,61 @@ namespace UMapx.Imaging
 
     #region Interfaces
     /// <summary>
-    /// Определяет общий интерфейс фильтров двух изображений.
+    /// Defines the interface for two images bitmap filter.
     /// </summary>
     public interface IBitmapFilter2
     {
         #region Filter components
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         void Apply(BitmapData bmData, BitmapData bmSrc);
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         void Apply(Bitmap Data, Bitmap Src);
         #endregion
     }
     /// <summary>
-    /// Определяет общий интерфейс фильтров.
+    /// Defines the interface for bitmap filter.
     /// </summary>
     public interface IBitmapFilter
     {
         #region Filter components
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         void Apply(BitmapData bmData);
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         void Apply(Bitmap Data);
         #endregion
     }
     /// <summary>
-    /// Определяет общий вид холстов.
+    /// Defines the interface of canvas.
     /// </summary>
     public interface ICanvas
     {
         #region Interface
         /// <summary>
-        /// Получает ширину холста.
+        /// Gets or sets the width of the canvas.
         /// </summary>
         int Width { get; set; }
         /// <summary>
-        /// Получает высоту холста.
+        /// Gets or sets the height of the canvas.
         /// </summary>
         int Height { get; set; }
         /// <summary>
-        /// Создает холст.
+        /// Creates canvas.
         /// </summary>
-        /// <returns>Точечный рисунок</returns>
+        /// <returns>Bitmap</returns>
         Bitmap Create();
         #endregion
     }
@@ -98,17 +97,17 @@ namespace UMapx.Imaging
 
     #region Abstract classes
     /// <summary>
-    /// Определяет абстрактный класс перестроения данных.
+    /// Defines an abstract data rebuilding class.
     /// </summary>
     public abstract class Rebuilder
     {
         #region Protected components
         /// <summary>
-        /// Использовать перестроение данных класса или нет.
+        /// Use data rebuilding or not.
         /// </summary>
         protected bool rebuild = false;
         /// <summary>
-        /// Реализует перестроение данных класса.
+        /// Implements the rebuilding of class data.
         /// </summary>
         protected abstract void Rebuild();
         #endregion
@@ -117,38 +116,38 @@ namespace UMapx.Imaging
 
     #region Rebuilder filters
     /// <summary>
-    /// Определяет фильтр масочной коррекции.
+    /// Defines the mask correction filter.
     /// </summary>
     public class Correction : Rebuilder, IBitmapFilter
     {
         #region Private data
         /// <summary>
-        /// Значения.
+        /// Values.
         /// </summary>
         protected double[] values;
         /// <summary>
-        /// Цветовое пространство.
+        /// Color space.
         /// </summary>
         protected Space space;
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild() { }
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр масочной коррекции.
+        /// Initializes the mask correction filter.
         /// </summary>
-        /// <param name="values">Одномерная маска</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="values">Mask array</param>
+        /// <param name="space">Color space</param>
         public Correction(double[] values, Space space)
         {
             Values = values;
             Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр масочной коррекции.
+        /// Initializes the mask correction filter.
         /// </summary>
         public Correction()
         {
@@ -156,7 +155,7 @@ namespace UMapx.Imaging
             Space = Imaging.Space.RGB;
         }
         /// <summary>
-        /// Получает или задает табулированную маску.
+        /// Gets or sets the mask array.
         /// </summary>
         public double[] Values
         {
@@ -167,13 +166,13 @@ namespace UMapx.Imaging
             set
             {
                 if (value.Length != 256)
-                    throw new Exception("Размер маски должен быть равен 256");
+                    throw new Exception("Mask size should be  256");
 
                 this.values = value;
             }
         }
         /// <summary>
-        /// Получает или задает цветовое пространство.
+        /// Gets or sets the color space.
         /// </summary>
         public Space Space
         {
@@ -187,9 +186,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             // rebuild?
@@ -220,9 +219,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -234,9 +233,9 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyRGB(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -267,9 +266,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyHSL(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -297,9 +296,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyHSB(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -327,9 +326,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyYCbCr(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -357,9 +356,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyGrayscale(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -387,45 +386,45 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр масочной коррекции каналов.
+    /// Defines the RGBA mask correction filter.
     /// </summary>
     public class RGBACorrection : Rebuilder, IBitmapFilter
     {
         #region Private data
         /// <summary>
-        /// Канал.
+        /// Channel of RGBA.
         /// </summary>
         protected RGBA channel;
         /// <summary>
-        /// Значения.
+        /// Values.
         /// </summary>
         protected double[] values;
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild() { }
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр масочной коррекции каналов.
+        /// Initializes the RGBA mask correction filter.
         /// </summary>
-        /// <param name="values">Одномерная маска</param>
-        /// <param name="channel">Канал</param>
+        /// <param name="values">Mask array</param>
+        /// <param name="channel">Channel</param>
         public RGBACorrection(double[] values, RGBA channel)
         {
             Values = values;
             Channel = channel;
         }
         /// <summary>
-        /// Инициализирует фильтр масочной коррекции каналов.
+        /// Initializes the RGBA mask correction filter.
         /// </summary>
         public RGBACorrection()
         {
             Values = new double[256];
         }
         /// <summary>
-        /// Получает или задает табулированную маску.
+        /// Gets or sets the mask array.
         /// </summary>
         public double[] Values
         {
@@ -436,13 +435,13 @@ namespace UMapx.Imaging
             set
             {
                 if (value.Length != 256)
-                    throw new Exception("Размер маски должен быть равен 256");
+                    throw new Exception("Mask size should be  256");
 
                 this.values = value;
             }
         }
         /// <summary>
-        /// Получает или задает цветовой канал модели RGBA.
+        /// Gets or sets the channel of the RGBA model.
         /// </summary>
         public RGBA Channel
         {
@@ -456,9 +455,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             // rebuild?
@@ -484,9 +483,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -497,32 +496,32 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр локальной масочной коррекции.
+    /// Defines the local mask correction filter.
     /// </summary>
     public class LocalCorrection : Rebuilder, IBitmapFilter2
     {
         #region Private data
         /// <summary>
-        /// Фильтр локального усреднения.
+        /// Box blur filter.
         /// </summary>
         protected BoxBlur gb;
         /// <summary>
-        /// Коэффициент сжатия контраста.
+        /// Contrast.
         /// </summary>
         protected double[,] values;
         /// <summary>
-        /// Цветовое пространство.
+        /// Color space.
         /// </summary>
         protected Space space;
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild() { }
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр локальной масочной коррекции.
+        /// Initializes the local mask correction filter.
         /// </summary>
         public LocalCorrection()
         {
@@ -531,11 +530,11 @@ namespace UMapx.Imaging
             Values = new double[256, 256];
         }
         /// <summary>
-        /// Инициализирует фильтр локальной масочной коррекции.
+        /// Initializes the local mask correction filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="values">Двумерная маска</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="values">Matrix mask</param>
         public LocalCorrection(int radius, double[,] values, Space space)
         {
             gb = new BoxBlur(radius);
@@ -543,12 +542,12 @@ namespace UMapx.Imaging
             Values = values;
         }
         /// <summary>
-        /// Инициализирует фильтр локальной масочной коррекции.
+        /// Initializes the local mask correction filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="values">Двумерная маска</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="space">Color space</param>
+        /// <param name="values">Matrix mask</param>
         public LocalCorrection(int width, int height, double[,] values, Space space)
         {
             gb = new BoxBlur(width, height);
@@ -556,11 +555,11 @@ namespace UMapx.Imaging
             Values = values;
         }
         /// <summary>
-        /// Инициализирует фильтр локальной масочной коррекции.
+        /// Initializes the local mask correction filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="values">Двумерная маска</param>
+        /// <param name="size">Filter size</param>
+        /// <param name="space">Color space</param>
+        /// <param name="values">Matrix mask</param>
         public LocalCorrection(SizeInt size, double[,] values, Space space)
         {
             gb = new BoxBlur(size);
@@ -568,7 +567,7 @@ namespace UMapx.Imaging
             Values = values;
         }
         /// <summary>
-        /// Получает или задает размер фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -582,7 +581,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает цветовое пространство.
+        /// Gets or sets the color space.
         /// </summary>
         public Space Space
         {
@@ -596,7 +595,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение коэффициента сжатия контраста [-1, 1].
+        /// Gets or sets the matrix mask.
         /// </summary>
         public double[,] Values
         {
@@ -607,16 +606,16 @@ namespace UMapx.Imaging
             set
             {
                 if (value.GetLength(0) != 256 || value.GetLength(1) != 256)
-                    throw new Exception("Размер маски должен быть равен 256");
+                    throw new Exception("Mask size should be  256");
 
                 this.values = value;
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // rebuild?
@@ -648,10 +647,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -662,9 +661,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -680,10 +679,10 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyRGB(BitmapData bmData, BitmapData bmSrc)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
@@ -706,10 +705,10 @@ namespace UMapx.Imaging
             );
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyHSL(BitmapData bmData, BitmapData bmSrc)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
@@ -736,10 +735,10 @@ namespace UMapx.Imaging
             );
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyHSB(BitmapData bmData, BitmapData bmSrc)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
@@ -768,10 +767,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyYCbCr(BitmapData bmData, BitmapData bmSrc)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
@@ -800,10 +799,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyGrayscale(BitmapData bmData, BitmapData bmSrc)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
@@ -830,32 +829,32 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр локальной масочной коррекции каналов.
+    /// Defines the local RGBA mask correction filter.
     /// </summary>
     public class RGBALocalCorrection : Rebuilder, IBitmapFilter2
     {
         #region Private data
         /// <summary>
-        /// Фильтр локального усреднения.
+        /// Box blur filter.
         /// </summary>
         private BoxBlur gb;
         /// <summary>
-        /// Коэффициент сжатия контраста.
+        /// Contrast.
         /// </summary>
         protected double[,] values;
         /// <summary>
-        /// Канал.
+        /// Channel.
         /// </summary>
         protected RGBA channel;
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild() { }
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр локальной масочной коррекции каналов.
+        /// Initializes the local RGBA mask correction filter.
         /// </summary>
         public RGBALocalCorrection()
         {
@@ -864,11 +863,11 @@ namespace UMapx.Imaging
             Values = new double[256, 256];
         }
         /// <summary>
-        /// Инициализирует фильтр локальной масочной коррекции каналов.
+        /// Initializes the local RGBA mask correction filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="channel">Канал</param>
-        /// <param name="values">Двумерная маска</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="channel">Channel</param>
+        /// <param name="values">Matrix mask</param>
         public RGBALocalCorrection(int radius, double[,] values, RGBA channel)
         {
             gb = new BoxBlur(radius);
@@ -876,12 +875,12 @@ namespace UMapx.Imaging
             Values = values;
         }
         /// <summary>
-        /// Инициализирует фильтр локальной масочной коррекции каналов.
+        /// Initializes the local RGBA mask correction filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="channel">Канал</param>
-        /// <param name="values">Двумерная маска</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="channel">Channel</param>
+        /// <param name="values">Matrix mask</param>
         public RGBALocalCorrection(int width, int height, double[,] values, RGBA channel)
         {
             gb = new BoxBlur(width, height);
@@ -889,11 +888,11 @@ namespace UMapx.Imaging
             Values = values;
         }
         /// <summary>
-        /// Инициализирует фильтр локальной масочной коррекции каналов.
+        /// Initializes the local RGBA mask correction filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
-        /// <param name="channel">Канал</param>
-        /// <param name="values">Двумерная маска</param>
+        /// <param name="size">Filter size</param>
+        /// <param name="channel">Channel</param>
+        /// <param name="values">Matrix mask</param>
         public RGBALocalCorrection(SizeInt size, double[,] values, RGBA channel)
         {
             gb = new BoxBlur(size);
@@ -901,7 +900,7 @@ namespace UMapx.Imaging
             Values = values;
         }
         /// <summary>
-        /// Получает или задает размер фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -915,7 +914,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает цветовой канал модели RGBA.
+        /// Gets or sets the channel of the RGBA model.
         /// </summary>
         public RGBA Channel
         {
@@ -929,7 +928,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение коэффициента сжатия контраста [-1, 1].
+        /// Gets or sets the matrix mask.
         /// </summary>
         public double[,] Values
         {
@@ -940,16 +939,16 @@ namespace UMapx.Imaging
             set
             {
                 if (value.GetLength(0) != 256 || value.GetLength(1) != 256)
-                    throw new Exception("Размер маски должен быть равен 256");
+                    throw new Exception("Mask size should be  256");
 
                 this.values = value;
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // rebuild?
@@ -980,10 +979,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -994,9 +993,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -1011,44 +1010,44 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр суммирования точек.
+    /// Defines the point addition filter.
     /// </summary>
     public class PointAddition : Rebuilder, IBitmapFilter2
     {
         #region Private data
         /// <summary>
-        /// Массив точек.
+        /// Point matrix.
         /// </summary>
         protected PointInt[,] points = new PointInt[0, 0];
         /// <summary>
-        /// Ширина изображения.
+        /// Image width.
         /// </summary>
         protected int width;
         /// <summary>
-        /// Высота изображения.
+        /// Image height.
         /// </summary>
         protected int height;
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild() { }
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр суммирования точек.
+        /// Initializes the point addition filter.
         /// </summary>
-        /// <param name="points">Массив упорядоченных пар чисел X и Y</param>
+        /// <param name="points">Array of ordered pairs of X and Y</param>
         public PointAddition(PointInt[,] points)
         {
             Points = points;
         }
         /// <summary>
-        /// Инициализирует фильтр суммирования точек.
+        /// Initializes the point addition filter.
         /// </summary>
         public PointAddition() { }
         /// <summary>
-        /// Получает или задает массив упорядоченных пар чисел X и Y.
+        /// Gets or sets point matrix.
         /// </summary>
         public PointInt[,] Points
         {
@@ -1062,10 +1061,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // get image sizes
@@ -1110,10 +1109,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -1123,9 +1122,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -1139,44 +1138,44 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр умножения точек.
+    /// Defines the point multiplication filter.
     /// </summary>
     public class PointMultiplication : Rebuilder, IBitmapFilter2
     {
         #region Private data
         /// <summary>
-        /// Массив точек.
+        /// Point matrix.
         /// </summary>
         protected PointInt[,] points = new PointInt[0, 0];
         /// <summary>
-        /// Ширина изображения.
+        /// Image width.
         /// </summary>
         protected int width;
         /// <summary>
-        /// Высота изображения.
+        /// Image height.
         /// </summary>
         protected int height;
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild() { }
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр умножения точек.
+        /// Initializes the point multiplication filter.
         /// </summary>
-        /// <param name="points">Массив упорядоченных пар чисел X и Y</param>
+        /// <param name="points">Array of ordered pairs of X and Y</param>
         public PointMultiplication(PointInt[,] points)
         {
             Points = points;
         }
         /// <summary>
-        /// Инициализирует фильтр умножения точек.
+        /// Initializes the point multiplication filter.
         /// </summary>
         public PointMultiplication() { }
         /// <summary>
-        /// Получает или задает массив упорядоченных пар чисел X и Y.
+        /// Gets or sets point matrix.
         /// </summary>
         public PointInt[,] Points
         {
@@ -1190,10 +1189,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // get image sizes
@@ -1234,10 +1233,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -1247,9 +1246,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -1266,56 +1265,53 @@ namespace UMapx.Imaging
 
     #region Intensity adjustments
     /// <summary>
-    /// Определяет фильтр инверсии яркости.
+    /// Defines the channels inversion filter.
     /// </summary>
     public class InvertChannels : Correction, IBitmapFilter
     {
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр инверсии яркости.
+        /// Initializes the channels inversion filter.
         /// </summary>
         public InvertChannels(Space space)
         {
             this.values = Intensity.Invert(256);
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild() { }
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр бинаризации.
+    /// Defines the threshold filter.
     /// </summary>
     public class Threshold : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Порог.
-        /// </summary>
-        protected double threshold;
+        private double threshold;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует новый фильтр.
+        /// Initializes the threshold filter.
         /// </summary>
-        /// <param name="threshold">Пороговое значение [0, 1]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="threshold">Threshold [0, 1]</param>
+        /// <param name="space">Color space</param>
         public Threshold(double threshold, Space space)
         {
             this.Value = threshold;
             this.Space = space;
         }
         /// <summary>
-        /// Инициализирует новый фильтр.
+        /// Initializes the threshold filter.
         /// </summary>
         public Threshold()
         {
             Value = 0.5;
         }
         /// <summary>
-        /// Получает или задает значение порогового значения [0, 1].
+        /// Gets or sets the threshold value [0, 1].
         /// </summary>
         public double Value
         {
@@ -1330,7 +1326,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1339,38 +1335,32 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр коррекции уровней.
+    /// Defines the levels correction filter.
     /// <remarks>
-    /// Пример использования фильтра:
+    /// Filter usage example:
     /// https://digital-photography-school.com/using-levels-photoshop-image-correct-color-contrast/
     /// </remarks>
     /// </summary>
     public class LevelsCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Входные значения каналов.
-        /// </summary>
-        protected RangeDouble input;
-        /// <summary>
-        /// Выходные значения каналов.
-        /// </summary>
-        protected RangeDouble output;
+        private RangeDouble input;
+        private RangeDouble output;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции уровней.
+        /// Initializes the levels correction filter.
         /// </summary>
-        /// <param name="input">Входные значения каналов</param>
-        /// <param name="output">Выходные значения каналов</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="input">Input channel values</param>
+        /// <param name="output">Output channel values</param>
+        /// <param name="space">Color space</param>
         public LevelsCorrection(RangeDouble input, RangeDouble output, Space space)
         {
-            Input = input; Output = output;
+            Input = input; Output = output; this.Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции уровней.
+        /// Initializes the levels correction filter.
         /// </summary>
         public LevelsCorrection()
         {
@@ -1378,7 +1368,7 @@ namespace UMapx.Imaging
             Output = new RangeDouble(0, 1);
         }
         /// <summary>
-        /// Получает или задает входные значения каналов.
+        /// Gets or sets input channel values.
         /// </summary>
         public RangeDouble Input
         {
@@ -1393,7 +1383,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает выходные значения каналов.
+        /// Gets or sets output channel values.
         /// </summary>
         public RangeDouble Output
         {
@@ -1408,7 +1398,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1417,40 +1407,37 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр экспозиционной коррекции.
+    /// Defines the exposure correction filter.
     /// <remarks>
-    /// Более подробное описание фильтра можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Exposure_(photography)
     /// </remarks>
     /// </summary>
     public class ExposureCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Среднее число.
-        /// </summary>
-        protected double average;
+        private double average;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр экспозиционной коррекции.
+        /// Initializes the exposure correction filter.
         /// </summary>
-        /// <param name="average">Среднее число [0, 2500]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="average">Average [0, 2500]</param>
+        /// <param name="space">Color space</param>
         public ExposureCorrection(double average, Space space)
         {
-            Average = average;
+            Average = average; this.Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр экспозиционной коррекции.
+        /// Initializes the exposure correction filter.
         /// </summary>
         public ExposureCorrection()
         {
             Average = 128;
         }
         /// <summary>
-        /// Получает или задает значение среднего числа [0, 2500].
+        /// Gets or sets the average [0, 2500].
         /// </summary>
         public double Average
         {
@@ -1465,7 +1452,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1474,50 +1461,44 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр линейной коррекции.
+    /// Defines the linear correction filter.
     /// </summary>
     public class LinearCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Граничные значения каналов.
-        /// </summary>
-        protected RangeDouble range;
-        /// <summary>
-        /// Смещение.
-        /// </summary>
-        protected double delta;
+        private RangeDouble range;
+        private double delta;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр линейной коррекции.
+        /// Initializes the linear correction filter.
         /// </summary>
-        /// <param name="range">Граничные значения каналов</param>
-        /// <param name="delta">Дельта [-1, 1]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="range">Range values</param>
+        /// <param name="delta">Delta [-1, 1]</param>
+        /// <param name="space">Color space</param>
         public LinearCorrection(RangeDouble range, double delta, Space space)
         {
-            Range = range; Delta = delta;
+            Range = range; Delta = delta; this.Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр линейной коррекции.
+        /// Initializes the linear correction filter.
         /// </summary>
-        /// <param name="delta">Дельта [-100, 100]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="delta">Delta [-100, 100]</param>
+        /// <param name="space">Color space</param>
         public LinearCorrection(double delta, Space space)
         {
-            Range = new RangeDouble(0, 1); Delta = delta;
+            Range = new RangeDouble(0, 1); Delta = delta; this.Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр линейной коррекции.
+        /// Initializes the linear correction filter.
         /// </summary>
         public LinearCorrection()
         {
-            Range = new RangeDouble(0, 1); Delta = 0.5;
+            Range = new RangeDouble(0, 1); Delta = 0.5; this.Space = space;
         }
         /// <summary>
-        /// Получает или задает граничные значения каналов.
+        /// Gets or sets range values.
         /// </summary>
         public RangeDouble Range
         {
@@ -1532,7 +1513,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение дельты [-1, 1].
+        /// Gets or sets the delta value [-1, 1].
         /// </summary>
         public double Delta
         {
@@ -1547,7 +1528,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1556,36 +1537,33 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр синусоидальной коррекции.
+    /// Defines the sine correction filter.
     /// </summary>
     public class SinCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Дельта.
-        /// </summary>
-        protected double delta;
+        private double delta;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр синусоидальной коррекции.
+        /// Initializes the sine correction filter.
         /// </summary>
-        /// <param name="delta">Дельта [-1, 1]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="delta">Delta [-1, 1]</param>
+        /// <param name="space">Color space</param>
         public SinCorrection(double delta, Space space)
         {
-            Delta = delta;
+            Delta = delta; this.Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр синусоидальной коррекции.
+        /// Initializes the sine correction filter.
         /// </summary>
         public SinCorrection()
         {
             Delta = 20;
         }
         /// <summary>
-        /// Получает или задает значение дельты [-1, 1].
+        /// Gets or sets the delta value [-1, 1].
         /// </summary>
         public double Delta
         {
@@ -1600,7 +1578,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1609,36 +1587,33 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр косинусоидальной коррекции.
+    /// Defines the cosine correction filter.
     /// </summary>
     public class CosCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Дельта.
-        /// </summary>
-        protected double delta;
+        private double delta;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр косинусоидальной коррекции.
+        /// Initializes the cosine correction filter.
         /// </summary>
-        /// <param name="delta">Дельта [-1, 1]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="delta">Delta [-1, 1]</param>
+        /// <param name="space">Color space</param>
         public CosCorrection(double delta, Space space)
         {
-            Delta = delta;
+            Delta = delta; this.Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр синусоидальной коррекции.
+        /// Initializes the cosine correction filter.
         /// </summary>
         public CosCorrection()
         {
             Delta = 0.5;
         }
         /// <summary>
-        /// Получает или задает значение дельты.
+        /// Gets or sets the delta value [-1, 1].
         /// </summary>
         public double Delta
         {
@@ -1653,7 +1628,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1662,38 +1637,32 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр логарифмической коррекции.
+    /// Defines the logarithmic correction filter.
     /// </summary>
     public class LogCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Основание логарифма.
-        /// </summary>
-        protected double nbase = 3.14f;
-        /// <summary>
-        /// Дельта.
-        /// </summary>
-        protected double delta = 0.5;
+        private double nbase = 3.14f;
+        private double delta = 0.5;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр логарифмической коррекции.
+        /// Initializes the logarithmic correction filter.
         /// </summary>
-        /// <param name="nbase">Основание логарифма</param>
-        /// <param name="delta">Дельта [-1, 1]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="nbase">Logarithm base</param>
+        /// <param name="delta">Delta [-1, 1]</param>
+        /// <param name="space">Color space</param>
         public LogCorrection(double nbase, double delta, Space space)
         {
-            Base = nbase; Delta = delta;
+            Base = nbase; Delta = delta; this.Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр логарифмической коррекции.
+        /// Initializes the logarithmic correction filter.
         /// </summary>
         public LogCorrection() { }
         /// <summary>
-        /// Получает или задает значение основания логарифма.
+        /// Gets or sets the base value of the logarithm.
         /// </summary>
         public double Base
         {
@@ -1708,7 +1677,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение дельты.
+        /// Gets or sets the delta value [-1, 1].
         /// </summary>
         public double Delta
         {
@@ -1723,7 +1692,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1732,40 +1701,37 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр коррекции яркости.
+    /// Defines the brightness correction filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// http://esate.ru/uroki/OpenGL/image_processing/_p4106/
     /// </remarks>
     /// </summary>
     public class BrightnessCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Яркость.
-        /// </summary>
-        protected double brightness;
+        private double brightness;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции яркости.
+        /// Initializes the brightness correction filter.
         /// </summary>
-        /// <param name="brightness">Яркость [-1, 1]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="brightness">Brightness [-1, 1]</param>
+        /// <param name="space">Color space</param>
         public BrightnessCorrection(double brightness, Space space)
         {
-            Brightness = brightness;
+            Brightness = brightness; this.Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции яркости.
+        /// Initializes the brightness correction filter.
         /// </summary>
         public BrightnessCorrection()
         {
             Brightness = 0.5;
         }
         /// <summary>
-        /// Получает или задает значение яркости [-1, 1].
+        /// Gets or sets the brightness value [-1, 1].
         /// </summary>
         public double Brightness
         {
@@ -1780,7 +1746,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1789,40 +1755,37 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр коррекции контрастности.
+    /// Defines the contrast correction filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// http://esate.ru/uroki/OpenGL/image_processing/_p4106/
     /// </remarks>
     /// </summary>
     public class ContrastCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Контрастность.
-        /// </summary>
-        protected double contrast;
+        private double contrast;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции контрастности.
+        /// Initializes the contrast correction filter.
         /// </summary>
-        /// <param name="value">Контрастность [-1, 1]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="value">Contrast [-1, 1]</param>
+        /// <param name="space">Color space</param>
         public ContrastCorrection(double value, Space space)
         {
-            Contrast = value;
+            Contrast = value; this.Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции контрастности.
+        /// Initializes the contrast correction filter.
         /// </summary>
         public ContrastCorrection()
         {
             Contrast = 0.5;
         }
         /// <summary>
-        /// Получает или задает значение контрастности.
+        /// Gets or sets the contrast value.
         /// </summary>
         public double Contrast
         {
@@ -1837,7 +1800,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1846,40 +1809,37 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр гамма-коррекции.
+    /// Defines the gamma correction filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Gamma_correction
     /// </remarks>
     /// </summary>
     public class GammaCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Гамма.
-        /// </summary>
-        protected double g;
+        private double g;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр гамма-коррекции.
+        /// Initializes the gamma correction filter.
         /// </summary>
-        /// <param name="g">Гамма [0, 20]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="g">Gamma [0, 20]</param>
+        /// <param name="space">Color space</param>
         public GammaCorrection(double g, Space space)
         {
             Gamma = g; Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр гамма-коррекции.
+        /// Initializes the gamma correction filter.
         /// </summary>
         public GammaCorrection()
         {
             Gamma = 2.2;
         }
         /// <summary>
-        /// Получает или задает значение гаммы [0, 20].
+        /// Gets or sets the gamma value [0, 20].
         /// </summary>
         public double Gamma
         {
@@ -1894,7 +1854,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1903,29 +1863,26 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр коррекции ко смещением.
+    /// Defines the shift correction filter.
     /// </summary>
     public class ShiftCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Смещение.
-        /// </summary>
-        protected double offset;
+        private double offset;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции ко смещением.
+        /// Initializes the shift correction filter.
         /// </summary>
-        /// <param name="offset">Смещение (-0.5, 0.5)</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="offset">Offset (-0.5, 0.5)</param>
+        /// <param name="space">Color space</param>
         public ShiftCorrection(double offset, Space space)
         {
             Offset = offset; Space = space;
         }
         /// <summary>
-        /// Получает или задает значение смещения (-0.5, 0.5).
+        /// Gets or sets the offset value (-0.5, 0.5).
         /// </summary>
         public double Offset
         {
@@ -1940,7 +1897,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1949,29 +1906,26 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр глобального улучшения контраста.
+    /// Defines the global contrast enhancement filter.
     /// </summary>
     public class ContrastEnhancement : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Коэффициент сжатия контраста.
-        /// </summary>
-        protected double contrast;
+        private double contrast;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр глобального улучшения контраста.
+        /// Initializes the global contrast enhancement filter.
         /// </summary>
-        /// <param name="contrast">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="contrast">Contrast [-1, 1]</param>
+        /// <param name="space">Color space</param>
         public ContrastEnhancement(double contrast, Space space)
         {
             Space = space; Contrast = contrast;
         }
         /// <summary>
-        /// Получает или задает значение коэффициента сжатия контраста [-1, 1].
+        /// Gets or sets the contrast coefficent value [-1, 1].
         /// </summary>
         public double Contrast
         {
@@ -1986,7 +1940,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -1995,40 +1949,37 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр квантования.
+    /// Defines the quantization filter.
     /// <remarks>
-    /// Примеры работы фильтра можно найти на сайте: 
+    /// More information can be found on the website:
     /// http://en.wikipedia.org/wiki/Posterization
     /// </remarks>
     /// </summary>
     public class Quantization : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Количество уровней.
-        /// </summary>
-        protected int levels;
+        private int levels;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр квантования.
+        /// Initializes the quantization filter.
         /// </summary>
-        /// <param name="levels">Количество уровней</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="levels">Number of levels</param>
+        /// <param name="space">Color space</param>
         public Quantization(int levels, Space space)
         {
             Levels = levels; Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр квантования.
+        /// Initializes the quantization filter.
         /// </summary>
         public Quantization()
         {
             Levels = 4;
         }
         /// <summary>
-        /// Получает или задает количество уровней.
+        /// Gets or sets number of levels.
         /// </summary>
         public int Levels
         {
@@ -2043,7 +1994,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -2055,28 +2006,25 @@ namespace UMapx.Imaging
 
     #region Local intensity adjustments
     /// <summary>
-    /// Определяет фильтр локальной бинаризации Брэдли.
+    /// Defines the Bradley local threshold filter.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
     /// </remarks>
     /// </summary>
     public class LocalThreshold : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Предел разницы яркости между пикселем обработки и средним значением локальных пикселей.
-        /// </summary>
-        protected double difference;
+        private double difference;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр локальной бинаризации Брэдли.
+        /// Initializes the Bradley local threshold filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="difference">Difference [0, 1]</param>
         public LocalThreshold(int radius, Space space, double difference = 0.15)
         {
             gb = new BoxBlur(radius);
@@ -2084,12 +2032,12 @@ namespace UMapx.Imaging
             Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр локальной бинаризации Брэдли.
+        /// Initializes the Bradley local threshold filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="space">Color space</param>
+        /// <param name="difference">Difference [0, 1]</param>
         public LocalThreshold(int width, int height, Space space, double difference = 0.15)
         {
             gb = new BoxBlur(width, height);
@@ -2097,11 +2045,11 @@ namespace UMapx.Imaging
             Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр локальной бинаризации Брэдли.
+        /// Initializes the Bradley local threshold filter.
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
+        /// <param name="size">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="difference">Difference [0, 1]</param>
         public LocalThreshold(SizeInt size, Space space, double difference = 0.15)
         {
             gb = new BoxBlur(size);
@@ -2109,7 +2057,7 @@ namespace UMapx.Imaging
             Space = space;
         }
         /// <summary>
-        /// Получает или задает предел разницы яркости между пикселем обработки и средним значением локальных пикселей.
+        /// Gets or sets the difference [0, 1].
         /// </summary>
         public double Difference
         {
@@ -2124,7 +2072,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -2133,61 +2081,58 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр локального улучшения контраста.
+    /// Defines the local contrast enhancement filter.
     /// <remarks>
-    /// Данный фильтр также известен под названием "Unsharp Masking". 
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// This filter is also known as "Unsharp Masking."
+    /// More information can be found on the website:
     /// http://www.cambridgeincolour.com/tutorials/local-contrast-enhancement.htm
-    /// Примеры использования:
+    /// Filter usage example:
     /// http://www.knowhowtransfer.com/photoshop-professional-plugins/alce-local-contrast-enhancer/
     /// </remarks>
     /// </summary>
     public class LocalContrastEnhancement : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Коэффициент сжатия контраста.
-        /// </summary>
-        protected double contrast;
+        private double contrast;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр локального улучшения контраста.
+        /// Initializes the local contrast enhancement filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="contrast">Коэффициент сжатия контраста [-1, 1]</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="contrast">Contrast [-1, 1]</param>
         public LocalContrastEnhancement(int radius, Space space, double contrast = 0.75)
         {
             gb = new BoxBlur(radius);
             Space = space; Contrast = contrast;
         }
         /// <summary>
-        /// Инициализирует фильтр локального улучшения контраста.
+        /// Initializes the local contrast enhancement filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="contrast">Коэффициент сжатия контраста [-1, 1]</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="space">Color space</param>
+        /// <param name="contrast">Contrast [-1, 1]</param>
         public LocalContrastEnhancement(int width, int height, Space space, double contrast = 0.75)
         {
             gb = new BoxBlur(width, height);
             Space = space; Contrast = contrast;
         }
         /// <summary>
-        /// Инициализирует фильтр локального улучшения контраста.
+        /// Initializes the local contrast enhancement filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="contrast">Коэффициент сжатия контраста [-1, 1]</param>
+        /// <param name="size">Filter size</param>
+        /// <param name="space">Color space</param>
+        /// <param name="contrast">Contrast [-1, 1]</param>
         public LocalContrastEnhancement(SizeInt size, Space space, double contrast = 0.75)
         {
             gb = new BoxBlur(size);
-            Space = space; Contrast = contrast;
+            Space = space;Contrast = contrast;
         }
         /// <summary>
-        /// Получает или задает значение коэффициента сжатия контраста [-1, 1].
+        /// Gets or sets the contrast value [-1, 1].
         /// </summary>
         public double Contrast
         {
@@ -2202,7 +2147,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -2211,32 +2156,26 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр инверсии локального контраста.
+    /// Defines the local contrast inversion filter.
     /// <remarks>
-    /// Данный фильтр используется для выравнивания освещенности изображений путем усреднения яркости.
+    /// This filter is used to equalize the illumination of images by averaging the brightness.
     /// </remarks>
     /// </summary>
     public class LocalContrastInversion : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Коэффициент сжатия контраста.
-        /// </summary>
-        protected double a;
-        /// <summary>
-        /// Смещение.
-        /// </summary>
-        protected double b;
+        private double a;
+        private double b;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр инверсии локального контраста.
+        /// Initializes the local contrast inversion filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста (0, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast (0, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
         public LocalContrastInversion(int radius, Space space, double a = 0.75, double b = 0.05)
         {
             this.gb = new BoxBlur(radius);
@@ -2245,13 +2184,13 @@ namespace UMapx.Imaging
             B = b;
         }
         /// <summary>
-        /// Инициализирует фильтр инверсии локального контраста.
+        /// Initializes the local contrast inversion filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста (0, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast (0, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
         public LocalContrastInversion(int width, int height, Space space, double a = 0.75, double b = 0.05)
         {
             this.gb = new BoxBlur(width, height);
@@ -2260,12 +2199,12 @@ namespace UMapx.Imaging
             B = b;
         }
         /// <summary>
-        /// Инициализирует фильтр инверсии локального контраста.
+        /// Initializes the local contrast inversion filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста (0, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
+        /// <param name="size">Filter size</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast (0, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
         public LocalContrastInversion(SizeInt size, Space space, double a = 0.75, double b = 0.05)
         {
             this.gb = new BoxBlur(size);
@@ -2274,7 +2213,7 @@ namespace UMapx.Imaging
             B = b;
         }
         /// <summary>
-        /// Получает или задает значение коэффициента сжатия контраста (0, 1].
+        /// Gets or sets the contrast value (0, 1].
         /// </summary>
         public double A
         {
@@ -2289,7 +2228,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение смещения (0, 1].
+        /// Gets or sets the offset value (0, 1].
         /// </summary>
         public double B
         {
@@ -2300,14 +2239,14 @@ namespace UMapx.Imaging
             set
             {
                 if (value <= 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.b = value;
                 this.rebuild = true;
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -2316,61 +2255,55 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр повышения контраста.
+    /// Defines the contrast enhancement filter.
     /// </summary>
     public class KsiContrastEnhancement : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Коэффициент сжатия контраста.
-        /// </summary>
-        protected double a;
-        /// <summary>
-        /// Смещение.
-        /// </summary>
-        protected double b;
+        private double a;
+        private double b;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр повышения контраста.
+        /// Initializes the contrast enhancement filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение [-1, 1]</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset [-1, 1]</param>
         public KsiContrastEnhancement(int radius, Space space, double a = 0.75, double b = 0.05)
         {
             gb = new BoxBlur(radius);
             Space = space; A = a; B = b;
         }
         /// <summary>
-        /// Инициализирует фильтр повышения контраста.
+        /// Initializes the contrast enhancement filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение [-1, 1]</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset [-1, 1]</param>
         public KsiContrastEnhancement(int width, int height, Space space, double a = 0.75, double b = 0.05)
         {
             gb = new BoxBlur(width, height);
             Space = space; A = a; B = b;
         }
         /// <summary>
-        /// Инициализирует фильтр повышения контраста.
+        /// Initializes the contrast enhancement filter.
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение [-1, 1]</param>
+        /// <param name="size">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset [-1, 1]</param>
         public KsiContrastEnhancement(SizeInt size, Space space, double a = 0.75, double b = 0.05)
         {
             gb = new BoxBlur(size);
             Space = space; A = a; B = b;
         }
         /// <summary>
-        /// Получает или задает значение коэффициента сжатия контраста [-1, 1].
+        /// Gets or sets the contrast value [-1, 1].
         /// </summary>
         public double A
         {
@@ -2385,7 +2318,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение смещения [-1, 1].
+        /// Gets or sets the offset value [-1, 1].
         /// </summary>
         public double B
         {
@@ -2400,7 +2333,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -2409,68 +2342,62 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр гомоморфной обработки.
+    /// Defines the filter for homomorphic processing.
     /// <remarks>
-    /// Гомоморфный фильтр чаще всего используется для выравнивания освещенности изображений. 
-    /// Он одновременно нормализует яркость изображения и увеличивает контрастность.
+    /// A homomorphic filter is most often used to equalize the illumination of images.
+    /// It simultaneously normalizes the brightness of the image and increases the contrast.
     /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Homomorphic_filtering
     /// </remarks>
     /// </summary>
     public class HomomorphicEnhancement : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Коэффициент сжатия контраста.
-        /// </summary>
-        protected double a;
-        /// <summary>
-        /// Смещение.
-        /// </summary>
-        protected double b;
+        private double a;
+        private double b;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр гомоморфной обработки.
+        /// Initializes the filter for homomorphic processing.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
         public HomomorphicEnhancement(int radius, Space space, double a = 0.5, double b = 0.05)
         {
             gb = new BoxBlur(radius);
             Space = space; A = a; B = b;
         }
         /// <summary>
-        /// Инициализирует фильтр гомоморфной обработки.
+        /// Initializes the filter for homomorphic processing.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
         public HomomorphicEnhancement(int width, int height, Space space, double a = 0.5, double b = 0.05)
         {
             gb = new BoxBlur(width, height);
             Space = space; A = a; B = b;
         }
         /// <summary>
-        /// Инициализирует фильтр гомоморфной обработки.
+        /// Initializes the filter for homomorphic processing.
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
+        /// <param name="size">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
         public HomomorphicEnhancement(SizeInt size, Space space, double a = 0.5, double b = 0.05)
         {
             gb = new BoxBlur(size);
             Space = space; A = a; B = b;
         }
         /// <summary>
-        /// Получает или задает значение коэффициента сжатия контраста [-1, 1].
+        /// Gets or sets the contrast value [-1, 1].
         /// </summary>
         public double A
         {
@@ -2485,7 +2412,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение смещения (0, 1].
+        /// Gets or sets the offset value (0, 1].
         /// </summary>
         public double B
         {
@@ -2496,14 +2423,14 @@ namespace UMapx.Imaging
             set
             {
                 if (value <= 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.b = value;
                 this.rebuild = true;
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -2512,75 +2439,63 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр Single Scale Retinex.
+    /// Defines the Single Scale Retinex filter.
     /// <remarks>
-    /// Алгоритмы группы Single Scale Retinex предназначены для коррекции неравномерно освещенных изображений. 
-    /// Фильтр данной группы выравнивает освещенность изображения, сохраняя локальный контраст в плохо и ярко освещенных областях.
-    /// 
-    /// Более подробную информацию можно найти в статье:
+    /// More information can be found on the website:
     /// https://dragon.larc.nasa.gov/background/pubabs/papers/gspx1.pdf
     /// </remarks>
     /// </summary>
     public class SingleScaleRetinex : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Коэффициент сжатия контраста.
-        /// </summary>
-        protected double a;
-        /// <summary>
-        /// Смещение.
-        /// </summary>
-        protected double b;
-        /// <summary>
-        /// Основание логарифма.
-        /// </summary>
-        protected double nbase;
+        private double a;
+        private double b;
+        private double nbase;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр Single Scale Retinex.
+        /// Initializes the Single Scale Retinex filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
-        /// <param name="nbase">Основание логарифма</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="nbase">Logarithm base</param>
         public SingleScaleRetinex(int radius, Space space, double a = 1, double b = 0, double nbase = Math.PI)
         {
             gb = new BoxBlur(radius);
             Space = space; A = a; B = b; Base = nbase;
         }
         /// <summary>
-        /// Инициализирует фильтр Single Scale Retinex.
+        /// Initializes the Single Scale Retinex filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
-        /// <param name="nbase">Основание логарифма</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="nbase">Logarithm base</param>
         public SingleScaleRetinex(int width, int height, Space space, double a = 1, double b = 0, double nbase = Math.PI)
         {
             gb = new BoxBlur(width, height);
             Space = space; A = a; B = b; Base = nbase;
         }
         /// <summary>
-        /// Инициализирует фильтр Single Scale Retinex.
+        /// Initializes the Single Scale Retinex filter.
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
-        /// <param name="nbase">Основание логарифма</param>
+        /// <param name="size">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="nbase">Logarithm base</param>
         public SingleScaleRetinex(SizeInt size, Space space, double a = 1, double b = 0, double nbase = Math.PI)
         {
             gb = new BoxBlur(size);
             Space = space; A = a; B = b; Base = nbase;
         }
         /// <summary>
-        /// Получает или задает коэффициент сжатия контраста [-1, 1].
+        /// Gets or sets the contrast [-1, 1].
         /// </summary>
         public double A
         {
@@ -2595,7 +2510,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение смещения (0, 1].
+        /// Gets or sets the offset value (0, 1].
         /// </summary>
         public double B
         {
@@ -2610,7 +2525,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает основание логарифма.
+        /// Gets or sets the logarithm base.
         /// </summary>
         public double Base
         {
@@ -2621,14 +2536,14 @@ namespace UMapx.Imaging
             set
             {
                 if (value <= 0)
-                    throw new Exception("Основание логарифма должно быть больше 0");
+                    throw new Exception("Logarithm base should be greater than 0");
 
                 this.nbase = value;
                 this.rebuild = true;
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -2637,66 +2552,60 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр коррекции теней и светов.
+    /// Defines the shadows and lights correction filter.
     /// <remarks>
-    /// Коррекция теней и светов (Shadows-Highlights correction) используется для коррекции неравномерно освещенных изображений. В отличие от других локальных алгоритмов
-    /// (например, Single Scale Retinex, Homomorphic Enhancement, Flat-Field Correction) фильтр позволяет регулировать значения яркости отдельно в темных и светлых областях
-    /// изображения.
+    /// Shadow-Highlights correction is used to correct unevenly lit images. Unlike other local algorithms
+    /// (for example, Single Scale Retinex, Homomorphic Enhancement, Flat-Field Correction) filter allows you to adjust the brightness values separately in dark and bright areas
+    /// Images.
     /// </remarks>
     /// </summary>
     public class ShadowsHighlightsCorrection : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Тени.
-        /// </summary>
-        protected double shadows;
-        /// <summary>
-        /// Света.
-        /// </summary>
-        protected double lights;
+        private double shadows;
+        private double lights;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции теней и светов.
+        /// Initializes the shadows and lights correction filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="shadows">Тени [0, 1]</param>
-        /// <param name="highlights">Света [0, 1]</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="shadows">Shadows [0, 1]</param>
+        /// <param name="highlights">Highlights [0, 1]</param>
         public ShadowsHighlightsCorrection(int radius, Space space, double shadows = 0.4, double highlights = 0.4)
         {
             gb = new BoxBlur(radius);
             Space = space; Shadows = shadows; Highlights = highlights;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции теней и светов.
+        /// Initializes the shadows and lights correction filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="shadows">Тени [0, 1]</param>
-        /// <param name="highlights">Света [0, 1]</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="space">Color space</param>
+        /// <param name="shadows">Shadows [0, 1]</param>
+        /// <param name="highlights">Highlights [0, 1]</param>
         public ShadowsHighlightsCorrection(int width, int height, Space space, double shadows = 0.4, double highlights = 0.4)
         {
             gb = new BoxBlur(width, height);
             Space = space; Shadows = shadows; Highlights = highlights;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции теней и светов.
+        /// Initializes the shadows and lights correction filter.
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="shadows">Тени [0, 1]</param>
-        /// <param name="highlights">Света [0, 1]</param>
+        /// <param name="size">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="shadows">Shadows [0, 1]</param>
+        /// <param name="highlights">Highlights [0, 1]</param>
         public ShadowsHighlightsCorrection(SizeInt size, Space space, double shadows = 0.4, double highlights = 0.4)
         {
             gb = new BoxBlur(size);
             Space = space; Shadows = shadows; Highlights = highlights;
         }
         /// <summary>
-        /// Получает или задает значение теней [0, 1].
+        /// Gets or sets the shadows value [0, 1].
         /// </summary>
         public double Shadows
         {
@@ -2711,7 +2620,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение светов [0, 1].
+        /// Gets or sets the highlights value [0, 1].
         /// </summary>
         public double Highlights
         {
@@ -2726,7 +2635,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -2738,21 +2647,20 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Возвращает значение гамма-параметра.
+        /// 
         /// </summary>
-        /// <param name="v">Значение фильтра [0, 1]</param>
-        /// <returns>Гамма</returns>
+        /// <param name="v"></param>
+        /// <returns></returns>
         private double value2gamma(double v)
         {
-            // Вычисление гамма-параметра:
             return (v - Intensity.logEpsilon) / 2.0;
         }
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр Flat-Field-коррекции.
+    /// Defines the flat-field correction filter.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// http://imagej.net/Image_Intensity_Processing
     /// </remarks>
     /// </summary>
@@ -2767,32 +2675,32 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр "Flat-Field" коррекции.
+        /// Initializes the flat-field correction filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
+        /// <param name="radius">Radius</param>
         public FlatFieldCorrection(int radius = 15)
         {
             gb = new BoxBlur(radius);
         }
         /// <summary>
-        /// Инициализирует фильтр "Flat-Field" коррекции.
+        /// Initializes the flat-field correction filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public FlatFieldCorrection(int width, int height)
         {
             gb = new BoxBlur(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр "Flat-Field" коррекции.
+        /// Initializes the flat-field correction filter.
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
+        /// <param name="size">Radius</param>
         public FlatFieldCorrection(SizeInt size)
         {
             gb = new BoxBlur(size);
         }
         /// <summary>
-        /// Получает или задает размер фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -2806,10 +2714,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             gb.Apply(bmSrc);
@@ -2817,10 +2725,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -2831,9 +2739,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -2849,10 +2757,10 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void flatfield(BitmapData bmData, BitmapData bmSrc)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -2883,10 +2791,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Получает значения медиан изображения.
+        /// 
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Array</returns>
         private unsafe void globalmeans(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -2915,9 +2823,9 @@ namespace UMapx.Imaging
 
     #region Grayscale filters
     /// <summary>
-    /// Определяет фильтр на основе структуры HSB.
+    /// Defines the grayscale filter based on the HSB structure.
     /// <remarks>
-    /// Фильтр обесцвечивает указанную часть изображения.
+    /// The filter discolors the specified part of the image.
     /// </remarks>
     /// </summary>
     public class HSBGrayscale : IBitmapFilter
@@ -2929,25 +2837,25 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр на основе структуры HSB.
+        /// Initializes the grayscale filter based on the HSB structure.
         /// </summary>
-        /// <param name="hue">Диапазон оттенков [0, 359]</param>
+        /// <param name="hue">Hue range [0, 359]</param>
         public HSBGrayscale(RangeInt hue)
         {
             Hue = hue;
         }
         /// <summary>
-        /// Инициализирует фильтр на основе структуры HSB.
+        /// Initializes the grayscale filter based on the HSB structure.
         /// </summary>
-        /// <param name="min">Нижний предел [0, 359]</param>
-        /// <param name="max">Верхний предел [0, 359]</param>
+        /// <param name="min">Lower bound [0, 359]</param>
+        /// <param name="max">Upper bound [0, 359]</param>
         public HSBGrayscale(int min, int max)
         {
             this.min = min;
             this.max = max;
         }
         /// <summary>
-        /// Получает или задает диапазон оттенков [0, 359].
+        /// Gets or sets the hue range [0, 359].
         /// </summary>
         public RangeInt Hue
         {
@@ -2962,9 +2870,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -3016,9 +2924,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -3028,9 +2936,9 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр на основе структуры HSL.
+    /// Defines the grayscale filter based on the HSL structure.
     /// <remarks>
-    /// Фильтр обесцвечивает указанную часть изображения.
+    /// The filter discolors the specified part of the image.
     /// </remarks>
     /// </summary>
     public class HSLGrayscale : IBitmapFilter
@@ -3042,25 +2950,25 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр на основе структуры HSB.
+        /// Initializes the grayscale filter based on the HSL structure.
         /// </summary>
-        /// <param name="hue">Диапазон оттенков [0, 359]</param>
+        /// <param name="hue">Hue range [0, 359]</param>
         public HSLGrayscale(RangeInt hue)
         {
             Hue = hue;
         }
         /// <summary>
-        /// Инициализирует фильтр на основе структуры HSB.
+        /// Initializes the grayscale filter based on the HSL structure.
         /// </summary>
-        /// <param name="min">Нижний предел [0, 359]</param>
-        /// <param name="max">Верхний предел [0, 359]</param>
+        /// <param name="min">Lower bound [0, 359]</param>
+        /// <param name="max">Upper bound [0, 359]</param>
         public HSLGrayscale(int min, int max)
         {
             this.min = min;
             this.max = max;
         }
         /// <summary>
-        /// Получает или задает диапазон оттенков [0, 359].
+        /// Gets or sets the hue range [0, 359].
         /// </summary>
         public RangeInt Hue
         {
@@ -3075,9 +2983,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -3129,9 +3037,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -3141,32 +3049,23 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр градаций серого.
+    /// Defines the grayscale filter.
     /// </summary>
     public class Grayscale : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// C(r).
-        /// </summary>
-        protected double cr;
-        /// <summary>
-        /// C(g).
-        /// </summary>
-        protected double cg;
-        /// <summary>
-        /// C(b).
-        /// </summary>
-        protected double cb;
+        private double cr;
+        private double cg;
+        private double cb;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр градаций серого.
+        /// Initializes the grayscale filter.
         /// </summary>
-        /// <param name="cr">Коэффициент красного канала</param>
-        /// <param name="cg">Коэффициент зеленого канала</param>
-        /// <param name="cb">Коэффициент синего канала</param>
+        /// <param name="cr">Red</param>
+        /// <param name="cg">Green</param>
+        /// <param name="cb">Blue</param>
         public Grayscale(double cr, double cg, double cb)
         {
             Cr = cr;
@@ -3174,7 +3073,7 @@ namespace UMapx.Imaging
             Cb = cb;
         }
         /// <summary>
-        /// Инициализирует фильтр градаций серого.
+        /// Initializes the grayscale filter.
         /// </summary>
         public Grayscale()
         {
@@ -3183,7 +3082,7 @@ namespace UMapx.Imaging
             Cb = 0.333f;
         }
         /// <summary>
-        /// Получает или задает значение коэффициента красного канала.
+        /// Gets or sets the red channel value.
         /// </summary>
         public double Cr
         {
@@ -3197,7 +3096,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение коэффициента зеленого канала.
+        /// Gets or sets the green channel value.
         /// </summary>
         public double Cg
         {
@@ -3211,7 +3110,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение коэффициента синего канала.
+        /// Gets or sets the blue channel value.
         /// </summary>
         public double Cb
         {
@@ -3225,9 +3124,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -3243,9 +3142,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -3256,7 +3155,7 @@ namespace UMapx.Imaging
 
         #region Static voids
         /// <summary>
-        /// Инициализирует фильтр градаций серого (BT709).
+        /// Initializes the grayscale filter (BT709).
         /// </summary>
         public static Grayscale BT709
         {
@@ -3266,7 +3165,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Определяет фильтр градаций серого (R-Y).
+        /// Initializes the grayscale filter (R-Y).
         /// </summary>
         public static Grayscale RY
         {
@@ -3276,7 +3175,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Определяет фильтр градаций серого Y.
+        /// Initializes the grayscale filter Y.
         /// </summary>
         public static Grayscale Y
         {
@@ -3289,10 +3188,10 @@ namespace UMapx.Imaging
 
         #region IsGrayscale
         /// <summary>
-        /// Проверяет является ли точечный рисунок изображением в оттенках серого.
+        /// Checks if Bitmap is a grayscale image.
         /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Boolean</returns>
         public static bool IsGrayscale(Bitmap b)
         {
             bool isgrayscale = false;
@@ -3319,32 +3218,23 @@ namespace UMapx.Imaging
 
     #region Color adjustments
     /// <summary>
-    /// Определяет цветовой фотофильтр.
+    /// Defines the color photo filter.
     /// </summary>
     public class PhotoFilter : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Сила фильтра.
-        /// </summary>
-        protected double s;
-        /// <summary>
-        /// Цвет.
-        /// </summary>
-        protected Color color;
-        /// <summary>
-        /// Функция смешивания.
-        /// </summary>
-        protected IDoubleMesh blendf;
+        private double s;
+        private Color color;
+        private IDoubleMesh blendf;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует цветовой фотофильтр.
+        /// Initializes the color photo filter.
         /// </summary>
-        /// <param name="blendf">Функция смешивания</param>
-        /// <param name="color">Цвет фильтра</param>
-        /// <param name="strength">Сила фильтра [0, 1]</param>
+        /// <param name="blendf">Blend function</param>
+        /// <param name="color">Color</param>
+        /// <param name="strength">Strenght [0, 1]</param>
         public PhotoFilter(IDoubleMesh blendf, Color color, double strength = 0.5)
         {
             BlendFunction = blendf;
@@ -3352,10 +3242,10 @@ namespace UMapx.Imaging
             Strength = strength;
         }
         /// <summary>
-        /// Инициализирует цветовой фотофильтр.
+        /// Initializes the color photo filter.
         /// </summary>
-        /// <param name="color">Цвет фильтра</param>
-        /// <param name="strength">Сила фильтра [0, 1]</param>
+        /// <param name="color">Color</param>
+        /// <param name="strength">Strenght [0, 1]</param>
         public PhotoFilter(Color color, double strength = 0.5)
         {
             BlendFunction = BlendMode.Pegtop;
@@ -3363,7 +3253,7 @@ namespace UMapx.Imaging
             Strength = strength;
         }
         /// <summary>
-        /// Инициализирует цветовой фотофильтр.
+        /// Initializes the color photo filter.
         /// </summary>
         public PhotoFilter()
         {
@@ -3372,7 +3262,7 @@ namespace UMapx.Imaging
             Strength = 0.5;
         }
         /// <summary>
-        /// Получает или задает цвет фильтра.
+        /// Gets or sets the blend function.
         /// </summary>
         public IDoubleMesh BlendFunction
         {
@@ -3386,7 +3276,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает цвет фильтра.
+        /// gets or sets the filter color.
         /// </summary>
         public Color Color
         {
@@ -3400,7 +3290,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает силу фильтра [0, 1].
+        /// Gets or sets filter strenght [0, 1].
         /// </summary>
         public double Strength
         {
@@ -3414,9 +3304,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -3463,9 +3353,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -3476,7 +3366,7 @@ namespace UMapx.Imaging
 
         #region Complete filters
         /// <summary>
-        /// Инициализирует холодный фильтр (82).
+        /// Initializes the cold filter (82).
         /// </summary>
         public static PhotoFilter Cold82
         {
@@ -3486,7 +3376,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует холодный фильтр LBB.
+        /// Initializes the cold filter LBB.
         /// </summary>
         public static PhotoFilter ColdLBB
         {
@@ -3496,7 +3386,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует теплый фильтр (81).
+        /// Initializes the hot filter (81).
         /// </summary>
         public static PhotoFilter Warm81
         {
@@ -3506,7 +3396,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует теплый фильтр LBA.
+        /// Initializes the hot filter LBA.
         /// </summary>
         public static PhotoFilter WarmLBA
         {
@@ -3516,7 +3406,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр сепии.
+        /// Initializes the sepia filter.
         /// </summary>
         public static PhotoFilter Sepia
         {
@@ -3526,7 +3416,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует красный фильтр.
+        /// Initializes the red filter.
         /// </summary>
         public static PhotoFilter Red
         {
@@ -3536,7 +3426,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует синий фильтр.
+        /// Initializes the blue filter.
         /// </summary>
         public static PhotoFilter Blue
         {
@@ -3546,7 +3436,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует зеленый фильтр.
+        /// Initializes the green filter.
         /// </summary>
         public static PhotoFilter Green
         {
@@ -3556,7 +3446,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует подводный фильтр.
+        /// Initializes the "underwater" filter.
         /// </summary>
         public static PhotoFilter Underwater
         {
@@ -3566,7 +3456,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует пурпурный фильтр.
+        /// Initializes the purple filter.
         /// </summary>
         public static PhotoFilter Purple
         {
@@ -3576,7 +3466,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует оранжевый фильтр.
+        /// Initializes the orange filter.
         /// </summary>
         public static PhotoFilter Orange
         {
@@ -3586,7 +3476,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует желтый фильтр.
+        /// Initializes the yellow filter.
         /// </summary>
         public static PhotoFilter Yellow
         {
@@ -3598,39 +3488,36 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр коррекции температуры.
+    /// Defines the temperature correction filter.
     /// <remarks>
-    /// Фильтр использует аппроксимацию кривой Планка.
+    /// The filter uses an approximation of the Planck curve.
     /// </remarks>
     /// </summary>
     public class TemperatureCorrection : PhotoFilter, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Температура.
-        /// </summary>
-        protected double temperature;
+        private double temperature;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции температуры.
+        /// Initializes the temperature correction filter.
         /// </summary>
-        /// <param name="temperature">Температура [1E3К, 1E4К]</param>
-        /// <param name="strength">Сила фильтра [0, 1]</param>
+        /// <param name="temperature">Temperature [1E3K, 1E4K]</param>
+        /// <param name="strength">Strenght [0, 1]</param>
         public TemperatureCorrection(double temperature, double strength = 0.5)
         {
             Temperature = temperature; Strength = strength;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции температуры.
+        /// Initializes the temperature correction filter.
         /// </summary>
         public TemperatureCorrection()
         {
             Temperature = 1000; Strength = 0.5;
         }
         /// <summary>
-        /// Получает или задает значение температуры [1E3К, 1E4К].
+        /// Gets or sets the temperature [1E3K, 1E4K].
         /// </summary>
         public double Temperature
         {
@@ -3641,46 +3528,40 @@ namespace UMapx.Imaging
             set
             {
                 this.temperature = value;
-                this.color = RGB.Temp2RGB(this.temperature);
+                this.Color = RGB.Temp2RGB(this.temperature);
             }
         }
         #endregion
     }
     /// <summary>
-    /// Определяет цветовой фотофильтр на основе модели YUV.
+    /// Defines the color filter based on the YUV structure.
     /// </summary>
     public class YUVPhotoFilter : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Сила фильтра.
-        /// </summary>
-        protected double s;
-        /// <summary>
-        /// Цвет.
-        /// </summary>
-        protected Color color;
+        private double s;
+        private Color color;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует цветовой фотофильтр на основе модели YUV.
+        /// Initializes the color filter based on the YUV structure.
         /// </summary>
-        /// <param name="color">Цвет фильтра</param>
-        /// <param name="strength">Сила фильтра [0, 1]</param>
+        /// <param name="color">Color</param>
+        /// <param name="strength">Strenght [0, 1]</param>
         public YUVPhotoFilter(Color color, double strength = 0.5)
         {
             Color = color; Strength = strength;
         }
         /// <summary>
-        /// Инициализирует цветовой фотофильтр на основе модели YUV.
+        /// Initializes the color filter based on the YUV structure.
         /// </summary>
         public YUVPhotoFilter()
         {
             Color = Color.White; Strength = 0.5;
         }
         /// <summary>
-        /// Получает или задает цвет фильтра.
+        /// Gets or sets the filter color.
         /// </summary>
         public Color Color
         {
@@ -3694,7 +3575,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает силу фильтра [0, 1].
+        /// Gets or sets the filter strength [0, 1].
         /// </summary>
         public double Strength
         {
@@ -3708,9 +3589,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -3729,17 +3610,14 @@ namespace UMapx.Imaging
                 {
                     k = ystride + x * 4;
 
-                    // Исходные значения каналов:
                     iR = p[k + 2]; iG = p[k + 1]; iB = p[k];
 
-                    //Вычисление нового цвета:
                     luma = RGB.HDTV(iR, iG, iB);
                     nYUV = YUV.FromRGB(luma, luma, luma);
                     iYUV = YUV.FromRGB(color.R, color.G, color.B);
                     rgb  = AddColor(nYUV, iYUV).ToRGB;
                     nR   = rgb.Red; nG = rgb.Green; nB = rgb.Blue;
 
-                    // Фиксация значений в соответствии с силой фильтра:
                     p[k + 2] = Maths.Byte(nR * s + iR * z);
                     p[k + 1] = Maths.Byte(nG * s + iG * z);
                     p[k    ] = Maths.Byte(nB * s + iB * z);
@@ -3750,9 +3628,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -3760,10 +3638,10 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Data, bmData);
         }
         /// <summary>
-        /// Проверяет является ли цвет оттенком серого.
+        /// Checks if the color is a shade of gray.
         /// </summary>
-        /// <param name="color">Цвет в терминах красного, зеленого и синего каналов</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="color">Color</param>
+        /// <returns>Boolean</returns>
         public static bool IsGrayColor(Color color)
         {
             if (color.R == color.G && color.G == color.B)
@@ -3773,11 +3651,11 @@ namespace UMapx.Imaging
             return false;
         }
         /// <summary>
-        /// Смешивает два цвета в пространстве YUV.
+        /// Blend two colors in YUV space.
         /// </summary>
-        /// <param name="yuv1">Первый цвет</param>
-        /// <param name="yuv2">Второй цвет</param>
-        /// <returns>Результат</returns>
+        /// <param name="yuv1">First color</param>
+        /// <param name="yuv2">Second color</param>
+        /// <returns>YUV</returns>
         public static YUV AddColor(YUV yuv1, YUV yuv2)
         {
             return new YUV(yuv1.Y, yuv1.U + yuv2.U, yuv1.V + yuv2.V);
@@ -3786,7 +3664,7 @@ namespace UMapx.Imaging
 
         #region Complete filters
         /// <summary>
-        /// Инициализирует фильтр сепии.
+        /// Initializes the sepia filter.
         /// </summary>
         public static YUVPhotoFilter Sepia
         {
@@ -3796,7 +3674,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует оранжевый фильтр.
+        /// Initializes the orange filter.
         /// </summary>
         public static YUVPhotoFilter Orange
         {
@@ -3806,7 +3684,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует желтый фильтр.
+        /// Initializes the yellow filter.
         /// </summary>
         public static YUVPhotoFilter Yellow
         {
@@ -3818,35 +3696,32 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр коррекции насыщенности.
+    /// Defines the saturation correction filter.
     /// </summary>
     public class SaturationCorrection : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Насыщенность.
-        /// </summary>
-        protected double saturation;
+        private double saturation;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции насыщенности.
+        /// Initializes the saturation correction filter.
         /// </summary>
-        /// <param name="saturation">Насыщенность [-100, 100]</param>
+        /// <param name="saturation">Saturation [-100, 100]</param>
         public SaturationCorrection(double saturation)
         {
             Saturation = saturation;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции насыщенности.
+        /// Initializes the saturation correction filter.
         /// </summary>
         public SaturationCorrection()
         {
             Saturation = 20;
         }
         /// <summary>
-        /// Получает или задает значение насыщенности [-100, 100].
+        /// Gets or sets the saturation value [-100, 100].
         /// </summary>
         public double Saturation
         {
@@ -3860,9 +3735,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
@@ -3890,9 +3765,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -3902,38 +3777,32 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр замены цвета.
+    /// Defines the color replacement filter.
     /// </summary>
     public class ColorReplace : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Входной цвет.
-        /// </summary>
-        protected Color input = Color.Transparent;
-        /// <summary>
-        /// Выходной цвет.
-        /// </summary>
-        protected Color output = Color.Transparent;
+        private Color input = Color.Transparent;
+        private Color output = Color.Transparent;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр замены цвета.
+        /// Initializes the color replacement filter.
         /// </summary>
-        /// <param name="input">Входной цвет в терминах каналов красного, зеленого, синего и альфа каналов</param>
-        /// <param name="output">Выходной цвет в терминах каналов красного, зеленого, синего и альфа каналов</param>
+        /// <param name="input">Input color</param>
+        /// <param name="output">Output color</param>
         public ColorReplace(Color input, Color output)
         {
             Input = input;
             Output = output;
         }
         /// <summary>
-        /// Инициализирует фильтр замены цвета.
+        /// Initializes the color replacement filter.
         /// </summary>
         public ColorReplace() { }
         /// <summary>
-        /// Входной цвет в терминах каналов красного, зеленого, синего и альфа каналов.
+        /// Input color.
         /// </summary>
         public Color Input
         {
@@ -3947,7 +3816,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Выходной цвет в терминах каналов красного, зеленого, синего и альфа каналов.
+        /// Output color.
         /// </summary>
         public Color Output
         {
@@ -3961,9 +3830,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -3984,9 +3853,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -3999,24 +3868,21 @@ namespace UMapx.Imaging
 
     #region Color reductions
     /// <summary>
-    /// Определяет фильтр тонального дитеринга.
+    /// Defines the tone diffusion dithering filter.
     /// <remarks>
-    /// Примеры работы данного фильтра можно найти на сайте:
+    /// Filter usage example:
     /// https://en.wikipedia.org/wiki/Dither
     /// </remarks>
     /// </summary>
     public class ToneDiffusionDithering : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Матрица диффузии.
-        /// </summary>
-        protected double[,] matrix;
+        private double[,] matrix;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр тонального дитеринга.
+        /// Initializes the tone diffusion dithering filter.
         /// </summary>
         public ToneDiffusionDithering()
         {
@@ -4027,15 +3893,15 @@ namespace UMapx.Imaging
 			                            { 255, 127, 223,  95 }};
         }
         /// <summary>
-        /// Инициализирует фильтр тонального дитеринга.
+        /// Initializes the tone diffusion dithering filter.
         /// </summary>
-        /// <param name="matrix">Двумерная матрица</param>
+        /// <param name="matrix">Matrix</param>
         public ToneDiffusionDithering(double[,] matrix)
         {
             Matrix = matrix;
         }
         /// <summary>
-        /// Получает или задает двумерную матрицу.
+        /// Gets or sets the tone diffusion dithering matrix. 
         /// </summary>
         public double[,] Matrix
         {
@@ -4049,9 +3915,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -4071,9 +3937,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -4083,21 +3949,18 @@ namespace UMapx.Imaging
         #endregion
 
         #region Static methods
-        /// <summary>
-        /// Генератор случайных чисел.
-        /// </summary>
         private static System.Random rand = new System.Random();
         /// <summary>
-        /// Инициализирует фильтр заказного дитеринга.
+        /// Initializes the order dithering filter.
         /// <remarks>
-        /// Подробное описание фильтра можно найти на сайте:
+        /// More information can be found on the website:
         /// http://en.wikipedia.org/wiki/Ordered_dithering
-        /// Примеры работы данного фильтра можно найти на сайте:
+        /// Filter usage example:
         /// https://en.wikipedia.org/wiki/Dither
         /// </remarks>
         /// </summary>
-        /// <param name="radius">Радиус матрицы [0, 255]</param>
-        /// <returns>Фильтр тонального дитеринга</returns>
+        /// <param name="radius">Radius [0, 255]</param>
+        /// <returns>Tone diffusion dithering filter</returns>
         public static ToneDiffusionDithering Order(int radius)
         {
             byte c = (byte)(256 / radius / radius + 1), d = 0;
@@ -4115,10 +3978,10 @@ namespace UMapx.Imaging
             return new ToneDiffusionDithering(table);
         }
         /// <summary>
-        /// Инициализирует фильтр случайного дитеринга.
+        /// Initializes the random dithering filter.
         /// </summary>
-        /// <param name="radius">Радиус матрицы [0, 255]</param>
-        /// <returns>Фильтр тонального дитеринга</returns>
+        /// <param name="radius">Radius [0, 255]</param>
+        /// <returns>Tone diffusion dithering filter</returns>
         public static ToneDiffusionDithering Random(int radius)
         {
             double[,] table = new double[radius, radius];
@@ -4135,9 +3998,9 @@ namespace UMapx.Imaging
             return new ToneDiffusionDithering(table);
         }
         /// <summary>
-        /// Инициализирует фильтр классического дитеринга.
+        /// Initializes the classic dithering filter.
         /// </summary>
-        /// <returns>Фильтр тонального дитеринга</returns>
+        /// <returns>Tone diffusion dithering filter</returns>
         public static ToneDiffusionDithering Basic()
         {
             return new ToneDiffusionDithering(new double[4, 4] {
@@ -4147,9 +4010,9 @@ namespace UMapx.Imaging
 			                            { 255, 127, 223,  95 }});
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга по алгоритму Байера.
+        /// Initializes the Bayer dithering filter.
         /// </summary>
-        /// <returns>Фильтр тонального дитеринга</returns>
+        /// <returns>Tone diffusion dithering filter</returns>
         public static ToneDiffusionDithering Bayer()
         {
             return new ToneDiffusionDithering(new double[,] {
@@ -4161,66 +4024,39 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр дитеринга диффузии ошибки.
+    /// Defines the error diffusion dithering filter.
     /// <remarks>
-    /// Примеры работы данного фильтра можно найти на сайте:
+    /// Filter usage example:
     /// https://en.wikipedia.org/wiki/Dither
     /// </remarks>
     /// </summary>
     public class ErrorDiffusionDithering : Rebuilder, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Координата X.
-        /// </summary>
-        protected int x;
-        /// <summary>
-        /// Координата Y.
-        /// </summary>
-        protected int y;
-        /// <summary>
-        /// Ширина изображения.
-        /// </summary>
-        protected int width;
-        /// <summary>
-        /// Высота изображения.
-        /// </summary>
-        protected int height;
-        /// <summary>
-        /// Шаг изображения.
-        /// </summary>
-        protected int stride;
-        /// <summary>
-        /// Матрица.
-        /// </summary>
-        protected double[][] matrix;
-        /// <summary>
-        /// Суммарное значение.
-        /// </summary>
+        private int x;
+        private int y;
+        private int width;
+        private int height;
+        private int stride;
+        private double[][] matrix;
         private double summary;
-        /// <summary>
-        /// Количество уровней квантования.
-        /// </summary>
-        protected int levels;
-        /// <summary>
-        /// Таблица квантования.
-        /// </summary>
+        private int levels;
         private double[] table;
         #endregion
 
         #region Class components
         /// <summary>
-        /// Инициализирует фильтр дитеринга диффузии ошибки.
+        /// Initializes the error diffusion dithering filter.
         /// </summary>
-        /// <param name="levels">Количество уровней квантования</param>
-        /// <param name="matrix">Матрица</param>
+        /// <param name="levels">Number of levels</param>
+        /// <param name="matrix">Matrix</param>
         public ErrorDiffusionDithering(int levels, double[][] matrix)
         {
             this.Levels = levels;
             this.Matrix = matrix;
         }
         /// <summary>
-        /// Получает или задает количество уровней квантования.
+        /// Gets or sets the number of levels.
         /// </summary>
         public int Levels
         {
@@ -4235,7 +4071,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает матрицу преобразования.
+        /// Gets or sets the matrix.
         /// </summary>
         public double[][] Matrix
         {
@@ -4264,10 +4100,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Bitmap</returns>
         public unsafe void Apply(BitmapData bmData)
         {
             // rebuild?
@@ -4309,10 +4145,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="Data">Bitmap</param>
+        /// <returns>Bitmap</returns>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -4321,7 +4157,7 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -4331,12 +4167,12 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Выполняет диффузию ошибки.
+        /// 
         /// </summary>
-        /// <param name="rError">Ошибка красного канала</param>
-        /// <param name="gError">Ошибка зеленого канала</param>
-        /// <param name="bError">Ошибка синего канала</param>
-        /// <param name="ptr">Текущий пиксель</param>
+        /// <param name="rError"></param>
+        /// <param name="gError"></param>
+        /// <param name="bError"></param>
+        /// <param name="ptr"></param>
         protected unsafe void Diffuse(int rError, int gError, int bError, byte* ptr)
         {
             double edR;	// error diffusion
@@ -4397,13 +4233,13 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Вычисляет ближайший цвет для заданных значений каналов.
+        /// 
         /// </summary>
-        /// <param name="red">Красный</param>
-        /// <param name="green">Зеленый</param>
-        /// <param name="blue">Синий</param>
-        /// <param name="table">Таблица цветов</param>
-        /// <returns>Цвет в терминах красного, зеленого и синего каналов</returns>
+        /// <param name="red"></param>
+        /// <param name="green"></param>
+        /// <param name="blue"></param>
+        /// <param name="table"></param>
+        /// <returns></returns>
         private Color GetColor(int red, int green, int blue, double[] table)
         {
             byte r = Maths.Byte(table[red]);
@@ -4415,9 +4251,9 @@ namespace UMapx.Imaging
 
         #region Static methods
         /// <summary>
-        /// Инициализирует фильтр дитеринга Эткинсона.
+        /// Initializes the Atkinson dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering Atkinson
         {
             get
@@ -4430,9 +4266,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Буркеса.
+        /// Initializes the Burkes dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering Burkes
         {
             get
@@ -4444,9 +4280,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Фэна.
+        /// Initializes the Fan dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering Fan
         {
             get
@@ -4458,9 +4294,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Сиерры.
+        /// Initializes the Sierra lite dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering SierraLite
         {
             get
@@ -4472,9 +4308,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Сиерры.
+        /// Initializes the Sierra dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering Sierra
         {
             get
@@ -4487,9 +4323,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Сиерры.
+        /// Initializes the Sierra lite dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering SierraTowsRows
         {
             get
@@ -4501,9 +4337,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Флойда-Стеинберга.
+        /// Initializes the Flyd-Steinberg dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering FloydSteinberg
         {
             get
@@ -4515,9 +4351,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Джарвиса-Джадиса-Нинке.
+        /// Initializes the Jarvis-Judice-Ninke dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering JarvisJudiceNinke
         {
             get
@@ -4530,9 +4366,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Стивенсона.
+        /// Initializes the Stevenson dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering Stevenson
         {
             get
@@ -4545,9 +4381,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Шиау.
+        /// Initializes the Shiau dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering Shiau
         {
             get
@@ -4559,9 +4395,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Инициализирует фильтр дитеринга Стаки.
+        /// Initializes the Stucki dithering filter.
         /// </summary>
-        /// <returns>Фильтр дитеринга диффузии ошибки</returns>
+        /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering Stucki
         {
             get
@@ -4579,42 +4415,34 @@ namespace UMapx.Imaging
 
     #region Noise filters
     /// <summary>
-    /// Определяет фильтр аддитивного Гауссова шума.
+    /// Defines the additive noise filter.
     /// <remarks>
-    /// Гауссовский шум представляет собой статистический шум, имеющий функцию плотности вероятности (PDF), равную функции нормального распределения, 
-    /// которая также известна как распределение Гаусса. Другими словами, значения, которые может принимать шум, распределены по Гауссу.
-    /// Примеры работы данного фильтра можно найти на сайте:
+    /// Filter usage example:
     /// https://en.wikipedia.org/wiki/Gaussian_noise
     /// </remarks>
     /// </summary>
     public class AdditiveNoise : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Сила.
-        /// </summary>
-        protected int amount = 10;
-        /// <summary>
-        /// Генератор случайных чисел.
-        /// </summary>
+        private int amount = 10;
         private Random generator = new Random();
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр аддитивного Гауссова шума.
+        /// Initializes the additive noise filter.
         /// </summary>
         public AdditiveNoise() { }
         /// <summary>
-        /// Инициализирует фильтр аддитивного Гауссова шума.
+        /// Initializes the additive noise filter.
         /// </summary>
-        /// <param name="amount">Процентная доля шума [0, 100]</param>
+        /// <param name="amount">Amount [0, 100]</param>
         public AdditiveNoise(int amount)
         {
             Amount = amount;
         }
         /// <summary>
-        /// Получает или задает процентную долю шума [0, 100].
+        /// Gets or sets the amout value [0, 100].
         /// </summary>
         public int Amount
         {
@@ -4628,9 +4456,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -4648,9 +4476,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -4660,44 +4488,34 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр шума "соль и перец".
+    /// Defines the salt and pepper noise filter.
     /// <remarks>
-    /// Salt and pepper (англ. "соль с черным перцем", то есть чередование серых и белых частиц) - одна из форм шума, который как правило встречается 
-    /// на графических и видео изображениях. Он представляет собой случайно возникающие белые и черные пиксели. Очень часто для проверки видео фильтров 
-    /// данный шум используют как тестовый, добавляя к сигналу. В обычных же условиях шум Salt and Pepper возникает в изображения при быстрых переходных 
-    /// процессах, таких как неправильная коммутация. Эффективным способом подавления этого типа шума является использование медианного фильтра.
-    /// Примеры работы данного фильтра можно найти на сайте:
+    /// Filter usage example:
     /// https://en.wikipedia.org/wiki/Salt-and-pepper_noise
     /// </remarks>
     /// </summary>
     public class SaltAndPepper : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Сила.
-        /// </summary>
-        protected double amount = 10;
-        /// <summary>
-        /// Генератор случайных чисел.
-        /// </summary>
+        private double amount = 10;
         private Random generator = new Random();
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр шума "соль и перец".
+        /// Initializes the salt and pepper noise filter.
         /// </summary>
         public SaltAndPepper() { }
         /// <summary>
-        /// Инициализирует фильтр шума "соль и перец".
+        /// Initializes the salt and pepper noise filter.
         /// </summary>
-        /// <param name="amount">Процентная доля шума [0, 100].</param>
+        /// <param name="amount">Amount [0, 100].</param>
         public SaltAndPepper(double amount)
         {
             Amount = amount;
         }
         /// <summary>
-        /// Получает или задает процентную долю шума [0, 100].
+        /// Gets or sets the amout value [0, 100].
         /// </summary>
         public double Amount
         {
@@ -4711,9 +4529,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -4732,9 +4550,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -4747,29 +4565,26 @@ namespace UMapx.Imaging
 
     #region Channels
     /// <summary>
-    /// Определяет фильтр коррекции прозрачности.
+    /// Defines the transparency correction filter.
     /// </summary>
     public class TransparencyCorrection : RGBACorrection, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Прозрачность.
-        /// </summary>
-        protected double transparency;
+        private double transparency;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции прозрачности.
+        /// Initializes the transparency correction filter.
         /// </summary>
-        /// <param name="transparency">Прозрачность [-1, 1]</param>
+        /// <param name="transparency">Transparency [-1, 1]</param>
         public TransparencyCorrection(double transparency)
         {
             this.Channel = RGBA.Alpha;
             Transparency = transparency;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции прозрачности.
+        /// Initializes the transparency correction filter.
         /// </summary>
         public TransparencyCorrection()
         {
@@ -4777,7 +4592,7 @@ namespace UMapx.Imaging
             Transparency = 0;
         }
         /// <summary>
-        /// Получает или задает значение прозрачности [-1, 1].
+        /// Gets or sets the transparency value [-1, 1].
         /// </summary>
         public double Transparency
         {
@@ -4792,7 +4607,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -4801,38 +4616,32 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр коррекции уровней канала.
+    /// Defines the channel level correction filter.
     /// <remarks>
-    /// Пример использования фильтра:
+    /// Filter usage example:
     /// https://digital-photography-school.com/using-levels-photoshop-image-correct-color-contrast/
     /// </remarks>
     /// </summary>
     public class LevelsChannelCorrection : RGBACorrection, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Входные значения каналов.
-        /// </summary>
-        protected RangeDouble input;
-        /// <summary>
-        /// Выходные значения каналов.
-        /// </summary>
-        protected RangeDouble output;
+        private RangeDouble input;
+        private RangeDouble output;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр коррекции уровней.
+        /// Initializes the channel level correction filter.
         /// </summary>
-        /// <param name="channel">Цветовой канал модели RGBA</param>
-        /// <param name="input">Входные значения каналов</param>
-        /// <param name="output">Выходные значения каналов</param>
+        /// <param name="channel">Channel of RGBA model</param>
+        /// <param name="input">Input channel values</param>
+        /// <param name="output">Output channel values</param>
         public LevelsChannelCorrection(RGBA channel, RangeDouble input, RangeDouble output)
         {
             this.Channel = channel; Input = input; Output = output;
         }
         /// <summary>
-        /// Инициализирует фильтр коррекции уровней.
+        /// Initializes the channel level correction filter.
         /// </summary>
         public LevelsChannelCorrection()
         {
@@ -4840,7 +4649,7 @@ namespace UMapx.Imaging
             Output = new RangeDouble(0, 255);
         }
         /// <summary>
-        /// Получает или задает входные значения каналов.
+        /// Gets or sets input channel values.
         /// </summary>
         public RangeDouble Input
         {
@@ -4855,7 +4664,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает выходные значения каналов.
+        /// Gets or sets output channel values.
         /// </summary>
         public RangeDouble Output
         {
@@ -4870,7 +4679,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -4879,22 +4688,19 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр поворота каналов.
-    /// <remarks>
-    /// Каналы изображения меняются местами: B = R, G = B, R = G.
-    /// </remarks>
+    /// Defines the channel rotation filter.
     /// </summary>
     public class RotateChannel : IBitmapFilter
     {
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр поворота каналов.
+        /// Initializes the channel rotation filter.
         /// </summary>
         public RotateChannel() { }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -4917,9 +4723,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -4929,10 +4735,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр эквализации каналов.
-    /// <remarks>
-    /// Каналы изображения эквализируются в соотвествии с выбранным каналом C: R = G = B = C.
-    /// </remarks>
+    /// Defines the channel equalization filter.
     /// </summary>
     public class EqualizeChannel : IBitmapFilter
     {
@@ -4942,19 +4745,19 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр эквализации каналов.
+        /// Initializes the channel equalization filter.
         /// </summary>
-        /// <param name="channel">Цветовой канал модели RGBA</param>
+        /// <param name="channel">Channel of RGBA model</param>
         public EqualizeChannel(RGBA channel)
         {
             Channel = channel;
         }
         /// <summary>
-        /// Инициализирует фильтр эквализации каналов.
+        /// Initializes the channel equalization filter.
         /// </summary>
         public EqualizeChannel() { }
         /// <summary>
-        /// Получает или задает цветовой канал модели RGBA.
+        /// Gets or sets the channel of the RGBA model.
         /// </summary>
         public RGBA Channel
         {
@@ -4968,9 +4771,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -4988,9 +4791,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -5000,7 +4803,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр скрытия канала.
+    /// Defines the channel hide filter.
     /// </summary>
     public class HideChannel : IBitmapFilter
     {
@@ -5010,19 +4813,19 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр скрытия канала.
+        /// Initializes the channel hide filter.
         /// </summary>
-        /// <param name="channel">Цветовой канал модели RGBA</param>
+        /// <param name="channel">Channel of RGBA model</param>
         public HideChannel(RGBA channel)
         {
             Channel = channel;
         }
         /// <summary>
-        /// Инициализирует фильтр скрытия канала.
+        /// Initializes the channel hide filter.
         /// </summary>
         public HideChannel() { }
         /// <summary>
-        /// Получает или задает цветовой канал модели RGBA.
+        /// Gets or sets the channel of the RGBA model.
         /// </summary>
         public RGBA Channel
         {
@@ -5036,9 +4839,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -5054,9 +4857,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -5066,10 +4869,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр отображения каналов.
-    /// <remarks>
-    /// Каналы изображения скрываются в соотвествии с выбранным каналом.
-    /// </remarks>
+    /// Defines the channel show filter.
     /// </summary>
     public class ShowChannel : IBitmapFilter
     {
@@ -5079,19 +4879,19 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр отображения каналов.
+        /// Initializes the channel show filter.
         /// </summary>
-        /// <param name="channel">Цветовой канал модели RGBA</param>
+        /// <param name="channel">Channel of RGBA model</param>
         public ShowChannel(RGBA channel)
         {
             Channel = channel;
         }
         /// <summary>
-        /// Инициализирует фильтр отображения каналов.
+        /// Initializes the channel show filter.
         /// </summary>
         public ShowChannel() { }
         /// <summary>
-        /// Получает или задает цветовой канал модели RGBA.
+        /// Gets or sets the channel of the RGBA model.
         /// </summary>
         public RGBA Channel
         {
@@ -5105,9 +4905,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -5138,9 +4938,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -5153,7 +4953,7 @@ namespace UMapx.Imaging
 
     #region Canvas
     /// <summary>
-    /// Определяет класс цветного холста.
+    /// Defines the color canvas class.
     /// </summary>
     public class CanvasColor : ICanvas
     {
@@ -5165,21 +4965,21 @@ namespace UMapx.Imaging
 
         #region Class components
         /// <summary>
-        /// Инициализирует класс цветного холста.
+        /// Initializes the color canvas class.
         /// </summary>
         public CanvasColor() { }
         /// <summary>
-        /// Инициализирует класс цветного холста.
+        /// Initializes the color canvas class.
         /// </summary>
-        /// <param name="width">Ширина холста</param>
-        /// <param name="height">Высота холста</param>
-        /// <param name="color">Цвет в терминах каналов красного, зеленого и синего</param>
+        /// <param name="width">Canvas width</param>
+        /// <param name="height">Canvas height</param>
+        /// <param name="color">Color</param>
         public CanvasColor(int width, int height, Color color)
         {
             Width = width; Height = height; Color = color;
         }
         /// <summary>
-        /// Получает или задает цвет холста.
+        /// Gets or sets canvas color.
         /// </summary>
         public Color Color
         {
@@ -5193,7 +4993,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает ширину холста.
+        /// Gets or sets the width of the canvas.
         /// </summary>
         public int Width
         {
@@ -5207,7 +5007,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает высоту холста.
+        /// Gets or sets the height of the canvas.
         /// </summary>
         public int Height
         {
@@ -5221,9 +5021,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Создает холст.
+        /// Creates canvas.
         /// </summary>
-        /// <returns>Точечный рисунок</returns>
+        /// <returns>Bitmap</returns>
         public Bitmap Create()
         {
             bitmap = new Bitmap(width, height);
@@ -5237,7 +5037,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет класс градиентного холста.
+    /// Defines the gradient canvas class.
     /// </summary>
     public class CanvasGradient : ICanvas
     {
@@ -5251,23 +5051,23 @@ namespace UMapx.Imaging
 
         #region Class components
         /// <summary>
-        /// Инициализирует класс градиентного холста.
+        /// Initializes the gradient canvas class.
         /// </summary>
         public CanvasGradient() { }
         /// <summary>
-        /// Инициализирует класс градиентного холста.
+        /// Initializes the gradient canvas class.
         /// </summary>
-        /// <param name="width">Ширина холста</param>
-        /// <param name="height">Высота холста</param>
-        /// <param name="angle">Направление линейного градиента</param>
-        /// <param name="color1">Первый цвет</param>
-        /// <param name="color2">Второй цвет</param>
+        /// <param name="width">Canvas width</param>
+        /// <param name="height">Canvas height</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="color1">First color</param>
+        /// <param name="color2">Second color</param>
         public CanvasGradient(int width, int height, double angle, Color color1, Color color2)
         {
             Width = width; Height = height; Angle = angle; Color1 = color1; Color2 = color2;
         }
         /// <summary>
-        /// Получает или задает первый цвет холста.
+        /// Gets or sets the first color.
         /// </summary>
         public Color Color1
         {
@@ -5281,7 +5081,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает второй цвет холста.
+        /// Gets or sets the second color.
         /// </summary>
         public Color Color2
         {
@@ -5295,7 +5095,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает направление линейного градиента.
+        /// Gets or sets the angle value.
         /// </summary>
         public double Angle
         {
@@ -5309,7 +5109,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает ширину холста.
+        /// Gets or sets the width of the canvas.
         /// </summary>
         public int Width
         {
@@ -5323,7 +5123,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает высоту холста.
+        /// Gets or sets the height of the canvas.
         /// </summary>
         public int Height
         {
@@ -5337,9 +5137,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Создает холст.
+        /// Creates canvas.
         /// </summary>
-        /// <returns>Точечный рисунок</returns>
+        /// <returns>Bitmap</returns>
         public Bitmap Create()
         {
             bitmap = new Bitmap(width, height);
@@ -5357,36 +5157,33 @@ namespace UMapx.Imaging
 
     #region Points
     /// <summary>
-    /// Определяет фильтр пикселизации.
+    /// Defines the pixelation filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
     public class Pixelate : PointAddition, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Параметр фильтра.
-        /// </summary>
         private int value = 20;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр пикселизации.
+        /// Initializes the pixelation filter.
         /// </summary>
-        /// <param name="value">Глубина [0, 100]</param>
+        /// <param name="value">Value [0, 100]</param>
         public Pixelate(int value)
         {
             Value = value;
         }
         /// <summary>
-        /// Инициализирует фильтр пикселизации.
+        /// Initializes the pixelation filter.
         /// </summary>
         public Pixelate() { }
         /// <summary>
-        /// Получает или задает значение глубины пикселизации.
+        /// Gets or sets the value.
         /// </summary>
         public int Value
         {
@@ -5401,7 +5198,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -5410,36 +5207,33 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр разбиения на сетку.
+    /// Defines the grid filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
     public class Grid : PointAddition, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Параметр фильтра.
-        /// </summary>
         private int value = 20;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр разбиения на сетку.
+        /// Initializes the grid filter.
         /// </summary>
-        /// <param name="value">Глубина [0, 100]</param>
+        /// <param name="value">Value [0, 100]</param>
         public Grid(int value)
         {
             Value = value;
         }
         /// <summary>
-        /// Инициализирует фильтр разбиения на сетку.
+        /// Initializes the grid filter.
         /// </summary>
         public Grid() { }
         /// <summary>
-        /// Получает или задает значение глубины разбиения.
+        /// Gets or sets the value.
         /// </summary>
         public int Value
         {
@@ -5454,7 +5248,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -5463,36 +5257,33 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр дрожания.
+    /// Defines the jitter filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
     public class Jitter : PointAddition, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Параметр фильтра.
-        /// </summary>
         private int value = 20;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр дрожания.
+        /// Initializes the jitter filter.
         /// </summary>
-        /// <param name="value">Глубина [0, 100]</param>
+        /// <param name="value">Value [0, 100]</param>
         public Jitter(int value)
         {
             Value = value;
         }
         /// <summary>
-        /// Инициализирует фильтр дрожания.
+        /// Initializes the jitter filter.
         /// </summary>
         public Jitter() { }
         /// <summary>
-        /// Получает или задает значение глубины дрожания.
+        /// Gets or sets the value.
         /// </summary>
         public int Value
         {
@@ -5507,7 +5298,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -5516,36 +5307,33 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет водный фильтр.
+    /// Defines the water filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
     public class Water : PointMultiplication, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Параметр фильтра.
-        /// </summary>
         private int value = 20;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует водный фильтр.
+        /// Initializes the water filter.
         /// </summary>
-        /// <param name="value">Глубина [0, 100]</param>
+        /// <param name="value">Value [0, 100]</param>
         public Water(int value)
         {
             Value = value;
         }
         /// <summary>
-        /// Инициализирует водный фильтр.
+        /// Initializes the water filter.
         /// </summary>
         public Water() { }
         /// <summary>
-        /// Получает или задает значение глубины фильтра.
+        /// Gets or sets the value.
         /// </summary>
         public int Value
         {
@@ -5560,7 +5348,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -5569,36 +5357,33 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр шума.
+    /// Defines the noise filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
     public class Noise : PointMultiplication, IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Параметр фильтра.
-        /// </summary>
         private int value = 20;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует водный фильтр.
+        /// Initializes the noise filter.
         /// </summary>
-        /// <param name="value">Глубина [0, 100]</param>
+        /// <param name="value">Value [0, 100]</param>
         public Noise(int value)
         {
             Value = value;
         }
         /// <summary>
-        /// Инициализирует водный фильтр.
+        /// Initializes the noise filter.
         /// </summary>
         public Noise() { }
         /// <summary>
-        /// Получает или задает значение глубины фильтра.
+        /// Gets or sets the value.
         /// </summary>
         public int Value
         {
@@ -5613,7 +5398,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -5625,47 +5410,41 @@ namespace UMapx.Imaging
 
     #region Morphs
     /// <summary>
-    /// Определяет фильтр сдвига.
+    /// Defines the shift filter.
     /// </summary>
     public class Shift : IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Смещение по оси X.
-        /// </summary>
-        protected int x;
-        /// <summary>
-        /// Смещение по оси Y.
-        /// </summary>
-        protected int y;
+        private int x;
+        private int y;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр сдвига.
+        /// Initializes the shift filter.
         /// </summary>
-        /// <param name="x">Значение смещения по оси X</param>
-        /// <param name="y">Значение смещения по оси Y</param>
+        /// <param name="x">Offset value of axis X</param>
+        /// <param name="y">Offset value of axis Y</param>
         public Shift(int x, int y)
         {
             X = x;
             Y = y;
         }
         /// <summary>
-        /// Инициализирует фильтр сдвига.
+        /// Initializes the shift filter.
         /// </summary>
-        /// <param name="point">Пара целых чисел, представляющих упорядоченную пару координат X и Y</param>
+        /// <param name="point">A pair of integers representing an ordered pair of X and Y coordinates</param>
         public Shift(PointInt point)
         {
             X = point.X;
             Y = point.Y;
         }
         /// <summary>
-        /// Инициализирует фильтр сдвига по оси X.
+        /// Initializes the shift filter.
         /// </summary>
         public Shift() { }
         /// <summary>
-        /// Получает или задает значение смещения по оси X.
+        /// Gets or sets the offset value of axis X.
         /// </summary>
         public int X
         {
@@ -5679,7 +5458,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение смещения по оси Y.
+        /// Gets or sets the offset value of axis Y.
         /// </summary>
         public int Y
         {
@@ -5693,10 +5472,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // image properties:
@@ -5707,7 +5486,7 @@ namespace UMapx.Imaging
             // exception!
             if (bmData.Width  != width ||
                 bmData.Height != height)
-                throw new Exception("Размеры входных изображений должны быть одинаковыми");
+                throw new Exception("Input image sizes must be the same");
 
             // applying only for X:
             if (x != 0 && y == 0)
@@ -5726,10 +5505,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -5739,9 +5518,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -5756,31 +5535,30 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <param name="stride">Ширина шага по индексу</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <param name="stride">Stride</param>
         private unsafe void ShiftY(BitmapData bmData, BitmapData bmSrc, int width, int height, int stride)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             byte* pSrc = (byte*)(void*)bmSrc.Scan0.ToPointer();
-            int sX = 0, sY = 0, front = 0, reverse = 0, f = 1; // Смещения.
+            int sX = 0, sY = 0, front = 0, reverse = 0, f = 1;
             int i, j;
 
             for (j = 0; j < height; j++)
             {
-                sY = j + y; // Смещение по оси Y
+                sY = j + y; // Offset of axis Y
 
                 for (i = 0; i < width; i++, p += 4)
                 {
-                    sX = i; // Смещение по оси X
+                    sX = i; // Offset of axis X
 
                     if (sY < height && sY >= 0)
                     {
-                        // Смещение в пределах рисунка
                         front = Math.Abs(sX * 4 + sY * stride);
                         p[0] = pSrc[front    ];
                         p[1] = pSrc[front + 1];
@@ -5789,8 +5567,8 @@ namespace UMapx.Imaging
                     }
                     else
                     {
-                        f = (sY < 0) ? -1 : 1; // Определение направления смещения.
-                        // Смещение за пределами рисунка
+                        f = (sY < 0) ? -1 : 1;
+
                         reverse = Math.Abs(sX * 4 + (sY - f * height) * stride);
                         p[0] = pSrc[reverse    ];
                         p[1] = pSrc[reverse + 1];
@@ -5802,31 +5580,30 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <param name="stride">Ширина шага по индексу</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <param name="stride">Stride</param>
         private unsafe void ShiftX(BitmapData bmData, BitmapData bmSrc, int width, int height, int stride)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             byte* pSrc = (byte*)(void*)bmSrc.Scan0.ToPointer();
-            int sX = 0, sY = 0, front = 0, reverse = 0, f = 1; // Смещения.
+            int sX = 0, sY = 0, front = 0, reverse = 0, f = 1;
             int i, j;
 
             for (j = 0; j < height; j++)
             {
-                sY = j; // Смещение по оси Y
+                sY = j; // Offset of axis Y
 
                 for (i = 0; i < width; i++, p += 4)
                 {
-                    sX = i + x; // Смещение по оси X
+                    sX = i + x; // Offset of axis X
 
                     if (sX < width && sX >= 0)
                     {
-                        // Смещение в пределах рисунка
                         front = Math.Abs(sX * 4 + sY * stride);
                         p[0] = pSrc[front];
                         p[1] = pSrc[front + 1];
@@ -5835,8 +5612,8 @@ namespace UMapx.Imaging
                     }
                     else
                     {
-                        f = (sX < 0) ? -1 : 1; // Определение направления смещения.
-                        // Смещение за пределами рисунка
+                        f = (sX < 0) ? -1 : 1;
+                        
                         reverse = Math.Abs((sX - f * width) * 4 + sY * stride);
                         p[0] = pSrc[reverse];
                         p[1] = pSrc[reverse + 1];
@@ -5850,38 +5627,32 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр отображения.
+    /// Defines the flip filter.
     /// </summary>
     public class Flip : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// По оси X.
-        /// </summary>
-        protected bool x = true;
-        /// <summary>
-        /// По оси Y.
-        /// </summary>
-        protected bool y = true;
+        private bool x = true;
+        private bool y = true;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр отображения.
+        /// Initializes the flip filter.
         /// </summary>
         public Flip() { }
         /// <summary>
-        /// Инициализирует фильтр отображения.
+        /// Initializes the flip filter.
         /// </summary>
-        /// <param name="x">Отображение по оси X</param>
-        /// <param name="y">Отображение по оси Y</param>
+        /// <param name="x">Flip X</param>
+        /// <param name="y">Flip Y</param>
         public Flip(bool x, bool y)
         {
             X = x;
             Y = y;
         }
         /// <summary>
-        /// Получает или задает отображение по оси X.
+        /// Gets or sets flip X.
         /// </summary>
         public bool X
         {
@@ -5895,7 +5666,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает отображение по оси Y.
+        /// Gets or sets flip Y.
         /// </summary>
         public bool Y
         {
@@ -5909,9 +5680,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             #region Data
@@ -5921,7 +5692,7 @@ namespace UMapx.Imaging
             #endregion
 
             #region FlipY
-            // Отображение по оси X:
+            // Flip X:
             if (this.x == true)
             {
                 byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -5961,7 +5732,7 @@ namespace UMapx.Imaging
             #endregion
 
             #region FlipX
-            // Отображение по оси Y:
+            // Flip Y:
             if (this.y == true)
             {
                 byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -5992,9 +5763,9 @@ namespace UMapx.Imaging
             #endregion
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -6004,7 +5775,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр поворота.
+    /// Defines the rotation filter.
     /// </summary>
     public class Rotate : IBitmapFilter2
     {
@@ -6015,16 +5786,16 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр поворота.
+        /// Initializes the rotation filter.
         /// </summary>
-        /// <param name="angle">Угол поворота</param>
-        /// <param name="color">Цвет фона</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="color">Background color</param>
         public Rotate(double angle, Color color)
         {
             Angle = angle; Color = color;
         }
         /// <summary>
-        /// Получает или задает угол поворота.
+        /// Gets or sets angle value.
         /// </summary>
         public double Angle
         {
@@ -6038,7 +5809,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает цвет фона.
+        /// Gets or sets background color.
         /// </summary>
         public Color Color
         {
@@ -6052,15 +5823,15 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // exception!
             if (bmSrc.Width != bmData.Width || bmSrc.Height != bmData.Height)
-                throw new Exception("Размеры входных изображений должны быть одинаковыми");
+                throw new Exception("Input image sizes must be the same");
 
             // get source image size
             int width = bmSrc.Width, height = bmSrc.Height, stride = bmSrc.Stride;
@@ -6122,10 +5893,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -6135,9 +5906,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -6151,7 +5922,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр вырезания.
+    /// Defines the crop filter.
     /// </summary>
     public class Crop : IBitmapFilter2
     {
@@ -6161,26 +5932,26 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр вырезания.
+        /// Initializes the crop filter.
         /// </summary>
-        /// <param name="rectangle">Прямоугольная область</param>
+        /// <param name="rectangle">Rectangle</param>
         public Crop(Rectangle rectangle)
         {
             Rectangle = rectangle;
         }
         /// <summary>
-        /// Инициализирует фильтр вырезания.
+        /// Initializes the crop filter.
         /// </summary>
-        /// <param name="x">Координата X</param>
-        /// <param name="y">Координата Y</param>
-        /// <param name="width">Ширина</param>
-        /// <param name="height">Высота</param>
+        /// <param name="x">Coordinate X</param>
+        /// <param name="y">Coordinate Y</param>
+        /// <param name="width">Width</param>
+        /// <param name="height">Height</param>
         public Crop(int x, int y, int width, int height)
         {
             Rectangle = new Rectangle(x, y, width, height);
         }
         /// <summary>
-        /// Получает или задает прямоугольную область.
+        /// Gets or sets rectangle.
         /// </summary>
         public Rectangle Rectangle
         {
@@ -6194,10 +5965,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image:
@@ -6242,10 +6013,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -6257,7 +6028,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр изменения размеров изображения.
+    /// Defines the resize filter.
     /// </summary>
     public class Resize : IBitmapFilter2
     {
@@ -6268,24 +6039,24 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр изменения размеров изображения.
+        /// Initializes the resize filter.
         /// </summary>
-        /// <param name="width">Ширина</param>
-        /// <param name="height">Высота</param>
+        /// <param name="width">Width</param>
+        /// <param name="height">Height</param>
         public Resize(int width = 512, int height = 512)
         {
             Size = new SizeInt(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр изменения размеров изображения.
+        /// Initializes the resize filter.
         /// </summary>
-        /// <param name="size">Ширина и высота</param>
+        /// <param name="size">Size</param>
         public Resize(SizeInt size)
         {
             Size = size;
         }
         /// <summary>
-        /// Получает или задает новый размер изображения.
+        /// Gets or sets image size.
         /// </summary>
         public SizeInt Size
         {
@@ -6300,10 +6071,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image:
@@ -6340,10 +6111,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -6355,49 +6126,43 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр наложения.
+    /// Defines the merge filter.
     /// </summary>
     public class Merge : IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Прозрачность.
-        /// </summary>
-        protected int transparency = 255;
-        /// <summary>
-        /// Координаты X и Y.
-        /// </summary>
-        protected PointInt point;
+        private int transparency = 255;
+        private PointInt point;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр наложения.
+        /// Initializes the merge filter.
         /// </summary>
-        /// <param name="point">Пара целых чисел, представляющих упорядоченную пару координат X и Y</param>
-        /// <param name="transparency">Прозрачность [0, 255]</param>
+        /// <param name="point">A pair of integers representing an ordered pair of X and Y coordinates</param>
+        /// <param name="transparency">Transparency [0, 255]</param>
         public Merge(PointInt point, int transparency = 128)
         {
             Point = point;
             Transparency = transparency;
         }
         /// <summary>
-        /// Инициализирует фильтр наложения.
+        /// Initializes the merge filter.
         /// </summary>
-        /// <param name="x">Координата X</param>
-        /// <param name="y">Координата Y</param>
-        /// <param name="transparency">Прозрачность [0, 255]</param>
+        /// <param name="x">Coordinate X</param>
+        /// <param name="y">Coordinate Y</param>
+        /// <param name="transparency">Transparency [0, 255]</param>
         public Merge(int x, int y, int transparency)
         {
             Point = new PointInt(x, y);
             Transparency = transparency;
         }
         /// <summary>
-        /// Инициализирует фильтр наложения.
+        /// Initializes the merge filter.
         /// </summary>
         public Merge() { }
         /// <summary>
-        /// Получает или задает значение прозрачности [0, 255]
+        /// Gets or sets the transparency value [0, 255].
         /// </summary>
         public int Transparency
         {
@@ -6411,7 +6176,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает пару целых чисел, представляющих упорядоченную пару координат X и Y.
+        /// Gets or sets a pair of integers representing an ordered pair of X and Y coordinates.
         /// </summary>
         public PointInt Point
         {
@@ -6425,10 +6190,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image:
@@ -6473,10 +6238,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -6489,13 +6254,13 @@ namespace UMapx.Imaging
 
         #region Merging function components
         /// <summary>
-        /// Реализует слияние двух случайных величин с заданными параметрами.
+        /// Merge function.
         /// </summary>
-        /// <param name="x">Первая случайная величина</param>
-        /// <param name="y">Вторая случайная величина</param>
-        /// <param name="a0">Первый параметр</param>
-        /// <param name="a1">Второй параметр</param>
-        /// <returns>Целое число без знака</returns>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="a0"></param>
+        /// <param name="a1"></param>
+        /// <returns></returns>
         private static byte merge(byte x, byte y, int a0, int a1)
         {
             return Maths.Byte((x * a0 + y * a1) / 255);
@@ -6503,159 +6268,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр ректификации.
-    /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
-    /// https://en.wikipedia.org/wiki/Image_rectification
-    /// </remarks>
-    /// </summary>
-    public class Rectification : IBitmapFilter2
-    {
-        #region Private data
-        private double[,] H;
-        private Color color;
-        #endregion
-
-        #region Filter components
-        /// <summary>
-        /// Инициализирует фильтр ректификации.
-        /// </summary>
-        /// <param name="homography">Матрица гомографии [3, 3]</param>
-        /// <param name="color">Цвет фона</param>
-        public Rectification(double[,] homography, Color color)
-        {
-            this.H = homography; Color = color;
-        }
-        /// <summary>
-        /// Получает или задает матрицу гомографии [3, 3], используемую для сопоставления изображения, 
-        /// переданного фильтру, на накладываемое изображение.
-        /// </summary>
-        public double[,] Homography
-        {
-            get
-            {
-                return this.H;
-            }
-            set
-            {
-                if (value.GetLength(0) != 3 && value.GetLength(1) != 3)
-                    throw new Exception("Размерность матрицы должна быть [3, 3]");
-
-                this.H = value;
-            }
-        }
-        /// <summary>
-        /// Получает или задает цвет фона.
-        /// </summary>
-        public Color Color
-        {
-            get { return color; }
-            set { color = value; }
-        }
-        /// <summary>
-        /// Применяет фильтр к точечному рисунку.
-        /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
-        public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
-        {
-            // get source image size
-            int width = bmSrc.Width;
-            int height = bmSrc.Height;
-            int srcStride = bmSrc.Stride;
-
-            // get destination image size
-            int nWidth = bmData.Width;
-            int nHeight = bmData.Height;
-            int dstStride = bmData.Stride;
-
-            // fill values
-            byte R = color.R;
-            byte G = color.G;
-            byte B = color.B;
-            byte A = color.A;
-
-            // Retrieve homography matrix as float array
-            byte* src = (byte*)bmSrc.Scan0.ToPointer();
-            byte* dst = (byte*)bmData.Scan0.ToPointer();
-
-            int y, x, ox, oy, c;
-            double cx, cy, hw, hx, hy;
-
-            // Project the second image
-            for (y = 0; y < nHeight; y++)
-            {
-                for (x = 0; x < nWidth; x++, dst += 4)
-                {
-                    cx = x;
-                    cy = y;
-
-                    // projection using homogenous coordinates
-                    hw = (H[2, 0] * cx + H[2, 1] * cy + H[2, 2]);
-                    hx = (H[0, 0] * cx + H[0, 1] * cy + H[0, 2]) / hw;
-                    hy = (H[1, 0] * cx + H[1, 1] * cy + H[1, 2]) / hw;
-
-                    // coordinate of the nearest point
-                    ox = (int)(hx);
-                    oy = (int)(hy);
-
-                    // validate source pixel's coordinates
-                    if ((ox >= 0) && (oy >= 0) && (ox < width) && (oy < height))
-                    {
-                        c = oy * srcStride + ox * 4;
-
-                        // 32bpp
-                        dst[0] = src[c + 0];
-                        dst[1] = src[c + 1];
-                        dst[2] = src[c + 2];
-                        dst[3] = src[c + 3];
-                    }
-                    else
-                    {
-                        // 32bpp
-                        dst[0] = B;
-                        dst[1] = G;
-                        dst[2] = R;
-                        dst[3] = A;
-                    }
-                }
-            }
-
-            return;
-        }
-        /// <summary>
-        /// Применяет фильтр к точечному рисунку.
-        /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
-        public void Apply(Bitmap Data, Bitmap Src)
-        {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
-            return;
-        }
-        /// <summary>
-        /// Применяет фильтр к точечному рисунку.
-        /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        public void Apply(Bitmap Data)
-        {
-            Bitmap Src = (Bitmap)Data.Clone();
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
-            Src.Dispose();
-            return;
-        }
-        #endregion
-    }
-    /// <summary>
-    /// Определяет фильтры текстуризации.
+    /// Defines the texturing filter.
     /// </summary>
     public class Texturer : IBitmapFilter
     {
@@ -6666,24 +6279,24 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтры текстуризации.
+        /// Initializes the texturing filter.
         /// </summary>
-        /// <param name="texture">Матрица-текстура</param>
+        /// <param name="texture">Matrix</param>
         public Texturer(double[,] texture)
         {
             Texture = texture;
         }
         /// <summary>
-        /// Инициализирует фильтры текстуризации.
+        /// Initializes the texturing filter.
         /// </summary>
-        /// <param name="texture">Матрица-текстура</param>
-        /// <param name="depth">Глубина фильтра [0, 1]</param>
+        /// <param name="texture">Matrix</param>
+        /// <param name="depth">Depth [0, 1]</param>
         public Texturer(double[,] texture, double depth = 1.0)
         {
             Texture = texture; Depth = depth;
         }
         /// <summary>
-        /// Получает или задает матрицу-текстуру.
+        /// Gets or sets the texture matrix.
         /// </summary>
         public double[,] Texture
         {
@@ -6691,7 +6304,7 @@ namespace UMapx.Imaging
             set { texture = value; }
         }
         /// <summary>
-        /// Получает или задает глубину фильтра [0, 1].
+        /// Gets or sets the depth value [0, 1].
         /// </summary>
         public double Depth
         {
@@ -6699,9 +6312,9 @@ namespace UMapx.Imaging
             set { this.depth = Maths.Double(value); }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
@@ -6734,9 +6347,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -6746,21 +6359,16 @@ namespace UMapx.Imaging
         #endregion
 
         #region Static methods
-        /// <summary>
-        /// Генератор случайных чисел.
-        /// </summary>
         private static Random rand = new Random();
-        /// <summary>
-        /// Случайное значение.
-        /// </summary>
         private static int r;
+
         /// <summary>
-        /// Реализует построение текстуры дерева заданного размера.
+        /// Implements the construction of a wood texture.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="rings">Количество колец</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="rings">Rings</param>
+        /// <returns>Matrix</returns>
         public static Texturer Wood(int m, int l, double rings = 12)
         {
             PerlinNoise noise = new PerlinNoise(8, 0.5, 1.0 / 32, 0.05); r = rand.Next(5000);
@@ -6785,11 +6393,11 @@ namespace UMapx.Imaging
             return new Texturer(texture);
         }
         /// <summary>
-        /// Реализует построение текстуры ткани заданного размера.
+        /// Implements the construction of a textile texture.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static Texturer Textile(int m, int l)
         {
             PerlinNoise noise = new PerlinNoise(3, 0.65, 1.0 / 8, 1.0); r = rand.Next(5000);
@@ -6810,13 +6418,13 @@ namespace UMapx.Imaging
             return new Texturer(texture);
         }
         /// <summary>
-        /// Реализует построение текстуры мрамора заданного размера.
+        /// Implements the construction of a marble texture.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="yPeriod">Период по высоте</param>
-        /// <param name="xPeriod">Период по ширине</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="yPeriod">Y-period</param>
+        /// <param name="xPeriod">X-period</param>
+        /// <returns>Matrix</returns>
         public static Texturer Marble(int m, int l, double yPeriod = 10.0, double xPeriod = 5.0)
         {
             PerlinNoise noise = new PerlinNoise(2, 0.65, 1.0 / 32, 1.0); r = rand.Next(5000);
@@ -6838,11 +6446,11 @@ namespace UMapx.Imaging
             return new Texturer(texture);
         }
         /// <summary>
-        /// Реализует построение текстуры лабиринта заданного размера.
+        /// Implements the construction of a labyrinth texture.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static Texturer Labyrinth(int m, int l)
         {
             PerlinNoise noise = new PerlinNoise(1, 0.65, 1.0 / 16, 1.0); r = rand.Next(5000);
@@ -6863,11 +6471,11 @@ namespace UMapx.Imaging
             return new Texturer(texture);
         }
         /// <summary>
-        /// Реализует построение текстуры облаков заданного размера.
+        /// Implements the construction of a clouds texture.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static Texturer Clouds(int m, int l)
         {
             PerlinNoise noise = new PerlinNoise(8, 0.5, 1.0 / 32, 1.0); r = rand.Next(5000);
@@ -6893,10 +6501,10 @@ namespace UMapx.Imaging
 
     #region Operations
     /// <summary>
-    /// Определяет фильтр линейной операции.
+    /// Defines the linear operation filter.
     /// <remarks>
-    /// Данный фильтр работает по следующему алгоритму: C(x,y) = a * A(x,y) + b * B(x,y), где A, B - исходные изображения, 
-    /// a, b - коэффициенты.
+    /// This filter works according to the following algorithm: C (x, y) = a * A (x, y) + b * B (x, y), where A, B are the original images,
+    /// a, b are the coefficients.
     /// </remarks>
     /// </summary>
     public class Operation : IBitmapFilter2
@@ -6908,16 +6516,16 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр линейной операции.
+        /// Initializes the linear operation filter.
         /// </summary>
-        /// <param name="a">Коэффициент первого изображения</param>
-        /// <param name="b">Коэффициент второго изображения</param>
+        /// <param name="a">First image coefficient</param>
+        /// <param name="b">Second image coefficient</param>
         public Operation(double a, double b)
         {
             A = a; B = b; 
         }
         /// <summary>
-        /// Получает или задает коэффициент первого изображения.
+        /// Gets or sets the first image coefficient.
         /// </summary>
         public double A
         {
@@ -6931,7 +6539,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает коэффициент второго изображения.
+        /// Gets or sets the second image coefficient.
         /// </summary>
         public double B
         {
@@ -6945,10 +6553,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -6967,10 +6575,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -6983,7 +6591,7 @@ namespace UMapx.Imaging
 
         #region Public static methods
         /// <summary>
-        /// Возвращает фильтр операции сложения.
+        /// Addition filter.
         /// </summary>
         public static Operation Addition
         {
@@ -6993,7 +6601,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Возвращает фильтр операции вычитания.
+        /// Subtraction filter.
         /// </summary>
         public static Operation Subtraction
         {
@@ -7003,7 +6611,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Возвращает фильтр операции усреднения.
+        /// Averaging filter.
         /// </summary>
         public static Operation Averaging
         {
@@ -7015,32 +6623,29 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр создания стереоэффекта для пары изображений.
+    /// Defines the stereo effect filter for a pair of images.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// http://www.3dtv.at/Knowhow/AnaglyphComparison_en.aspx
     /// </remarks>
     /// </summary>
     public class StereoAnaglyph : IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Алгоритм.
-        /// </summary>
-        protected Anaglyph algorithm = Anaglyph.Gray;
+        private Anaglyph algorithm = Anaglyph.Gray;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр создания стереоэффекта для пары изображений.
+        /// Initializes the stereo effect filter for a pair of images.
         /// </summary>
-        /// <param name="algorithm">Алгоритм</param>
+        /// <param name="algorithm">Algorithm</param>
         public StereoAnaglyph(Anaglyph algorithm)
         {
             this.algorithm = algorithm;
         }
         /// <summary>
-        /// Получает или задает алгоритм.
+        /// Gets or sets the algorithm.
         /// </summary>
         public Anaglyph Algorithm
         {
@@ -7048,10 +6653,10 @@ namespace UMapx.Imaging
             set { algorithm = value; }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения (левое изображение)</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения (правое изображение)</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             int width = bmData.Width, height = bmData.Height;
@@ -7134,10 +6739,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -7150,16 +6755,16 @@ namespace UMapx.Imaging
 
         #region Enums
         /// <summary>
-        /// Определяет алгоритм создания стереоэффекта.
+        /// Defines the stereo effect creation algorithm.
         /// </summary>
         /// <remarks>
-        /// Более подробную информацию можно найти на сайте:
+        /// More information can be found on the website:
         /// http://www.3dtv.at/Knowhow/AnaglyphComparison_en.aspx
         /// </remarks>
         public enum Anaglyph
         {
             /// <summary>
-            /// Создает стереоэффект для пары изображений согласно следующим вычислениям:
+            /// Creates a stereo effect for a pair of images according to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=0;</item>
@@ -7168,7 +6773,7 @@ namespace UMapx.Imaging
             /// </summary>
             True,
             /// <summary>
-            /// Создает стереоэффект для пары изображений согласно следующим вычислениям:
+            /// Creates a stereo effect for a pair of images according to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=0.299*R<sub>r</sub>+0.587*G<sub>r</sub>+0.114*B<sub>r</sub>;</item>
@@ -7177,7 +6782,7 @@ namespace UMapx.Imaging
             /// </summary>
             Gray,
             /// <summary>
-            /// Создает стереоэффект для пары изображений согласно следующим вычислениям:
+            /// Creates a stereo effect for a pair of images according to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=R<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=G<sub>r</sub>;</item>
@@ -7186,7 +6791,7 @@ namespace UMapx.Imaging
             /// </summary>
             Color,
             /// <summary>
-            /// Создает стереоэффект для пары изображений согласно следующим вычислениям:
+            /// Creates a stereo effect for a pair of images according to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=G<sub>r</sub>;</item>
@@ -7195,7 +6800,7 @@ namespace UMapx.Imaging
             /// </summary>
             HalfColor,
             /// <summary>
-            /// Создает стереоэффект для пары изображений согласно следующим вычислениям:
+            /// Creates a stereo effect for a pair of images according to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=0.7*G<sub>l</sub>+0.3*B<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=G<sub>r</sub>;</item>
@@ -7207,10 +6812,9 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр рисунка маслом.
+    /// Defines the oil filter.
     /// <remarks>
-    /// Данный фильтр был портирован с языка C++.
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// https://www.codeproject.com/articles/471994/oilpainteffect
     /// </remarks>
     /// </summary>
@@ -7226,38 +6830,38 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр рисунка маслом.
+        /// Initializes the oil filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="depth">Глубина [0, 1]</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="depth">Value [0, 1]</param>
         public OilPainting(int radius = 3, double depth = 1.0)
         {
             Size = new SizeInt(radius, radius);
             Depth = depth;
         }
         /// <summary>
-        /// Инициализирует фильтр рисунка маслом.
+        /// Initializes the oil filter.
         /// </summary>
-        /// <param name="height">Радиус по высоте</param>
-        /// <param name="width">Радиус по ширине</param>
-        /// <param name="depth">Глубина [0, 1]</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="depth">Value [0, 1]</param>
         public OilPainting(int width, int height, double depth = 1.0)
         {
             Size = new SizeInt(width, height);
             Depth = depth;
         }
         /// <summary>
-        /// Инициализирует фильтр рисунка маслом.
+        /// Initializes the oil filter.
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
-        /// <param name="depth">Глубина [0, 1]</param>
+        /// <param name="size">Radius</param>
+        /// <param name="depth">Value [0, 1]</param>
         public OilPainting(SizeInt size, double depth = 1.0)
         {
             Size = size;
             Depth = depth;
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -7274,7 +6878,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение глубины [0, 1].
+        /// Gets or sets the depth value [0, 1].
         /// </summary>
         public double Depth
         {
@@ -7288,10 +6892,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
@@ -7387,10 +6991,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -7400,9 +7004,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -7416,7 +7020,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр на основе матрицы свертки.
+    /// Defines the convolution filter.
     /// </summary>
     public class Convolution : IBitmapFilter2
     {
@@ -7427,29 +7031,29 @@ namespace UMapx.Imaging
         private int radius1;
         private int l0;
         private int l1;
-        private bool twoside;
+        private bool bilateral;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр на основе двумерной матрицы свертки.
+        /// Initializes the convolution filter.
         /// </summary>
-        /// <param name="m">Матричный оператор</param>
-        /// <param name="offset">Значение смещения</param>
-        /// <param name="twoside">Двусторонняя обработка или нет</param>
-        public Convolution(double[,] m, double offset = 0, bool twoside = false)
+        /// <param name="m">Matrix</param>
+        /// <param name="offset">Offset</param>
+        /// <param name="bilateral">Bilateral processing or not</param>
+        public Convolution(double[,] m, double offset = 0, bool bilateral = false)
         {
-            Matrix = m; Offset = offset; Twoside = twoside;
+            Matrix = m; Offset = offset; Bilateral = bilateral;
         }
         /// <summary>
-        /// Инициализирует фильтр на основе двумерной матрицы свертки.
+        /// Initializes the convolution filter.
         /// </summary>
         public Convolution()
         {
-            Matrix = Matrice.One(3, 3); Offset = 0; Twoside = false;
+            Matrix = Matrice.One(3, 3); Offset = 0; Bilateral = false;
         }
         /// <summary>
-        /// Получает или задает матричный оператор.
+        /// Gets or sets the convolution matrix.
         /// </summary>
         public double[,] Matrix
         {
@@ -7463,7 +7067,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение смещения.
+        /// Gets or sets the offset value.
         /// </summary>
         public double Offset
         {
@@ -7477,23 +7081,23 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Двусторонняя обработка или нет.
+        /// Bilateral processing or not.
         /// </summary>
-        public bool Twoside
+        public bool Bilateral
         {
             get
             {
-                return this.twoside;
+                return this.bilateral;
             }
             set
             {
-                this.twoside = value;
+                this.bilateral = value;
             }
         }
         /// <summary>
-        /// Устанавливает значения параметров свертки.
+        /// 
         /// </summary>
-        /// <param name="m">Матричный оператор</param>
+        /// <param name="m">Matrix</param>
         private void Data(double[,] m)
         {
             this.l0 = m.GetLength(0);
@@ -7503,22 +7107,22 @@ namespace UMapx.Imaging
             this.kernel = Jagged.ToJagged(m);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
-            if (this.l0 != this.l1 && this.twoside == true)
-                throw new Exception("Матрица должна быть квадратной");
+            if (this.l0 != this.l1 && this.bilateral == true)
+                throw new Exception("Matrix must be squared");
 
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
             byte* dst = (byte*)bmData.Scan0.ToPointer();
             #endregion
 
-            if (!this.twoside)
+            if (!this.bilateral)
             {
                 Parallel.For(0, height, y =>
                 {
@@ -7665,10 +7269,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -7679,9 +7283,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -7697,21 +7301,21 @@ namespace UMapx.Imaging
 
         #region Sobel's gradient components
         /// <summary>
-        /// Получает значение оператора градиента.
+        /// Gets the value of the gradient operator.
         /// </summary>
-        /// <param name="Gx">Случайная величина</param>
-        /// <param name="Gy">Случайная величина</param>
-        /// <returns>Число двойной точности</returns>
+        /// <param name="Gx">Gradient X</param>
+        /// <param name="Gy">Gradient Y</param>
+        /// <returns>Double precision floating point number</returns>
         public static double G(double Gx, double Gy)
         {
             return Math.Sqrt(Gx * Gx + Gy * Gy);
         }
         /// <summary>
-        /// Получает направление оператора градиента.
+        /// Gets the angle of the gradient operator.
         /// </summary>
-        /// <param name="Gx">Случайная величина</param>
-        /// <param name="Gy">Случайная величина</param>
-        /// <returns>Число двойной точности</returns>
+        /// <param name="Gx">Gradient X</param>
+        /// <param name="Gy">Gradient Y</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Tetta(double Gx, double Gy)
         {
             return Math.Atan(Gx / Gy);
@@ -7721,12 +7325,12 @@ namespace UMapx.Imaging
         #region Public static methods
         #region Radius matrix
         /// <summary>
-        /// Реализует построение перевернутого оператора Гаусса.
+        /// mplements the construction of the inverted Gausssian filter.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="sigma">Отклонение (!=0)</param>
-        /// <returns>Матричный оператор</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="sigma">Standard deviation (!=0)</param>
+        /// <returns>Matrix</returns>
         public static Convolution LoGaussian(int m, int l, double sigma)
         {
             int r1 = m / 2;
@@ -7749,12 +7353,12 @@ namespace UMapx.Imaging
             return new Convolution(H);
         }
         /// <summary>
-        /// Реализует построение оператора Гаусса.
+        /// mplements the construction of the Gaussian blur filter.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="sigma">Отклонение (!=0)</param>
-        /// <returns>Матричный оператор</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="sigma">Standard deviation (!=0)</param>
+        /// <returns>Matrix</returns>
         public static Convolution Gaussian(int m, int l, double sigma)
         {
             int r1 = m / 2;
@@ -7772,15 +7376,14 @@ namespace UMapx.Imaging
             return new Convolution(H);
         }
         /// <summary>
-        /// Реализует построение оператора "нерезкого маскирования".
+        /// Implements the construction of the "unsharp masking" filter.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="sigma">Отклонение (!=0)</param>
-        /// <returns>Матричный оператор</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="sigma">Standard deviation (!=0)</param>
+        /// <returns>Matrix</returns>
         public static Convolution Unsharp(int m, int l, double sigma)
         {
-            // построение оператора Гаусса:
             double[,] G = new double[m, l];
             int i, j, x, y;
             int r1 = m / 2;
@@ -7799,7 +7402,6 @@ namespace UMapx.Imaging
             double summary = 0;
             double v, iv;
 
-            // Вычисление матрицы:
             for (i = 0; i < m; i++)
             {
                 for (j = 0; j < l; j++)
@@ -7811,17 +7413,16 @@ namespace UMapx.Imaging
                 }
             }
 
-            // Вычисление цетрального значения:
             invG[m / 2, l / 2] = 2 * summary - invG[m / 2, l / 2];
             return new Convolution(invG);
         }
         /// <summary>
-        /// Реализует построение оператора выделения верхних частот.
+        /// Implements the construction of the high-pass filter.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="boost">Усиление</param>
-        /// <returns>Матричный оператор</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="boost">Boost</param>
+        /// <returns>Matrix</returns>
         public static Convolution HighPass(int m, int l, double boost)
         {
             int r1 = m / 2;
@@ -7840,20 +7441,20 @@ namespace UMapx.Imaging
             return new Convolution(H);
         }
         /// <summary>
-        /// Реализует построение оператора выделения нижних частот.
+        /// Implements the construction of the low-pass filter.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матричный оператор</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static Convolution LowPass(int m, int l)
         {
             return Convolution.HighPass(m, l, 1);
         }
         /// <summary>
-        /// Реализует построение оператора выделения рельефа.
+        /// Implements the construction of the emboss filter.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матричный оператор</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static Convolution Emboss(int n)
         {
             double[,] H = new double[n, n];
@@ -7869,57 +7470,57 @@ namespace UMapx.Imaging
 
         #region Fixed radius matrix
         /// <summary>
-        /// Реализует построение оператора Робертса [2 x 2].
+        /// Implements the construction of the Roberts operator [2 x 2].
         /// </summary>
-        /// <returns>Матричный оператор</returns>
+        /// <returns>Matrix</returns>
         public static Convolution Roberts()
         {
             return new Convolution(new double[2, 2] { { 1, 0 }, { 0, -1 } });
         }
         /// <summary>
-        /// Реализует построение оператора Прюитта [3 x 3].
+        /// Implements the construction of the Prewitt operator [3 x 3].
         /// </summary>
-        /// <returns>Матричный оператор</returns>
+        /// <returns>Matrix</returns>
         public static Convolution Prewitt()
         {
             return new Convolution(new double[3, 3] { { -1, -1, -1 }, { 0, 0, 0 }, { 1, 1, 1 } });
         }
         /// <summary>
-        /// Реализует построение оператора Собеля [3 x 3].
+        /// Implements the construction of the Sobel operator [3 x 3].
         /// </summary>
-        /// <returns>Матричный оператор</returns>
+        /// <returns>Matrix</returns>
         public static Convolution Sobel()
         {
             return new Convolution(new double[3, 3] { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } });
         }
         /// <summary>
-        /// Реализует построение оператора Щарра [3 x 3].
+        /// Implements the construction of the Scharr operator [3 x 3].
         /// </summary>
-        /// <returns>Матричный оператор</returns>
+        /// <returns>Matrix</returns>
         public static Convolution Scharr()
         {
             return new Convolution(new double[3, 3] { { 3, 10, 3 }, { 0, 0, 0 }, { -3, -10, -3 } });
         }
         /// <summary>
-        /// Реализует построение оператора Лапласа [3 x 3].
+        /// Implements the construction of the Laplacian operator [3 x 3].
         /// </summary>
-        /// <returns>Матричный оператор</returns>
+        /// <returns>Matrix</returns>
         public static Convolution Laplacian()
         {
             return new Convolution(new double[3, 3] { { 0, 1, 0 }, { 1, -4, 1 }, { 0, 1, 0 } });
         }
         /// <summary>
-        /// Реализует построение диагонального оператора Лапласа [3 x 3].
+        /// Implements the construction of the diagonal Laplacian operator [3 x 3].
         /// </summary>
-        /// <returns>Матричный оператор</returns>
+        /// <returns>Matrix</returns>
         public static Convolution LaplacianDiagonal()
         {
             return new Convolution(new double[3, 3] { { 1, 1, 1 }, { 1, -8, 1 }, { 1, 1, 1 } });
         }
         /// <summary>
-        /// Реализует построение обратного оператора Лапласа [3 x 3].
+        /// Implements the construction of the inverted Laplacian operator [3 x 3].
         /// </summary>
-        /// <returns>Матричный оператор</returns>
+        /// <returns>Matrix</returns>
         public static Convolution LaplacianInvert()
         {
             return new Convolution(new double[3, 3] { { -1, 0, -1 }, { 0, 4, 0 }, { -1, 0, -1 } });
@@ -7928,10 +7529,10 @@ namespace UMapx.Imaging
 
         #region Fixed radius compass matrix
         /// <summary>
-        /// Реализует построение оператора-компаса Кирша [3 x 3].
+        /// Implements the construction of the Kirsh operator [3 x 3].
         /// </summary>
-        /// <param name="direction">Направление оператора градиента</param>
-        /// <returns>Матричный оператор</returns>
+        /// <param name="direction">Gradient direction</param>
+        /// <returns>Matrix</returns>
         public static Convolution Kirsh(Gradient direction)
         {
             double[,] H = new double[3, 3];
@@ -7988,10 +7589,10 @@ namespace UMapx.Imaging
             return new Convolution(H);
         }
         /// <summary>
-        /// Реализует построение оператора-компаса Робертса [2 x 2].
+        /// Implements the construction of the Roberts operator [3 x 3]. [2 x 2].
         /// </summary>
-        /// <param name="direction">Направление оператора градиента</param>
-        /// <returns>Матричный оператор</returns>
+        /// <param name="direction">Gradient direction</param>
+        /// <returns>Matrix</returns>
         public static Convolution Roberts(Gradient direction)
         {
             double[,] H = new double[2, 2];
@@ -8023,59 +7624,50 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр морфологических операций.
+    /// Defines the morphology filter.
     /// </summary>
     public class Morphology : IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Пороговое значение.
-        /// </summary>
         private int threshold;
-        /// <summary>
-        /// Ширина фильтра.
-        /// </summary>
         private int rw;
-        /// <summary>
-        /// Высота фильтра.
-        /// </summary>
         private int rh;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр квадратного размытия.
+        /// Initializes the morphology filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="threshold">Пороговое значение</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="threshold">Threshold</param>
         public Morphology(int radius = 3, int threshold = 0)
         {
             Size = new SizeInt(radius, radius);
             Threshold = threshold;
         }
         /// <summary>
-        /// Инициализирует фильтр квадратного размытия.
+        /// Initializes the morphology filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="threshold">Пороговое значение</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="threshold">Threshold</param>
         public Morphology(int width, int height, int threshold)
         {
             Size = new SizeInt(width, height);
             Threshold = threshold;
         }
         /// <summary>
-        /// Инициализирует фильтр квадратного размытия.
+        /// Initializes the morphology filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
-        /// <param name="threshold">Пороговое значение</param>
+        /// <param name="size">Filter size</param>
+        /// <param name="threshold">Threshold</param>
         public Morphology(SizeInt size, int threshold = 0)
         {
             Size = size;
             Threshold = threshold;
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -8090,7 +7682,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает пороговое значение.
+        /// Gets or sets the threshold.
         /// </summary>
         public int Threshold
         {
@@ -8104,10 +7696,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (rw >= 2 && rh >= 2)
@@ -8126,10 +7718,10 @@ namespace UMapx.Imaging
             else return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -8139,9 +7731,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -8156,10 +7748,10 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyVertical(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
@@ -8223,10 +7815,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyHorizontal(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
@@ -8293,26 +7885,26 @@ namespace UMapx.Imaging
 
         #region Public static components
         /// <summary>
-        /// Инициализирует фильтр медианы.
+        /// Initializes the median filter.
         /// </summary>
-        /// <param name="radius">Радиус</param>
+        /// <param name="radius">Radius</param>
         public static Morphology Median(int radius)
         {
             int threshold = radius / 2;
             return new Morphology(radius, radius, threshold);
         }
         /// <summary>
-        /// Инициализирует фильтр эрозии.
+        /// Initializes the erosion filter.
         /// </summary>
-        /// <param name="radius">Радиус</param>
+        /// <param name="radius">Radius</param>
         public static Morphology Erosion(int radius)
         {
             return new Morphology(radius, radius, 0);
         }
         /// <summary>
-        /// Инициализирует фильтр расширения.
+        /// Initializes the dilatation filter.
         /// </summary>
-        /// <param name="radius">Радиус</param>
+        /// <param name="radius">Radius</param>
         public static Morphology Dilatation(int radius)
         {
             return new Morphology(radius, radius, radius - 1);
@@ -8320,49 +7912,43 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр расширения.
+    /// Defines the dilatation filter.
     /// </summary>
     public class Dilatation : IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Ширина фильтра.
-        /// </summary>
         private int rw;
-        /// <summary>
-        /// Высота фильтра.
-        /// </summary>
         private int rh;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр расширения.
+        /// Initializes the dilatation filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
+        /// <param name="radius">Radius</param>
         public Dilatation(int radius = 3)
         {
             Size = new SizeInt(radius, radius);
         }
         /// <summary>
-        /// Инициализирует фильтр расширения.
+        /// Initializes the dilatation filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public Dilatation(int width, int height)
         {
             Size = new SizeInt(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр расширения.
+        /// Initializes the dilatation filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
+        /// <param name="size">Filter size</param>
         public Dilatation(SizeInt size)
         {
             Size = size;
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -8377,10 +7963,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (rw >= 2 && rh >= 2)
@@ -8399,10 +7985,10 @@ namespace UMapx.Imaging
             else return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -8412,9 +7998,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -8429,10 +8015,10 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyVertical(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
@@ -8488,10 +8074,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyHorizontal(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
@@ -8549,49 +8135,43 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр эрозии.
+    /// Defines the erosion filter.
     /// </summary>
     public class Erosion : IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Ширина фильтра.
-        /// </summary>
         private int rw;
-        /// <summary>
-        /// Высота фильтра.
-        /// </summary>
         private int rh;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр эрозии.
+        /// Initializes the erosion filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
+        /// <param name="radius">Radius</param>
         public Erosion(int radius = 3)
         {
             Size = new SizeInt(radius, radius);
         }
         /// <summary>
-        /// Инициализирует фильтр эрозии.
+        /// Initializes the erosion filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public Erosion(int width, int height)
         {
             Size = new SizeInt(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр эрозии.
+        /// Initializes the erosion filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
+        /// <param name="size">Filter size</param>
         public Erosion(SizeInt size)
         {
             Size = size;
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -8606,10 +8186,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (rw >= 2 && rh >= 2)
@@ -8628,10 +8208,10 @@ namespace UMapx.Imaging
             else return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -8641,9 +8221,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -8658,10 +8238,10 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyVertical(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
@@ -8717,10 +8297,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         private unsafe void ApplyHorizontal(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
@@ -8778,7 +8358,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр Top-Hat.
+    /// Defines the top-hat filter.
     /// </summary>
     public class TopHat : IBitmapFilter2
     {
@@ -8789,32 +8369,32 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр Top-Hat.
+        /// Initializes the top-hat filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
+        /// <param name="radius">Radius</param>
         public TopHat(int radius = 3)
         {
             opening = new Opening(radius);
         }
         /// <summary>
-        /// Инициализирует фильтр Top-Hat.
+        /// Initializes the top-hat filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public TopHat(int width, int height)
         {
             opening = new Opening(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр Top-Hat.
+        /// Initializes the top-hat filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
+        /// <param name="size">Filter size</param>
         public TopHat(SizeInt size)
         {
             opening = new Opening(size);
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -8828,10 +8408,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // Creating resources:
@@ -8847,10 +8427,10 @@ namespace UMapx.Imaging
             Src0.Dispose();
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -8860,9 +8440,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -8876,7 +8456,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр Bottom-Hat.
+    /// Defines the bottom-hat filter.
     /// </summary>
     public class BottomHat : IBitmapFilter2
     {
@@ -8887,32 +8467,32 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр Bottom-Hat.
+        /// Initializes the bottom-hat filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
+        /// <param name="radius">Radius</param>
         public BottomHat(int radius = 3)
         {
             closing = new Closing(radius);
         }
         /// <summary>
-        /// Инициализирует фильтр Bottom-Hat.
+        /// Initializes the bottom-hat filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public BottomHat(int width, int height)
         {
             closing = new Closing(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр Bottom-Hat.
+        /// Initializes the bottom-hat filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
+        /// <param name="size">Filter size</param>
         public BottomHat(SizeInt size)
         {
             closing = new Closing(size);
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -8926,10 +8506,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // Creating resources:
@@ -8945,10 +8525,10 @@ namespace UMapx.Imaging
             Src0.Dispose();
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -8958,9 +8538,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -8974,7 +8554,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр закрытия.
+    /// Defines the closing filter.
     /// </summary>
     public class Closing : IBitmapFilter2
     {
@@ -8985,35 +8565,35 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр закрытия.
+        /// Initializes the closing filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
+        /// <param name="radius">Radius</param>
         public Closing(int radius = 3)
         {
             erosion = new Erosion(radius);
             dilatation = new Dilatation(radius);
         }
         /// <summary>
-        /// Инициализирует фильтр закрытия.
+        /// Initializes the closing filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public Closing(int width, int height)
         {
             erosion = new Erosion(width, height);
             dilatation = new Dilatation(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр закрытия.
+        /// Initializes the closing filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
+        /// <param name="size">Filter size</param>
         public Closing(SizeInt size)
         {
             erosion = new Erosion(size);
             dilatation = new Dilatation(size);
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -9028,20 +8608,20 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             dilatation.Apply(bmSrc, bmData);
             erosion.Apply(bmData, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -9051,9 +8631,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -9067,7 +8647,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр открытия.
+    /// Defines the opening filter.
     /// </summary>
     public class Opening : IBitmapFilter2
     {
@@ -9078,35 +8658,35 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр открытия.
+        /// Initializes the opening filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
+        /// <param name="radius">Radius</param>
         public Opening(int radius = 3)
         {
             erosion = new Erosion(radius);
             dilatation = new Dilatation(radius);
         }
         /// <summary>
-        /// Инициализирует фильтр открытия.
+        /// Initializes the opening filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public Opening(int width, int height)
         {
             erosion = new Erosion(width, height);
             dilatation = new Dilatation(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр открытия.
+        /// Initializes the opening filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
+        /// <param name="size">Filter size</param>
         public Opening(SizeInt size)
         {
             erosion = new Erosion(size);
             dilatation = new Dilatation(size);
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -9121,20 +8701,20 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             erosion.Apply(bmSrc, bmData);
             dilatation.Apply(bmData, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -9144,9 +8724,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -9160,7 +8740,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр свечения краев.
+    /// Defines the edge glow filter.
     /// </summary>
     public class EdgeGlow : IBitmapFilter2
     {
@@ -9171,32 +8751,32 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр свечения краев.
+        /// Initializes the edge glow filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
+        /// <param name="radius">Radius</param>
         public EdgeGlow(int radius = 3)
         {
             erosion = new Erosion(radius);
         }
         /// <summary>
-        /// Инициализирует фильтр свечения краев.
+        /// Initializes the edge glow filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public EdgeGlow(int width, int height)
         {
             erosion = new Erosion(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр свечения краев.
+        /// Initializes the edge glow filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
+        /// <param name="size">Filter size</param>
         public EdgeGlow(SizeInt size)
         {
             erosion = new Erosion(size);
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -9210,10 +8790,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // Creating resources:
@@ -9229,10 +8809,10 @@ namespace UMapx.Imaging
             Src0.Dispose();
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -9242,9 +8822,9 @@ namespace UMapx.Imaging
             BitmapConverter.Unlock(Src, bmSrc);
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -9258,49 +8838,43 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр квадратного размытия.
+    /// Defines the box blur filter.
     /// </summary>
     public class BoxBlur : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Ширина фильтра.
-        /// </summary>
         private int rw;
-        /// <summary>
-        /// Высота фильтра.
-        /// </summary>
         private int rh;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр квадратного размытия.
+        /// Initializes the box blur filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
+        /// <param name="radius">Radius</param>
         public BoxBlur(int radius = 3)
         {
             Size = new SizeInt(radius, radius);
         }
         /// <summary>
-        /// Инициализирует фильтр квадратного размытия.
+        /// Initializes the box blur filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public BoxBlur(int width, int height)
         {
             Size = new SizeInt(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр квадратного размытия.
+        /// Initializes the box blur filter.
         /// </summary>
-        /// <param name="size">Размеры фильтра</param>
+        /// <param name="size">Filter size</param>
         public BoxBlur(SizeInt size)
         {
             Size = size;
         }
         /// <summary>
-        /// Получает или задает размеры фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -9315,9 +8889,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
             if (rw >= 2 && rh >= 2)
@@ -9336,9 +8910,9 @@ namespace UMapx.Imaging
             else return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -9350,9 +8924,9 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyVertical(BitmapData bmData)
         {
             #region Data
@@ -9432,9 +9006,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyHorizontal(BitmapData bmData)
         {
             #region Data
@@ -9517,7 +9091,7 @@ namespace UMapx.Imaging
 
     #region Colorspace filters
     /// <summary>
-    /// Определяет фильтр на основе структуры HSB.
+    /// Defines the HSB filter.
     /// </summary>
     public class HSBFilter : IBitmapFilter
     {
@@ -9529,11 +9103,11 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр на основе структуры HSB.
+        /// Initializes the HSB filter.
         /// </summary>
-        /// <param name="hue">Оттенок [0, 359]</param>
-        /// <param name="saturation">Насыщенность [-1, 1]</param>
-        /// <param name="brightness">Яркость [-1, 1]</param>
+        /// <param name="hue">Hue [0, 359]</param>
+        /// <param name="saturation">Saturation [-1, 1]</param>
+        /// <param name="brightness">Brightness [-1, 1]</param>
         public HSBFilter(int hue, double saturation, double brightness)
         {
             Hue = hue;
@@ -9541,14 +9115,14 @@ namespace UMapx.Imaging
             Brightness = brightness;
         }
         /// <summary>
-        /// Инициализирует фильтр на основе структуры HSB.
+        /// Initializes the HSB filter.
         /// </summary>
         public HSBFilter()
         {
             new HSBFilter(0, 0, 0);
         }
         /// <summary>
-        /// Оттенок [0, 359].
+        /// Hue [0, 359].
         /// </summary>
         public int Hue
         {
@@ -9562,7 +9136,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Насыщенность [-1, 1].
+        /// Saturation [-1, 1].
         /// </summary>
         public double Saturation
         {
@@ -9576,7 +9150,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Яркость [-1, 1].
+        /// Brightness [-1, 1].
         /// </summary>
         public double Brightness
         {
@@ -9590,9 +9164,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -9623,9 +9197,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -9636,7 +9210,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр на основе структуры HSL.
+    /// Defines the HSL filter.
     /// </summary>
     public class HSLFilter : IBitmapFilter
     {
@@ -9648,11 +9222,11 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр на основе структуры HSB.
+        /// Initializes the HSL filter.
         /// </summary>
-        /// <param name="hue">Оттенок [0, 359]</param>
-        /// <param name="saturation">Насыщенность [-1, 1]</param>
-        /// <param name="lightness">Световая интенсивность [-1, 1]</param>
+        /// <param name="hue">Hue [0, 359]</param>
+        /// <param name="saturation">Saturation [-1, 1]</param>
+        /// <param name="lightness">Lightness [-1, 1]</param>
         public HSLFilter(int hue, double saturation, double lightness)
         {
             Hue = hue;
@@ -9660,14 +9234,14 @@ namespace UMapx.Imaging
             Lightness = lightness;
         }
         /// <summary>
-        /// Инициализирует фильтр на основе структуры HSB.
+        /// Initializes the HSL filter.
         /// </summary>
         public HSLFilter()
         {
             new HSLFilter(0, 0, 0);
         }
         /// <summary>
-        /// Оттенок [0, 359].
+        /// Hue [0, 359].
         /// </summary>
         public int Hue
         {
@@ -9681,7 +9255,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Насыщенность [-1, 1].
+        /// Saturation [-1, 1].
         /// </summary>
         public double Saturation
         {
@@ -9695,7 +9269,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Световая интенсивность [-1, 1].
+        /// Lightness [-1, 1].
         /// </summary>
         public double Lightness
         {
@@ -9709,9 +9283,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Точечный рисунок</param>
+        /// <param name="bmData">Bitmap</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -9742,9 +9316,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -9754,7 +9328,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр на основе структуры YCbCr.
+    /// Defines the YCbCr filter.
     /// </summary>
     public class YCbCrFilter : IBitmapFilter
     {
@@ -9766,7 +9340,7 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр на основе структуры YCbCr.
+        /// Initializes the YCbCr filter.
         /// </summary>
         /// <param name="y">Y [-1, 1]</param>
         /// <param name="cb">Cb [-1, 1]</param>
@@ -9778,7 +9352,7 @@ namespace UMapx.Imaging
             Cr = cr;
         }
         /// <summary>
-        /// Инициализирует фильтр на основе структуры YCbCr.
+        /// Initializes the YCbCr filter.
         /// </summary>
         public YCbCrFilter()
         {
@@ -9827,9 +9401,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Точечный рисунок</param>
+        /// <param name="bmData">Bitmap</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -9860,9 +9434,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -9873,7 +9447,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр на основе структуры CMYK.
+    /// Defines the CMYK filter.
     /// </summary>
     public class CMYKFilter : IBitmapFilter
     {
@@ -9886,12 +9460,12 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр на основе структуры CMYK.
+        /// Initializes the CMYK filter.
         /// </summary>
-        /// <param name="cyan">Голубой [-1, 1]</param>
-        /// <param name="magenta">Пурпурный [-1, 1]</param>
-        /// <param name="yellow">Желтый [-1, 1]</param>
-        /// <param name="keycolor">Черный [-1, 1]</param>
+        /// <param name="cyan">Cyan [-1, 1]</param>
+        /// <param name="magenta">Magenta [-1, 1]</param>
+        /// <param name="yellow">Yellow [-1, 1]</param>
+        /// <param name="keycolor">Keycolor [-1, 1]</param>
         public CMYKFilter(double cyan, double magenta, double yellow, double keycolor)
         {
             Cyan = cyan;
@@ -9900,14 +9474,14 @@ namespace UMapx.Imaging
             Keycolor = keycolor;
         }
         /// <summary>
-        /// Инициализирует фильтр на основе структуры CMYK.
+        /// Initializes the CMYK filter.
         /// </summary>
         public CMYKFilter()
         {
             new CMYKFilter(0, 0, 0, 0);
         }
         /// <summary>
-        /// Голубой [-1, 1].
+        /// Cyan [-1, 1].
         /// </summary>
         public double Cyan
         {
@@ -9921,7 +9495,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Пурпурный [-1, 1].
+        /// Magenta [-1, 1].
         /// </summary>
         public double Magenta
         {
@@ -9935,7 +9509,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Желтый [-1, 1].
+        /// Yellow [-1, 1].
         /// </summary>
         public double Yellow
         {
@@ -9949,7 +9523,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Черный [-1, 1].
+        /// Keycolor [-1, 1].
         /// </summary>
         public double Keycolor
         {
@@ -9963,9 +9537,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Точечный рисунок</param>
+        /// <param name="bmData">Bitmap</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -9997,9 +9571,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -10010,7 +9584,7 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр на основе структуры RGB.
+    /// Defines the RGB filter.
     /// </summary>
     public class RGBFilter : IBitmapFilter
     {
@@ -10022,11 +9596,11 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр на основе структуры RGB.
+        /// Initializes the RGB filter.
         /// </summary>
-        /// <param name="red">Красный [-255, 255]</param>
-        /// <param name="green">Зеленый [-255, 255]</param>
-        /// <param name="blue">Синий [-255, 255]</param>
+        /// <param name="red">Red [-255, 255]</param>
+        /// <param name="green">Green [-255, 255]</param>
+        /// <param name="blue">Blue [-255, 255]</param>
         public RGBFilter(int red, int green, int blue)
         {
             Red = red;
@@ -10034,14 +9608,14 @@ namespace UMapx.Imaging
             Blue = blue;
         }
         /// <summary>
-        /// Инициализирует фильтр на основе структуры RGB.
+        /// Initializes the RGB filter.
         /// </summary>
         public RGBFilter()
         {
             new RGBFilter(0, 0, 0);
         }
         /// <summary>
-        /// Красный [-255, 255].
+        /// Red [-255, 255].
         /// </summary>
         public int Red
         {
@@ -10055,7 +9629,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Зеленый [-255, 255].
+        /// Green [-255, 255].
         /// </summary>
         public int Green
         {
@@ -10069,7 +9643,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Синий [-255, 255].
+        /// Blue [-255, 255].
         /// </summary>
         public int Blue
         {
@@ -10083,9 +9657,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Точечный рисунок</param>
+        /// <param name="bmData">Bitmap</param>
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -10103,9 +9677,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -10119,9 +9693,9 @@ namespace UMapx.Imaging
 
     #region Histogram equalizations
     /// <summary>
-    /// Определяет фильтр глобальной эквализации гистограммы.
+    /// Defines the global histogram equalization filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// http://www.cromwell-intl.com/3d/histogram/
     /// </remarks>
     /// </summary>
@@ -10129,13 +9703,13 @@ namespace UMapx.Imaging
     {
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр глобальной эквализации гистограммы.
+        /// Initializes the global histogram equalization filter.
         /// </summary>
         public HistogramEqualization() { }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
             int[] H = Statistics.Histogram(bmData);
@@ -10156,9 +9730,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -10169,9 +9743,9 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр локальной эквализации гистограммы.
+    /// Defines the local histogram equalization filter.
     /// <remarks>
-    /// Подробное описание алгоритма можно найти на сайте:
+    /// More information can be found on the website:
     /// http://angeljohnsy.blogspot.com/2011/06/local-histogram-equalization.html
     /// </remarks>
     /// </summary>
@@ -10186,32 +9760,32 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр локальной эквализации гистограммы.
+        /// Initializes the local histogram equalization filter.
         /// </summary>
-        /// <param name="radius">Радиус матрицы</param>
+        /// <param name="radius">Radius</param>
         public LocalHistogramEqualization(int radius = 10)
         {
             Size = new SizeInt(radius, radius);
         }
         /// <summary>
-        /// Инициализирует фильтр локальной эквализации гистограммы.
+        /// Initializes the local histogram equalization filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
         public LocalHistogramEqualization(int width, int height)
         {
             Size = new SizeInt(width, height);
         }
         /// <summary>
-        /// Инициализирует фильтр локальной эквализации гистограммы.
+        /// Initializes the local histogram equalization filter.
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
+        /// <param name="size">Radius</param>
         public LocalHistogramEqualization(SizeInt size)
         {
             Size = size;
         }
         /// <summary>
-        /// Получает или задает размер фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -10225,9 +9799,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Устанавливает значения параметров свертки.
+        /// 
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
+        /// <param name="size">Radius</param>
         private void Data(SizeInt size)
         {
             this.l0 = size.Width;
@@ -10236,10 +9810,10 @@ namespace UMapx.Imaging
             this.rh = l1 >> 1;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmSrc">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
@@ -10314,10 +9888,10 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="Src">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -10328,9 +9902,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
@@ -10345,41 +9919,38 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр глобального сжатия гистограммы.
+    /// Defines the global histogram stretch filter.
     /// </summary>
     public class HistogramStretch : Correction, IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// { Min, Max }.
-        /// </summary>
-        protected RangeDouble range;
+        private RangeDouble range;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр глобального сжатия гистограммы.
+        /// Initializes the global histogram stretch filter.
         /// </summary>
-        /// <param name="min">Минимальное значение яркости [0, 1]</param>
-        /// <param name="max">Максимально значение яркости [0, 1]</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="min">Minimum intensity [0, 1]</param>
+        /// <param name="max">Maximum intensity [0, 1]</param>
+        /// <param name="space">Color space</param>
         public HistogramStretch(double min, double max, Space space)
         {
             Range = new RangeDouble(min, max);
             Space = space;
         }
         /// <summary>
-        /// Инициализирует фильтр глобального сжатия гистограммы.
+        /// Initializes the global histogram stretch filter.
         /// </summary>
-        /// <param name="range">Диапазон значений яркости</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="range">Intensity range</param>
+        /// <param name="space">Color space</param>
         public HistogramStretch(RangeDouble range, Space space)
         {
             Range = range;
             Space = space;
         }
         /// <summary>
-        /// Получает или задает диапазон значений, которые принимает сигнал.
+        /// Gets or sets the intensity range.
         /// </summary>
         public RangeDouble Range
         {
@@ -10394,7 +9965,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Реализует перестроение данных фильтра.
+        /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
@@ -10403,50 +9974,31 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет класс фильтра локального сжатия гистограммы.
+    /// Defines the local histogram stretch filter.
     /// <remarks>
-    /// Фильтр используется для коррекции неравномерно освещенных изображений и повышения детализации.
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// http://www.academia.edu/7629047/Image_enhancement_by_local_histogram_stretching
     /// </remarks>
     /// </summary>
     public class LocalHistogramStretch : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Фильтр локального усреднения.
-        /// </summary>
         private BoxBlur gb = new BoxBlur();
-        /// <summary>
-        /// Фильтр эрозии.
-        /// </summary>
         private Erosion er = new Erosion();
-        /// <summary>
-        /// Фильтр приращения.
-        /// </summary>
         private Dilatation di = new Dilatation();
-        /// <summary>
-        /// Цветовое пространство.
-        /// </summary>
-        protected Space space;
-        /// <summary>
-        /// Коэффициент сжатия контраста.
-        /// </summary>
-        protected double contrast;
-        /// <summary>
-        /// Сглаживание.
-        /// </summary>
-        protected bool smoothing;
+        private Space space;
+        private double contrast;
+        private bool smoothing;
         #endregion
 
         #region Filter componetns
         /// <summary>
-        /// Инициализирует класс фильтра локального сжатия гистограммы.
+        /// Initializes the local histogram stretch filter.
         /// </summary>
-        /// <param name="radius">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="contrast">Коэффициент сжатия контраста [0, 1]</param>
-        /// <param name="smoothing">Использовать сглаживание или нет</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="contrast">Contrast [0, 1]</param>
+        /// <param name="smoothing">Smoothing</param>
         public LocalHistogramStretch(int radius, Space space, double contrast = 0.5, bool smoothing = true)
         {
             Size = new SizeInt(radius, radius);
@@ -10455,13 +10007,13 @@ namespace UMapx.Imaging
             Contrast = contrast;
         }
         /// <summary>
-        /// Инициализирует класс фильтра локального сжатия гистограммы.
+        /// Initializes the local histogram stretch filter.
         /// </summary>
-        /// <param name="width">Ширина фильтра</param>
-        /// <param name="height">Высота фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="contrast">Коэффициент сжатия контраста [0, 1]</param>
-        /// <param name="smoothing">Использовать сглаживание или нет</param>
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <param name="space">Color space</param>
+        /// <param name="contrast">Contrast [0, 1]</param>
+        /// <param name="smoothing">Smoothing</param>
         public LocalHistogramStretch(int width, int height, Space space, double contrast = 0.5, bool smoothing = true)
         {
             Size = new SizeInt(width, height);
@@ -10470,12 +10022,12 @@ namespace UMapx.Imaging
             Contrast = contrast;
         }
         /// <summary>
-        /// Инициализирует класс фильтра локального сжатия гистограммы.
+        /// Initializes the local histogram stretch filter.
         /// </summary>
-        /// <param name="size">Размер фильтра</param>
-        /// <param name="space">Цветовое пространство</param>
-        /// <param name="contrast">Коэффициент сжатия контраста [0, 1]</param>
-        /// <param name="smoothing">Использовать сглаживание или нет</param>
+        /// <param name="size">Radius</param>
+        /// <param name="space">Color space</param>
+        /// <param name="contrast">Contrast [0, 1]</param>
+        /// <param name="smoothing">Smoothing</param>
         public LocalHistogramStretch(SizeInt size, Space space, double contrast = 0.5, bool smoothing = true)
         {
             Size = size;
@@ -10484,7 +10036,7 @@ namespace UMapx.Imaging
             Contrast = contrast;
         }
         /// <summary>
-        /// Получает или задает размер фильтра.
+        /// Gets or sets the filter size.
         /// </summary>
         public SizeInt Size
         {
@@ -10503,7 +10055,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает цветовое пространство.
+        /// Gets or sets the color space.
         /// </summary>
         public Space Space
         {
@@ -10517,7 +10069,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает значение коэффициента сжатия контраста [0, 1].
+        /// Gets or sets the contrast value [0, 1].
         /// </summary>
         public double Contrast
         {
@@ -10531,7 +10083,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Использовать сглаживание или нет.
+        /// Smoothing.
         /// </summary>
         public bool Smoothing
         {
@@ -10545,68 +10097,54 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
-            // Создание копий изображения:
             Bitmap Max = (Bitmap)BitmapConverter.Bitmap(bmData).Clone();
             Bitmap Min = (Bitmap)Max.Clone();
 
-            // Применение фильтров морфологии:
             di.Apply(Max); er.Apply(Min);
 
-            // Получение атрибутов:
             BitmapData bmMax = BitmapConverter.Lock32bpp(Max);
             BitmapData bmMin = BitmapConverter.Lock32bpp(Min);
 
-            // Сглаживание ФНЧ:
             if (smoothing)
                 gb.Apply(bmMax); gb.Apply(bmMin);
 
-            // Применение фильтра сжатия гистограммы:
             Apply(bmData, bmMax, bmMin);
 
-            // Высвобождение данных:
             BitmapConverter.Unlock(Max, bmMax);
             BitmapConverter.Unlock(Min, bmMin);
 
-            // Удаление объектов:
             Max.Dispose(); Min.Dispose();
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            // Создание копий изображения:
             Bitmap Max = (Bitmap)Data.Clone();
             Bitmap Min = (Bitmap)Data.Clone();
 
-            // Применение фильтров морфологии:
             di.Apply(Max); er.Apply(Min);
 
-            // Получение атрибутов:
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
             BitmapData bmMax = BitmapConverter.Lock32bpp(Max);
             BitmapData bmMin = BitmapConverter.Lock32bpp(Min);
 
-            // Сглаживание ФНЧ:
             if (smoothing)
                 gb.Apply(bmMax); gb.Apply(bmMin);
 
-            // Применение фильтра сжатия гистограммы:
             Apply(bmData, bmMax, bmMin);
 
-            // Высвобождение данных:
             BitmapConverter.Unlock(Data, bmData);
             BitmapConverter.Unlock(Max, bmMax);
             BitmapConverter.Unlock(Min, bmMin);
 
-            // Удаление объектов:
             Max.Dispose(); Min.Dispose();
             return;
         }
@@ -10614,11 +10152,11 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmMax">Атрибуты точечного изображения</param>
-        /// <param name="bmMin">Атрибуты точечного изображения</param> 
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmMax">Bitmap data</param>
+        /// <param name="bmMin">Bitmap data</param> 
         private unsafe void Apply(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             // filter
@@ -10643,11 +10181,11 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmMax">Атрибуты точечного изображения</param>
-        /// <param name="bmMin">Атрибуты точечного изображения</param> 
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmMax">Bitmap data</param>
+        /// <param name="bmMin">Bitmap data</param> 
         private unsafe void ApplyRGB(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -10670,15 +10208,12 @@ namespace UMapx.Imaging
                     // Local function:
                     for (q = 0; q < 3; q++)
                     {
-                        // Смещение по пикселям:
                         v = k + q;
 
-                        // Получение яркостных компонент:
                         mag = p[v] / 255.0;
                         max = pMax[v] / 255.0;
                         min = pMin[v] / 255.0;
 
-                        // Вычисление функции контраста:
                         num1 = max - min;
 
                         if (num1 < required)
@@ -10688,7 +10223,6 @@ namespace UMapx.Imaging
                             max = Maths.Double(num2 + required);
                         }
 
-                        // Локальное сжатие гистограммы:
                         num1 = max - min;
                         num3 = mag - min;
 
@@ -10703,11 +10237,11 @@ namespace UMapx.Imaging
             );
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmMax">Атрибуты точечного изображения</param>
-        /// <param name="bmMin">Атрибуты точечного изображения</param> 
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmMax">Bitmap data</param>
+        /// <param name="bmMin">Bitmap data</param> 
         private unsafe void ApplyHSB(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -10728,17 +10262,14 @@ namespace UMapx.Imaging
                 {
                     k = jstride + i * 4; k1 = k + 1; k2 = k + 2;
 
-                    // Преобразование в другое цветовое пространство:
                     imag = HSB.FromRGB(p[k2], p[k1], p[k]);
                     imax = HSB.FromRGB(pMax[k2], pMax[k1], pMax[k]);
                     imin = HSB.FromRGB(pMin[k2], pMin[k1], pMin[k]);
 
-                    // Получение яркостных компонент:
                     mag = imag.Brightness;
                     max = imax.Brightness;
                     min = imin.Brightness;
 
-                    // Вычисление функции контраста:
                     num1 = max - min;
 
                     if (num1 < required)
@@ -10748,7 +10279,6 @@ namespace UMapx.Imaging
                         max = Maths.Double(num2 + required);
                     }
 
-                    // Локальное сжатие гистограммы:
                     num1 = max - min;
                     num3 = mag - min;
 
@@ -10763,11 +10293,11 @@ namespace UMapx.Imaging
             );
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmMax">Атрибуты точечного изображения</param>
-        /// <param name="bmMin">Атрибуты точечного изображения</param> 
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmMax">Bitmap data</param>
+        /// <param name="bmMin">Bitmap data</param> 
         private unsafe void ApplyHSL(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -10788,17 +10318,14 @@ namespace UMapx.Imaging
                 {
                     k = jstride + i * 4; k1 = k + 1; k2 = k + 2;
 
-                    // Преобразование в другое цветовое пространство:
                     imag = HSL.FromRGB(p[k2], p[k1], p[k]);
                     imax = HSL.FromRGB(pMax[k2], pMax[k1], pMax[k]);
                     imin = HSL.FromRGB(pMin[k2], pMin[k1], pMin[k]);
 
-                    // Получение яркостных компонент:
                     mag = imag.Lightness;
                     max = imax.Lightness;
                     min = imin.Lightness;
 
-                    // Вычисление функции контраста:
                     num1 = max - min;
 
                     if (num1 < required)
@@ -10808,7 +10335,6 @@ namespace UMapx.Imaging
                         max = Maths.Double(num2 + required);
                     }
 
-                    // Локальное сжатие гистограммы:
                     num1 = max - min;
                     num3 = mag - min;
 
@@ -10823,11 +10349,11 @@ namespace UMapx.Imaging
             );
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmMax">Атрибуты точечного изображения</param>
-        /// <param name="bmMin">Атрибуты точечного изображения</param> 
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmMax">Bitmap data</param>
+        /// <param name="bmMin">Bitmap data</param> 
         private unsafe void ApplyYCbCr(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -10848,17 +10374,14 @@ namespace UMapx.Imaging
                 {
                     k = jstride + i * 4; k1 = k + 1; k2 = k + 2;
 
-                    // Преобразование в другое цветовое пространство:
                     imag = YCbCr.FromRGB(p[k2], p[k1], p[k]);
                     imax = YCbCr.FromRGB(pMax[k2], pMax[k1], pMax[k]);
                     imin = YCbCr.FromRGB(pMin[k2], pMin[k1], pMin[k]);
 
-                    // Получение яркостных компонент:
                     mag = imag.Y;
                     max = imax.Y;
                     min = imin.Y;
 
-                    // Вычисление функции контраста:
                     num1 = max - min;
 
                     if (num1 < required)
@@ -10868,7 +10391,6 @@ namespace UMapx.Imaging
                         max = Maths.Double(num2 + required);
                     }
 
-                    // Локальное сжатие гистограммы:
                     num1 = max - min;
                     num3 = mag - min;
 
@@ -10883,11 +10405,11 @@ namespace UMapx.Imaging
             );
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="bmMax">Атрибуты точечного изображения</param>
-        /// <param name="bmMin">Атрибуты точечного изображения</param> 
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmMax">Bitmap data</param>
+        /// <param name="bmMin">Bitmap data</param> 
         private unsafe void ApplyGrayscale(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -10910,12 +10432,10 @@ namespace UMapx.Imaging
                     // Local function:
                     v = k;
 
-                    // Получение яркостных компонент:
                     mag = RGB.Average(p[v], p[v + 1], p[v + 2]) / 255.0;
                     max = RGB.Average(pMax[v], pMax[v + 1], pMax[v + 2]) / 255.0;
                     min = RGB.Average(pMin[v], pMin[v + 1], pMin[v + 2]) / 255.0;
 
-                    // Вычисление функции контраста:
                     num1 = max - min;
 
                     if (num1 < required)
@@ -10925,7 +10445,6 @@ namespace UMapx.Imaging
                         max = Maths.Double(num2 + required);
                     }
 
-                    // Локальное сжатие гистограммы:
                     num1 = max - min;
                     num3 = mag - min;
 
@@ -10944,34 +10463,28 @@ namespace UMapx.Imaging
 
     #region Special filters
     /// <summary>
-    /// Определяет фильтр обработки изображений.
+    /// Defines the bitmap filter.
     /// </summary>
     public class BitmapFilter : IBitmapFilter
     {
         #region Private data
-        /// <summary>
-        /// Направленный фильтр.
-        /// </summary>
-        protected IFilter filter;
-        /// <summary>
-        /// Цветовое пространство.
-        /// </summary>
-        protected Space space;
+        private IFilter filter;
+        private Space space;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр обработки изображений.
+        /// Initializes the bitmap filter.
         /// </summary>
-        /// <param name="filter">Фильтр</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="filter">Filter</param>
+        /// <param name="space">Color space</param>
         public BitmapFilter(IFilter filter, Space space = Space.RGB)
         {
             this.filter = filter;
             this.space = space;
         }
         /// <summary>
-        /// Получает или задает фильтр.
+        /// Gets or sets the filter.
         /// </summary>
         public IFilter Filter
         {
@@ -10985,7 +10498,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает цветовое пространство.
+        /// Gets or sets the color space.
         /// </summary>
         public Space Space
         {
@@ -10999,9 +10512,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Appy filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
             // filter
@@ -11026,9 +10539,9 @@ namespace UMapx.Imaging
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Appy filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -11040,250 +10553,83 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Appy filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyRGB(BitmapData bmData)
         {
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double[,] r = new double[width, height];
-            double[,] g = new double[width, height];
-            double[,] b = new double[width, height];
+            double[][,] rgb = BitmapConverter.ToRGB(bmData, true);
 
-            // Получение яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
+            this.filter.Apply(rgb[0]);
+            this.filter.Apply(rgb[1]);
+            this.filter.Apply(rgb[2]);
 
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    r[i, j] = p[k + 2] / 255.0;
-                    g[i, j] = p[k + 1] / 255.0;
-                    b[i, j] = p[k] / 255.0;
-                }
-            }
-            );
-
-            // Применение фильтра:
-            this.filter.Apply(r);
-            this.filter.Apply(g);
-            this.filter.Apply(b);
-
-            // Указание новых яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    p[k + 2] = Maths.Byte(r[i, j] * 255);
-                    p[k + 1] = Maths.Byte(g[i, j] * 255);
-                    p[k] = Maths.Byte(b[i, j] * 255);
-                }
-            }
-            );
-
+            BitmapConverter.FromRGB(rgb, bmData);
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Appy filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyHSB(BitmapData bmData)
         {
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double[,] input = new double[width, height];
+            double[][,] hsb = BitmapConverter.ToHSB(bmData, true);
 
-            // Получение яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                HSB lumI;
-                int i, k, jstride = j * stride;
+            this.filter.Apply(hsb[0]);
+            this.filter.Apply(hsb[1]);
+            this.filter.Apply(hsb[2]);
 
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    lumI = HSB.FromRGB(p[k + 2], p[k + 1], p[k]);
-                    input[i, j] = lumI.Brightness;
-                }
-            }
-            );
-
-            // Применение фильтра:
-            this.filter.Apply(input);
-
-            // Указание новых яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                HSB lumI; RGB rgb;
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-
-                    lumI = HSB.FromRGB(p[k + 2], p[k + 1], p[k]);
-                    lumI.Brightness = input[i, j];
-
-                    rgb = lumI.ToRGB;
-                    p[k + 2] = rgb.Red; p[k + 1] = rgb.Green; p[k] = rgb.Blue;
-                }
-            }
-            );
-
+            BitmapConverter.FromHSB(hsb, bmData);
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Appy filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyHSL(BitmapData bmData)
         {
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double[,] input = new double[width, height];
+            double[][,] hsl = BitmapConverter.ToHSL(bmData, true);
 
-            // Получение яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                HSL lumI;
-                int i, k, jstride = j * stride;
+            this.filter.Apply(hsl[0]);
+            this.filter.Apply(hsl[1]);
+            this.filter.Apply(hsl[2]);
 
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    lumI = HSL.FromRGB(p[k + 2], p[k + 1], p[k]);
-                    input[i, j] = lumI.Lightness;
-                }
-            }
-            );
-
-            // Применение фильтра:
-            this.filter.Apply(input);
-
-            // Указание новых яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                HSL lumI; RGB rgb;
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-
-                    lumI = HSL.FromRGB(p[k + 2], p[k + 1], p[k]);
-                    lumI.Lightness = input[i, j];
-
-                    rgb = lumI.ToRGB;
-                    p[k + 2] = rgb.Red; p[k + 1] = rgb.Green; p[k] = rgb.Blue;
-                }
-            }
-            );
-
+            BitmapConverter.FromHSL(hsl, bmData);
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Appy filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyYCbCr(BitmapData bmData)
         {
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double[,] input = new double[width, height];
+            double[][,] ycbcr = BitmapConverter.ToYCbCr(bmData, true);
 
-            // Получение яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                YCbCr lumI;
-                int i, k, jstride = j * stride;
+            this.filter.Apply(ycbcr[0]);
+            this.filter.Apply(ycbcr[1]);
+            this.filter.Apply(ycbcr[2]);
 
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    lumI = YCbCr.FromRGB(p[k + 2], p[k + 1], p[k]);
-                    input[i, j] = lumI.Y;
-                }
-            }
-            );
-
-            // Применение фильтра:
-            this.filter.Apply(input);
-
-            // Указание новых яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                YCbCr lumI; RGB rgb;
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-
-                    lumI = YCbCr.FromRGB(p[k + 2], p[k + 1], p[k]);
-                    lumI.Y = input[i, j];
-
-                    rgb = lumI.ToRGB;
-                    p[k + 2] = rgb.Red; p[k + 1] = rgb.Green; p[k] = rgb.Blue;
-                }
-            }
-            );
-
+            BitmapConverter.FromHSL(ycbcr, bmData);
             return;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Appy filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyGrayscale(BitmapData bmData)
         {
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double[,] r = new double[width, height];
-
-            // Получение яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    r[i, j] = RGB.Average(p[k], p[k + 1], p[k + 2]) / 255.0;
-                }
-            }
-            );
-
-            // Применение фильтра:
-            this.filter.Apply(r);
-
-            // Указание новых яркостных характеристик изображения:
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    p[k] = p[k + 1] = p[k + 2] = Maths.Byte(r[i, j] * 255);
-                }
-            }
-            );
-
+            double[,] y = BitmapConverter.ToGrayscale(bmData);
+            this.filter.Apply(y);
+            BitmapConverter.FromGrayscale(y, bmData);
             return;
         }
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр смешивания изображений.
+    /// Defines the bitmap blending filter.
     /// <remarks>
-    /// Данный фильтр усредняет несколько входных изображений одинакового размера, получая тем самым единственное
-    /// выходное изображение. Фильтр может использоваться для реализации эффектов HDR.
-    /// Более подробную информацию можно найти на сайте:
+    /// Filter can be used to implement HDR effects.
+    /// More information can be found on the website:
     /// https://web.stanford.edu/class/cs231m/lectures/lecture-5-stitching-blending.pdf
     /// (стр. 65-75)
     /// </remarks>
@@ -11291,29 +10637,23 @@ namespace UMapx.Imaging
     public class BitmapBlender
     {
         #region Private data
-        /// <summary>
-        /// Фильтр смешивания.
-        /// </summary>
         private IBlendFilter filter;
-        /// <summary>
-        /// Цветовое пространство.
-        /// </summary>
         private Space space;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Инициализирует фильтр смешивания изображений.
+        /// Initializes the bitmap blending filter.
         /// </summary>
-        /// <param name="filter">Фильтр смешивания</param>
-        /// <param name="space">Цветовое пространство</param>
+        /// <param name="filter">Blending filter</param>
+        /// <param name="space">Color space</param>
         public BitmapBlender(IBlendFilter filter, Space space = Space.RGB)
         {
             this.filter = filter;
             this.space = space;
         }
         /// <summary>
-        /// Получает или задает фильтр смешивания.
+        /// Gets or sets the blending filter.
         /// </summary>
         public IBlendFilter Filter
         {
@@ -11327,7 +10667,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает или задает цветовое пространство.
+        /// Gets or sets the color space.
         /// </summary>
         public Space Space
         {
@@ -11341,10 +10681,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к массиву точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="images">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="images">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         public Bitmap Apply(params Bitmap[] images)
         {
             // filter
@@ -11367,10 +10707,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к массиву точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="images">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="images">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         public Bitmap Apply(params BitmapData[] images)
         {
             // filter
@@ -11396,10 +10736,10 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Применяет фильтр к массиву точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="Data">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyRGB(Bitmap[] Data)
         {
             int length = Data.Length;
@@ -11420,10 +10760,10 @@ namespace UMapx.Imaging
             return BitmapConverter.FromRGB(new double[][,] { this.filter.Apply(b), this.filter.Apply(g), this.filter.Apply(r) });
         }
         /// <summary>
-        /// Применяет фильтр к массиву атрибутов точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="bmData">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyRGB(BitmapData[] bmData)
         {
             int length = bmData.Length;
@@ -11444,10 +10784,10 @@ namespace UMapx.Imaging
             return BitmapConverter.FromRGB(new double[][,] { this.filter.Apply(b), this.filter.Apply(g), this.filter.Apply(r) });
         }
         /// <summary>
-        /// Применяет фильтр к массиву точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="Data">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyGrayscale(Bitmap[] Data)
         {
             int length = Data.Length;
@@ -11455,16 +10795,16 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                r[i] = BitmapConverter.FromBitmap(Data[i]);
+                r[i] = BitmapConverter.ToGrayscale(Data[i]);
             }
 
-            return BitmapConverter.ToBitmap(this.filter.Apply(r));
+            return BitmapConverter.FromGrayscale(this.filter.Apply(r));
         }
         /// <summary>
-        /// Применяет фильтр к массиву атрибутов точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="bmData">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyGrayscale(BitmapData[] bmData)
         {
             int length = bmData.Length;
@@ -11472,16 +10812,16 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                r[i] = BitmapConverter.FromBitmap(bmData[i]);
+                r[i] = BitmapConverter.ToGrayscale(bmData[i]);
             }
 
-            return BitmapConverter.ToBitmap(this.filter.Apply(r));
+            return BitmapConverter.FromGrayscale(this.filter.Apply(r));
         }
         /// <summary>
-        /// Применяет фильтр к массиву точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="Data">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyYCbCr(Bitmap[] Data)
         {
             int length = Data.Length;
@@ -11502,10 +10842,10 @@ namespace UMapx.Imaging
             return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), BoxFilterOptions.boxf(cb), BoxFilterOptions.boxf(cr) });
         }
         /// <summary>
-        /// Применяет фильтр к массиву атрибутов точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="bmData">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyYCbCr(BitmapData[] bmData)
         {
             int length = bmData.Length;
@@ -11526,10 +10866,10 @@ namespace UMapx.Imaging
             return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), BoxFilterOptions.boxf(cb), BoxFilterOptions.boxf(cr) });
         }
         /// <summary>
-        /// Применяет фильтр к массиву точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="Data">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyHSB(Bitmap[] Data)
         {
             int length = Data.Length;
@@ -11550,10 +10890,10 @@ namespace UMapx.Imaging
             return BitmapConverter.FromHSB(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(b) });
         }
         /// <summary>
-        /// Применяет фильтр к массиву атрибутов точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="bmData">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyHSB(BitmapData[] bmData)
         {
             int length = bmData.Length;
@@ -11574,10 +10914,10 @@ namespace UMapx.Imaging
             return BitmapConverter.FromHSB(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(b) });
         }
         /// <summary>
-        /// Применяет фильтр к массиву точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="Data">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyHSL(Bitmap[] Data)
         {
             int length = Data.Length;
@@ -11598,10 +10938,10 @@ namespace UMapx.Imaging
             return BitmapConverter.FromHSL(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(l) });
         }
         /// <summary>
-        /// Применяет фильтр к массиву атрибутов точечных рисунков.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Массив точечных рисунков</param>
-        /// <returns>Точечный рисунок</returns>
+        /// <param name="bmData">Bitmap array</param>
+        /// <returns>Bitmap</returns>
         private Bitmap ApplyHSL(BitmapData[] bmData)
         {
             int length = bmData.Length;
@@ -11625,40 +10965,1240 @@ namespace UMapx.Imaging
     }
     #endregion
 
+    #region Bitmap conversions
+    /// <summary>
+    /// Uses to work with bitmaps.
+    /// </summary>
+    public static class BitmapConverter
+    {
+        #region Bitmap convert components
+        /// <summary>
+        /// Converts Bitmap to icon file.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <param name="size">Size</param>
+        /// <returns>Icon</returns>
+        public static Icon ToIco(this Bitmap b, int size)
+        {
+            Bitmap bmp = new Bitmap(b, new Size(size, size));
+            MemoryStream pngstream = new MemoryStream();
+            MemoryStream icostream = new MemoryStream();
+
+            byte[] pngicon = new byte[] { 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            byte[] png;
+
+            bmp.Save(pngstream, System.Drawing.Imaging.ImageFormat.Png);
+            pngstream.Position = 0;
+            png = pngstream.ToArray();
+
+            if (size >= 256) size = 0;
+            pngicon[6] = (byte)size;
+            pngicon[7] = (byte)size;
+            pngicon[14] = (byte)(png.Length & 255);
+            pngicon[15] = (byte)(png.Length / 256);
+            pngicon[18] = (byte)(pngicon.Length);
+
+            icostream.Write(pngicon, 0, pngicon.Length);
+            icostream.Write(png, 0, png.Length);
+            icostream.Position = 0;
+            bmp.Dispose();
+            pngstream.Dispose();
+
+            return new Icon(icostream);
+        }
+        /// <summary>
+        /// Converts Bitmap to JPEG format.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap ToJpeg(this Bitmap b)
+        {
+            Bitmap bmp = new Bitmap(b);
+            MemoryStream stream = new MemoryStream();
+            bmp.Save(stream, ImageFormat.Jpeg);
+
+            return new Bitmap(stream);
+        }
+        /// <summary>
+        /// Converts Bitmap to BMP format.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap ToBmp(this Bitmap b)
+        {
+            Bitmap bmp = new Bitmap(b);
+            MemoryStream stream = new MemoryStream();
+            bmp.Save(stream, ImageFormat.Bmp);
+
+            return new Bitmap(stream);
+        }
+        /// <summary>
+        /// Converts Bitmap to GIF format.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap ToGif(this Bitmap b)
+        {
+            Bitmap bmp = new Bitmap(b);
+            MemoryStream stream = new MemoryStream();
+            bmp.Save(stream, ImageFormat.Gif);
+
+            return new Bitmap(stream);
+        }
+        /// <summary>
+        /// Converts Bitmap to PNG format.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap ToPng(this Bitmap b)
+        {
+            Bitmap bmp = new Bitmap(b);
+            MemoryStream stream = new MemoryStream();
+            bmp.Save(stream, ImageFormat.Png);
+
+            return new Bitmap(stream);
+        }
+        /// <summary>
+        /// Converts Bitmap to TIFF format.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap ToTiff(this Bitmap b)
+        {
+            Bitmap bmp = new Bitmap(b);
+            MemoryStream stream = new MemoryStream();
+            bmp.Save(stream, ImageFormat.Tiff);
+
+            return new Bitmap(stream);
+        }
+        /// <summary>
+        /// Gets the Bitmap from the BitmapData.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap Bitmap(this BitmapData bmData)
+        {
+            return new Bitmap(bmData.Width, bmData.Height, bmData.Stride, bmData.PixelFormat, bmData.Scan0);
+        }
+        /// <summary>
+        /// Converts Bitmap to a specific format
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <param name="pixelformat">Pixel format</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap Bitmap(this Bitmap b, PixelFormat pixelformat)
+        {
+            return b.Clone(new Rectangle(0, 0, b.Width, b.Height), pixelformat);
+        }
+        #endregion
+
+        #region BitmapData voids
+        /// <summary>
+        /// Blocks Bitmap in system memory.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap data</returns>
+        public static BitmapData Lock32bpp(this Bitmap b)
+        {
+            return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+        }
+        /// <summary>
+        /// Blocks Bitmap in system memory.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap data</returns>
+        public static BitmapData Lock8bpp(this Bitmap b)
+        {
+            return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
+        }
+        /// <summary>
+        /// Unblocks Bitmap in system memory.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <param name="bmData">Bitmap data</param>
+        public static void Unlock(this Bitmap b, BitmapData bmData)
+        {
+            b.UnlockBits(bmData);
+            return;
+        }
+        #endregion
+
+        #region RGB
+        /// <summary>
+        /// Converts a Bitmap to an RGB structure with or without alpha-channel.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="alpha">Alpha-channel</param>
+        /// <returns>RGBA structure array</returns>
+        public static double[][,] ToRGB(this Bitmap Data, bool alpha = false)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            double[][,] rgb = BitmapConverter.ToRGB(bmData, alpha);
+            BitmapConverter.Unlock(Data, bmData);
+            return rgb;
+        }
+        /// <summary>
+        /// Converts a Bitmap to an RGB structure with or without alpha-channel.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="alpha">Alpha-channel</param>
+        /// <returns>RGBA structure array</returns>
+        public unsafe static double[][,] ToRGB(BitmapData bmData, bool alpha = false)
+        {
+            // params
+            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // matrices
+            double[,] x = new double[height, width];
+            double[,] y = new double[height, width];
+            double[,] z = new double[height, width];
+
+            // with alpha channel
+            if (alpha)
+            {
+                double[,] a = new double[height, width];
+
+                Parallel.For(0, height, j =>
+                {
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        // color
+                        x[j, i] = p[k + 0] / 255.0;
+                        y[j, i] = p[k + 1] / 255.0;
+                        z[j, i] = p[k + 2] / 255.0;
+                        a[j, i] = p[k + 3] / 255.0;
+                    }
+                });
+
+                return new double[][,] { x, y, z, a };
+            }
+
+            // without alpha channel
+            Parallel.For(0, height, j =>
+            {
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    // shift:
+                    k = jstride + i * 4;
+
+                    // color
+                    x[j, i] = p[k + 0] / 255.0;
+                    y[j, i] = p[k + 1] / 255.0;
+                    z[j, i] = p[k + 2] / 255.0;
+                }
+            });
+
+            return new double[][,] { x, y, z };
+        }
+        /// <summary>
+        /// Converts an RGB structure to a color image.
+        /// </summary>
+        /// <param name="array">RGBA structure array</param>
+        /// <returns>Bitmap</returns>
+        public unsafe static Bitmap FromRGB(this double[][,] array)
+        {
+            // matrices
+            double[,] x = array[0];
+            double[,] y = array[1];
+            double[,] z = array[2];
+
+            // params
+            int width = x.GetLength(1), height = x.GetLength(0);
+            Bitmap bitmap = new Bitmap(width, height);
+            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // alpha
+            bool alpha = array.Length == 4;
+
+            if (alpha)
+            {
+                double[,] a = array[3];
+
+                Parallel.For(0, height, j =>
+                {
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        // recording model:
+                        p[k + 0] = Maths.Byte(x[j, i] * 255.0);
+                        p[k + 1] = Maths.Byte(y[j, i] * 255.0);
+                        p[k + 2] = Maths.Byte(z[j, i] * 255.0);
+                        p[k + 3] = Maths.Byte(a[j, i] * 255.0);
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, height, j =>
+                {
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        // recording model:
+                        p[k + 0] = Maths.Byte(x[j, i] * 255.0);
+                        p[k + 1] = Maths.Byte(y[j, i] * 255.0);
+                        p[k + 2] = Maths.Byte(z[j, i] * 255.0);
+                        p[k + 3] = (byte)255;
+                    }
+                });
+            }
+
+
+            BitmapConverter.Unlock(bitmap, bmData);
+            return bitmap;
+        }
+        /// <summary>
+        /// Converts an RGB structure to a color image.
+        /// </summary>
+        /// <param name="array">RGBA structure array</param>
+        /// <param name="bmData">Bitmap data</param>
+        public unsafe static void FromRGB(this double[][,] array, BitmapData bmData)
+        {
+            // matrices
+            double[,] x = array[0];
+            double[,] y = array[1];
+            double[,] z = array[2];
+
+            // params
+            int width = x.GetLength(1), height = x.GetLength(0);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // alpha
+            bool alpha = array.Length == 4;
+
+            if (alpha)
+            {
+                double[,] a = array[3];
+
+                Parallel.For(0, height, j =>
+                {
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        // recording model:
+                        p[k + 0] = Maths.Byte(x[j, i] * 255.0);
+                        p[k + 1] = Maths.Byte(y[j, i] * 255.0);
+                        p[k + 2] = Maths.Byte(z[j, i] * 255.0);
+                        p[k + 3] = Maths.Byte(a[j, i] * 255.0);
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, height, j =>
+                {
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        // recording model:
+                        p[k + 0] = Maths.Byte(x[j, i] * 255.0);
+                        p[k + 1] = Maths.Byte(y[j, i] * 255.0);
+                        p[k + 2] = Maths.Byte(z[j, i] * 255.0);
+                        p[k + 3] = (byte)255;
+                    }
+                });
+            }
+
+            return;
+        }
+        /// <summary>
+        /// Converts an RGB structure to a color image.
+        /// </summary>
+        /// <param name="array">RGBA structure array</param>
+        /// <param name="Data">Bitmap</param>
+        public static void FromRGB(this double[][,] array, Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            FromRGB(array, bmData);
+            BitmapConverter.Unlock(Data, bmData);
+            return;
+        }
+        #endregion
+
+        #region HSB
+        /// <summary>
+        /// Converts a Bitmap to an HSB structure with or without alpha-channel.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="alpha">Alpha-channel</param>
+        /// <returns>HSB structure array</returns>
+        public static double[][,] ToHSB(this Bitmap Data, bool alpha = false)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            double[][,] rgb = BitmapConverter.ToHSB(bmData, alpha);
+            BitmapConverter.Unlock(Data, bmData);
+            return rgb;
+        }
+        /// <summary>
+        /// Converts a Bitmap to an HSB structure with or without alpha-channel.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="alpha">Alpha-channel</param>
+        /// <returns>HSB structure array</returns>
+        public unsafe static double[][,] ToHSB(this BitmapData bmData, bool alpha = false)
+        {
+            // params
+            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // matrices
+            double[,] x = new double[height, width];
+            double[,] y = new double[height, width];
+            double[,] z = new double[height, width];
+
+            // with alpha channel
+            if (alpha)
+            {
+                double[,] a = new double[height, width];
+
+                Parallel.For(0, height, j =>
+                {
+                    HSB mdl;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        mdl = HSB.FromRGB(p[k + 2], p[k + 1], p[k + 0]);
+                        x[j, i] = mdl.Hue;
+                        y[j, i] = mdl.Saturation;
+                        z[j, i] = mdl.Brightness;
+                        a[j, i] = p[k + 3] / 255.0;
+                    }
+                });
+
+                return new double[][,] { x, y, z, a };
+            }
+
+            // without alpha channel
+            Parallel.For(0, height, j =>
+            {
+                HSB mdl;
+
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    // shift:
+                    k = jstride + i * 4;
+
+                    mdl = HSB.FromRGB(p[k + 2], p[k + 1], p[k + 0]);
+                    x[j, i] = mdl.Hue;
+                    y[j, i] = mdl.Saturation;
+                    z[j, i] = mdl.Brightness;
+                }
+            });
+
+            return new double[][,] { x, y, z };
+        }
+        /// <summary>
+        /// Converts an HSB structure to a color image.
+        /// </summary>
+        /// <param name="array">HSB structure array</param>
+        /// <returns>Bitmap</returns>
+        public unsafe static Bitmap FromHSB(this double[][,] array)
+        {
+            // matrices
+            double[,] x = array[0];
+            double[,] y = array[1];
+            double[,] z = array[2];
+
+            // params
+            int width = x.GetLength(1), height = x.GetLength(0);
+            Bitmap bitmap = new Bitmap(width, height);
+            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // alpha
+            bool alpha = array.Length == 4;
+
+            if (alpha)
+            {
+                double[,] a = array[3];
+
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new HSB(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = Maths.Byte(a[j, i] * 255.0);
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new HSB(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = (byte)255;
+                    }
+                });
+            }
+
+            BitmapConverter.Unlock(bitmap, bmData);
+            return bitmap;
+        }
+        /// <summary>
+        /// Converts an HSB structure to a color image.
+        /// </summary>
+        /// <param name="array">HSB structure array</param>
+        /// <param name="bmData">Bitmap data</param>
+        public unsafe static void FromHSB(this double[][,] array, BitmapData bmData)
+        {
+            // matrices
+            double[,] x = array[0];
+            double[,] y = array[1];
+            double[,] z = array[2];
+
+            // params
+            int width = x.GetLength(1), height = x.GetLength(0);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // alpha
+            bool alpha = array.Length == 4;
+
+            if (alpha)
+            {
+                double[,] a = array[3];
+
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new HSB(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = Maths.Byte(a[j, i] * 255.0);
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new HSB(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = (byte)255;
+                    }
+                });
+            }
+
+            return;
+        }
+        /// <summary>
+        /// Converts an HSB structure to a color image.
+        /// </summary>
+        /// <param name="array">HSB structure array</param>
+        /// <param name="Data">Bitmap</param>
+        public static void FromHSB(this double[][,] array, Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            FromHSB(array, bmData);
+            BitmapConverter.Unlock(Data, bmData);
+            return;
+        }
+        #endregion
+
+        #region HSL
+        /// <summary>
+        /// Converts a Bitmap to an HSL structure with or without alpha-channel.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="alpha">Alpha-channel</param>
+        /// <returns>HSL structure array</returns>
+        public static double[][,] ToHSL(this Bitmap Data, bool alpha = false)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            double[][,] rgb = BitmapConverter.ToHSL(bmData, alpha);
+            BitmapConverter.Unlock(Data, bmData);
+            return rgb;
+        }
+        /// <summary>
+        /// Converts a Bitmap to an HSL structure with or without alpha-channel.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="alpha">Alpha-channel</param>
+        /// <returns>HSL structure array</returns>
+        public unsafe static double[][,] ToHSL(this BitmapData bmData, bool alpha = false)
+        {
+            // params
+            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // matrices
+            double[,] x = new double[height, width];
+            double[,] y = new double[height, width];
+            double[,] z = new double[height, width];
+
+            // with alpha channel
+            if (alpha)
+            {
+                double[,] a = new double[height, width];
+
+                Parallel.For(0, height, j =>
+                {
+                    HSL mdl;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        mdl = HSL.FromRGB(p[k + 2], p[k + 1], p[k + 0]);
+                        x[j, i] = mdl.Hue;
+                        y[j, i] = mdl.Saturation;
+                        z[j, i] = mdl.Lightness;
+                        a[j, i] = p[k + 3] / 255.0;
+                    }
+                });
+
+                return new double[][,] { x, y, z, a };
+            }
+
+            // without alpha channel
+            Parallel.For(0, height, j =>
+            {
+                HSL mdl;
+
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    // shift:
+                    k = jstride + i * 4;
+
+                    mdl = HSL.FromRGB(p[k + 2], p[k + 1], p[k + 0]);
+                    x[j, i] = mdl.Hue;
+                    y[j, i] = mdl.Saturation;
+                    z[j, i] = mdl.Lightness;
+                }
+            });
+
+            return new double[][,] { x, y, z };
+        }
+        /// <summary>
+        /// Converts an HSL structure to a color image.
+        /// </summary>
+        /// <param name="array">HSL structure array</param>
+        /// <returns>Bitmap</returns>
+        public unsafe static Bitmap FromHSL(this double[][,] array)
+        {
+            // matrices
+            double[,] x = array[0];
+            double[,] y = array[1];
+            double[,] z = array[2];
+
+            // params
+            int width = x.GetLength(1), height = x.GetLength(0);
+            Bitmap bitmap = new Bitmap(width, height);
+            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // alpha
+            bool alpha = array.Length == 4;
+
+            if (alpha)
+            {
+                double[,] a = array[3];
+
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new HSL(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = Maths.Byte(a[j, i] * 255.0);
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new HSL(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = (byte)255;
+                    }
+                });
+            }
+
+            BitmapConverter.Unlock(bitmap, bmData);
+            return bitmap;
+        }
+        /// <summary>
+        /// Converts an HSL structure to a color image.
+        /// </summary>
+        /// <param name="array">HSL structure array</param>
+        /// <param name="bmData">Bitmap data</param>
+        public unsafe static void FromHSL(this double[][,] array, BitmapData bmData)
+        {
+            // matrices
+            double[,] x = array[0];
+            double[,] y = array[1];
+            double[,] z = array[2];
+
+            // params
+            int width = x.GetLength(1), height = x.GetLength(0);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // alpha
+            bool alpha = array.Length == 4;
+
+            if (alpha)
+            {
+                double[,] a = array[3];
+
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new HSL(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = Maths.Byte(a[j, i] * 255.0);
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new HSL(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = (byte)255;
+                    }
+                });
+            }
+
+            return;
+        }
+        /// <summary>
+        /// Converts an HSL structure to a color image.
+        /// </summary>
+        /// <param name="array">HSL structure array</param>
+        /// <param name="Data">Bitmap</param>
+        public static void FromHSL(this double[][,] array, Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            FromHSL(array, bmData);
+            BitmapConverter.Unlock(Data, bmData);
+            return;
+        }
+        #endregion
+
+        #region YCbCr
+        /// <summary>
+        /// Converts a Bitmap to an YCbCr structure with or without alpha-channel.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="alpha">Alpha-channel</param>
+        /// <returns>YCbCr structure array</returns>
+        public static double[][,] ToYCbCr(this Bitmap Data, bool alpha = false)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            double[][,] rgb = BitmapConverter.ToYCbCr(bmData, alpha);
+            BitmapConverter.Unlock(Data, bmData);
+            return rgb;
+        }
+        /// <summary>
+        /// Converts a Bitmap to an YCbCr structure with or without alpha-channel.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="alpha">Alpha-channel</param>
+        /// <returns>YCbCr structure array</returns>
+        public unsafe static double[][,] ToYCbCr(this BitmapData bmData, bool alpha = false)
+        {
+            // params
+            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // matrices
+            double[,] x = new double[height, width];
+            double[,] y = new double[height, width];
+            double[,] z = new double[height, width];
+
+            // with alpha channel
+            if (alpha)
+            {
+                double[,] a = new double[height, width];
+
+                Parallel.For(0, height, j =>
+                {
+                    YCbCr mdl;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        mdl = YCbCr.FromRGB(p[k + 2], p[k + 1], p[k + 0]);
+                        x[j, i] = mdl.Y;
+                        y[j, i] = mdl.Cb;
+                        z[j, i] = mdl.Cr;
+                        a[j, i] = p[k + 3] / 255.0;
+                    }
+                });
+
+                return new double[][,] { x, y, z, a };
+            }
+
+            // without alpha channel
+            Parallel.For(0, height, j =>
+            {
+                YCbCr mdl;
+
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    // shift:
+                    k = jstride + i * 4;
+
+                    mdl = YCbCr.FromRGB(p[k + 2], p[k + 1], p[k + 0]);
+                    x[j, i] = mdl.Y;
+                    y[j, i] = mdl.Cb;
+                    z[j, i] = mdl.Cr;
+                }
+            });
+
+            return new double[][,] { x, y, z };
+        }
+        /// <summary>
+        /// Converts an YCbCr structure to a color image.
+        /// </summary>
+        /// <param name="array">YCbCr structure array</param>
+        /// <returns>Bitmap</returns>
+        public unsafe static Bitmap FromYCbCr(this double[][,] array)
+        {
+            // matrices
+            double[,] x = array[0];
+            double[,] y = array[1];
+            double[,] z = array[2];
+
+            // params
+            int width = x.GetLength(1), height = x.GetLength(0);
+            Bitmap bitmap = new Bitmap(width, height);
+            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // alpha
+            bool alpha = array.Length == 4;
+
+            if (alpha)
+            {
+                double[,] a = array[3];
+
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new YCbCr(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = Maths.Byte(a[j, i] * 255.0);
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new YCbCr(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = (byte)255;
+                    }
+                });
+            }
+
+            BitmapConverter.Unlock(bitmap, bmData);
+            return bitmap;
+        }
+        /// <summary>
+        /// Converts an YCbCr structure to a color image.
+        /// </summary>
+        /// <param name="array">YCbCr structure array</param>
+        /// <param name="bmData">Bitmap data</param>
+        public unsafe static void FromYCbCr(this double[][,] array, BitmapData bmData)
+        {
+            // matrices
+            double[,] x = array[0];
+            double[,] y = array[1];
+            double[,] z = array[2];
+
+            // params
+            int width = x.GetLength(1), height = x.GetLength(0);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            // alpha
+            bool alpha = array.Length == 4;
+
+            if (alpha)
+            {
+                double[,] a = array[3];
+
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new YCbCr(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = Maths.Byte(a[j, i] * 255.0);
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, height, j =>
+                {
+                    RGB rgb;
+
+                    int i, k, jstride = j * stride;
+
+                    for (i = 0; i < width; i++)
+                    {
+                        // shift:
+                        k = jstride + i * 4;
+
+                        rgb = new YCbCr(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                        // recording model:
+                        p[k + 0] = rgb.Blue;
+                        p[k + 1] = rgb.Green;
+                        p[k + 2] = rgb.Red;
+                        p[k + 3] = (byte)255;
+                    }
+                });
+            }
+
+            return;
+        }
+        /// <summary>
+        /// Converts an YCbCr structure to a color image.
+        /// </summary>
+        /// <param name="array">YCbCr structure array</param>
+        /// <param name="Data">Bitmap</param>
+        public static void FromYCbCr(this double[][,] array, Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            FromYCbCr(array, bmData);
+            BitmapConverter.Unlock(Data, bmData);
+            return;
+        }
+        #endregion
+
+        #region Grayscale
+        /// <summary>
+        /// Converts Bitmap to averaged channel value matrix.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <returns>Matrix</returns>
+        public static double[,] ToGrayscale(this Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            double[,] rgb = ToGrayscale(bmData);
+            BitmapConverter.Unlock(Data, bmData);
+            return rgb;
+        }
+        /// <summary>
+        /// Converts Bitmap to averaged channel value matrix.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Matrix</returns>
+        public unsafe static double[,] ToGrayscale(this BitmapData bmData)
+        {
+            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            double[,] rgb = new double[height, width];
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            Parallel.For(0, height, j =>
+            {
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+                    rgb[j, i] = RGB.Average(p[k + 2], p[k + 1], p[k]) / 255.0;
+                }
+            });
+
+            return rgb;
+        }
+        /// <summary>
+        /// Converts a matrix of channel values to a monochrome Bitmap.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <returns>Bitmap</returns>
+        public unsafe static Bitmap FromGrayscale(this double[,] m)
+        {
+            int width = m.GetLength(1), height = m.GetLength(0);
+            Bitmap bitmap = new Bitmap(width, height);
+            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            Parallel.For(0, height, j =>
+            {
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+                    p[k + 2] = p[k + 1] = p[k] = Maths.Byte(m[j, i] * 255.0);
+                    p[k + 3] = 255;
+                }
+            });
+
+            BitmapConverter.Unlock(bitmap, bmData);
+            return bitmap;
+        }
+        /// <summary>
+        /// Converts a matrix of channel values to a monochrome Bitmap.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="bmData">Bitmap data</param>
+        public unsafe static void FromGrayscale(this double[,] m, BitmapData bmData)
+        {
+            int width = m.GetLength(1), height = m.GetLength(0);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            Parallel.For(0, height, j =>
+            {
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+                    p[k + 2] = p[k + 1] = p[k] = Maths.Byte(m[j, i] * 255.0);
+                    p[k + 3] = 255;
+                }
+            });
+
+            return;
+        }
+        /// <summary>
+        /// Converts a matrix of channel values to a monochrome Bitmap.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="Data">Bitmap</param>
+        public static void FromGrayscale(this double[,] m, Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            FromGrayscale(m, bmData);
+            BitmapConverter.Unlock(Data, bmData);
+            return;
+        }
+        #endregion
+    }
+    #endregion
+
     #region Hough transforms
     /// <summary>
-    /// Определяет линию Хафа.
+    /// Defines the Hough line.
     /// </summary>
     public struct HoughLine : IComparable
     {
         #region Struct components
         /// <summary>
-        /// Наклон линии - угол между полярной осью и радиусом линии θ ∈ [0, 180).
+        /// Slope of the line [0, 180).
+        /// <remarks>
+        /// It is the angle between the polar axis and the radius of the line.
+        /// </remarks>
         /// </summary>
         public readonly double Theta;
         /// <summary>
-        /// Расстояние линии от центра изображения (-inf, +inf).
+        /// Line distance from the center of the image (-inf, +inf).
         /// <remarks>
-        /// Отрицательный радиус линии означает, что линия находится в нижней части системы полярных координат. Поэтому 
-        /// угол θ должен быть увеличен на 180 градусов, а радиус должен быть положительным.
+        /// A negative radius line means that the line is at the bottom of the polar coordinate system. Therefore
+        /// the angle θ should be increased by 180 degrees, and Radius should be positive.
         /// </remarks>
         /// </summary>
         public readonly short Radius;
         /// <summary>
-        /// Абсолютная интенсивность линии (0, +inf).
+        /// Absolute line intensity (0, +inf).
         /// </summary>
         public readonly short Intensity;
         /// <summary>
-        /// Относительная интенсивность линии (0, 1].
+        /// Relative line intensity (0, 1].
         /// </summary>
         public readonly double RelativeIntensity;
         /// <summary>
-        /// Инициализирует линию Хафа.
+        /// Initializes the Hough line.
         /// </summary>
-        /// <param name="theta">Наклон линии θ ∈ [0, 180)</param>
-        /// <param name="radius">Расстояние линии от центра изображения (-inf, +inf)</param>
-        /// <param name="intensity">Абсолютная интенсивность линии (0, +inf)</param>
-        /// <param name="relativeIntensity">Относительная интенсивность линии (0, 1]</param>
+        /// <param name="theta">Slope of the line [0, 180)</param>
+        /// <param name="radius">Radius (-inf, +inf)</param>
+        /// <param name="intensity">Absolute line intensity (0, +inf)</param>
+        /// <param name="relativeIntensity">Relative line intensity (0, 1]</param>
         public HoughLine(double theta, short radius, short intensity, double relativeIntensity)
         {
             Theta = theta;
@@ -11667,10 +12207,10 @@ namespace UMapx.Imaging
             RelativeIntensity = relativeIntensity;
         }
         /// <summary>
-        /// Сравнивает объект с другим экземпляром этого класса.
+        /// Compares object to another instance of this class.
         /// </summary>
-        /// <param name="value">Объект</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="value">Object</param>
+        /// <returns>Integer number</returns>
         public int CompareTo(object value)
         {
             return (-Intensity.CompareTo(((HoughLine)value).Intensity));
@@ -11678,39 +12218,39 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет окружность Хафа.
+    /// Defines the Hough circle.
     /// </summary>
     public struct HoughCircle : IComparable
     {
         #region Struct components
         /// <summary>
-        /// Координата X.
+        /// Coordinate X.
         /// </summary>
         public readonly int X;
         /// <summary>
-        /// Координата Y.
+        /// Coordinate Y.
         /// </summary>
         public readonly int Y;
         /// <summary>
-        /// Радиус окружности.
+        /// Radius.
         /// </summary>
         public readonly int Radius;
         /// <summary>
-        /// Абсолютная интенсивность линии (0, +inf).
+        /// Absolute line intensity (0, +inf).
         /// </summary>
         public readonly short Intensity;
         /// <summary>
-        /// Относительная интенсивность линии (0, 1].
+        /// Relative line intensity (0, 1].
         /// </summary>
         public readonly double RelativeIntensity;
         /// <summary>
-        /// Инициализирует окружность Хафа.
+        /// Initializes the Hough circle.
         /// </summary>
-        /// <param name="x">Координата X</param>
-        /// <param name="y">Координата Y</param>
-        /// <param name="radius">Радиус окружности</param>
-        /// <param name="intensity">Абсолютная интенсивность линии (0, +inf)</param>
-        /// <param name="relativeIntensity">Относительная интенсивность линии (0, 1]</param>
+        /// <param name="x">Coordinate X</param>
+        /// <param name="y">Coordinate Y</param>
+        /// <param name="radius">Radius</param>
+        /// <param name="intensity">Absolute line intensity (0, +inf)</param>
+        /// <param name="relativeIntensity">Relative line intensity (0, 1]</param>
         public HoughCircle(int x, int y, int radius, short intensity, double relativeIntensity)
         {
             X = x;
@@ -11720,10 +12260,10 @@ namespace UMapx.Imaging
             RelativeIntensity = relativeIntensity;
         }
         /// <summary>
-        /// Сравнивает объект с другим экземпляром этого класса.
+        /// Compares object to another instance of this class.
         /// </summary>
-        /// <param name="value">Объект</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="value">Object</param>
+        /// <returns>Integer number</returns>
         public int CompareTo(object value)
         {
             return (-Intensity.CompareTo(((HoughCircle)value).Intensity));
@@ -11731,20 +12271,18 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр преобразования Хафа.
+    /// Defines the Hough line transform filter.
     /// </summary>
     public class HoughLineTransform : IBitmapFilter
     {
         #region Private data
-        // Hough transformation quality settings
         private int stepsPerDegree;
         private int houghHeight;
         private double thetaStep;
 
-        // precalculated Sine and Cosine values
         private double[] sinMap;
         private double[] cosMap;
-        // Hough map
+        
         private short[,] houghMap;
         private short maxMapIntensity = 0;
 
@@ -11755,7 +12293,7 @@ namespace UMapx.Imaging
 
         #region Initialize
         /// <summary>
-        /// Инициализирует фильтр преобразования Хафа.
+        /// Initializes the Hough line transform filter.
         /// </summary>
         public HoughLineTransform()
         {
@@ -11765,7 +12303,7 @@ namespace UMapx.Imaging
 
         #region Class components
         /// <summary>
-        /// Шаг в грудасах.
+        /// Gets or sets steps per degree.
         /// </summary>
         public int StepsPerDegree
         {
@@ -11788,7 +12326,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Получает минимальную интенсивность линий.
+        /// Gets the minimum line intensity.
         /// </summary>
         public short MinLineIntensity
         {
@@ -11796,14 +12334,14 @@ namespace UMapx.Imaging
             set { minLineIntensity = value; }
         }
         /// <summary>
-        /// Получает максимальную интенсивность линий.
+        /// Gets the maximum line intensity.
         /// </summary>
         public short MaxIntensity
         {
             get { return maxMapIntensity; }
         }
         /// <summary>
-        /// Получает или задает радиус поиска локального пикового значения.
+        /// Gets or sets the radius search for the local peak value.
         /// </summary>
         public int LocalPeakRadius
         {
@@ -11811,17 +12349,17 @@ namespace UMapx.Imaging
             set { localPeakRadius = Math.Max(1, Math.Min(10, value)); }
         }
         /// <summary>
-        /// Получает количество найденных линий.
+        /// Gets the count of lines found.
         /// </summary>
         public int LinesCount
         {
             get { return lines.Count; }
         }
         /// <summary>
-        /// Возвращает массив линий с абсолютной интенсивностью.
+        /// Returns an array of lines with absolute intensity.
         /// </summary>
-        /// <param name="count">Количество</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="count">Count</param>
+        /// <returns>Array</returns>
         public HoughLine[] GetMostIntensiveLines(int count)
         {
             // lines count
@@ -11834,10 +12372,10 @@ namespace UMapx.Imaging
             return dst;
         }
         /// <summary>
-        /// Возвращает массив линий с относительной интенсивностью.
+        /// Returns an array of lines with relative intensity.
         /// </summary>
-        /// <param name="minRelativeIntensity">Минимальная относительная интенсивность</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="minRelativeIntensity">Minimum relative intensity</param>
+        /// <returns>Array</returns>
         public HoughLine[] GetLinesByRelativeIntensity(double minRelativeIntensity)
         {
             int count = 0, n = lines.Count;
@@ -11851,15 +12389,15 @@ namespace UMapx.Imaging
 
         #region Image processing
         /// <summary>
-        /// Возвращает синограмму Хафа.
+        /// Returns the Hough synogram.
         /// </summary>
-        /// <returns>Точечный рисунок</returns>
+        /// <returns>Bitmap</returns>
         public Bitmap ToBitmap()
         {
             // check if Hough transformation was made already
             if (houghMap == null)
             {
-                throw new ApplicationException("Преобразование Хафа не было произведено");
+                throw new ApplicationException("Hough conversion was not made");
             }
 
             int height = houghMap.GetLength(0);
@@ -11904,9 +12442,9 @@ namespace UMapx.Imaging
             return image;
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             // lock source image
@@ -11924,14 +12462,14 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format8bppIndexed)
             {
-                throw new Exception("Формат изображения должен быть: 8bppIndexed");
+                throw new Exception("Image format should be: 8bppIndexed");
             }
 
             // get source image size
@@ -12091,19 +12629,16 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет фильтр преобразования Хафа.
+    /// Defines the Hough circle transform filter.
     /// </summary>
     public class HoughCircleTransform : IBitmapFilter
     {
         #region Private data
-        // circle radius to detect
         private int radiusToDetect;
 
-        // Hough map
         private short[,] houghMap;
         private short maxMapIntensity = 0;
 
-        // Hough map's width and height
         private int width;
         private int height;
 
@@ -12114,9 +12649,9 @@ namespace UMapx.Imaging
 
         #region Initialize
         /// <summary>
-        /// Инициализирует фильтр преобразования Хафа.
+        /// Initializes the Hough circle transform filter.
         /// </summary>
-        /// <param name="radiusToDetect">Радиус поиска</param>
+        /// <param name="radiusToDetect">Radius</param>
         public HoughCircleTransform(int radiusToDetect)
         {
             this.radiusToDetect = radiusToDetect;
@@ -12125,7 +12660,7 @@ namespace UMapx.Imaging
 
         #region Class components
         /// <summary>
-        /// Получает или задает минимальную интенсивность окружности.
+        /// Gets the minimum circle intensity.
         /// </summary>
         public short MinCircleIntensity
         {
@@ -12133,7 +12668,7 @@ namespace UMapx.Imaging
             set { minCircleIntensity = value; }
         }
         /// <summary>
-        /// Получает или задает радиус поиска локального пикового значения.
+        /// Gets or sets the radius search for the local peak value.
         /// </summary>
         public int LocalPeakRadius
         {
@@ -12141,24 +12676,24 @@ namespace UMapx.Imaging
             set { localPeakRadius = Math.Max(1, Math.Min(10, value)); }
         }
         /// <summary>
-        /// Получает максимальную интенсивность линий.
+        /// Gets the maximum line intensity.
         /// </summary>
         public short MaxIntensity
         {
             get { return maxMapIntensity; }
         }
         /// <summary>
-        /// Получает количество найденных окружностей.
+        /// Gets the count of lines found.
         /// </summary>
         public int CirclesCount
         {
             get { return circles.Count; }
         }
         /// <summary>
-        /// Возвращает массив окружностей с абсолютной интенсивностью.
+        /// Returns an array of lines with absolute intensity.
         /// </summary>
-        /// <param name="count">Количество</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="count">Count</param>
+        /// <returns>Array</returns>
         public HoughCircle[] GetMostIntensiveCircles(int count)
         {
             // lines count
@@ -12171,10 +12706,10 @@ namespace UMapx.Imaging
             return dst;
         }
         /// <summary>
-        /// Возвращает массив окружностей с относительной интенсивностью.
+        /// Returns an array of lines with relative intensity.
         /// </summary>
-        /// <param name="minRelativeIntensity">Минимальная относительная интенсивность</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="minRelativeIntensity">Minimum relative intensity</param>
+        /// <returns>Array</returns>
         public HoughCircle[] GetCirclesByRelativeIntensity(double minRelativeIntensity)
         {
             int count = 0, n = circles.Count;
@@ -12188,9 +12723,9 @@ namespace UMapx.Imaging
 
         #region Image processing
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
+        /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
             // lock source image
@@ -12208,14 +12743,14 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Применяет фильтр к точечному рисунку.
+        /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
+        /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format8bppIndexed)
             {
-                throw new Exception("Формат изображения должен быть: 8bppIndexed");
+                throw new Exception("Image format should be: 8bppIndexed");
             }
 
             // get source image size
@@ -12263,15 +12798,15 @@ namespace UMapx.Imaging
             CollectCircles();
         }
         /// <summary>
-        /// Возвращает синограмму Хафа.
+        /// Returns the Hough synogram.
         /// </summary>
-        /// <returns>Точечный рисунок</returns>
+        /// <returns>Bitmap</returns>
         public Bitmap ToBitmap()
         {
             // check if Hough transformation was made already
             if (houghMap == null)
             {
-                throw new ApplicationException("Преобразование Хафа не было произведено");
+                throw new ApplicationException("Hough conversion was not made");
             }
 
             int width = houghMap.GetLength(1);
@@ -12462,643 +12997,22 @@ namespace UMapx.Imaging
     }
     #endregion
 
-    #region Bitmap conversions
-    /// <summary>
-    /// Используется для работы с точечными изображениями.
-    /// </summary>
-    public static class BitmapConverter
-    {
-        #region Bitmap convert components
-        /// <summary>
-        /// Конвертирует точечный рисунок в файл значка.
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <param name="size">Размер (ширина = высота)</param>
-        /// <returns>Файл значка</returns>
-        public static Icon ToIco(this Bitmap b, int size)
-        {
-            Bitmap bmp = new Bitmap(b, new Size(size, size));
-            MemoryStream pngstream = new MemoryStream();
-            MemoryStream icostream = new MemoryStream();
-
-            byte[] pngicon = new byte[] { 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            byte[] png;
-
-            bmp.Save(pngstream, System.Drawing.Imaging.ImageFormat.Png);
-            pngstream.Position = 0;
-            png = pngstream.ToArray();
-
-            if (size >= 256) size = 0;
-            pngicon[6] = (byte)size;
-            pngicon[7] = (byte)size;
-            pngicon[14] = (byte)(png.Length & 255);
-            pngicon[15] = (byte)(png.Length / 256);
-            pngicon[18] = (byte)(pngicon.Length);
-
-            icostream.Write(pngicon, 0, pngicon.Length);
-            icostream.Write(png, 0, png.Length);
-            icostream.Position = 0;
-            bmp.Dispose();
-            pngstream.Dispose();
-
-            return new Icon(icostream);
-        }
-        /// <summary>
-        /// Конвертирует точечный рисунок в JPEG формат.
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <returns>Точечный рисунок</returns>
-        public static Bitmap ToJpeg(this Bitmap b)
-        {
-            Bitmap bmp = new Bitmap(b);
-            MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Jpeg);
-
-            return new Bitmap(stream);
-        }
-        /// <summary>
-        /// Конвертирует точечный рисунок в BMP формат.
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <returns>Точечный рисунок</returns>
-        public static Bitmap ToBmp(this Bitmap b)
-        {
-            Bitmap bmp = new Bitmap(b);
-            MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Bmp);
-
-            return new Bitmap(stream);
-        }
-        /// <summary>
-        /// Конвертирует точечный рисунок в GIF формат.
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <returns>Точечный рисунок</returns>
-        public static Bitmap ToGif(this Bitmap b)
-        {
-            Bitmap bmp = new Bitmap(b);
-            MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Gif);
-
-            return new Bitmap(stream);
-        }
-        /// <summary>
-        /// Конвертирует точечный рисунок в Png формат.
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <returns>Точечный рисунок</returns>
-        public static Bitmap ToPng(this Bitmap b)
-        {
-            Bitmap bmp = new Bitmap(b);
-            MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Png);
-
-            return new Bitmap(stream);
-        }
-        /// <summary>
-        /// Конвертирует точечный рисунок в Tiff формат.
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <returns>Точечный рисунок</returns>
-        public static Bitmap ToTiff(this Bitmap b)
-        {
-            Bitmap bmp = new Bitmap(b);
-            MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Tiff);
-
-            return new Bitmap(stream);
-        }
-        /// <summary>
-        /// Получает точечный рисунок из атрибутов точечного изображения.
-        /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <returns>Точечный рисунок</returns>
-        public static Bitmap Bitmap(this BitmapData bmData)
-        {
-            return new Bitmap(bmData.Width, bmData.Height, bmData.Stride, bmData.PixelFormat, bmData.Scan0);
-        }
-        /// <summary>
-        /// Конвертирует точечный рисунок в определенный формат
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <param name="pixelformat">Формат данных о цвете для каждой точки точечного рисунка</param>
-        /// <returns>Точечный рисунок</returns>
-        public static Bitmap Bitmap(this Bitmap b, PixelFormat pixelformat)
-        {
-            return b.Clone(new Rectangle(0, 0, b.Width, b.Height), pixelformat);
-        }
-        #endregion
-
-        #region BitmapData voids
-        /// <summary>
-        /// Блокирует точечный рисунок в системной памяти.
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <returns>Атрибуты точечного изображения</returns>
-        public static BitmapData Lock32bpp(this Bitmap b)
-        {
-            return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-        }
-        /// <summary>
-        /// Блокирует точечный рисунок в системной памяти.
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <returns>Атрибуты точечного изображения</returns>
-        public static BitmapData Lock8bpp(this Bitmap b)
-        {
-            return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
-        }
-        /// <summary>
-        /// Разблокирует точечный рисунок из системной памяти.
-        /// </summary>
-        /// <param name="b">Точечный рисунок</param>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        public static void Unlock(this Bitmap b, BitmapData bmData)
-        {
-            b.UnlockBits(bmData);
-            return;
-        }
-        #endregion
-
-        #region RGB
-        /// <summary>
-        /// Преобразовывает точечный рисунок в RGBA-структуру.
-        /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="alpha">Учитывать альфа-канал или нет</param>
-        /// <returns>RGBA-структура</returns>
-        public static double[][,] ToRGB(this Bitmap Data, bool alpha = false)
-        {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[][,] rgb = BitmapConverter.ToRGB(bmData, alpha);
-            BitmapConverter.Unlock(Data, bmData);
-            return rgb;
-        }
-        /// <summary>
-        /// Преобразовывает точечный рисунок в RGBA-структуру.
-        /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="alpha">Учитывать альфа-канал или нет</param>
-        /// <returns>RGBA-структура</returns>
-        public unsafe static double[][,] ToRGB(this BitmapData bmData, bool alpha = false)
-        {
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            int total = 4, length = (alpha) ? total : total - 1;
-            double[][,] array = BitmapConverter.Dim(length, height, width);
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    // shift:
-                    k = jstride + i * total;
-
-                    // color
-                    array[0][j, i] = p[k] / 255.0;
-                    array[1][j, i] = p[k + 1] / 255.0;
-                    array[2][j, i] = p[k + 2] / 255.0;
-
-                    // if exist?
-                    if (alpha)
-                    {
-                        array[3][j, i] = p[k + 3] / 255.0;
-                    }
-                }
-            });
-            return array;
-        }
-        /// <summary>
-        /// Преобразовывает RGBA-структуру в цветное изображение.
-        /// </summary>
-        /// <param name="array">RGBA-структура</param>
-        /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap FromRGB(this double[][,] array)
-        {
-            int total = 4, length = array.Length;
-            int width = array[0].GetLength(1), height = array[0].GetLength(0);
-            Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    // shift:
-                    k = jstride + i * total;
-
-                    // recording model:
-                    p[k] = Maths.Byte(array[0][j, i] * 255.0);
-                    p[k + 1] = Maths.Byte(array[1][j, i] * 255.0);
-                    p[k + 2] = Maths.Byte(array[2][j, i] * 255.0);
-                    p[k + 3] = (byte)((length < 4) ? 255 : array[3][j, i] * 255.0);
-                }
-            });
-
-            BitmapConverter.Unlock(bitmap, bmData);
-            return bitmap;
-        }
-        #endregion
-
-        #region HSB
-        /// <summary>
-        /// Преобразовывает точечный рисунок в HSB-структуру.
-        /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="alpha">Учитывать альфа-канал или нет</param>
-        /// <returns>HSB-структура</returns>
-        public static double[][,] ToHSB(this Bitmap Data, bool alpha = false)
-        {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[][,] rgb = BitmapConverter.ToHSB(bmData, alpha);
-            BitmapConverter.Unlock(Data, bmData);
-            return rgb;
-        }
-        /// <summary>
-        /// Преобразовывает точечный рисунок в HSB-структуру.
-        /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="alpha">Учитывать альфа-канал или нет</param>
-        /// <returns>HSB-структура</returns>
-        public unsafe static double[][,] ToHSB(this BitmapData bmData, bool alpha = false)
-        {
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            int total = 4, length = (alpha) ? total : total - 1;
-            double[][,] array = BitmapConverter.Dim(length, height, width);
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                RGB rgb; HSB mod;
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    // shift
-                    k = jstride + i * total;
-
-                    // color transform:
-                    rgb = new RGB(p[k + 2], p[k + 1], p[k + 0]);
-                    mod = HSB.FromRGB(rgb);
-
-                    // recording model:
-                    array[0][j, i] = mod.Hue;
-                    array[1][j, i] = mod.Saturation;
-                    array[2][j, i] = mod.Brightness;
-
-                    // if exist?
-                    if (alpha)
-                    {
-                        array[3][j, i] = p[k + 3] / 255.0;
-                    }
-                }
-            });
-            return array;
-        }
-        /// <summary>
-        /// Преобразовывает HSB-структуру в цветное изображение.
-        /// </summary>
-        /// <param name="array">HSB-структура</param>
-        /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap FromHSB(this double[][,] array)
-        {
-            int total = 4, length = array.Length;
-            int width = array[0].GetLength(1), height = array[0].GetLength(0);
-            Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                RGB rgb; HSB mod;
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    // shift:
-                    k = jstride + i * total;
-
-                    // color transform:
-                    mod = new HSB(array[0][j, i], array[1][j, i], array[2][j, i]);
-                    rgb = mod.ToRGB;
-
-                    // recording model:
-                    p[k] = rgb.Blue;
-                    p[k + 1] = rgb.Green;
-                    p[k + 2] = rgb.Red;
-                    p[k + 3] = (byte)((length < 4) ? 255 : array[3][j, i] * 255.0);
-                }
-            });
-
-            BitmapConverter.Unlock(bitmap, bmData);
-            return bitmap;
-        }
-        #endregion
-
-        #region HSL
-        /// <summary>
-        /// Преобразовывает точечный рисунок в HSL-структуру.
-        /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="alpha">Учитывать альфа-канал или нет</param>
-        /// <returns>HSL-структура</returns>
-        public static double[][,] ToHSL(this Bitmap Data, bool alpha = false)
-        {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[][,] rgb = BitmapConverter.ToHSL(bmData, alpha);
-            BitmapConverter.Unlock(Data, bmData);
-            return rgb;
-        }
-        /// <summary>
-        /// Преобразовывает точечный рисунок в HSL-структуру.
-        /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="alpha">Учитывать альфа-канал или нет</param>
-        /// <returns>HSL-структура</returns>
-        public unsafe static double[][,] ToHSL(this BitmapData bmData, bool alpha = false)
-        {
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            int total = 4, length = (alpha) ? total : total - 1;
-            double[][,] array = BitmapConverter.Dim(length, height, width);
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                RGB rgb; HSL mod;
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    // shift
-                    k = jstride + i * total;
-
-                    // color transform:
-                    rgb = new RGB(p[k + 2], p[k + 1], p[k + 0]);
-                    mod = HSL.FromRGB(rgb);
-
-                    // recording model:
-                    array[0][j, i] = mod.Hue;
-                    array[1][j, i] = mod.Saturation;
-                    array[2][j, i] = mod.Lightness;
-
-                    // if exist?
-                    if (alpha)
-                    {
-                        array[3][j, i] = p[k + 3] / 255.0;
-                    }
-                }
-            });
-            return array;
-        }
-        /// <summary>
-        /// Преобразовывает HSL-структуру в цветное изображение.
-        /// </summary>
-        /// <param name="array">HSL-структура</param>
-        /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap FromHSL(this double[][,] array)
-        {
-            int total = 4, length = array.Length;
-            int width = array[0].GetLength(1), height = array[0].GetLength(0);
-            Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                RGB rgb; HSL mod;
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    // shift:
-                    k = jstride + i * total;
-
-                    // color transform:
-                    mod = new HSL(array[0][j, i], array[1][j, i], array[2][j, i]);
-                    rgb = mod.ToRGB;
-
-                    // recording model:
-                    p[k] = rgb.Blue;
-                    p[k + 1] = rgb.Green;
-                    p[k + 2] = rgb.Red;
-                    p[k + 3] = (byte)((length < 4) ? 255 : array[3][j, i] * 255.0);
-                }
-            });
-
-            BitmapConverter.Unlock(bitmap, bmData);
-            return bitmap;
-        }
-        #endregion
-
-        #region YCbCr
-        /// <summary>
-        /// Преобразовывает точечный рисунок в YCbCr-структуру.
-        /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="alpha">Учитывать альфа-канал или нет</param>
-        /// <returns>YCbCr-структура</returns>
-        public static double[][,] ToYCbCr(this Bitmap Data, bool alpha = false)
-        {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[][,] rgb = BitmapConverter.ToYCbCr(bmData, alpha);
-            BitmapConverter.Unlock(Data, bmData);
-            return rgb;
-        }
-        /// <summary>
-        /// Преобразовывает точечный рисунок в YCbCr-структуру.
-        /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="alpha">Учитывать альфа-канал или нет</param>
-        /// <returns>YCbCr-структура</returns>
-        public unsafe static double[][,] ToYCbCr(this BitmapData bmData, bool alpha = false)
-        {
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            int total = 4, length = (alpha) ? total : total - 1;
-            double[][,] array = BitmapConverter.Dim(length, height, width);
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                RGB rgb; YCbCr mod;
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    // shift
-                    k = jstride + i * total;
-
-                    // color transform:
-                    rgb = new RGB(p[k + 2], p[k + 1], p[k + 0]);
-                    mod = YCbCr.FromRGB(rgb);
-
-                    // recording model:
-                    array[0][j, i] = mod.Y;
-                    array[1][j, i] = mod.Cb;
-                    array[2][j, i] = mod.Cr;
-
-                    // if exist?
-                    if (alpha)
-                    {
-                        array[3][j, i] = p[k + 3] / 255.0;
-                    }
-                }
-            });
-            return array;
-        }
-        /// <summary>
-        /// Преобразовывает YCbCr-структуру в цветное изображение.
-        /// </summary>
-        /// <param name="array">YCbCr-структура</param>
-        /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap FromYCbCr(this double[][,] array)
-        {
-            int total = 4, length = array.Length;
-            int width = array[0].GetLength(1), height = array[0].GetLength(0);
-            Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                RGB rgb; YCbCr mod;
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    // shift:
-                    k = jstride + i * total;
-
-                    // color transform:
-                    mod = new YCbCr(array[0][j, i], array[1][j, i], array[2][j, i]);
-                    rgb = mod.ToRGB;
-
-                    // recording model:
-                    p[k] = rgb.Blue;
-                    p[k + 1] = rgb.Green;
-                    p[k + 2] = rgb.Red;
-                    p[k + 3] = (byte)((length < 4) ? 255 : array[3][j, i] * 255.0);
-                }
-            });
-
-            BitmapConverter.Unlock(bitmap, bmData);
-            return bitmap;
-        }
-        #endregion
-
-        #region Private voids
-        /// <summary>
-        /// Возвращает набор матриц в соответствии с заданными параметрами.
-        /// </summary>
-        /// <param name="length">Длина набора</param>
-        /// <param name="height">Высота матриц</param>
-        /// <param name="width">Ширина матриц</param>
-        /// <returns>Набор матриц</returns>
-        internal static double[][,] Dim(int length, int height, int width)
-        {
-            double[][,] matx = new double[length][,];
-
-            for (int k = 0; k < length; k++)
-            {
-                matx[k] = new double[height, width];
-            }
-            return matx;
-        }
-        #endregion
-
-        #region Bitmap matrix voids
-        /// <summary>
-        /// Преобразовывает точечный рисунок в матрицу значений усредненного канала.
-        /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <returns>Прямоугольная матрица</returns>
-        public static double[,] FromBitmap(this Bitmap Data)
-        {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            double[,] rgb = FromBitmap(bmData);
-            BitmapConverter.Unlock(Data, bmData);
-            return rgb;
-        }
-        /// <summary>
-        /// Преобразовывает точечный рисунок в матрицу значений усредненного канала.
-        /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <returns>Прямоугольная матрица</returns>
-        public unsafe static double[,] FromBitmap(this BitmapData bmData)
-        {
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double[,] rgb = new double[height, width];
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    rgb[j, i] = RGB.Average(p[k + 2], p[k + 1], p[k]) / 255.0;
-                }
-            });
-
-            return rgb;
-        }
-        /// <summary>
-        /// Преобразовывает прямоугольную матрицу значений каналов в монохромный точечный рисунок.
-        /// </summary>
-        /// <param name="m">Прямоугольная матрица</param>
-        /// <returns>Точечный рисунок</returns>
-        public unsafe static Bitmap ToBitmap(this double[,] m)
-        {
-            int width = m.GetLength(1), height = m.GetLength(0);
-            Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapConverter.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
-            {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
-                {
-                    k = jstride + i * 4;
-                    p[k + 2] = p[k + 1] = p[k] = Maths.Byte(m[j, i] * 255.0);
-                    p[k + 3] = 255;
-                }
-            });
-
-            BitmapConverter.Unlock(bitmap, bmData);
-            return bitmap;
-        }
-        #endregion
-    }
-    #endregion
-
     #region Mathematics
     /// <summary>
-    /// Используется для работы с яркостью, представленной в виде значения, принадлежащего интервалу [0, 1].
+    /// Uses to work with brightness represented as a value belonging to the interval [0, 1].
     /// </summary>
     public static class Intensity
     {
         #region Nonlinear methods components
         /// <summary>
-        /// Реализует алгоритм коррекции яркости Single Scale Retinex.
+        /// Implements the Single Scale Retinex algorithm.
         /// </summary>
-        /// <param name="x">Яркость</param>
-        /// <param name="xlow">Яркость под воздействием фильтра</param>
-        /// <param name="nbase">Основание логарифма</param>
-        /// <param name="a">Коэффициент сжатия [-1, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Brightness</param>
+        /// <param name="xlow">Filter brightness</param>
+        /// <param name="nbase">Logarithm base</param>
+        /// <param name="a">Factor [-1, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
+        /// <returns>Double precision floating point number</returns>
         public static double SingleScaleRetinex(double x, double xlow, double nbase, double a, double b)
         {
             // Singe scale retinex modified algorithm
@@ -13107,13 +13021,13 @@ namespace UMapx.Imaging
             return Math.Exp(a * Math.Log(x / xlow, nbase) + b) - 0.5f;
         }
         /// <summary>
-        /// Возвращает маску коррекции яркости Single Scale Retinex.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="nbase">Основание логарифма</param>
-        /// <param name="a">Коэффициент сжатия (0, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Матрица</returns>
+        /// <param name="nbase">Logarithm base</param>
+        /// <param name="a">Factor (0, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="length">Length</param>
+        /// <returns>Matrix</returns>
         public static double[,] SingleScaleRetinex(double nbase, double a, double b, int length)
         {
             double[,] table = new double[length, length];
@@ -13135,24 +13049,24 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует алгоритм инверсии локального контраста.
+        /// Implements the local contrast inversion algorithm.
         /// </summary>
-        /// <param name="x">Яркость</param>
-        /// <param name="xlow">Яркость под воздействием НЧ-фильтра</param>
-        /// <param name="a">Коэффициент сжатия (0, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Brightness</param>
+        /// <param name="xlow">Filter brightness</param>
+        /// <param name="a">Factor (0, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
+        /// <returns>Double precision floating point number</returns>
         public static double LocalContrastInversion(double x, double xlow, double a, double b)
         {
             return a * x / (xlow + b);
         }
         /// <summary>
-        /// Возвращает маску инверсии локального контраста.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Коэффициент сжатия (0, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Factor (0, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="length">Length</param>
+        /// <returns>Matrix</returns>
         public static double[,] LocalContrastInversion(double a, double b, int length)
         {
             double[,] table = new double[length, length];
@@ -13174,12 +13088,12 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует алгоритм локального улучшения контраста.
+        /// Implements the local contrast enhancement algorithm.
         /// </summary>
-        /// <param name="x">Яркость</param>
-        /// <param name="xlow">Яркость под воздействием НЧ-фильтра</param>
-        /// <param name="a">Коэффициент сжатия [-1, 1]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Brightness</param>
+        /// <param name="xlow">Filter brightness</param>
+        /// <param name="a">Factor [-1, 1]</param>
+        /// <returns>Double precision floating point number</returns>
         public static double LocalContrastEnhancement(double x, double xlow, double a)
         {
             return x + a * (x - xlow);
@@ -13187,11 +13101,11 @@ namespace UMapx.Imaging
             //return (1.0 + a) * (x - xlow) + xlow;
         }
         /// <summary>
-        /// Возвращает маску локального улучшения контраста.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Коэффициент сжатия [-1, 1]</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Factor [-1, 1]</param>
+        /// <param name="length">Length</param>
+        /// <returns>Matrix</returns>
         public static double[,] LocalContrastEnhancement(double a, int length)
         {
             double[,] table = new double[length, length];
@@ -13213,24 +13127,24 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует алгоритм гомоморфной обработки.
+        /// Implements the homomorphic enhancement algorithm.
         /// </summary>
-        /// <param name="x">Яркость</param>
-        /// <param name="mu">Яркость под воздействием НЧ-фильтра</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Brightness</param>
+        /// <param name="mu">Filter brightness</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
+        /// <returns>Double precision floating point number</returns>
         public static double HomomorphicEnhancement(double x, double mu, double a, double b)
         {
             return Math.Exp(Math.Log(x) - a * Math.Log(mu + b));
         }
         /// <summary>
-        /// Возвращает маску гомоморфной обработки.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение (0, 1]</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="length">Length</param>
+        /// <returns>Matrix</returns>
         public static double[,] HomomorphicEnhancement(double a, double b, int length)
         {
             double[,] table = new double[length, length];
@@ -13252,35 +13166,34 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует алгоритм ξ-функции повышения контраста.
+        /// Implements the ξ-contrast enhancement algorithm.
         /// </summary>
-        /// <param name="x">Яркость</param>
-        /// <param name="mu">Математическое ожидание</param>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение [-1, 1]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Brightness</param>
+        /// <param name="mu">Filter brightness</param>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset [-1, 1]</param>
+        /// <returns>Double precision floating point number</returns>
         public static double KsiContrastEnchancement(double x, double mu, double a, double b)
         {
-            // Пусть:
-            // x ∈ [0, 1], μ ∈ [0, 1] - математическое ожидание величины x.
-            // σ - дисперсия, ξ - кси-коэффициент.
+            // x ∈ [0, 1], μ ∈ [0, 1] - mean of x.
+            // σ - variance, ξ - coefficient.
             //
             // σ = x - μ
             // ξ = σ / μ
-            // Тогда итоговое значение яркости будет вычисляться по формуле:
-            // x' = x + α * ξ + β, где α, β ∈ [-1, 1].
+            // result value:
+            // x' = x + α * ξ + β, where α, β ∈ [-1, 1].
 
             double sigma = x - mu;
             double ksi = sigma / mu;
             return x + a * ksi + b;
         }
         /// <summary>
-        /// Возвращает маску ξ-функции повышения контраста.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Коэффициент сжатия контраста [-1, 1]</param>
-        /// <param name="b">Смещение [-1, 1]</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Contrast [-1, 1]</param>
+        /// <param name="b">Offset [-1, 1]</param>
+        /// <param name="length">Length</param>
+        /// <returns>Matrix</returns>
         public static double[,] KsiContrastEnchancement(double a, double b, int length)
         {
             double[,] table = new double[length, length];
@@ -13302,12 +13215,12 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует SAUCE-алгоритм.
+        /// Implements the SAUCE algorithm.
         /// </summary>
-        /// <param name="x">Яркость</param>
-        /// <param name="mu">Математическое ожидание</param>
-        /// <param name="d">Степень отличия [0, 1]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Brightness</param>
+        /// <param name="mu">Filter brightness</param>
+        /// <param name="d">Degree of difference [0, 1]</param>
+        /// <returns>Double precision floating point number</returns>
         public static double SAUCE(double x, double mu, double d)
         {
             // Ravimal Bandara algorithm
@@ -13327,11 +13240,11 @@ namespace UMapx.Imaging
             return (x - a) / d;
         }
         /// <summary>
-        /// Возвращает маску SAUCE-алгоритма.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Коэффициент сжатия [-1, 1]</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Factor [-1, 1]</param>
+        /// <param name="length">Length</param>
+        /// <returns>Matrix</returns>
         public static double[,] SAUCE(double a, int length)
         {
             double[,] table = new double[length, length];
@@ -13352,36 +13265,78 @@ namespace UMapx.Imaging
 
             return table;
         }
+        /// <summary>
+        /// Implements the Bradley threshold correction.
+        /// </summary>
+        /// <param name="x">Brightness</param>
+        /// <param name="xlow">Filter brightness</param>
+        /// <param name="difference">Difference [0, 1]</param>
+        /// <returns>Double precision floating point number</returns>
+        public static double Bradley(double x, double xlow, double difference = 0.15)
+        {
+            // Bradley local threshold void.
+            // Derek Bradley, Gerhard Roth (2005). Adaptive Thresholding Using the Integral Image.
+            // Retrieved from http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
+
+            double z = 1.0 - difference;
+            return (x < xlow * z) ? 0 : 1;
+        }
+        /// <summary>
+        /// Returns the correction mask.
+        /// </summary>
+        /// <param name="difference">Difference [0, 1]</param>
+        /// <param name="length">Length</param>
+        /// <returns>Matrix</returns>
+        public static double[,] Bradley(double difference, int length)
+        {
+            double[,] table = new double[length, length];
+            double w, v;
+            int x, y;
+
+            for (x = 0; x < length; x++)
+            {
+                w = x / (double)length;
+
+                for (y = 0; y < length; y++)
+                {
+                    v = y / (double)length;
+
+                    table[x, y] = Intensity.Bradley(w, v, difference);
+                }
+            }
+
+            return table;
+        }
         #endregion
 
         #region LogStretrch Histogram method components
         /// <summary>
-        /// Натуральный логарифм от 0.5.
+        /// Logarithm of 0.5.
         /// </summary>
         public const double log05 = -0.693147180559945;
         /// <summary>
-        /// Погрешность вычисления логарифма.
+        /// Logarithmic epsilon.
         /// </summary>
         public const double logEpsilon = 1e-9;
         /// <summary>
-        /// Реализует логарифмическое сжатие случайной величины.
+        /// Implements the logarithmic stretch algorithm.
         /// </summary>
-        /// <param name="x">Яркость</param>
-        /// <param name="mu">Математическое ожидание</param>
-        /// <param name="s">Уровень теней</param>
-        /// <param name="l">Уровень светов</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Brightness</param>
+        /// <param name="mu">Filter brightness</param>
+        /// <param name="s">Shadows</param>
+        /// <param name="l">Highlights</param>
+        /// <returns>Double precision floating point number</returns>
         public static double LogStretch(double x, double mu, double s, double l)
         {
             return Intensity.LogPow(x, Maths.Range(Intensity.log05 / Math.Log(mu), s, l));
         }
         /// <summary>
-        /// Возвращает маску логарифмического сжатия.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="s">Уровень теней</param>
-        /// <param name="l">Уровень светов</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Матрица</returns>
+        /// <param name="s">Shadows</param>
+        /// <param name="l">Highlights</param>
+        /// <param name="length">Length</param>
+        /// <returns>Matrix</returns>
         public static double[,] LogStretch(double s, double l, int length)
         {
             double[,] table = new double[length, length];
@@ -13403,24 +13358,24 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Возвращает число, возведенное в логарифмическую степень.
+        /// Returns the number raised to the logarithmic power.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="power">Степень</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Number</param>
+        /// <param name="power">Power</param>
+        /// <returns>Double precision floating point number</returns>
         public static double LogPow(double a, double power)
         {
             return Math.Exp(Math.Log(a) * power);
         }
         #endregion
 
-        #region Gamma method components
+        #region Linear methods components
         /// <summary>
-        /// Получает маску для гамма-коррекции.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="g">Гамма</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="g">Gamma</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Gamma(double g, int length)
         {
             double[] table = new double[length];
@@ -13432,24 +13387,21 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует гамму-коррекцию случайной величины.
+        /// Implements the gamma correction.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="g">Гамма</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="g">Gamma</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gamma(double x, double g)
         {
             return Math.Pow(x, g);
         }
-        #endregion
-
-        #region Shift method components
         /// <summary>
-        /// Получает маску для коррекции ко смещением случайной величины.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="b">Сдвиг (-0.5, 0.5)</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="b">Offset (-0.5, 0.5)</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Shift(double b, int length)
         {
             double[] table = new double[length];
@@ -13461,25 +13413,22 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует коррекцию ко смещением случайной величины.
+        /// Implements the shift correction.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="b">Сдвиг (-0.5, 0.5)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="b">Offset (-0.5, 0.5)</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Shift(double x, double b)
         {
             double v = log05 / Math.Log(0.5 - b);
             return LogPow(x, v);
         }
-        #endregion
-
-        #region Binarization method components
         /// <summary>
-        /// Получает маску для бинаризации.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="threshold">Пороговое значение [0, 1]</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="threshold">Threshold [0, 1]</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Bin(double threshold, int length)
         {
             double[] table = new double[length];
@@ -13491,24 +13440,21 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует бинаризацию случайной величины.
+        /// Implements the threshold correction.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="threshold">Пороговое значение [0, 1]</param>
-        /// <returns>Целое число без знака</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="threshold">Threshold [0, 1]</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Bin(double x, double threshold)
         {
             return (x > threshold) ? 1 : 0;
         }
-        #endregion
-
-        #region Exposure method components
         /// <summary>
-        /// Получает маску для экспозиционной коррекции.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="average">Среднее число</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="average">Average</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Exposure(double average, int length)
         {
             double[] table = new double[length];
@@ -13520,25 +13466,22 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует экспозиционную коррекцию случайной величины.
+        /// Implements the exposure correction.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="average">Среднее число</param>
-        /// <returns>Целое число без знака</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="average">Average</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Exposure(double x, double average)
         {
             double T = 255.0 / average;
             return 1 - Math.Exp(-T * x);
         }
-        #endregion
-
-        #region Sin method components
         /// <summary>
-        /// Получает маску для синусоидальной коррекции.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="delta">Дельта</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="delta">Delta</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Sin(double delta, int length)
         {
             double[] table = new double[length];
@@ -13550,24 +13493,21 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует синусоидальную коррекцию случайной величины.
+        /// Implements the sine correction.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="delta">Дельта</param>
-        /// <returns>Целое число без знака</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="delta">Delta</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Sin(double x, double delta)
         {
             return 0.5 * Math.Sin((3.14 * x) - (3.14 / 2)) + 0.5 + delta;
         }
-        #endregion
-
-        #region Cos method components
         /// <summary>
-        /// Получает маску для косинусоидальной коррекции.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="delta">Дельта</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="delta">Delta</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Cos(double delta, int length)
         {
             double[] table = new double[length];
@@ -13579,25 +13519,22 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует косинусоидальную коррекцию случайной величины.
+        /// Implements the cosine correction.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="delta">Дельта</param>
-        /// <returns>Целое число без знака</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="delta">Delta</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Cos(double x, double delta)
         {
             return 0.5 * Math.Cos((3.14 * x) - 3.14) + 0.5 + delta;
         }
-        #endregion
-
-        #region Log method components
         /// <summary>
-        /// Получает маску для логарифмической коррекции.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Основание логарифма</param>
-        /// <param name="delta">Дельта</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Logarithm base</param>
+        /// <param name="delta">Delta</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Log(double a, double delta, int length)
         {
             double[] table = new double[length];
@@ -13609,25 +13546,22 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует логарифмическую коррекцию случайной величины.
+        /// Implements the logarithmic correction.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="a">Основание логарифма</param>
-        /// <param name="delta">Дельта</param>
-        /// <returns>Целое число без знака</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Logarithm base</param>
+        /// <param name="delta">Delta</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Log(double x, double a, double delta)
         {
             return Math.Log((1.0 + (x + delta) / 0.5), a);
         }
-        #endregion
-
-        #region Add method components
         /// <summary>
-        /// Получает маску для коррекции по значению Y = (X + V).
+        /// Returns the correction mask for formula: Y = (X + V).
         /// </summary>
-        /// <param name="value">Значение</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="value">Value</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Add(double value, int length)
         {
             double[] table = new double[length];
@@ -13637,15 +13571,12 @@ namespace UMapx.Imaging
             }
             return table;
         }
-        #endregion
-
-        #region Contrast method components
         /// <summary>
-        /// Получает маску для коррекции контрастности.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="value">Значение</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="value">Value</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Contrast(double value, int length)
         {
             double[] table = new double[length];
@@ -13657,29 +13588,26 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует коррекцию контрастности случайной величины.
+        /// Implements the contrast correction.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="value">Контрастность</param>
-        /// <returns>Целое число без знака</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="value">Contrast</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Contrast(double x, double value)
         {
-            value = (1 + value); // Вычисление общего значения.
+            value = (1 + value);
             double xc = x;
             xc -= 0.5f;
             xc *= value;
             xc += 0.5f;
             return xc;
         }
-        #endregion
-
-        #region Log contrast method components
         /// <summary>
-        /// Получает маску для коррекции контрастности.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="power">Значение</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="power">Value</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] LogContrast(double power, int length)
         {
             double[] table = new double[length];
@@ -13691,11 +13619,11 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует алгоритм глобальной коррекции контраста.
+        /// Implements the log-contrast correction.
         /// </summary>
-        /// <param name="x">Яркость</param>
-        /// <param name="power">Степень</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Brightness</param>
+        /// <param name="power">Power</param>
+        /// <returns>Double precision floating point number</returns>
         public static double LogContrast(double x, double power)
         {
             if (x <= 0.5)
@@ -13704,14 +13632,11 @@ namespace UMapx.Imaging
             }
             return 1.0 - Intensity.LogPow((1 - x) * 2, power) * 0.5;
         }
-        #endregion
-
-        #region Invert method components
         /// <summary>
-        /// Получает маску инверсии.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Invert(int length)
         {
             double[] table = new double[length];
@@ -13723,24 +13648,21 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Инвертирует случайную величину.
+        /// Negates the value.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <returns>Целое число без знака</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Invert(double x)
         {
             return 1.0 - x;
         }
-        #endregion
-
-        #region Equalization components
         /// <summary>
-        /// Эквализирует случайную величину относительно {min, max} диапазона.
+        /// Equalizes a value relative to the {min, max} range.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="max">Максимальное значение, которое принимает случайная величина</param>
-        /// <param name="min">Минимальное значение, которое принимает случайная величина</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="max">Maximum value</param>
+        /// <param name="min">Minimum value</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Equalize(double x, double min, double max)
         {
             double a = max - min;
@@ -13749,12 +13671,12 @@ namespace UMapx.Imaging
             return Maths.Double(c);
         }
         /// <summary>
-        /// Получает маску для эквализации случайной величины относительно {min, max} диапазона.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="max">Максимальное значение, которое принимает случайная величина</param>
-        /// <param name="min">Минимальное значение, которое принимает случайная величина</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="max">Maximum value</param>
+        /// <param name="min">Minimum value</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Equalize(double min, double max, int length)
         {
             double[] table = new double[length];
@@ -13765,28 +13687,25 @@ namespace UMapx.Imaging
             }
             return table;
         }
-        #endregion
-
-        #region Linear method components
         /// <summary>
-        /// Получает маску для линейной коррекции.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="range">Пара чисел Max и Min</param>
-        /// <param name="delta">Дельта</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="range">Pair of numbers Max и Min</param>
+        /// <param name="delta">Delta</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Linear(RangeDouble range, double delta, int length)
         {
             return Intensity.Linear(range.Max, range.Min, delta, length);
         }
         /// <summary>
-        /// Получает маску для линейной коррекции.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="xmax">Максимальное значение, принимаемое случайной величиной</param>
-        /// <param name="xmin">Минимальное значение, принимаемое случайной величиной</param>
-        /// <param name="delta">Дельта</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="xmax">Maximum value</param>
+        /// <param name="xmin">Minimum value</param>
+        /// <param name="delta">Delta</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Linear(double xmax, double xmin, double delta, int length)
         {
             double[] table = new double[length];
@@ -13798,29 +13717,26 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Реализует линейную коррекцию случайной величины.
+        /// Implements the linear correction.
         /// </summary>
-        /// <param name="x">Случайная величина</param>
-        /// <param name="xmax">Максимальное значение, принимаемое случайной величиной</param>
-        /// <param name="xmin">Минимальное значение, принимаемое случайной величиной</param>
-        /// <param name="delta">Дельта</param>
-        /// <returns>Целое число без знака</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="xmax">Maximum value</param>
+        /// <param name="xmin">Minimum value</param>
+        /// <param name="delta">Delta</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Linear(double x, double xmax, double xmin, double delta)
         {
             return (x - xmin) / (xmax - xmin) + delta;
         }
-        #endregion
-
-        #region Levels method components
         /// <summary>
-        /// Получает маску для коррекции уровней.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="xmin">Минимальное значение входного параметра</param>
-        /// <param name="xmax">Максимальное значение входного параметра</param>
-        /// <param name="ymin">Минимальное значение выходного параметра</param>
-        /// <param name="ymax">Максимальное значение выходного параметра</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="xmin">Minimum value of the input range</param>
+        /// <param name="xmax">Maximum value of the input range</param>
+        /// <param name="ymin">Minimum value of the output range</param>
+        /// <param name="ymax">Maximum value of the output range</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Levels(double xmin, double xmax, double ymin, double ymax, int length)
         {
             double[] table = new double[length];
@@ -13849,29 +13765,26 @@ namespace UMapx.Imaging
             return table;
         }
         /// <summary>
-        /// Получает маску для коррекции уровней.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="input">Входные значения</param>
-        /// <param name="output">Выходные значения</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="input">Input values</param>
+        /// <param name="output">Output values</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Levels(RangeDouble input, RangeDouble output, int length)
         {
             return Intensity.Levels(input.Min, input.Max, output.Min, output.Max, length);
         }
-        #endregion
-
-        #region Quantization method components
         /// <summary>
-        /// Получает маску для квантования по уровню.
+        /// Returns the correction mask.
         /// </summary>
-        /// <param name="levels">Количество уровней квантования</param>
-        /// <param name="length">Количество уровней представления</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="levels">Number of levels</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Quantize(int levels, int length)
         {
             if (levels > length)
-                throw new Exception("Количество уровней квантования не может быть больше количества уровней представления");
+                throw new Exception("Number of levels cannot be greater than length");
 
             int interval = length / levels + 1;
             double[] table = new double[length];
@@ -13906,56 +13819,11 @@ namespace UMapx.Imaging
             return table;
         }
         #endregion
-
-        #region Bradley method components
-        /// <summary>
-        /// Реализует алгоритм коррекции яркости Single Scale Retinex.
-        /// </summary>
-        /// <param name="x">Яркость</param>
-        /// <param name="xlow">Яркость под воздействием фильтра</param>
-        /// <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
-        public static double Bradley(double x, double xlow, double difference = 0.15)
-        {
-            // Bradley local threshold void.
-            // Derek Bradley, Gerhard Roth (2005). Adaptive Thresholding Using the Integral Image.
-            // Retrieved from http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
-
-            double z = 1.0 - difference;
-            return (x < xlow * z) ? 0 : 1;
-        }
-        /// <summary>
-        /// Возвращает маску коррекции яркости Single Scale Retinex.
-        /// </summary>
-        /// <param name="difference">Предел разницы яркости между пикселем обработки и средним значением локальных пикселей [0, 1]</param>
-        /// <param name="length">Размерность массива</param>
-        /// <returns>Матрица</returns>
-        public static double[,] Bradley(double difference, int length)
-        {
-            double[,] table = new double[length, length];
-            double w, v;
-            int x, y;
-
-            for (x = 0; x < length; x++)
-            {
-                w = x / (double)length;
-
-                for (y = 0; y < length; y++)
-                {
-                    v = y / (double)length;
-
-                    table[x, y] = Intensity.Bradley(w, v, difference);
-                }
-            }
-
-            return table;
-        }
-        #endregion
     }
     /// <summary>
-    /// Используется для смешивания слоев.
+    /// Used to blending layers.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// http://www.pegtop.net/delphi/articles/blendmodes/index.htm
     /// </remarks>
     /// </summary>
@@ -13963,61 +13831,61 @@ namespace UMapx.Imaging
     {
         #region Blend mode components
         /// <summary>
-        /// Реализует функцию усреднения.
+        /// Implements the averaging function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Average(double a, double b)
         {
             return (a + b) / 2.0;
         }
         /// <summary>
-        /// Реализует функцию экранирования.
+        /// Implements the screening function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Screen(double a, double b)
         {
             return 1 - (1 - a) * (1 - b);
         }
         /// <summary>
-        /// Реализует функцию вычитания.
+        /// Implements the difference function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Difference(double a, double b)
         {
             return Math.Abs(a - b);
         }
         /// <summary>
-        /// Реализует функцию обращения.
+        /// Implements the negation function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Negation(double a, double b)
         {
             return 1 - Math.Abs(1 - a - b);
         }
         /// <summary>
-        /// Реализует функцию исключения.
+        /// Implements the exclusion function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Exclusion(double a, double b)
         {
             return a + b - 2 * a * b;
         }
         /// <summary>
-        /// Реализует функцию наложения.
+        /// Implements the overlaying function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Overlay(double a, double b)
         {
             if (a < 0.5)
@@ -14027,11 +13895,11 @@ namespace UMapx.Imaging
             return 1 - 2 * (1 - a) * (1 - b);
         }
         /// <summary>
-        /// Реализует функцию "жесткий свет".
+        /// Implements the "hard light" function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double HardLight(double a, double b)
         {
             if (b < 0.5)
@@ -14041,21 +13909,21 @@ namespace UMapx.Imaging
             return 1 - 2 * (1 - a) * (1 - b);
         }
         /// <summary>
-        /// Реализует функцию поворота цвета.
+        /// Implements the "dodge" function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Dodge(double a, double b)
         {
             return a / (1 - b);
         }
         /// <summary>
-        /// Реализует функцию "умного" поворота цвета.
+        /// Implements the "soft dodge" function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double SoftDodge(double a, double b)
         {
             if (a + b < 1)
@@ -14065,21 +13933,21 @@ namespace UMapx.Imaging
             return 1 - 0.5 * (1 - b) / a;
         }
         /// <summary>
-        /// Реализует функцию обратного экранирования.
+        /// Implements the "burn" function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Burn(double a, double b)
         {
             return 1 - (1 - a) / b;
         }
         /// <summary>
-        /// Реализует функцию "умного" обратного экранирования.
+        /// Implements the "soft burn" function".
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double SoftBurn(double a, double b)
         {
             if (a + b < 1)
@@ -14089,73 +13957,73 @@ namespace UMapx.Imaging
             return 1 - 0.5 * (1 - a) / b;
         }
         /// <summary>
-        /// Реализует функцию отражения.
+        /// Implements the reflection function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Reflect(double a, double b)
         {
             return a * a / (1 - b);
         }
         /// <summary>
-        /// Реализует функцию свечения.
+        /// Implements the glow function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Glow(double a, double b)
         {
             return b * b / (1 - a);
         }
         /// <summary>
-        /// Реализует функцию печати.
+        /// Implements the stamp function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Stamp(double a, double b)
         {
             return a + 2 * b - 1;
         }
         /// <summary>
-        /// ВРеализует функцию "freeze".
+        /// Implements the "freeze" function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Freeze(double a, double b)
         {
             double x = 1 - a;
             return 1 - x * x / b;
         }
         /// <summary>
-        /// Реализует функцию "heat".
+        /// Implements the "heat" function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Heat(double a, double b)
         {
             double x = 1 - b;
             return 1 - x * x / a;
         }
         /// <summary>
-        /// Реализует функцию интерполяции.
+        /// Implements the interpolation function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Interpolation(double a, double b)
         {
             return 0.5 - 0.25 * Math.Cos(Math.PI * a) - 0.25 * Math.Cos(Math.PI * b);
         }
         /// <summary>
-        /// Реализует функцию "умный свет" Adobe Photoshop.
+        /// Implements the function of "soft light" (Adobe Photoshop).
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Photoshop(double a, double b)
         {
             if (b < 0.5)
@@ -14165,11 +14033,11 @@ namespace UMapx.Imaging
             return 2 * a * (1 - b) + Math.Sqrt(a) * (2 * b - 1);
         }
         /// <summary>
-        /// Реализует функцию "умный свет" Illusions.hu.
+        /// Implements the function of "soft light" (Illusions.hu).
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Illusions(double a, double b)
         {
             double x = 2 * (0.5 - b);
@@ -14177,21 +14045,21 @@ namespace UMapx.Imaging
             return Math.Pow(a, y);
         }
         /// <summary>
-        /// Реализует функцию "умный свет" Pegtop.
+        /// Implements the function of "soft light" (Pegtop).
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Pegtop(double a, double b)
         {
             return (1 - 2 * b) * a * a + 2 * b * a;
         }
         /// <summary>
-        /// Реализует функцию "Cairo".
+        /// Implements the "Cairo" function.
         /// </summary>
-        /// <param name="a">Первый слой</param>
-        /// <param name="b">Второй слой</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">First layer</param>
+        /// <param name="b">Second layer</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Fw3c(double a, double b)
         {
             if (b <= 0.5)
@@ -14201,10 +14069,10 @@ namespace UMapx.Imaging
             return a + (2 * b - 1) * (BlendMode.Gw3c(a) - a);
         }
         /// <summary>
-        /// Реализует функцию "Cairo".
+        /// Implements the "Cairo" function.
         /// </summary>
-        /// <param name="a">Случайная величина</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gw3c(double a)
         {
             if (a <= 0.25)
@@ -14216,16 +14084,16 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Используется для работы со статистическими характеристиками изображения.
+    /// Uses to work with the statistical characteristics of the image.
     /// </summary>
     public static class Statistics
     {
         #region Histogram
         /// <summary>
-        /// Получает гистограмму изображения.
+        /// Gets a histogram of the image.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Array</returns>
         public unsafe static int[] Histogram(BitmapData bmData)
         {
             int[] rgb = new int[256];
@@ -14244,11 +14112,11 @@ namespace UMapx.Imaging
             return rgb;
         }
         /// <summary>
-        /// Получает гистограмму изображения.
+        /// Gets a histogram of the image.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <param name="channel">Цветовой канал модели RGBA</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="channel">Channel of RGBA model</param>
+        /// <returns>Array</returns>
         public unsafe static int[] Histogram(BitmapData bmData, RGBA channel)
         {
             int[] rgb = new int[256];
@@ -14298,10 +14166,10 @@ namespace UMapx.Imaging
             return rgb;
         }
         /// <summary>
-        /// Получает данные одновременно о красном, зеленом и синем каналах.
+        /// Gets a histogram of the image.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="Data">Bitmap</param>
+        /// <returns>Array</returns>
         public static int[] Histogram(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -14310,11 +14178,11 @@ namespace UMapx.Imaging
             return rgb;
         }
         /// <summary>
-        /// Получает данные одновременно о красном, зеленом и синем каналах.
+        /// Gets a histogram of the image.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <param name="channel">Цветовой канал модели RGBA</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="channel">Channel of RGBA model</param>
+        /// <returns>Array</returns>
         public static int[] Histogram(Bitmap Data, RGBA channel)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -14326,18 +14194,16 @@ namespace UMapx.Imaging
 
         #region Density
         /// <summary>
-        /// Получает массив значений общей функции плотности яркости.
+        /// Gets an array of values of the density function.
         /// </summary>
-        /// <param name="H">Гистограмма</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="H">Histogram</param>
+        /// <returns>Array</returns>
         public static int[] CDF(int[] H)
         {
             int length = H.Length;
             int[] cdf = new int[length];
             cdf[0] = H[0];
 
-            // Рекурсивный метод расчета функции плотности яркости
-            // взамен реккурентному:
             for (int i = 1; i < length; i++)
             {
                 cdf[i] = H[i] + cdf[i - 1];
@@ -14345,10 +14211,10 @@ namespace UMapx.Imaging
             return cdf;
         }
         /// <summary>
-        /// Получает массив значений эквализированной гистограммы путем пересчета функции плотности яркости.
+        /// Gets an array of equalized histogram values by recalculating the brightness density function.
         /// </summary>
-        /// <param name="H">Гистограмма</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="H">Histogram</param>
+        /// <returns>Array</returns>
         public static double[] Equalize(int[] H)
         {
             // CDF calculating
@@ -14373,14 +14239,14 @@ namespace UMapx.Imaging
 
         #region Otsu's threshold
         /// <summary>
-        /// Вычисляет оптимальный порог методом Оцу для исходного точечного рисунка.
+        /// Calculates the optimal threshold using the Otsu method for the original bitmap.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Integer number</returns>
         public static int OtsuThreshold(BitmapData bmData)
         {
             double[] v = new double[256];
-            int[] h = Statistics.Histogram(bmData); // Получаем гистограмму исходного точечного рисунка.
+            int[] h = Statistics.Histogram(bmData);
             double diff, w1, w2;
 
             for (int k = 1; k < 256; k++)
@@ -14394,10 +14260,10 @@ namespace UMapx.Imaging
             return MaxIndex(v);
         }
         /// <summary>
-        /// Вычисляет оптимальный порог методом Оцу для исходного точечного рисунка.
+        /// Calculates the optimal threshold using the Otsu method for the original bitmap.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="Data">Bitmap</param>
+        /// <returns>Integer number</returns>
         public static int OtsuThreshold(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -14409,10 +14275,10 @@ namespace UMapx.Imaging
 
         #region SIS threshold
         /// <summary>
-        /// Вычисляет оптимальный порог для исходного точечного рисунка.
+        /// Calculates the optimal threshold for the original bitmap.
         /// </summary>
-        /// <param name="bmData">Атрибуты точечного изображения</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Integer number</returns>
         public unsafe static int SISThreshold(BitmapData bmData)
         {
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
@@ -14439,10 +14305,10 @@ namespace UMapx.Imaging
             return (weightTotal == 0) ? 0 : (byte)(total / weightTotal);
         }
         /// <summary>
-        /// Вычисляет оптимальный порог для исходного точечного рисунка.
+        /// Calculates the optimal threshold for the original bitmap.
         /// </summary>
-        /// <param name="Data">Точечный рисунок</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="Data">Bitmap</param>
+        /// <returns>Integer number</returns>
         public static int SISThreshold(Bitmap Data)
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
@@ -14454,10 +14320,10 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Получает индекс максимального элемента массива.
+        /// Gets the index of the maximum element of the array.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Integer number</returns>
         private static int MaxIndex(double[] data)
         {
             int index = 0, length = data.Length - 1, i;
@@ -14475,10 +14341,10 @@ namespace UMapx.Imaging
             return index;
         }
         /// <summary>
-        /// Получает индекс максимального элемента массива.
+        /// Gets the index of the maximum element of the array.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Integer number</returns>
         private static int MaxIndex(int[] data)
         {
             int index = 0, length = data.Length - 1, i;
@@ -14496,10 +14362,10 @@ namespace UMapx.Imaging
             return index;
         }
         /// <summary>
-        /// Получает индекс минимального элемента массива.
+        /// Gets the index of the minimum element of the array.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Integer number</returns>
         private static int MinIndex(double[] data)
         {
             int index = 0, length = data.Length - 1, i;
@@ -14517,10 +14383,10 @@ namespace UMapx.Imaging
             return index;
         }
         /// <summary>
-        /// Получает индекс минимального элемента массива.
+        /// Gets the index of the minimum element of the array.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
-        /// <returns>Целое число со знаком</returns>
+        /// <param name="data">Array</param>
+        /// <returns>Integer number</returns>
         private static int MinIndex(int[] data)
         {
             int index = 0, length = data.Length - 1, i;
@@ -14538,12 +14404,12 @@ namespace UMapx.Imaging
             return index;
         }
         /// <summary>
-        /// Получает значение вероятности класса.
+        /// Omega.
         /// </summary>
-        /// <param name="init">Начальный момент</param>
-        /// <param name="end">Конечный момент</param>
-        /// <param name="h">Гистограмма точечного рисунка</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="init">Init</param>
+        /// <param name="end">End</param>
+        /// <param name="h">Histogram</param>
+        /// <returns>Double precision floating point number</returns>
         private static double Omega(int init, int end, int[] h)
         {
             int sum = 0, i;
@@ -14556,12 +14422,12 @@ namespace UMapx.Imaging
             return sum;
         }
         /// <summary>
-        /// Получает значение среднего арифметического класса.
+        /// Mean.
         /// </summary>
-        /// <param name="init">Начальный момент</param>
-        /// <param name="end">Конечный момент</param>
-        /// <param name="h">Гистограмма точечного рисунка</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="init">Init</param>
+        /// <param name="end">End</param>
+        /// <param name="h">Histogram</param>
+        /// <returns>Double precision floating point number</returns>
         private static double Mu(int init, int end, int[] h)
         {
             int sum = 0, i;
@@ -14576,17 +14442,17 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Используется для работы с матрицами точек.
+    /// Uses to work with point matrices.
     /// </summary>
     public static class PointMatrix
     {
         #region Filters
         /// <summary>
-        /// Получает массив упорядоченных пар чисел X и Y для эффекта отображения по оси Y.
+        /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <returns>Массив упорядоченных пар чисел X и Y</returns>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] FlipY(int width, int height)
         {
             PointInt[,] matrix = new PointInt[width, height];
@@ -14607,11 +14473,11 @@ namespace UMapx.Imaging
             return matrix;
         }
         /// <summary>
-        /// Получает массив упорядоченных пар чисел X и Y для эффекта отображения по оси X.
+        /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <returns>Массив упорядоченных пар чисел X и Y</returns>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] FlipX(int width, int height)
         {
             PointInt[,] matrix = new PointInt[width, height];
@@ -14632,12 +14498,12 @@ namespace UMapx.Imaging
             return matrix;
         }
         /// <summary>
-        /// Получает массив упорядоченных пар чисел X и Y для эффекта сдвига по оси X.
+        /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <param name="value">Сдвиг</param>
-        /// <returns>Массив упорядоченных пар чисел X и Y</returns>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <param name="value">Offset</param>
+        /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] ShiftX(int width, int height, int value)
         {
             PointInt[,] matrix = new PointInt[width, height];
@@ -14658,12 +14524,12 @@ namespace UMapx.Imaging
             return matrix;
         }
         /// <summary>
-        /// Получает массив упорядоченных пар чисел X и Y для эффекта сдвига по оси Y.
+        /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <param name="value">Сдвиг</param>
-        /// <returns>Массив упорядоченных пар чисел X и Y</returns>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <param name="value">Offset</param>
+        /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] ShiftY(int width, int height, int value)
         {
             PointInt[,] matrix = new PointInt[width, height];
@@ -14684,12 +14550,12 @@ namespace UMapx.Imaging
             return matrix;
         }
         /// <summary>
-        /// Получает массив упорядоченных пар чисел X и Y для эффекта шума.
+        /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <param name="value">Плотность [0, 100]</param>
-        /// <returns>Массив упорядоченных пар чисел X и Y</returns>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <param name="value">Value [0, 100]</param>
+        /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] Noise(int width, int height, int value)
         {
             PointInt[,] noise = new PointInt[width, height];
@@ -14719,12 +14585,12 @@ namespace UMapx.Imaging
             return noise;
         }
         /// <summary>
-        /// Получает массив упорядоченных пар чисел X и Y для эффекта.
+        /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <param name="value">Плотность [0, 100]</param>
-        /// <returns>Массив упорядоченных пар чисел X и Y</returns>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <param name="value">Value [0, 100]</param>
+        /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] Pixelate(int width, int height, int value)
         {
             PointInt[,] pixelate = new PointInt[width, height];
@@ -14747,12 +14613,12 @@ namespace UMapx.Imaging
             return pixelate;
         }
         /// <summary>
-        /// Получает массив упорядоченных пар чисел X и Y для эффекта мозаики.
+        /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <param name="value">Плотность [0, 100]</param>
-        /// <returns>Массив упорядоченных пар чисел X и Y</returns>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <param name="value">Value [0, 100]</param>
+        /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] Grid(int width, int height, int value)
         {
             PointInt[,] grid = new PointInt[width, height];
@@ -14782,12 +14648,12 @@ namespace UMapx.Imaging
             return grid;
         }
         /// <summary>
-        /// Получает массив упорядоченных пар чисел X и Y для эффекта воды.
+        /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Ширина изображения</param>
-        /// <param name="height">Высота изображения</param>
-        /// <param name="value">Плотность [0, 100]</param>
-        /// <returns>Массив упорядоченных пар чисел X и Y</returns>
+        /// <param name="width">Image width</param>
+        /// <param name="height">Image height</param>
+        /// <param name="value">Value [0, 100]</param>
+        /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] Water(int width, int height, int value)
         {
             PointInt[,] water = new PointInt[width, height];
@@ -14815,13 +14681,9 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Определяет шум Перлина.
+    /// Defines the Perlin noise.
     /// <remarks>
-    /// Perlin noise (Шум Перлина, также иногда Классический шум Перлина) — математический алгоритм по генерированию процедурной текстуры 
-    /// псевдо-случайным методом. Используется в компьютерной графике для увеличения реализма или графической сложности поверхности геометрических объектов. 
-    /// Также может использоваться для генерации эффектов дыма, тумана и т.д.
-    /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Perlin_noise
     /// </remarks>
     /// </summary>
@@ -14836,18 +14698,18 @@ namespace UMapx.Imaging
 
         #region Class components
         /// <summary>
-        /// Инициализирует шум Перлина.
+        /// Initializes the Perlin noise.   
         /// </summary>
-        /// <param name="octaves">Количество октав [1, 32]</param>
-        /// <param name="persistence">Продолжительность</param>
-        /// <param name="frequency">Частота</param>
-        /// <param name="amplitude">Амплитуда</param>
+        /// <param name="octaves">Octaves[1, 32]</param>
+        /// <param name="persistence">Persistence</param>
+        /// <param name="frequency">Frequency</param>
+        /// <param name="amplitude">Amplitude</param>
         public PerlinNoise(int octaves = 4, double persistence = 0.65, double frequency = 1, double amplitude = 1)
         {
             Octaves = octaves; Persistence = persistence; Frequency = frequency; Amplitude = amplitude;
         }
         /// <summary>
-        /// Получает или задает частоту.
+        /// Gets or sets the frequency.
         /// </summary>
         public double Frequency
         {
@@ -14855,7 +14717,7 @@ namespace UMapx.Imaging
             set { initFrequency = value; }
         }
         /// <summary>
-        /// Получает или задает амплитуду.
+        /// Gets or sets the amplitude value.
         /// </summary>
         public double Amplitude
         {
@@ -14863,7 +14725,7 @@ namespace UMapx.Imaging
             set { initAmplitude = value; }
         }
         /// <summary>
-        /// Получает или задает продолжительность.
+        /// Gets or sets the persistence value.
         /// </summary>
         public double Persistence
         {
@@ -14871,7 +14733,7 @@ namespace UMapx.Imaging
             set { persistence = value; }
         }
         /// <summary>
-        /// Получает или задает количество октав [1, 32].
+        /// Gets or sets the number of octaves[1, 32].
         /// </summary>
         public int Octaves
         {
@@ -14879,10 +14741,10 @@ namespace UMapx.Imaging
             set { octaves = System.Math.Max(1, System.Math.Min(32, value)); }
         }
         /// <summary>
-        /// Одномерная функция шума Перлина.
+        /// One-dimensional Perlin noise function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public double Function(double x)
         {
             double frequency = initFrequency;
@@ -14900,11 +14762,11 @@ namespace UMapx.Imaging
             return sum;
         }
         /// <summary>
-        /// Двумерная функция шума Перлина.
+        /// Two-dimensional Perlin noise function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="y">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="y">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public double Function2D(double x, double y)
         {
             double frequency = initFrequency;
@@ -14925,10 +14787,10 @@ namespace UMapx.Imaging
 
         #region Private static voids
         /// <summary>
-        /// Одномерная функция шума.
+        /// 
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x"></param>
+        /// <returns></returns>
         private static double Noise(int x)
         {
             int n = (x << 13) ^ x;
@@ -14936,11 +14798,11 @@ namespace UMapx.Imaging
             return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0);
         }
         /// <summary>
-        /// Двумерная функция шума.
+        /// 
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="y">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         private static double Noise(int x, int y)
         {
             int n = x + y * 57;
@@ -14949,10 +14811,10 @@ namespace UMapx.Imaging
             return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0);
         }
         /// <summary>
-        /// Одномерная функция сглаженного шума.
+        /// 
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x"></param>
+        /// <returns></returns>
         private static double SmoothedNoise(double x)
         {
             int xInt = (int)x;
@@ -14961,11 +14823,11 @@ namespace UMapx.Imaging
             return PerlinNoise.CosineInterpolate(Noise(xInt), Noise(xInt + 1), xFrac);
         }
         /// <summary>
-        /// Двумерная функция сглаженного шума.
+        /// 
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="y">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         private static double SmoothedNoise(double x, double y)
         {
             // params
@@ -14987,13 +14849,7 @@ namespace UMapx.Imaging
             // y interpolation
             return PerlinNoise.CosineInterpolate(v1, v2, yFrac);
         }
-        /// <summary>
-        /// Косинусная интерполяция.
-        /// </summary>
-        /// <param name="x1">Неизвестно</param>
-        /// <param name="x2">Неизвестно</param>
-        /// <param name="a">Параметр</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        ///
         private static double CosineInterpolate(double x1, double x2, double a)
         {
             double f = (1 - Math.Cos(a * Math.PI)) * 0.5;
@@ -15006,90 +14862,96 @@ namespace UMapx.Imaging
 
     #region Enums
     /// <summary>
-    /// Определеяет цветовое пространство.
+    /// Defines the color space.
     /// </summary>
     public enum Space
     {
+        #region Space
         /// <summary>
-        /// Цветовое пространство RGB.
+        /// Color space RGB.
         /// </summary>
         RGB,
         /// <summary>
-        /// Цветовое пространство HSB.
+        /// Color space HSB.
         /// </summary>
         HSB,
         /// <summary>
-        /// Цветовое пространство HSB.
+        /// Color space HSB.
         /// </summary>
         HSL,
         /// <summary>
-        /// Цветовое пространство YCbCr.
+        /// Color space YCbCr.
         /// </summary>
         YCbCr,
         /// <summary>
-        /// Оттенки серого.
+        /// Grayscale.
         /// </summary>
         Grayscale,
+        #endregion
     }
     /// <summary>
-    /// Определяет цветовой канал модели RGBA.
+    /// Defines the channel of RGBA model.
     /// </summary>
     public enum RGBA
     {
+        #region RGBA
         /// <summary>
-        /// Альфа-канал.
+        /// Alpha.
         /// </summary>
         Alpha = 3,
         /// <summary>
-        /// Красный.
+        /// Red.
         /// </summary>
         Red = 2,
         /// <summary>
-        /// Зеленый.
+        /// Green.
         /// </summary>
         Green = 1,
         /// <summary>
-        /// Синий.
+        /// Blue.
         /// </summary>
         Blue = 0,
+        #endregion
     }
     /// <summary>
-    /// Указывает направление вектора градиента.
+    /// Defines the direction of the gradient vector.
     /// </summary>
     public enum Gradient
     {
+        #region Gradient
         /// <summary>
-        /// Северное направление вектора градиента.
+        /// North direction.
         /// </summary>
         North = 0,
         /// <summary>
-        /// Северо-Западное направление вектора градиента.
+        /// North-West direction.
         /// </summary>
         NorthWest = 1,
         /// <summary>
-        /// Западное направление вектора градиента.
+        /// West direction.
         /// </summary>
         West = 2,
         /// <summary>
-        /// Юго-Западное направление вектора градиента.
+        /// South-West direction.
         /// </summary>
         SouthWest = 3,
         /// <summary>
-        /// Южное направление вектора градиента.
+        /// South direction.
         /// </summary>
         South = 4,
         /// <summary>
-        /// Юго-Восточное направление вектора градиента.
+        /// South-East direction.
         /// </summary>
         SouthEast = 5,
         /// <summary>
-        /// Восточное направление вектора градиента.
+        /// East direction.
         /// </summary>
         East = 6,
         /// <summary>
-        /// Северо-Восточное направление вектора градиента.
+        /// North-East direction.
         /// </summary>
         NorthEast = 7,
+        #endregion
     }
     #endregion
 }

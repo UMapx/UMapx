@@ -23,7 +23,7 @@ namespace UMapx.Colorspace
 
     #region Colorspaces
     /// <summary>
-    /// Определяет цветовую модель CIE Lab.
+    /// Defines a color model CIE Lab.
     /// </summary>
     public struct LAB : IColorSpace, ICloneable, ISerializable
     {
@@ -35,11 +35,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры CIE Lab.
+        /// Creates an instance of the structure CIE Lab.
         /// </summary>
-        /// <param name="l">Компонента L [0, 100]</param>
-        /// <param name="a">Компонента a [-127, 127]</param>
-        /// <param name="b">компонента b [-127, 127]</param>
+        /// <param name="l">Component L [0, 100]</param>
+        /// <param name="a">Component a [-127, 127]</param>
+        /// <param name="b">Component b [-127, 127]</param>
         public LAB(double l, double a, double b)
         {
             this.l = (l > 100.0) ? 100.0 : ((l < 0) ? 0 : l);
@@ -47,7 +47,7 @@ namespace UMapx.Colorspace
             this.b = (b > 127.0) ? 127.0 : ((b < -127) ? -127 : b);
         }
         /// <summary>
-        /// Определяет составляющую модели [0, 100].
+        /// Defines a component of the model [0, 100].
         /// </summary>
         public double L
         {
@@ -61,7 +61,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую модели [-127, 127].
+        /// Defines a component of the model [-127, 127].
         /// </summary>
         public double A
         {
@@ -75,7 +75,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую модели [-127, 127].
+        /// Defines a component of the model [-127, 127].
         /// </summary>
         public double B
         {
@@ -92,11 +92,11 @@ namespace UMapx.Colorspace
 
         #region Operators
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">CIE Lab структура</param>
-        /// <param name="item2">CIE Lab структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">CIE Lab structure</param>
+        /// <param name="item2">CIE Lab structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(LAB item1, LAB item2)
         {
             return (
@@ -106,11 +106,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">CIE Lab структура</param>
-        /// <param name="item2">CIE Lab структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">CIE Lab structure</param>
+        /// <param name="item2">CIE Lab structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(LAB item1, LAB item2)
         {
             return !(item1 == item2);
@@ -119,10 +119,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -130,17 +130,17 @@ namespace UMapx.Colorspace
             return (this == (LAB)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return L.GetHashCode() ^ a.GetHashCode() ^ b.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return l.ToString() + "\n" + a.ToString() + "\n" + b.ToString();
@@ -149,17 +149,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new LAB(this.L, this.A, this.B);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public LAB Clone()
         {
             return new LAB(this.L, this.A, this.B);
@@ -168,10 +168,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("L", this.L);
@@ -182,12 +182,12 @@ namespace UMapx.Colorspace
 
         #region CIE Lab convert
         /// <summary>
-        /// Преобразует цветовую модель CIE Lab в модель CIE XYZ.
+        /// Converts a color model CIE Lab in model CIE XYZ.
         /// </summary>
-        /// <param name="l">Компонента L</param>
-        /// <param name="a">Компонента a</param>
-        /// <param name="b">Компонента b</param>
-        /// <returns>CIE XYZ структура</returns>
+        /// <param name="l">Component L</param>
+        /// <param name="a">Component a</param>
+        /// <param name="b">Component b</param>
+        /// <returns>CIE XYZ structure</returns>
         public static XYZ ToXYZ(double l, double a, double b)
         {
             double theta = 6.0 / 29.0;
@@ -205,30 +205,30 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Преобразует цветовую модель CIE Lab в модель CIE XYZ.
+        /// Converts a color model CIE Lab in model CIE XYZ.
         /// </summary>
-        /// <param name="lab">CIE Lab структура</param>
-        /// <returns>CIE XYZ структура</returns>
+        /// <param name="lab">CIE Lab structure</param>
+        /// <returns>CIE XYZ structure</returns>
         public static XYZ ToXYZ(LAB lab)
         {
             return LAB.ToXYZ(lab.L, lab.A, lab.B);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель CIE Lab.
+        /// Converts a color model RGB in model CIE Lab.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>CIE Lab структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>CIE Lab structure</returns>
         public static LAB ToLAB(int red, int green, int blue)
         {
             return XYZ.ToLAB(XYZ.FromRGB(red, green, blue));
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель CIE Lab.
+        /// Converts a color model RGB in model CIE Lab.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>CIE Lab структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>CIE Lab structure</returns>
         public static LAB ToLAB(RGB rgb)
         {
             return XYZ.ToLAB(XYZ.FromRGB(rgb.Red, rgb.Green, rgb.Blue));
@@ -237,9 +237,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель CIE Lab в модель RGB.
+        /// Converts a color model CIE Lab in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -250,13 +250,13 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель CIE XYZ.
+    /// Defines a color model CIE XYZ.
     /// </summary>
     public struct XYZ : IColorSpace, ICloneable, ISerializable
     {
         #region Readonly
         /// <summary>
-        /// Возвращает белый цвет.
+        /// Returns white color.
         /// </summary>
         public static readonly XYZ White = new XYZ(0.9505, 1.0, 1.0890);
         #endregion
@@ -269,11 +269,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры CIE XYZ.
+        /// Creates an instance of the structure CIE XYZ.
         /// </summary>
-        /// <param name="x">Компонента X [0, 1]</param>
-        /// <param name="y">Компонента Y [0, 1]</param>
-        /// <param name="z">компонента Z [0, 1]</param>
+        /// <param name="x">Component X [0, 1]</param>
+        /// <param name="y">Component Y [0, 1]</param>
+        /// <param name="z">Component Z [0, 1]</param>
         public XYZ(double x, double y, double z)
         {
             this.x = (x > 1.0) ? 1.0 : ((x < 0) ? 0 : x);
@@ -281,7 +281,7 @@ namespace UMapx.Colorspace
             this.z = (z > 1.0) ? 1.0 : ((z < 0) ? 0 : z);
         }
         /// <summary>
-        /// Определяет составляющую модели [0, 1].
+        /// Defines a component of the model [0, 1].
         /// </summary>
         public double X
         {
@@ -295,7 +295,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую модели [0, 1].
+        /// Defines a component of the model [0, 1].
         /// </summary>
         public double Y
         {
@@ -309,7 +309,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую модели [0, 1].
+        /// Defines a component of the model [0, 1].
         /// </summary>
         public double Z
         {
@@ -326,11 +326,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">CIE XYZ структура</param>
-        /// <param name="item2">CIE XYZ структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">CIE XYZ structure</param>
+        /// <param name="item2">CIE XYZ structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(XYZ item1, XYZ item2)
         {
             return (
@@ -340,11 +340,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">CIE XYZ структура</param>
-        /// <param name="item2">CIE XYZ структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">CIE XYZ structure</param>
+        /// <param name="item2">CIE XYZ structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(XYZ item1, XYZ item2)
         {
             return !(item1 == item2);
@@ -353,10 +353,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -364,17 +364,17 @@ namespace UMapx.Colorspace
             return (this == (XYZ)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return x.GetHashCode() ^ y.GetHashCode() ^ z.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return x.ToString() + "\n" + y.ToString() + "\n" + z.ToString();
@@ -383,17 +383,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new XYZ(this.X, this.Y, this.Z);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public XYZ Clone()
         {
             return new XYZ(this.X, this.Y, this.Z);
@@ -402,10 +402,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("X", this.X);
@@ -416,12 +416,12 @@ namespace UMapx.Colorspace
 
         #region CIE XYZ convert
         /// <summary>
-        /// Преобразует цветовую модель CIE XYZ в модель CIE Lab.
+        /// Converts a color model CIE XYZ in model CIE Lab.
         /// </summary>
-        /// <param name="x">Компонента X</param>
-        /// <param name="y">Компонента Y</param>
-        /// <param name="z">Компонента Z</param>
-        /// <returns>CIE Lab структура</returns>
+        /// <param name="x">Component X</param>
+        /// <param name="y">Component Y</param>
+        /// <param name="z">Component Z</param>
+        /// <returns>CIE Lab structure</returns>
         public static LAB ToLAB(double x, double y, double z)
         {
             LAB lab = new LAB();
@@ -433,21 +433,21 @@ namespace UMapx.Colorspace
             return lab;
         }
         /// <summary>
-        /// Преобразует цветовую модель CIE XYZ в модель CIE Lab.
+        /// Converts a color model CIE XYZ in model CIE Lab.
         /// </summary>
-        /// <param name="xyz">CIE XYZ структура</param>
-        /// <returns>CIE Lab структура</returns>
+        /// <param name="xyz">CIE XYZ structure</param>
+        /// <returns>CIE Lab structure</returns>
         public static LAB ToLAB(XYZ xyz)
         {
             return ToLAB(xyz.X, xyz.Y, xyz.Z);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель CIE XYZ.
+        /// Converts a color model RGB in model CIE XYZ.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>CIE XYZ структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>CIE XYZ structure</returns>
         public static XYZ FromRGB(int red, int green, int blue)
         {
             // normalize red, green, blue values
@@ -468,10 +468,10 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель CIE XYZ.
+        /// Converts a color model RGB in model CIE XYZ.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>CIE XYZ структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>CIE XYZ structure</returns>
         public static XYZ FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -480,10 +480,10 @@ namespace UMapx.Colorspace
 
         #region Private voids
         /// <summary>
-        /// Трансформационная функция между моделями CIE XYZ и CIE Lab.
+        /// 
         /// </summary>
-        /// <param name="t">Параметр t</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="t"></param>
+        /// <returns></returns>
         private static double Fxyz(double t)
         {
             return ((t > 0.008856) ? Math.Pow(t, (1.0 / 3.0)) : (7.787 * t + 16.0 / 116.0));
@@ -492,9 +492,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель CIE XYZ в модель RGB.
+        /// Converts a color model CIE XYZ in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -520,7 +520,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель СMYK.
+    /// Defines a color model СMYK.
     /// </summary>
     public struct CMYK : IColorSpace, ICloneable, ISerializable
     {
@@ -533,12 +533,12 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры CMYK.
+        /// Creates an instance of the structure CMYK.
         /// </summary>
-        /// <param name="c">Голубой [0, 1]</param>
-        /// <param name="m">Пурпурный [0, 1]</param>
-        /// <param name="y">Желтый [0, 1]</param>
-        /// <param name="k">Черный [0, 1]</param>
+        /// <param name="c">Cyan [0, 1]</param>
+        /// <param name="m">Magenta [0, 1]</param>
+        /// <param name="y">Yellow [0, 1]</param>
+        /// <param name="k">Keycolor [0, 1]</param>
         public CMYK(double c, double m, double y, double k)
         {
             this.c = (c > 1) ? 1 : ((c < 0) ? 0 : c);
@@ -547,7 +547,7 @@ namespace UMapx.Colorspace
             this.k = (k > 1) ? 1 : ((k < 0) ? 0 : k);
         }
         /// <summary>
-        /// Определяет составляющую модели [0, 1].
+        /// Defines a component of the model [0, 1].
         /// </summary>
         public double Cyan
         {
@@ -561,7 +561,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую модели [0, 1].
+        /// Defines a component of the model [0, 1].
         /// </summary>
         public double Magenta
         {
@@ -575,7 +575,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую модели [0, 1].
+        /// Defines a component of the model [0, 1].
         /// </summary>
         public double Yellow
         {
@@ -589,7 +589,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую модели [0, 1].
+        /// Defines a component of the model [0, 1].
         /// </summary>
         public double Keycolor
         {
@@ -606,11 +606,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">CMYK структура</param>
-        /// <param name="item2">CMYK структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">CMYK structure</param>
+        /// <param name="item2">CMYK structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(CMYK item1, CMYK item2)
         {
             return (
@@ -621,11 +621,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство два объекта класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">CMYK структура</param>
-        /// <param name="item2">CMYK структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">CMYK structure</param>
+        /// <param name="item2">CMYK structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(CMYK item1, CMYK item2)
         {
             return !(item1 == item2);
@@ -634,10 +634,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -645,17 +645,17 @@ namespace UMapx.Colorspace
             return (this == (CMYK)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Cyan.GetHashCode() ^ Magenta.GetHashCode() ^ Yellow.GetHashCode() ^ Keycolor.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Cyan.ToString() + "\n" + Magenta.ToString() + "\n" + Yellow.ToString() + "\n" + Keycolor.ToString();
@@ -664,17 +664,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new CMYK(this.Cyan, this.Magenta, this.Yellow, this.Keycolor);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public CMYK Clone()
         {
             return new CMYK(this.Cyan, this.Magenta, this.Yellow, this.Keycolor);
@@ -683,10 +683,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Cyan", this.Cyan);
@@ -698,12 +698,12 @@ namespace UMapx.Colorspace
 
         #region CMYK convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель CMYK.
+        /// Converts a color model RGB in model CMYK.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>CMYK структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>CMYK structure</returns>
         public static CMYK FromRGB(int red, int green, int blue)
         {
             double c = (255.0f - red) / 255.0f;
@@ -723,10 +723,10 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель HSB.
+        /// Converts a color model RGB in model HSB.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>CMYK структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>CMYK structure</returns>
         public static CMYK FromRGB(RGB rgb)
         {
             return CMYK.FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -735,9 +735,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель CMYK в модель RGB.
+        /// Converts a color model CMYK in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -754,7 +754,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель HSB.
+    /// Defines a color model HSB.
     /// </summary>
     public struct HSB : IColorSpace, ICloneable, ISerializable
     {
@@ -766,11 +766,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры HSB.
+        /// Creates an instance of the structure HSB.
         /// </summary>
-        /// <param name="h">Оттенок [0, 359]</param>
-        /// <param name="s">Насыщенность [0, 1]</param>
-        /// <param name="b">Яркость [0, 1]</param>
+        /// <param name="h">Hue [0, 359]</param>
+        /// <param name="s">Saturation [0, 1]</param>
+        /// <param name="b">Brightness [0, 1]</param>
         public HSB(double h, double s, double b)
         {
             this.h = (h > 359) ? 359 : ((h < 0) ? 0 : h);
@@ -778,7 +778,7 @@ namespace UMapx.Colorspace
             this.b = (b > 1) ? 1 : ((b < 0) ? 0 : b);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 359].
+        /// Defines a component of the color model [0, 359].
         /// </summary>
         public double Hue
         {
@@ -792,7 +792,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Saturation
         {
@@ -806,7 +806,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Brightness
         {
@@ -823,11 +823,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">HSB структура</param>
-        /// <param name="item2">HSB структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">HSB structure</param>
+        /// <param name="item2">HSB structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(HSB item1, HSB item2)
         {
             return (
@@ -837,11 +837,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">HSB структура</param>
-        /// <param name="item2">HSB структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">HSB structure</param>
+        /// <param name="item2">HSB structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(HSB item1, HSB item2)
         {
             return !(item1 == item2);
@@ -850,10 +850,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -861,17 +861,17 @@ namespace UMapx.Colorspace
             return (this == (HSB)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Hue.GetHashCode() ^ Saturation.GetHashCode() ^ Brightness.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Hue.ToString() + "\n" + Saturation.ToString() + "\n" + Brightness.ToString();
@@ -880,17 +880,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new HSB(this.Hue, this.Saturation, this.Brightness);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public HSB Clone()
         {
             return new HSB(this.Hue, this.Saturation, this.Brightness);
@@ -899,10 +899,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Hue", this.Hue);
@@ -913,30 +913,27 @@ namespace UMapx.Colorspace
 
         #region HSB convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель HSB.
+        /// Converts a color model RGB in model HSB.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>HSB структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>HSB structure</returns>
         public static HSB FromRGB(int red, int green, int blue)
         {
-            // Перевод модели RGB в sRGB модель.
             double r = red / 255.0f;
             double g = green / 255.0f;
             double b = blue / 255.0f;
 
-            // Поиск максимального значения в каналах.
             double max = Maths.Max(r, g, b);
             double min = Maths.Min(r, g, b);
 
             double h = 0;
             double l = max - min;
 
-            //Расчет цветового тона.
             if (max == r && g >= b)
             {
-                if (l == 0.0) h = 0; // Не определено.
+                if (l == 0.0) h = 0;
                 else h = (int)(60 * (g - b) / l);
             }
             else if (max == r && g < b)
@@ -956,10 +953,10 @@ namespace UMapx.Colorspace
             return new HSB(h, s, max);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель HSB.
+        /// Converts a color model RGB in model HSB.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>HSB структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>HSB structure</returns>
         public static HSB FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -968,9 +965,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель HSB в модель RGB.
+        /// Converts a color model HSB in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -1038,7 +1035,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель HSL.
+    /// Defines a color model HSL.
     /// </summary>
     public struct HSL : IColorSpace, ICloneable, ISerializable
     {
@@ -1050,11 +1047,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры HSL.
+        /// Creates an instance of the structure HSL.
         /// </summary>
-        /// <param name="h">Оттенок [0, 360]</param>
-        /// <param name="s">Насыщенность [0, 1]</param>
-        /// <param name="l">Световая интенсивность [0, 1]</param>
+        /// <param name="h">Hue [0, 360]</param>
+        /// <param name="s">Saturation [0, 1]</param>
+        /// <param name="l">Lightness [0, 1]</param>
         public HSL(double h, double s, double l)
         {
             this.h = (h > 360) ? 360 : ((h < 0) ? 0 : h);
@@ -1062,7 +1059,7 @@ namespace UMapx.Colorspace
             this.l = (l > 1) ? 1 : ((l < 0) ? 0 : l);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 360].
+        /// Defines a component of the color model [0, 360].
         /// </summary>
         public double Hue
         {
@@ -1076,7 +1073,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Saturation
         {
@@ -1090,7 +1087,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Lightness
         {
@@ -1107,11 +1104,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">HSL структура</param>
-        /// <param name="item2">HSL структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">HSL structure</param>
+        /// <param name="item2">HSL structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(HSL item1, HSL item2)
         {
             return (
@@ -1121,11 +1118,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">HSL структура</param>
-        /// <param name="item2">HSL структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">HSL structure</param>
+        /// <param name="item2">HSL structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(HSL item1, HSL item2)
         {
             return !(item1 == item2);
@@ -1134,10 +1131,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -1145,17 +1142,17 @@ namespace UMapx.Colorspace
             return (this == (HSL)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Hue.GetHashCode() ^ Saturation.GetHashCode() ^ Lightness.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Hue.ToString() + "\n" + Saturation.ToString() + "\n" + Lightness.ToString();
@@ -1164,17 +1161,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new HSL(this.Hue, this.Saturation, this.Lightness);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public HSL Clone()
         {
             return new HSL(this.Hue, this.Saturation, this.Lightness);
@@ -1183,10 +1180,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Hue", this.Hue);
@@ -1197,30 +1194,27 @@ namespace UMapx.Colorspace
 
         #region HSL convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель HSL.
+        /// Converts a color model RGB in model HSL.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>HSL структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>HSL structure</returns>
         public static HSL FromRGB(int red, int green, int blue)
         {
             double s = 0.0f, l = 0.0f;
             int h = 0;
 
-            // Перевод модели RGB в sRGB модель.
             double r = red / 255.0f;
             double g = green / 255.0f;
             double b = blue / 255.0f;
 
-            // Поиск максимального значения в каналах.
             double max = Maths.Max(r, g, b);
             double min = Maths.Min(r, g, b);
 
-            //Расчет цветового тона.
             if (max == min)
             {
-                h = 0; // Не определено.
+                h = 0;
             }
             else if (max == r && g >= b)
             {
@@ -1239,10 +1233,8 @@ namespace UMapx.Colorspace
                 h = (int)(60 * (r - g) / (max - min) + 240);
             }
 
-            // Световая интенсивность.
             l = (max + min) / 2.0f;
 
-            // Насыщенность.
             if (l == 0.0 || max == min)
             {
                 s = 0.0f;
@@ -1259,10 +1251,10 @@ namespace UMapx.Colorspace
             return new HSL(h, s, l);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель HSL.
+        /// Converts a color model RGB in model HSL.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>HSL структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>HSL structure</returns>
         public static HSL FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -1271,9 +1263,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель HSL в модель RGB.
+        /// Converts a color model HSL in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -1291,9 +1283,9 @@ namespace UMapx.Colorspace
                     double Hk = h / 360.0f;
                     double[] T = new double[3];
 
-                    T[0] = Hk + 0.3333f;	// Tr составляющая
-                    T[1] = Hk;				// Tb составляющая
-                    T[2] = Hk - 0.3333f;	// Tg составляющая
+                    T[0] = Hk + 0.3333f;	// Tr
+                    T[1] = Hk;				// Tb
+                    T[2] = Hk - 0.3333f;	// Tg
 
                     for (int i = 0; i < 3; i++)
                     {
@@ -1326,7 +1318,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель AHSL.
+    /// Defines a color model AHSL.
     /// </summary>
     public struct AHSL : IColorSpace, ICloneable, ISerializable
     {
@@ -1338,11 +1330,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры HSL.
+        /// Creates an instance of the structure HSL.
         /// </summary>
-        /// <param name="h">Оттенок [0, 360]</param>
-        /// <param name="s">Насыщенность [0, 255]</param>
-        /// <param name="l">Световая интенсивность [-100, 100]</param>
+        /// <param name="h">Hue [0, 360]</param>
+        /// <param name="s">Saturation [0, 255]</param>
+        /// <param name="l">Lightness [-100, 100]</param>
         public AHSL(double h, double s, double l)
         {
             this.h = (h > 359) ? 359 : ((h < 0) ? 0 : h);
@@ -1350,7 +1342,7 @@ namespace UMapx.Colorspace
             this.l = (l > 100) ? 100 : ((l < -100) ? -100 : l);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 359].
+        /// Defines a component of the color model [0, 359].
         /// </summary>
         public double Hue
         {
@@ -1364,7 +1356,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 255].
+        /// Defines a component of the color model [0, 255].
         /// </summary>
         public double Saturation
         {
@@ -1378,7 +1370,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-100, 100].
+        /// Defines a component of the color model [-100, 100].
         /// </summary>
         public double Lightness
         {
@@ -1395,11 +1387,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">HSL структура</param>
-        /// <param name="item2">HSL структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">HSL structure</param>
+        /// <param name="item2">HSL structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(AHSL item1, AHSL item2)
         {
             return (
@@ -1409,11 +1401,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">HSL структура</param>
-        /// <param name="item2">HSL структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">HSL structure</param>
+        /// <param name="item2">HSL structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(AHSL item1, AHSL item2)
         {
             return !(item1 == item2);
@@ -1422,10 +1414,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -1433,17 +1425,17 @@ namespace UMapx.Colorspace
             return (this == (AHSL)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Hue.GetHashCode() ^ Saturation.GetHashCode() ^ Lightness.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Hue.ToString() + "\n" + Saturation.ToString() + "\n" + Lightness.ToString();
@@ -1452,17 +1444,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new AHSL(this.Hue, this.Saturation, this.Lightness);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public AHSL Clone()
         {
             return new AHSL(this.Hue, this.Saturation, this.Lightness);
@@ -1471,10 +1463,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Hue", this.Hue);
@@ -1485,24 +1477,22 @@ namespace UMapx.Colorspace
 
         #region AHSL covnert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель AHSL.
+        /// Converts a color model RGB in model AHSL.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>HSL структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>HSL structure</returns>
         public static AHSL FromRGB(int red, int green, int blue)
         {
             double s = 0, l = 0, h = 0;
 
-            // Поиск максимального значения в каналах.
             double max = Maths.Max(red, green, blue);
             double min = Maths.Min(red, green, blue);
 
-            //Расчет цветового тона.
             if (max == min)
             {
-                h = 0; // Не определено.
+                h = 0;
             }
             else if (max == red && green >= blue)
             {
@@ -1521,11 +1511,9 @@ namespace UMapx.Colorspace
                 h = (int)(60 * (red - green) / (max - min) + 240);
             }
 
-            // Усреднение каналов:
             double gray = (red + green + blue) / 3.0;
             double r0 = 0, g0 = 0, b0 = 0;
 
-            // Расчет R0, G0, B0:
             if ((h >= 0) && (h <= 60)) { r0 = 255.0; g0 = 4.25 * h; }
             else if ((h > 60) && (h <= 120)) { g0 = 255.0; r0 = 255 - 4.25 * (h - 60); }
             else if ((h > 120) && (h <= 180)) { g0 = 255.0; b0 = 4.25 * (h - 120); }
@@ -1533,29 +1521,25 @@ namespace UMapx.Colorspace
             else if ((h > 240) && (h <= 300)) { b0 = 255.0; r0 = 4.25 * (h - 240); }
             else if ((h > 300) && (h <= 360)) { r0 = 255.0; b0 = 255 - 4.25 * (h - 300); }
 
-            // Второе усреднение каналов:
             double gray0 = (r0 + g0 + b0) / 3.0;
 
-            // Определение светлоты:
             if (gray == gray0) { l = 0; }
             else if (gray > gray0) { l = 100 * (gray - gray0) / (255.0 - gray0); }
             else if (gray < gray0) { l = 100 * (gray - gray0) / gray0; }
 
-            // Вторичная коррекция:
             if (l > 0) { r0 = r0 + l * (255 - r0) / 100.0; }
             else if (l < 0) { r0 = r0 + l * r0 / 100.0; }
 
-            // Определение насыщенности:
             if (red == gray) { s = 0; }
             else { s = 255 * Math.Abs(red - gray) / (Math.Abs(r0 - gray)); }
 
             return new AHSL(h, s, l);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель AHSL.
+        /// Converts a color model RGB in model AHSL.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>HSL структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>HSL structure</returns>
         public static AHSL FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -1564,16 +1548,15 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель AHSL в модель RGB.
+        /// Converts a color model AHSL in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
             {
                 double r = 0, g = 0, b = 0;
 
-                // Расчет R, G, B по тону:
                 if ((h >= 0) && (h <= 60)) { r = 255.0; g = 4.25 * h; }
                 else if ((h > 60) && (h <= 120)) { g = 255.0; r = 255 - 4.25 * (h - 60); }
                 else if ((h > 120) && (h <= 180)) { g = 255.0; b = 4.25 * (h - 120); }
@@ -1581,7 +1564,6 @@ namespace UMapx.Colorspace
                 else if ((h > 240) && (h <= 300)) { b = 255.0; r = 4.25 * (h - 240); }
                 else if ((h > 300) && (h <= 360)) { r = 255.0; b = 255 - 4.25 * (h - 300); }
 
-                // Коррекция по светлоте:
                 if (l > 0)
                 {
                     r = r + l * (255 - r) / 100;
@@ -1606,7 +1588,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель RGB.
+    /// Defines a color model RGB.
     /// </summary>
     public struct RGB : IColorSpace, ICloneable, ISerializable
     {
@@ -1618,11 +1600,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры RGB.
+        /// Creates an instance of the structure RGB.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
         public RGB(int red, int green, int blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
@@ -1630,11 +1612,11 @@ namespace UMapx.Colorspace
             this.b = (byte)((blue > 255) ? 255 : ((blue < 0) ? 0 : blue));
         }
         /// <summary>
-        /// Создает экземпляр структуры RGB.
+        /// Creates an instance of the structure RGB.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
         public RGB(double red, double green, double blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
@@ -1642,7 +1624,7 @@ namespace UMapx.Colorspace
             this.b = (byte)((blue > 255) ? 255 : ((blue < 0) ? 0 : blue));
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 255].
+        /// Defines a component of the color model [0, 255].
         /// </summary>
         public byte Red
         {
@@ -1656,7 +1638,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 255].
+        /// Defines a component of the color model [0, 255].
         /// </summary>
         public byte Green
         {
@@ -1670,7 +1652,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 255].
+        /// Defines a component of the color model [0, 255].
         /// </summary>
         public byte Blue
         {
@@ -1687,11 +1669,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">RGB структура</param>
-        /// <param name="item2">RGB структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">RGB structure</param>
+        /// <param name="item2">RGB structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(RGB item1, RGB item2)
         {
             return (
@@ -1701,11 +1683,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">RGB структура</param>
-        /// <param name="item2">RGB структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">RGB structure</param>
+        /// <param name="item2">RGB structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(RGB item1, RGB item2)
         {
             return !(item1 == item2);
@@ -1714,10 +1696,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -1725,17 +1707,17 @@ namespace UMapx.Colorspace
             return (this == (RGB)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Red.GetHashCode() ^ Green.GetHashCode() ^ Blue.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Red.ToString() + "\n" + Green.ToString() + "\n" + Blue.ToString();
@@ -1744,17 +1726,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new RGB(this.Red, this.Green, this.Blue);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public RGB Clone()
         {
             return new RGB(this.Red, this.Green, this.Blue);
@@ -1763,19 +1745,19 @@ namespace UMapx.Colorspace
 
         #region Conversion operators
         /// <summary>
-        /// Определяет явное преобразование RGB в System.Drawing.Color.
+        /// Defines an explicit conversion RGB в System.Drawing.Color.
         /// </summary>
-        /// <param name="value">RGB структура</param>
-        /// <returns>Цвет в терминах красного, зеленого и синего</returns>
+        /// <param name="value">RGB structure</param>
+        /// <returns>Color in terms of red, green and blue</returns>
         public static implicit operator Color(RGB value)
         {
             return Color.FromArgb(value.Red, value.Green, value.Blue);
         }
         /// <summary>
-        /// Определяет явное преобразование RGB в System.Drawing.Color.
+        /// Defines an explicit conversion RGB в System.Drawing.Color.
         /// </summary>
-        /// <param name="value">Цвет в терминах красного, зеленого и синего</param>
-        /// <returns>RGB структура</returns>
+        /// <param name="value">Color in terms of red, green and blue</param>
+        /// <returns>RGB structure</returns>
         public static implicit operator RGB(Color value)
         {
             return new RGB(value.R, value.G, value.B);
@@ -1824,10 +1806,10 @@ namespace UMapx.Colorspace
 
         #region HEX convert
         /// <summary>
-        /// Преобразует цветовую модель HEX в модель RGB.
+        /// Converts a color model HEX in model RGB.
         /// </summary>
-        /// <param name="hexColor">HEX цвет</param>
-        /// <returns>RGB структура</returns>
+        /// <param name="hexColor">HEX</param>
+        /// <returns>RGB structure</returns>
         public static RGB FromHEX(string hexColor)
         {
             string r, g, b;
@@ -1850,21 +1832,21 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель HEX.
+        /// Converts a color model RGB in model HEX.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string ToHEX(int red, int green, int blue)
         {
             return String.Format("#{0:x2}{1:x2}{2:x2}", red, green, blue);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель HEX.
+        /// Converts a color model RGB in model HEX.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string ToHEX(RGB rgb)
         {
             return ToHEX(rgb.Red, rgb.Green, rgb.Blue);
@@ -1873,10 +1855,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Red", this.Red);
@@ -1887,41 +1869,41 @@ namespace UMapx.Colorspace
 
         #region Average
         /// <summary>
-        /// Вычисляет среднее значение яркости.
+        /// Calculates the average brightness value.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>Double precision floating point number</returns>
         public static int Average(int red, int green, int blue)
         {
             return (red + green + blue) / 3;
         }
         /// <summary>
-        /// Вычисляет среднее значение яркости.
+        /// Calculates the average brightness value.
         /// </summary>
-        /// <param name="red">Красный</param>
-        /// <param name="green">Зеленый</param>
-        /// <param name="blue">Синий</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="red">Red</param>
+        /// <param name="green">Green</param>
+        /// <param name="blue">Blue</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Average(double red, double green, double blue)
         {
             return (red + green + blue) / 3.0;
         }
         /// <summary>
-        /// Вычисляет среднее значение яркости.
+        /// Calculates the average brightness value.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>Double precision floating point number</returns>
         public static int Average(RGB rgb)
         {
             return Average(rgb.Red, rgb.Green, rgb.Blue);
         }
         /// <summary>
-        /// Вычисляет среднее значение яркости.
+        /// Calculates the average brightness value.
         /// </summary>
-        /// <param name="rgb">sRGB структура</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="rgb">sRGB structure</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Average(sRGB rgb)
         {
             return Average(rgb.Red, rgb.Green, rgb.Blue);
@@ -1930,41 +1912,41 @@ namespace UMapx.Colorspace
 
         #region PAL/NTC
         /// <summary>
-        /// Вычисляет значение яркости в стандарте (PAL/NTC).
+        /// Calculates the brightness value in the standard (PAL/NTC).
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>Double precision floating point number</returns>
         public static int PAL(int red, int green, int blue)
         {
             return (int)(0.299 * red + 0.587 * green + 0.114 * blue);
         }
         /// <summary>
-        /// Вычисляет значение яркости в стандарте (PAL/NTC).
+        /// Calculates the brightness value in the standard (PAL/NTC).
         /// </summary>
-        /// <param name="red">Красный</param>
-        /// <param name="green">Зеленый</param>
-        /// <param name="blue">Синий</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="red">Red</param>
+        /// <param name="green">Green</param>
+        /// <param name="blue">Blue</param>
+        /// <returns>Double precision floating point number</returns>
         public static double PAL(double red, double green, double blue)
         {
             return 0.299 * red + 0.587 * green + 0.114 * blue;
         }
         /// <summary>
-        /// Вычисляет значение яркости в стандарте (PAL/NTC).
+        /// Calculates the brightness value in the standard (PAL/NTC).
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>Double precision floating point number</returns>
         public static double PAL(RGB rgb)
         {
             return PAL(rgb.Red, rgb.Green, rgb.Blue);
         }
         /// <summary>
-        /// Вычисляет значение яркости в стандарте (PAL/NTC).
+        /// Calculates the brightness value in the standard (PAL/NTC).
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>Double precision floating point number</returns>
         public static double PAL(sRGB rgb)
         {
             return PAL(rgb.Red, rgb.Green, rgb.Blue);
@@ -1973,41 +1955,41 @@ namespace UMapx.Colorspace
 
         #region HDTV
         /// <summary>
-        /// Вычисляет значение яркости в стандарте HDTV.
+        /// Calculates the brightness value in the standard HDTV.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>Double precision floating point number</returns>
         public static int HDTV(int red, int green, int blue)
         {
             return (int)(0.2126 * red + 0.7152 * green + 0.0722 * blue);
         }
         /// <summary>
-        /// Вычисляет значение яркости в стандарте HDTV.
+        /// Calculates the brightness value in the standard HDTV.
         /// </summary>
-        /// <param name="red">Красный</param>
-        /// <param name="green">Зеленый</param>
-        /// <param name="blue">Синий</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="red">Red</param>
+        /// <param name="green">Green</param>
+        /// <param name="blue">Blue</param>
+        /// <returns>Double precision floating point number</returns>
         public static double HDTV(double red, double green, double blue)
         {
             return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
         }
         /// <summary>
-        /// Вычисляет значение яркости в стандарте HDTV.
+        /// Calculates the brightness value in the standard HDTV.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>Double precision floating point number</returns>
         public static int HDTV(RGB rgb)
         {
             return HDTV(rgb.Red, rgb.Green, rgb.Blue);
         }
         /// <summary>
-        /// Вычисляет значение яркости в стандарте HDTV.
+        /// Calculates the brightness value in the standard HDTV.
         /// </summary>
-        /// <param name="rgb">sRGB структура</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="rgb">sRGB structure</param>
+        /// <returns>Double precision floating point number</returns>
         public static double HDTV(sRGB rgb)
         {
             return HDTV(rgb.Red, rgb.Green, rgb.Blue);
@@ -2016,41 +1998,41 @@ namespace UMapx.Colorspace
 
         #region RYY
         /// <summary>
-        /// Вычисляет значение яркости в стандарте RYY.
+        /// Calculates the brightness value in the standard RYY.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>Double precision floating point number</returns>
         public static int RYY(int red, int green, int blue)
         {
             return (int)(0.5 * red + 0.419 * green + 0.081 * blue);
         }
         /// <summary>
-        /// Вычисляет значение яркости в стандарте RYY.
+        /// Calculates the brightness value in the standard RYY.
         /// </summary>
-        /// <param name="red">Красный</param>
-        /// <param name="green">Зеленый</param>
-        /// <param name="blue">Синий</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="red">Red</param>
+        /// <param name="green">Green</param>
+        /// <param name="blue">Blue</param>
+        /// <returns>Double precision floating point number</returns>
         public static double RYY(double red, double green, double blue)
         {
             return 0.5 * red + 0.419 * green + 0.081 * blue;
         }
         /// <summary>
-        /// Вычисляет значение яркости в стандарте RYY.
+        /// Calculates the brightness value in the standard RYY.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>Double precision floating point number</returns>
         public static int RYY(RGB rgb)
         {
             return RYY(rgb.Red, rgb.Green, rgb.Blue);
         }
         /// <summary>
-        /// Вычисляет значение яркости в стандарте RYY.
+        /// Calculates the brightness value in the standard RYY.
         /// </summary>
-        /// <param name="rgb">sRGB структура</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="rgb">sRGB structure</param>
+        /// <returns>Double precision floating point number</returns>
         public static double RYY(sRGB rgb)
         {
             return RYY(rgb.Red, rgb.Green, rgb.Blue);
@@ -2059,10 +2041,10 @@ namespace UMapx.Colorspace
 
         #region Temperature
         /// <summary>
-        /// Преобразует температуру T (в кельвинах) в цвет в терминах красного, зеленого и синего каналов.
+        /// Converts temperature T (in kelvins) to color in terms of red, green, and blue channels.
         /// </summary>
-        /// <param name="temperature">Температура [1000К, 10000К]</param>
-        /// <returns>RGB структура</returns>
+        /// <param name="temperature">Temperature [1000K, 10000K]</param>
+        /// <returns>RGB structure</returns>
         public static RGB Temp2RGB(double temperature)
         {
             // Approximation of Planckian locus in RGB model
@@ -2105,13 +2087,13 @@ namespace UMapx.Colorspace
 
         #region Saturation
         /// <summary>
-        /// Корректирует насыщенность цвета.
+        /// Corrects color saturation.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <param name="s">Насыщенность</param>
-        /// <returns>RGB структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <param name="s">Saturation</param>
+        /// <returns>RGB structure</returns>
         public static RGB Saturation(int red, int green, int blue, double s)
         {
             double max = Maths.Max(red, green, blue);
@@ -2123,13 +2105,13 @@ namespace UMapx.Colorspace
                 Maths.Byte(red + (red - max) * s));
         }
         /// <summary>
-        /// Корректирует насыщенность цвета.
+        /// Corrects color saturation.
         /// </summary>
-        /// <param name="red">Красный </param>
-        /// <param name="green">Зеленый</param>
-        /// <param name="blue">Синий</param>
-        /// <param name="s">Насыщенность</param>
-        /// <returns>RGB структура</returns>
+        /// <param name="red">Red </param>
+        /// <param name="green">Green</param>
+        /// <param name="blue">Blue</param>
+        /// <param name="s">Saturation</param>
+        /// <returns>RGB structure</returns>
         public static sRGB Saturation(double red, double green, double blue, double s)
         {
             double max = Maths.Max(red, green, blue);
@@ -2141,21 +2123,21 @@ namespace UMapx.Colorspace
                 Maths.Byte(red + (red - max) * s));
         }
         /// <summary>
-        /// Корректирует насыщенность цвета.
+        /// Corrects color saturation.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <param name="s">Насыщенность</param>
-        /// <returns>RGB структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <param name="s">Saturation</param>
+        /// <returns>RGB structure</returns>
         public static RGB Saturation(RGB rgb, double s)
         {
             return Saturation(rgb.Red, rgb.Green, rgb.Blue, s);
         }
         /// <summary>
-        /// Корректирует насыщенность цвета.
+        /// Corrects color saturation.
         /// </summary>
-        /// <param name="rgb">sRGB структура</param>
-        /// <param name="s">Насыщенность</param>
-        /// <returns>RGB структура</returns>
+        /// <param name="rgb">sRGB structure</param>
+        /// <param name="s">Saturation</param>
+        /// <returns>RGB structure</returns>
         public static sRGB Saturation(sRGB rgb, double s)
         {
             return Saturation(rgb.Red, rgb.Green, rgb.Blue, s);
@@ -2164,7 +2146,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Возвращает цветовую модель RGB.
+        /// Returns the color model RGB.
         /// </summary>
         public RGB ToRGB
         {
@@ -2177,11 +2159,11 @@ namespace UMapx.Colorspace
 
         #region Scheme
         /// <summary>
-        /// Генерирует цветовую схему.
+        /// Generates a color scheme.
         /// </summary>
-        /// <param name="hue">Оттенок [0, 360]</param>
-        /// <param name="length">Размер схемы</param>
-        /// <returns>Цветовая схема</returns>
+        /// <param name="hue">Hue [0, 360]</param>
+        /// <param name="length">Length</param>
+        /// <returns>Color scheme</returns>
         public static RGB[] SchemeFromHue(double hue, uint length)
         {
             RGB[] scheme = new RGB[length];
@@ -2198,7 +2180,7 @@ namespace UMapx.Colorspace
 
         #region Completed shemes
         /// <summary>
-        /// Возвращает цветовую схему "Холодный".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] Cool
         {
@@ -2208,7 +2190,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Возвращает цветовую схему "Теплый".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] Hot
         {
@@ -2218,7 +2200,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Возвращает цветовую схему "Медь".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] Copper
         {
@@ -2228,7 +2210,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Возвращает цветовую схему "HSB".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] HSB
         {
@@ -2238,7 +2220,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Возвращает цветовую схему "Jet".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] Jet
         {
@@ -2248,7 +2230,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Возвращает цветовую схему "Розовый".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] Pink
         {
@@ -2258,7 +2240,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Возвращает цветовую схему "Осень".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] Autumn
         {
@@ -2268,7 +2250,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Возвращает цветовую схему "Весна".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] Spring
         {
@@ -2278,7 +2260,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Возвращает цветовую схему "Лето".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] Summer
         {
@@ -2288,7 +2270,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Возвращает цветовую схему "Зима".
+        /// Returns the color scheme.
         /// </summary>
         public static RGB[] Winter
         {
@@ -2300,7 +2282,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель RYB.
+    /// Defines a color model RYB.
     /// </summary>
     public struct RYB : IColorSpace, ICloneable, ISerializable
     {
@@ -2312,11 +2294,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры RYB.
+        /// Creates an instance of the structure RYB.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="yellow">Желтый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="yellow">Yellow [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
         public RYB(int red, int yellow, int blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
@@ -2324,11 +2306,11 @@ namespace UMapx.Colorspace
             this.b = (byte)((blue > 255) ? 255 : ((blue < 0) ? 0 : blue));
         }
         /// <summary>
-        /// Создает экземпляр структуры RYB.
+        /// Creates an instance of the structure RYB.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="yellow">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="yellow">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
         public RYB(double red, double yellow, double blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
@@ -2336,7 +2318,7 @@ namespace UMapx.Colorspace
             this.b = (byte)((blue > 255) ? 255 : ((blue < 0) ? 0 : blue));
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 255].
+        /// Defines a component of the color model [0, 255].
         /// </summary>
         public byte Red
         {
@@ -2350,7 +2332,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 255].
+        /// Defines a component of the color model [0, 255].
         /// </summary>
         public byte Yellow
         {
@@ -2364,7 +2346,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 255].
+        /// Defines a component of the color model [0, 255].
         /// </summary>
         public byte Blue
         {
@@ -2381,11 +2363,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">RYB структура</param>
-        /// <param name="item2">RYB структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">RYB structure</param>
+        /// <param name="item2">RYB structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(RYB item1, RYB item2)
         {
             return (
@@ -2395,11 +2377,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">RYB структура</param>
-        /// <param name="item2">RYB структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">RYB structure</param>
+        /// <param name="item2">RYB structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(RYB item1, RYB item2)
         {
             return !(item1 == item2);
@@ -2408,10 +2390,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -2419,17 +2401,17 @@ namespace UMapx.Colorspace
             return (this == (RYB)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Red.GetHashCode() ^ Yellow.GetHashCode() ^ Blue.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Red.ToString() + "\n" + Yellow.ToString() + "\n" + Blue.ToString();
@@ -2438,17 +2420,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new RYB(this.Red, this.Yellow, this.Blue);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public RYB Clone()
         {
             return new RYB(this.Red, this.Yellow, this.Blue);
@@ -2457,10 +2439,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Red", this.Red);
@@ -2471,17 +2453,16 @@ namespace UMapx.Colorspace
 
         #region RYB convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель RYB.
+        /// Converts a color model RGB in model RYB.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>RYB структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>RYB structure</returns>
         public static RYB FromRGB(int red, int green, int blue)
         {
-            // Автор алгоритма Arah J. Leonard
+            // Arah J. Leonard
             // https://github.com/bahamas10/node-rgb2ryb/blob/master/rgb2ryb.js
-            // Онлайн-калькулятор цветов
             // http://www.deathbysoftware.com/colors/index.html
             //
 
@@ -2523,10 +2504,10 @@ namespace UMapx.Colorspace
             return new RYB(r, y, b);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель RYB.
+        /// Converts a color model RGB in model RYB.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>RYB структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>RYB structure</returns>
         public static RYB FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -2535,16 +2516,15 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель RYB в модель RGB.
+        /// Converts a color model RYB in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
             {
-                // Автор алгоритма Arah J. Leonard
+                // Arah J. Leonard
                 // https://github.com/bahamas10/node-rgb2ryb/blob/master/rgb2ryb.js
-                // Онлайн-калькулятор цветов
                 // http://www.deathbysoftware.com/colors/index.html
                 //
 
@@ -2589,7 +2569,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель sRGB.
+    /// Defines a color model sRGB.
     /// </summary>
     public struct sRGB : IColorSpace, ICloneable, ISerializable
     {
@@ -2601,11 +2581,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры sRGB.
+        /// Creates an instance of the structure sRGB.
         /// </summary>
-        /// <param name="red">Красный [0, 1]</param>
-        /// <param name="green">Зеленый [0, 1]</param>
-        /// <param name="blue">Синий [0, 1]</param>
+        /// <param name="red">Red [0, 1]</param>
+        /// <param name="green">Green [0, 1]</param>
+        /// <param name="blue">Blue [0, 1]</param>
         public sRGB(double red, double green, double blue)
         {
             this.r = (red > 1) ? 1 : ((red < 0) ? 0 : red);
@@ -2613,7 +2593,7 @@ namespace UMapx.Colorspace
             this.b = (blue > 1) ? 1 : ((blue < 0) ? 0 : blue);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Red
         {
@@ -2627,7 +2607,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Green
         {
@@ -2641,7 +2621,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Blue
         {
@@ -2658,11 +2638,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">sRGB структура</param>
-        /// <param name="item2">sRGB структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">sRGB structure</param>
+        /// <param name="item2">sRGB structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(sRGB item1, sRGB item2)
         {
             return (
@@ -2672,11 +2652,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">sRGB структура</param>
-        /// <param name="item2">sRGB структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">sRGB structure</param>
+        /// <param name="item2">sRGB structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(sRGB item1, sRGB item2)
         {
             return !(item1 == item2);
@@ -2685,10 +2665,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -2696,17 +2676,17 @@ namespace UMapx.Colorspace
             return (this == (sRGB)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Red.GetHashCode() ^ Green.GetHashCode() ^ Blue.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Red.ToString() + "\n" + Green.ToString() + "\n" + Blue.ToString();
@@ -2715,17 +2695,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new sRGB(this.Red, this.Green, this.Blue);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public sRGB Clone()
         {
             return new sRGB(this.Red, this.Green, this.Blue);
@@ -2734,10 +2714,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Red", this.Red);
@@ -2748,12 +2728,12 @@ namespace UMapx.Colorspace
 
         #region sRGB convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель sRGB.
+        /// Converts a color model RGB in model sRGB.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>sRGB структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>sRGB structure</returns>
         public static sRGB FromRGB(int red, int green, int blue)
         {
             double r = red / 255.0f;
@@ -2763,10 +2743,10 @@ namespace UMapx.Colorspace
             return new sRGB(r, g, b);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель sRGB.
+        /// Converts a color model RGB in model sRGB.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>sRGB структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>sRGB structure</returns>
         public static sRGB FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -2775,9 +2755,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель sRGB в модель RGB.
+        /// Converts a color model sRGB in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -2789,7 +2769,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель YUV.
+    /// Defines a color model YUV.
     /// </summary>
     public struct YUV : IColorSpace, ICloneable, ISerializable
     {
@@ -2801,11 +2781,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры YUV.
+        /// Creates an instance of the structure YUV.
         /// </summary>
-        /// <param name="y">Y яркостная составляющая [0, 1]</param>
-        /// <param name="u">U цветоразностная составляющая [-0.436, 0.436]</param>
-        /// <param name="v">V цветоразностная составляющая [-0.614, 0.614]</param>
+        /// <param name="y">Y [0, 1]</param>
+        /// <param name="u">U [-0.436, 0.436]</param>
+        /// <param name="v">V [-0.614, 0.614]</param>
         public YUV(double y, double u, double v)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
@@ -2813,7 +2793,7 @@ namespace UMapx.Colorspace
             this.v = (v > 0.614f) ? 0.614f : ((v < -0.614f) ? -0.614f : v);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Y
         {
@@ -2827,7 +2807,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-0.436, 0.436].
+        /// Defines a component of the color model [-0.436, 0.436].
         /// </summary>
         public double U
         {
@@ -2841,7 +2821,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-0.614, 0.614].
+        /// Defines a component of the color model [-0.614, 0.614].
         /// </summary>
         public double V
         {
@@ -2858,11 +2838,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">YUV структура</param>
-        /// <param name="item2">YUV структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YUV structure</param>
+        /// <param name="item2">YUV structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(YUV item1, YUV item2)
         {
             return (
@@ -2872,11 +2852,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">YUV структура</param>
-        /// <param name="item2">YUV структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YUV structure</param>
+        /// <param name="item2">YUV structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(YUV item1, YUV item2)
         {
             return !(item1 == item2);
@@ -2885,10 +2865,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -2896,17 +2876,17 @@ namespace UMapx.Colorspace
             return (this == (YUV)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Y.GetHashCode() ^ U.GetHashCode() ^ V.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Y.ToString() + "\n" + U.ToString() + "\n" + V.ToString();
@@ -2915,17 +2895,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new YUV(this.Y, this.U, this.V);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public YUV Clone()
         {
             return new YUV(this.Y, this.U, this.V);
@@ -2934,10 +2914,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Y", this.Y);
@@ -2948,12 +2928,12 @@ namespace UMapx.Colorspace
 
         #region YUV convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YUV.
+        /// Converts a color model RGB in model YUV.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>YUV структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>YUV structure</returns>
         public static YUV FromRGB(int red, int green, int blue)
         {
             double r = red / 255.0f;
@@ -2967,10 +2947,10 @@ namespace UMapx.Colorspace
             return new YUV(Y, U, V);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YUV.
+        /// Converts a color model RGB in model YUV.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>YUV структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>YUV structure</returns>
         public static YUV FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -2979,9 +2959,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель YUV в модель RGB.
+        /// Converts a color model YUV in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -2996,7 +2976,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель YIQ.
+    /// Defines a color model YIQ.
     /// </summary>
     public struct YIQ : IColorSpace, ICloneable, ISerializable
     {
@@ -3008,11 +2988,11 @@ namespace UMapx.Colorspace
 
         #region Stucture components
         /// <summary>
-        /// Создает экземпляр структуры YIQ.
+        /// Creates an instance of the structure YIQ.
         /// </summary>
-        /// <param name="y">Y яркостная составляющая [0, 1]</param>
-        /// <param name="i">I цветоразностная составляющая [-0.5957, 0.5957]</param>
-        /// <param name="q">Q цветоразностная составляющая [-0.5226, 0.5226]</param>
+        /// <param name="y">Y [0, 1]</param>
+        /// <param name="i">I [-0.5957, 0.5957]</param>
+        /// <param name="q">Q [-0.5226, 0.5226]</param>
         public YIQ(double y, double i, double q)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
@@ -3020,7 +3000,7 @@ namespace UMapx.Colorspace
             this.q = (q > 0.5226f) ? 0.5226f : ((q < -0.5226f) ? -0.5226f : q);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Y
         {
@@ -3034,7 +3014,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-0.5957, 0.5957].
+        /// Defines a component of the color model [-0.5957, 0.5957].
         /// </summary>
         public double I
         {
@@ -3048,7 +3028,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-0.5226, 0.5226].
+        /// Defines a component of the color model [-0.5226, 0.5226].
         /// </summary>
         public double Q
         {
@@ -3065,11 +3045,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">YIQ структура</param>
-        /// <param name="item2">YIQ структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YIQ structure</param>
+        /// <param name="item2">YIQ structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(YIQ item1, YIQ item2)
         {
             return (
@@ -3079,11 +3059,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">YIQ структура</param>
-        /// <param name="item2">YIQ структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YIQ structure</param>
+        /// <param name="item2">YIQ structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(YIQ item1, YIQ item2)
         {
             return !(item1 == item2);
@@ -3092,10 +3072,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -3103,17 +3083,17 @@ namespace UMapx.Colorspace
             return (this == (YIQ)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Y.GetHashCode() ^ I.GetHashCode() ^ Q.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Y.ToString() + "\n" + I.ToString() + "\n" + Q.ToString();
@@ -3122,17 +3102,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new YIQ(this.Y, this.I, this.Q);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public YIQ Clone()
         {
             return new YIQ(this.Y, this.I, this.Q);
@@ -3141,10 +3121,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Y", this.Y);
@@ -3155,12 +3135,12 @@ namespace UMapx.Colorspace
 
         #region YIQ convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YIQ.
+        /// Converts a color model RGB in model YIQ.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>YIQ структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>YIQ structure</returns>
         public static YIQ FromRGB(int red, int green, int blue)
         {
             double r = red / 255.0f;
@@ -3174,10 +3154,10 @@ namespace UMapx.Colorspace
             return new YIQ(Y, I, Q);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YIQ.
+        /// Converts a color model RGB in model YIQ.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>YIQ структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>YIQ structure</returns>
         public static YIQ FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -3186,9 +3166,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель YIQ в модель RGB.
+        /// Converts a color model YIQ in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -3203,7 +3183,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель YCbCr.
+    /// Defines a color model YCbCr.
     /// </summary>
     public struct YCbCr : IColorSpace, ICloneable, ISerializable
     {
@@ -3215,11 +3195,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры YCbCr.
+        /// Creates an instance of the structure YCbCr.
         /// </summary>
-        /// <param name="y">Y яркостная составляющая [0, 1]</param>
-        /// <param name="cb">Cb цветоразностная составляющая [-1, 1]</param>
-        /// <param name="cr">Cr цветоразностная составляющая [-1, 1]</param>
+        /// <param name="y">Y [0, 1]</param>
+        /// <param name="cb">Cb [-1, 1]</param>
+        /// <param name="cr">Cr [-1, 1]</param>
         public YCbCr(double y, double cb, double cr)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
@@ -3227,7 +3207,7 @@ namespace UMapx.Colorspace
             this.cr = (cr > 1) ? 1 : ((cr < -1) ? -1 : cr);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Y
         {
@@ -3241,7 +3221,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-1, 1].
+        /// Defines a component of the color model [-1, 1].
         /// </summary>
         public double Cb
         {
@@ -3255,7 +3235,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-1, 1].
+        /// Defines a component of the color model [-1, 1].
         /// </summary>
         public double Cr
         {
@@ -3272,11 +3252,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">YCbCr структура</param>
-        /// <param name="item2">YCbCr структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YCbCr structure</param>
+        /// <param name="item2">YCbCr structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(YCbCr item1, YCbCr item2)
         {
             return (
@@ -3286,11 +3266,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">YCbCr структура</param>
-        /// <param name="item2">YCbCr структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YCbCr structure</param>
+        /// <param name="item2">YCbCr structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(YCbCr item1, YCbCr item2)
         {
             return !(item1 == item2);
@@ -3299,10 +3279,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -3310,17 +3290,17 @@ namespace UMapx.Colorspace
             return (this == (YCbCr)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Y.GetHashCode() ^ Cb.GetHashCode() ^ Cr.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Y.ToString() + "\n" + Cb.ToString() + "\n" + Cr.ToString();
@@ -3329,17 +3309,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new YCbCr(this.Y, this.Cb, this.Cr);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public YCbCr Clone()
         {
             return new YCbCr(this.Y, this.Cb, this.Cr);
@@ -3348,10 +3328,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Y", this.Y);
@@ -3362,12 +3342,12 @@ namespace UMapx.Colorspace
 
         #region YCbCr convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YCbCr.
+        /// Converts a color model RGB in model YCbCr.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>YCbCr структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>YCbCr structure</returns>
         public static YCbCr FromRGB(int red, int green, int blue)
         {
             double r = red / 255.0;
@@ -3381,10 +3361,10 @@ namespace UMapx.Colorspace
             return new YCbCr(Y, Cb, Cr);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YCbCr.
+        /// Converts a color model RGB in model YCbCr.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>YCbCr структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>YCbCr structure</returns>
         public static YCbCr FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -3393,9 +3373,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель YCbCr в модель RGB.
+        /// Converts a color model YCbCr in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -3410,7 +3390,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель YDbDr.
+    /// Defines a color model YDbDr.
     /// </summary>
     public struct YDbDr : IColorSpace, ICloneable, ISerializable
     {
@@ -3422,11 +3402,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры YDbDr.
+        /// Creates an instance of the structure YDbDr.
         /// </summary>
-        /// <param name="y">Y яркостная составляющая [0, 1]</param>
-        /// <param name="db">Db цветоразностная составляющая [-1.333, 1.333]</param>
-        /// <param name="dr">Dr цветоразностная составляющая [-1.333, 1.333]</param>
+        /// <param name="y">Y [0, 1]</param>
+        /// <param name="db">Db [-1.333, 1.333]</param>
+        /// <param name="dr">Dr [-1.333, 1.333]</param>
         public YDbDr(double y, double db, double dr)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
@@ -3434,7 +3414,7 @@ namespace UMapx.Colorspace
             this.dr = (dr > 1.333) ? 1.333 : ((dr < -1.333) ? -1.333 : dr);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Y
         {
@@ -3448,7 +3428,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-1.333, 1.333].
+        /// Defines a component of the color model [-1.333, 1.333].
         /// </summary>
         public double Db
         {
@@ -3462,7 +3442,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-1.333, 1.333].
+        /// Defines a component of the color model [-1.333, 1.333].
         /// </summary>
         public double Dr
         {
@@ -3479,11 +3459,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">YDbDr структура</param>
-        /// <param name="item2">YDbDr структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YDbDr structure</param>
+        /// <param name="item2">YDbDr structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(YDbDr item1, YDbDr item2)
         {
             return (
@@ -3493,11 +3473,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">YDbDr структура</param>
-        /// <param name="item2">YDbDr структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YDbDr structure</param>
+        /// <param name="item2">YDbDr structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(YDbDr item1, YDbDr item2)
         {
             return !(item1 == item2);
@@ -3506,10 +3486,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -3517,17 +3497,17 @@ namespace UMapx.Colorspace
             return (this == (YDbDr)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Y.GetHashCode() ^ Db.GetHashCode() ^ Dr.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Y.ToString() + "\n" + Db.ToString() + "\n" + Dr.ToString();
@@ -3536,17 +3516,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new YDbDr(this.Y, this.Db, this.Dr);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public YDbDr Clone()
         {
             return new YDbDr(this.Y, this.Db, this.Dr);
@@ -3555,10 +3535,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Y", this.Y);
@@ -3569,12 +3549,12 @@ namespace UMapx.Colorspace
 
         #region YDbDr convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YDbDr.
+        /// Converts a color model RGB in model YDbDr.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>YDbDr структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>YDbDr structure</returns>
         public static YDbDr FromRGB(int red, int green, int blue)
         {
             double r = red / 255.0f;
@@ -3588,10 +3568,10 @@ namespace UMapx.Colorspace
             return new YDbDr(Y, Cb, Cr);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YDbDr.
+        /// Converts a color model RGB in model YDbDr.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>YDbDr структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>YDbDr structure</returns>
         public static YDbDr FromRGB(RGB rgb)
         {
             return YDbDr.FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -3600,9 +3580,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель YDbDr в модель RGB.
+        /// Converts a color model YDbDr in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -3617,7 +3597,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель YCgCo.
+    /// Defines a color model YCgCo.
     /// </summary>
     public struct YCgCo : IColorSpace, ICloneable, ISerializable
     {
@@ -3629,11 +3609,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры YDbDr.
+        /// Creates an instance of the structure YDbDr.
         /// </summary>
-        /// <param name="y">Y яркостная составляющая [0, 1]</param>
-        /// <param name="cg">Cg цветоразностная составляющая [-0.5, 0.5]</param>
-        /// <param name="co">Co цветоразностная составляющая [-0.5, 0.5]</param>
+        /// <param name="y">Y [0, 1]</param>
+        /// <param name="cg">Cg [-0.5, 0.5]</param>
+        /// <param name="co">Co [-0.5, 0.5]</param>
         public YCgCo(double y, double cg, double co)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
@@ -3641,7 +3621,7 @@ namespace UMapx.Colorspace
             this.co = (co > 0.5) ? 0.5 : ((co < -0.5) ? -0.5 : co);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Y
         {
@@ -3655,7 +3635,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-0.5, 0.5].
+        /// Defines a component of the color model [-0.5, 0.5].
         /// </summary>
         public double Cg
         {
@@ -3669,7 +3649,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-0.5, 0.5].
+        /// Defines a component of the color model [-0.5, 0.5].
         /// </summary>
         public double Co
         {
@@ -3686,11 +3666,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">YCgCo структура</param>
-        /// <param name="item2">YCgCo структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YCgCo structure</param>
+        /// <param name="item2">YCgCo structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(YCgCo item1, YCgCo item2)
         {
             return (
@@ -3700,11 +3680,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">YCgCo структура</param>
-        /// <param name="item2">YCgCo структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YCgCo structure</param>
+        /// <param name="item2">YCgCo structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(YCgCo item1, YCgCo item2)
         {
             return !(item1 == item2);
@@ -3713,10 +3693,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -3724,17 +3704,17 @@ namespace UMapx.Colorspace
             return (this == (YCgCo)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Y.GetHashCode() ^ Cg.GetHashCode() ^ Co.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Y.ToString() + "\n" + Cg.ToString() + "\n" + Co.ToString();
@@ -3743,17 +3723,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new YCgCo(this.Y, this.Cg, this.Co);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public YCgCo Clone()
         {
             return new YCgCo(this.Y, this.Cg, this.Co);
@@ -3762,10 +3742,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Y", this.Y);
@@ -3776,12 +3756,12 @@ namespace UMapx.Colorspace
 
         #region YCgCo convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YCgCo.
+        /// Converts a color model RGB in model YCgCo.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>YCgCo структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>YCgCo structure</returns>
         public static YCgCo FromRGB(int red, int green, int blue)
         {
             double r = red / 255.0;
@@ -3795,10 +3775,10 @@ namespace UMapx.Colorspace
             return new YCgCo(Y, Cg, Co);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YCgCo.
+        /// Converts a color model RGB in model YCgCo.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>YCgCo структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>YCgCo structure</returns>
         public static YCgCo FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -3807,9 +3787,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель YCgCo в модель RGB.
+        /// Converts a color model YCgCo in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -3824,7 +3804,7 @@ namespace UMapx.Colorspace
         #endregion
     }
     /// <summary>
-    /// Определяет цветовую модель YPbPr.
+    /// Defines a color model YPbPr.
     /// </summary>
     public struct YPbPr : IColorSpace, ICloneable, ISerializable
     {
@@ -3836,11 +3816,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры YPbPr.
+        /// Creates an instance of the structure YPbPr.
         /// </summary>
-        /// <param name="y">Y яркостная составляющая [0, 1]</param>
-        /// <param name="pb">Pb цветоразностная составляющая [-0.5, 0.5]</param>
-        /// <param name="pr">Pr цветоразностная составляющая [-0.5, 0.5]</param>
+        /// <param name="y">Y [0, 1]</param>
+        /// <param name="pb">Pb [-0.5, 0.5]</param>
+        /// <param name="pr">Pr [-0.5, 0.5]</param>
         public YPbPr(double y, double pb, double pr)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
@@ -3848,7 +3828,7 @@ namespace UMapx.Colorspace
             this.pr = (pr > 0.5) ? 0.5 : ((pr < -0.5) ? -0.5 : pr);
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [0, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public double Y
         {
@@ -3862,7 +3842,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-0.5, 0.5].
+        /// Defines a component of the color model [-0.5, 0.5].
         /// </summary>
         public double Pb
         {
@@ -3876,7 +3856,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели [-0.5, 0.5].
+        /// Defines a component of the color model [-0.5, 0.5].
         /// </summary>
         public double Pr
         {
@@ -3893,11 +3873,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">YPbPr структура</param>
-        /// <param name="item2">YPbPr структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YPbPr structure</param>
+        /// <param name="item2">YPbPr structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(YPbPr item1, YPbPr item2)
         {
             return (
@@ -3907,11 +3887,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">YPbPr структура</param>
-        /// <param name="item2">YPbPr структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">YPbPr structure</param>
+        /// <param name="item2">YPbPr structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(YPbPr item1, YPbPr item2)
         {
             return !(item1 == item2);
@@ -3920,10 +3900,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -3931,17 +3911,17 @@ namespace UMapx.Colorspace
             return (this == (YPbPr)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return Y.GetHashCode() ^ Pb.GetHashCode() ^ Pr.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return Y.ToString() + "\n" + Pb.ToString() + "\n" + Pr.ToString();
@@ -3950,17 +3930,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new YPbPr(this.Y, this.Pb, this.Pr);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public YPbPr Clone()
         {
             return new YPbPr(this.Y, this.Pb, this.Pr);
@@ -3969,10 +3949,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Y", this.Y);
@@ -3983,12 +3963,12 @@ namespace UMapx.Colorspace
 
         #region YPbPr convert
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YPbPr.
+        /// Converts a color model RGB in model YPbPr.
         /// </summary>
-        /// <param name="red">Красный [0, 255]</param>
-        /// <param name="green">Зеленый [0, 255]</param>
-        /// <param name="blue">Синий [0, 255]</param>
-        /// <returns>YPbPr структура</returns>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>YPbPr structure</returns>
         public static YPbPr FromRGB(int red, int green, int blue)
         {
             double r = red / 255.0;
@@ -4002,10 +3982,10 @@ namespace UMapx.Colorspace
             return new YPbPr(Y, Cb, Cr);
         }
         /// <summary>
-        /// Преобразует цветовую модель RGB в модель YPbPr.
+        /// Converts a color model RGB in model YPbPr.
         /// </summary>
-        /// <param name="rgb">RGB структура</param>
-        /// <returns>YPbPr структура</returns>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>YPbPr structure</returns>
         public static YPbPr FromRGB(RGB rgb)
         {
             return YPbPr.FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -4014,9 +3994,9 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Преобразует цветовую модель YPbPr в модель RGB.
+        /// Converts a color model YPbPr in model RGB.
         /// </summary>
-        /// <returns>RGB структура</returns>
+        /// <returns>RGB structure</returns>
         public RGB ToRGB
         {
             get
@@ -4034,8 +4014,8 @@ namespace UMapx.Colorspace
 
     #region Unknown colorspace
     /// <summary>
-    /// Определяет неизвестную цветовую модель.
-    /// Данная цветовая модель может играть роль любого цветового пространства.
+    /// Defines an unknown color model.
+    /// This color model can play the role of any color space.
     /// </summary>
     public struct Unknown : IColorSpace, ICloneable, ISerializable
     {
@@ -4047,11 +4027,11 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Создает экземпляр структуры.
+        /// Creates an instance of the structure.
         /// </summary>
-        /// <param name="x">X составляющая</param>
-        /// <param name="y">Y составляющая</param>
-        /// <param name="z">Z составляющая</param>
+        /// <param name="x">Component X</param>
+        /// <param name="y">Component Y</param>
+        /// <param name="z">Component Z</param>
         public Unknown(double x, double y, double z)
         {
             this.x = x;
@@ -4059,7 +4039,7 @@ namespace UMapx.Colorspace
             this.z = z;
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели.
+        /// Defines the component of the color model.
         /// </summary>
         public double X
         {
@@ -4073,7 +4053,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели.
+        /// Defines the component of the color model.
         /// </summary>
         public double Y
         {
@@ -4087,7 +4067,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Определяет составляющую цветовой модели.
+        /// Defines the component of the color model.
         /// </summary>
         public double Z
         {
@@ -4104,11 +4084,11 @@ namespace UMapx.Colorspace
 
         #region Boolean
         /// <summary>
-        /// Проверяет равенство двух объектов класса.
+        /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">Unknown структура</param>
-        /// <param name="item2">Unknown структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">Unknown structure</param>
+        /// <param name="item2">Unknown structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator ==(Unknown item1, Unknown item2)
         {
             return (
@@ -4118,11 +4098,11 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Проверяет неравенство двух объектов класса.
+        /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">Unknown структура</param>
-        /// <param name="item2">Unknown структура</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="item1">Unknown structure</param>
+        /// <param name="item2">Unknown structure</param>
+        /// <returns>Boolean</returns>
         public static bool operator !=(Unknown item1, Unknown item2)
         {
             return !(item1 == item2);
@@ -4131,10 +4111,10 @@ namespace UMapx.Colorspace
 
         #region Methods
         /// <summary>
-        /// Определяет, равен ли заданный объект System.Object текущему объекту System.Object.
+        /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Элемент</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -4142,17 +4122,17 @@ namespace UMapx.Colorspace
             return (this == (Unknown)obj);
         }
         /// <summary>
-        /// Играет роль хэш-функции определенного типа.
+        /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Целое число со знаком</returns>
+        /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
             return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
         }
         /// <summary>
-        /// Возвращает объект System.String, который представляет текущий объект.
+        /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
             return X.ToString() + "\n" + Y.ToString() + "\n" + Z.ToString();
@@ -4161,304 +4141,304 @@ namespace UMapx.Colorspace
 
         #region Conversion operators
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(AHSL value)
         {
             return new Unknown(value.Hue, value.Saturation, value.Lightness);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator AHSL(Unknown value)
         {
             return new AHSL(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(LAB value)
         {
             return new Unknown(value.L, value.A, value.B);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator LAB(Unknown value)
         {
             return new LAB(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(XYZ value)
         {
             return new Unknown(value.X, value.Y, value.Z);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator XYZ(Unknown value)
         {
             return new XYZ(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(CMYK value)
         {
             return new Unknown(value.Cyan, value.Magenta, value.Yellow);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator CMYK(Unknown value)
         {
             return new CMYK(value.X, value.Y, value.Z, 0);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(HSB value)
         {
             return new Unknown(value.Hue, value.Saturation, value.Brightness);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator HSB(Unknown value)
         {
             return new HSB(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(HSL value)
         {
             return new Unknown(value.Hue, value.Saturation, value.Lightness);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator HSL(Unknown value)
         {
             return new HSL(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(RGB value)
         {
             return new Unknown(value.Red, value.Green, value.Blue);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator RGB(Unknown value)
         {
             return new RGB(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(RYB value)
         {
             return new Unknown(value.Red, value.Yellow, value.Blue);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator RYB(Unknown value)
         {
             return new RYB(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(sRGB value)
         {
             return new Unknown(value.Red, value.Green, value.Blue);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator sRGB(Unknown value)
         {
             return new sRGB(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(YCbCr value)
         {
             return new Unknown(value.Y, value.Cb, value.Cr);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator YCbCr(Unknown value)
         {
             return new YCbCr(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(YCgCo value)
         {
             return new Unknown(value.Y, value.Cg, value.Co);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator YCgCo(Unknown value)
         {
             return new YCgCo(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(YDbDr value)
         {
             return new Unknown(value.Y, value.Db, value.Dr);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator YDbDr(Unknown value)
         {
             return new YDbDr(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(YIQ value)
         {
             return new Unknown(value.Y, value.I, value.Q);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator YIQ(Unknown value)
         {
             return new YIQ(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(YPbPr value)
         {
             return new Unknown(value.Y, value.Pb, value.Pr);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator YPbPr(Unknown value)
         {
             return new YPbPr(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(YUV value)
         {
             return new Unknown(value.Y, value.U, value.V);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator YUV(Unknown value)
         {
             return new YUV(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        /// Определяет явное преобразование Space в Unknown.
+        /// Defines an explicit conversion Space в Unknown.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Unknown(Color value)
         {
             return new Unknown(value.R, value.G, value.B);
         }
         /// <summary>
-        /// Определяет явное преобразование Unknown в Space.
+        /// Defines an explicit conversion Unknown в Space.
         /// </summary>
-        /// <param name="value">Структура</param>
-        /// <returns>Структура</returns>
+        /// <param name="value">Structure</param>
+        /// <returns>Structure</returns>
         public static implicit operator Color(Unknown value)
         {
             return Color.FromArgb((int)value.X, (int)value.Y, (int)value.Z);
@@ -4467,17 +4447,17 @@ namespace UMapx.Colorspace
 
         #region Clone members
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
             return new Unknown(this.X, this.Y, this.Z);
         }
         /// <summary>
-        /// Создает копию цветовой модели.
+        /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Структура</returns>
+        /// <returns>Structure</returns>
         public Unknown Clone()
         {
             return new Unknown(this.X, this.Y, this.Z);
@@ -4486,10 +4466,10 @@ namespace UMapx.Colorspace
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data required for serializing and deserializing an object</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("X", this.X);
@@ -4500,7 +4480,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Возвращает цветовую модель RGB.
+        /// Returns the color model RGB.
         /// </summary>
         public RGB ToRGB
         {
@@ -4515,13 +4495,13 @@ namespace UMapx.Colorspace
 
     #region Interfaces
     /// <summary>
-    /// Определяет общий интерфейс цветовых пространств.
+    /// Defines the color space interface.
     /// </summary>
     public interface IColorSpace
     {
         #region Interface
         /// <summary>
-        /// Возвращает цветовую модель RGB.
+        /// Returns the color model RGB.
         /// </summary>
         RGB ToRGB { get; }
         #endregion

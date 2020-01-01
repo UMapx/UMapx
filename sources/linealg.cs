@@ -21,7 +21,7 @@ namespace UMapx.Core
 
     #region Matrice
     /// <summary>
-    /// Используется для реализации стандартных алгебраических операций над матрицами и векторами.
+    /// Uses to implement standard algebraic operations on matrices and vectors.
     /// </summary>
     public static class Matrice
     {
@@ -29,11 +29,11 @@ namespace UMapx.Core
 
         #region Matrix booleans
         /// <summary>
-        /// Проверяет равенство двух матриц.
+        /// Checks the equality of two matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsEquals(this double[,] m, double[,] n)
         {
             int r = m.GetLength(0);
@@ -54,11 +54,11 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет равенство двух матриц.
+        /// Checks the equality of two matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsEquals(this Complex[,] m, Complex[,] n)
         {
             int r = m.GetLength(0);
@@ -79,10 +79,10 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет является ли матрица вектором.
+        /// Checks if the matrix is a vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsVector(this double[,] m)
         {
             if (m.GetLength(0) == 1 || m.GetLength(1) == 1)
@@ -92,10 +92,10 @@ namespace UMapx.Core
             return false;
         }
         /// <summary>
-        /// Проверяет является ли матрица квадратной.
+        /// Checks if the matrix is square.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsSquare(this double[,] m)
         {
             if (m.GetLength(0) == m.GetLength(1))
@@ -105,10 +105,10 @@ namespace UMapx.Core
             return false;
         }
         /// <summary>
-        /// Проверяет является ли матрица положительной.
+        /// Checks if the matrix is positive.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsPositive(this double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -125,10 +125,10 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет является ли матрица симметричной.
+        /// Checks if the matrix is symmetric.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsSymmetric(this double[,] m)
         {
             if (Matrice.IsSquare(m))
@@ -142,10 +142,10 @@ namespace UMapx.Core
             return false;
         }
         /// <summary>
-        /// Проверяет является ли матрица кососимметричной.
+        /// Checks if the matrix is skew-symmetric.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsSkewSymmetric(this double[,] m)
         {
             if (Matrice.IsSquare(m))
@@ -159,10 +159,10 @@ namespace UMapx.Core
             return false;
         }
         /// <summary>
-        /// Проверяет является ли матрица диагональной.
+        /// Checks if the matrix is diagonal.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsDiagonal(this double[,] m)
         {
             int i, j;
@@ -185,10 +185,10 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет является ли матрица вектором.
+        /// Checks if the matrix is a vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsVector(this Complex[,] m)
         {
             if (m.GetLength(0) == 1 || m.GetLength(1) == 1)
@@ -198,10 +198,10 @@ namespace UMapx.Core
             return false;
         }
         /// <summary>
-        /// Проверяет является ли матрица квадратной.
+        /// Checks if the matrix is square.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsSquare(this Complex[,] m)
         {
             if (m.GetLength(0) == m.GetLength(1))
@@ -211,10 +211,10 @@ namespace UMapx.Core
             return false;
         }
         /// <summary>
-        /// Проверяет является ли матрица симметричной (эрмитовой).
+        /// Checks if the matrix is symmetric (Hermitian).
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsSymmetric(this Complex[,] m)
         {
             if (Matrice.IsSquare(m))
@@ -228,10 +228,10 @@ namespace UMapx.Core
             return false;
         }
         /// <summary>
-        /// Проверяет является ли матрица кососимметричной (антиэрмитовой).
+        /// Checks if the matrix is skew-symmetric (anti-Hermitian).
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsSkewSymmetric(this Complex[,] m)
         {
             if (Matrice.IsSquare(m))
@@ -245,10 +245,10 @@ namespace UMapx.Core
             return false;
         }
         /// <summary>
-        /// Проверяет является ли матрица диагональной.
+        /// Checks if the matrix is diagonal.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool IsDiagonal(this Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -273,17 +273,16 @@ namespace UMapx.Core
 
         #region Matrix tranform
         /// <summary>
-        /// Реализует операцию инвертирования матрицы.
+        /// Implements the matrix inversion operation.
         /// </summary>
-        /// <param name="m">Квадратная матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Square matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Invert(this double[,] m)
         {
-            // Построение матрицы дополнения:
             int n = m.GetLength(0);
 
             if (n != m.GetLength(1))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             double[][] z = m.ToJagged();
             int n2 = n * 2;
@@ -306,8 +305,7 @@ namespace UMapx.Core
                 a[i][i + n] = 1;
             }
 
-            // Вычисление обратной матрицы через матрицу дополнения:
-            const double epsilon = 1e-4; // вычислительная погрешность.
+            const double epsilon = 1e-4;
             int k, c, l, t;
             double temp, factor, div1, div2;
 
@@ -381,14 +379,14 @@ namespace UMapx.Core
             return inv.FromJagged();
         }
         /// <summary>
-        /// Реализует операцию траспонирования матрицы.
+        /// Implements the transpose of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Transponate(this double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r1, r0]; // Транспонированная матрица
+            double[,] H = new double[r1, r0];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -402,17 +400,16 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует операцию инвертирования матрицы.
+        /// Implements the matrix inversion operation.
         /// </summary>
-        /// <param name="m">Квадратная матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Square matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Invert(this Complex[,] m)
         {
-            // Построение матрицы дополнения:
             int n = m.GetLength(0);
 
             if (n != m.GetLength(1))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             Complex[][] z = m.ToJagged();
             int n2 = n * 2;
@@ -435,8 +432,7 @@ namespace UMapx.Core
                 a[i][i + n] = 1;
             }
 
-            // Вычисление обратной матрицы через матрицу дополнения:
-            const double epsilon = 1e-4; // вычислительная погрешность.
+            const double epsilon = 1e-4;
             int k, c, l, t;
             Complex temp, factor, div1, div2;
 
@@ -510,14 +506,14 @@ namespace UMapx.Core
             return inv.FromJagged();
         }
         /// <summary>
-        /// Реализует операцию траспонирования матрицы.
+        /// Implements the transpose of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Transponate(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r1, r0]; // Транспонированная матрица
+            Complex[,] H = new Complex[r1, r0];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -531,14 +527,14 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает комплексно-сопряженную матрицу.
+        /// Returns the complex conjugate matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Conjugate(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r0, r1]; // Транспонированная матрица
+            Complex[,] H = new Complex[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -552,14 +548,14 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует операцию эрмитово-сопряжения матрицы.
+        /// Implements the Hermitian-conjugation operation of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Hermitian(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r1, r0]; // Транспонированная матрица
+            Complex[,] H = new Complex[r1, r0];
             int i, j, x, y;
 
             for (i = 0, x = 0; (i < r0) && (x < r0); i++, x++)
@@ -576,14 +572,14 @@ namespace UMapx.Core
 
         #region Matrix properties
         /// <summary>
-        /// Возвращает значение следа квадратной матрицы.
+        /// Returns the trace value of a square matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Число двойночй точности с плавающей запятой</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Trace(this double[,] m)
         {
             if (!Matrice.IsSquare(m))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             int d = m.GetLength(0);
             int i;
@@ -596,16 +592,16 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает значение определителя матрицы.
+        /// Returns the value of the matrix determinant.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Число двойночй точности с плавающей запятой</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Det(this double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
 
             if (mr != ml)
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             unsafe
             {
@@ -617,11 +613,11 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает P-норму матрицы.
+        /// Returns the P-norm of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="p">Параметр p</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="p">Parameter p</param>
+        /// <returns>Matrix</returns>
         public static double Norm(this double[,] m, double p)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -639,21 +635,21 @@ namespace UMapx.Core
             return Maths.Sqrt(norm, p);
         }
         /// <summary>
-        /// Возвращает норму матрицы.
+        /// Returns the norm of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double Norm(this double[,] m)
         {
             return Matrice.Norm(m, 2);
         }
         /// <summary>
-        /// Выделяет целую часть матрицы.
+        /// Selects the integer part of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="digits">Количество десятичных разрядов в возвращаемом значении</param>
-        /// <param name="mode">Значение, задающее правило округления</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="digits">Digits</param>
+        /// <param name="mode">Midpoint rounding</param>
+        /// <returns>Matrix</returns>
         public static double[,] Round(this double[,] m, int digits, MidpointRounding mode)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -671,14 +667,14 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение квадратной матрицы перестановки.
+        /// Implements the construction of a square permutation matrix.
         /// </summary>
-        /// <param name="m">Квадратная матрица</param>
-        /// <returns>Квадратная матрица</returns>
+        /// <param name="m">Square matrix</param>
+        /// <returns>Square matrix</returns>
         public static double[,] Permutation(this double[,] m)
         {
             if (!Matrice.IsSquare(m))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             int i, j, r, n = m.GetLength(0);
             double[] temp; double diagonal;
@@ -706,14 +702,14 @@ namespace UMapx.Core
             return Jagged.FromJagged(perm);
         }
         /// <summary>
-        /// Возвращает значение следа квадратной матрицы.
+        /// Returns the trace value of a square matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Complex number</returns>
         public static Complex Trace(this Complex[,] m)
         {
             if (!Matrice.IsSquare(m))
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             int d = m.GetLength(0);
             int i;
@@ -726,16 +722,16 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает значение определителя матрицы.
+        /// Returns the value of the matrix determinant.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Число двойночй точности с плавающей запятой</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Det(this Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
 
             if (mr != ml)
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
 
             unsafe
             {
@@ -747,11 +743,11 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает P-норму двумерной матрицы.
+        /// Returns the P-norm of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="p">Параметр p</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="p">Parameter p</param>
+        /// <returns>Matrix</returns>
         public static double Norm(this Complex[,] m, double p)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -769,21 +765,21 @@ namespace UMapx.Core
             return Maths.Sqrt(norm, p);
         }
         /// <summary>
-        /// Возвращает норму двумерной матрицы.
+        /// Returns the norm of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double Norm(this Complex[,] m)
         {
             return Matrice.Norm(m, 2);
         }
         /// <summary>
-        /// Выделяет целую часть матрицы.
+        /// Selects the integer part of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="digits">Количество десятичных разрядов в возвращаемом значении</param>
-        /// <param name="mode">Значение, задающее правило округления</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="digits">Digits</param>
+        /// <param name="mode">Midpoint rounding</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Round(this Complex[,] m, int digits, MidpointRounding mode)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -806,11 +802,11 @@ namespace UMapx.Core
 
         #region Matrix kronecker product
         /// <summary>
-        /// Возвращает матричное произведение Кронекера.
+        /// Returns the Kronecker matrix product.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Kronecker(this double[,] m, double[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -836,11 +832,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует матричное произведение Кронекера.
+        /// Returns the Kronecker matrix product.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Kronecker(this Complex[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -866,11 +862,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует матричное произведение Кронекера.
+        /// Returns the Kronecker matrix product.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Kronecker(this Complex[,] m, double[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -896,11 +892,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует матричное произведение Кронекера.
+        /// Returns the Kronecker matrix product.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Kronecker(this double[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -929,11 +925,11 @@ namespace UMapx.Core
 
         #region Matrix add/sub
         /// <summary>
-        /// Возвращает сумму двух матриц.
+        /// Returns the sum of two matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Add(this double[,] m, double[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -950,11 +946,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает сумму двух матриц.
+        /// Returns the sum of two matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Add(this Complex[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -971,11 +967,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает сумму двух матриц.
+        /// Returns the sum of two matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Add(this Complex[,] m, double[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -993,11 +989,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает сумму двух матриц.
+        /// Returns the sum of two matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Add(this double[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -1015,11 +1011,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает сумму матрицы и числа.
+        /// Returns the sum of a matrix and a number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Add(this double[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1037,11 +1033,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает сумму матрицы и числа.
+        /// Returns the sum of a matrix and a number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Add(this Complex[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1059,11 +1055,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает сумму матрицы и числа.
+        /// Returns the sum of a matrix and a number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Add(this Complex[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1081,11 +1077,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает сумму матрицы и числа.
+        /// Returns the sum of a matrix and a number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Add(this double[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1104,11 +1100,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает сумму числа и матрицы.
+        /// Returns the sum of a number and a matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Add(double a, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1126,11 +1122,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает сумму числа и матрицы.
+        /// Returns the sum of a number and a matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Add(Complex a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1148,11 +1144,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает сумму числа и матрицы.
+        /// Returns the sum of a number and a matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Add(Complex a, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1170,11 +1166,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает сумму числа и матрицы.
+        /// Returns the sum of a number and a matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Add(double a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1193,11 +1189,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает разность двух матриц.
+        /// Subtracts one matrix from another.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Sub(this double[,] m, double[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -1214,11 +1210,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает разность двух матриц.
+        /// Subtracts one matrix from another.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Sub(this Complex[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -1235,11 +1231,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает разность двух матриц.
+        /// Subtracts one matrix from another.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Sub(this Complex[,] m, double[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -1256,11 +1252,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает разность двух матриц.
+        /// Subtracts one matrix from another.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Sub(this double[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -1278,11 +1274,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает разность матрицы и числа.
+        /// Subtracts a number from the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Sub(this double[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1300,11 +1296,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает разность матрицы и числа.
+        /// Subtracts a number from the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Sub(this Complex[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1322,11 +1318,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает разность матрицы и числа.
+        /// Subtracts a number from the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Sub(this Complex[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1344,11 +1340,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает разность матрицы и числа.
+        /// Subtracts a number from the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Sub(this double[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1367,11 +1363,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает разность числа и матрицы.
+        /// Subtracts a matrix from a number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Sub(double a, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1389,11 +1385,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает разность числа и матрицы.
+        /// Subtracts a matrix from a number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Sub(Complex a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1411,11 +1407,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает разность числа и матрицы.
+        /// Subtracts a matrix from a number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Sub(Complex a, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1433,11 +1429,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает разность числа и матрицы.
+        /// Subtracts a matrix from a number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Sub(double a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1458,11 +1454,11 @@ namespace UMapx.Core
 
         #region Matrix mul
         /// <summary>
-        /// Реализует умножение матриц.
+        /// Implements matrix multiplication.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Mul(this double[,] m, double[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
@@ -1479,11 +1475,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует умножение матриц.
+        /// Implements matrix multiplication.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Mul(this Complex[,] m, Complex[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
@@ -1500,11 +1496,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует умножение матриц.
+        /// Implements matrix multiplication.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Mul(this Complex[,] m, double[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
@@ -1521,11 +1517,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует умножение матриц.
+        /// Implements matrix multiplication.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Mul(this double[,] m, Complex[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
@@ -1543,11 +1539,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Умножает все элементы матрицы на число.
+        /// Multiplies all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Mul(this double[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1565,11 +1561,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Умножает все элементы матрицы на число.
+        /// Multiplies all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Mul(this Complex[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1587,11 +1583,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Умножает все элементы матрицы на число.
+        /// Multiplies all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Mul(this Complex[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1609,11 +1605,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Умножает все элементы матрицы на число.
+        /// Multiplies all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Mul(this double[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1632,11 +1628,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Умножает все элементы матрицы на число.
+        /// Multiplies all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Mul(double a, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1654,11 +1650,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Умножает все элементы матрицы на число.
+        /// Multiplies all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Mul(Complex a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1676,11 +1672,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Умножает все элементы матрицы на число.
+        /// Multiplies all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Mul(Complex a, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1698,11 +1694,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Умножает все элементы матрицы на число.
+        /// Multiplies all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Mul(double a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1723,11 +1719,11 @@ namespace UMapx.Core
 
         #region Matrix div
         /// <summary>
-        /// Делит матрицу на матрицу.
+        /// Divides a matrix by a matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Div(this double[,] m, double[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
@@ -1744,11 +1740,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Делит матрицу на матрицу.
+        /// Divides a matrix by a matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Div(this Complex[,] m, Complex[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
@@ -1765,11 +1761,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Делит матрицу на матрицу.
+        /// Divides a matrix by a matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Div(this Complex[,] m, double[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
@@ -1786,11 +1782,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Делит матрицу на матрицу.
+        /// Divides a matrix by a matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Div(this double[,] m, Complex[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
@@ -1808,11 +1804,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Делит все элементы матрицы на число.
+        /// Divides all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Div(this double[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1830,11 +1826,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Делит все элементы матрицы на число.
+        /// Divides all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Div(this Complex[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1852,11 +1848,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Делит все элементы матрицы на число.
+        /// Divides all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Div(this Complex[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1874,11 +1870,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Делит все элементы матрицы на число.
+        /// Divides all matrix elements by number.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Div(this double[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1897,11 +1893,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Делит число на элементы матрицы.
+        /// Divides number into matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Div(double a, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1919,11 +1915,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Делит число на элементы матрицы.
+        /// Divides number into matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Div(Complex a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1941,11 +1937,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Делит число на элементы матрицы.
+        /// Divides number into matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Div(Complex a, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1963,11 +1959,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Делит число на элементы матрицы.
+        /// Divides number into matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Div(double a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -1988,11 +1984,11 @@ namespace UMapx.Core
 
         #region Matrix pow
         /// <summary>
-        /// Возводит все элементы матрицы в степень.
+        /// Raises all matrix elements to a power.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="pow">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="pow">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Pow(this Complex[,] m, double pow)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2010,11 +2006,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возводит все элементы матрицы в степень.
+        /// Raises all matrix elements to a power.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="pow">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="pow">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Pow(this double[,] m, Complex pow)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2032,11 +2028,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возводит все элементы матрицы в степень.
+        /// Raises all matrix elements to a power.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="pow">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="pow">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Pow(this double[,] m, double pow)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2055,11 +2051,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возводит число поэлементно в степень.
+        /// Raises the number to the power of the matrix.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Number</param>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Pow(double a, double[,] m)
         {
             int r0 = m.GetLength(0);
@@ -2078,11 +2074,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возводит число поэлементно в степень.
+        /// Raises the number to the power of the matrix.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Number</param>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Pow(Complex a, double[,] m)
         {
             int r0 = m.GetLength(0);
@@ -2101,11 +2097,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возводит число поэлементно в степень.
+        /// Raises the number to the power of the matrix.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Number</param>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Pow(double a, Complex[,] m)
         {
             int r0 = m.GetLength(0);
@@ -2127,11 +2123,11 @@ namespace UMapx.Core
 
         #region Matrix log and exp
         /// <summary>
-        /// Логарифмирует все элементы матрицы по основанию.
+        /// Logarithms all elements of the matrix at the base.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static double[,] Log(this double[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2149,10 +2145,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Экспонирует все элементы матрицы по основанию.
+        /// Takes an exponent from all matrix values.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Exp(this double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2170,11 +2166,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Логарифмирует все элементы матрицы по основанию.
+        /// Logarithms all elements of the matrix at the base.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="a">Число</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="a">Number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Log(this Complex[,] m, double a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2192,10 +2188,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Экспонирует все элементы матрицы по основанию.
+        /// Takes an exponent from all matrix values.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Exp(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2216,10 +2212,10 @@ namespace UMapx.Core
 
         #region Matrix conversions
         /// <summary>
-        /// Инвертирует все элементы матрицы.
+        /// Negates all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Negate(this double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2237,10 +2233,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Инвертирует все элементы матрицы.
+        /// Negates all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Negate(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2258,10 +2254,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает комплексную матрицу.
+        /// Returns a complex matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] ToComplex(this double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2279,10 +2275,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 255].
+        /// Returns a matrix whose values belong to the interval [0, 255].
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] ToByte(this double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2299,10 +2295,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 1].
+        /// Returns a matrix whose values belong to the interval [0, 1].
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] ToDouble(this double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2322,10 +2318,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет модуль для всех элементов матрицы.
+        /// Takes a module for all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Abs(this double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2343,10 +2339,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет модуль для всех элементов матрицы.
+        /// Takes a module for all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Abs(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2364,10 +2360,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет угол для всех элементов матрицы.
+        /// Takes an angle for all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Angle(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2385,10 +2381,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет действительную часть для всех элементов матрицы.
+        /// Takes the real part for all elements of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Real(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2406,10 +2402,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет мнимую часть для всех элементов матрицы.
+        /// Takes the imaginary part for all elements of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Imag(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -2430,9 +2426,9 @@ namespace UMapx.Core
 
         #region Matrix statistics
         /// <summary>
-        /// Сортирует матрицу.
+        /// Sorts the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
+        /// <param name="m">Matrix</param>
         public static void Sort(this double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -2457,10 +2453,10 @@ namespace UMapx.Core
             return;
         }
         /// <summary>
-        /// Возвращает вектор сумм матрицы.
+        /// Returns the vector of matrix sums.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Sum(this double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -2478,10 +2474,10 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает вектор сумм матрицы.
+        /// Returns the vector of matrix sums.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Sum(this Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -2499,10 +2495,10 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает вектор произведений матрицы.
+        /// Returns the matrix product vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Mul(this double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -2522,10 +2518,10 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает вектор произведений матрицы.
+        /// Returns the matrix product vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(this Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -2545,10 +2541,10 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает вектор частных матрицы.
+        /// Returns the matrix divide vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Div(this double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -2568,10 +2564,10 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает вектор частных матрицы.
+        /// Returns the matrix divide vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(this Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -2591,23 +2587,21 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
-        /// Возвращает максимальный вектор матрицы.
+        /// Returns the maximum matrix vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Max(this double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             double[] v = new double[mr];
             int i, j;
 
-            // Первичное заполнение вектора
-            // максимумов:
             for (i = 0; i < mr; i++)
             {
                 v[i] = double.MinValue;
             }
-            // Поиск максимального вектора:
+
             for (i = 0; i < mr; i++)
             {
                 for (j = 0; j < ml; j++)
@@ -2621,23 +2615,21 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Возвращает минимальный вектор матрицы.
+        /// Returns the minimum matrix vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Min(this double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             double[] v = new double[mr];
             int i, j;
 
-            // Первичное заполнение вектора
-            // минимумов:
             for (i = 0; i < mr; i++)
             {
                 v[i] = double.MaxValue;
             }
-            // Поиск минимального вектора:
+
             for (i = 0; i < mr; i++)
             {
                 for (j = 0; j < ml; j++)
@@ -2651,11 +2643,11 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Возвращает вектор матрицы, соответствующий указанному пороговому значению.
+        /// Returns the matrix vector corresponding to the specified threshold value.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="threshold">Пороговое значение</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="threshold">Threshold</param>
+        /// <returns>Array</returns>
         public static double[] Morph(this double[,] m, int threshold)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -2663,7 +2655,6 @@ namespace UMapx.Core
             double[] u = new double[mr];
             int i, j;
 
-            // Поиск минимального вектора:
             for (i = 0; i < mr; i++)
             {
                 for (j = 0; j < ml; j++)
@@ -2671,35 +2662,34 @@ namespace UMapx.Core
                     v[j] = m[j, i];
                 }
 
-                // Выделение по порогу:
                 Array.Sort(v);
                 u[i] = v[threshold];
             }
             return u;
         }
         /// <summary>
-        /// Возвращает вектор математического ожидания матрицы.
+        /// Returns the vector of means of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Mean(this double[,] m)
         {
             return Matrice.Div(Matrice.Sum(m), m.GetLength(0));
         }
         /// <summary>
-        /// Возвращает вектор математического ожидания матрицы.
+        /// Returns the vector of means of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Mean(this Complex[,] m)
         {
             return Matrice.Div(Matrice.Sum(m), m.GetLength(0));
         }
         /// <summary>
-        /// Возвращает вектор дисперсий матрицы.
+        /// Returns the vector of variances of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Var(this double[,] m)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
@@ -2717,10 +2707,10 @@ namespace UMapx.Core
             return Matrice.Div(v, ml - 1);
         }
         /// <summary>
-        /// Возвращает вектор дисперсий матрицы.
+        /// Returns the vector of variances of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Var(this Complex[,] m)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
@@ -2738,11 +2728,11 @@ namespace UMapx.Core
             return Matrice.Div(v, ml - 1);
         }
         /// <summary>
-        /// Возвращает вектор дисперсий матриц.
+        /// Returns the vector of variances of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Var(this double[,] m, double[,] n)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
@@ -2759,11 +2749,11 @@ namespace UMapx.Core
             return Matrice.Div(v, ml - 1);
         }
         /// <summary>
-        /// Возвращает вектор дисперсий матриц.
+        /// Returns the vector of variances of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Var(this Complex[,] m, Complex[,] n)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
@@ -2780,57 +2770,55 @@ namespace UMapx.Core
             return Matrice.Div(v, ml - 1);
         }
         /// <summary>
-        /// Возвращает вектор среднеквадратических отклонений матрицы.
+        /// Returns the standard deviation vector of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] StnDev(this double[,] m)
         {
             return Matrice.Pow(Matrice.Var(m), 0.5);
         }
         /// <summary>
-        /// Возвращает вектор среднеквадратических отклонений матрицы.
+        /// Returns the standard deviation vector of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] StnDev(this Complex[,] m)
         {
             return Matrice.Pow(Matrice.Var(m), 0.5);
         }
         /// <summary>
-        /// Возвращает вектор среднеквадратических отклонений матриц.
+        /// Returns the standard deviation vector of the matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] StnDev(this double[,] m, double[,] n)
         {
             return Matrice.Pow(Matrice.Var(m, n), 0.5);
         }
         /// <summary>
-        /// Возвращает вектор среднеквадратических отклонений матриц.
+        /// Returns the standard deviation vector of the matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] StnDev(this Complex[,] m, Complex[,] n)
         {
             return Matrice.Pow(Matrice.Var(m, n), 0.5);
         }
         /// <summary>
-        /// Возвращает матрицу ковариации.
+        /// Returns the covariance matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Cov(this double[,] m)
         {
-            // Получаем вектора мат. ожиданий μ:
             double[] v = Matrice.Mean(m);
             int width = m.GetLength(1), height = m.GetLength(0);
             double[,] H = (double[,])m.Clone();
             int i, j;
 
-            // Нахождение матрицы E = A - μ:
             for (i = 0; i < height; i++)
             {
                 for (j = 0; j < width; j++)
@@ -2838,24 +2826,21 @@ namespace UMapx.Core
                     H[i, j] -= v[j];
                 }
             }
-            // Вычисление: cov(A) = 1 / (n  - 1) * E' * E,
-            // где ' - знак эрмитова-сопряжения.
+
             return H.Transponate().Dot(H).Div(height - 1);
         }
         /// <summary>
-        /// Возвращает матрицу ковариации.
+        /// Returns the covariance matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Cov(this Complex[,] m)
         {
-            // Получаем вектора мат. ожиданий μ:
             Complex[] v = Matrice.Mean(m);
             int width = m.GetLength(1), height = m.GetLength(0);
             Complex[,] H = (Complex[,])m.Clone();
             int i, j;
 
-            // Нахождение матрицы E = A - μ:
             for (i = 0; i < height; i++)
             {
                 for (j = 0; j < width; j++)
@@ -2863,15 +2848,14 @@ namespace UMapx.Core
                     H[i, j] -= v[j];
                 }
             }
-            // Вычисление: cov(A) = 1 / (n  - 1) * E' * E,
-            // где ' - знак эрмитова-сопряжения.
+
             return H.Hermitian().Dot(H).Div(height - 1);
         }
         /// <summary>
-        /// Возвращает вектор энтропии матрицы.
+        /// Returns the entropy vector of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Entropy(this double[,] m)
         {
             int width = m.GetLength(1), height = m.GetLength(0);
@@ -2896,41 +2880,41 @@ namespace UMapx.Core
 
         #region Matrix dot
         /// <summary>
-        /// Реализует скалярное произведение матриц.
+        /// Implements a scalar product of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[,] Dot(this double[,] m, double[,] n)
         {
             return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
         }
         /// <summary>
-        /// Реализует скалярное произведение матриц.
+        /// Implements a scalar product of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Dot(this Complex[,] m, Complex[,] n)
         {
             return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
         }
         /// <summary>
-        /// Реализует скалярное произведение матриц.
+        /// Implements a scalar product of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Dot(this Complex[,] m, double[,] n)
         {
             return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
         }
         /// <summary>
-        /// Реализует скалярное произведение матриц.
+        /// Implements a scalar product of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Dot(this double[,] m, Complex[,] n)
         {
             return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
@@ -2939,45 +2923,45 @@ namespace UMapx.Core
 
         #region Matrix convolutions
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Matrix</returns>
         public static double[,] Conv(this double[,] m, double[,] n, bool normalize = true)
         {
             return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
         }
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Conv(this Complex[,] m, Complex[,] n, bool normalize = true)
         {
             return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
         }
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Conv(this Complex[,] m, double[,] n, bool normalize = true)
         {
             return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
         }
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Conv(this double[,] m, Complex[,] n, bool normalize = true)
         {
             return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
@@ -2986,13 +2970,13 @@ namespace UMapx.Core
 
         #region Matrix convolutions (separable)
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Matrix</returns>
         public static double[,] Conv(this double[,] m, double[] n, Direction direction, bool normalize = true)
         {
             // direction of processing
@@ -3015,13 +2999,13 @@ namespace UMapx.Core
                                              LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
         }
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Conv(this double[,] m, Complex[] n, Direction direction, bool normalize = true)
         {
             // direction of processing
@@ -3044,13 +3028,13 @@ namespace UMapx.Core
                                              LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
         }
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Conv(this Complex[,] m, double[] n, Direction direction, bool normalize = true)
         {
             // direction of processing
@@ -3073,13 +3057,13 @@ namespace UMapx.Core
                                              LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
         }
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Conv(this Complex[,] m, Complex[] n, Direction direction, bool normalize = true)
         {
             // direction of processing
@@ -3105,11 +3089,11 @@ namespace UMapx.Core
 
         #region Matrix morphology (separable)
         /// <summary>
-        /// Возвращает матрицу-результат морфологического сужения.
+        /// Returns the matrix result of morphological minimum.
         /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
+        /// <param name="m">Matrix</param>
+        /// <param name="r0">Height radius</param>
+        /// <param name="r1">Width radius</param>
         public static double[,] Min(this double[,] m, int r0, int r1)
         {
             // both processing
@@ -3118,11 +3102,11 @@ namespace UMapx.Core
                                              LinealgOptions.MinHorizontal(mm, r1), r0));
         }
         /// <summary>
-        /// Возвращает матрицу-результат морфологического расширения.
+        /// Returns the matrix result of morphological maximum.
         /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
+        /// <param name="m">Matrix</param>
+        /// <param name="r0">Height radius</param>
+        /// <param name="r1">Width radius</param>
         public static double[,] Max(this double[,] m, int r0, int r1)
         {
             // both processing
@@ -3131,12 +3115,12 @@ namespace UMapx.Core
                                              LinealgOptions.MaxHorizontal(mm, r1), r0));
         }
         /// <summary>
-        /// Возвращает матрицу-результат морфологии.
+        /// Returns the matrix result of morphology.
         /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
-        /// <param name="threshold">Пороговое значение</param>
+        /// <param name="m">Matrix</param>
+        /// <param name="r0">Height radius</param>
+        /// <param name="r1">Width radius</param>
+        /// <param name="threshold">Threshold</param>
         public static double[,] Morph(this double[,] m, int r0, int r1, int threshold)
         {
             // both processing
@@ -3148,11 +3132,11 @@ namespace UMapx.Core
 
         #region Matrix mean (separable)
         /// <summary>
-        /// Возвращает матрицу-результат локального усреднения.
+        /// Returns the result matrix of local averaging.
         /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
+        /// <param name="m">Matrix</param>
+        /// <param name="r0">Height radius</param>
+        /// <param name="r1">Width radius</param>
         public static double[,] Mean(this double[,] m, int r0, int r1)
         {
             // both processing
@@ -3161,11 +3145,11 @@ namespace UMapx.Core
                                              LinealgOptions.MeanHorizontal(mm, r1), r0));
         }
         /// <summary>
-        /// Возвращает матрицу-результат локального усреднения.
+        /// Returns the result matrix of local averaging.
         /// </summary>
-        /// <param name="m">Двумерный массив</param>
-        /// <param name="r0">Радиус обработки по высоте</param>
-        /// <param name="r1">Радиус обработки по ширине</param>
+        /// <param name="m">Matrix</param>
+        /// <param name="r0">Height radius</param>
+        /// <param name="r1">Width radius</param>
         public static Complex[,] Mean(this Complex[,] m, int r0, int r1)
         {
             // both processing
@@ -3179,11 +3163,11 @@ namespace UMapx.Core
 
         #region Vector booleans
         /// <summary>
-        /// Проверяет являются ли векторы одинаковыми.
+        /// Checks the equality of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Boolean</returns>
         public static bool IsEquals(this double[] a, double[] b)
         {
             int n = a.Length;
@@ -3199,11 +3183,11 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли векторы одинаковыми.
+        /// Checks the equality of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Boolean</returns>
         public static bool IsEquals(this Complex[] a, Complex[] b)
         {
             int n = a.Length;
@@ -3219,10 +3203,10 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли векторы коллинеарными.
+        /// Checks if vectors are collinear.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Boolean</returns>
         public static bool IsPositive(this double[] v)
         {
             int N = v.Length;
@@ -3237,11 +3221,11 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли векторы коллинеарными.
+        /// Checks if vectors are collinear.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Boolean</returns>
         public static bool IsCollinear(this double[] a, double[] b)
         {
             int N = a.Length, i, j;
@@ -3262,11 +3246,11 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли векторы коллинеарными.
+        /// Checks if vectors are collinear.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Boolean</returns>
         public static bool IsCollinear(this Complex[] a, Complex[] b)
         {
             int N = a.Length, i, j;
@@ -3287,11 +3271,11 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли векторы коллинеарными.
+        /// Checks if vectors are collinear.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Boolean</returns>
         public static bool IsCollinear(this Complex[] a, double[] b)
         {
             int N = a.Length, i, j;
@@ -3312,11 +3296,11 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Проверяет являются ли векторы коллинеарными.
+        /// Checks if vectors are collinear.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Boolean</returns>
         public static bool IsCollinear(this double[] a, Complex[] b)
         {
             int N = a.Length, i, j;
@@ -3340,11 +3324,11 @@ namespace UMapx.Core
 
         #region Vector properties
         /// <summary>
-        /// Возвращает P-норму вектора.
+        /// Returns the P-norm of the vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="p">Параметр p</param>
-        /// <returns>Норма</returns>
+        /// <param name="a">Array</param>
+        /// <param name="p">Parameter p</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Norm(this double[] a, double p)
         {
             int length = a.Length, i;
@@ -3357,20 +3341,20 @@ namespace UMapx.Core
             return Maths.Sqrt(norm, p);
         }
         /// <summary>
-        /// Возвращает норму вектора.
+        /// Returns the norm of the vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <returns>Норма</returns>
+        /// <param name="a">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Norm(this double[] a)
         {
             return Norm(a, 2);
         }
         /// <summary>
-        /// Возвращает P-норму вектора.
+        /// Returns the P-norm of the vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="p">Параметр p</param>
-        /// <returns>Норма</returns>
+        /// <param name="a">Array</param>
+        /// <param name="p">Parameter p</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Norm(this Complex[] a, double p)
         {
             int length = a.Length, i;
@@ -3383,21 +3367,21 @@ namespace UMapx.Core
             return Maths.Sqrt(norm, p);
         }
         /// <summary>
-        /// Возвращает норму вектора.
+        /// Returns the norm of the vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <returns>Норма</returns>
+        /// <param name="a">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Norm(this Complex[] a)
         {
             return Norm(a, 2);
         }
         /// <summary>
-        /// Выделяет целую часть матрицы.
+        /// Selects the integer part of the matrix.
         /// </summary>
-        /// <param name="m">Одномерный массив</param>
-        /// <param name="digits">Количество десятичных разрядов в возвращаемом значении</param>
-        /// <param name="mode">Значение, задающее правило округления</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Array</param>
+        /// <param name="digits">Digits</param>
+        /// <param name="mode">Midpoint rounding</param>
+        /// <returns>Array</returns>
         public static double[] Round(this double[] m, int digits, MidpointRounding mode)
         {
             int ml = m.GetLength(0);
@@ -3412,12 +3396,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Выделяет целую часть матрицы.
+        /// Selects the integer part of the matrix.
         /// </summary>
-        /// <param name="m">Одномерный массив</param>
-        /// <param name="digits">Количество десятичных разрядов в возвращаемом значении</param>
-        /// <param name="mode">Значение, задающее правило округления</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Array</param>
+        /// <param name="digits">Digits</param>
+        /// <param name="mode">Midpoint rounding</param>
+        /// <returns>Array</returns>
         public static Complex[] Round(this Complex[] m, int digits, MidpointRounding mode)
         {
             int ml = m.GetLength(0);
@@ -3437,92 +3421,92 @@ namespace UMapx.Core
 
         #region Vector angle, projection, cosine
         /// <summary>
-        /// Возвращает угол между двумя векторами.
+        /// Returns the angle between two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Angle(this double[] a, double[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
         /// <summary>
-        /// Возвращает угол между двумя векторами.
+        /// Returns the angle between two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Angle(this Complex[] a, double[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
         /// <summary>
-        /// Возвращает угол между двумя векторами.
+        /// Returns the angle between two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Angle(this double[] a, Complex[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
         /// <summary>
-        /// Возвращает угол между двумя векторами.
+        /// Returns the angle between two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Angle(this Complex[] a, Complex[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
 
         /// <summary>
-        /// Возвращает проекцию двух векторов.
+        /// Returns the projection of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Proj(this double[] a, double[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
         /// <summary>
-        /// Возвращает проекцию двух векторов.
+        /// Returns the projection of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Proj(this Complex[] a, double[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
         /// <summary>
-        /// Возвращает проекцию двух векторов.
+        /// Returns the projection of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Proj(this double[] a, Complex[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
         /// <summary>
-        /// Возвращает проекцию двух векторов.
+        /// Returns the projection of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Proj(this Complex[] a, Complex[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
 
         /// <summary>
-        /// Возвращает направляющие косинусы вектора.
+        /// Returns the direction cosines of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Cosines(this double[] v)
         {
             int length = v.Length, i;
@@ -3536,10 +3520,10 @@ namespace UMapx.Core
             return cos;
         }
         /// <summary>
-        /// Возвращает направляющие косинусы вектора.
+        /// Returns the direction cosines of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Cosines(this Complex[] v)
         {
             int length = v.Length, i;
@@ -3556,11 +3540,11 @@ namespace UMapx.Core
 
         #region Vector add/sub
         /// <summary>
-        /// Возвращает сумму двух векторов.
+        /// Returns the sum of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static double[] Add(this double[] a, double[] b)
         {
             int length = a.Length, i;
@@ -3573,11 +3557,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает сумму двух векторов.
+        /// Returns the sum of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Add(this Complex[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -3590,11 +3574,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает сумму двух векторов.
+        /// Returns the sum of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Add(this Complex[] a, double[] b)
         {
             int length = a.Length, i;
@@ -3607,11 +3591,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает сумму двух векторов.
+        /// Returns the sum of two vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Add(this double[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -3625,11 +3609,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает сумму вектора и числа.
+        /// Returns the sum of a vector and a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static double[] Add(this double[] a, double b)
         {
             int length = a.Length, i;
@@ -3642,11 +3626,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает сумму вектора и числа.
+        /// Returns the sum of a vector and a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Add(this Complex[] a, Complex b)
         {
             int length = a.Length, i;
@@ -3659,11 +3643,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает сумму вектора и числа.
+        /// Returns the sum of a vector and a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Add(this Complex[] a, double b)
         {
             int length = a.Length, i;
@@ -3676,11 +3660,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает сумму вектора и числа.
+        /// Returns the sum of a vector and a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Add(this double[] a, Complex b)
         {
             int length = a.Length, i;
@@ -3694,11 +3678,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает сумму вектора и числа.
+        /// Returns the sum of a vector and a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static double[] Add(double b, double[] a)
         {
             int length = a.Length, i;
@@ -3711,11 +3695,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает сумму вектора и числа.
+        /// Returns the sum of a vector and a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Add(Complex b, Complex[] a)
         {
             int length = a.Length, i;
@@ -3728,11 +3712,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает сумму вектора и числа.
+        /// Returns the sum of a vector and a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Add(double b, Complex[] a)
         {
             int length = a.Length, i;
@@ -3745,11 +3729,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает сумму вектора и числа.
+        /// Returns the sum of a vector and a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Add(Complex b, double[] a)
         {
             int length = a.Length, i;
@@ -3763,11 +3747,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает разность двух векторов.
+        /// Subtracts one vector from another.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Sub(this Complex[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -3780,11 +3764,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает разность двух векторов.
+        /// Subtracts one vector from another.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static double[] Sub(this double[] a, double[] b)
         {
             int length = a.Length, i;
@@ -3797,11 +3781,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает разность двух векторов.
+        /// Subtracts one vector from another.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Sub(this Complex[] a, double[] b)
         {
             int length = a.Length, i;
@@ -3814,11 +3798,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает разность двух векторов.
+        /// Subtracts one vector from another.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Sub(this double[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -3832,11 +3816,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает разность вектора и числа.
+        /// Subtracts a number from a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static double[] Sub(this double[] a, double b)
         {
             int length = a.Length, i;
@@ -3849,11 +3833,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает разность вектора и числа.
+        /// Subtracts a number from a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Sub(this Complex[] a, Complex b)
         {
             int length = a.Length, i;
@@ -3866,11 +3850,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает разность вектора и числа.
+        /// Subtracts a number from a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Sub(this Complex[] a, double b)
         {
             int length = a.Length, i;
@@ -3883,11 +3867,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает разность вектора и числа.
+        /// Subtracts a number from a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Sub(this double[] a, Complex b)
         {
             int length = a.Length, i;
@@ -3901,11 +3885,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает разность числа и вектора.
+        /// Subtracts a vector from a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static double[] Sub(double b, double[] a)
         {
             int length = a.Length, i;
@@ -3918,11 +3902,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает разность числа и вектора.
+        /// Subtracts a vector from a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Sub(Complex b, Complex[] a)
         {
             int length = a.Length, i;
@@ -3935,11 +3919,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает разность числа и вектора.
+        /// Subtracts a vector from a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Sub(Complex b, double[] a)
         {
             int length = a.Length, i;
@@ -3952,11 +3936,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Возвращает разность числа и вектора.
+        /// Subtracts a vector from a number.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Sub(double b, Complex[] a)
         {
             int length = a.Length, i;
@@ -3972,11 +3956,11 @@ namespace UMapx.Core
 
         #region Vector mul
         /// <summary>
-        /// Реализует поэлементное произведение векторов.
+        /// Implements element-wise product of vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static double[] Mul(this double[] a, double[] b)
         {
             int length = a.Length, i;
@@ -3989,11 +3973,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Реализует поэлементное произведение векторов.
+        /// Implements element-wise product of vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(this Complex[] a, double[] b)
         {
             int length = a.Length, i;
@@ -4006,11 +3990,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Реализует поэлементное произведение векторов.
+        /// Implements element-wise product of vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(this double[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -4023,11 +4007,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Реализует поэлементное произведение векторов.
+        /// Implements element-wise product of vectors.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(this Complex[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -4041,11 +4025,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Реализует умножение вектора на число.
+        /// Implements the multiplication of the vector by number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static double[] Mul(this double[] v, double a)
         {
             int length = v.Length, i;
@@ -4058,11 +4042,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует умножение вектора на число.
+        /// Implements the multiplication of the vector by number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(this double[] v, Complex a)
         {
             int length = v.Length, i;
@@ -4075,11 +4059,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует умножение вектора на число.
+        /// Implements the multiplication of the vector by number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(this Complex[] v, double a)
         {
             int length = v.Length, i;
@@ -4092,11 +4076,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует умножение вектора на число.
+        /// Implements the multiplication of the vector by number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(this Complex[] v, Complex a)
         {
             int length = v.Length, i;
@@ -4110,11 +4094,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Реализует умножение вектора на число.
+        /// Implements the multiplication of the vector by number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static double[] Mul(double a, double[] v)
         {
             int length = v.Length, i;
@@ -4127,11 +4111,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует умножение вектора на число.
+        /// Implements the multiplication of the vector by number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(Complex a, Complex[] v)
         {
             int length = v.Length, i;
@@ -4144,11 +4128,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует умножение вектора на число.
+        /// Implements the multiplication of the vector by number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(Complex a, double[] v)
         {
             int length = v.Length, i;
@@ -4161,11 +4145,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует умножение вектора на число.
+        /// Implements the multiplication of the vector by number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Mul(double a, Complex[] v)
         {
             int length = v.Length, i;
@@ -4181,11 +4165,11 @@ namespace UMapx.Core
 
         #region Vector div
         /// <summary>
-        /// Реализует поэлементное произведение векторов.
+        /// Divides a vector by a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static double[] Div(this double[] a, double[] b)
         {
             int length = a.Length, i;
@@ -4198,11 +4182,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Реализует поэлементное произведение векторов.
+        /// Divides a vector by a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(this Complex[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -4215,11 +4199,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Реализует поэлементное произведение векторов.
+        /// Divides a vector by a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(this Complex[] a, double[] b)
         {
             int length = a.Length, i;
@@ -4232,11 +4216,11 @@ namespace UMapx.Core
             return c;
         }
         /// <summary>
-        /// Реализует поэлементное произведение векторов.
+        /// Divides a vector by a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(this double[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -4250,11 +4234,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Реализует деление вектора на число.
+        /// Divides a vector by a number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static double[] Div(this double[] v, double a)
         {
             int length = v.Length, i;
@@ -4267,11 +4251,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует деление вектора на число.
+        /// Divides a vector by a number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(this double[] v, Complex a)
         {
             int length = v.Length, i;
@@ -4284,11 +4268,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует деление вектора на число.
+        /// Divides a vector by a number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(this Complex[] v, double a)
         {
             int length = v.Length, i;
@@ -4301,11 +4285,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует деление вектора на число.
+        /// Divides a vector by a number.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(this Complex[] v, Complex a)
         {
             int length = v.Length, i;
@@ -4319,11 +4303,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Реализует деление числа на вектор.
+        /// Divides a number by a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static double[] Div(double a, double[] v)
         {
             int length = v.Length, i;
@@ -4336,11 +4320,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует деление числа на вектор.
+        /// Divides a number by a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(Complex a, Complex[] v)
         {
             int length = v.Length, i;
@@ -4353,11 +4337,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует деление числа на вектор.
+        /// Divides a number by a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(double a, Complex[] v)
         {
             int length = v.Length, i;
@@ -4370,11 +4354,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует деление числа на вектор.
+        /// Divides a number by a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Div(Complex a, double[] v)
         {
             int length = v.Length, i;
@@ -4390,11 +4374,11 @@ namespace UMapx.Core
 
         #region Vector pow
         /// <summary>
-        /// Возводит элементы вектора в степень.
+        /// Raises the elements of a vector to a power.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="power">Степень</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="power">Power</param>
+        /// <returns>Array</returns>
         public static double[] Pow(this double[] v, double power)
         {
             int length = v.Length;
@@ -4407,11 +4391,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возводит элементы вектора в степень.
+        /// Raises the elements of a vector to a power.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="power">Степень</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="power">Power</param>
+        /// <returns>Array</returns>
         public static Complex[] Pow(this Complex[] v, double power)
         {
             int length = v.Length;
@@ -4424,11 +4408,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возводит элементы вектора в степень.
+        /// Raises the elements of a vector to a power.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="power">Степень</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="power">Power</param>
+        /// <returns>Array</returns>
         public static Complex[] Pow(this double[] v, Complex power)
         {
             int length = v.Length;
@@ -4442,11 +4426,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возводит число поэлементно в степень.
+        /// Raises the number to the power of the vector.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Number</param>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Pow(double a, double[] v)
         {
             int n = v.GetLength(0);
@@ -4461,11 +4445,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возводит число поэлементно в степень.
+        /// Raises the number to the power of the vector.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Number</param>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Pow(Complex a, double[] v)
         {
             int n = v.GetLength(0);
@@ -4480,11 +4464,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возводит число поэлементно в степень.
+        /// Raises the number to the power of the vector.
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Number</param>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Pow(double a, Complex[] v)
         {
             int n = v.GetLength(0);
@@ -4502,11 +4486,11 @@ namespace UMapx.Core
 
         #region Vector exp/log
         /// <summary>
-        /// Логарифмирует элементы вектора по основанию.
+        /// Logarithms the elements of the vector base.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static double[] Log(this double[] v, double a = Math.E)
         {
             int length = v.Length;
@@ -4519,11 +4503,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Логарифмирует элементы вектора по основанию.
+        /// Logarithms the elements of the vector base.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="a">Число</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="a">Number</param>
+        /// <returns>Array</returns>
         public static Complex[] Log(this Complex[] v, double a = Math.E)
         {
             int length = v.Length;
@@ -4536,10 +4520,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Экспонирует элементы вектора.
+        /// Takes an exponent from all vector values.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Exp(this double[] v)
         {
             int length = v.Length;
@@ -4552,10 +4536,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Экспонирует элементы вектора.
+        /// Takes an exponent from all vector values.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Exp(this Complex[] v)
         {
             int length = v.Length;
@@ -4571,10 +4555,10 @@ namespace UMapx.Core
 
         #region Vector conversions
         /// <summary>
-        /// Возвращает вектор, значения которого принадлежат интервалу [0, 1].
+        /// Returns a vector whose values belong to the interval [0, 1].
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] ToDouble(this double[] v)
         {
             int length = v.Length;
@@ -4590,10 +4574,10 @@ namespace UMapx.Core
             return u;
         }
         /// <summary>
-        /// Возвращает вектор, значения которого принадлежат интервалу [0, 255].
+        /// Returns a vector whose values belong to the interval [0, 255].
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] ToByte(this double[] v)
         {
             int length = v.Length;
@@ -4606,10 +4590,10 @@ namespace UMapx.Core
             return u;
         }
         /// <summary>
-        /// Возвращает модуль элементов вектора.
+        /// Returns the module of the elements of the vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Abs(this double[] v)
         {
             int length = v.Length;
@@ -4622,10 +4606,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Инвертирует все элементы вектора.
+        /// Negates all elements of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Negate(this double[] v)
         {
             int length = v.Length;
@@ -4638,10 +4622,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Инвертирует все элементы вектора.
+        /// Negates all elements of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Negate(this Complex[] v)
         {
             int length = v.Length;
@@ -4654,10 +4638,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает комплексный вектор.
+        /// Returns a complex vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] ToComplex(this double[] v)
         {
             int length = v.Length;
@@ -4670,10 +4654,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает модуль элементов комплексного вектора.
+        /// Returns the module of elements of a complex vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Abs(this Complex[] v)
         {
             int length = v.Length;
@@ -4686,10 +4670,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает угол элементов комплексного вектора.
+        /// Returns the angle of the elements of a complex vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Angle(this Complex[] v)
         {
             int length = v.Length;
@@ -4702,10 +4686,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает действительную часть элементов комплексного вектора.
+        /// Returns the real part of the elements of a complex vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Real(this Complex[] v)
         {
             int length = v.Length;
@@ -4718,10 +4702,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает мнимую часть элементов комплексного вектора.
+        /// Returns the imaginary part of the elements of a complex vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Imag(this Complex[] v)
         {
             int length = v.Length;
@@ -4734,10 +4718,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает комплексно-сопряженный вектор.
+        /// Returns a complex conjugate vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Conjugate(this Complex[] v)
         {
             int length = v.Length;
@@ -4753,10 +4737,10 @@ namespace UMapx.Core
 
         #region Vector statistics
         /// <summary>
-        /// Возвращает значение ковариации вектора.
+        /// Returns the covariance value of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Cov(this double[] v)
         {
             int xlength = v.Length;
@@ -4771,10 +4755,10 @@ namespace UMapx.Core
             return total / (xlength - 1);
         }
         /// <summary>
-        /// Возвращает значение ковариации вектора.
+        /// Returns the covariance value of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Complex number</returns>
         public static Complex Cov(this Complex[] v)
         {
             int xlength = v.Length;
@@ -4789,10 +4773,10 @@ namespace UMapx.Core
             return total / (xlength - 1);
         }
         /// <summary>
-        /// Возвращает общее значение вектора.
+        /// Returns the total value of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Sum(this double[] v)
         {
             double total = 0;
@@ -4806,10 +4790,10 @@ namespace UMapx.Core
             return total;
         }
         /// <summary>
-        /// Возвращает общее значение вектора.
+        /// Returns the total value of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Complex number</returns>
         public static Complex Sum(this Complex[] v)
         {
             Complex total = 0;
@@ -4823,10 +4807,10 @@ namespace UMapx.Core
             return total;
         }
         /// <summary>
-        /// Возвращает общее произведение вектора.
+        /// Returns the total product of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Mul(this double[] v)
         {
             double total = 1;
@@ -4840,10 +4824,10 @@ namespace UMapx.Core
             return total;
         }
         /// <summary>
-        /// Возвращает общее произведение вектора.
+        /// Returns the total product of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Mul(this Complex[] v)
         {
             Complex total = 1;
@@ -4857,10 +4841,10 @@ namespace UMapx.Core
             return total;
         }
         /// <summary>
-        /// Возвращает общее частное вектора.
+        /// Returns the common quotient of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Div(this double[] v)
         {
             double total = 1;
@@ -4874,10 +4858,10 @@ namespace UMapx.Core
             return total;
         }
         /// <summary>
-        /// Возвращает общее частное вектора.
+        /// Returns the common quotient of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Div(this Complex[] v)
         {
             Complex total = 1;
@@ -4891,10 +4875,10 @@ namespace UMapx.Core
             return total;
         }
         /// <summary>
-        /// Возвращает значение энтропии вектора.
+        /// Returns the entropy of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Entropy(this double[] v)
         {
             double H = 0;
@@ -4910,28 +4894,28 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает среднее значение вектора.
+        /// Returns the average value of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Mean(this double[] v)
         {
             return Matrice.Sum(v) / v.Length;
         }
         /// <summary>
-        /// Возвращает среднее значение вектора.
+        /// Returns the average value of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Complex number</returns>
         public static Complex Mean(this Complex[] v)
         {
             return Matrice.Sum(v) / v.Length;
         }
         /// <summary>
-        /// Возвращает значение дисперсии.
+        /// Returns the variance value.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Var(this double[] v)
         {
             int length = v.Length;
@@ -4946,10 +4930,10 @@ namespace UMapx.Core
             return sum / (length - 1);
         }
         /// <summary>
-        /// Возвращает значение дисперсии.
+        /// Returns the variance value.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Complex number</returns>
         public static Complex Var(this Complex[] v)
         {
             int length = v.Length;
@@ -4964,11 +4948,11 @@ namespace UMapx.Core
             return sum / (length - 1);
         }
         /// <summary>
-        /// Возвращает значение дисперсии.
+        /// Returns the variance value.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="y">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Array</param>
+        /// <param name="y">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Var(this double[] x, double[] y)
         {
             int length = x.Length;
@@ -4982,11 +4966,11 @@ namespace UMapx.Core
             return sum / (length - 1);
         }
         /// <summary>
-        /// Возвращает значение дисперсии.
+        /// Returns the variance value.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="y">Одномерный массив</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="x">Array</param>
+        /// <param name="y">Array</param>
+        /// <returns>Complex number</returns>
         public static Complex Var(this Complex[] x, Complex[] y)
         {
             int length = x.Length;
@@ -5000,48 +4984,48 @@ namespace UMapx.Core
             return sum / (length - 1);
         }
         /// <summary>
-        /// Возвращает значение среднеквадратического отклонения.
+        /// Returns the standard deviation.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double StnDev(this double[] v)
         {
             return Math.Sqrt(Matrice.Var(v));
         }
         /// <summary>
-        /// Возвращает значение среднеквадратического отклонения.
+        /// Returns the standard deviation.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Комлпексное число</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Complex number</returns>
         public static Complex StnDev(this Complex[] v)
         {
             return Maths.Sqrt(Matrice.Var(v));
         }
         /// <summary>
-        /// Возвращает значение среднеквадратического отклонения.
+        /// Returns the standard deviation.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="y">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Array</param>
+        /// <param name="y">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double StnDev(this double[] x, double[] y)
         {
             return Math.Sqrt(Matrice.Var(x, y));
         }
         /// <summary>
-        /// Возвращает значение среднеквадратического отклонения.
+        /// Returns the standard deviation.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="y">Одномерный массив</param>
-        /// <returns>Комлпексное число</returns>
+        /// <param name="x">Array</param>
+        /// <param name="y">Array</param>
+        /// <returns>Complex number</returns>
         public static Complex StnDev(this Complex[] x, Complex[] y)
         {
             return Maths.Sqrt(Matrice.Var(x, y));
         }
         /// <summary>
-        /// Возвращает значение моды вектора.
+        /// Returns the value of the vector mode.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число одиночной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Mode(this double[] v)
         {
             int count = 0;
@@ -5065,10 +5049,10 @@ namespace UMapx.Core
             return frequent;
         }
         /// <summary>
-        /// Возвращает значение моды вектора.
+        /// Returns the value of the vector mode.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Complex number</returns>
         public static Complex Mode(this Complex[] v)
         {
             int count = 0;
@@ -5092,10 +5076,10 @@ namespace UMapx.Core
             return frequent;
         }
         /// <summary>
-        /// Возвращает значения минимума и максимума вектора.
+        /// Returns the minimum and maximum values of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Пара целых чисел, представляющая отрезок</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Pair of numbers</returns>
         public static RangeDouble Extremum(this double[] v)
         {
             double max = double.MinValue, min = double.MaxValue;
@@ -5114,10 +5098,10 @@ namespace UMapx.Core
             return new RangeDouble(min, max);
         }
         /// <summary>
-        /// Получает значение минимального элемента сигнала.
+        /// Gets the value of the minimum element of the vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число одиночной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Min(this double[] v)
         {
             int index = 0, length = v.Length;
@@ -5137,10 +5121,10 @@ namespace UMapx.Core
             return minimum;
         }
         /// <summary>
-        /// Получает значение максимального элемента вектора.
+        /// Gets the value of the maximum element of the vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Число одиночной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Max(this double[] v)
         {
             int index = 0, length = v.Length;
@@ -5160,11 +5144,11 @@ namespace UMapx.Core
             return maximum;
         }
         /// <summary>
-        /// Получает значение элемента вектора, соответствующего пороговому значению.
+        /// Gets the value of the vector element corresponding to the threshold value.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="threshold">Пороговое значение</param>
-        /// <returns>Число одиночной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <param name="threshold">Threshold</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Morph(this double[] v, int threshold)
         {
             double[] u = (double[])v.Clone();
@@ -5172,9 +5156,9 @@ namespace UMapx.Core
             return u[threshold];
         }
         /// <summary>
-        /// Сортирует исходный вектор.
+        /// Sorts the vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
+        /// <param name="v">Array</param>
         public static void Sort(this double[] v)
         {
             int i, j, length = v.Length;
@@ -5194,11 +5178,11 @@ namespace UMapx.Core
             return;
         }
         /// <summary>
-        /// Сортирует исходный вектора.
+        /// Sorts the vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="r">Определяет диапазон сортировки. Начальная точка</param>
-        /// <param name="l">Определяет диапазон сортировки. Конечная точка</param>
+        /// <param name="v">Array</param>
+        /// <param name="r">Start</param>
+        /// <param name="l">End</param>
         public static void Sort(this double[] v, int r, int l)
         {
             double temp;
@@ -5230,12 +5214,12 @@ namespace UMapx.Core
 
         #region Vector as diagonal matrix
         /// <summary>
-        /// Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+        /// Implements the scalar product of a matrix by a vector of the form: A * diag(v).
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Array</param>
+        /// <param name="inverse">Use inverse to diagonal matrix or not</param>
+        /// <returns>Array</returns>
         public static double[,] Dot(this double[,] m, double[] v, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5273,12 +5257,12 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+        /// Implements the scalar product of a matrix by a vector of the form: A * diag(v).
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Array</param>
+        /// <param name="inverse">Use inverse to diagonal matrix or not</param>
+        /// <returns>Array</returns>
         public static Complex[,] Dot(this Complex[,] m, Complex[] v, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5316,12 +5300,12 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+        /// Implements the scalar product of a matrix by a vector of the form: A * diag(v).
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Array</param>
+        /// <param name="inverse">Use inverse to diagonal matrix or not</param>
+        /// <returns>Array</returns>
         public static Complex[,] Dot(this Complex[,] m, double[] v, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5359,12 +5343,12 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Реализует скалярное произведение матрицы на вектор вида: A * diag(v).
+        /// Implements the scalar product of a matrix by a vector of the form: A * diag(v).
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Array</param>
+        /// <param name="inverse">Use inverse to diagonal matrix or not</param>
+        /// <returns>Array</returns>
         public static Complex[,] Dot(this double[,] m, Complex[] v, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5403,12 +5387,12 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+        /// Implements the scalar product of a matrix by a vector of the form: diag(v) * A.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Array</param>
+        /// <param name="inverse">Use inverse to diagonal matrix or not</param>
+        /// <returns>Array</returns>
         public static double[,] Dot(this double[] v, double[,] m, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5446,12 +5430,12 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+        /// Implements the scalar product of a matrix by a vector of the form: diag(v) * A.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Array</param>
+        /// <param name="inverse">Use inverse to diagonal matrix or not</param>
+        /// <returns>Array</returns>
         public static Complex[,] Dot(this Complex[] v, Complex[,] m, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5489,12 +5473,12 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+        /// Implements the scalar product of a matrix by a vector of the form: diag(v) * A.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Array</param>
+        /// <param name="inverse">Use inverse to diagonal matrix or not</param>
+        /// <returns>Array</returns>
         public static Complex[,] Dot(this Complex[] v, double[,] m, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5532,12 +5516,12 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Реализует скалярное произведение матрицы на вектор вида: diag(v) * A.
+        /// Implements the scalar product of a matrix by a vector of the form: diag(v) * A.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="inverse">Использовать обратную к диагональной матрицу или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Array</param>
+        /// <param name="inverse">Use inverse to diagonal matrix or not</param>
+        /// <returns>Array</returns>
         public static Complex[,] Dot(this double[] v, Complex[,] m, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5580,11 +5564,11 @@ namespace UMapx.Core
 
         #region Vector dot
         /// <summary>
-        /// Реализует скалярное произведение векторов вида: a * b'.
+        /// Implements a scalar product of vectors of the form: a * b'.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Dot(this double[] a, double[] b)
         {
             int length = a.Length, i;
@@ -5597,11 +5581,11 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Реализует скалярное произведение векторов вида: a * b'.
+        /// Implements a scalar product of vectors of the form: a * b'.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Dot(this Complex[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -5614,11 +5598,11 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Реализует скалярное произведение векторов вида: a * b'.
+        /// Implements a scalar product of vectors of the form: a * b'.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Dot(this Complex[] a, double[] b)
         {
             int length = a.Length, i;
@@ -5631,11 +5615,11 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Реализует скалярное произведение векторов вида: a * b'.
+        /// Implements a scalar product of vectors of the form: a * b'.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Dot(this double[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -5648,11 +5632,11 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Реализует скалярное умножение вектора на матрицу вида: 
+        /// Implements scalar multiplication of a vector by a matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Dot(this double[] v, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5671,11 +5655,11 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Реализует скалярное умножение вектора на матрицу.
+        /// Implements scalar multiplication of a vector by a matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Dot(this double[] v, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5694,11 +5678,11 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Реализует скалярное умножение вектора на матрицу.
+        /// Implements scalar multiplication of a vector by a matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Dot(this Complex[] v, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5717,11 +5701,11 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Реализует скалярное умножение вектора на матрицу.
+        /// Implements scalar multiplication of a vector by a matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="m">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Dot(this Complex[] v, double[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
@@ -5743,12 +5727,12 @@ namespace UMapx.Core
 
         #region Vector/matrix multiply
         /// <summary>
-        /// Реализует скалярное произведение векторов вида: a' * b, 
-        /// где ' - знак транспонирования.
+        /// Implements a scalar product of vectors of the form: a' * b, 
+        /// where ' is the transpose sign.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static double[,] Dotp(this double[] a, double[] b)
         {
             int l0 = a.Length, l1 = b.Length;
@@ -5767,12 +5751,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует скалярное произведение векторов вида: a' * b, 
-        /// где ' - знак транспонирования.
+        /// Implements a scalar product of vectors of the form: a' * b, 
+        /// where ' is the transpose sign.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[,] Dotp(this Complex[] a, Complex[] b)
         {
             int l0 = a.Length, l1 = b.Length;
@@ -5791,12 +5775,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует скалярное произведение векторов вида: a' * b, 
-        /// где ' - знак транспонирования.
+        /// Implements a scalar product of vectors of the form: a' * b, 
+        /// where ' is the transpose sign.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[,] Dotp(this Complex[] a, double[] b)
         {
             int l0 = a.Length, l1 = b.Length;
@@ -5815,12 +5799,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует скалярное произведение векторов вида: a' * b, 
-        /// где ' - знак транспонирования.
+        /// Implements a scalar product of vectors of the form: a' * b, 
+        /// where ' is the transpose sign.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[,] Dotp(this double[] a, Complex[] b)
         {
             int l0 = a.Length, l1 = b.Length;
@@ -5842,12 +5826,12 @@ namespace UMapx.Core
 
         #region Vector convolutions
         /// <summary>
-        /// Возвращает вектор-результат одномерной свертки.
+        /// Implements discrete convolution of vectors.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="u">Одномерный массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="u">Array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Array</returns>
         public static double[] Conv(this double[] v, double[] u, bool normalize = true)
         {
             int n = v.Length;
@@ -5904,12 +5888,12 @@ namespace UMapx.Core
             return uv;
         }
         /// <summary>
-        /// Возвращает вектор-результат одномерной свертки.
+        /// Implements discrete convolution of vectors.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="u">Одномерный массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="u">Array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Array</returns>
         public static Complex[] Conv(this Complex[] v, Complex[] u, bool normalize = true)
         {
             int n = v.Length;
@@ -5966,12 +5950,12 @@ namespace UMapx.Core
             return uv;
         }
         /// <summary>
-        /// Возвращает вектор-результат одномерной свертки.
+        /// Implements discrete convolution of vectors.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="u">Одномерный массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="u">Array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Array</returns>
         public static Complex[] Conv(this Complex[] v, double[] u, bool normalize = true)
         {
             int n = v.Length;
@@ -6028,12 +6012,12 @@ namespace UMapx.Core
             return uv;
         }
         /// <summary>
-        /// Возвращает вектор-результат одномерной свертки.
+        /// Implements discrete convolution of vectors.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="u">Одномерный массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="u">Array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Array</returns>
         public static Complex[] Conv(this double[] v, Complex[] u, bool normalize = true)
         {
             int n = v.Length;
@@ -6093,10 +6077,10 @@ namespace UMapx.Core
 
         #region Vector morphology
         /// <summary>
-        /// Реализует одномерный фильтр морфологического расширения.
+        /// Returns the vector result of morphology maximum.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="r">Радиус обработки</param>
+        /// <param name="v">Array</param>
+        /// <param name="r">Radius</param>
         public static double[] Max(this double[] v, int r)
         {
             int l = v.Length;
@@ -6127,10 +6111,10 @@ namespace UMapx.Core
             return B;
         }
         /// <summary>
-        /// Реализует одномерный фильтр морфологического сужения.
+        /// Returns the vector result of morphology minimum.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="r">Радиус обработки</param>
+        /// <param name="v">Array</param>
+        /// <param name="r">Radius</param>
         public static double[] Min(this double[] v, int r)
         {
             int l = v.Length;
@@ -6161,12 +6145,12 @@ namespace UMapx.Core
             return B;
         }
         /// <summary>
-        /// Возвращает вектор-результат одномерной морфологии.
+        /// Returns the vector result of morphology.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="r">Радиус</param>
-        /// <param name="threshold">Пороговое значение</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="r">Radius</param>
+        /// <param name="threshold">Threshold</param>
+        /// <returns>Array</returns>
         public static double[] Morph(this double[] v, int r, int threshold)
         {
             int n = v.Length;
@@ -6175,7 +6159,6 @@ namespace UMapx.Core
             int r2 = r / 2;
             int i, j, k, c, p;
 
-            // Операция морфологии:
             for (i = 0; i < n; i++)
             {
                 k = i - r2;
@@ -6191,9 +6174,7 @@ namespace UMapx.Core
                     }
                 }
 
-                // Сортировка массива:
                 Array.Sort(u);
-                // Выборка:
                 uv[i] = u[threshold];
             }
 
@@ -6203,13 +6184,12 @@ namespace UMapx.Core
 
         #region Vector mean
         /// <summary>
-        /// Реализует одномерный фильтр локального усреднения.
+        /// Returns the result vector of local averaging.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="r">Радиус</param>
+        /// <param name="v">Array</param>
+        /// <param name="r">Radius</param>
         public static double[] Mean(this double[] v, int r)
         {
-            // Определение параметров фильтра:
             int l = v.Length;
             double[] output = new double[l];
             int r2 = r >> 1;
@@ -6217,23 +6197,22 @@ namespace UMapx.Core
             double s = 0;
             int i;
 
-            // Вычисление глобальной суммы [0, h):
             for (i = 0; i < r; i++)
             {
                 s += v[i];
             }
-            // Вычисление фильтра на отрезке [0, v):
+
             for (i = 0; i < r2; i++)
             {
                 output[i] = s / r;
             }
-            // Вычисление фильтра на отрезке [v, l-v):
+
             for (i = r2; i < dl; i++)
             {
                 s = s - v[i - r2] + v[i + r2];
                 output[i] = s / r;
             }
-            // Вычисление фильтра на отрезке [l-v, l):
+
             for (i = dl; i < l; i++)
             {
                 s = s - v[i - r2] + v[i];
@@ -6243,13 +6222,12 @@ namespace UMapx.Core
             return output;
         }
         /// <summary>
-        /// Реализует одномерный фильтр локального усреднения.
+        /// Returns the result vector of local averaging.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="r">Радиус</param>
+        /// <param name="v">Array</param>
+        /// <param name="r">Radius</param>
         public static Complex[] Mean(this Complex[] v, int r)
         {
-            // Определение параметров фильтра:
             int l = v.Length;
             Complex[] output = new Complex[l];
             int r2 = r >> 1;
@@ -6257,23 +6235,23 @@ namespace UMapx.Core
             Complex s = 0;
             int i;
 
-            // Вычисление глобальной суммы [0, h):
+
             for (i = 0; i < r; i++)
             {
                 s += v[i];
             }
-            // Вычисление фильтра на отрезке [0, v):
+  
             for (i = 0; i < r2; i++)
             {
                 output[i] = s / r;
             }
-            // Вычисление фильтра на отрезке [v, l-v):
+
             for (i = r2; i < dl; i++)
             {
                 s = s - v[i - r2] + v[i + r2];
                 output[i] = s / r;
             }
-            // Вычисление фильтра на отрезке [l-v, l):
+
             for (i = dl; i < l; i++)
             {
                 s = s - v[i - r2] + v[i];
@@ -6286,14 +6264,13 @@ namespace UMapx.Core
 
         // MATLAB voids
 
-        #region MATLAB voids
         #region Get/set rows and columns
         /// <summary>
-        /// Возвращает вектор столбца матрицы.
+        /// Returns the matrix column vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="r">Номер столбца</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="r">Column number</param>
+        /// <returns>Array</returns>
         public static double[] GetCol(this double[,] m, int r)
         {
             int w = m.GetLength(0);
@@ -6305,12 +6282,12 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Задает вектор столбца матрицы.
+        /// Specifies the matrix column vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Одномерный массив</param>
-        /// <param name="r">Номер столбца</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Array</param>
+        /// <param name="r">Column number</param>
+        /// <returns>Matrix</returns>
         public static double[,] SetCol(this double[,] m, double[] n, int r)
         {
             int w = m.GetLength(0);
@@ -6322,11 +6299,11 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Возвращает вектор строки матрицы.
+        /// Returns the row vector of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="r">Номер строки</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="r">Row number</param>
+        /// <returns>Array</returns>
         public static double[] GetRow(this double[,] m, int r)
         {
             int w = m.GetLength(1);
@@ -6338,12 +6315,12 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Задает вектор строки матрицы.
+        /// Specifies the row vector of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Одномерный массив</param>
-        /// <param name="r">Номер строки</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Array</param>
+        /// <param name="r">Row number</param>
+        /// <returns>Matrix</returns>
         public static double[,] SetRow(this double[,] m, double[] n, int r)
         {
             int w = m.GetLength(1);
@@ -6355,11 +6332,11 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Возвращает вектор столбца матрицы.
+        /// Returns the matrix column vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="r">Номер столбца</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="r">Column number</param>
+        /// <returns>Array</returns>
         public static Complex[] GetCol(this Complex[,] m, int r)
         {
             int w = m.GetLength(0);
@@ -6371,12 +6348,12 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Задает вектор столбца матрицы.
+        /// Specifies the matrix column vector.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Одномерный массив</param>
-        /// <param name="r">Номер столбца</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Array</param>
+        /// <param name="r">Column number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] SetCol(this Complex[,] m, Complex[] n, int r)
         {
             int w = m.GetLength(0);
@@ -6388,11 +6365,11 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Возвращает вектор строки матрицы.
+        /// Returns the row vector of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="r">Номер строки</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="r">Row number</param>
+        /// <returns>Array</returns>
         public static Complex[] GetRow(this Complex[,] m, int r)
         {
             int w = m.GetLength(1);
@@ -6404,12 +6381,12 @@ namespace UMapx.Core
             return U;
         }
         /// <summary>
-        /// Задает вектор строки матрицы.
+        /// Specifies the row vector of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="n">Одномерный массив</param>
-        /// <param name="r">Номер строки</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="n">Array</param>
+        /// <param name="r">Row number</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] SetRow(this Complex[,] m, Complex[] n, int r)
         {
             int w = m.GetLength(1);
@@ -6424,12 +6401,12 @@ namespace UMapx.Core
 
         #region Shift voids
         /// <summary>
-        /// Релизует блочную перегруппировку матрицы.
+        /// Implements block matrix rearrangement.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="m">Количество позиций, на которое происходит сдвиг по высоте</param>
-        /// <param name="l">Количество позиций, на которое происходит сдвиг по ширине</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="m">The number of positions to which a shift in height occurs</param>
+        /// <param name="l">The number of positions by which the shift occurs in width</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Shift(this Complex[,] a, int m, int l)
         {
             int l0 = a.GetLength(0), l1 = a.GetLength(1);
@@ -6446,12 +6423,12 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Релизует блочную перегруппировку матрицы.
+        /// Implements block matrix rearrangement.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="m">Количество позиций, на которое происходит сдвиг по высоте</param>
-        /// <param name="l">Количество позиций, на которое происходит сдвиг по ширине</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="m">The number of positions to which a shift in height occurs</param>
+        /// <param name="l">The number of positions by which the shift occurs in width</param>
+        /// <returns>Matrix</returns>
         public static double[,] Shift(this double[,] a, int m, int l)
         {
             int l0 = a.GetLength(0), l1 = a.GetLength(1);
@@ -6468,11 +6445,11 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Релизует сдвиг элементов вектора.
+        /// Implements a shift of vector elements.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="l">Количество позиций, на которое происходит сдвиг</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="l">Number of positions to shift</param>
+        /// <returns>Array</returns>
         public static Complex[] Shift(this Complex[] v, int l)
         {
             int N = v.Length;
@@ -6486,11 +6463,11 @@ namespace UMapx.Core
             return temp;
         }
         /// <summary>
-        /// Релизует сдвиг элементов вектора.
+        /// Implements a shift of vector elements.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="l">Количество позиций, на которое происходит сдвиг</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="l">Number of positions to shift</param>
+        /// <returns>Array</returns>
         public static double[] Shift(this double[] v, int l)
         {
             int N = v.Length;
@@ -6507,11 +6484,11 @@ namespace UMapx.Core
 
         #region Flip voids
         /// <summary>
-        /// Отображает элементы матрицы.
+        /// Flips matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <returns>Matrix</returns>
         public static double[,] Flip(this double[,] m, Direction direction)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -6555,11 +6532,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Отображает элементы матрицы.
+        /// Flips matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Flip(this Complex[,] m, Direction direction)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -6603,10 +6580,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Отображает элементы вектора.
+        /// Flips vector elements.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Flip(this double[] v)
         {
             int mr = v.Length;
@@ -6620,10 +6597,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Отображает элементы вектора.
+        /// Flips vector elements.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Flip(this Complex[] v)
         {
             int mr = v.Length;
@@ -6640,11 +6617,11 @@ namespace UMapx.Core
 
         #region Merge voids
         /// <summary>
-        /// Реализует слияние векторов.
+        /// Implements vector merging.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static double[] Merge(this double[] a, double[] b)
         {
             int na = a.Length, nb = b.Length, i;
@@ -6659,11 +6636,11 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Реализует слияние векторов.
+        /// Implements vector merging.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Merge(this Complex[] a, Complex[] b)
         {
             int na = a.Length, nb = b.Length, i;
@@ -6678,11 +6655,11 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Реализует слияние векторов.
+        /// Implements vector merging.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Merge(this Complex[] a, double[] b)
         {
             int na = a.Length, nb = b.Length, i;
@@ -6697,11 +6674,11 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Реализует слияние векторов.
+        /// Implements vector merging.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="b">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Merge(this double[] a, Complex[] b)
         {
             int na = a.Length, nb = b.Length, i;
@@ -6719,12 +6696,12 @@ namespace UMapx.Core
 
         #region Cut voids
         /// <summary>
-        /// Возвращает заданную часть вектора.
+        /// Returns the specified part of the vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="start">Начальная позиция</param>
-        /// <param name="length">Длина вектора</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="start">Starting position</param>
+        /// <param name="length">Vector length</param>
+        /// <returns>Array</returns>
         public static double[] Cut(this double[] a, int start, int length)
         {
             int na = a.Length, i;
@@ -6736,12 +6713,12 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Возвращает заданную часть вектора.
+        /// Returns the specified part of the vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="start">Начальная позиция</param>
-        /// <param name="length">Длина вектора</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Array</param>
+        /// <param name="start">Starting position</param>
+        /// <param name="length">Vector length</param>
+        /// <returns>Array</returns>
         public static Complex[] Cut(this Complex[] a, int start, int length)
         {
             int na = a.Length, i;
@@ -6753,14 +6730,14 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Обрезает матрицу до заданных размеров.
+        /// Crops the matrix to the specified size.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="y">Начальная позиция по высоте</param>
-        /// <param name="x">Начальная позиция по ширине</param>
-        /// <param name="height">Высота</param>
-        /// <param name="width">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="y">Starting position in height</param>
+        /// <param name="x">Starting position in width</param>
+        /// <param name="height">Height</param>
+        /// <param name="width">Width</param>
+        /// <returns>Matrix</returns>
         public static double[,] Cut(this double[,] m, int y, int x, int height, int width)
         {
             // params
@@ -6779,14 +6756,14 @@ namespace UMapx.Core
             return B;
         }
         /// <summary>
-        /// Обрезает матрицу до заданных размеров.
+        /// Crops the matrix to the specified size.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="y">Начальная позиция по высоте</param>
-        /// <param name="x">Начальная позиция по ширине</param>
-        /// <param name="height">Высота</param>
-        /// <param name="width">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="y">Starting position in height</param>
+        /// <param name="x">Starting position in width</param>
+        /// <param name="height">Height</param>
+        /// <param name="width">Width</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Cut(this Complex[,] m, int y, int x, int height, int width)
         {
             // params
@@ -6808,11 +6785,11 @@ namespace UMapx.Core
 
         #region Reshape voids
         /// <summary>
-        /// Возвращает матрицу, сформированную из вектора.
+        /// Returns a matrix formed from a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="height">Высота матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Array</param>
+        /// <param name="height">Height</param>
+        /// <returns>Matrix</returns>
         public static double[,] Reshape(this double[] a, int height)
         {
             int n = a.Length;
@@ -6838,11 +6815,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу, сформированную из вектора.
+        /// Returns a matrix formed from a vector.
         /// </summary>
-        /// <param name="a">Одномерный массив</param>
-        /// <param name="height">Высота матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Array</param>
+        /// <param name="height">Height</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Reshape(this Complex[] a, int height)
         {
             int n = a.Length;
@@ -6868,11 +6845,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает вектор, сформированный из матрицы.
+        /// Returns a vector formed from a matrix.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="length">Размерность вектора</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Reshape(this double[,] a, int length)
         {
             int height = a.GetLength(0), width = a.GetLength(1);
@@ -6898,11 +6875,11 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Возвращает вектор, сформированный из матрицы.
+        /// Returns a vector formed from a matrix.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="length">Размерность вектора</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static Complex[] Reshape(this Complex[,] a, int length)
         {
             int height = a.GetLength(0), width = a.GetLength(1);
@@ -6931,10 +6908,10 @@ namespace UMapx.Core
 
         #region Diagonalize
         /// <summary>
-        /// Реализует приведение вектора к диагональной матрице.
+        /// Implements the reduction of a vector to a diagonal matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static double[,] Diag(this double[] v)
         {
             int n = v.Length, i;
@@ -6947,10 +6924,10 @@ namespace UMapx.Core
             return diag;
         }
         /// <summary>
-        /// Реализует приведение вектора к диагональной матрице.
+        /// Implements the reduction of a vector to a diagonal matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Diag(this Complex[] v)
         {
             int n = v.Length, i;
@@ -6963,10 +6940,10 @@ namespace UMapx.Core
             return diag;
         }
         /// <summary>
-        /// Возвращает вектор, элементы которого лежат на диагонали матрицы.
+        /// Returns a vector whose elements lie on the diagonal of the matrix.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Matrix</param>
+        /// <returns>Array</returns>
         public static double[] Diag(this double[,] a)
         {
             int height = a.GetLength(0), width = a.GetLength(1);
@@ -6985,10 +6962,10 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Возвращает вектор, элементы которого лежат на диагонали матрицы.
+        /// Returns a vector whose elements lie on the diagonal of the matrix.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="a">Matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Diag(this Complex[,] a)
         {
             int height = a.GetLength(0), width = a.GetLength(1);
@@ -7010,12 +6987,12 @@ namespace UMapx.Core
 
         #region Swap voids
         /// <summary>
-        /// Реализует перестановку векторов матрицы.
+        /// Implements a permutation of the vectors of the matrix.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="i">Первый ряд или столбец</param>
-        /// <param name="j">Второй ряд или столбец</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="a">Matrix</param>
+        /// <param name="i">First row or column</param>
+        /// <param name="j">Second row or column</param>
+        /// <param name="direction">Processing direction</param>
         public static void Swap(this double[,] a, int i, int j, Direction direction = Direction.Horizontal)
         {
             // properties:
@@ -7065,12 +7042,12 @@ namespace UMapx.Core
             return;
         }
         /// <summary>
-        /// Реализует перестановку векторов матрицы.
+        /// Implements a permutation of the vectors of the matrix.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="i">Первый ряд или столбец</param>
-        /// <param name="j">Второй ряд или столбец</param>
-        /// <param name="direction">Направление обработки</param>
+        /// <param name="a">Matrix</param>
+        /// <param name="i">First row or column</param>
+        /// <param name="j">Second row or column</param>
+        /// <param name="direction">Processing direction</param>
         public static void Swap(this Complex[,] a, int i, int j, Direction direction = Direction.Horizontal)
         {
             // properties:
@@ -7120,11 +7097,11 @@ namespace UMapx.Core
             return;
         }
         /// <summary>
-        /// Реализует перестановку элементов вектора.
+        /// Implements a permutation of the elements of the vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="i">Номер первого элемента</param>
-        /// <param name="j">Номер второго элемента</param>
+        /// <param name="v">Array</param>
+        /// <param name="i">First element position</param>
+        /// <param name="j">Second element position</param>
         public static void Swap(this double[] v, int i, int j)
         {
             // get elements:
@@ -7134,11 +7111,11 @@ namespace UMapx.Core
             return;
         }
         /// <summary>
-        /// Реализует перестановку элементов вектора.
+        /// Implements a permutation of the elements of the vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="i">Номер первого элемента</param>
-        /// <param name="j">Номер второго элемента</param>
+        /// <param name="v">Array</param>
+        /// <param name="i">First element position</param>
+        /// <param name="j">Second element position</param>
         public static void Swap(this Complex[] v, int i, int j)
         {
             // get elements:
@@ -7151,13 +7128,13 @@ namespace UMapx.Core
 
         #region Remove voids
         /// <summary>
-        /// Реализует перестановку векторов матрицы.
+        /// Implements the removal of matrix elements.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="i">Первый ряд или столбец</param>
-        /// <param name="length">Длина</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="i">First row or column</param>
+        /// <param name="length">Length</param>
+        /// <param name="direction">Processing direction</param>
+        /// <returns>Matrix</returns>
         public static double[,] Remove(this double[,] a, int i, int length, Direction direction = Direction.Horizontal)
         {
             // properties:
@@ -7210,13 +7187,13 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует перестановку векторов матрицы.
+        /// Implements the removal of matrix elements.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="i">Первый ряд или столбец</param>
-        /// <param name="length">Длина</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="i">First row or column</param>
+        /// <param name="length">Length</param>
+        /// <param name="direction">Processing direction</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Remove(this Complex[,] a, int i, int length, Direction direction = Direction.Horizontal)
         {
             // properties:
@@ -7269,12 +7246,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует удаление элементов вектора.
+        /// Implements the removal of vector elements.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="i">Номер элемента</param>
-        /// <param name="length">Длина</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="i">Number of element</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Remove(this double[] v, int i, int length)
         {
             int n = v.Length;
@@ -7287,12 +7264,12 @@ namespace UMapx.Core
             return w;
         }
         /// <summary>
-        /// Реализует удаление элементов вектора.
+        /// Implements the removal of vector elements.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="i">Номер элемента</param>
-        /// <param name="length">Длина</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="i">Number of element</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static Complex[] Remove(this Complex[] v, int i, int length)
         {
             int n = v.Length;
@@ -7308,19 +7285,19 @@ namespace UMapx.Core
 
         #region Minor voids
         /// <summary>
-        /// Реализует операцию взятия минора матрицы.
+        /// Implements the operation of taking the minor of the matrix.
         /// </summary>
-        /// <param name="m">Квадратная матрица</param>
-        /// <param name="n">Номер строки и столбца</param>
-        /// <returns>Квадратная матрица</returns>
+        /// <param name="m">Square matrix</param>
+        /// <param name="n">Row and column number</param>
+        /// <returns>Square matrix</returns>
         public static double[,] Minor(this double[,] m, int n)
         {
             // matrix sizes:
             int height = m.GetLength(0), width = m.GetLength(1);
 
             // errors:
-            if (height != width) throw new Exception("Матрица должна быть квадратной");
-            if (n >= height || n < 0) throw new Exception("Номер строки и столбца указан не верно");
+            if (height != width) throw new Exception("The matrix must be square");
+            if (n >= height || n < 0) throw new Exception("Row and column number specified is invalid");
 
             // new matrix:
             double[,] H = new double[height - 1, width - 1];
@@ -7347,19 +7324,19 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует операцию взятия минора матрицы.
+        /// Implements the operation of taking the minor of the matrix.
         /// </summary>
-        /// <param name="m">Квадратная матрица</param>
-        /// <param name="n">Номер строки и столбца</param>
-        /// <returns>Квадратная матрица</returns>
+        /// <param name="m">Square matrix</param>
+        /// <param name="n">Row and column number</param>
+        /// <returns>Square matrix</returns>
         public static Complex[,] Minor(this Complex[,] m, int n)
         {
             // matrix sizes:
             int height = m.GetLength(0), width = m.GetLength(1);
 
             // errors:
-            if (height != width) throw new Exception("Матрица должна быть квадратной");
-            if (n >= height || n < 0) throw new Exception("Номер строки и столбца указан не верно");
+            if (height != width) throw new Exception("The matrix must be square");
+            if (n >= height || n < 0) throw new Exception("Row and column number specified is invalid");
 
             // new matrix:
             Complex[,] H = new Complex[height - 1, width - 1];
@@ -7389,13 +7366,13 @@ namespace UMapx.Core
 
         #region Diff voids
         /// <summary>
-        /// Возвращает разность элементов массива.
+        /// Returns the difference of matrix elements.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="n">Порядок</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="reverse">Обратное направление обработки или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="n">Order</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
         public static double[,] Diff(double[,] a, int n, Direction direction, bool reverse = false)
         {
             // start
@@ -7447,11 +7424,11 @@ namespace UMapx.Core
             return a;
         }
         /// <summary>
-        /// Возвращает разность элементов массива.
+        /// Returns the difference of matrix elements.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="reverse">Обратное направление обработки или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
         private static double[,] DiffVertical(double[,] a, bool reverse = false)
         {
             // vertical direction 
@@ -7482,11 +7459,11 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// Возвращает разность элементов массива.
+        /// Returns the difference of matrix elements.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="reverse">Обратное направление обработки или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
         private static double[,] DiffHorizontal(double[,] a, bool reverse = false)
         {
             // horizontal direction 
@@ -7517,13 +7494,13 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// Возвращает разность элементов массива.
+        /// Returns the difference of matrix elements.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="n">Порядок</param>
-        /// <param name="direction">Направление обработки</param>
-        /// <param name="reverse">Обратное направление обработки или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="n">Order</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Diff(Complex[,] a, int n, Direction direction, bool reverse = false)
         {
             // start
@@ -7575,11 +7552,11 @@ namespace UMapx.Core
             return a;
         }
         /// <summary>
-        /// Возвращает разность элементов массива.
+        /// Returns the difference of matrix elements.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="reverse">Обратное направление обработки или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
         private static Complex[,] DiffVertical(Complex[,] a, bool reverse = false)
         {
             // vertical direction 
@@ -7610,11 +7587,11 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// Возвращает разность элементов массива.
+        /// Returns the difference of matrix elements.
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="reverse">Обратное направление обработки или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
         private static Complex[,] DiffHorizontal(Complex[,] a, bool reverse = false)
         {
             // horizontal direction 
@@ -7645,12 +7622,12 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// Возвращает разность элементов массива.
+        /// Returns the difference of vector elements.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="n">Порядок</param>
-        /// <param name="reverse">Обратное направление обработки или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="n">Order</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Array</returns>
         public static double[] Diff(this double[] v, int n, bool reverse = false)
         {
             // start
@@ -7684,12 +7661,12 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// Возвращает разность элементов массива.
+        /// Returns the difference of vector elements.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="n">Порядок</param>
-        /// <param name="reverse">Обратное направление обработки или нет</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="n">Order</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Array</returns>
         public static Complex[] Diff(this Complex[] v, int n, bool reverse = false)
         {
             // start
@@ -7726,11 +7703,11 @@ namespace UMapx.Core
 
         #region Extend voids
         /// <summary>
-        /// Расширяет вектор до заданной длины.
+        /// Extends the vector to the specified length.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="length">Длина</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static double[] Extend(this double[] v, int length)
         {
             int r0 = v.GetLength(0);
@@ -7751,12 +7728,12 @@ namespace UMapx.Core
             return b;
         }
         /// <summary>
-        /// Расширяет матрицу до заданных размеров.
+        /// Extends the matrix to the specified size.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="height">Высота</param>
-        /// <param name="width">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="height">Height</param>
+        /// <param name="width">Width</param>
+        /// <returns>Matrix</returns>
         public static double[,] Extend(this double[,] m, int height, int width)
         {
             int r = m.GetLength(0);
@@ -7825,11 +7802,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Расширяет вектор до заданной длины.
+        /// Extends the vector to the specified length.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="length">Длина</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="length">Length</param>
+        /// <returns>Array</returns>
         public static Complex[] Extend(this Complex[] v, int length)
         {
             int r0 = v.GetLength(0);
@@ -7850,12 +7827,12 @@ namespace UMapx.Core
             return b;
         }
         /// <summary>
-        /// Расширяет матрицу до заданных размеров.
+        /// Extends the matrix to the specified size.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="height">Высота</param>
-        /// <param name="width">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="height">Height</param>
+        /// <param name="width">Width</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Extend(this Complex[,] m, int height, int width)
         {
             int r = m.GetLength(0);
@@ -7923,18 +7900,17 @@ namespace UMapx.Core
             return B;
         }
         #endregion
-        #endregion
 
         // Extra voids
 
         #region Compute methods
         /// <summary>
-        /// Возвращает массив значений аргумента, реализованный в заданном отрезке с заданным шагом.
+        /// Returns an array of function values.
         /// </summary>
-        /// <param name="min">Начало отрезка</param>
-        /// <param name="max">Конец отрезка</param>
-        /// <param name="step">Шаг</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="min">Minimum</param>
+        /// <param name="max">Maximum</param>
+        /// <param name="step">Step</param>
+        /// <returns>Array</returns>
         public static double[] Compute(double min, double max, double step)
         {
             // ******************************
@@ -7988,11 +7964,11 @@ namespace UMapx.Core
             return x;
         }
         /// <summary>
-        /// Возвращает массив значений функции.
+        /// Returns an array of function values.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="function">Continuous function delegate</param>
+        /// <returns>Array</returns>
         public static double[] Compute(this double[] v, IDouble function)
         {
             int length = v.Length;
@@ -8005,11 +7981,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает массив значений функции.
+        /// Returns an array of function values.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <param name="function">Continuous function delegate</param>
+        /// <returns>Array</returns>
         public static Complex[] Compute(this Complex[] v, IComplex function)
         {
             int length = v.Length;
@@ -8022,12 +7998,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой определяются по двум массивам аргумента и делегату непрерывной функции.
+        /// Returns a matrix of function values.
         /// </summary>
-        /// <param name="x">Массив значений первого аргумента</param>
-        /// <param name="y">Массив значений второго аргумента</param>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <returns>Матрица</returns>
+        /// <param name="x">Array of values of the first argument</param>
+        /// <param name="y">Array of values of the second argument</param>
+        /// <param name="function">Continuous function delegate</param>
+        /// <returns>Matrix</returns>
         public static double[,] Compute(this double[] x, double[] y, IDoubleMesh function)
         {
             int xlength = x.Length, ylength = y.Length;
@@ -8044,12 +8020,12 @@ namespace UMapx.Core
             return z;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой определяются по двум массивам аргумента и делегату непрерывной функции.
+        /// Returns a matrix of function values.
         /// </summary>
-        /// <param name="x">Массив значений первого аргумента</param>
-        /// <param name="y">Массив значений второго аргумента</param>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <returns>Матрица</returns>
+        /// <param name="x">Array of values of the first argument</param>
+        /// <param name="y">Array of values of the second argument</param>
+        /// <param name="function">Continuous function delegate</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Compute(this double[] x, Complex[] y, IComplexMesh function)
         {
             int xlength = x.Length, ylength = y.Length;
@@ -8066,12 +8042,12 @@ namespace UMapx.Core
             return z;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой определяются по двум массивам аргумента и делегату непрерывной функции.
+        /// Returns a matrix of function values.
         /// </summary>
-        /// <param name="x">Массив значений первого аргумента</param>
-        /// <param name="y">Массив значений второго аргумента</param>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <returns>Матрица</returns>
+        /// <param name="x">Array of values of the first argument</param>
+        /// <param name="y">Array of values of the second argument</param>
+        /// <param name="function">Continuous function delegate</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Compute(this Complex[] x, double[] y, IComplexMesh function)
         {
             int xlength = x.Length, ylength = y.Length;
@@ -8088,12 +8064,12 @@ namespace UMapx.Core
             return z;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой определяются по двум массивам аргумента и делегату непрерывной функции.
+        /// Returns a matrix of function values.
         /// </summary>
-        /// <param name="x">Массив значений первого аргумента</param>
-        /// <param name="y">Массив значений второго аргумента</param>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <returns>Матрица</returns>
+        /// <param name="x">Array of values of the first argument</param>
+        /// <param name="y">Array of values of the second argument</param>
+        /// <param name="function">Continuous function delegate</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Compute(this Complex[] x, Complex[] y, IComplexMesh function)
         {
             int xlength = x.Length, ylength = y.Length;
@@ -8110,11 +8086,11 @@ namespace UMapx.Core
             return z;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой определяются по массиву аргумента и делегату непрерывной функции.
+        /// Returns an array of function values.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="function">Continuous function delegate</param>
+        /// <returns>Matrix</returns>
         public static double[,] Compute(this double[,] m, IDouble function)
         {
             int i, j;
@@ -8131,11 +8107,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой определяются по массиву аргумента и делегату непрерывной функции.
+        /// Returns a matrix of function values.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <param name="function">Continuous function delegate</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Compute(this Complex[,] m, IComplex function)
         {
             int i, j;
@@ -8155,10 +8131,10 @@ namespace UMapx.Core
 
         #region Radius vector
         /// <summary>
-        /// Реализует построение вектора единиц.
+        /// Implements the construction of a vector of ones.
         /// </summary>
-        /// <param name="n">Размерность</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="n">Dimension</param>
+        /// <returns>Array</returns>
         public static double[] One(int n)
         {
             double[] v = new double[n];
@@ -8171,10 +8147,10 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Реализует построение вектора нулей.
+        /// Implements the construction of a vector of zeros.
         /// </summary>
-        /// <param name="n">Размерность</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="n">Dimension</param>
+        /// <returns>Array</returns>
         public static double[] Zero(int n)
         {
             return new double[n];
@@ -8183,10 +8159,10 @@ namespace UMapx.Core
 
         #region Matrix products
         /// <summary>
-        /// Возвращает вектор Хаусхолдера.
+        /// Returns the Householder vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] Householder(this double[] v)
         {
             int length = v.Length;
@@ -8220,10 +8196,10 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Реализует построение сопровождающей матрицы.
+        /// Implements the construction of the companion matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static double[,] Companion(this double[] v)
         {
             int n = v.Length, i;
@@ -8243,10 +8219,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Вандерморта.
+        /// Implements the construction of the Vandermond matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static double[,] Vander(this double[] v)
         {
             int n = v.Length;
@@ -8264,10 +8240,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение неполной матрицы Ганкеля.
+        /// Implements the construction of an incomplete Hankel matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static double[,] Hankeli(this double[] v)
         {
             int n = v.Length;
@@ -8285,10 +8261,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Ганкеля.
+        /// Implements the construction of the Hankel matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static double[,] Hankel(this double[] v)
         {
             int n = v.Length / 2;
@@ -8306,10 +8282,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Тёплица.
+        /// Implements the construction of the Toeplitz matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static double[,] Toeplitz(this double[] v)
         {
             int n = v.Length / 2;
@@ -8327,11 +8303,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Коши.
+        /// Implements the construction of the Cauchy matrix.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="y">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="x">Array</param>
+        /// <param name="y">Array</param>
+        /// <returns>Matrix</returns>
         public static double[,] Cauchy(this double[] x, double[] y)
         {
             int m = x.Length, l = y.Length;
@@ -8351,10 +8327,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение цикличной матрицы.
+        /// Implements the construction of a circulant matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static double[,] Circulant(this double[] v)
         {
             int n = v.Length;
@@ -8371,10 +8347,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение симметричной матрицы.
+        /// Implements the construction of a symmetric matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static double[,] Symmetric(this double[] v)
         {
             int n = v.Length;
@@ -8395,10 +8371,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение сопровождающей матрицы.
+        /// Implements the construction of the companion matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Companion(this Complex[] v)
         {
             int n = v.Length, i;
@@ -8418,10 +8394,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Вандерморта.
+        /// Implements the construction of the Vandermond matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Vander(this Complex[] v)
         {
             int n = v.Length;
@@ -8439,10 +8415,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение неполной матрицы Ганкеля.
+        /// Implements the construction of an incomplete Hankel matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Hankeli(this Complex[] v)
         {
             int n = v.Length;
@@ -8460,10 +8436,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Ганкеля.
+        /// Implements the construction of the Hankel matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Hankel(this Complex[] v)
         {
             int n = v.Length / 2;
@@ -8481,10 +8457,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Тёплица.
+        /// Implements the construction of the Toeplitz matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Toeplitz(this Complex[] v)
         {
             int n = v.Length / 2;
@@ -8502,11 +8478,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Коши.
+        /// Implements the construction of the Cauchy matrix.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="y">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="x">Array</param>
+        /// <param name="y">Array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Cauchy(this Complex[] x, Complex[] y)
         {
             int m = x.Length, l = y.Length;
@@ -8526,10 +8502,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение цикличной матрицы.
+        /// Implements the construction of a circulant matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Circulant(this Complex[] v)
         {
             int n = v.Length;
@@ -8546,10 +8522,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение симметричной матрицы.
+        /// Implements the construction of a symmetric matrix.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Symmetric(this Complex[] v)
         {
             int n = v.Length;
@@ -8573,21 +8549,21 @@ namespace UMapx.Core
 
         #region Radius matrix
         /// <summary>
-        /// Реализует построение нулевой матрицы.
+        /// Implements the construction of a zero matrix.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[,] Zero(int m, int l)
         {
             return new double[m, l];
         }
         /// <summary>
-        /// Реализует построение единичной матрицы.
+        /// Implements the construction of a eye matrix.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[,] Eye(int m, int l)
         {
             double[,] H = new double[m, l];
@@ -8604,11 +8580,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы единиц.
+        /// Implements the construction of a matrix of ones.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[,] One(int m, int l)
         {
             double[,] H = new double[m, l];
@@ -8624,10 +8600,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение обменной матрицы.
+        /// Implements the construction of the exchange matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] Exchange(int n)
         {
             double[,] H = new double[n, n];
@@ -8644,10 +8620,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Лемера.
+        /// Implements the construction of the Lehmer matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] Lehmer(int n)
         {
             double[,] H = new double[n, n];
@@ -8666,10 +8642,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Редхеффера.
+        /// Implements the construction of the Redheffer matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] Redheffer(int n)
         {
             double[,] H = new double[n, n];
@@ -8679,12 +8655,10 @@ namespace UMapx.Core
             {
                 for (j = 1; j <= n; j++)
                 {
-                    // Главная диагональ:
                     if (i == j)
                     {
                         H[i - 1, j - 1] = 1;
                     }
-                    //  i делится на j без остатка:
                     if (i % j == 0)
                     {
                         H[i - 1, j - 1] = 1;
@@ -8703,10 +8677,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Гильберта.
+        /// Implements the construction of a Hilbert matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] Hilbert(int n)
         {
             double[,] H = new double[n, n];
@@ -8722,10 +8696,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение цикличной матрицы.
+        /// Implements the construction of a cyclic matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] Circulant(int n)
         {
             double[,] H = new double[n, n];
@@ -8741,10 +8715,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение симметричной матрицы.
+        /// Implements the construction of a symmetric matrix.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] Symmetric(int n)
         {
             double[,] H = new double[n, n];
@@ -8764,10 +8738,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы НОД-ов.
+        /// Implements the construction of a matrix of GCD.
         /// </summary>
-        /// <param name="n">Размер матрицы</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static double[,] GCD(int n)
         {
             double[,] H = new double[n, n];
@@ -8783,11 +8757,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы Стирлинга первого или второго рода.
+        /// Implements the construction of the Stirling matrix of the first or second kind.
         /// </summary>
-        /// <param name="n">Размерность матрицы</param>
-        /// <param name="second">Второго рода или нет</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Dimension</param>
+        /// <param name="second">Second kind or not</param>
+        /// <returns>Matrix</returns>
         public static double[,] Stirling(int n, bool second = false)
         {
             // Stirling's matrix 
@@ -8834,14 +8808,14 @@ namespace UMapx.Core
             return S;
         }
         /// <summary>
-        /// Реализует построение магического квадрата.
+        /// Implements the construction of a magic square.
         /// </summary>
-        /// <param name="n">Размер матрицы (нечетное число)</param>
-        /// <returns>Матрица</returns>
+        /// <param name="n">Size (odd number)</param>
+        /// <returns>Matrix</returns>
         public static double[,] Magic(int n)
         {
             if (Maths.Mod(n, 2) != 1)
-                throw new Exception("Размерность матрица должна быть нечетным числом");
+                throw new Exception("Dimension of the matrix must be an odd number");
 
             double[,] m = new double[n, n];
             int i, j;
@@ -8861,16 +8835,16 @@ namespace UMapx.Core
 
         #region Random matrices and vectors
         /// <summary>
-        /// Генератор случайных чисел.
+        /// 
         /// </summary>
         private static Random rnd = new Random();
 
         #region Rand and randc voids
         /// <summary>
-        /// Реализует построение вектора случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a vector of random numbers, the values of which are distributed according to a uniform distribution.
         /// </summary>
-        /// <param name="n">Размерность</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="n">Dimension</param>
+        /// <returns>Array</returns>
         public static double[] Rand(int n)
         {
             double[] v = new double[n];
@@ -8883,10 +8857,10 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Реализует построение комплексного вектора случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a vector of random numbers, the values of which are distributed according to a uniform distribution.
         /// </summary>
-        /// <param name="n">Размерность</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="n">Dimension</param>
+        /// <returns>Array</returns>
         public static Complex[] Randc(int n)
         {
             Complex[] v = new Complex[n];
@@ -8899,11 +8873,11 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a matrix of random numbers, the values of which are distributed according to a uniform distribution.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[,] Rand(int m, int l)
         {
             double[,] H = new double[m, l];
@@ -8920,11 +8894,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a matrix of random numbers, the values of which are distributed according to a uniform distribution.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Randc(int m, int l)
         {
             Complex[,] H = new Complex[m, l];
@@ -8944,30 +8918,30 @@ namespace UMapx.Core
 
         #region Randi and randic voids
         /// <summary>
-        /// Реализует построение вектора случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a vector of integer random numbers.
         /// </summary>
-        /// <param name="n">Размерность</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="n">Dimension</param>
+        /// <returns>Array</returns>
         public static double[] Randi(int n)
         {
             return Randi(n, 1, n + 1);
         }
         /// <summary>
-        /// Реализует построение комплексного вектора случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a vector of integer random numbers.
         /// </summary>
-        /// <param name="n">Размерность</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="n">Dimension</param>
+        /// <returns>Array</returns>
         public static Complex[] Randic(int n)
         {
             return Randic(n, 1, n + 1);
         }
         /// <summary>
-        /// Реализует построение вектора случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a vector of integer random numbers.
         /// </summary>
-        /// <param name="n">Размерность</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="n">Dimension</param>
+        /// <param name="a">Lower bound</param>
+        /// <param name="b">Upper bound</param>
+        /// <returns>Array</returns>
         public static double[] Randi(int n, int a, int b)
         {
             double[] v = new double[n];
@@ -8980,12 +8954,12 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Реализует построение комплексного вектора случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a vector of integer random numbers.
         /// </summary>
-        /// <param name="n">Размерность</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="n">Dimension</param>
+        /// <param name="a">Lower bound</param>
+        /// <param name="b">Upper bound</param>
+        /// <returns>Array</returns>
         public static Complex[] Randic(int n, int a, int b)
         {
             Complex[] v = new Complex[n];
@@ -8999,23 +8973,23 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Реализует построение матрицы случайных целых чисел.
+        /// Implements the construction of a matrix of integer random numbers.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[,] Randi(int m, int l)
         {
             return Randi(m, l, 1, l + 1);
         }
         /// <summary>
-        /// Реализует построение матрицы случайных целых чисел.
+        /// Implements the construction of a matrix of integer random numbers.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="a">Lower bound</param>
+        /// <param name="b">Upper bound</param>
+        /// <returns>Matrix</returns>
         public static double[,] Randi(int m, int l, int a, int b)
         {
             double[,] H = new double[m, l];
@@ -9032,23 +9006,23 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует комплексной построение матрицы случайных целых чисел.
+        /// Implements the construction of a matrix of integer random numbers.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Randic(int m, int l)
         {
             return Randic(m, l, 1, l + 1);
         }
         /// <summary>
-        /// Реализует комплексной построение матрицы случайных целых чисел.
+        /// Implements the construction of a matrix of integer random numbers.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="a">Lower bound</param>
+        /// <param name="b">Upper bound</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Randic(int m, int l, int a, int b)
         {
             Complex[,] H = new Complex[m, l];
@@ -9069,14 +9043,14 @@ namespace UMapx.Core
 
         #region Parse methods
         /// <summary>
-        /// Переводит исходную строку в матрицу вещественных чисел.
+        /// Parses the original string into a matrix of double numbers.
         /// <remarks>
-        /// Пример входной строки: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
+        /// Example: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
         /// </remarks>
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="s">Input string</param>
+        /// <returns>Matrix</returns>
         public static double[,] Parse(this double[,] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
@@ -9105,11 +9079,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Пробует перевести исходную строку в матрицу вещественных чисел.
+        /// Tries to parse the original row into a matrix of double numbers.
         /// </summary>
-        /// <param name="s">Исходная строка</param>
-        /// <param name="result">Матрица вещественных чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="s">Input string</param>
+        /// <param name="result">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool TryParse(string s, ref double[,] result)
         {
             double[,] zero = null;
@@ -9125,14 +9099,14 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Переводит исходную строку в матрицу комплексных чисел.
+        /// Parses the original string into a matrix of complex numbers.
         /// </summary>
         /// <remarks>
-        /// Пример входной строки: "[1 + 2i, 2 + 4i; 3 + 6i, 4 + 8i]";
+        /// Example: "[1 + 2i, 2 + 4i; 3 + 6i, 4 + 8i]";
         /// </remarks>
-        /// <param name="a">Матрица</param>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Матрица комплексных чисел</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="s">Input string</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] Parse(this Complex[,] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
@@ -9162,11 +9136,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Пробует перевести исходную строку в матрицу комплексных чисел.
+        /// Tries to parse the original row into a matrix of complex numbers.
         /// </summary>
-        /// <param name="s">Исходная строка</param>
-        /// <param name="result">Матрица комплексных чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="s">Input string</param>
+        /// <param name="result">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool TryParse(string s, ref Complex[,] result)
         {
             Complex[,] zero = null;
@@ -9183,14 +9157,14 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Переводит исходную строку в матрицу вещественных чисел.
+        /// Parses the original string into a vector of double numbers.
         /// <remarks>
-        /// Пример входной строки: "[1, 2, 3, 4]";
+        /// Example: "[1, 2, 3, 4]";
         /// </remarks>
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="s">Input string</param>
+        /// <returns>Matrix</returns>
         public static double[] Parse(this double[] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
@@ -9212,15 +9186,15 @@ namespace UMapx.Core
             }
             else
             {
-                throw new Exception("Входная строка имела неверный формат");
+                throw new Exception("The input string was in the wrong format");
             }
         }
         /// <summary>
-        /// Пробует перевести исходную строку в матрицу вещественных чисел.
+        /// Tries to parse the original row into a matrix of double numbers.
         /// </summary>
-        /// <param name="s">Исходная строка</param>
-        /// <param name="result">Матрица вещественных чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="s">Input string</param>
+        /// <param name="result">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool TryParse(string s, ref double[] result)
         {
             double[] zero = null;
@@ -9236,14 +9210,14 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Переводит исходную строку в матрицу вещественных чисел.
+        /// Parses the original string into a vector of complex numbers.
         /// <remarks>
-        /// Пример входной строки: "[1 + 2i, 2 + 0.3i, 3 + i, 4 - 11i]";
+        /// Example: "[1 + 2i, 2 + 0.3i, 3 + i, 4 - 11i]";
         /// </remarks>
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="s">Input string</param>
+        /// <returns>Matrix</returns>
         public static Complex[] Parse(this Complex[] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
@@ -9265,15 +9239,15 @@ namespace UMapx.Core
             }
             else
             {
-                throw new Exception("Входная строка имела неверный формат");
+                throw new Exception("The input string was in the wrong format");
             }
         }
         /// <summary>
-        /// Пробует перевести исходную строку в матрицу вещественных чисел.
+        /// Tries to parse the original row into a matrix of complex numbers.
         /// </summary>
-        /// <param name="s">Исходная строка</param>
-        /// <param name="result">Матрица вещественных чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="s">Input string</param>
+        /// <param name="result">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool TryParse(string s, ref Complex[] result)
         {
             Complex[] zero = null;
@@ -9294,30 +9268,26 @@ namespace UMapx.Core
 
         #region Gauss-Jordan elimination
         /// <summary>
-        /// Возвращает вектор-столбец, соответствующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Returns a vector corresponding to the solution of a system of linear algebraic equations: Ax = b.
         /// </summary>
-        /// <param name="A">Расширенная матрица</param>
-        /// <returns>Вектор-столбец</returns>
+        /// <param name="A">Extended matrix</param>
+        /// <returns>Array</returns>
         public static double[] Solve(this double[,] A)
         {
-            // параметры
             int height = A.GetLength(0);
             int width = A.GetLength(1);
 
             if (height + 1 != width)
-                throw new Exception("Исходная матрица имеет неверные размеры");
+                throw new Exception("Input matrix has invalid sizes");
 
-            // инициализация
             double[][] B = Jagged.ToJagged(A);
             int i, j, k, l;
             double[] x = new double[height];
             double[] v, w;
             double temp;
 
-            // Этап 1
             for (i = 0; i < height; i++)
             {
-                // Делаем главную диагональ единицами
                 w = B[i];
                 temp = w[i];
 
@@ -9326,7 +9296,6 @@ namespace UMapx.Core
                     w[j] /= temp;
                 }
 
-                // Обнуляем числа под единицами главной диогoнали
                 for (k = i + 1; k < height; k++)
                 {
                     v = B[k];
@@ -9343,7 +9312,6 @@ namespace UMapx.Core
                 B[i] = w;
             }
 
-            // Этап 2
             for (i = 0; i < height; i++)
             {
                 l = (height - 1) - i;
@@ -9372,33 +9340,30 @@ namespace UMapx.Core
             return x;
         }
         /// <summary>
-        /// Возвращает вектор-столбец, соответствующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Returns a vector corresponding to the solution of a system of linear algebraic equations: Ax = b.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
-        /// <param name="b">Вектор-столбец</param>
-        /// <returns>Вектор-столбец</returns>
+        /// <param name="A">Square matrix</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static double[] Solve(this double[,] A, double[] b)
         {
-            // параметры
             int height = A.GetLength(0);
             int width = A.GetLength(1);
 
             if (height != width)
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
             if (height != b.Length)
-                throw new Exception("Длина вектора должна быть равна высоте матрицы");
+                throw new Exception("Vector length should be equal to the height of the matrix");
 
-            // инициализация
             double[][] B = Jagged.ToJagged(A);
             int i, j, k, l;
             double[] x = (double[])b.Clone();
             double[] v, w;
             double temp;
 
-            // Этап 1
+
             for (i = 0; i < height; i++)
             {
-                // Делаем главную диагональ единицами
                 w = B[i];
                 temp = w[i];
 
@@ -9408,7 +9373,6 @@ namespace UMapx.Core
                 }
                 x[i] /= temp;
 
-                // Обнуляем числа под единицами главной диогoнали
                 for (k = i + 1; k < height; k++)
                 {
                     v = B[k];
@@ -9424,7 +9388,6 @@ namespace UMapx.Core
                 }
             }
 
-            // Этап 2
             for (i = 0; i < height; i++)
             {
                 l = (height - 1) - i;
@@ -9451,30 +9414,26 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает вектор-столбец, соответствующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Returns a vector corresponding to the solution of a system of linear algebraic equations: Ax = b.
         /// </summary>
-        /// <param name="A">Расширенная матрица</param>
-        /// <returns>Вектор-столбец</returns>
+        /// <param name="A">Extended matrix</param>
+        /// <returns>Array</returns>
         public static Complex[] Solve(this Complex[,] A)
         {
-            // параметры
             int height = A.GetLength(0);
             int width = A.GetLength(1);
 
             if (height + 1 != width)
-                throw new Exception("Исходная матрица имеет неверные размеры");
+                throw new Exception("Input matrix has invalid sizes");
 
-            // инициализация
             Complex[][] B = Jagged.ToJagged(A);
             int i, j, k, l;
             Complex[] x = new Complex[height];
             Complex[] v, w;
             Complex temp;
 
-            // Этап 1
             for (i = 0; i < height; i++)
             {
-                // Делаем главную диагональ единицами
                 w = B[i];
                 temp = w[i];
 
@@ -9483,7 +9442,6 @@ namespace UMapx.Core
                     w[j] /= temp;
                 }
 
-                // Обнуляем числа под единицами главной диогoнали
                 for (k = i + 1; k < height; k++)
                 {
                     v = B[k];
@@ -9500,7 +9458,6 @@ namespace UMapx.Core
                 B[i] = w;
             }
 
-            // Этап 2
             for (i = 0; i < height; i++)
             {
                 l = (height - 1) - i;
@@ -9529,33 +9486,29 @@ namespace UMapx.Core
             return x;
         }
         /// <summary>
-        /// Возвращает вектор-столбец, соответствующий решению системы линейных алгебраических уравнений: Ax = b.
+        /// Returns a vector corresponding to the solution of a system of linear algebraic equations: Ax = b.
         /// </summary>
-        /// <param name="A">Квадратная матрица</param>
-        /// <param name="b">Вектор-столбец</param>
-        /// <returns>Вектор-столбец</returns>
+        /// <param name="A">Square matrix</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
         public static Complex[] Solve(this Complex[,] A, Complex[] b)
         {
-            // параметры
             int height = A.GetLength(0);
             int width = A.GetLength(1);
 
             if (height != width)
-                throw new Exception("Матрица должна быть квадратной");
+                throw new Exception("The matrix must be square");
             if (height != b.Length)
-                throw new Exception("Длина вектора должна быть равна высоте матрицы");
+                throw new Exception("Vector length should be equal to the height of the matrix");
 
-            // инициализация
             Complex[][] B = Jagged.ToJagged(A);
             int i, j, k, l;
             Complex[] x = (Complex[])b.Clone();
             Complex[] v, w;
             Complex temp;
 
-            // Этап 1
             for (i = 0; i < height; i++)
             {
-                // Делаем главную диагональ единицами
                 w = B[i];
                 temp = w[i];
 
@@ -9565,7 +9518,6 @@ namespace UMapx.Core
                 }
                 x[i] /= temp;
 
-                // Обнуляем числа под единицами главной диогoнали
                 for (k = i + 1; k < height; k++)
                 {
                     v = B[k];
@@ -9581,7 +9533,6 @@ namespace UMapx.Core
                 }
             }
 
-            // Этап 2
             for (i = 0; i < height; i++)
             {
                 l = (height - 1) - i;
@@ -9612,45 +9563,43 @@ namespace UMapx.Core
 
     #region Linealg options
     /// <summary>
-    /// Определяет класс оптимизаций матричных операций.
+    /// Defines the class of optimizations of matrix operations.
     /// </summary>
     internal class LinealgOptions
     {
         #region Private data
         /// <summary>
-        /// Текст исключения при умножении.
+        /// 
         /// </summary>
-        private static string exception = "Длина строки матрицы A должна быть равна длине столбца матрицы B";
+        private static string exception = "The length of the row of matrix A must be equal to the length of the column of matrix B";
         #endregion
 
         #region Determinant
         /// <summary>
-        /// Итеративный расчет детерминанта.
+        /// Iterative calculation of the determinant.
         /// </summary>
-        /// <param name="element">"Элемент</param>
-        /// <param name="n">Радиус матрицы</param>
-        /// <returns>Число двойной точности</returns>
+        /// <param name="element">"Element</param>
+        /// <param name="n">Radius</param>
+        /// <returns>Double precision floating point number</returns>
         public unsafe static double Determinant(double* element, int n)
         {
             double* mtx_u_ii, mtx_ii_j;
             double* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
             double val, det = 1;
             int d = 0;
-            // rmX указывает на (i,i) элемент на каждом шаге и называется ведущим
+
             for (double* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
             {
-                // Ищем максимальный элемент в столбце(под ведущим)
                 {
-                    //Ищем максимальный элемент и его позицию
                     val = Math.Abs(*(mtx_ii_j = element));
                     for (mtx_u_ii = element + n; mtx_u_ii < mtx_end; mtx_u_ii += n)
                     {
                         if (val < Math.Abs(*mtx_u_ii))
                             val = Math.Abs(*(mtx_ii_j = mtx_u_ii));
                     }
-                    //Если максимальный элемент = 0 -> матрица вырожденная
+
                     if (Math.Abs(val - 0) < double.Epsilon) return double.NaN;
-                    //Если ведущий элемент не является максимальным - делаем перестановку строк и меняем знак определителя
+
                     if (mtx_ii_j != element)
                     {
                         det = -det;
@@ -9662,7 +9611,7 @@ namespace UMapx.Core
                         }
                     }
                 }
-                //Обнуляем элементы под ведущим
+
                 for (mtx_u_ii = element + n, mtx_u_ii_j = mtx_end + n; mtx_u_ii < mtx_u_ii_j; mtx_u_ii += d)
                 {
                     val = *(mtx_u_ii++) / *element;
@@ -9674,32 +9623,31 @@ namespace UMapx.Core
             return det * *element;
         }
         /// <summary>
-        /// Итеративный расчет детерминанта.
+        /// Iterative calculation of the determinant.
         /// </summary>
-        /// <param name="element">"Элемент</param>
-        /// <param name="n">Радиус матрицы</param>
-        /// <returns>Комплексное число</returns>
+        /// <param name="element">"Element</param>
+        /// <param name="n">Radius</param>
+        /// <returns>Complex number</returns>
         public unsafe static Complex Determinant(Complex* element, int n)
         {
             Complex* mtx_u_ii, mtx_ii_j;
             Complex* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
             Complex val, det = (Complex)1;
             int d = 0;
-            // rmX указывает на (i,i) элемент на каждом шаге и называется ведущим
+
             for (Complex* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
             {
-                // Ищем максимальный элемент в столбце(под ведущим) 
                 {
-                    //Ищем максимальный элемент и его позицию
+
                     val = (Complex)Maths.Abs(*(mtx_ii_j = element));
                     for (mtx_u_ii = element + n; mtx_u_ii < mtx_end; mtx_u_ii += n)
                     {
                         if (val.Abs < (Maths.Abs(*mtx_u_ii)))
                             val = (Complex)Maths.Abs(*(mtx_ii_j = mtx_u_ii));
                     }
-                    //Если максимальный элемент = 0 -> матрица вырожденная
+
                     if (Maths.Abs(val - 0) < double.Epsilon) return (Complex)double.NaN;
-                    //Если ведущий элемент не является максимальным - делаем перестановку строк и меняем знак определителя
+
                     if (mtx_ii_j != element)
                     {
                         det = -det;
@@ -9711,7 +9659,7 @@ namespace UMapx.Core
                         }
                     }
                 }
-                //Обнуляем элементы под ведущим
+
                 for (mtx_u_ii = element + n, mtx_u_ii_j = mtx_end + n; mtx_u_ii < mtx_u_ii_j; mtx_u_ii += d)
                 {
                     val = *(mtx_u_ii++) / *element;
@@ -9726,11 +9674,11 @@ namespace UMapx.Core
 
         #region Multiplication
         /// <summary>
-        /// Реализует умножение матриц, представленных в виде зубчатых массивов.
+        /// Implements the multiplication of matrices presented in the form of jagged arrays.
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <returns>Jagged array</returns>
         public static float[][] Mul(float[][] A, float[][] B)
         {
             if (A[0].GetLength(0) != B.GetLength(0))
@@ -9750,11 +9698,11 @@ namespace UMapx.Core
             return C;
         }
         /// <summary>
-        /// Реализует умножение матриц, представленных в виде зубчатых массивов.
+        /// Implements the multiplication of matrices presented in the form of jagged arrays.
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] Mul(Complex32[][] A, Complex32[][] B)
         {
             if (A[0].GetLength(0) != B.GetLength(0))
@@ -9774,11 +9722,11 @@ namespace UMapx.Core
             return C;
         }
         /// <summary>
-        /// Реализует умножение матриц, представленных в виде зубчатых массивов.
+        /// Implements the multiplication of matrices presented in the form of jagged arrays.
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] Mul(Complex32[][] A, float[][] B)
         {
             if (A[0].GetLength(0) != B.GetLength(0))
@@ -9798,11 +9746,11 @@ namespace UMapx.Core
             return C;
         }
         /// <summary>
-        /// Реализует умножение матриц, представленных в виде зубчатых массивов.
+        /// Implements the multiplication of matrices presented in the form of jagged arrays.
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] Mul(float[][] A, Complex32[][] B)
         {
             if (A[0].GetLength(0) != B.GetLength(0))
@@ -9825,12 +9773,12 @@ namespace UMapx.Core
 
         #region Convolution
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static float[][] Conv(float[][] A, float[][] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -9924,12 +9872,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] Conv(Complex32[][] A, Complex32[][] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10024,12 +9972,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] Conv(float[][] A, Complex32[][] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10124,12 +10072,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат двумерной дискретной свертки.
+        /// Implements discrete convolution of matrices.
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] Conv(Complex32[][] A, float[][] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10229,12 +10177,12 @@ namespace UMapx.Core
 
         #region Convolution (separable)
         /// <summary>
-        /// Возвращает матрицу-результат одномерной дискретной свертки (по горизонтали).
+        /// Implements discrete convolution of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static float[][] ConvHorizontal(float[][] A, float[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10318,12 +10266,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат одномерной дискретной свертки (по вертикали).
+        /// Implements discrete convolution of matrices (vertical).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static float[][] ConvVertical(float[][] A, float[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10408,12 +10356,12 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает матрицу-результат одномерной дискретной свертки (по горизонтали).
+        /// Implements discrete convolution of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] ConvHorizontal(float[][] A, Complex32[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10497,12 +10445,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат одномерной дискретной свертки (по вертикали).
+        /// Implements discrete convolution of matrices (vertical).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] ConvVertical(float[][] A, Complex32[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10587,12 +10535,12 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает матрицу-результат одномерной дискретной свертки (по горизонтали).
+        /// Implements discrete convolution of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] ConvHorizontal(Complex32[][] A, Complex32[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10676,12 +10624,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат одномерной дискретной свертки (по вертикали).
+        /// Implements discrete convolution of matrices (vertical).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] ConvVertical(Complex32[][] A, Complex32[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10766,12 +10714,12 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает матрицу-результат одномерной дискретной свертки (по горизонтали).
+        /// Implements discrete convolution of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] ConvHorizontal(Complex32[][] A, float[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10855,12 +10803,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат одномерной дискретной свертки (по вертикали).
+        /// Implements discrete convolution of matrices (vertical).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="B">Зубчатый массив</param>
-        /// <param name="normalize">Нормализованная свертка или нет</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="B">Jagged array</param>
+        /// <param name="normalize">Normalized convolution or not</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] ConvVertical(Complex32[][] A, float[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10947,12 +10895,12 @@ namespace UMapx.Core
 
         #region Morphology (separable)
         /// <summary>
-        /// Возвращает матрицу-результат морфологии (по горизонтали).
+        /// Implements discrete morphology of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r1">Размер</param>
-        /// <param name="threshold">Пороговое значение</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r1">Size</param>
+        /// <param name="threshold">Threshold</param>
+        /// <returns>Jagged array</returns>
         public static float[][] MorphHorizontal(float[][] A, int r1, int threshold)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -10990,12 +10938,12 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат морфологии (по вертикали).
+        /// Implements discrete morphology of matrices (vertical).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r0">Размер</param>
-        /// <param name="threshold">Пороговое значение</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r0">Size</param>
+        /// <param name="threshold">Threshold</param>
+        /// <returns>Jagged array</returns>
         public static float[][] MorphVertical(float[][] A, int r0, int threshold)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -11033,11 +10981,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат морфологического сужения (по горизонтали).
+        /// Implements discrete morphology minimum of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r1">Размер</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r1">Size</param>
+        /// <returns>Jagged array</returns>
         public static float[][] MinHorizontal(float[][] A, int r1)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -11073,11 +11021,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат морфологического сужения (по вертикали).
+        /// Implements discrete morphology minimum of matrices (vertical).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r0">Размер</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r0">Size</param>
+        /// <returns>Jagged array</returns>
         public static float[][] MinVertical(float[][] A, int r0)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -11113,11 +11061,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат морфологического расширения (по горизонтали).
+        /// Implements discrete morphology maximum of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r1">Размер</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r1">Size</param>
+        /// <returns>Jagged array</returns>
         public static float[][] MaxHorizontal(float[][] A, int r1)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -11153,11 +11101,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат морфологического расширения (по вертикали).
+        /// Implements discrete morphology maximum of matrices (vertical).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r0">Размер</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r0">Size</param>
+        /// <returns>Jagged array</returns>
         public static float[][] MaxVertical(float[][] A, int r0)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -11196,11 +11144,11 @@ namespace UMapx.Core
 
         #region Mean (separable)
         /// <summary>
-        /// Возвращает матрицу-результат локального усреднения (по горизонтали).
+        /// Implements local average of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r1">Размер</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r1">Size</param>
+        /// <returns>Jagged array</returns>
         public static float[][] MeanHorizontal(float[][] A, int r1)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -11214,23 +11162,22 @@ namespace UMapx.Core
                 float s = 0;
                 int x;
 
-                // Вычисление глобальной суммы [0, h):
                 for (x = 0; x < h; x++)
                 {
                     s += A[y][x];
                 }
-                // Вычисление фильтра на отрезке [0, v):
+
                 for (x = 0; x < v; x++)
                 {
                     H[y][x] = s / h;
                 }
-                // Вычисление фильтра на отрезке [v, l-v):
+
                 for (x = v; x < dl; x++)
                 {
                     s = s - A[y][x - v] + A[y][x + v];
                     H[y][x] = s / h;
                 }
-                // Вычисление фильтра на отрезке [l-v, l):
+
                 for (x = dl; x < width; x++)
                 {
                     s = s - A[y][x - v] + A[y][x];
@@ -11241,11 +11188,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат локального усреднения (по вертикали).
+        /// Implements local average of matrices (vertical).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r0">Размер</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r0">Size</param>
+        /// <returns>Jagged array</returns>
         public static float[][] MeanVertical(float[][] A, int r0)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -11259,23 +11206,22 @@ namespace UMapx.Core
                 float s = 0;
                 int y;
                 
-                // Вычисление глобальной суммы [0, h):
                 for (y = 0; y < h; y++)
                 {
                     s += A[y][x];
                 }
-                // Вычисление фильтра на отрезке [0, v):
+
                 for (y = 0; y < v; y++)
                 {
                     H[y][x] = s / h;
                 }
-                // Вычисление фильтра на отрезке [v, l-v):
+
                 for (y = v; y < dl; y++)
                 {
                     s = s - A[y - v][x] + A[y + v][x];
                     H[y][x] = s / h;
                 }
-                // Вычисление фильтра на отрезке [l-v, l):
+
                 for (y = dl; y < height; y++)
                 {
                     s = s - A[y - v][x] + A[y][x];
@@ -11287,11 +11233,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат локального усреднения (по горизонтали).
+        /// Implements local average of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r1">Размер</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r1">Size</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] MeanHorizontal(Complex32[][] A, int r1)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -11305,23 +11251,23 @@ namespace UMapx.Core
                 Complex32 s = new Complex32(0, 0);
                 int x;
 
-                // Вычисление глобальной суммы [0, h):
+
                 for (x = 0; x < h; x++)
                 {
                     s += A[y][x];
                 }
-                // Вычисление фильтра на отрезке [0, v):
+
                 for (x = 0; x < v; x++)
                 {
                     H[y][x] = s / h;
                 }
-                // Вычисление фильтра на отрезке [v, l-v):
+
                 for (x = v; x < dl; x++)
                 {
                     s = s - A[y][x - v] + A[y][x + v];
                     H[y][x] = s / h;
                 }
-                // Вычисление фильтра на отрезке [l-v, l):
+
                 for (x = dl; x < width; x++)
                 {
                     s = s - A[y][x - v] + A[y][x];
@@ -11332,11 +11278,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу-результат локального усреднения (по вертикали).
+        /// Implements local average of matrices (vertical).
         /// </summary>
-        /// <param name="A">Зубчатый массив</param>
-        /// <param name="r0">Размер</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="A">Jagged array</param>
+        /// <param name="r0">Size</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] MeanVertical(Complex32[][] A, int r0)
         {
             int height = A.GetLength(0), width = A[0].GetLength(0);
@@ -11350,23 +11296,23 @@ namespace UMapx.Core
                 Complex32 s = new Complex32(0, 0);
                 int y;
 
-                // Вычисление глобальной суммы [0, h):
+
                 for (y = 0; y < h; y++)
                 {
                     s += A[y][x];
                 }
-                // Вычисление фильтра на отрезке [0, v):
+
                 for (y = 0; y < v; y++)
                 {
                     H[y][x] = s / h;
                 }
-                // Вычисление фильтра на отрезке [v, l-v):
+
                 for (y = v; y < dl; y++)
                 {
                     s = s - A[y - v][x] + A[y + v][x];
                     H[y][x] = s / h;
                 }
-                // Вычисление фильтра на отрезке [l-v, l):
+
                 for (y = dl; y < height; y++)
                 {
                     s = s - A[y - v][x] + A[y][x];
@@ -11381,10 +11327,10 @@ namespace UMapx.Core
 
         #region Jagged array
         /// <summary>
-        /// Возвращает зубчатый массив.
+        /// Returns jagged array.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Jagged array</returns>
         public static float[][] ToJagged(double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -11404,10 +11350,10 @@ namespace UMapx.Core
             return jagged;
         }
         /// <summary>
-        /// Возвращает матрицу.
+        /// Returns matrix.
         /// </summary>
-        /// <param name="jagged">Зубчатый массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="jagged">Jagged array</param>
+        /// <returns>Matrix</returns>
         public static double[,] FromJagged(float[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
@@ -11424,10 +11370,10 @@ namespace UMapx.Core
             return m;
         }
         /// <summary>
-        /// Возвращает зубчатый массив.
+        /// Returns jagged array.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[][] ToJagged(Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -11449,10 +11395,10 @@ namespace UMapx.Core
             return jagged;
         }
         /// <summary>
-        /// Возвращает матрицу.
+        /// Returns matrix.
         /// </summary>
-        /// <param name="jagged">Зубчатый массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="jagged">Jagged array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] FromJagged(Complex32[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
@@ -11465,17 +11411,17 @@ namespace UMapx.Core
                 for (j = 0; j < mr; j++)
                 {
                     jaggedij = jagged[i][j];
-                    m[i, j] = new Complex(jaggedij.Re, jaggedij.Im);
+                    m[i, j] = new Complex(jaggedij.Real, jaggedij.Imag);
                 }
             }
             return m;
         }
 
         /// <summary>
-        /// Возвращает зубчатый массив.
+        /// Returns jagged array.
         /// </summary>
-        /// <param name="m">Вектор</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="m">Array</param>
+        /// <returns>Jagged array</returns>
         public static float[] ToJagged(double[] m)
         {
             int n = m.GetLength(0);
@@ -11489,10 +11435,10 @@ namespace UMapx.Core
             return jagged;
         }
         /// <summary>
-        /// Возвращает матрицу.
+        /// Returns matrix.
         /// </summary>
-        /// <param name="jagged">Зубчатый массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="jagged">Jagged array</param>
+        /// <returns>Matrix</returns>
         public static double[] FromJagged(float[] jagged)
         {
             int n = jagged.GetLength(0);
@@ -11506,10 +11452,10 @@ namespace UMapx.Core
             return m;
         }
         /// <summary>
-        /// Возвращает зубчатый массив.
+        /// Returns jagged array.
         /// </summary>
-        /// <param name="m">Вектор</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="m">Array</param>
+        /// <returns>Jagged array</returns>
         public static Complex32[] ToJagged(Complex[] m)
         {
             int n = m.GetLength(0);
@@ -11525,10 +11471,10 @@ namespace UMapx.Core
             return jagged;
         }
         /// <summary>
-        /// Возвращает матрицу.
+        /// Returns matrix.
         /// </summary>
-        /// <param name="jagged">Зубчатый массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="jagged">Jagged array</param>
+        /// <returns>Matrix</returns>
         public static Complex[] FromJagged(Complex32[] jagged)
         {
             int n = jagged.GetLength(0);
@@ -11539,7 +11485,7 @@ namespace UMapx.Core
             for (i = 0; i < n; i++)
             {
                 mi = jagged[i];
-                m[i] = new Complex(mi.Re, mi.Im);
+                m[i] = new Complex(mi.Real, mi.Imag);
             }
             return m;
         }
@@ -11547,47 +11493,47 @@ namespace UMapx.Core
 
         #region Complex32
         /// <summary>
-        /// Определяет комплексное число, вещественные части которой представляются числами одиночной точности с плавающей запятой.
+        /// Complex (32 bit).
         /// </summary>
         public struct Complex32
         {
             #region Private data
             /// <summary>
-            /// Действительная часть числа.
+            /// Real part.
             /// </summary>
-            public float Re;
+            public float Real;
             /// <summary>
-            /// Мнимая часть числа.
+            /// Imaginary part.
             /// </summary>
-            public float Im;
+            public float Imag;
             #endregion
 
             #region Struct Components
             /// <summary>
-            /// Инициализирует комплексное число.
+            /// Complex (32 bit).
             /// </summary>
-            /// <param name="re">Действительная часть комплексного числа</param>
-            /// <param name="im">Мнимая часть комплексного числа</param>
+            /// <param name="re">Real part of the complex number</param>
+            /// <param name="im">Imaginary part of a complex number</param>
             public Complex32(float re, float im)
             {
-                this.Re = re; this.Im = im;
+                this.Real = re; this.Imag = im;
             }
             #endregion
 
             #region Overrides
             /// <summary>
-            /// Возвращает хэш-код для данного объекта.
+            /// Returns the hash code for this object.
             /// </summary>
-            /// <returns>Целое число со знаком</returns>
+            /// <returns>Integer number</returns>
             public override int GetHashCode()
             {
-                return Re.GetHashCode() ^ Im.GetHashCode();
+                return Real.GetHashCode() ^ Imag.GetHashCode();
             }
             /// <summary>
-            /// Возвращает значение, указывающее, равен ли данный экземпляр заданному значению типа Complex.
+            /// Gets a value indicating whether this instance is equal to the given value of type Complex32.
             /// </summary>
-            /// <param name="obj">Объект</param>
-            /// <returns>Логическое значение</returns>
+            /// <param name="obj">Object</param>
+            /// <returns>Boolean</returns>
             public override bool Equals(object obj)
             {
                 return (obj is Complex32) ? (this == (Complex32)obj) : false;
@@ -11596,164 +11542,178 @@ namespace UMapx.Core
 
             #region Bools
             /// <summary>
-            /// Проверяет равны ли два объекта типа Complex между собой.
+            /// Checks if two objects of type Complex are equal to each other.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Комплексное число</param>
-            /// <returns>Логическое значение</returns>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Boolean</returns>
             public static bool operator ==(Complex32 a, Complex32 b)
             {
-                return ((a.Re == b.Re) && (a.Im == b.Im));
+                return ((a.Real == b.Real) && (a.Imag == b.Imag));
             }
             /// <summary>
-            /// Проверяет не равны ли два объекта типа Complex между собой.
+            /// Checks if two objects of type Complex are not equal to each other.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Комплексное число</param>
-            /// <returns>Логическое значение</returns>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Boolean</returns>
             public static bool operator !=(Complex32 a, Complex32 b)
             {
                 return !(a == b);
             }
             #endregion
 
-            #region Operations
+            #region Operators
             /// <summary>
-            /// Сумма двух комплексных чисел
+            /// The sum of two complex numbers.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Комплексное число</param>
-            /// <returns>Комплексное число</returns>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Complex number</returns>
             public static Complex32 operator +(Complex32 a, Complex32 b)
             {
-                return new Complex32(a.Re + b.Re, a.Im + b.Im);
+                return new Complex32(a.Real + b.Real, a.Imag + b.Imag);
             }
             /// <summary>
-            /// Сумма комплексного числа и действительного числа.
+            /// The sum of a complex number and a real number.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Число</param>
-            /// <returns>Комплексное число</returns>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Number</param>
+            /// <returns>Complex number</returns>
             public static Complex32 operator +(Complex32 a, float b)
             {
-                return new Complex32(a.Re + b, a.Im);
+                return new Complex32(a.Real + b, a.Imag);
             }
             /// <summary>
-            /// Сумма комплексного числа и действительного числа.
+            /// The sum of a complex number and a real number.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Число</param>
-            /// <returns>Комплексное число</returns>
-            public static Complex32 operator +(float b, Complex32 a)
+            /// <param name="a">Number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Complex number</returns>
+            public static Complex32 operator +(float a, Complex32 b)
             {
-                return new Complex32(a.Re + b, a.Im);
+                return new Complex32(b.Real + a, b.Imag);
             }
+
+
             /// <summary>
-            /// Разность двух комплексных чисел
+            /// The difference of two complex numbers.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Комплексное число</param>
-            /// <returns>Комплексное число</returns>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Complex number</returns>
             public static Complex32 operator -(Complex32 a, Complex32 b)
             {
-                return new Complex32(a.Re - b.Re, a.Im - b.Im);
+                return new Complex32(a.Real - b.Real, a.Imag - b.Imag);
             }
             /// <summary>
-            /// Разность комплексного числа и действительного числа.
+            /// The difference between a complex number and a real number.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Число</param>
-            /// <returns>Комплексное число</returns>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Number</param>
+            /// <returns>Complex number</returns>
             public static Complex32 operator -(Complex32 a, float b)
             {
-                return new Complex32(a.Re - b, a.Im);
+                return new Complex32(a.Real - b, a.Imag);
             }
             /// <summary>
-            /// Разность комплексного числа и действительного числа.
+            /// The difference between a complex number and a real number.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Число</param>
-            /// <returns>Комплексное число</returns>
-            public static Complex32 operator -(float b, Complex32 a)
+            /// <param name="a">Number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Complex number</returns>
+            public static Complex32 operator -(float a, Complex32 b)
             {
-                return new Complex32(-a.Re + b, a.Im);
+                return new Complex32(a - b.Real, b.Imag);
             }
             /// <summary>
-            /// Произведение двух комплексных чисел
+            /// Inverts complex number.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Комплексное число</param>
-            /// <returns>Комплексное число</returns>
+            /// <param name="a">Complex number</param>
+            /// <returns>Complex number</returns>
+            public static Complex32 operator -(Complex32 a)
+            {
+                return new Complex32(-a.Real, -a.Imag);
+            }
+
+
+            /// <summary>
+            /// Multiplies one complex number by another.
+            /// </summary>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Complex number</returns>
             public static Complex32 operator *(Complex32 a, Complex32 b)
             {
-                float aRe = a.Re, aIm = a.Im;
-                float bRe = b.Re, bIm = b.Im;
+                float aRe = a.Real, aIm = a.Imag;
+                float bRe = b.Real, bIm = b.Imag;
 
                 return new Complex32(aRe * bRe - aIm * bIm, aRe * bIm + aIm * bRe);
             }
             /// <summary>
-            /// Произведение комплексного числа и действительного числа.
+            /// Multiplies real number by complex number.
             /// </summary>
-            /// <param name="a">Число</param>
-            /// <param name="b">Комплексное число</param>
-            /// <returns>Комплексное число</returns>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Number</param>
+            /// <returns>Complex number</returns>
+            public static Complex32 operator *(float a, Complex32 b)
+            {
+                return new Complex32(b.Real * a, b.Imag * a);
+            }
+            /// <summary>
+            /// Multiplies complex number by real number.
+            /// </summary>
+            /// <param name="a">Number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Complex number</returns>
             public static Complex32 operator *(Complex32 a, float b)
             {
-                return new Complex32(a.Re * b, a.Im * b);
-            }
-            /// <summary>
-            /// Произведение комплексного числа и действительного числа.
-            /// </summary>
-            /// <param name="a">Число</param>
-            /// <param name="b">Комплексное число</param>
-            /// <returns>Комплексное число</returns>
-            public static Complex32 operator *(float b, Complex32 a)
-            {
-                return new Complex32(a.Re * b, a.Im * b);
+                return new Complex32(a.Real * b, a.Imag * b);
             }
 
+
             /// <summary>
-            /// Частное двух комплексных чисел
+            /// Divides one complex number by another.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Комплексное число</param>
-            /// <returns>Комплексное число</returns>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Complex number</returns>
             public static Complex32 operator /(Complex32 a, Complex32 b)
             {
-                float aRe = a.Re, aIm = a.Im;
-                float bRe = b.Re, bIm = b.Im;
+                float aRe = a.Real, aIm = a.Imag;
+                float bRe = b.Real, bIm = b.Imag;
                 float abs = bRe * bRe + bIm * bIm;
                 float inv = 1 / abs;
 
                 return new Complex32((aRe * bRe + aIm * bIm) * inv, (aIm * bRe - aRe * bIm) * inv);
             }
             /// <summary>
-            /// Частное комплексного числа и действительного числа.
+            /// Divides complex number by real number.
             /// </summary>
-            /// <param name="a">Комплексное число</param>
-            /// <param name="b">Число</param>
-            /// <returns>Комплексное число</returns>
+            /// <param name="a">Complex number</param>
+            /// <param name="b">Number</param>
+            /// <returns>Complex number</returns>
             public static Complex32 operator /(Complex32 a, float b)
             {
-                return new Complex32(a.Re / b, a.Im / b);
+                return new Complex32(a.Real / b, a.Imag / b);
             }
             /// <summary>
-            /// Частное комплексного числа и действительного числа.
+            /// Divides real number by complex number.
             /// </summary>
-            /// <param name="a">Числа</param>
-            /// <param name="b">Комплексное число</param>
-            /// <returns>Комплексное число</returns>
+            /// <param name="a">Number</param>
+            /// <param name="b">Complex number</param>
+            /// <returns>Complex number</returns>
             public static Complex32 operator /(float a, Complex32 b)
             {
-                if (b.Im == 0)
+                if (b.Imag == 0)
                 {
-                    return new Complex32(a / b.Re, 0);
+                    return new Complex32(a / b.Real, 0);
                 }
-                else if (b.Re == 0)
+                else if (b.Real == 0)
                 {
-                    return new Complex32(0, a / b.Im);
+                    return new Complex32(0, a / b.Imag);
                 }
-                return new Complex32(a / b.Re, a / b.Im);
+                return new Complex32(a / b.Real, a / b.Imag);
             }
             #endregion
         }
@@ -11761,13 +11721,13 @@ namespace UMapx.Core
 
         #region Modified Whittle multiply optimizations
         /// <summary>
-        /// Реализует умножние матриц с использованием модифицированной оптимизации Уиттла.
+        /// Implements matrix multiplication using modified Whittle optimization.
         /// </summary>
-        /// <param name="iRowA">Строка матрицы A</param>
-        /// <param name="B">Матрица B</param>
-        /// <param name="iRowC">Строка матрицы C</param>
-        /// <param name="length">Длина</param>
-        /// <param name="width">Ширина</param>
+        /// <param name="iRowA">Row of A</param>
+        /// <param name="B">Matrix B</param>
+        /// <param name="iRowC">Row of C</param>
+        /// <param name="length">Length</param>
+        /// <param name="width">Width</param>
         private static void Whittle_Mul(float[] iRowA, float[][] B, float[] iRowC, int length, int width)
         {
             float[] kRowB;
@@ -11785,13 +11745,13 @@ namespace UMapx.Core
             return;
         }
         /// <summary>
-        /// Реализует умножние матриц с использованием модифицированной оптимизации Уиттла.
+        /// Implements matrix multiplication using modified Whittle optimization.
         /// </summary>
-        /// <param name="iRowA">Строка матрицы A</param>
-        /// <param name="B">Матрица B</param>
-        /// <param name="iRowC">Строка матрицы C</param>
-        /// <param name="length">Длина</param>
-        /// <param name="width">Ширина</param>
+        /// <param name="iRowA">Row of A</param>
+        /// <param name="B">Matrix B</param>
+        /// <param name="iRowC">Row of C</param>
+        /// <param name="length">Length</param>
+        /// <param name="width">Width</param>
         private static void Whittle_Mul(Complex32[] iRowA, Complex32[][] B, Complex32[] iRowC, int length, int width)
         {
             Complex32[] kRowB;
@@ -11809,13 +11769,13 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Реализует умножние матриц с использованием модифицированной оптимизации Уиттла.
+        /// Implements matrix multiplication using modified Whittle optimization.
         /// </summary>
-        /// <param name="iRowA">Строка матрицы A</param>
-        /// <param name="B">Матрица B</param>
-        /// <param name="iRowC">Строка матрицы C</param>
-        /// <param name="length">Длина</param>
-        /// <param name="width">Ширина</param>
+        /// <param name="iRowA">Row of A</param>
+        /// <param name="B">Matrix B</param>
+        /// <param name="iRowC">Row of C</param>
+        /// <param name="length">Length</param>
+        /// <param name="width">Width</param>
         private static void Whittle_Mul(Complex32[] iRowA, float[][] B, Complex32[] iRowC, int length, int width)
         {
             float[] kRowB;
@@ -11833,13 +11793,13 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Реализует умножние матриц с использованием модифицированной оптимизации Уиттла.
+        /// Implements matrix multiplication using modified Whittle optimization.
         /// </summary>
-        /// <param name="iRowA">Строка матрицы A</param>
-        /// <param name="B">Матрица B</param>
-        /// <param name="iRowC">Строка матрицы C</param>
-        /// <param name="length">Длина</param>
-        /// <param name="width">Ширина</param>
+        /// <param name="iRowA">Row of A</param>
+        /// <param name="B">Matrix B</param>
+        /// <param name="iRowC">Row of C</param>
+        /// <param name="length">Length</param>
+        /// <param name="width">Width</param>
         private static void Whittle_Mul(float[] iRowA, Complex32[][] B, Complex32[] iRowC, int length, int width)
         {
             Complex32[] kRowB;
@@ -11862,16 +11822,16 @@ namespace UMapx.Core
 
     #region Jagged array
     /// <summary>
-    /// Используется для работы с зубчатыми массивами.
+    /// Uses to work with gear arrays.
     /// </summary>
     public static class Jagged
     {
         #region Conversions
         /// <summary>
-        /// Возвращает зубчатый массив.
+        /// Returns jagged array.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Jagged array</returns>
         public static double[][] ToJagged(this double[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -11891,10 +11851,10 @@ namespace UMapx.Core
             return jagged;
         }
         /// <summary>
-        /// Возвращает матрицу.
+        /// Returns matrix.
         /// </summary>
-        /// <param name="jagged">Зубчатый массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="jagged">Jagged array</param>
+        /// <returns>Matrix</returns>
         public static double[,] FromJagged(this double[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
@@ -11911,10 +11871,10 @@ namespace UMapx.Core
             return m;
         }
         /// <summary>
-        /// Возвращает зубчатый массив.
+        /// Returns jagged array.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Зубчатый массив</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Jagged array</returns>
         public static Complex[][] ToJagged(this Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -11934,10 +11894,10 @@ namespace UMapx.Core
             return jagged;
         }
         /// <summary>
-        /// Возвращает матрицу.
+        /// Returns matrix.
         /// </summary>
-        /// <param name="jagged">Зубчатый массив</param>
-        /// <returns>Матрица</returns>
+        /// <param name="jagged">Jagged array</param>
+        /// <returns>Matrix</returns>
         public static Complex[,] FromJagged(this Complex[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
@@ -11957,15 +11917,15 @@ namespace UMapx.Core
 
         #region Jagged array
         /// <summary>
-        /// Генератор случайных чисел.
+        /// 
         /// </summary>
         private static Random rnd = new Random();
         /// <summary>
-        /// Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a vector of random numbers, the values of which are distributed according to a uniform distribution.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[][] Rand(int m, int l)
         {
             double[][] H = new double[m][];
@@ -11984,11 +11944,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы случайных дробных чисел, значения которой распределены по равномерному закону.
+        /// Implements the construction of a vector of random numbers, the values of which are distributed according to a uniform distribution.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static Complex[][] Randc(int m, int l)
         {
             Complex[][] H = new Complex[m][];
@@ -12007,23 +11967,23 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Реализует построение матрицы случайных целых чисел.
+        /// Implements the construction of a vector of integer random numbers.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[][] Randi(int m, int l)
         {
             return Randi(m, l, 1, l + 1);
         }
         /// <summary>
-        /// Реализует построение матрицы случайных целых чисел.
+        /// Implements the construction of a vector of integer random numbers.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="a">Lower bound</param>
+        /// <param name="b">Upper bound</param>
+        /// <returns>Matrix</returns>
         public static double[][] Randi(int m, int l, int a, int b)
         {
             double[][] H = new double[m][];
@@ -12042,23 +12002,23 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует комплексной построение матрицы случайных целых чисел.
+        /// Implements the construction of a vector of integer random numbers.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static Complex[][] Randic(int m, int l)
         {
             return Randic(m, l, 1, l + 1);
         }
         /// <summary>
-        /// Реализует комплексной построение матрицы случайных целых чисел.
+        /// Implements the construction of a vector of integer random numbers.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <param name="a">Lower bound</param>
+        /// <param name="b">Upper bound</param>
+        /// <returns>Matrix</returns>
         public static Complex[][] Randic(int m, int l, int a, int b)
         {
             Complex[][] H = new Complex[m][];
@@ -12078,11 +12038,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Реализует построение нулевой матрицы.
+        /// Implements the construction of a zero matrix.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[][] Zero(int m, int l)
         {
             double[][] H = new double[m][];
@@ -12096,11 +12056,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение матрицы единиц.
+        /// Implements the construction of a matrix of ones.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[][] One(int m, int l)
         {
             double[][] H = new double[m][];
@@ -12118,11 +12078,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Реализует построение единичной матрицы.
+        /// Implements the construction of a eye matrix.
         /// </summary>
-        /// <param name="m">Высота</param>
-        /// <param name="l">Ширина</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Height</param>
+        /// <param name="l">Width</param>
+        /// <returns>Matrix</returns>
         public static double[][] Eye(int m, int l)
         {
             double[][] H = new double[m][];
@@ -12140,14 +12100,14 @@ namespace UMapx.Core
 
         #region Parse methods
         /// <summary>
-        /// Переводит исходную строку в матрицу вещественных чисел.
+        /// Parses the original string into a matrix of double numbers.
         /// <remarks>
-        /// Пример входной строки: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
+        /// Example: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
         /// </remarks>
         /// </summary>
-        /// <param name="a">Матрица</param>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Матрица</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="s">Input string</param>
+        /// <returns>Matrix</returns>
         public static double[][] Parse(this double[][] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
@@ -12171,11 +12131,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Пробует перевести исходную строку в матрицу вещественных чисел.
+        /// Tries to parse the original row into a matrix of double numbers.
         /// </summary>
-        /// <param name="s">Исходная строка</param>
-        /// <param name="result">Матрица вещественных чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="s">Input string</param>
+        /// <param name="result">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool TryParse(string s, ref double[][] result)
         {
             double[][] zero = null;
@@ -12191,14 +12151,14 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Переводит исходную строку в матрицу комплексных чисел.
+        /// Parses the original string into a matrix of complex numbers.
         /// </summary>
         /// <remarks>
-        /// Пример входной строки: "[1 + 2i, 2 + 4i; 3 + 6i, 4 + 8i]";
+        /// Example: "[1 + 2i, 2 + 4i; 3 + 6i, 4 + 8i]";
         /// </remarks>
-        /// <param name="a">Матрица</param>
-        /// <param name="s">Исходная строка</param>
-        /// <returns>Матрица комплексных чисел</returns>
+        /// <param name="a">Matrix</param>
+        /// <param name="s">Input string</param>
+        /// <returns>Matrix</returns>
         public static Complex[][] Parse(this Complex[][] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
@@ -12222,11 +12182,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Пробует перевести исходную строку в матрицу комплексных чисел.
+        /// Tries to parse the original row into a matrix of complex numbers.
         /// </summary>
-        /// <param name="s">Исходная строка</param>
-        /// <param name="result">Матрица комплексных чисел</param>
-        /// <returns>Логическое значение</returns>
+        /// <param name="s">Input string</param>
+        /// <param name="result">Matrix</param>
+        /// <returns>Boolean</returns>
         public static bool TryParse(string s, ref Complex[][] result)
         {
             Complex[][] zero = null;
@@ -12245,10 +12205,10 @@ namespace UMapx.Core
 
         #region Matrix conversions
         /// <summary>
-        /// Инвертирует все элементы матрицы.
+        /// Negates all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[][] Negate(this double[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12270,10 +12230,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Инвертирует все элементы матрицы.
+        /// Negates all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[][] Negate(this Complex[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12295,10 +12255,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает комплексную матрицу.
+        /// Returns a complex matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static Complex[][] ToComplex(this double[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12320,10 +12280,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 255].
+        /// Returns a matrix whose values belong to the interval [0, 255].
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[][] ToByte(this double[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12345,10 +12305,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Возвращает матрицу, значения которой принадлежат интервалу [0, 1].
+        /// Returns a matrix whose values belong to the interval [0, 1].
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[][] ToDouble(this double[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12388,10 +12348,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет модуль для всех элементов матрицы.
+        /// Takes a module for all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[][] Abs(this double[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12413,10 +12373,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет модуль для всех элементов матрицы.
+        /// Takes a module for all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[][] Abs(this Complex[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12438,10 +12398,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет угол для всех элементов матрицы.
+        /// Takes an angle for all matrix elements.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[][] Angle(this Complex[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12463,10 +12423,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет действительную часть для всех элементов матрицы.
+        /// Takes the real part for all elements of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[][] Real(this Complex[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12488,10 +12448,10 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Берет мнимую часть для всех элементов матрицы.
+        /// Takes the imaginary part for all elements of the matrix.
         /// </summary>
-        /// <param name="m">Матрица</param>
-        /// <returns>Матрица</returns>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
         public static double[][] Imag(this Complex[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -12518,21 +12478,21 @@ namespace UMapx.Core
 
     #region Enums
     /// <summary>
-    /// Определяет направление обработки.
+    /// Defines the direction of processing.
     /// </summary>
     public enum Direction
     {
         #region Direction
         /// <summary>
-        /// Горизонтальное направление.
+        /// Horizontal direction.
         /// </summary>
         Horizontal,
         /// <summary>
-        /// Вертикальное направление.
+        /// Vertical direction.
         /// </summary>
         Vertical,
         /// <summary>
-        /// Двустороннее направление.
+        /// Both direction.
         /// </summary>
         Both,
         #endregion

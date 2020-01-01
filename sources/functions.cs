@@ -20,9 +20,9 @@ namespace UMapx.Core
 
     #region Functions
     /// <summary>
-    /// Используется для реализации специальных математических функций.
+    /// Uses to implement special mathematical functions.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Special_functions
     /// </remarks>
     /// </summary>
@@ -30,25 +30,25 @@ namespace UMapx.Core
     {
         #region Private data
         /// <summary>
-        /// Максимальный логарифм.
+        /// 
         /// </summary>
         private const double LogMax = 7.09782712893383996732E2;
         /// <summary>
-        /// Минимальный логарифм.
+        /// 
         /// </summary>
         private const double LogMin = -7.451332191019412076235E2;
         /// <summary>
-        /// Квадратный корень из π.
+        /// 
         /// </summary>
         private const double sqrtPI = 1.7724538509055160272981674833411;
         #endregion
 
         #region Integral functions
         /// <summary>
-        /// Возвращает значение интегрального косинуса.
+        /// Returns the value of the integral cosine.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Ci(double x)
         {
             // special cases:
@@ -89,10 +89,10 @@ namespace UMapx.Core
             return Maths.Gamma + Math.Log(x) + s;
         }
         /// <summary>
-        /// Возвращает значение интегрального синуса.
+        /// Returns the value of the integral sine.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Si(double x)
         {
             // special cases:
@@ -131,10 +131,10 @@ namespace UMapx.Core
             return s;
         }
         /// <summary>
-        /// Возвращает значение интегральной показательной функции.
+        /// Returns the value of an integral exponential function.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Ei(double x)
         {
             // Properties:
@@ -169,10 +169,10 @@ namespace UMapx.Core
             return r + Math.Log(x);
         }
         /// <summary>
-        /// Возвращает значение интегрального логарифма.
+        /// Returns the value of the integral logarithm.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Li(double x)
         {
             // calculating Li(x) from Ei(x) 
@@ -188,10 +188,10 @@ namespace UMapx.Core
 
         #region Fresnel integral functions
         /// <summary>
-        /// Возвращает значение интеграла Френеля C(x).
+        /// Returns the value of the Fresnel integral C (x).
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Fresnelc(double x)
         {
             // special case:
@@ -229,10 +229,10 @@ namespace UMapx.Core
             return s;
         }
         /// <summary>
-        /// Возвращает значение интеграла Френеля S(x).
+        /// Returns the value of the Fresnel integral S(x).
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Fresnels(double x)
         {
             // special case:
@@ -273,11 +273,11 @@ namespace UMapx.Core
 
         #region Struve function
         /// <summary>
-        /// Возвращает значение функции Струве.
+        /// Returns the value of the Struve function.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="a">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double H(double x, int a)
         {
             // Struve function calculation method.
@@ -324,11 +324,11 @@ namespace UMapx.Core
             return s;
         }
         /// <summary>
-        /// Возвращает значение модифицированной функции Струве.
+        /// Returns the value of the modified Struve function.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="v">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <param name="v">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double L(double x, int v)
         {
             // Modified Struve function calculation method.
@@ -377,41 +377,41 @@ namespace UMapx.Core
 
         #region Beta function
         /// <summary>
-        /// Возвращает значение бета-функции: B(a, b) = Г(a) * Г(b) / Г(ab).
+        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="b">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Number</param>
+        /// <param name="b">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Beta(double a, double b)
         {
             return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
         }
         /// <summary>
-        /// Возвращает значение бета-функции B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
+        /// Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
         /// </summary>
-        /// <param name="m">Целое число</param>
-        /// <param name="n">Целое число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="m">Integer number</param>
+        /// <param name="n">Integer number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Beta(int m, int n)
         {
             return Special.Factorial(m - 1) * Special.Factorial(n - 1) / Special.Factorial(m + n - 1);
         }
         /// <summary>
-        /// Возвращает значение неполной бета-функции: Bx(a, b).
+        /// Returns the value of an incomplete beta function: Bx(a, b).
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="b">Число</param>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Number</param>
+        /// <param name="b">Number</param>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Beta(double a, double b, double x)
         {
             double aa, bb, t, xx, xc, w, y;
             bool flag;
 
             if (a <= 0.0)
-                throw new ArgumentOutOfRangeException("Неверное значение аргумента: a <= 0");
+                throw new ArgumentOutOfRangeException("Invalid argument value: a <= 0");
             if (b <= 0.0)
-                throw new ArgumentOutOfRangeException("Неверное значение аргумента: b <= 0");
+                throw new ArgumentOutOfRangeException("Invalid argument value: b <= 0");
 
             if ((x <= 0.0) || (x >= 1.0))
             {
@@ -423,7 +423,7 @@ namespace UMapx.Core
                 {
                     return 1.0;
                 }
-                throw new ArgumentOutOfRangeException("Неверное значение аргумента, поскольку значение носителя должно принадлежать интервалу [0, 1]");
+                throw new ArgumentOutOfRangeException("Invalid argument value, beacause the value must belong to the interval [0, 1]");
             }
 
             flag = false;
@@ -497,22 +497,22 @@ namespace UMapx.Core
             return t;
         }
         /// <summary>
-        /// Возвращает значение производной бета-функции: B'(a, b).
+        /// Returns the value of a derivative beta function: B'(a, b).
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="b">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Number</param>
+        /// <param name="b">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double BetaDerivative(double a, double b)
         {
             return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
         }
         /// <summary>
-        /// Возвращает значение регуляризованной неполной бета-функции Ix(a, b).
+        /// Returns the value of a regularized incomplete beta function: Ix(a, b).
         /// </summary>
-        /// <param name="a">Число</param>
-        /// <param name="b">Число</param>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Number</param>
+        /// <param name="b">Number</param>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double BetaIncomplete(double a, double b, double x)
         {
             return Special.Beta(a, b, x) / Special.Beta(a, b);
@@ -748,11 +748,11 @@ namespace UMapx.Core
 
         #region Gamma function
         /// <summary>
-        /// Максимальное значение Г-функции.
+        /// 
         /// </summary>
         private const double GammaMax = 171.624376956302725;
         /// <summary>
-        /// Левые коэффициенты.
+        /// 
         /// </summary>
         private static double[] Px = {
 						 1.60119522476751861407E-4,
@@ -764,7 +764,7 @@ namespace UMapx.Core
 						 9.99999999999999996796E-1
 					 };
         /// <summary>
-        /// Правые коэффициенты.
+        /// 
         /// </summary>
         private static double[] Qx = {
 						 -2.31581873324120129819E-5,
@@ -777,10 +777,10 @@ namespace UMapx.Core
 						 1.00000000000000000320E0
 					 };
         /// <summary>
-        /// Возвращает значение Гамма-функции Эйлера: Г(z).
+        /// Returns the value of the Euler Gamma function: Г(z).
         /// </summary>
-        /// <param name="z">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="z">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gamma(double z)
         {
             double p, g;
@@ -855,10 +855,10 @@ namespace UMapx.Core
 
         }
         /// <summary>
-        /// Возвращает значение натурального логарифма Гамма-функции Эйлера: ln[Г(z)].
+        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
         /// </summary>
-        /// <param name="z">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="z">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double GammaLog(double z)
         {
             if (z < 0)
@@ -876,10 +876,10 @@ namespace UMapx.Core
             return double.NaN;
         }
         /// <summary>
-        /// Возвращает значение Дигамма-функции: ψ(z).
+        /// Returns the value of the Digamma function: ψ(z).
         /// </summary>
-        /// <param name="z">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="z">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double DiGamma(double z)
         {
             if (z == 0)
@@ -971,10 +971,10 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// Возвращает значение Тригамма-функции: ψ1(z).
+        /// Returns the value of the Trigamma function: ψ1(z).
         /// </summary>
-        /// <param name="z">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="z">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double TriGamma(double z)
         {
             double a = 0.0001;
@@ -1024,11 +1024,11 @@ namespace UMapx.Core
             return value;
         }
         /// <summary>
-        /// Возвращает значение степени Гамма-функции Эйлера: Г(z)^p.
+        /// Returns the value of the degree of the Euler Gamma function: Г(z)^p.
         /// </summary>
-        /// <param name="z">Число</param>
-        /// <param name="p">Степень</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="z">Number</param>
+        /// <param name="p">Power</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gamma(double z, uint p)
         {
             if (p == 1)
@@ -1047,11 +1047,11 @@ namespace UMapx.Core
             return prod;
         }
         /// <summary>
-        /// Возвращает значение неполной верхней Гамма-функции: Q(s, x) = Γ(s, x) / Γ(s).
+        /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
         /// </summary>
-        /// <param name="s">Число</param>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double GammaQ(double s, double x)
         {
             const double big = 4.503599627370496e15;
@@ -1118,11 +1118,11 @@ namespace UMapx.Core
             return ans * ax;
         }
         /// <summary>
-        /// Возвращает значение неполной нижней Гамма-функции: P(s, x) = γ(s, x) / Γ(s).
+        /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
         /// </summary>
-        /// <param name="s">Число</param>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double GammaP(double s, double x)
         {
             if (s <= 0)
@@ -1155,11 +1155,11 @@ namespace UMapx.Core
             return ans * ax / s;
         }
         /// <summary>
-        /// Возвращает значение неполной Гамма-функции: γ(s, x).
+        /// Returns the value of an incomplete Gamma function: γ(s, x).
         /// </summary>
-        /// <param name="s">Число</param>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double GammaIncomplete(double s, double x)
         {
             double ans, ax, c, r;
@@ -1190,12 +1190,12 @@ namespace UMapx.Core
 
         }
         /// <summary>
-        /// Возвращает значение неполной Гамма-функции: γ(s, x).
+        /// Returns the value of an incomplete Gamma function: γ(s, x).
         /// </summary>
-        /// <param name="s">Число</param>
-        /// <param name="x">Число</param>
-        /// <param name="complemented">Дополнительная функция или нет</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <param name="complemented">Additional function or not</param>
+        /// <returns>Double precision floating point number</returns>
         public static double GammaIncomplete(double s, double x, bool complemented)
         {
             // not complemented
@@ -1261,12 +1261,12 @@ namespace UMapx.Core
 
         #region Gamma approximations
         /// <summary>
-        /// Возвращает значение полиномиала.
+        /// 
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="coef">Коэффициенты</param>
-        /// <param name="N">Порядок</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x"></param>
+        /// <param name="coef"></param>
+        /// <param name="N"></param>
+        /// <returns></returns>
         private static double Polynomials(double x, double[] coef, int N)
         {
             double sum = coef[0];
@@ -1279,10 +1279,10 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Возвращает значение логарифма Гамма-функции Эйлера, аппроксимированной по методу Стирлинга.
+        /// 
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x"></param>
+        /// <returns></returns>
         private static double Stirling(double x)
         {
             double[] STIR = 
@@ -1314,10 +1314,10 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// Возвращает значение логарифма Гамма-функции Эйлера, аппроксимированной по методу Ланцоша.
+        /// 
         /// </summary>
-        /// <param name="z">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="z"></param>
+        /// <returns></returns>
         private static double GammaLogLanczos(double z)
         {
             double[] coef = new double[6] { 76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179E-2, -0.5395239384953E-5 };
@@ -1340,21 +1340,20 @@ namespace UMapx.Core
 
         #region Laplace function
         /// <summary>
-        /// Возвращает значение интеграла Лапласа (функция ошибок).
-        /// Значения интеграла варьируются в пределах [-1, 1].
+        /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">Значение верхнего предела интеграла</param>
-        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erf(double x)
         {
             return Erf(x, false);
         }
         /// <summary>
-        /// Возвращает значение интеграла Лапласа (функция ошибок).
+        /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">Значение верхнего предела интеграла</param>
-        /// <param name="inverse">Обратная функция или нет</param>
-        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="inverse">Reverse function or not</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erf(double x, bool inverse)
         {
             // exception
@@ -1398,10 +1397,10 @@ namespace UMapx.Core
             return erf;
         }
         /// <summary>
-        /// Возвращает значение мнимой функции ошибок.
+        /// Returns the value of the imaginary error function.
         /// </summary>
-        /// <param name="x">Значение верхнего предела интеграла</param>
-        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erfi(double x)
         {
             // special cases:
@@ -1436,57 +1435,53 @@ namespace UMapx.Core
             return p * s;
         }
         /// <summary>
-        /// Возвращает значение интеграла Лапласа (функция ошибок).
-        /// Значения интеграла варьируются в пределах [-1, 1].
+        /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">Значение верхнего предела интеграла</param>
-        /// <param name="a">Нижняя граница отрезка нормировки</param>
-        /// <param name="b">Верхняя граница отрезка нормировки</param>
-        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="a">The lower boundary of the normalization</param>
+        /// <param name="b">The upper limit of the normalization</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erf(double x, double a, double b)
         {
             return Erf((x - a) / b);
         }
         /// <summary>
-        /// Возвращает значение интеграла Лапласа (функция ошибок).
-        /// Значения интеграла варьируются в пределах [-1, 1].
+        /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">Значение верхнего предела интеграла</param>
-        /// <param name="range">Пара дробных чисел, представляющих отрезок</param>
-        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="range">A pair of fractional numbers</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erf(double x, RangeDouble range)
         {
             return Erf(x, range.Min, range.Max);
         }
+
         /// <summary>
-        /// Возвращает значение интеграла Лапласа (дополнительная функция ошибок).
-        /// Значения интеграла варьируются в пределах [0, 2].
+        /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
-        /// <param name="x">Значение верхнего предела интеграла</param>
-        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erfc(double x)
         {
             return 1.0 - Erf(x);
         }
         /// <summary>
-        /// Возвращает значение интеграла Лапласа (дополнительная функция ошибок).
-        /// Значения интеграла варьируются в пределах [0, 2].
+        /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
-        /// <param name="x">Значение верхнего предела интеграла</param>
-        /// <param name="a">Нижняя граница отрезка нормировки</param>
-        /// <param name="b">Верхняя граница отрезка нормировки</param>
-        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="a">The lower boundary of the normalization</param>
+        /// <param name="b">The upper limit of the normalization</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erfc(double x, double a, double b)
         {
             return 1.0 - Erf(x, a, b);
         }
         /// <summary>
-        /// Возвращает значение интеграла Лапласа (дополнительная функция ошибок).
-        /// Значения интеграла варьируются в пределах [0, 2].
+        /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
-        /// <param name="x">Значение верхнего предела интеграла</param>
-        /// <param name="range">Пара дробных чисел, представляющих отрезок</param>
-        /// <returns>Вероятность того, что случайная величина примет значение, принадлежащее заданному интервалу</returns>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="range">A pair of fractional numbers</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erfc(double x, RangeDouble range)
         {
             return 1.0 - Erf(x, range.Min, range.Max);
@@ -1495,11 +1490,11 @@ namespace UMapx.Core
 
         #region Q-function
         /// <summary>
-        /// Возвращает значение Q-функции.
+        /// Returns the value of a Q function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="inverse">Обратная функция или нет</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="inverse">Inverse function or not</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Q(double x, bool inverse = false)
         {
             if (inverse)
@@ -1512,10 +1507,10 @@ namespace UMapx.Core
 
         #region Bessel functions
         /// <summary>
-        /// Возвращает значение функции Бесселя первого рода при a = 0.
+        /// Returns the value of the Bessel function of the first kind at a = 0.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         private static double J0(double x)
         {
             double ax;
@@ -1546,10 +1541,10 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции Бесселя первого рода при a = 1.
+        /// Returns the value of the Bessel function of the first kind at a = 1.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         private static double J1(double x)
         {
             double ax;
@@ -1583,11 +1578,11 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции Бесселя первого рода.
+        /// Returns the value of a Bessel function of the first kind.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="a">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double J(double x, int a)
         {
             if (a < 0 || x == 0) return 0;
@@ -1646,10 +1641,10 @@ namespace UMapx.Core
             return x < 0.0 && a % 2 == 1 ? -ans : ans;
         }
         /// <summary>
-        /// Возвращает значение функции Бесселя второго рода при a = 0.
+        /// Returns the value of the Bessel function of the second kind at a = 0.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         private static double Y0(double x)
         {
             if (x < 8.0)
@@ -1679,10 +1674,10 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции Бесселя второго рода при a = 1.
+        /// Returns the value of the Bessel function of the second kind at a = 1.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         private static double Y1(double x)
         {
             if (x < 8.0)
@@ -1711,11 +1706,11 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции Бесселя второго рода.
+        /// Returns the value of a Bessel function of the second kind.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="a">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Y(double x, int a)
         {
             if (a < 0 || x == 0) return 0;
@@ -1735,10 +1730,10 @@ namespace UMapx.Core
             return by;
         }
         /// <summary>
-        /// Возвращает значение модифицированной функции Бесселя первого рода при a = 0.
+        /// Returns the value of the modified Bessel function of the first kind at a = 0.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         private static double I0(double x)
         {
             double ans;
@@ -1763,10 +1758,10 @@ namespace UMapx.Core
             return ans;
         }
         /// <summary>
-        /// Возвращает значение модифицированной функции Бесселя первого рода при a = 1.
+        /// Returns the value of the modified Bessel function of the first kind at a = 1.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         private static double I1(double x)
         {
             double ans;
@@ -1790,11 +1785,11 @@ namespace UMapx.Core
             return x < 0.0 ? -ans : ans;
         }
         /// <summary>
-        /// Возвращает значение модифицированной функции Бесселя первого рода.
+        /// Returns the value of the modified Bessel function of the first kind.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="a">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double I(double x, int a)
         {
             if (a < 0 || x == 0) return 0;
@@ -1829,10 +1824,10 @@ namespace UMapx.Core
             return x < 0.0 && a % 2 == 1 ? -ans : ans;
         }
         /// <summary>
-        /// Возвращает значение модифицированной функции Бесселя второго рода при a = 0.
+        /// Returns the value of the modified Bessel function of the second kind at a = 0.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         private static double K0(double x)
         {
             double y, ans;
@@ -1854,10 +1849,10 @@ namespace UMapx.Core
             return ans;
         }
         /// <summary>
-        /// Возвращает значение модифицированной функции Бесселя второго рода при a = 1.
+        /// Returns the value of the modified Bessel function of the second kind at a = 1.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         private static double K1(double x)
         {
             double y, ans;
@@ -1879,11 +1874,11 @@ namespace UMapx.Core
             return ans;
         }
         /// <summary>
-        /// Возвращает значение модифицированной функции Бесселя второго рода.
+        /// Returns the value of the modified Bessel function of the second kind.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="a">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double K(double x, int a)
         {
             if (a < 0 || x == 0) return 0;
@@ -1907,11 +1902,11 @@ namespace UMapx.Core
 
         #region Owen's T-function components
         /// <summary>
-        /// Возвращает значение T-функции Оуэна.
+        /// Returns the value of the Owen T function.
         /// </summary>
-        /// <param name="h">Первый аргумент</param>
-        /// <param name="a">Второй аргумент</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="h">First argument</param>
+        /// <param name="a">Second argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Owen(double h, double a)
         {
             double absa;
@@ -1952,12 +1947,12 @@ namespace UMapx.Core
         }
         #region Private data
         /// <summary>
-        /// Возвращает значение T-функции Оуэна.
+        /// Returns the value of the Owen T function.
         /// </summary>
-        /// <param name="h">Первый аргумент</param>
-        /// <param name="a">Второй аргумент</param>
+        /// <param name="h">First argument</param>
+        /// <param name="a">Second argument</param>
         /// <param name="ah">h * a</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <returns>Double precision floating point number</returns>
         private static double owenhaah(double h, double a, double ah)
         {
             double ai;
@@ -2174,14 +2169,14 @@ namespace UMapx.Core
             return value;
         }
         /// <summary>
-        /// Коэффициенты.
+        /// 
         /// </summary>
         private static readonly double[] arange = 
         {
             0.025, 0.09, 0.15, 0.36, 0.5, 0.9, 0.99999 
         };
         /// <summary>
-        /// Коэффициенты.
+        /// 
         /// </summary>
         private static readonly double[] coefT = 
         {
@@ -2198,7 +2193,7 @@ namespace UMapx.Core
             -0.44676566663971825242E-02,  0.39141169402373836468E-03 
         };
         /// <summary>
-        /// Коэффициенты.
+        /// 
         /// </summary>
         private static readonly double[] hrange = 
         {
@@ -2207,21 +2202,21 @@ namespace UMapx.Core
             2.4,  3.36, 3.4,  4.8 
         };
         /// <summary>
-        /// Коэффициенты.
+        /// 
         /// </summary>
         private static readonly int[] meth = 
         {
             1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 6 
         };
         /// <summary>
-        /// Коэффициенты.
+        /// 
         /// </summary>
         private static readonly int[] ord = 
         {
             2, 3, 4, 5, 7,10,12,18,10,20,30,20, 4, 7, 8,20,13, 0 
         };
         /// <summary>
-        /// Коэффициенты.
+        /// 
         /// </summary>
         private static readonly double[] pts = 
         {
@@ -2234,7 +2229,7 @@ namespace UMapx.Core
             0.95723808085944261843,      0.99178832974629703586 
         };
         /// <summary>
-        /// Коэффициенты.
+        /// 
         /// </summary>
         private static readonly int[] select = 
         {
@@ -2248,7 +2243,7 @@ namespace UMapx.Core
             2, 3, 4, 4, 6, 6,18,18,18,18,17,17,17,12,12 
         };
         /// <summary>
-        /// Коэффициенты.
+        /// 
         /// </summary>
         private static readonly double[] wts = 
         {
@@ -2265,28 +2260,28 @@ namespace UMapx.Core
 
         #region Guderman & Hartley functions
         /// <summary>
-        /// Возвращает значение обратной функции Гудермана.
+        /// Returns the value of the inverse Guderman function.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Agd(double x)
         {
             return 0.5 * Math.Log((1.0 + Math.Sin(x)) / (1.0 - Math.Sin(x)));
         }
         /// <summary>
-        /// Возвращает значение функции Гудермана.
+        /// Returns the value of the Guderman function.
         /// </summary>
-        /// <param name="x">Угол в радианах</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Angle in radians</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gd(double x)
         {
             return 2 * Maths.Atg(Maths.Exp(x)) - 1.57079632679f;
         }
         /// <summary>
-        /// Возвращает значение функции Cas(x).
+        /// Returns the value of the function Cas(x).
         /// </summary>
-        /// <param name="theta">Тетта</param>
-        /// <returns>Число двойной точности</returns>
+        /// <param name="theta">Theta</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Cas(double theta)
         {
             return 1.414f * Math.Sin(theta + 0.78539);
@@ -2295,20 +2290,20 @@ namespace UMapx.Core
 
         #region Sinc function
         /// <summary>
-        /// Возвращает значение функции нормированного кардинального синуса: f(x) = sin(πx) / (πx).
+        /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Sinc(double x)
         {
             return Special.Sinc(x, Math.PI);
         }
         /// <summary>
-        /// Возвращает значение функции кардинального синуса с параметром: f(x, a) = sin(ax) / (ax).
+        /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="a">Параметр</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <param name="a">Parameter</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Sinc(double x, double a)
         {
             if (x == 0)
@@ -2322,11 +2317,11 @@ namespace UMapx.Core
 
         #region Binomial function
         /// <summary>
-        /// Возвращает значение биномиальных коэффициентов: C(n, k) = n! / k! / (n-k)! для k > 0.
+        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
         /// </summary>
-        /// <param name="n">Число</param>
-        /// <param name="k">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Binomial(double n, double k)
         {
             if (k < 0)
@@ -2336,11 +2331,11 @@ namespace UMapx.Core
             return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
         }
         /// <summary>
-        /// Возвращает значение натурального логарифма биномиальных коэффициентов: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
+        /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
         /// </summary>
-        /// <param name="n">Число</param>
-        /// <param name="k">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double LogBinomial(double n, double k)
         {
             return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
@@ -2349,19 +2344,19 @@ namespace UMapx.Core
 
         #region Factorial function
         /// <summary>
-        /// Возвращает натуральный логарифм факториала числа log(n!).
+        /// Returns the natural logarithm of the factorial of a number log(n!).
         /// </summary>
-        /// <param name="n">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double LogFactorial(double n)
         {
             return Special.GammaLog(n + 1.0);
         }
         /// <summary>
-        /// Возвращает факториал числа.
+        /// Returns the factorial of a number.
         /// </summary>
-        /// <param name="n">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Factorial(double n)
         {
             // check it:
@@ -2377,21 +2372,21 @@ namespace UMapx.Core
             return Special.Gamma(n + 1);
         }
         /// <summary>
-        /// Возвращает убывающий факториал числа.
+        /// Returns the decreasing factorial of a number.
         /// </summary>
-        /// <param name="n">Число</param>
-        /// <param name="k">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double FactorialDown(double n, double k)
         {
             return Special.Factorial(n) / Special.Factorial(n - k);
         }
         /// <summary>
-        /// Возвращает возрастающий факториал числа (символ Погхаммера).
+        /// Returns the increasing factorial of a number (Pohhammer symbol).
         /// </summary>
-        /// <param name="n">Число</param>
-        /// <param name="k">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double FactorialUp(double n, double k)
         {
             if (n == 0)
@@ -2404,13 +2399,12 @@ namespace UMapx.Core
 
         #region Fibonacci & Lucas numbers
         /// <summary>
-        /// Возвращает значение числа Фибоначчи.
+        /// Returns the value of the Fibonacci number.
         /// </summary>
-        /// <param name="n">Целое число</param>
-        /// <returns>Целое число</returns>
+        /// <param name="n">Integer number</param>
+        /// <returns>Integer number</returns>
         public static int Fibonacci(int n)
         {
-            // Формула Бине:
             double r = 2.2360679774997896964;
             double phi = (1.0 + r) / 2.0;
             double psi = (1.0 - r) / 2.0;
@@ -2418,13 +2412,12 @@ namespace UMapx.Core
             return (int)(num / r);
         }
         /// <summary>
-        /// Возвращает значение числа Люка.
+        /// Returns the value of the Luca number.
         /// </summary>
-        /// <param name="n">Целое число</param>
-        /// <returns>Целое число</returns>
+        /// <param name="n">Integer number</param>
+        /// <returns>Integer number</returns>
         public static int Lucas(int n)
         {
-            // Формула Бине:
             double r = 2.2360679774997896964;
             double phi = (1.0 + r) / 2.0;
             double psi = (1.0 - r) / 2.0;
@@ -2435,10 +2428,10 @@ namespace UMapx.Core
 
         #region Bernoulli function
         /// <summary>
-        /// Возвращает число Бернулли.
+        /// Returns the Bernoulli number.
         /// </summary>
-        /// <param name="n">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Bernoulli(int n)
         {
             // special cases:
@@ -2463,11 +2456,11 @@ namespace UMapx.Core
             return 0;
         }
         /// <summary>
-        /// Возвращает значение многочлена Бернулли.
+        /// Returns the value of the Bernoulli polynomial.
         /// </summary>
-        /// <param name="n">Порядок</param>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Order</param>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Bernoulli(int n, double x)
         {
             // properties:
@@ -2486,10 +2479,10 @@ namespace UMapx.Core
 
         #region Euler function
         /// <summary>
-        /// Возвращает число Эйлера.
+        /// Returns the Euler number.
         /// </summary>
-        /// <param name="n">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Euler(int n)
         {
             // special cases:
@@ -2512,11 +2505,11 @@ namespace UMapx.Core
             return 0;
         }
         /// <summary>
-        /// Возвращает значение многочлена Эйлера.
+        /// Returns the value of the Euler polynomial.
         /// </summary>
-        /// <param name="n">Порядок</param>
-        /// <param name="x">Число</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Order</param>
+        /// <param name="x">Number</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Euler(int n, double x)
         {
             // properties:
@@ -2537,20 +2530,20 @@ namespace UMapx.Core
 
         #region Harmonic number
         /// <summary>
-        /// Возвращает гармоническое число.
+        /// Returns the harmonic number.
         /// </summary>
-        /// <param name="n">Аргумент</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Harm(int n)
         {
             return Special.DiGamma(n) + 1.0 / n + Maths.Gamma;
         }
         /// <summary>
-        /// Возвращает гармоническое число.
+        /// Returns the harmonic number.
         /// </summary>
-        /// <param name="n">Порядок</param>
-        /// <param name="m">Аргумент</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="n">Order</param>
+        /// <param name="m">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Harm(int n, double m)
         {
             double sum = 0;
@@ -2565,27 +2558,23 @@ namespace UMapx.Core
 
         #region Chebyshev polynomials
         /// <summary>
-        /// Возвращает значение многочлена Чебышева первого рода.
+        /// Returns the value of the Chebyshev polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="n">Порядок многочлена</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public static double ChebyshevT(double x, int n)
         {
-            // Тригонометрическое определение
-            // многочлена Чебышева первого рода:
             return Math.Cos(n * Math.Acos(x));
         }
         /// <summary>
-        /// Возвращает значение многочлена Чебышева второго рода.
+        /// Returns the value of the Chebyshev polynomial of the second kind.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="n">Порядок многочлена</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public static double ChebyshevU(double x, int n)
         {
-            // Тригонометрическое определение
-            // многочлена Чебышева второго рода:
             double z = Math.Acos(x);
             return Math.Sin((n + 1) * z) / Math.Sin(z);
         }
@@ -2593,12 +2582,12 @@ namespace UMapx.Core
 
         #region Abel polynomials
         /// <summary>
-        /// Возвращает значение многочлена Абеля.
+        /// Returns the value of the Abel polynomial.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="a">Степень многочлена</param>
-        /// <param name="n">Порядок многочлена</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Abel(double x, double a, int n)
         {
             if (n == 0)
@@ -2614,12 +2603,12 @@ namespace UMapx.Core
 
         #region Laguerre polynomial
         /// <summary>
-        /// Возвращает значение многочлена Лагерра.
+        /// Returns the value of the Laguerre polynomial.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="a">Степень многочлена</param>
-        /// <param name="k">Порядок многочлена</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="k">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Laguerre(double x, double a, int k)
         {
             if (k == 0)
@@ -2637,11 +2626,11 @@ namespace UMapx.Core
 
         #region Legendre polynomial
         /// <summary>
-        /// Возвращает значение многочлена Лежандра первого рода.
+        /// Returns the value of the Legendre polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="m">Порядок многочлена</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Legendre(double x, int m)
         {
             if (m == 0)
@@ -2660,11 +2649,11 @@ namespace UMapx.Core
 
         #region Hermite polynomial
         /// <summary>
-        /// Возвращает значение многочлена Эрмита.
+        /// Returns the value of the Hermite polynomial.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="m">Порядок многочлена</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Hermite(double x, int m)
         {
             if (m == 0)
@@ -2680,12 +2669,12 @@ namespace UMapx.Core
 
         #region Gegenbauer polynomial
         /// <summary>
-        /// Возвращает значение многочлена Гегенбауэра.
+        /// Returns the value of the Gegenbauer polynomial.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="a">Степень многочлена</param>
-        /// <param name="n">Порядок многочлена</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gegenbauer(double x, double a, int n)
         {
             if (n == 0)
@@ -2702,11 +2691,11 @@ namespace UMapx.Core
 
         #region Mahlerpolynom function
         /// <summary>
-        /// Возвращает значение полинома Малера.
+        /// Returns the value of the Mahler polynomial.
         /// </summary>
-        /// <param name="x">Число</param>
-        /// <param name="t">Параметр</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Number</param>
+        /// <param name="t">Parameter</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Mahler(double x, double t)
         {
             return Math.Exp(x * (1 + t - Math.Pow(Math.E, t)));
@@ -2715,13 +2704,13 @@ namespace UMapx.Core
 
         #region Gompertz function
         /// <summary>
-        /// Возвращает значение функции Гомпертца.
+        /// Gets the value of the Gompertz function.
         /// </summary>
-        /// <param name="t">Носитель</param>
-        /// <param name="a">Верхняя асимптота</param>
-        /// <param name="b">Параметр роста</param>
-        /// <param name="c">Темп роста</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="t">Argument</param>
+        /// <param name="a">Upper asymptote</param>
+        /// <param name="b">Growth parameter</param>
+        /// <param name="c">Growth rate</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gompertz(double t, double a, double b, double c)
         {
             double x = -c * t;
@@ -2733,11 +2722,11 @@ namespace UMapx.Core
 
         #region Heavyside delta-function
         /// <summary>
-        /// Возвращает значение дельта-функции Хевисайда.
+        /// Returns the value of the Heaviside delta function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="k">Коэффициент сглаживания</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="k">Smoothing factor</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Heaviside(double x, double k)
         {
             return 0.5 + 0.5 * Math.Tanh(k * x);
@@ -2746,37 +2735,37 @@ namespace UMapx.Core
 
         #region Logistic function
         /// <summary>
-        /// Возвращает значение логистической функции.
+        /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="a">Нижняя асимптота</param>
-        /// <param name="k">Верхняя асимптота</param>
-        /// <param name="b">Темп роста</param>
-        /// <param name="v">Аффект</param>
-        /// <param name="q">Центральный момент</param>
-        /// <param name="c">Смещение</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <param name="v">Affect</param>
+        /// <param name="q">Central moment</param>
+        /// <param name="c">Offset</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Logistic(double x, double a, double k, double b, double v, double q, double c)
         {
             return a + (k - a) / Math.Pow(c + q * Math.Exp(-b * x), 1.0 / v);
         }
         /// <summary>
-        /// Возвращает значение логистической функции.
+        /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="a">Нижняя асимптота</param>
-        /// <param name="k">Верхняя асимптота</param>
-        /// <param name="b">Темп роста</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Logistic(double x, double a, double k, double b)
         {
             return Logistic(x, a, k, b, 0.5, 0.5, 1);
         }
         /// <summary>
-        /// Возвращает значение логистической функции.
+        /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Logistic(double x)
         {
             return Logistic(x, 0, 1, 3, 0.5, 0.5, 1);
@@ -2785,11 +2774,11 @@ namespace UMapx.Core
 
         #region Dirac delta-function
         /// <summary>
-        /// Возвращает значение дельта-функции Дирака.
+        /// Returns the value of the Dirac delta function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="a">Коэффициент</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Coefficient</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Dirac(double x, double a)
         {
             double s = Math.Sqrt(Math.PI);
@@ -2802,11 +2791,11 @@ namespace UMapx.Core
 
         #region Dawson functions
         /// <summary>
-        /// Возвращает значение D-/D+ функции Доусона.
+        /// Returns the value of the D- / D + Dawson function.
         /// </summary>
-        /// <param name="x">Носитель</param>
+        /// <param name="x">Argument</param>
         /// <param name="positive">D- или D+</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <returns>Double precision floating point number</returns>
         public static double Dawson(double x, bool positive)
         {
             if (positive)
@@ -2828,24 +2817,23 @@ namespace UMapx.Core
 
         #region Hypergeometric functions
         /// <summary>
-        /// Возвращает значение гипергеометрической функции.
+        /// Returns the value of a hypergeometric function.
         /// <remarks>
-        /// Данная версия гипергеометрической функции встречается в русскоязычной литературе и обозначается 
-        /// как F(a,b,c,z).
-        /// Более подробную информацию можно найти на сайте:
+        /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+        /// More information can be found on the website:
         /// https://en.wikipedia.org/wiki/Hypergeometric_function
         /// </remarks>
         /// </summary>
-        /// <param name="a">Параметр</param>
-        /// <param name="b">Параметр</param>
-        /// <param name="c">Параметр</param>
-        /// <param name="z">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="c">Parameter</param>
+        /// <param name="z">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Hypergeom(double a, double b, double c, double z)
         {
             // catch exception:
             if (double.IsNaN(a) || double.IsNaN(b) || double.IsNaN(c))
-                throw new Exception("Для данной функции должны быть корректно определены все входные параметры");
+                throw new Exception("For this function, all input parameters must be correctly defined");
             
             // for all z = 0:
             if (z == 0)
@@ -2881,19 +2869,19 @@ namespace UMapx.Core
             return s;
         }
         /// <summary>
-        /// Возвращает значение гипергеометрической функции.
+        /// Returns the value of a hypergeometric function.
         /// <remarks>
-        /// Гипергеометрическая функция может быть использована в нескольких вариациях:
+        /// The hypergeometric function can be used in several variations:
         /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
-        /// Вместо знака "~" следует использовать значение double.NaN.
-        /// Более подробную информацию можно найти на сайте:
+        /// Instead of the “~” sign, use the double.NaN value.
+        /// More information can be found on the website:
         /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
         /// </remarks>
         /// </summary>
-        /// <param name="a">Параметр</param>
-        /// <param name="b">Параметр</param>
-        /// <param name="z">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="z">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Hypergeom(double a, double b, double z)
         {
             // for all z = 0:
@@ -2984,11 +2972,11 @@ namespace UMapx.Core
 
         #region Generalized error function
         /// <summary>
-        /// Возвращает значение генерализированной функции ошибок.
+        /// Returns the value of the generalized error function.
         /// </summary>
-        /// <param name="x">Носитель (0, +inf)</param>
-        /// <param name="n">Порядок [0, +inf)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument (0, +inf)</param>
+        /// <param name="n">Order [0, +inf)</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gerf(double x, int n)
         {
             // Generalized error functions:
@@ -3015,10 +3003,10 @@ namespace UMapx.Core
             return double.NaN;
         }
         /// <summary>
-        /// Возвращает значение генерализированной функции ошибок.
+        /// Returns the value of the generalized error function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gerf(double x)
         {
             return Gerf(x, 2);
@@ -3027,11 +3015,11 @@ namespace UMapx.Core
 
         #region Rademacher function
         /// <summary>
-        /// Возвращает значение функции Радамехера.
+        /// Returns the value of the Radamecher function.
         /// </summary>
-        /// <param name="t">Носитель [0, 1]</param>
-        /// <param name="n">Порядок</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="t">Argument [0, 1]</param>
+        /// <param name="n">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Rademacher(double t, int n)
         {
             double p = Math.Pow(2, n);
@@ -3042,12 +3030,12 @@ namespace UMapx.Core
 
         #region Elrang B and C functions
         /// <summary>
-        /// Возвращает значение C-функции Эрланга.
+        /// Returns the value of the Erlang C-function.
         /// </summary>
-        /// <param name="y">Первый параметр</param>
-        /// <param name="v">Второй параметр</param>
-        /// <param name="t">Временной параметр</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <param name="t">Time parameter</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erlang(double y, int v, double t)
         {
             double e = Special.Erlang(y, v);
@@ -3057,11 +3045,11 @@ namespace UMapx.Core
             return a / b * Math.Exp(-c);
         }
         /// <summary>
-        /// Возвращает значение B-функции Эрланга.
+        /// Returns the value of the Erlang B-function.
         /// </summary>
-        /// <param name="y">Первый параметр</param>
-        /// <param name="v">Второй параметр</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Erlang(double y, int v)
         {
             // special cases:
@@ -3088,11 +3076,11 @@ namespace UMapx.Core
 
         #region Lambert W-function
         /// <summary>
-        /// Возвращает значение W-функции Ламберта.
+        /// Returns the value of the Lambert W-function.
         /// </summary>
-        /// <param name="x">Носитель [-1/e,+inf)</param>
-        /// <param name="branch">Ветвь функции</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument [-1/e,+inf)</param>
+        /// <param name="branch">Function branch</param>
+        /// <returns>Double precision floating point number</returns>
         public static double LambertW(double x, bool branch = true)
         {
             // *****************************************************************
@@ -3115,11 +3103,11 @@ namespace UMapx.Core
             return w;
         }
         /// <summary>
-        /// Возвращает значение квадратного супер-корня.
+        /// Returns the value of the square super-root.
         /// </summary>
-        /// <param name="x">Носитель [1,+inf)</param>
-        /// <param name="branch">Ветвь функции</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument [1,+inf)</param>
+        /// <param name="branch">Function branch</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Ssqrt(double x, bool branch = true)
         {
             // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
@@ -3131,10 +3119,10 @@ namespace UMapx.Core
 
         #region Minkowski function
         /// <summary>
-        /// Возвращает значение функции Минковского.
+        /// Returns the value of the Minkowski function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Minkowski(double x)
         {
             // Minkowski function:
@@ -3168,7 +3156,7 @@ namespace UMapx.Core
 
         #region Sequences of numbers
         /// <summary>
-        /// Числа Бернулли четного порядка от 2 до 258.
+        /// 
         /// </summary>
         private static double[] A027641 = new double[]
         {
@@ -3303,7 +3291,7 @@ namespace UMapx.Core
             1.33527841873546293819631624429361412259570631983417101322206e306, 
         };
         /// <summary>
-        /// Последовательность значений факториалов от 0 до 170.
+        /// 
         /// </summary>
         private static double[] A000142 = new double[]
         {
@@ -3480,7 +3468,7 @@ namespace UMapx.Core
             7.2574156153079940453996357155895914678961841172423e306,
         };
         /// <summary>
-        /// Числа Эйлера четного порядка от 2 до 186.
+        /// 
         /// </summary>
         private static double[] A122045 = new double[]
         {
@@ -3581,9 +3569,9 @@ namespace UMapx.Core
         #endregion
     }
     /// <summary>
-    /// Используется для работы с ядерными функциями.
+    /// Uses to work with kernel functions.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Kernel_(statistics)
     /// </remarks>
     /// </summary>
@@ -3591,10 +3579,10 @@ namespace UMapx.Core
     {
         #region Bicubic kernel function
         /// <summary>
-        /// Возвращает значение бикубической функции.
+        /// Returns the value of a bicubic function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Bicubic(double x)
         {
             if (x < 0)
@@ -3619,11 +3607,11 @@ namespace UMapx.Core
 
         #region Gaussian kernel function
         /// <summary>
-        /// Возвращает значение функции гауссиана.
+        /// Returns the value of a Gaussian function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="sigma">Среднеквадратическое отклонение (0, +inf)</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="sigma">Standard deviation (0, +inf)</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gaussian(double x, double sigma)
         {
             double t = x * x;
@@ -3631,10 +3619,10 @@ namespace UMapx.Core
             return Math.Exp(-t / s / 2.0);
         }
         /// <summary>
-        /// Возвращает значение функции гауссиана σ = 1.
+        /// Returns the value of a Gaussian function σ = 1.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Gaussian(double x)
         {
             return Math.Exp(-x * x / 2);
@@ -3643,11 +3631,11 @@ namespace UMapx.Core
 
         #region Lanczos kernel function
         /// <summary>
-        /// Возвращает значение функции Ланцоша.
+        /// Returns the value of the Lanczos function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <param name="a">Параметр</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Parameter</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Lanczos(double x, double a)
         {
             if (x == 0)
@@ -3662,10 +3650,10 @@ namespace UMapx.Core
             return 0;
         }
         /// <summary>
-        /// Возвращает значение функции Ланцоша, при a = 1.
+        /// Returns the value of the Lanczos function, with a = 1.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Lanczos(double x)
         {
             return Lanczos(x, 1);
@@ -3674,10 +3662,10 @@ namespace UMapx.Core
 
         #region Uniform kernel function
         /// <summary>
-        /// Возвращает значение равномерной функции.
+        /// Returns the value of a uniform function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Uniform(double x)
         {
             double abs = Math.Abs(x);
@@ -3691,10 +3679,10 @@ namespace UMapx.Core
 
         #region Triangular kernel function
         /// <summary>
-        /// Возвращает значение треугольной функции.
+        /// Returns the value of a triangular function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Triangular(double x)
         {
             double abs = Math.Abs(x);
@@ -3708,10 +3696,10 @@ namespace UMapx.Core
 
         #region Trapezoid kernel function
         /// <summary>
-        /// Возвращает значение трапециевидная функции.
+        /// Returns the value of the trapezoid function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Trapezoid(double x)
         {
             double abs = Math.Abs(x);
@@ -3729,10 +3717,10 @@ namespace UMapx.Core
 
         #region Epanechnikov kernel function
         /// <summary>
-        /// Возвращает значение функции Епанечникова.
+        /// Returns the value of the Epanechnikov function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Epanechnikov(double x)
         {
             double abs = Math.Abs(x);
@@ -3746,10 +3734,10 @@ namespace UMapx.Core
 
         #region Quartic kernel function
         /// <summary>
-        /// Возвращает значение Q-функции.
+        /// Returns the value of a Q function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Quartic(double x)
         {
             double abs = Math.Abs(x);
@@ -3763,10 +3751,10 @@ namespace UMapx.Core
 
         #region Triweight kernel function
         /// <summary>
-        /// Возвращает значение T-функции.
+        /// Returns the value of a T-function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Triweight(double x)
         {
             double abs = Math.Abs(x);
@@ -3780,10 +3768,10 @@ namespace UMapx.Core
 
         #region Tricube kernel function
         /// <summary>
-        /// Возвращает значение трикубической функции.
+        /// Returns the value of a tricubic function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Tricube(double x)
         {
             double abs = Math.Abs(x);
@@ -3797,10 +3785,10 @@ namespace UMapx.Core
 
         #region Cosine kernel function
         /// <summary>
-        /// Возвращает значение косинусной функции.
+        /// Returns the value of the cosine function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Cosine(double x)
         {
             double abs = Math.Abs(x);
@@ -3814,10 +3802,10 @@ namespace UMapx.Core
 
         #region Logistic kernel function
         /// <summary>
-        /// Возвращает значение логистической функции.
+        /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Logistic(double x)
         {
             return 1.0 / (Math.Exp(x) + 2 + Math.Exp(-x));
@@ -3826,10 +3814,10 @@ namespace UMapx.Core
 
         #region Sigmoid kernel function
         /// <summary>
-        /// Возвращает значение сигмоидальной функции.
+        /// Returns the value of a sigmoid function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Sigmoid(double x)
         {
             return 2.0 / Math.PI * (Math.Exp(x) + Math.Exp(-x));
@@ -3838,10 +3826,10 @@ namespace UMapx.Core
 
         #region Silverman function
         /// <summary>
-        /// Возвращает значение функции Сильвермана.
+        /// Returns the value of the Silverman function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Silverman(double x)
         {
             double abs = Math.Abs(x);
@@ -3854,30 +3842,30 @@ namespace UMapx.Core
 
     #region Delegates
     /// <summary>
-    /// Определяет делегат непрерывной функции, зависящей от одного аргумента.
+    /// Defines the delegate of a continuous function that depends on a single argument.
     /// </summary>
-    /// <param name="x">Аргумент</param>
-    /// <returns>Число двойной точности с плавающей запятой</returns>
+    /// <param name="x">Argument</param>
+    /// <returns>Double precision floating point number</returns>
     public delegate double IDouble(double x);
     /// <summary>
-    /// Определяет делегат непрерывной функции, зависящей от одного аргумента.
+    /// Defines the delegate of a continuous function that depends on a single argument.
     /// </summary>
-    /// <param name="x">Аргумент</param>
-    /// <returns>Комплексное число</returns>
+    /// <param name="x">Argument</param>
+    /// <returns>Complex number</returns>
     public delegate Complex IComplex(Complex x);
     /// <summary>
-    /// Определяет делегат непрерывной функции, зависящей от двух аргументов.
+    /// Defines the delegate of a continuous function that depends on two arguments.
     /// </summary>
-    /// <param name="x">Первый аргумент</param>
-    /// <param name="y">Второй аргумент</param>
-    /// <returns>Число двойной точности с плавающей запятой</returns>
+    /// <param name="x">First argument</param>
+    /// <param name="y">Second argument</param>
+    /// <returns>Double precision floating point number</returns>
     public delegate double IDoubleMesh(double x, double y);
     /// <summary>
-    /// Определяет делегат непрерывной функции, зависящей от двух аргументов.
+    /// Defines the delegate of a continuous function that depends on two arguments.
     /// </summary>
-    /// <param name="x">Первый аргумент</param>
-    /// <param name="y">Второй аргумент</param>
-    /// <returns>Комплексное число</returns>
+    /// <param name="x">First argument</param>
+    /// <param name="y">Second argument</param>
+    /// <returns>Complex number</returns>
     public delegate Complex IComplexMesh(Complex x, Complex y);
     #endregion
 }

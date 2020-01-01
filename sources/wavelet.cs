@@ -27,11 +27,11 @@ namespace UMapx.Wavelet
 
     #region Wavelet Transforms
     /// <summary>
-    /// Определяет дискретное вейвлет-преобразование.
+    /// Defines a discrete wavelet transform.
     /// <remarks>
-    /// Для корректного вейвлет-преобразования исходного сигнала необходимо, чтобы его размерность была степенью 2.
+    /// For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
     /// 
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Discrete_wavelet_transform
     /// </remarks>
     /// </summary>
@@ -48,17 +48,17 @@ namespace UMapx.Wavelet
 
         #region Initialize
         /// <summary>
-        /// Инициализирует дискретное вейвлет-преобразование.
+        /// Initializes a discrete wavelet transform.
         /// </summary>
-        /// <param name="wavelet">Дискретный вейвлет</param>
-        /// <param name="levels">Количество уровней</param>
-        /// <param name="normalized">Нормализованное преобразование или нет</param>
+        /// <param name="wavelet">Discrete wavelet</param>
+        /// <param name="levels">Number of levels</param>
+        /// <param name="normalized">Normalized transform or not</param>
         public WaveletTransform(WaveletPack wavelet, int levels = 1, bool normalized = true)
         {
             Wavelet = wavelet; Levels = levels; Normalized = normalized;
         }
         /// <summary>
-        /// Получает или задает количество уровней преобразования.
+        /// Gets or sets the number of transform levels.
         /// </summary>
         public int Levels
         {
@@ -69,13 +69,13 @@ namespace UMapx.Wavelet
             set
             {
                 if (value < 1)
-                    throw new Exception("Количество уровней не может быть меньше 1");
+                    throw new Exception("Number of levels cannot be less than 1");
 
                 this.levels = value;
             }
         }
         /// <summary>
-        /// Нормализированное преобразование или нет.
+        /// Normalized transform or not.
         /// </summary>
         public bool Normalized
         {
@@ -89,7 +89,7 @@ namespace UMapx.Wavelet
             }
         }
         /// <summary>
-        /// Получает или задает дискретный вейвлет.
+        /// Gets or sets the discrete wavelet.
         /// </summary>
         public WaveletPack Wavelet
         {
@@ -109,10 +109,10 @@ namespace UMapx.Wavelet
 
         #region Wavelet transform
         /// <summary>
-        /// Прямое вейвлет-преобразование.
+        /// Forward wavelet transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
             // params
@@ -127,10 +127,10 @@ namespace UMapx.Wavelet
             return A;
         }
         /// <summary>
-        /// Обратное вейвлет-преобразование.
+        /// Backward wavelet transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
             // params
@@ -145,10 +145,10 @@ namespace UMapx.Wavelet
             return B;
         }
         /// <summary>
-        /// Прямое вейвлет-преобразование.
+        /// Forward wavelet transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Forward(double[,] A)
         {
             // params
@@ -190,10 +190,10 @@ namespace UMapx.Wavelet
             return output;
         }
         /// <summary>
-        /// Обратное вейвлет-преобразование.
+        /// Backward wavelet transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public double[,] Backward(double[,] B)
         {
             // params
@@ -230,10 +230,10 @@ namespace UMapx.Wavelet
             return output;
         }
         /// <summary>
-        /// Прямое вейвлет-преобразование.
+        /// Forward wavelet transform.
         /// </summary>
-        /// <param name="A">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
             // params
@@ -248,10 +248,10 @@ namespace UMapx.Wavelet
             return A;
         }
         /// <summary>
-        /// Обратное вейвлет-преобразование.
+        /// Backward wavelet transform.
         /// </summary>
-        /// <param name="B">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
             // params
@@ -266,10 +266,10 @@ namespace UMapx.Wavelet
             return B;
         }
         /// <summary>
-        /// Прямое вейвлет-преобразование.
+        /// Forward wavelet transform.
         /// </summary>
-        /// <param name="A">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Forward(Complex[,] A)
         {
             // params
@@ -311,10 +311,10 @@ this.levels), DataLen2);
             return output;
         }
         /// <summary>
-        /// Обратное вейвлет-преобразование.
+        /// Backward wavelet transform.
         /// </summary>
-        /// <param name="B">Двумерный массив</param>
-        /// <returns>Двумерный массив</returns>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
         public Complex[,] Backward(Complex[,] B)
         {
             // params
@@ -623,9 +623,9 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет дискретный вейвлет.
+    /// Defines the discrete wavelet.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
     /// </summary>
@@ -640,18 +640,18 @@ this.levels), DataLen2);
 
         #region Wavelet components
         /// <summary>
-        /// Инициализирует дискретный вейвлет.
+        /// Initializes the discrete wavelet.
         /// </summary>
-        /// <param name="lp">Масштабирующая функция прямого преобразования</param>
-        /// <param name="hp">Вейвлет-функция прямого преобразования</param>
-        /// <param name="ilp">Масштабирующая функция обратного преобразования</param>
-        /// <param name="ihp">Вейвлет-функция обратного преобразования</param>
+        /// <param name="lp">Scaling function of forward transform</param>
+        /// <param name="hp">Wavelet function of forward transform</param>
+        /// <param name="ilp">Scaling function of backward transform</param>
+        /// <param name="ihp">Wavelet function of backward transform</param>
         public WaveletPack(double[] lp, double[] hp, double[] ilp, double[] ihp)
         {
             this.lp = lp; this.hp = hp; this.ilp = ilp; this.ihp = ihp;
         }
         /// <summary>
-        /// Получает или задает масштабирующую функцию прямого преобразования.
+        /// Gets or sets the scaling function of forward transform.
         /// </summary>
         public double[] LowPass
         {
@@ -665,7 +665,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Получает или задает вейвлет-функцию прямого преобразования.
+        /// Gets or sets the wavelet function of forward transform.
         /// </summary>
         public double[] HighPass
         {
@@ -679,7 +679,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Получает или задает масштабирующую функцию обратного преобразования.
+        /// Gets or sets the scaling function of backward transform.
         /// </summary>
         public double[] iLowPass
         {
@@ -693,7 +693,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Получает или задает вейвлет-функцию обратного преобразования.
+        /// Gets or sets the wavelet function of backward transform.
         /// </summary>
         public double[] iHighPass
         {
@@ -710,10 +710,10 @@ this.levels), DataLen2);
 
         #region Public static voids
         /// <summary>
-        /// Инвертирует нечетные элементы вектора.
+        /// Inverts the odd elements of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] InvertOdds(double[] v)
         {
             double[] w = (double[])v.Clone();
@@ -727,10 +727,10 @@ this.levels), DataLen2);
             return w;
         }
         /// <summary>
-        /// Инвертирует четные элементы вектора.
+        /// Inverts even elements of a vector.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
         public static double[] InvertEvens(double[] v)
         {
             double[] w = (double[])v.Clone();
@@ -744,19 +744,19 @@ this.levels), DataLen2);
             return w;
         }
         /// <summary>
-        /// Возвращает вейвлет-функцию Добеши.
+        /// Returns the Daubechies wavelet function.
         /// </summary>
-        /// <param name="scaling">Масштабирующая функция</param>
-        /// <returns>Вейвлет-функция</returns>
+        /// <param name="scaling">Scaling function</param>
+        /// <returns>Wavelet function</returns>
         private static double[] GetWavelet(double[] scaling)
         {
             return WaveletPack.InvertOdds(Matrice.Flip(scaling));
         }
         /// <summary>
-        /// Создает дискретный вейвлет.
+        /// Creates the discrete wavelet.
         /// </summary>
-        /// <param name="scaling">Масштабирующая функция</param>
-        /// <returns>Вейвлет-фильтр</returns>
+        /// <param name="scaling">Scaling function</param>
+        /// <returns>Discrete wavelet</returns>
         public static WaveletPack Create(double[] scaling)
         {
             double[] lp = scaling;
@@ -767,11 +767,11 @@ this.levels), DataLen2);
             return new WaveletPack(lp, hp, ilp, ihp);
         }
         /// <summary>
-        /// Создает дискретный вейвлет.
+        /// Creates the discrete wavelet.
         /// </summary>
-        /// <param name="scaling">Масштабирующая функция</param>
-        /// <param name="wavelet">Вейвлет-функция</param>
-        /// <returns>Вейвлет-фильтр</returns>
+        /// <param name="scaling">Scaling function</param>
+        /// <param name="wavelet">Wavelet function</param>
+        /// <returns>Discrete wavelet</returns>
         public static WaveletPack Create(double[] scaling, double[] wavelet)
         {
             double[] lp = scaling;
@@ -785,9 +785,9 @@ this.levels), DataLen2);
 
         #region Clone members
         /// <summary>
-        /// Создает копию дискретного вейвлета.
+        /// Creates a copy of the discrete wavelet.
         /// </summary>
-        /// <returns>Комплексное число</returns>
+        /// <returns>Discrete wavelet</returns>
         object ICloneable.Clone()
         {
             return new WaveletPack(
@@ -797,9 +797,9 @@ this.levels), DataLen2);
                 (double[])this.ihp.Clone());
         }
         /// <summary>
-        /// Создает копию дискретного вейвлета.
+        /// Creates a copy of the discrete wavelet.
         /// </summary>
-        /// <returns>Комплексное число</returns>
+        /// <returns>Discrete wavelet</returns>
         public WaveletPack Clone()
         {
             return new WaveletPack(
@@ -812,24 +812,24 @@ this.levels), DataLen2);
 
         #region Serialization members
         /// <summary>
-        /// Получает информацию об объекте.
+        /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Данные, необходимые для сериализации и диссериализации объекта</param>
-        /// <param name="context">Источник и назначение заданного потока</param>
+        /// <param name="info">Data needed for serialization and deserialization</param>
+        /// <param name="context">Source and destination of a given stream</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("Масштабирующая функция прямого преобразования", this.lp);
-            info.AddValue("Вейвлет-функция прямого преобразования", this.hp);
-            info.AddValue("Масштабирующая функция обратного преобразования", this.ilp);
-            info.AddValue("Вейвлет-функция обратного преобразования", this.ihp);
+            info.AddValue("Scaling function of forward transform", this.lp);
+            info.AddValue("Wavelet function of forward transform", this.hp);
+            info.AddValue("Scaling function of backward transform", this.ilp);
+            info.AddValue("Wavelet function of backward transform", this.ihp);
         }
         #endregion
 
         #region Biorthogonal wavelets
         /// <summary>
-        /// Возвращает биортогональный вейвлет 1.1.
+        /// Returns a biorthogonal wavelet 1.1.
         /// <remarks>
-        /// Вейвлет Хаара.
+        /// Haar wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack Bior11
@@ -841,7 +841,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 1.3.
+        /// Returns a biorthogonal wavelet 1.3.
         /// </summary>
         public static WaveletPack Bior13
         {
@@ -851,7 +851,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 1.5.
+        /// Returns a biorthogonal wavelet 1.5.
         /// </summary>
         public static WaveletPack Bior15
         {
@@ -861,7 +861,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 2.2.
+        /// Returns a biorthogonal wavelet 2.2.
         /// </summary>
         public static WaveletPack Bior22
         {
@@ -871,7 +871,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 2.4.
+        /// Returns a biorthogonal wavelet 2.4.
         /// </summary>
         public static WaveletPack Bior24
         {
@@ -901,7 +901,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 2.6.
+        /// Returns a biorthogonal wavelet 2.6.
         /// </summary>
         public static WaveletPack Bior26
         {
@@ -939,7 +939,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 2.8.
+        /// Returns a biorthogonal wavelet 2.8.
         /// </summary>
         public static WaveletPack Bior28
         {
@@ -981,7 +981,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 3.1.
+        /// Returns a biorthogonal wavelet 3.1.
         /// </summary>
         public static WaveletPack Bior31
         {
@@ -999,7 +999,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 3.3.
+        /// Returns a biorthogonal wavelet 3.3.
         /// </summary>
         public static WaveletPack Bior33
         {
@@ -1025,7 +1025,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 3.5.
+        /// Returns a biorthogonal wavelet 3.5.
         /// </summary>
         public static WaveletPack Bior35
         {
@@ -1059,7 +1059,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает биортогональный вейвлет 3.7.
+        /// Returns a biorthogonal wavelet 3.7.
         /// </summary>
         public static WaveletPack Bior37
         {
@@ -1100,9 +1100,9 @@ this.levels), DataLen2);
 
         #region Daubechies wavelets
         /// <summary>
-        /// Возвращает вейвлет Добеши 1-го порядка.
+        /// Returns Daubechies wavelet of 1 order.
         /// <remarks>
-        /// Вейвлет Хаара.
+        /// Haar wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack D1
@@ -1116,7 +1116,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 2-го порядка.
+        /// Returns Daubechies wavelet of 2 order.
         /// </summary>
         public static WaveletPack D2
         {
@@ -1130,7 +1130,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 3-го порядка.
+        /// Returns Daubechies wavelet of 3 order.
         /// </summary>
         public static WaveletPack D3
         {
@@ -1146,7 +1146,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 4-го порядка.
+        /// Returns Daubechies wavelet of 4 order.
         /// </summary>
         public static WaveletPack D4
         {
@@ -1164,7 +1164,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 5-го порядка.
+        /// Returns Daubechies wavelet of 5 order.
         /// </summary>
         public static WaveletPack D5
         {
@@ -1184,7 +1184,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 6-го порядка.
+        /// Returns Daubechies wavelet of 6 order.
         /// </summary>
         public static WaveletPack D6
         {
@@ -1206,7 +1206,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 7-го порядка.
+        /// Returns Daubechies wavelet of 7 order.
         /// </summary>
         public static WaveletPack D7
         {
@@ -1230,7 +1230,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 8-го порядка.
+        /// Returns Daubechies wavelet of 8 order.
         /// </summary>
         public static WaveletPack D8
         {
@@ -1256,7 +1256,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 9-го порядка.
+        /// Returns Daubechies wavelet of 9 order.
         /// </summary>
         public static WaveletPack D9
         {
@@ -1284,7 +1284,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 10-го порядка.
+        /// Returns Daubechies wavelet of 10 order.
         /// </summary>
         public static WaveletPack D10
         {
@@ -1315,7 +1315,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 11-го порядка.
+        /// Returns Daubechies wavelet of 11 order.
         /// </summary>
         public static WaveletPack D11
         {
@@ -1348,7 +1348,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 12-го порядка.
+        /// Returns Daubechies wavelet of 12 order.
         /// </summary>
         public static WaveletPack D12
         {
@@ -1384,7 +1384,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 13-го порядка.
+        /// Returns Daubechies wavelet of 13 order.
         /// </summary>
         public static WaveletPack D13
         {
@@ -1422,7 +1422,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 14-го порядка.
+        /// Returns Daubechies wavelet of 14 order.
         /// </summary>
         public static WaveletPack D14
         {
@@ -1463,7 +1463,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 15-го порядка.
+        /// Returns Daubechies wavelet of 15 order.
         /// </summary>
         public static WaveletPack D15
         {
@@ -1506,7 +1506,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 16-го порядка.
+        /// Returns Daubechies wavelet of 16 order.
         /// </summary>
         public static WaveletPack D16
         {
@@ -1551,7 +1551,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 17-го порядка.
+        /// Returns Daubechies wavelet of 17 order.
         /// </summary>
         public static WaveletPack D17
         {
@@ -1598,7 +1598,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 18-го порядка.
+        /// Returns Daubechies wavelet of 18 order.
         /// </summary>
         public static WaveletPack D18
         {
@@ -1647,7 +1647,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 19-го порядка.
+        /// Returns Daubechies wavelet of 19 order.
         /// </summary>
         public static WaveletPack D19
         {
@@ -1698,7 +1698,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 20-го порядка.
+        /// Returns Daubechies wavelet of 20 order.
         /// </summary>
         public static WaveletPack D20
         {
@@ -1751,7 +1751,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 21-го порядка.
+        /// Returns Daubechies wavelet of 21 order.
         /// </summary>
         public static WaveletPack D21
         {
@@ -1806,7 +1806,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 22-го порядка.
+        /// Returns Daubechies wavelet of 22 order.
         /// </summary>
         public static WaveletPack D22
         {
@@ -1863,7 +1863,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 23-го порядка.
+        /// Returns Daubechies wavelet of 23 order.
         /// </summary>
         public static WaveletPack D23
         {
@@ -1922,7 +1922,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 24-го порядка.
+        /// Returns Daubechies wavelet of 24 order.
         /// </summary>
         public static WaveletPack D24
         {
@@ -1983,7 +1983,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 25-го порядка.
+        /// Returns Daubechies wavelet of 25 order.
         /// </summary>
         public static WaveletPack D25
         {
@@ -2046,7 +2046,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 26-го порядка.
+        /// Returns Daubechies wavelet of 26 order.
         /// </summary>
         public static WaveletPack D26
         {
@@ -2111,7 +2111,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 27-го порядка.
+        /// Returns Daubechies wavelet of 27 order.
         /// </summary>
         public static WaveletPack D27
         {
@@ -2178,7 +2178,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 28-го порядка.
+        /// Returns Daubechies wavelet of 28 order.
         /// </summary>
         public static WaveletPack D28
         {
@@ -2247,7 +2247,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 29-го порядка.
+        /// Returns Daubechies wavelet of 29 order.
         /// </summary>
         public static WaveletPack D29
         {
@@ -2318,7 +2318,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 30-го порядка.
+        /// Returns Daubechies wavelet of 30 order.
         /// </summary>
         public static WaveletPack D30
         {
@@ -2391,7 +2391,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 31-го порядка.
+        /// Returns Daubechies wavelet of 31 order.
         /// </summary>
         public static WaveletPack D31
         {
@@ -2466,7 +2466,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 32-го порядка.
+        /// Returns Daubechies wavelet of 32 order.
         /// </summary>
         public static WaveletPack D32
         {
@@ -2543,7 +2543,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 33-го порядка.
+        /// Returns Daubechies wavelet of 33 order.
         /// </summary>
         public static WaveletPack D33
         {
@@ -2622,7 +2622,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 34-го порядка.
+        /// Returns Daubechies wavelet of 34 order.
         /// </summary>
         public static WaveletPack D34
         {
@@ -2703,7 +2703,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 35-го порядка.
+        /// Returns Daubechies wavelet of 35 order.
         /// </summary>
         public static WaveletPack D35
         {
@@ -2786,7 +2786,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 36-го порядка.
+        /// Returns Daubechies wavelet of 36 order.
         /// </summary>
         public static WaveletPack D36
         {
@@ -2871,7 +2871,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 37-го порядка.
+        /// Returns Daubechies wavelet of 37 order.
         /// </summary>
         public static WaveletPack D37
         {
@@ -2958,7 +2958,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Добеши 38-го порядка.
+        /// Returns Daubechies wavelet of 38 order.
         /// </summary>
         public static WaveletPack D38
         {
@@ -3050,7 +3050,7 @@ this.levels), DataLen2);
 
         #region Coiflets wavelets
         /// <summary>
-        /// Возвращает вейвлет койфлет 1-го порядка.
+        /// Returns wavelet coiflet of 1 order.
         /// </summary>
         public static WaveletPack C1
         {
@@ -3066,7 +3066,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет койфлет 2-го порядка.
+        /// Returns wavelet coiflet of 2 order.
         /// </summary>
         public static WaveletPack C2
         {
@@ -3088,7 +3088,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет койфлет 3-го порядка.
+        /// Returns wavelet coiflet of 3 order.
         /// </summary>
         public static WaveletPack C3
         {
@@ -3116,7 +3116,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет койфлет 4-го порядка.
+        /// Returns wavelet coiflet of 4 order.
         /// </summary>
         public static WaveletPack C4
         {
@@ -3150,7 +3150,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет койфлет 5-го порядка.
+        /// Returns wavelet coiflet of 5 order.
         /// </summary>
         public static WaveletPack C5
         {
@@ -3193,9 +3193,9 @@ this.levels), DataLen2);
 
         #region Symlets wavelets
         /// <summary>
-        /// Возвращает вейвлет симлет 1-го порядка.
+        /// Returns wavelet symlet of 1 order.
         /// <remarks>
-        /// Вейвлет Хаара.
+        /// Haar wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack S1
@@ -3207,7 +3207,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 2-го порядка.
+        /// Returns wavelet symlet of 2 order.
         /// </summary>
         public static WaveletPack S2
         {
@@ -3217,7 +3217,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 3-го порядка.
+        /// Returns wavelet symlet of 3 order.
         /// </summary>
         public static WaveletPack S3
         {
@@ -3227,7 +3227,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 4-го порядка.
+        /// Returns wavelet symlet of 4 order.
         /// </summary>
         public static WaveletPack S4
         {
@@ -3237,7 +3237,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 5-го порядка.
+        /// Returns wavelet symlet of 5 order.
         /// </summary>
         public static WaveletPack S5
         {
@@ -3257,7 +3257,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 6-го порядка.
+        /// Returns wavelet symlet of 6 order.
         /// </summary>
         public static WaveletPack S6
         {
@@ -3279,7 +3279,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 7-го порядка.
+        /// Returns wavelet symlet of 7 order.
         /// </summary>
         public static WaveletPack S7
         {
@@ -3303,7 +3303,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 8-го порядка.
+        /// Returns wavelet symlet of 8 order.
         /// </summary>
         public static WaveletPack S8
         {
@@ -3329,7 +3329,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 9-го порядка.
+        /// Returns wavelet symlet of 9 order.
         /// </summary>
         public static WaveletPack S9
         {
@@ -3357,7 +3357,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 10-го порядка.
+        /// Returns wavelet symlet of 10 order.
         /// </summary>
         public static WaveletPack S10
         {
@@ -3387,7 +3387,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 11-го порядка.
+        /// Returns wavelet symlet of 11 order.
         /// </summary>
         public static WaveletPack S11
         {
@@ -3397,7 +3397,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 12-го порядка.
+        /// Returns wavelet symlet of 12 order.
         /// </summary>
         public static WaveletPack S12
         {
@@ -3407,7 +3407,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 13-го порядка.
+        /// Returns wavelet symlet of 13 order.
         /// </summary>
         public static WaveletPack S13
         {
@@ -3417,7 +3417,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 14-го порядка.
+        /// Returns wavelet symlet of 14 order.
         /// </summary>
         public static WaveletPack S14
         {
@@ -3427,7 +3427,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 15-го порядка.
+        /// Returns wavelet symlet of 15 order.
         /// </summary>
         public static WaveletPack S15
         {
@@ -3437,7 +3437,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 16-го порядка.
+        /// Returns wavelet symlet of 16 order.
         /// </summary>
         public static WaveletPack S16
         {
@@ -3447,7 +3447,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 17-го порядка.
+        /// Returns wavelet symlet of 17 order.
         /// </summary>
         public static WaveletPack S17
         {
@@ -3457,7 +3457,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 18-го порядка.
+        /// Returns wavelet symlet of 18 order.
         /// </summary>
         public static WaveletPack S18
         {
@@ -3467,7 +3467,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 19-го порядка.
+        /// Returns wavelet symlet of 19 order.
         /// </summary>
         public static WaveletPack S19
         {
@@ -3477,7 +3477,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет симлет 20-го порядка.
+        /// Returns wavelet symlet of 20 order.
         /// </summary>
         public static WaveletPack S20
         {
@@ -3490,7 +3490,7 @@ this.levels), DataLen2);
 
         #region Meyer wavelet
         /// <summary>
-        /// Возвращает вейвлет Мейера.
+        /// Returns the Meyer wavelet.
         /// </summary>
         public static WaveletPack Meyer
         {
@@ -3713,7 +3713,7 @@ this.levels), DataLen2);
 
         #region Fejer-Korovkin wavelets
         /// <summary>
-        /// Возвращает вейвлет Фейера-Коровкина 4-го порядка.
+        /// Returns the Fejer-Korovkin wavelet of 4 order.
         /// </summary>
         public static WaveletPack F4
         {
@@ -3732,7 +3732,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Фейера-Коровкина 6-го порядка.
+        /// Returns the Fejer-Korovkin wavelet of 6 order.
         /// </summary>
         public static WaveletPack F6
         {
@@ -3754,7 +3754,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Фейера-Коровкина 8-го порядка.
+        /// Returns the Fejer-Korovkin wavelet of 8 order.
         /// </summary>
         public static WaveletPack F8
         {
@@ -3778,7 +3778,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Фейера-Коровкина 14-го порядка.
+        /// Returns the Fejer-Korovkin wavelet of 14 order.
         /// </summary>
         public static WaveletPack F14
         {
@@ -3816,7 +3816,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Фейера-Коровкина 22-го порядка.
+        /// Returns the Fejer-Korovkin wavelet of 22 order.
         /// </summary>
         public static WaveletPack F22
         {
@@ -3874,9 +3874,9 @@ this.levels), DataLen2);
 
         #region Legendre wavelets
         /// <summary>
-        /// Возвращает вейвлет Лежандра 1-го порядка.
+        /// Returns Legendre wavelet of 1 order.
         /// <remarks>
-        /// Вейвлет Хаара.
+        /// Haar wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack L1
@@ -3888,9 +3888,9 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Лежандра 2-го порядка.
+        /// Returns Legendre wavelet of 2 order.
         /// <remarks>
-        /// Неортогональный вейвлет.
+        /// Nonorthogonal wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack L2
@@ -3901,9 +3901,9 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Лежандра 3-го порядка.
+        /// Returns Legendre wavelet of 3 order.
         /// <remarks>
-        /// Неортогональный вейвлет.
+        /// Nonorthogonal wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack L3
@@ -3914,9 +3914,9 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Лежандра 4-го порядка.
+        /// Returns Legendre wavelet of 4 order.
         /// <remarks>
-        /// Неортогональный вейвлет.
+        /// Nonorthogonal wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack L4
@@ -3935,9 +3935,9 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Лежандра 5-го порядка.
+        /// Returns Legendre wavelet of 5 order.
         /// <remarks>
-        /// Неортогональный вейвлет.
+        /// Nonorthogonal wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack L5
@@ -3958,9 +3958,9 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Лежандра 6-го порядка.
+        /// Returns Legendre wavelet of 6 order.
         /// <remarks>
-        /// Неортогональный вейвлет.
+        /// Nonorthogonal wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack L6
@@ -3987,9 +3987,9 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Лежандра 7-го порядка.
+        /// Returns Legendre wavelet of 7 order.
         /// <remarks>
-        /// Неортогональный вейвлет.
+        /// Nonorthogonal wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack L7
@@ -4017,9 +4017,9 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Лежандра 8-го порядка.
+        /// Returns Legendre wavelet of 8 order.
         /// <remarks>
-        /// Неортогональный вейвлет.
+        /// Nonorthogonal wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack L8
@@ -4049,9 +4049,9 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Лежандра 9-го порядка.
+        /// Returns Legendre wavelet of 9 order.
         /// <remarks>
-        /// Неортогональный вейвлет.
+        /// Nonorthogonal wavelet.
         /// </remarks>
         /// </summary>
         public static WaveletPack L9
@@ -4086,9 +4086,9 @@ this.levels), DataLen2);
 
         #region Fbsp wavelets
         /// <summary>
-        /// Возвращает B-spline вейвлет 1-0-0.
+        /// Returns B-spline wavelet 1-0-0.
         /// <remarks>
-        /// Вейвлет Хаара (с задержкой).
+        /// Haar wavelet (delayed).
         /// </remarks>
         /// </summary>
         public static WaveletPack Fbsp100
@@ -4099,7 +4099,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает B-spline вейвлет 1-0-3.
+        /// Returns B-spline wavelet 1-0-3.
         /// </summary>
         public static WaveletPack Fbsp103
         {
@@ -4109,7 +4109,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает B-spline вейвлет 1-0-5.
+        /// Returns B-spline wavelet 1-0-5.
         /// </summary>
         public static WaveletPack Fbsp105
         {
@@ -4122,7 +4122,7 @@ this.levels), DataLen2);
 
         #region Haar wavelet
         /// <summary>
-        /// Возвращает вейвлет Хаара.
+        /// Returns Haar wavelet.
         /// </summary>
         public static WaveletPack Haar
         {
@@ -4135,7 +4135,7 @@ this.levels), DataLen2);
 
         #region Cohen-Daubechies-Feaveau wavelets
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 1/1).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 1/1).
         /// </summary>
         public static WaveletPack CDF11
         {
@@ -4145,7 +4145,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 1/3).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 1/3).
         /// </summary>
         public static WaveletPack CDF13
         {
@@ -4165,7 +4165,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 1/5).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 1/5).
         /// </summary>
         public static WaveletPack CDF15
         {
@@ -4189,7 +4189,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 3/1).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 3/1).
         /// </summary>
         public static WaveletPack CDF31
         {
@@ -4209,7 +4209,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает лифтинговый вейвлет Коэна-Добеши-Фево (CDF 5/1).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 5/1).
         /// </summary>
         public static WaveletPack CDF51
         {
@@ -4233,7 +4233,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 5/3).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 5/3).
         /// </summary>
         public static WaveletPack CDF53
         {
@@ -4261,7 +4261,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 5/5).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 5/5).
         /// </summary>
         public static WaveletPack CDF55
         {
@@ -4293,7 +4293,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 2/2).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 2/2).
         /// </summary>
         public static WaveletPack CDF22
         {
@@ -4315,7 +4315,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 2/4).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 2/4).
         /// </summary>
         public static WaveletPack CDF24
         {
@@ -4341,7 +4341,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 2/6).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 2/6).
         /// </summary>
         public static WaveletPack CDF26
         {
@@ -4371,7 +4371,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 4/2).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 4/2).
         /// </summary>
         public static WaveletPack CDF42
         {
@@ -4397,7 +4397,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 4/4).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 4/4).
         /// </summary>
         public static WaveletPack CDF44
         {
@@ -4427,7 +4427,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 4/6).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 4/6).
         /// </summary>
         public static WaveletPack CDF46
         {
@@ -4461,7 +4461,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 6/2).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 6/2).
         /// </summary>
         public static WaveletPack CDF62
         {
@@ -4490,7 +4490,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 6/4).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 6/4).
         /// </summary>
         public static WaveletPack CDF64
         {
@@ -4523,7 +4523,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает вейвлет Коэна-Добеши-Фево (CDF 6/6).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 6/6).
         /// </summary>
         public static WaveletPack CDF66
         {
@@ -4560,7 +4560,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает лифтинговый вейвлет Коэна-Добеши-Фево (CDF 9/7).
+        /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 9/7).
         /// </summary>
         public static WaveletPack CDF97
         {
@@ -4593,7 +4593,7 @@ this.levels), DataLen2);
 
         #region Kravchenko wavelet
         /// <summary>
-        /// Определяет вейвлет Кравченко.
+        /// Returns Kravchenko wavelet.
         /// </summary>
         public static WaveletPack Kravchenko
         {
@@ -4685,7 +4685,7 @@ this.levels), DataLen2);
 
     #region Continuous wavelets
     /// <summary>
-    /// Определяет непрерывный комплексный частотный B-сплайновый вейвлет.
+    /// Defines the continuous complex frequency B-spline wavelet.
     /// </summary>
     public class FbspWavelet : IComplexWavelet
     {
@@ -4697,17 +4697,17 @@ this.levels), DataLen2);
 
         #region Wavelet compoents
         /// <summary>
-        /// Инициализирует непрерывный комплексный частотный B-сплайновый вейвлет.
+        /// Initializes the continuous complex frequency B-spline wavelet.
         /// </summary>
-        /// <param name="m">Порядок вейвлета</param>
-        /// <param name="fb">Параметр полосы пропускания</param>
-        /// <param name="fc">Центральная частота вейвлета</param>
+        /// <param name="m">Order</param>
+        /// <param name="fb">Bandwidth</param>
+        /// <param name="fc">Center frequency</param>
         public FbspWavelet(double m = 3, double fb = 1, double fc = 2)
         {
             M = m; Fb = fb; Fc = fc;
         }
         /// <summary>
-        /// Получает или задает значение порядка вейвлета.
+        /// Gets or sets the value of the wavelet order.
         /// </summary>
         public double M
         {
@@ -4718,13 +4718,13 @@ this.levels), DataLen2);
             set
             {
                 if (value < 1)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.m = value;
             }
         }
         /// <summary>
-        /// Получает или задает значение параметра полосы пропускания.
+        /// Gets or sets the value of the bandwidth parameter.
         /// </summary>
         public double Fb
         {
@@ -4738,7 +4738,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Получает или задает значение центральной частоты вейвлета.
+        /// Gets or sets the center frequency value of the wavelet.
         /// </summary>
         public double Fc
         {
@@ -4752,19 +4752,19 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Wavelet(double x)
         {
             double a = Math.Sqrt(fb);
@@ -4777,31 +4777,29 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный вейвлет "Эрмитова шляпа".
+    /// Defines the continuous Hermitian hat wavelet.
     /// </summary>
     public class HermitianHatWavelet : IComplexWavelet
     {
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный вейвлет "Эрмитова шляпа".
+        /// Initializes the continuous Hermitian Hat wavelet.
         /// </summary>
-        public HermitianHatWavelet()
-        {
-        }
+        public HermitianHatWavelet() { }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Wavelet(double x)
         {
             double x2 = x * x;
@@ -4811,7 +4809,7 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный эрмитовый вейвлет.
+    /// Defines the continuous Hermitian wavelet.
     /// </summary>
     public class HermitianWavelet : IComplexWavelet
     {
@@ -4821,15 +4819,15 @@ this.levels), DataLen2);
 
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный эрмитовый вейвлет.
+        /// Initializes the continuous Hermitian wavelet.
         /// </summary>
-        /// <param name="derivative">Номер производной функции [1, 3]</param>
+        /// <param name="derivative">Derivative order [1, 3]</param>
         public HermitianWavelet(int derivative = 1)
         {
             Derivative = derivative;
         }
         /// <summary>
-        /// Получает или задает номер производной функции [1, 3].
+        /// Gets or sets the derivative order [1, 3].
         /// </summary>
         public int Derivative
         {
@@ -4840,25 +4838,25 @@ this.levels), DataLen2);
             set
             {
                 if (value < 1 || value > 3)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 derivative = value;
             }
         }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Wavelet(double x)
         {
             double x2 = x * x;
@@ -4885,7 +4883,7 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный комплексный вейвлет Габора.
+    /// Defines the continuous complex Gabor wavelet.
     /// </summary>
     public class GaborWavelet : IComplexWavelet
     {
@@ -4898,17 +4896,17 @@ this.levels), DataLen2);
 
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный комплексный вейвлет Габора.
+        /// Initializes the continuous complex Gabor wavelet.
         /// </summary>
-        /// <param name="x0">Начальное значение</param>
-        /// <param name="k0">Коэффициент модуляции</param>
-        /// <param name="a">Множитель</param>
+        /// <param name="x0">Initial value</param>
+        /// <param name="k0">Modulation factor</param>
+        /// <param name="a">Factor</param>
         public GaborWavelet(double x0 = 0, double k0 = 1, double a = 2)
         {
             X0 = x0; K0 = k0; A = a;
         }
         /// <summary>
-        /// Получает или задает начальное значение.
+        /// Gets or sets the initial value.
         /// </summary>
         public double X0
         {
@@ -4922,7 +4920,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Получает или задает коэффициент модуляции.
+        /// Gets or sets the modulation factor.
         /// </summary>
         public double K0
         {
@@ -4936,7 +4934,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Получает или задает множитель.
+        /// Gets or sets the factor.
         /// </summary>
         public double A
         {
@@ -4951,29 +4949,29 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Wavelet(double x)
         {
             double d = x - x0;
             return Math.Exp(-d * d / a2) * Maths.Exp(-Maths.I * k0 * d);
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double WaveletReal(double x)
         {
             return Wavelet(x).Real;
@@ -4981,7 +4979,7 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный комплексный Морлет вейвлет.
+    /// Defines the continuous complex Morlet wavelet.
     /// </summary>
     public class ComplexMorletWavelet : IComplexWavelet
     {
@@ -4992,16 +4990,16 @@ this.levels), DataLen2);
 
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный комплексный Морлет вейвлет.
+        /// Initializes the continuous complex Morlet wavelet.
         /// </summary>
-        /// <param name="fb">Полоса пропускания</param>
-        /// <param name="fc">Центральная частота</param>
+        /// <param name="fb">Bandwidth</param>
+        /// <param name="fc">Center frequency</param>
         public ComplexMorletWavelet(double fb = 0.5, double fc = 1)
         {
             Fb = fb; Fc = fc;
         }
         /// <summary>
-        /// Получает или задает полосу пропускания.
+        /// Gets or sets the bandwidth.
         /// </summary>
         public double Fb
         {
@@ -5015,7 +5013,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Получает или задает центральную частоту.
+        /// Gets or sets the center frequency.
         /// </summary>
         public double Fc
         {
@@ -5029,19 +5027,19 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Wavelet(double x)
         {
             return Math.Pow(Maths.Pi * fb, -0.5) * Maths.Exp(2 * Maths.Pi * Maths.I * fc * x) * Math.Exp(-(x * x) / fb);
@@ -5049,7 +5047,7 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный вейвлет Гаусса.
+    /// Defines the continuous complex Gaussian wavelet.
     /// </summary>
     public class ComplexGaussianWavelet : IComplexWavelet
     {
@@ -5059,15 +5057,15 @@ this.levels), DataLen2);
 
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный вейвлет Гаусса.
+        /// Initializes the continuous complex Gaussian wavelet.
         /// </summary>
-        /// <param name="derivative">Номер производной функции [1, 8]</param>
+        /// <param name="derivative">Derivative order [1, 8]</param>
         public ComplexGaussianWavelet(int derivative = 1)
         {
             Derivative = derivative;
         }
         /// <summary>
-        /// Получает или задает номер производной функции [1, 8].
+        /// Gets or sets the derivative order [1, 8].
         /// </summary>
         public int Derivative
         {
@@ -5078,25 +5076,25 @@ this.levels), DataLen2);
             set
             {
                 if (value < 1 || value > 8)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 derivative = value;
             }
         }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public Complex Wavelet(double x)
         {
             double x2 = x * x;
@@ -5146,7 +5144,7 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный вейвлет Гаусса.
+    /// Defines the continuous Gaussian wavelet.
     /// </summary>
     public class GaussianWavelet : IDoubleWavelet
     {
@@ -5156,15 +5154,15 @@ this.levels), DataLen2);
 
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный вейвлет Гаусса.
+        /// Initializes the continuous Gaussian wavelet.
         /// </summary>
-        /// <param name="derivative">Номер производной функции [1, 8]</param>
+        /// <param name="derivative">Derivative order [1, 8]</param>
         public GaussianWavelet(int derivative = 1)
         {
             Derivative = derivative;
         }
         /// <summary>
-        /// Получает или задает номер производной функции [1, 8].
+        /// Gets or sets the derivative order [1, 8].
         /// </summary>
         public int Derivative
         {
@@ -5175,25 +5173,25 @@ this.levels), DataLen2);
             set
             {
                 if (value < 1 || value > 8)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 derivative = value;
             }
         }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Wavelet(double x)
         {
             double x2 = x * x;
@@ -5241,31 +5239,29 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный вейвлет "Сомбреро".
+    /// Defines the continuous Mexican hat wavelet.
     /// </summary>
     public class MexicanHatWavelet : IDoubleWavelet
     {
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный вейвлет "Сомбреро".
+        /// Initializes the continuous Mexican hat wavelet.
         /// </summary>
-        public MexicanHatWavelet()
-        {
-        }
+        public MexicanHatWavelet() { }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Wavelet(double x)
         {
             double x2 = x * x;
@@ -5274,31 +5270,31 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный Морлет вейвлет.
+    /// Defines the continuous Morlet wavelet.
     /// </summary>
     public class MorletWavelet : IDoubleWavelet
     {
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный Морлет вейвлет.
+        /// Initializes the continuous Morlet wavelet.
         /// </summary>
         public MorletWavelet()
         {
         }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Wavelet(double x)
         {
             double x2 = x * x;
@@ -5307,20 +5303,20 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный вейвлет Мейера.
+    /// Defines the continuous Meyer wavelet.
     /// </summary>
     public class MeyerWavelet : IDoubleWavelet
     {
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный вейвлет Мейера.
+        /// Initializes the continuous Meyer wavelet.
         /// </summary>
         public MeyerWavelet() { }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Scaling(double x)
         {
             // 2015, Victor Vermehren Valenzuela and H. M. de Oliveira gave 
@@ -5334,10 +5330,10 @@ this.levels), DataLen2);
             return phiupper / phidown;
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Wavelet(double x)
         {
             // 2015, Victor Vermehren Valenzuela and H. M. de Oliveira gave 
@@ -5357,29 +5353,29 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный вейвлет Шеннона.
+    /// Defines the continuous Shannon wavelet.
     /// </summary>
     public class ShannonWavelet : IDoubleWavelet
     {
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный вейвлет Шеннона.
+        /// Initializes the continuous Shannon wavelet.
         /// </summary>
         public ShannonWavelet() { }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Wavelet(double x)
         {
             double t = x / 2;
@@ -5388,7 +5384,7 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный вейвлет Пуассона.
+    /// Defines the continuous Poisson wavelet.
     /// </summary>
     public class PoissonWavelet : IDoubleWavelet
     {
@@ -5398,15 +5394,15 @@ this.levels), DataLen2);
 
         #region Wavelet components
         /// <summary>
-        /// Инициализирует непрерывный вейвлет Пуассона.
+        /// Initializes the continuous Poisson wavelet.
         /// </summary>
-        /// <param name="n">Порядок вейвлета [1, +inf)</param>
+        /// <param name="n">Order [1, +inf)</param>
         public PoissonWavelet(int n = 1)
         {
             N = n;
         }
         /// <summary>
-        /// Получает или задает порядок вейвлета [1, +inf).
+        /// Gets or sets the order [1, +inf).
         /// </summary>
         public int N
         {
@@ -5417,25 +5413,25 @@ this.levels), DataLen2);
             set
             {
                 if (value < 1)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 n = value;
             }
         }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Scaling(double x)
         {
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Wavelet(double x)
         {
             if (x < 0)
@@ -5447,20 +5443,20 @@ this.levels), DataLen2);
         #endregion
     }
     /// <summary>
-    /// Определяет непрерывный вейвлет Хаара.
+    /// Defines the continuous Haar wavelet.
     /// </summary>
     public class HaarWavelet : IDoubleWavelet
     {
         #region Haar wavelet components
         /// <summary>
-        /// Инициализирует непрерывный вейвлет Хаара.
+        /// Initializes the continuous Haar wavelet.
         /// </summary>
         public HaarWavelet() { }
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Scaling(double x)
         {
             if (0 <= x && x < 1)
@@ -5470,10 +5466,10 @@ this.levels), DataLen2);
             return 0.0;
         }
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         public double Wavelet(double x)
         {
             if (x >= 0)
@@ -5488,7 +5484,7 @@ this.levels), DataLen2);
 
     #region Processing filters
     /// <summary>
-    /// Определяет вейвлет-фильтр.
+    /// Defines the wavelet filter.
     /// </summary>
     public class WaveletFilter : IFilter, IBlendFilter
     {
@@ -5500,11 +5496,11 @@ this.levels), DataLen2);
 
         #region Filter components
         /// <summary>
-        /// Инициализирует вейвлет-фильтр.
+        /// Initializes the wavelet filter.
         /// </summary>
-        /// <param name="dwt">Дискретное вейвлет-преобразование</param>
-        /// <param name="factor">Множитель [-1, 1]</param>
-        /// <param name="accuracy">Точность фильтра [0, 1]</param>
+        /// <param name="dwt">Discrete wavelet transform</param>
+        /// <param name="factor">Factor [-1, 1]</param>
+        /// <param name="accuracy">Accuracy [0, 1]</param>
         public WaveletFilter(WaveletTransform dwt, double factor = -1.0, double accuracy = 0.1)
         {
             this.dwt = dwt;
@@ -5512,7 +5508,7 @@ this.levels), DataLen2);
             this.Accuracy = accuracy;
         }
         /// <summary>
-        /// Получает или задает дискретное вейвлет-преобразование.
+        /// Gets or sets the discrete wavelet transform.
         /// </summary>
         public WaveletTransform DWT
         {
@@ -5526,7 +5522,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Получает или задает значение точности фильтра [0, 1].
+        /// Gets or sets the accuracy of the filter [0, 1].
         /// </summary>
         public double Accuracy
         {
@@ -5540,7 +5536,7 @@ this.levels), DataLen2);
             }
         }
         /// <summary>
-        /// Получает или задает значение множителя [-1, 1].
+        /// Gets or sets the factor value [-1, 1].
         /// </summary>
         public double Factor
         {
@@ -5557,9 +5553,9 @@ this.levels), DataLen2);
 
         #region Public apply voids
         /// <summary>
-        /// Реализует двумерный вейвлет-фильтр.
+        /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
 
         public void Apply(double[,] data)
         {
@@ -5610,9 +5606,9 @@ this.levels), DataLen2);
             return;
         }
         /// <summary>
-        /// Реализует одномерный вейвлет-фильтр.
+        /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(double[] data)
         {
             // params
@@ -5655,9 +5651,9 @@ this.levels), DataLen2);
             return;
         }
         /// <summary>
-        /// Реализует двумерный вейвлет-фильтр.
+        /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Матрица</param>
+        /// <param name="data">Matrix</param>
 
         public void Apply(Complex[,] data)
         {
@@ -5708,9 +5704,9 @@ this.levels), DataLen2);
             return;
         }
         /// <summary>
-        /// Реализует одномерный вейвлет-фильтр.
+        /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Одномерный массив</param>
+        /// <param name="data">Array</param>
         public void Apply(Complex[] data)
         {
             // params
@@ -5756,10 +5752,10 @@ this.levels), DataLen2);
 
         #region Blender apply voids
         /// <summary>
-        /// Реализует двумерный вейвлет-фильтр.
+        /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
 
         public double[,] Apply(double[][,] data)
         {
@@ -5812,10 +5808,10 @@ this.levels), DataLen2);
             return Matrice.Cut(sum, y0, x0, r0, c0);
         }
         /// <summary>
-        /// Реализует двумерный вейвлет-фильтр.
+        /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Matrix</returns>
 
         public double[] Apply(double[][] data)
         {
@@ -5862,10 +5858,10 @@ this.levels), DataLen2);
             return Matrice.Cut(sum, y0, r0);
         }
         /// <summary>
-        /// Реализует двумерный вейвлет-фильтр.
+        /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Matrix array</param>
+        /// <returns>Matrix</returns>
 
         public Complex[,] Apply(Complex[][,] data)
         {
@@ -5918,10 +5914,10 @@ this.levels), DataLen2);
             return Matrice.Cut(sum, y0, x0, r0, c0);
         }
         /// <summary>
-        /// Реализует двумерный вейвлет-фильтр.
+        /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Набор матриц</param>
-        /// <returns>Матрица</returns>
+        /// <param name="data">Jagged array</param>
+        /// <returns>Matrix</returns>
 
         public Complex[] Apply(Complex[][] data)
         {
@@ -5971,11 +5967,11 @@ this.levels), DataLen2);
 
         #region Static voids
         /// <summary>
-        /// Возвращает значение длины для преобразования.
+        /// Returns the length value for transform.
         /// </summary>
-        /// <param name="n">Длина</param>
-        /// <param name="levels">Количество уровней</param>
-        /// <returns>Длина</returns>
+        /// <param name="n">Length</param>
+        /// <param name="levels">Number of levels</param>
+        /// <returns>Length</returns>
         public static int GetLength(int n, int levels)
         {
             // params
@@ -6013,53 +6009,53 @@ this.levels), DataLen2);
 
     #region Wavelet interfaces
     /// <summary>
-    /// Определяет общий интерфейс непрерывных комплексных вейвлетов.
+    /// Defines the interface for continuous complex wavelets.
     /// </summary>
     public interface IComplexWavelet
     {
         #region Interface
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         Complex Scaling(double x);
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         Complex Wavelet(double x);
         #endregion
     }
     /// <summary>
-    /// Определяет общий интерфейс непрерывных вещественных вейвлетов.
+    /// Defines the interface for continuous wavelets.
     /// </summary>
     public interface IDoubleWavelet
     {
         #region Interface
         /// <summary>
-        /// Возвращает значение масштабирующей функции.
+        /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         double Scaling(double x);
         /// <summary>
-        /// Возвращает значение вейвлет-функции.
+        /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Носитель</param>
-        /// <returns>Значение функции</returns>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
         double Wavelet(double x);
         #endregion
     }
     /// <summary>
-    /// Определяет общий интерфейс вейвлет-преобразований.
+    /// Defines the wavelet transform interface.
     /// </summary>
     public interface IWaveletTransform
     {
         #region Interface
         /// <summary>
-        /// Получает или задает дискретный вейвлет.
+        /// Gets or sets the discrete wavelet.
         /// </summary>
         WaveletPack Wavelet { get; set; }
         #endregion

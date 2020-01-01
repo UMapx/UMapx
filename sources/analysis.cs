@@ -7,9 +7,10 @@
 // Version 4.0.0
 
 using System;
+using UMapx.Core;
 using UMapx.Decomposition;
 
-namespace UMapx.Core
+namespace UMapx.Analysis
 {
     // **************************************************************************
     //                            UMAPX.NET FRAMEWORK
@@ -21,9 +22,9 @@ namespace UMapx.Core
 
     #region Nonlinear solution
     /// <summary>
-    /// Определяет класс, реализующий решение нелинейного уравнения.
+    /// Defines a class that implements the solution of a nonlinear equation.
     /// <remarks>
-    /// Данный класс представляет собой решение задачи нахождения корня нелинейного уравнения вида F(x) = 0.
+    /// This class is a solution to the problem of finding the root of a nonlinear equation of the form F(x) = 0.
     /// </remarks>
     /// </summary>
     public class Nonlinear
@@ -35,17 +36,17 @@ namespace UMapx.Core
 
         #region Class components
         /// <summary>
-        /// Инициализирует класс, реализующий решение нелинейного уравнения.
+        /// Initializes a class that implements the solution of a nonlinear equation.
         /// </summary>
-        /// <param name="eps">Погрешность [0, 1]</param>
-        /// <param name="method">Метод решения нелинейного уравнения</param>
+        /// <param name="eps">Epsilon [0, 1]</param>
+        /// <param name="method">Method for solving a nonlinear equation</param>
         public Nonlinear(double eps = 1e-8, Nonlinear.Method method = Method.Secant)
         {
             this.method = method;
             this.Eps = eps;
         }
         /// <summary>
-        /// Получает или задает метод решения нелинейного уравнения.
+        /// Gets or sets the method for solving the nonlinear equation.
         /// </summary>
         public Nonlinear.Method MethodType
         {
@@ -59,7 +60,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает или задает значение погрешности [0, 1].
+        /// Gets or sets the error value [0, 1].
         /// </summary>
         public double Eps
         {
@@ -73,12 +74,12 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает значения корня нелинейного уравнения.
+        /// Gets the root value of a nonlinear equation.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <param name="a">Начало отрезка</param>
-        /// <param name="b">Конец отрезка</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="function">Continuous function delegate</param>
+        /// <param name="a">Start of line</param>
+        /// <param name="b">End of line</param>
+        /// <returns>Double precision floating point number</returns>
         public double Compute(IDouble function, double a, double b)
         {
             // chose method of nonlinear
@@ -96,12 +97,12 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Получает значения корня нелинейного уравнения.
+        /// Gets the root value of a nonlinear equation.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <param name="a">Начало отрезка</param>
-        /// <param name="b">Конец отрезка</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="function">Continuous function delegate</param>
+        /// <param name="a">Start of line</param>
+        /// <param name="b">End of line</param>
+        /// <returns>Double precision floating point number</returns>
         public Complex Compute(IComplex function, Complex a, Complex b)
         {
             // chose method of nonlinear
@@ -307,25 +308,25 @@ namespace UMapx.Core
 
         #region Enums
         /// <summary>
-        /// Метод решения нелинейного уравнения.
+        /// Method for solving a nonlinear equation.
         /// </summary>
         public enum Method
         {
             #region Methods
             /// <summary>
-            /// Метод половинного деления.
+            /// Bisection method.
             /// </summary>
             Bisection,
             /// <summary>
-            /// Метод Ньютона.
+            /// Chord method.
             /// </summary>
             Chord,
             /// <summary>
-            /// Метод секансов.
+            /// Secant method.
             /// </summary>
             Secant,
             /// <summary>
-            /// Метод ложной точки.
+            /// False position method.
             /// </summary>
             FalsePosition,
             #endregion
@@ -336,31 +337,28 @@ namespace UMapx.Core
 
     #region Optimization methods
     /// <summary>
-    /// Определяет класс, реализующий поиск экстремума.
+    /// Defines a class that implements an extremum search.
     /// <remarks>
-    /// Данный класс представляет собой решение задачи нахождения точек максимума и минимума функции F(x).
+    /// This class is a solution to the problem of finding the maximum and minimum points of the function F(x).
     /// </remarks>
     /// </summary>
     public class Optimization
     {
         #region Private data
-        /// <summary>
-        /// Погрешность вычислений.
-        /// </summary>
         private double eps;
         #endregion
 
         #region Class components
         /// <summary>
-        /// Инициализирует класс, реализующий поиск экстремума.
+        /// Initializes a class that implements an extremum search.
         /// </summary>
-        /// <param name="eps">Погрешность [0, 1]</param>
+        /// <param name="eps">Epsilon [0, 1]</param>
         public Optimization(double eps = 1e-8)
         {
             this.Eps = eps;
         }
         /// <summary>
-        /// Получает или задает значение погрешности [0, 1].
+        /// Gets or sets the error value [0, 1].
         /// </summary>
         public double Eps
         {
@@ -374,13 +372,13 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает соответствующий минимум функции на отреке.
+        /// Returns the corresponding minimum of the function on the segment.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <param name="a">Начало отрезка</param>
-        /// <param name="b">Конец отрезка</param>
-        /// <param name="max">Искать максимум или минимум</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="function">Continuous function delegate</param>
+        /// <param name="a">Start of line</param>
+        /// <param name="b">End of line</param>
+        /// <param name="max">Search maximum or minimum</param>
+        /// <returns>Double precision floating point number</returns>
         public double Compute(IDouble function, double a, double b, bool max = false)
         {
             // max or min
@@ -447,9 +445,9 @@ namespace UMapx.Core
 
     #region Integral solution
     /// <summary>
-    /// Определяет класс, реализующий численное интегрирование.
+    /// Defines a class that implements numerical integration.
     /// <remarks>
-    /// Данный класс представляет собой решение задачи нахождения значение интеграла функции F(x) в пределах значений a и b.
+    /// This class is a solution to the problem of finding the value of the integral of the function F(x) within the values of a and b.
     /// </remarks>
     /// </summary>
     public class Integration
@@ -460,15 +458,15 @@ namespace UMapx.Core
 
         #region Class components
         /// <summary>
-        /// Инициализирует класс, реализующий численное интегрирование.
+        /// Initializes a class that implements numerical integration.
         /// </summary>
-        /// <param name="method">Метод интегрирования</param>
+        /// <param name="method">Integration method</param>
         public Integration(Integration.Method method = Method.Rectangle)
         {
             this.method = method;
         }
         /// <summary>
-        /// Получает или задает метод интегрирования.
+        /// Gets or sets the integration method.
         /// </summary>
         public Integration.Method MethodType
         {
@@ -482,13 +480,13 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение интеграла функции.
+        /// Returns the value of the integral of a function.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <param name="n">Количество разбиений</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="function">Continuous function delegate</param>
+        /// <param name="a">Lower limit</param>
+        /// <param name="b">Upper limit</param>
+        /// <param name="n">Number of splits</param>
+        /// <returns>Double precision floating point number</returns>
         public double Compute(IDouble function, double a, double b, int n)
         {
             // chose method of integration
@@ -511,13 +509,13 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение интеграла функции.
+        /// Returns the value of the integral of a function.
         /// </summary>
-        /// <param name="y">Вектор значений функции</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <param name="n">Количество разбиений</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="y">Function vector</param>
+        /// <param name="a">Lower limit</param>
+        /// <param name="b">Upper limit</param>
+        /// <param name="n">Number of splits</param>
+        /// <returns>Double precision floating point number</returns>
         public double Compute(double[] y, double a, double b, int n)
         {
             // chose method of integration
@@ -537,13 +535,13 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение интеграла функции.
+        /// Returns the value of the integral of a function.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <param name="n">Количество разбиений</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="function">Continuous function delegate</param>
+        /// <param name="a">Lower limit</param>
+        /// <param name="b">Upper limit</param>
+        /// <param name="n">Number of splits</param>
+        /// <returns>Complex number</returns>
         public Complex Compute(IComplex function, Complex a, Complex b, int n)
         {
             // chose method of integration
@@ -566,13 +564,13 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение интеграла функции.
+        /// Returns the value of the integral of a function.
         /// </summary>
-        /// <param name="y">Вектор значений функции</param>
-        /// <param name="a">Нижний предел</param>
-        /// <param name="b">Верхний предел</param>
-        /// <param name="n">Количество разбиений</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="y">Function vector</param>
+        /// <param name="a">Lower limit</param>
+        /// <param name="b">Upper limit</param>
+        /// <param name="n">Number of splits</param>
+        /// <returns>Complex number</returns>
         public Complex Compute(Complex[] y, Complex a, Complex b, int n)
         {
             // chose method of integration
@@ -1037,29 +1035,29 @@ namespace UMapx.Core
 
         #region Enums
         /// <summary>
-        /// Метод интегрирования.
+        /// Integration method.
         /// </summary>
         public enum Method
         {
             #region Methods
             /// <summary>
-            /// Метод прямоугольников.
+            /// Rectangle method.
             /// </summary>
             Rectangle,
             /// <summary>
-            /// Метод средней точки.
+            /// Midpoint method.
             /// </summary>
             Midpoint,
             /// <summary>
-            /// Метод трапеций.
+            /// Trapezoidal method.
             /// </summary>
             Trapezoidal,
             /// <summary>
-            /// Метод Симпсона.
+            /// Simpson method.
             /// </summary>
             Simpson,
             /// <summary>
-            /// Метод Ромберга.
+            /// Romberg method.
             /// </summary>
             Romberg,
             #endregion
@@ -1070,7 +1068,7 @@ namespace UMapx.Core
 
     #region Numeric differentiation
     /// <summary>
-    /// Определяет класс, реализующий численное дифференцирование.
+    /// Defines a class that implements numerical differentiation.
     /// </summary>
     public class Differentation
     {
@@ -1080,15 +1078,15 @@ namespace UMapx.Core
 
         #region Components
         /// <summary>
-        /// Инициализирует класс, реализующий численное дифференцирование.
+        /// Initializes a class that implements numerical differentiation.
         /// </summary>
-        /// <param name="points">Количество точек интерполяции</param>
+        /// <param name="points">Number of interpolation points</param>
         public Differentation(int points)
         {
             this.Points = points;
         }
         /// <summary>
-        /// Получает или задает количество точек интерполяции. 
+        /// Gets or sets the number of interpolation points.
         /// </summary>
         public int Points
         {
@@ -1099,26 +1097,26 @@ namespace UMapx.Core
             set
             {
                 if (value < 0)
-                    throw new Exception("Неверное значение аргумента");
+                    throw new Exception("Invalid argument value");
 
                 this.points = value;
             }
         }
         /// <summary>
-        /// Возвращает значение производной функции.
+        /// Returns the value of a derived function.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <param name="x">Значение аргумента</param>
-        /// <param name="h">Значение шага</param>
-        /// <param name="order">Порядок производной</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="function">Continuous function delegate</param>
+        /// <param name="x">Argument value</param>
+        /// <param name="h">Step</param>
+        /// <param name="order">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public double Compute(IDouble function, double x, double h, int order)
         {
             // exception
             if (order > this.points)
-                throw new Exception("Порядок производной не может быть больше количества точек интерполяции");
+                throw new Exception("The order of the derivative cannot be greater than the number of interpolation points");
             if (order < 0)
-                throw new Exception("Порядок производной не может меньше 0");
+                throw new Exception("The derivative order cannot be less than 0");
 
             // Create the interpolation points
             int length = this.points + 1;
@@ -1136,20 +1134,20 @@ namespace UMapx.Core
             return sum / Math.Pow(h, order);
         }
         /// <summary>
-        /// Возвращает значение производной функции.
+        /// Returns the value of a derived function.
         /// </summary>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="index">Индекс аргумента</param>
-        /// <param name="h">Значение шага</param>
-        /// <param name="order">Порядок производной</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="y">Function vector</param>
+        /// <param name="index">Index of argument</param>
+        /// <param name="h">Step</param>
+        /// <param name="order">Order</param>
+        /// <returns>Double precision floating point number</returns>
         public double Compute(double[] y, int index, double h, int order)
         {
             // exception
             if (order > this.points)
-                throw new Exception("Порядок производной не может быть больше количества точек интерполяции");
+                throw new Exception("The order of the derivative cannot be greater than the number of interpolation points");
             if (order < 0)
-                throw new Exception("Порядок производной не может меньше 0");
+                throw new Exception("The derivative order cannot be less than 0");
 
             // Create the interpolation points
             int length = this.points + 1;
@@ -1167,20 +1165,20 @@ namespace UMapx.Core
             return sum / Math.Pow(h, order);
         }
         /// <summary>
-        /// Возвращает значение производной функции.
+        /// Returns the value of a derived function.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции</param>
-        /// <param name="x">Значение аргумента</param>
-        /// <param name="h">Значение шага</param>
-        /// <param name="order">Порядок производной</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="function">Continuous function delegate</param>
+        /// <param name="x">Argument value</param>
+        /// <param name="h">Step</param>
+        /// <param name="order">Order</param>
+        /// <returns>Complex number</returns>
         public Complex Compute(IComplex function, Complex x, Complex h, int order)
         {
             // exception
             if (order > this.points)
-                throw new Exception("Порядок производной не может быть больше количества точек интерполяции");
+                throw new Exception("The order of the derivative cannot be greater than the number of interpolation points");
             if (order < 0)
-                throw new Exception("Порядок производной не может меньше 0");
+                throw new Exception("The derivative order cannot be less than 0");
 
             // Create the interpolation points
             int length = this.points + 1;
@@ -1198,20 +1196,20 @@ namespace UMapx.Core
             return sum / Maths.Pow(h, order);
         }
         /// <summary>
-        /// Возвращает значение производной функции.
+        /// Returns the value of a derived function.
         /// </summary>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="index">Индекс аргумента</param>
-        /// <param name="h">Значение шага</param>
-        /// <param name="order">Порядок производной</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="y">Function vector</param>
+        /// <param name="index">Index of argument</param>
+        /// <param name="h">Step</param>
+        /// <param name="order">Order</param>
+        /// <returns>Complex number</returns>
         public Complex Compute(Complex[] y, int index, double h, int order)
         {
             // exception
             if (order > this.points)
-                throw new Exception("Порядок производной не может быть больше количества точек интерполяции");
+                throw new Exception("The order of the derivative cannot be greater than the number of interpolation points");
             if (order < 0)
-                throw new Exception("Порядок производной не может меньше 0");
+                throw new Exception("The derivative order cannot be less than 0");
 
             // Create the interpolation points
             int length = this.points + 1;
@@ -1232,10 +1230,10 @@ namespace UMapx.Core
 
         #region Static voids
         /// <summary>
-        /// Возвращает матрицу коэффициентов интерполяции.
+        /// Returns the matrix of interpolation coefficients.
         /// </summary>
-        /// <param name="points">Количество точек</param>
-        /// <returns>Матрица</returns>
+        /// <param name="points">Number of points</param>
+        /// <returns>Matrix</returns>
         public static double[,] GetCoefficients(int points)
         {
             // Compute difference coefficient table
@@ -1273,9 +1271,9 @@ namespace UMapx.Core
 
     #region Differential equation solution
     /// <summary>
-    /// Определяет класс, реализующий решение дифференциального уравнения.
+    /// Defines a class that implements a solution to a differential equation.
     /// <remarks>
-    /// Данный класс представляет собой решение задачи Коши для обыкновенного дифференциального уравнения y' = F(x, y).
+    /// This class is a solution to the Cauchy problem for the ordinary differential equation y' = F(x, y).
     /// </remarks>
     /// </summary>
     public class Differential
@@ -1286,15 +1284,15 @@ namespace UMapx.Core
 
         #region Diferentiation components
         /// <summary>
-        /// Инициализирует класс, реализующий решение дифференциального уравнения.
+        /// Initializes a class that implements the solution of a differential equation.
         /// </summary>
-        /// <param name="method">Метод дифференцирования</param>
+        /// <param name="method">Differentiation method</param>
         public Differential(Differential.Method method = Method.RungeKutta4)
         {
             this.method = method;
         }
         /// <summary>
-        /// Получает или задает метод дифференцирования.
+        /// Gets or sets the differentiation method.
         /// </summary>
         public Differential.Method MethodType
         {
@@ -1308,12 +1306,12 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение дифференциального уравнения.
+        /// Returns the value of a differential equation.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
-        /// <param name="x">Массив значений аргумент</param>
-        /// <param name="y0">Значение</param>
-        /// <returns>Массив значений функции</returns>
+        /// <param name="function">The delegate of a continuous function depending on two variables</param>
+        /// <param name="x">Array of values argument</param>
+        /// <param name="y0">Value</param>
+        /// <returns>Array of function values</returns>
         public double[] Compute(IDoubleMesh function, double[] x, double y0)
         {
             // chose method of differentiation
@@ -1333,12 +1331,12 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение дифференциального уравнения.
+        /// Returns the value of a differential equation.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
-        /// <param name="x">Массив значений аргумент</param>
-        /// <param name="y0">Значение</param>
-        /// <returns>Массив значений функции</returns>
+        /// <param name="function">The delegate of a continuous function depending on two variables</param>
+        /// <param name="x">Array of values argument</param>
+        /// <param name="y0">Value</param>
+        /// <returns>Array of function values</returns>
         public Complex[] Compute(IComplexMesh function, Complex[] x, Complex y0)
         {
             // chose method of differentiation
@@ -1361,13 +1359,13 @@ namespace UMapx.Core
 
         #region Recompute voids
         /// <summary>
-        /// Возвращает значение дифференциального уравнения, вычисленное по методу Адамса-Башфорта.
+        /// Returns the value of a differential equation calculated by the Adams-Bashfort method.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
-        /// <param name="x">Массив значений аргумент</param>
-        /// <param name="y0">Значение</param>
-        /// <param name="order">Порядок метода</param>
-        /// <returns>Массив значений функции</returns>
+        /// <param name="function">The delegate of a continuous function depending on two variables</param>
+        /// <param name="x">Array of values argument</param>
+        /// <param name="y0">Value</param>
+        /// <param name="order">Order</param>
+        /// <returns>Array of function values</returns>
         public double[] Compute(IDoubleMesh function, double[] x, double y0, int order = 2)
         {
             int n = x.Length - 1;
@@ -1416,13 +1414,13 @@ namespace UMapx.Core
             return this.Compute(function, x, y0);
         }
         /// <summary>
-        /// Возвращает значение дифференциального уравнения, вычисленное по методу Адамса-Башфорта.
+        /// Returns the value of a differential equation calculated by the Adams-Bashfort method.
         /// </summary>
-        /// <param name="function">Делегат непрерывной функции, зависящей от двух переменных</param>
-        /// <param name="x">Массив значений аргумент</param>
-        /// <param name="y0">Значение</param>
-        /// <param name="order">Порядок метода</param>
-        /// <returns>Массив значений функции</returns>
+        /// <param name="function">The delegate of a continuous function depending on two variables</param>
+        /// <param name="x">Array of values argument</param>
+        /// <param name="y0">Value</param>
+        /// <param name="order">Order</param>
+        /// <returns>Array of function values</returns>
         public Complex[] Compute(IComplexMesh function, Complex[] x, Complex y0, int order = 2)
         {
             int n = x.Length - 1;
@@ -1474,10 +1472,10 @@ namespace UMapx.Core
 
         #region Adams-Bashforth
         /// <summary>
-        /// Возвращает массив значений коэффициентов для формулы Адамса-Башфорта.
+        /// Returns an array of coefficient values for the Adams-Bashfort formula.
         /// </summary>
-        /// <param name="order">Порядок</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="order">Order</param>
+        /// <returns>Array</returns>
         public static double[] GetCoefficients(int order)
         {
             double[,] A = new double[order, order];
@@ -1709,25 +1707,25 @@ namespace UMapx.Core
 
         #region Enums
         /// <summary>
-        /// Метод дифференцирования.
+        /// Differentiation method
         /// </summary>
         public enum Method
         {
             #region Methods
             /// <summary>
-            /// Метод Эйлера.
+            /// Euler method.
             /// </summary>
             Euler,
             /// <summary>
-            /// Метод Рунге-Кутты второго порядка.
+            /// The second-order Runge-Kutta method.
             /// </summary>
             RungeKutta2,
             /// <summary>
-            /// Метод Рунге-Кутты четвертого порядка.
+            /// Fourth-order Runge-Kutta method.
             /// </summary>
             RungeKutta4,
             /// <summary>
-            /// Метод Фелберга.
+            /// Felberg's method.
             /// </summary>
             Fehlberg,
             #endregion
@@ -1738,9 +1736,9 @@ namespace UMapx.Core
 
     #region Interpolation methods
     /// <summary>
-    /// Определяет класс, реализующий интерполяцию.
+    /// Defines a class that implements interpolation.
     /// <remarks>
-    /// Данный класс представляет собой решение задачи нахождения промежуточного значение функции F(x).
+    /// This class is a solution to the problem of finding an intermediate value of the function F(x).
     /// </remarks>
     /// </summary>
     public class Interpolation
@@ -1751,15 +1749,15 @@ namespace UMapx.Core
 
         #region Class components
         /// <summary>
-        /// Инициализирует класс, реализующий интерполяцию.
+        /// Initializes a class that implements interpolation.
         /// </summary>
-        /// <param name="method">Метод интерполяции</param>
+        /// <param name="method">Interpolation method</param>
         public Interpolation(Interpolation.Method method = Method.Lagrange)
         {
             this.method = method;
         }
         /// <summary>
-        /// Получает или задает метод интерполяции.
+        /// Gets or sets the interpolation method.
         /// </summary>
         public Interpolation.Method MethodType
         {
@@ -1773,28 +1771,28 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции в точке.
+        /// Returns the value of a function at a point.
         /// <remarks>
-        /// В данном случае используется только билинейная интерполяция.
+        /// In this case, only bilinear interpolation is used.
         /// </remarks>
         /// </summary>
-        /// <param name="x">Массив значений первого аргумента</param>
-        /// <param name="y">Массив значений второго аргумента</param>
-        /// <param name="z">Матрица значений функции</param>
-        /// <param name="xl">Значение первого аргумента для вычисления</param>
-        /// <param name="yl">Значение второго аргумента для вычисления</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Array of values of the first argument</param>
+        /// <param name="y">Array of values of the second argument</param>
+        /// <param name="z">Function matrix</param>
+        /// <param name="xl">The value of the first argument to calculate</param>
+        /// <param name="yl">The value of the second argument to calculate</param>
+        /// <returns>Double precision floating point number</returns>
         public double Compute(double[] x, double[] y, double[,] z, double xl, double yl)
         {
             return bilinear(x, y, z, xl, yl);
         }
         /// <summary>
-        /// Возвращает значение функции в точке.
+        /// Returns the value of a function at a point.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="xl">Значение аргумента для вычисления</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Array of values of the argument</param>
+        /// <param name="y">Array of values of the function</param>
+        /// <param name="xl">The value of the argument to calculate</param>
+        /// <returns>Double precision floating point number</returns>
         public double Compute(double[] x, double[] y, double xl)
         {
             // chose method of interpolation
@@ -1814,12 +1812,12 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение функции в точке.
+        /// Returns the value of a function at a point.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="xl">Значение аргумента для вычисления</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Array of values of the argument</param>
+        /// <param name="y">Array of values of the function</param>
+        /// <param name="xl">The value of the argument to calculate</param>
+        /// <returns>Complex number</returns>
         public Complex Compute(Complex[] x, Complex[] y, Complex xl)
         {
             // chose method of interpolation
@@ -2089,25 +2087,25 @@ namespace UMapx.Core
 
         #region Enums
         /// <summary>
-        /// Метод интерполяции.
+        /// Interpolation method.
         /// </summary>
         public enum Method
         {
             #region Methods
             /// <summary>
-            /// Линейный метод.
+            /// Linear method.
             /// </summary>
             Linear,
             /// <summary>
-            /// Метод Лагранжа.
+            /// Lagrange's method.
             /// </summary>
             Lagrange,
             /// <summary>
-            /// Метод Ньютона.
+            /// Newton's method.
             /// </summary>
             Newton,
             /// <summary>
-            /// Барицентрический метод.
+            /// Barycentric method.
             /// </summary>
             Barycentric,
             #endregion
@@ -2118,10 +2116,10 @@ namespace UMapx.Core
 
     #region Approximation methods
     /// <summary>
-    /// Определяет класс аппроксимации методом наименьших квадратов.
+    /// Defines the least squares approximation class.
     /// <remarks>
-    /// Данный класс представляет собой решение задачи нахождения функции A(x) ≈ F(x), где F(x) - исходная функция.
-    /// Более подробную информацию можно найти на сайте:
+    /// This class is a solution to the problem of finding the function A (x) ≈ F (x), where F (x) is the original function.
+    /// More information can be found on the website:
     /// http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
     /// </remarks>
     /// </summary>
@@ -2134,17 +2132,17 @@ namespace UMapx.Core
 
         #region Approximation components
         /// <summary>
-        /// Инициализирует класс аппроксимации методом наименьших квадратов.
+        /// Initializes the least squares approximation class.
         /// </summary>
-        /// <param name="power">Степень полинома</param>
-        /// <param name="method">Метод аппроксимации</param>
+        /// <param name="power">Polynomial degree</param>
+        /// <param name="method">Approximation method</param>
         public Approximation(int power = 1, Approximation.Method method = Approximation.Method.Polynomial)
         {
             this.Power = power;
             this.method = method;
         }
         /// <summary>
-        /// Получает или задает степень полинома.
+        /// Gets or sets the degree of the polynomial.
         /// </summary>
         public int Power
         {
@@ -2155,13 +2153,13 @@ namespace UMapx.Core
             set
             {
                 if (value < 1)
-                    throw new Exception("Неверное значение аргмуента");
+                    throw new Exception("Invalid argument value");
 
                 this.power = value;
             }
         }
         /// <summary>
-        /// Получает или задает метод аппроксимации.
+        /// Gets or sets the approximation method.
         /// </summary>
         public Approximation.Method MethodType
         {
@@ -2178,10 +2176,11 @@ namespace UMapx.Core
 
         #region Public voids
         /// <summary>
-        /// Возвращает значение аппроксимации.
+        /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
+        /// <param name="x">Array of argument values</param>
+        /// <param name="y">Array of function values</param>
+        /// <returns>Array</returns>
         public double[] Compute(double[] x, double[] y)
         {
             double[] cf = null;
@@ -2205,11 +2204,12 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение аппроксимации.
+        /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="cf">Коэффициенты аппроксимации</param>
+        /// <param name="x">Array of argument values</param>
+        /// <param name="y">Array of function values</param>
+        /// <param name="cf">Approximation coefficients</param>
+        /// <returns>Array</returns>
         public double[] Compute(double[] x, double[] y, ref double[] cf)
         {
             double error = 0;
@@ -2232,12 +2232,13 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение аппроксимации.
+        /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="cf">Коэффициенты аппроксимации</param>
-        /// <param name="error">Погрешность аппроксимации</param>
+        /// <param name="x">Array of argument values</param>
+        /// <param name="y">Array of function values</param>
+        /// <param name="cf">Approximation coefficients</param>
+        /// <param name="error">Error</param>
+        /// <returns>Array</returns>
         public double[] Compute(double[] x, double[] y, ref double[] cf, ref double error)
         {
             string equation = null;
@@ -2259,13 +2260,14 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение аппроксимации.
+        /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="cf">Коэффициенты аппроксимации</param>
-        /// <param name="error">Погрешность аппроксимации</param>
-        /// <param name="equation">Уравнение аппроксимации</param>
+        /// <param name="x">Array of argument values</param>
+        /// <param name="y">Array of function values</param>
+        /// <param name="cf">Approximation coefficients</param>
+        /// <param name="error">Error</param>
+        /// <param name="equation">Equation</param>
+        /// <returns>Array</returns>
         public double[] Compute(double[] x, double[] y, ref double[] cf, ref double error, ref string equation)
         {
             // chose method of approximation
@@ -2286,10 +2288,11 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Возвращает значение аппроксимации.
+        /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
+        /// <param name="x">Array of argument values</param>
+        /// <param name="y">Array of function values</param>
+        /// <returns>Array</returns>
         public Complex[] Compute(Complex[] x, Complex[] y)
         {
             Complex[] cf = null;
@@ -2313,11 +2316,12 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение аппроксимации.
+        /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="cf">Коэффициенты аппроксимации</param>
+        /// <param name="x">Array of argument values</param>
+        /// <param name="y">Array of function values</param>
+        /// <param name="cf">Approximation coefficients</param>
+        /// <returns>Array</returns>
         public Complex[] Compute(Complex[] x, Complex[] y, ref Complex[] cf)
         {
             Complex error = 0;
@@ -2340,12 +2344,13 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение аппроксимации.
+        /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="cf">Коэффициенты аппроксимации</param>
-        /// <param name="error">Погрешность аппроксимации</param>
+        /// <param name="x">Array of argument values</param>
+        /// <param name="y">Array of function values</param>
+        /// <param name="cf">Approximation coefficients</param>
+        /// <param name="error">Error</param>
+        /// <returns>Array</returns>
         public Complex[] Compute(Complex[] x, Complex[] y, ref Complex[] cf, ref Complex error)
         {
             string equation = null;
@@ -2367,13 +2372,14 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает значение аппроксимации.
+        /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="cf">Коэффициенты аппроксимации</param>
-        /// <param name="error">Погрешность аппроксимации</param>
-        /// <param name="equation">Уравнение аппроксимации</param>
+        /// <param name="x">Array of argument values</param>
+        /// <param name="y">Array of function values</param>
+        /// <param name="cf">Approximation coefficients</param>
+        /// <param name="error">Error</param>
+        /// <param name="equation">Equation</param>
+        /// <returns>Array</returns>
         public Complex[] Compute(Complex[] x, Complex[] y, ref Complex[] cf, ref Complex error, ref string equation)
         {
             // chose method of approximation
@@ -2653,25 +2659,25 @@ namespace UMapx.Core
 
         #region Enums
         /// <summary>
-        /// Метод аппроксимации.
+        /// Approximation method.
         /// </summary>
         public enum Method
         {
             #region Methods
             /// <summary>
-            /// Полиномиальная аппроксимация.
+            /// Polynomial approximation.
             /// </summary>
             Polynomial,
             /// <summary>
-            /// Логарифимическая аппроксимация.
+            /// Logarithmic approximation.
             /// </summary>
             Logarithmic,
             /// <summary>
-            /// Экспоненциальная аппроксимация.
+            /// Exponential approximation.
             /// </summary>
             Exponential,
             /// <summary>
-            /// Степенная аппроксимация.
+            /// Power approximation.
             /// </summary>
             Power,
             #endregion
@@ -2679,17 +2685,17 @@ namespace UMapx.Core
         #endregion
     }
     /// <summary>
-    /// Определяет класс, реализующий метод наименьших квадратов.
+    /// Defines a class that implements the least squares method.
     /// </summary>
     internal static class LeastSquaresOptions
     {
         #region double components
         /// <summary>
-        /// Возвращает значение полиномиала.
+        /// Returns the polynomial value.
         /// </summary>
-        /// <param name="x">Аргумент</param>
-        /// <param name="c">Коэффициенты аппроксимации</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="c">Approximation coefficients</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Polynomial(double x, double[] c)
         {
             int n = c.Length, i;
@@ -2702,11 +2708,11 @@ namespace UMapx.Core
             return s;
         }
         /// <summary>
-        /// Возвращает массив значений полиномиала.
+        /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="c">Коэффициенты аппроксимации</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="c">Approximation coefficients</param>
+        /// <returns>Array</returns>
         public static double[] Polynomial(double[] x, double[] c)
         {
             int n = x.Length, i;
@@ -2719,14 +2725,14 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// Возвращает коэффициенты аппроксимации.
+        /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="iterations">Количество итераций</param>
+        /// <param name="x">Argument</param>
+        /// <param name="y">Function</param>
+        /// <param name="iterations">Number of iterations</param>
+        /// <returns>Array</returns>
         public static double[] Coefficients(double[] x, double[] y, int iterations)
         {
-            // Построение матрицы преобразования:
             int i, j;
             int n = x.Length;
             int m = iterations < 1 ? 1 : iterations;
@@ -2741,15 +2747,14 @@ namespace UMapx.Core
                 matrix[i, m] = LeastSquaresOptions.SummaryPow(y, x, 1, i);
             }
 
-            // Решение системы линейных уравнений:
             return Matrice.Solve(matrix);
         }
         /// <summary>
-        /// Возвращает значение выражения: s += v(i) ^ pow.
+        /// Returns the value of the expression: s += v(i) ^ pow.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="pow">Степень</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <param name="pow">Power</param>
+        /// <returns>Double precision floating point number</returns>
         public static double SummaryPow(double[] v, double pow)
         {
             double sum = 0;
@@ -2762,13 +2767,13 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Возвращает значение выражения: s += {x(i) ^ powx} * {y(i) ^ powy}.
+        /// Returns the value of the expression: s += {x(i) ^ powx} * {y(i) ^ powy}.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="y">Одномерный массив</param>
-        /// <param name="powx">Степень</param>
-        /// <param name="powy">Степень</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Array</param>
+        /// <param name="y">Array</param>
+        /// <param name="powx">Power of x</param>
+        /// <param name="powy">Power of y</param>
+        /// <returns>Double precision floating point number</returns>
         public static double SummaryPow(double[] x, double[] y, double powx, double powy)
         {
             double sum = 0;
@@ -2781,11 +2786,11 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Возвращает погрешность аппроксимации функции.
+        /// Returns the approximation error of the function.
         /// </summary>
-        /// <param name="a">Аппроксимация</param>
-        /// <param name="b">Функция</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Approximation</param>
+        /// <param name="b">Function</param>
+        /// <returns>Double precision floating point number</returns>
         public static double Error(double[] a, double[] b)
         {
             double vara = Matrice.Var(a);
@@ -2798,10 +2803,10 @@ namespace UMapx.Core
             return varb / vara;
         }
         /// <summary>
-        /// Возвращает уравнение полинома, представленного в виде строки.
+        /// Returns the equation of a polynomial represented as a string.
         /// </summary>
-        /// <param name="p">Коэффициенты полинома</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="p">Polynomial coefficients</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Equation(double[] p)
         {
             string equation = "";
@@ -2817,11 +2822,11 @@ namespace UMapx.Core
             return equation;
         }
         /// <summary>
-        /// Возвращает уравнение полинома, представленного в виде строки.
+        /// Returns the equation of a polynomial represented as a string.
         /// </summary>
-        /// <param name="p">Коэффициенты полинома</param>
-        /// <param name="function">Функция</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="p">Polynomial coefficients</param>
+        /// <param name="function">Function</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Equation(double[] p, string function)
         {
             string equation = "";
@@ -2840,11 +2845,11 @@ namespace UMapx.Core
 
         #region Complex components
         /// <summary>
-        /// Возвращает значение полиномиала.
+        /// Returns the polynomial value.
         /// </summary>
-        /// <param name="x">Аргумент</param>
-        /// <param name="c">Коэффициенты аппроксимации</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="c">Approximation coefficients</param>
+        /// <returns>Complex number</returns>
         public static Complex Polynomial(Complex x, Complex[] c)
         {
             int n = c.Length, i;
@@ -2857,11 +2862,11 @@ namespace UMapx.Core
             return s;
         }
         /// <summary>
-        /// Возвращает массив значений полиномиала.
+        /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="c">Коэффициенты аппроксимации</param>
-        /// <returns>Одномерный массив</returns>
+        /// <param name="x">Argument</param>
+        /// <param name="c">Approximation coefficients</param>
+        /// <returns>Array</returns>
         public static Complex[] Polynomial(Complex[] x, Complex[] c)
         {
             int n = x.Length, i;
@@ -2874,14 +2879,14 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// Возвращает коэффициенты аппроксимации.
+        /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Массив значений аргумента</param>
-        /// <param name="y">Массив значений функции</param>
-        /// <param name="iterations">Количество итераций</param>
+        /// <param name="x">Argument</param>
+        /// <param name="y">Function</param>
+        /// <param name="iterations">Number of iterations</param>
+        /// <returns>Array</returns>
         public static Complex[] Coefficients(Complex[] x, Complex[] y, int iterations)
         {
-            // Построение матрицы преобразования:
             int i, j;
             int n = x.Length;
             int m = iterations < 1 ? 1 : iterations;
@@ -2896,15 +2901,14 @@ namespace UMapx.Core
                 matrix[i, m] = LeastSquaresOptions.SummaryPow(y, x, 1, i);
             }
 
-            // Решение системы линейных уравнений:
             return Matrice.Solve(matrix);
         }
         /// <summary>
-        /// Возвращает значение выражения: s += v(i) ^ pow.
+        /// Returns the value of the expression: s += v(i) ^ pow.
         /// </summary>
-        /// <param name="v">Одномерный массив</param>
-        /// <param name="pow">Степень</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="v">Array</param>
+        /// <param name="pow">Power</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex SummaryPow(Complex[] v, double pow)
         {
             Complex sum = 0;
@@ -2917,13 +2921,13 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Возвращает значение выражения: s += {x(i) ^ powx} * {y(i) ^ powy}.
+        /// Returns the value of the expression: s += {x(i) ^ powx} * {y(i) ^ powy}.
         /// </summary>
-        /// <param name="x">Одномерный массив</param>
-        /// <param name="y">Одномерный массив</param>
-        /// <param name="powx">Степень</param>
-        /// <param name="powy">Степень</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="x">Array</param>
+        /// <param name="y">Array</param>
+        /// <param name="powx">Power of x</param>
+        /// <param name="powy">Power of y</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex SummaryPow(Complex[] x, Complex[] y, double powx, double powy)
         {
             Complex sum = 0;
@@ -2936,11 +2940,11 @@ namespace UMapx.Core
             return sum;
         }
         /// <summary>
-        /// Возвращает погрешность аппроксимации функции.
+        /// Returns the approximation error of the function.
         /// </summary>
-        /// <param name="a">Аппроксимация</param>
-        /// <param name="b">Функция</param>
-        /// <returns>Число двойной точности с плавающей запятой</returns>
+        /// <param name="a">Approximation</param>
+        /// <param name="b">Function</param>
+        /// <returns>Double precision floating point number</returns>
         public static Complex Error(Complex[] a, Complex[] b)
         {
             Complex vara = Matrice.Var(a);
@@ -2953,10 +2957,10 @@ namespace UMapx.Core
             return (varb / vara).Real;
         }
         /// <summary>
-        /// Возвращает уравнение полинома, представленного в виде строки.
+        /// Returns the equation of a polynomial represented as a string.
         /// </summary>
-        /// <param name="p">Коэффициенты полинома</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="p">Polynomial coefficients</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Equation(Complex[] p)
         {
             string equation = "";
@@ -2972,11 +2976,11 @@ namespace UMapx.Core
             return equation;
         }
         /// <summary>
-        /// Возвращает уравнение полинома, представленного в виде строки.
+        /// Returns the equation of a polynomial represented as a string.
         /// </summary>
-        /// <param name="p">Коэффициенты полинома</param>
-        /// <param name="function">Функция</param>
-        /// <returns>Текст как последовательность знаков Юникода</returns>
+        /// <param name="p">Polynomial coefficients</param>
+        /// <param name="function">Function</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Equation(Complex[] p, string function)
         {
             string equation = "";
@@ -2997,36 +3001,30 @@ namespace UMapx.Core
 
     #region Roots solution
     /// <summary>
-    /// Определяет класс решения уравнений с использованием спектрального разложения матрицы.
+    /// Defines a class for solving equations using the spectral decomposition of a matrix.
     /// <remarks>
-    /// Более подробную информацию можно найти на сайте:
+    /// More information can be found on the website:
     /// https://www.mathworks.com/help/matlab/ref/roots.html
     /// </remarks>
     /// </summary>
     public class Roots
     {
         #region Private data
-        /// <summary>
-        /// Спектральное разложение матрицы.
-        /// </summary>
         private EVD eig;
-        /// <summary>
-        /// Погрешность вычислений.
-        /// </summary>
         private double eps;
         #endregion
 
         #region Class components
         /// <summary>
-        /// Инициализирует класс решения уравнений с использованием спектрального разложения матрицы.
+        /// Initializes a class of equations using the spectral decomposition of a matrix.
         /// </summary>
-        /// <param name="eps">Погрешность [0, 1]</param>
+        /// <param name="eps">Epsilon [0, 1]</param>
         public Roots(double eps = 1e-16)
         {
             this.Eps = eps;
         }
         /// <summary>
-        /// Получает или задает погрешность [0, 1].
+        /// Gets or sets an error [0, 1].
         /// </summary>
         public double Eps
         {
@@ -3040,10 +3038,10 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Возвращает вектор-столбец, соответствующий численному решению полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
+        /// Returns a column vector corresponding to the numerical solution of the polynomial: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
         /// </summary>
-        /// <param name="polynomial">Полином</param>
-        /// <returns>Вектор-столбец</returns>
+        /// <param name="polynomial">Polynomial</param>
+        /// <returns>Array</returns>
         public Complex[] Compute(double[] polynomial)
         {
             // MATLAB roots method
@@ -3087,10 +3085,10 @@ namespace UMapx.Core
             return eig.D;
         }
         /// <summary>
-        /// Возвращает вектор-столбец коэффициентов полинома: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
+        /// Returns a column vector of polynomial coefficients: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
         /// </summary>
-        /// <param name="roots">Корни полинома</param>
-        /// <returns>Вектор-столбец</returns>
+        /// <param name="roots">Roots</param>
+        /// <returns>Array</returns>
         public double[] Compute(Complex[] roots)
         {
             // MATLAB roots method
