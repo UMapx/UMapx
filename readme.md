@@ -24,6 +24,6 @@ UMapx.NET Framework is a dynamic link library for digital signal processing and 
 * Image Processing Toolbox. Contains efficient algorithms for processing, correcting and analyzing 32-bit raster images.
 
 ## References
-A full list of references is given in a separate [file]().
+A full list of references is given in a separate [file](https://github.com/asiryan/UMapx.NET/blob/master/extras/references.pdf).
 
 Asiryan Valeriy, © 2015-2019
