@@ -28,4 +28,4 @@ UMapx.NET Framework is a dynamic link library for digital signal processing and 
 GNU LGPL ([en](licenses/gnu%20lgpl%20(en).pdf), [ru](licenses/gnu%20lgpl%20(ru).pdf))
 
 # References
-A full list of references is given in a separate [file](https://github.com/asiryan/UMapx.NET/blob/master/extras/references.pdf).
+A full list of references is given in a separate [file](docs/references.pdf).
