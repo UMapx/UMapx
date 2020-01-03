@@ -25,7 +25,7 @@
 * **Image Processing Toolbox**. Contains efficient algorithms for processing, correcting and analyzing 32-bit raster images.
 
 # License
-**GNU LGPL v2.1** ([file](docs/gnu%20lgpl%20(en).pdf))
+**GNU GPL v3.0**  
 
 # References
 A full list of references is given in a separate [file](docs/references.pdf).
