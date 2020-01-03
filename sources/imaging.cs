@@ -10574,11 +10574,7 @@ namespace UMapx.Imaging
         private unsafe void ApplyHSB(BitmapData bmData)
         {
             double[][,] hsb = BitmapConverter.ToHSB(bmData, true);
-
-            this.filter.Apply(hsb[0]);
-            this.filter.Apply(hsb[1]);
             this.filter.Apply(hsb[2]);
-
             BitmapConverter.FromHSB(hsb, bmData);
             return;
         }
@@ -10589,11 +10585,7 @@ namespace UMapx.Imaging
         private unsafe void ApplyHSL(BitmapData bmData)
         {
             double[][,] hsl = BitmapConverter.ToHSL(bmData, true);
-
-            this.filter.Apply(hsl[0]);
-            this.filter.Apply(hsl[1]);
             this.filter.Apply(hsl[2]);
-
             BitmapConverter.FromHSL(hsl, bmData);
             return;
         }
@@ -10604,12 +10596,8 @@ namespace UMapx.Imaging
         private unsafe void ApplyYCbCr(BitmapData bmData)
         {
             double[][,] ycbcr = BitmapConverter.ToYCbCr(bmData, true);
-
             this.filter.Apply(ycbcr[0]);
-            this.filter.Apply(ycbcr[1]);
-            this.filter.Apply(ycbcr[2]);
-
-            BitmapConverter.FromHSL(ycbcr, bmData);
+            BitmapConverter.FromYCbCr(ycbcr, bmData);
             return;
         }
         /// <summary>
