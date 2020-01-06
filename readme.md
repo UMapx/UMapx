@@ -1,4 +1,4 @@
-<p align="center"><img width="30%" src="docs/umapxlogo.png" /></p>
+<p align="center"><img width="25%" src="docs/umapxlogo.png" /></p>
 
 **UMapx.NET Framework** is a dynamic link library for digital signal processing and analysis developed in C#.
 
