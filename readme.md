@@ -24,6 +24,21 @@
 * **Window Toolbox**. Includes a set of tools for synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier transforms and Weyl-Heisenberg transforms ([Gabor analysis](https://github.com/asiryan/Weyl-Heisenberg-Bases-Toolbox)) for real and complex signals.
 * **Image Processing Toolbox**. Contains efficient algorithms for processing, correcting and analyzing 32-bit raster images.
 
+# Installation
+Download from release folder and add **UMapx.dll** to your project.  
+```c#
+using UMapx.Analysis;
+using UMapx.Colorspce;
+using UMapx.Core;
+using UMapx.Decomposition;
+using UMapx.Distribution;
+using UMapx.Imaging;
+using UMapx.Response;
+using UMapx.Transform;
+using UMapx.Wavelet;
+using UMapx.Window;
+```
+
 # License
 **GNU GPL v3.0**  
 
