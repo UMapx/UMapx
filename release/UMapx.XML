@@ -1306,13 +1306,6 @@
             </summary>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.LAB.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="M:UMapx.Colorspace.LAB.ToXYZ(System.Double,System.Double,System.Double)">
             <summary>
             Converts a color model CIE Lab in model CIE XYZ.
@@ -1430,13 +1423,6 @@
             Creates a copy of the color model.
             </summary>
             <returns>Structure</returns>
-        </member>
-        <member name="M:UMapx.Colorspace.XYZ.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="M:UMapx.Colorspace.XYZ.ToLAB(System.Double,System.Double,System.Double)">
             <summary>
@@ -1564,13 +1550,6 @@
             </summary>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.CMYK.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="M:UMapx.Colorspace.CMYK.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
             Converts a color model RGB in model CMYK.
@@ -1667,13 +1646,6 @@
             Creates a copy of the color model.
             </summary>
             <returns>Structure</returns>
-        </member>
-        <member name="M:UMapx.Colorspace.HSB.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="M:UMapx.Colorspace.HSB.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -1772,13 +1744,6 @@
             </summary>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.HSL.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="M:UMapx.Colorspace.HSL.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
             Converts a color model RGB in model HSL.
@@ -1875,13 +1840,6 @@
             Creates a copy of the color model.
             </summary>
             <returns>Structure</returns>
-        </member>
-        <member name="M:UMapx.Colorspace.AHSL.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="M:UMapx.Colorspace.AHSL.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -2029,13 +1987,6 @@
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>Text as a sequence of Unicode characters</returns>
-        </member>
-        <member name="M:UMapx.Colorspace.RGB.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="M:UMapx.Colorspace.RGB.Average(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -2354,13 +2305,6 @@
             </summary>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.RYB.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="M:UMapx.Colorspace.RYB.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
             Converts a color model RGB in model RYB.
@@ -2457,13 +2401,6 @@
             Creates a copy of the color model.
             </summary>
             <returns>Structure</returns>
-        </member>
-        <member name="M:UMapx.Colorspace.sRGB.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="M:UMapx.Colorspace.sRGB.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -2562,13 +2499,6 @@
             </summary>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.YUV.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="M:UMapx.Colorspace.YUV.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
             Converts a color model RGB in model YUV.
@@ -2665,13 +2595,6 @@
             Creates a copy of the color model.
             </summary>
             <returns>Structure</returns>
-        </member>
-        <member name="M:UMapx.Colorspace.YIQ.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="M:UMapx.Colorspace.YIQ.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -2770,13 +2693,6 @@
             </summary>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.YCbCr.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="M:UMapx.Colorspace.YCbCr.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
             Converts a color model RGB in model YCbCr.
@@ -2873,13 +2789,6 @@
             Creates a copy of the color model.
             </summary>
             <returns>Structure</returns>
-        </member>
-        <member name="M:UMapx.Colorspace.YDbDr.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="M:UMapx.Colorspace.YDbDr.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -2978,13 +2887,6 @@
             </summary>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.YCgCo.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="M:UMapx.Colorspace.YCgCo.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
             Converts a color model RGB in model YCgCo.
@@ -3081,13 +2983,6 @@
             Creates a copy of the color model.
             </summary>
             <returns>Structure</returns>
-        </member>
-        <member name="M:UMapx.Colorspace.YPbPr.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="M:UMapx.Colorspace.YPbPr.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -3410,13 +3305,6 @@
             Creates a copy of the color model.
             </summary>
             <returns>Structure</returns>
-        </member>
-        <member name="M:UMapx.Colorspace.Unknown.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="P:UMapx.Colorspace.Unknown.ToRGB">
             <summary>
@@ -4687,6 +4575,70 @@
             <param name="p">Array</param>
             <param name="q">Array</param>
             <returns>Double precision floating point number</returns>
+        </member>
+        <member name="T:UMapx.Core.Binary">
+            <summary>
+            Uses for binary serialization of objects.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Binary.Save(System.IO.Stream,System.Object)">
+            <summary>
+            Save data from the file.
+            </summary>
+            <param name="stream">Stream</param>
+            <param name="o">Object</param>
+        </member>
+        <member name="M:UMapx.Core.Binary.Save(System.String,System.Object)">
+            <summary>
+            Save data from the file.
+            </summary>
+            <param name="fileName">File name</param>
+            <param name="o">Object</param>
+        </member>
+        <member name="M:UMapx.Core.Binary.Load(System.IO.Stream)">
+            <summary>
+            Load data from the file.
+            </summary>
+            <param name="stream">Stream</param>
+        </member>
+        <member name="M:UMapx.Core.Binary.Load(System.String)">
+            <summary>
+            Load data from the file.
+            </summary>
+            <param name="fileName">File name</param>
+        </member>
+        <member name="T:UMapx.Core.Xml">
+            <summary>
+            Uses for Xml serialization of objects.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Xml.Save(System.IO.Stream,System.Object)">
+            <summary>
+            Save data from the file.
+            </summary>
+            <param name="stream">Stream</param>
+            <param name="o">Object</param>
+        </member>
+        <member name="M:UMapx.Core.Xml.Save(System.String,System.Object)">
+            <summary>
+            Save data from the file.
+            </summary>
+            <param name="fileName">File name</param>
+            <param name="o">Object</param>
+        </member>
+        <member name="M:UMapx.Core.Xml.Load(System.IO.Stream,System.Type)">
+            <summary>
+            Load data from the file.
+            </summary>
+            <param name="stream">Stream</param>
+            <param name="type">Type</param>
+        </member>
+        <member name="M:UMapx.Core.Xml.Load(System.String,System.Type)">
+            <summary>
+            Load data from the file.
+            </summary>
+            <param name="fileName">File name</param>
+            <param name="type">Type</param>
         </member>
         <member name="T:UMapx.Core.Special">
             <summary>
@@ -9997,13 +9949,6 @@
             </summary>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Complex.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about an object.
-            </summary>
-            <param name="info">Data needed for object serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Core.Quaternion">
             <summary>
             Defines a quaternion.
@@ -10228,13 +10173,6 @@
             </summary>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about an object.
-            </summary>
-            <param name="info">Data needed for object serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="M:UMapx.Core.Quaternion.Parse(System.String)">
             <summary>
             Parses the string to quaternion.
@@ -10381,13 +10319,6 @@
             </summary>
             <returns>Pair of numbers</returns>
         </member>
-        <member name="M:UMapx.Core.RangeDouble.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data needed for serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Core.RangeInt">
             <summary>
             Defines a pair of integer numbers representing a line segment.
@@ -10464,13 +10395,6 @@
             </summary>
             <returns>Pair of numbers</returns>
         </member>
-        <member name="M:UMapx.Core.RangeInt.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data needed for serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Core.PointDouble">
             <summary>
             Defines a pair of double numbers representing an ordered pair of X and Y coordinates.
@@ -10539,13 +10463,6 @@
             Creates a copy of PointDouble.
             </summary>
             <returns>Pair of numbers</returns>
-        </member>
-        <member name="M:UMapx.Core.PointDouble.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data needed for serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Core.PointInt">
             <summary>
@@ -10616,13 +10533,6 @@
             </summary>
             <returns>Pair of numbers</returns>
         </member>
-        <member name="M:UMapx.Core.PointInt.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data needed for serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Core.SizeDouble">
             <summary>
             Defines a pair of double numbers representing an ordered pair of width and height.
@@ -10692,13 +10602,6 @@
             </summary>
             <returns>Pair of numbers</returns>
         </member>
-        <member name="M:UMapx.Core.SizeDouble.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data needed for serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Core.SizeInt">
             <summary>
             Defines a pair of integer numbers representing an ordered pair of width and height.
@@ -10767,13 +10670,6 @@
             Creates a copy of SizeInt.
             </summary>
             <returns>Pair of numbers</returns>
-        </member>
-        <member name="M:UMapx.Core.SizeInt.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data needed for serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Decomposition.Hessenberg">
             <summary>
@@ -11749,25 +11645,6 @@
             </summary>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Gaussian.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gaussian.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gaussian.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.LogGaussian">
             <summary>
             Defines the logarithmic Gaussian distribution.
@@ -11854,25 +11731,6 @@
             </summary>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.LogGaussian.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.LogGaussian.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.LogGaussian.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Wigner">
             <summary>
             Defines the Wiener semicircular distribution.
@@ -11947,25 +11805,6 @@
             Returns the value of differential entropy.
             </summary>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Wigner.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Wigner.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Wigner.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Rayleigh">
             <summary>
@@ -12047,25 +11886,6 @@
             </summary>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Rayleigh.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Rayleigh.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Rayleigh.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Exponential">
             <summary>
             Defines the exponential distribution.
@@ -12145,25 +11965,6 @@
             Returns the value of differential entropy.
             </summary>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Exponential.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Exponential.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Exponential.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Cauchy">
             <summary>
@@ -12251,25 +12052,6 @@
             </summary>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Cauchy.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Cauchy.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Cauchy.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Weibull">
             <summary>
             Defines the Weibull distribution.
@@ -12355,25 +12137,6 @@
             Returns the value of differential entropy.
             </summary>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Weibull.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Weibull.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Weibull.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Laplace">
             <summary>
@@ -12461,25 +12224,6 @@
             </summary>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Laplace.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Laplace.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Laplace.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Geometric">
             <summary>
             Defines the geometric distribution.
@@ -12559,25 +12303,6 @@
             Returns the value of differential entropy.
             </summary>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Geometric.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Geometric.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Geometric.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Poisson">
             <summary>
@@ -12666,25 +12391,6 @@
             <param name="l"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Distribution.Poisson.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Poisson.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Poisson.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Uniform">
             <summary>
             Defines the uniform distribution.
@@ -12770,25 +12476,6 @@
             Returns the value of differential entropy.
             </summary>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Uniform.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Uniform.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Uniform.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Beta">
             <summary>
@@ -12876,25 +12563,6 @@
             </summary>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Beta.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Beta.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Beta.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Gamma">
             <summary>
             Defines the Gamma-distribution.
@@ -12980,25 +12648,6 @@
             Returns the value of differential entropy.
             </summary>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gamma.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gamma.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gamma.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Pareto">
             <summary>
@@ -13086,25 +12735,6 @@
             </summary>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Pareto.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Pareto.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Pareto.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Bernoulli">
             <summary>
             Defines the distribution of Bernoulli.
@@ -13184,25 +12814,6 @@
             Returns the value of differential entropy.
             </summary>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Bernoulli.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Bernoulli.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Bernoulli.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.LogLogistic">
             <summary>
@@ -13290,25 +12901,6 @@
             </summary>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.LogLogistic.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.LogLogistic.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.LogLogistic.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Binomial">
             <summary>
             Defines the binomial distribution.
@@ -13394,25 +12986,6 @@
             Returns the value of differential entropy.
             </summary>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Binomial.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Binomial.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Binomial.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Hypergeometric">
             <summary>
@@ -13506,25 +13079,6 @@
             </summary>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Hypergeometric.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Hypergeometric.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Hypergeometric.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Logistic">
             <summary>
             Defines the logistic distribution.
@@ -13610,25 +13164,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Logistic.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Logistic.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Logistic.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Rademacher">
             <summary>
             Defines the Rademacher distribution.
@@ -13696,18 +13231,6 @@
             <summary>
             Gets the value of entropy.
             </summary>
-        </member>
-        <member name="M:UMapx.Distribution.Rademacher.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Rademacher.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
         </member>
         <member name="T:UMapx.Distribution.Triangular">
             <summary>
@@ -13799,25 +13322,6 @@
             </summary>
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Triangular.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Triangular.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Triangular.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Nakagami">
             <summary>
@@ -13911,25 +13415,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Nakagami.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Nakagami.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Nakagami.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Levy">
             <summary>
             Defines the Levy distribution.
@@ -14010,25 +13495,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Levy.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Levy.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Levy.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Logarithmic">
             <summary>
             Defines the logarithmic distribution.
@@ -14102,25 +13568,6 @@
             <summary>
             Gets the value of entropy.
             </summary>
-        </member>
-        <member name="M:UMapx.Distribution.Logarithmic.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Logarithmic.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Logarithmic.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.BetaPrime">
             <summary>
@@ -14201,25 +13648,6 @@
             </summary>
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.BetaPrime.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.BetaPrime.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.BetaPrime.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.BirnbaumSaunders">
             <summary>
@@ -14307,25 +13735,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.BirnbaumSaunders.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.BirnbaumSaunders.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.BirnbaumSaunders.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.ChiSquare">
             <summary>
             Defines the xi-square distribution.
@@ -14399,25 +13808,6 @@
             </summary>
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.ChiSquare.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.ChiSquare.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.ChiSquare.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Gumbel">
             <summary>
@@ -14498,25 +13888,6 @@
             </summary>
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gumbel.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gumbel.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gumbel.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Student">
             <summary>
@@ -14599,25 +13970,6 @@
             <param name="x"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Distribution.Student.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Student.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Student.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.UQuadratic">
             <summary>
             Defines the U-quadratic distribution.
@@ -14698,25 +14050,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.UQuadratic.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.UQuadratic.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.UQuadratic.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.FisherSnedecor">
             <summary>
             Defines the Fisher distribution.
@@ -14796,25 +14129,6 @@
             </summary>
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.FisherSnedecor.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.FisherSnedecor.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.FisherSnedecor.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Erlang">
             <summary>
@@ -14897,25 +14211,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Erlang.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Erlang.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Erlang.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.WrappedCauchy">
             <summary>
             Defines the compact Cauchy distribution.
@@ -14995,25 +14290,6 @@
             </summary>
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.WrappedCauchy.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.WrappedCauchy.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.WrappedCauchy.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Kumaraswamy">
             <summary>
@@ -15104,25 +14380,6 @@
             <param name="b"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Distribution.Kumaraswamy.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Kumaraswamy.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Kumaraswamy.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Gompertz">
             <summary>
             Defines the Gompertz distribution.
@@ -15203,25 +14460,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Gompertz.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gompertz.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Gompertz.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.HyperbolicSecant">
             <summary>
             Defines the hyperbolic secant distribution.
@@ -15290,25 +14528,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.HyperbolicSecant.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.HyperbolicSecant.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.HyperbolicSecant.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.Arcsine">
             <summary>
             Defines the arcsine distribution.
@@ -15376,25 +14595,6 @@
             </summary>
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Arcsine.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Arcsine.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Arcsine.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Burr">
             <summary>
@@ -15476,25 +14676,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.Burr.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Burr.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Burr.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.FisherZ">
             <summary>
             Defines the Fisher's Z-distribution.
@@ -15575,25 +14756,6 @@
             <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.FisherZ.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.FisherZ.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.FisherZ.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.ConeShape">
             <summary>
             Defines the distribution of the conical shape.
@@ -15670,25 +14832,6 @@
             <param name="tau">Argument</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Distribution.ConeShape.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.ConeShape.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.ConeShape.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Distribution.ChoiWilliams">
             <summary>
             Defines the distribution of Choi Williams.
@@ -15764,25 +14907,6 @@
             <param name="t">Argument</param>
             <param name="tau">Argument</param>
             <returns>Double precision floating point number</returns>
-        </member>
-        <member name="M:UMapx.Distribution.ChoiWilliams.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.ChoiWilliams.Clone">
-            <summary>
-            Creates a copy of the distribution.
-            </summary>
-            <returns>Distribution</returns>
-        </member>
-        <member name="M:UMapx.Distribution.ChoiWilliams.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data required for serializing and deserializing an object</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Distribution.Bayes">
             <summary>
@@ -21871,25 +20995,6 @@
             Gets the finished notch filter.
             </summary>
         </member>
-        <member name="M:UMapx.Response.IIR.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the filter.
-            </summary>
-            <returns>Filter</returns>
-        </member>
-        <member name="M:UMapx.Response.IIR.Clone">
-            <summary>
-            Creates a copy of the filter.
-            </summary>
-            <returns>Filter</returns>
-        </member>
-        <member name="M:UMapx.Response.IIR.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data needed for serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
-        </member>
         <member name="T:UMapx.Response.FIR">
             <summary>
             Defines a filter with a finite impulse response.
@@ -21971,25 +21076,6 @@
             <summary>
             Gets the finished notch filter.
             </summary>
-        </member>
-        <member name="M:UMapx.Response.FIR.System#ICloneable#Clone">
-            <summary>
-            Creates a copy of the filter.
-            </summary>
-            <returns>Filter</returns>
-        </member>
-        <member name="M:UMapx.Response.FIR.Clone">
-            <summary>
-            Creates a copy of the filter.
-            </summary>
-            <returns>Filter</returns>
-        </member>
-        <member name="M:UMapx.Response.FIR.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Gets information about the object.
-            </summary>
-            <param name="info">Data needed for serialization and deserialization</param>
-            <param name="context">Source and destination of a given stream</param>
         </member>
         <member name="T:UMapx.Response.IResponse">
             <summary>
