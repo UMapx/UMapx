@@ -30,6 +30,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the window function of Planck.
     /// </summary>
+    [Serializable]
     public class Planck : WindowBase
     {
         #region Private data
@@ -122,6 +123,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the window function of Tukey.
     /// </summary>
+    [Serializable]
     public class Tukey : WindowBase
     {
         #region Private data
@@ -197,6 +199,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the closed Gaussian window.
     /// </summary>
+    [Serializable]
     public class Confined : WindowBase
     {
         #region Private data
@@ -280,6 +283,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines a generalized window normal function.
     /// </summary>
+    [Serializable]
     public class Normal : WindowBase
     {
         #region Private data
@@ -359,6 +363,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Kaiser window function.
     /// </summary>
+    [Serializable]
     public class Kaiser : WindowBase
     {
         #region Private data
@@ -421,6 +426,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Welch window function.
     /// </summary>
+    [Serializable]
     public class Welch : WindowBase
     {
         #region Window components
@@ -460,6 +466,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Lanczos window function.
     /// </summary>
+    [Serializable]
     public class Lanzcos : WindowBase
     {
         #region Window components
@@ -497,6 +504,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Parzen window function.
     /// </summary>
+    [Serializable]
     public class Parzen : WindowBase
     {
         #region Window components
@@ -550,6 +558,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the "Flat-Top" window function.
     /// </summary>
+    [Serializable]
     public class FlatTop : WindowBase
     {
         #region Window components
@@ -588,6 +597,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Nuttall window function.
     /// </summary>
+    [Serializable]
     public class Nuttall : WindowBase
     {
         #region Window components
@@ -625,6 +635,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Blackman-Nuttall window function.
     /// </summary>
+    [Serializable]
     public class BlackmanNuttall : WindowBase
     {
         #region Window components
@@ -663,6 +674,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Blackman-Harris window function.
     /// </summary>
+    [Serializable]
     public class BlackmanHarris : WindowBase
     {
         #region Window components
@@ -699,6 +711,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Blackman window function.
     /// </summary>
+    [Serializable]
     public class Blackman : WindowBase
     {
         #region Window components
@@ -736,6 +749,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Barlett-Hann window function.
     /// </summary>
+    [Serializable]
     public class BarlettHann : WindowBase
     {
         #region Window components
@@ -775,6 +789,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Hann window function (Hanning).
     /// </summary>
+    [Serializable]
     public class Hann : WindowBase
     {
         #region Window components
@@ -812,6 +827,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Hamming window function.
     /// </summary>
+    [Serializable]
     public class Hamming : WindowBase
     {
         #region Window components
@@ -849,6 +865,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the cosine window function.
     /// </summary>
+    [Serializable]
     public class Cosine : WindowBase
     {
         #region Window components
@@ -899,6 +916,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the sine window function.
     /// </summary>
+    [Serializable]
     public class Sine : WindowBase
     {
         #region Window components
@@ -949,6 +967,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Gabor window function.
     /// </summary>
+    [Serializable]
     public class Gabor : WindowBase
     {
         #region Private data
@@ -1112,6 +1131,7 @@ namespace UMapx.Window
     /// https://en.wikipedia.org/wiki/Short-time_Fourier_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FastShortTimeFourierTransform : IWindowTransform, ITransform
     {
         #region Private data
@@ -1474,6 +1494,7 @@ namespace UMapx.Window
     /// https://en.wikipedia.org/wiki/Short-time_Fourier_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class ShortTimeFourierTransform : IWindowTransform, ITransform
     {
         #region Private data
@@ -1839,6 +1860,7 @@ namespace UMapx.Window
     /// https://elibrary.ru/item.asp?id=29767333
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class WeylHeisenbergTransform : IWindowTransform, ITransform
     {
         #region Private data
@@ -2314,6 +2336,7 @@ namespace UMapx.Window
     /// https://elibrary.ru/title_about.asp?id=58245
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FastWeylHeisenbergTransform : IWindowTransform, ITransform
     {
         #region Private data

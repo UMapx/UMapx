@@ -118,6 +118,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the mask correction filter.
     /// </summary>
+    [Serializable]
     public class Correction : Rebuilder, IBitmapFilter
     {
         #region Private data
@@ -388,6 +389,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the RGBA mask correction filter.
     /// </summary>
+    [Serializable]
     public class RGBACorrection : Rebuilder, IBitmapFilter
     {
         #region Private data
@@ -498,6 +500,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the local mask correction filter.
     /// </summary>
+    [Serializable]
     public class LocalCorrection : Rebuilder, IBitmapFilter2
     {
         #region Private data
@@ -831,6 +834,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the local RGBA mask correction filter.
     /// </summary>
+    [Serializable]
     public class RGBALocalCorrection : Rebuilder, IBitmapFilter2
     {
         #region Private data
@@ -1012,6 +1016,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the point addition filter.
     /// </summary>
+    [Serializable]
     public class PointAddition : Rebuilder, IBitmapFilter2
     {
         #region Private data
@@ -1140,6 +1145,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the point multiplication filter.
     /// </summary>
+    [Serializable]
     public class PointMultiplication : Rebuilder, IBitmapFilter2
     {
         #region Private data
@@ -1267,6 +1273,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the channels inversion filter.
     /// </summary>
+    [Serializable]
     public class InvertChannels : Correction, IBitmapFilter
     {
         #region Filter components
@@ -1286,6 +1293,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the threshold filter.
     /// </summary>
+    [Serializable]
     public class Threshold : Correction, IBitmapFilter
     {
         #region Private data
@@ -1341,6 +1349,7 @@ namespace UMapx.Imaging
     /// https://digital-photography-school.com/using-levels-photoshop-image-correct-color-contrast/
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LevelsCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1413,6 +1422,7 @@ namespace UMapx.Imaging
     /// https://en.wikipedia.org/wiki/Exposure_(photography)
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class ExposureCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1463,6 +1473,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the linear correction filter.
     /// </summary>
+    [Serializable]
     public class LinearCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1539,6 +1550,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the sine correction filter.
     /// </summary>
+    [Serializable]
     public class SinCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1589,6 +1601,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the cosine correction filter.
     /// </summary>
+    [Serializable]
     public class CosCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1639,6 +1652,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the logarithmic correction filter.
     /// </summary>
+    [Serializable]
     public class LogCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1707,6 +1721,7 @@ namespace UMapx.Imaging
     /// http://esate.ru/uroki/OpenGL/image_processing/_p4106/
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class BrightnessCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1761,6 +1776,7 @@ namespace UMapx.Imaging
     /// http://esate.ru/uroki/OpenGL/image_processing/_p4106/
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class ContrastCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1815,6 +1831,7 @@ namespace UMapx.Imaging
     /// https://en.wikipedia.org/wiki/Gamma_correction
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class GammaCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1865,6 +1882,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the shift correction filter.
     /// </summary>
+    [Serializable]
     public class ShiftCorrection : Correction, IBitmapFilter
     {
         #region Private data
@@ -1908,6 +1926,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the global contrast enhancement filter.
     /// </summary>
+    [Serializable]
     public class ContrastEnhancement : Correction, IBitmapFilter
     {
         #region Private data
@@ -1955,6 +1974,7 @@ namespace UMapx.Imaging
     /// http://en.wikipedia.org/wiki/Posterization
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Quantization : Correction, IBitmapFilter
     {
         #region Private data
@@ -2012,6 +2032,7 @@ namespace UMapx.Imaging
     /// http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LocalThreshold : LocalCorrection, IBitmapFilter2
     {
         #region Private data
@@ -2090,6 +2111,7 @@ namespace UMapx.Imaging
     /// http://www.knowhowtransfer.com/photoshop-professional-plugins/alce-local-contrast-enhancer/
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LocalContrastEnhancement : LocalCorrection, IBitmapFilter2
     {
         #region Private data
@@ -2161,6 +2183,7 @@ namespace UMapx.Imaging
     /// This filter is used to equalize the illumination of images by averaging the brightness.
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LocalContrastInversion : LocalCorrection, IBitmapFilter2
     {
         #region Private data
@@ -2257,6 +2280,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the contrast enhancement filter.
     /// </summary>
+    [Serializable]
     public class KsiContrastEnhancement : LocalCorrection, IBitmapFilter2
     {
         #region Private data
@@ -2351,6 +2375,7 @@ namespace UMapx.Imaging
     /// https://en.wikipedia.org/wiki/Homomorphic_filtering
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class HomomorphicEnhancement : LocalCorrection, IBitmapFilter2
     {
         #region Private data
@@ -2445,6 +2470,7 @@ namespace UMapx.Imaging
     /// https://dragon.larc.nasa.gov/background/pubabs/papers/gspx1.pdf
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class SingleScaleRetinex : LocalCorrection, IBitmapFilter2
     {
         #region Private data
@@ -2559,6 +2585,7 @@ namespace UMapx.Imaging
     /// Images.
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class ShadowsHighlightsCorrection : LocalCorrection, IBitmapFilter2
     {
         #region Private data
@@ -2664,6 +2691,7 @@ namespace UMapx.Imaging
     /// http://imagej.net/Image_Intensity_Processing
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FlatFieldCorrection : IBitmapFilter2
     {
         #region Private data
@@ -2828,6 +2856,7 @@ namespace UMapx.Imaging
     /// The filter discolors the specified part of the image.
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class HSBGrayscale : IBitmapFilter
     {
         #region Private data
@@ -2941,6 +2970,7 @@ namespace UMapx.Imaging
     /// The filter discolors the specified part of the image.
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class HSLGrayscale : IBitmapFilter
     {
         #region Private data
@@ -3051,6 +3081,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the grayscale filter.
     /// </summary>
+    [Serializable]
     public class Grayscale : IBitmapFilter
     {
         #region Private data
@@ -3220,6 +3251,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the color photo filter.
     /// </summary>
+    [Serializable]
     public class PhotoFilter : IBitmapFilter
     {
         #region Private data
@@ -3493,6 +3525,7 @@ namespace UMapx.Imaging
     /// The filter uses an approximation of the Planck curve.
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class TemperatureCorrection : PhotoFilter, IBitmapFilter
     {
         #region Private data
@@ -3536,6 +3569,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the color filter based on the YUV structure.
     /// </summary>
+    [Serializable]
     public class YUVPhotoFilter : IBitmapFilter
     {
         #region Private data
@@ -3698,6 +3732,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the saturation correction filter.
     /// </summary>
+    [Serializable]
     public class SaturationCorrection : IBitmapFilter
     {
         #region Private data
@@ -3779,6 +3814,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the color replacement filter.
     /// </summary>
+    [Serializable]
     public class ColorReplace : IBitmapFilter
     {
         #region Private data
@@ -3874,6 +3910,7 @@ namespace UMapx.Imaging
     /// https://en.wikipedia.org/wiki/Dither
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class ToneDiffusionDithering : IBitmapFilter
     {
         #region Private data
@@ -4030,6 +4067,7 @@ namespace UMapx.Imaging
     /// https://en.wikipedia.org/wiki/Dither
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class ErrorDiffusionDithering : Rebuilder, IBitmapFilter
     {
         #region Private data
@@ -4421,6 +4459,7 @@ namespace UMapx.Imaging
     /// https://en.wikipedia.org/wiki/Gaussian_noise
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class AdditiveNoise : IBitmapFilter
     {
         #region Private data
@@ -4494,6 +4533,7 @@ namespace UMapx.Imaging
     /// https://en.wikipedia.org/wiki/Salt-and-pepper_noise
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class SaltAndPepper : IBitmapFilter
     {
         #region Private data
@@ -4567,6 +4607,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the transparency correction filter.
     /// </summary>
+    [Serializable]
     public class TransparencyCorrection : RGBACorrection, IBitmapFilter
     {
         #region Private data
@@ -4622,6 +4663,7 @@ namespace UMapx.Imaging
     /// https://digital-photography-school.com/using-levels-photoshop-image-correct-color-contrast/
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LevelsChannelCorrection : RGBACorrection, IBitmapFilter
     {
         #region Private data
@@ -4690,6 +4732,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the channel rotation filter.
     /// </summary>
+    [Serializable]
     public class RotateChannel : IBitmapFilter
     {
         #region Filter components
@@ -4737,6 +4780,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the channel equalization filter.
     /// </summary>
+    [Serializable]
     public class EqualizeChannel : IBitmapFilter
     {
         #region Private data
@@ -4805,6 +4849,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the channel hide filter.
     /// </summary>
+    [Serializable]
     public class HideChannel : IBitmapFilter
     {
         #region Private data
@@ -4871,6 +4916,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the channel show filter.
     /// </summary>
+    [Serializable]
     public class ShowChannel : IBitmapFilter
     {
         #region Private data
@@ -4955,6 +5001,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the color canvas class.
     /// </summary>
+    [Serializable]
     public class CanvasColor : ICanvas
     {
         #region Private data
@@ -5039,6 +5086,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the gradient canvas class.
     /// </summary>
+    [Serializable]
     public class CanvasGradient : ICanvas
     {
         #region Private data
@@ -5163,6 +5211,7 @@ namespace UMapx.Imaging
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Pixelate : PointAddition, IBitmapFilter2
     {
         #region Private data
@@ -5213,6 +5262,7 @@ namespace UMapx.Imaging
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Grid : PointAddition, IBitmapFilter2
     {
         #region Private data
@@ -5263,6 +5313,7 @@ namespace UMapx.Imaging
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Jitter : PointAddition, IBitmapFilter2
     {
         #region Private data
@@ -5313,6 +5364,7 @@ namespace UMapx.Imaging
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Water : PointMultiplication, IBitmapFilter2
     {
         #region Private data
@@ -5363,6 +5415,7 @@ namespace UMapx.Imaging
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Noise : PointMultiplication, IBitmapFilter2
     {
         #region Private data
@@ -5412,6 +5465,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the shift filter.
     /// </summary>
+    [Serializable]
     public class Shift : IBitmapFilter2
     {
         #region Private data
@@ -5629,6 +5683,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the flip filter.
     /// </summary>
+    [Serializable]
     public class Flip : IBitmapFilter
     {
         #region Private data
@@ -5777,6 +5832,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the rotation filter.
     /// </summary>
+    [Serializable]
     public class Rotate : IBitmapFilter2
     {
         #region Private data
@@ -5924,6 +5980,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the crop filter.
     /// </summary>
+    [Serializable]
     public class Crop : IBitmapFilter2
     {
         #region Private data
@@ -6030,6 +6087,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the resize filter.
     /// </summary>
+    [Serializable]
     public class Resize : IBitmapFilter2
     {
         #region Private data
@@ -6128,6 +6186,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the merge filter.
     /// </summary>
+    [Serializable]
     public class Merge : IBitmapFilter2
     {
         #region Private data
@@ -6270,6 +6329,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the texturing filter.
     /// </summary>
+    [Serializable]
     public class Texturer : IBitmapFilter
     {
         #region Private data
@@ -6507,6 +6567,7 @@ namespace UMapx.Imaging
     /// a, b are the coefficients.
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Operation : IBitmapFilter2
     {
         #region Private data
@@ -6629,6 +6690,7 @@ namespace UMapx.Imaging
     /// http://www.3dtv.at/Knowhow/AnaglyphComparison_en.aspx
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class StereoAnaglyph : IBitmapFilter2
     {
         #region Private data
@@ -6818,6 +6880,7 @@ namespace UMapx.Imaging
     /// https://www.codeproject.com/articles/471994/oilpainteffect
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class OilPainting : IBitmapFilter2
     {
         #region Private data
@@ -7022,6 +7085,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the convolution filter.
     /// </summary>
+    [Serializable]
     public class Convolution : IBitmapFilter2
     {
         #region Private data
@@ -7626,6 +7690,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the morphology filter.
     /// </summary>
+    [Serializable]
     public class Morphology : IBitmapFilter2
     {
         #region Private data
@@ -7914,6 +7979,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the dilatation filter.
     /// </summary>
+    [Serializable]
     public class Dilatation : IBitmapFilter2
     {
         #region Private data
@@ -8137,6 +8203,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the erosion filter.
     /// </summary>
+    [Serializable]
     public class Erosion : IBitmapFilter2
     {
         #region Private data
@@ -8360,6 +8427,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the top-hat filter.
     /// </summary>
+    [Serializable]
     public class TopHat : IBitmapFilter2
     {
         #region Private data
@@ -8458,6 +8526,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the bottom-hat filter.
     /// </summary>
+    [Serializable]
     public class BottomHat : IBitmapFilter2
     {
         #region Private data
@@ -8556,6 +8625,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the closing filter.
     /// </summary>
+    [Serializable]
     public class Closing : IBitmapFilter2
     {
         #region Private data
@@ -8649,6 +8719,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the opening filter.
     /// </summary>
+    [Serializable]
     public class Opening : IBitmapFilter2
     {
         #region Private data
@@ -8742,6 +8813,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the edge glow filter.
     /// </summary>
+    [Serializable]
     public class EdgeGlow : IBitmapFilter2
     {
         #region Private data
@@ -8840,6 +8912,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the box blur filter.
     /// </summary>
+    [Serializable]
     public class BoxBlur : IBitmapFilter
     {
         #region Private data
@@ -9093,6 +9166,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the HSB filter.
     /// </summary>
+    [Serializable]
     public class HSBFilter : IBitmapFilter
     {
         #region Private data
@@ -9212,6 +9286,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the HSL filter.
     /// </summary>
+    [Serializable]
     public class HSLFilter : IBitmapFilter
     {
         #region Private data
@@ -9330,6 +9405,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the YCbCr filter.
     /// </summary>
+    [Serializable]
     public class YCbCrFilter : IBitmapFilter
     {
         #region Private data
@@ -9449,6 +9525,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the CMYK filter.
     /// </summary>
+    [Serializable]
     public class CMYKFilter : IBitmapFilter
     {
         #region Private data
@@ -9586,6 +9663,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the RGB filter.
     /// </summary>
+    [Serializable]
     public class RGBFilter : IBitmapFilter
     {
         #region Private data
@@ -9699,6 +9777,7 @@ namespace UMapx.Imaging
     /// http://www.cromwell-intl.com/3d/histogram/
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class HistogramEqualization : IBitmapFilter
     {
         #region Filter components
@@ -9749,6 +9828,7 @@ namespace UMapx.Imaging
     /// http://angeljohnsy.blogspot.com/2011/06/local-histogram-equalization.html
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LocalHistogramEqualization : IBitmapFilter2
     {
         #region Private data
@@ -9921,6 +10001,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the global histogram stretch filter.
     /// </summary>
+    [Serializable]
     public class HistogramStretch : Correction, IBitmapFilter
     {
         #region Private data
@@ -9980,6 +10061,7 @@ namespace UMapx.Imaging
     /// http://www.academia.edu/7629047/Image_enhancement_by_local_histogram_stretching
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LocalHistogramStretch : IBitmapFilter
     {
         #region Private data
@@ -10465,6 +10547,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the bitmap filter.
     /// </summary>
+    [Serializable]
     public class BitmapFilter : IBitmapFilter
     {
         #region Private data
@@ -10622,6 +10705,7 @@ namespace UMapx.Imaging
     /// (стр. 65-75)
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class BitmapBlender
     {
         #region Private data
@@ -12154,6 +12238,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the Hough line.
     /// </summary>
+    [Serializable]
     public struct HoughLine : IComparable
     {
         #region Struct components
@@ -12208,6 +12293,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the Hough circle.
     /// </summary>
+    [Serializable]
     public struct HoughCircle : IComparable
     {
         #region Struct components
@@ -12261,6 +12347,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the Hough line transform filter.
     /// </summary>
+    [Serializable]
     public class HoughLineTransform : IBitmapFilter
     {
         #region Private data
@@ -12619,6 +12706,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the Hough circle transform filter.
     /// </summary>
+    [Serializable]
     public class HoughCircleTransform : IBitmapFilter
     {
         #region Private data

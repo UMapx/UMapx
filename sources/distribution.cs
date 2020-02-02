@@ -7,7 +7,6 @@
 // Version 4.0.0
 
 using System;
-using System.Runtime.Serialization;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -28,7 +27,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Normal_distribution
     /// </remarks>
     /// </summary>
-    public class Gaussian : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Gaussian : IDistribution
     {
         #region Private data
         private double sigma = 1;
@@ -181,38 +181,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Gaussian(sigma, mu);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Gaussian Clone()
-        {
-            return new Gaussian(sigma, mu);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Sigma", sigma);
-            info.AddValue("Mu", mu);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the logarithmic Gaussian distribution.
@@ -221,7 +189,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Log-normal_distribution
     /// </remarks>
     /// </summary>
-    public class LogGaussian : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class LogGaussian : IDistribution
     {
         #region Private data
         private double sigma = 1;
@@ -382,38 +351,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new LogGaussian(sigma, mu);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public LogGaussian Clone()
-        {
-            return new LogGaussian(sigma, mu);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Sigma", sigma);
-            info.AddValue("Mu", mu);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Wiener semicircular distribution.
@@ -422,7 +359,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Wigner_semicircle_distribution
     /// </remarks>
     /// </summary>
-    public class Wigner : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Wigner : IDistribution
     {
         #region Private data
         private double r;
@@ -571,37 +509,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Wigner(this.r);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Wigner Clone()
-        {
-            return new Wigner(this.r);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("R", this.r);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the logarithmic distribution of Rayleigh.
@@ -610,7 +517,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Rayleigh_distribution
     /// </remarks>
     /// </summary>
-    public class Rayleigh : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Rayleigh : IDistribution
     {
         #region Private data
         private double sigma = 1;
@@ -754,37 +662,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Rayleigh(sigma);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Rayleigh Clone()
-        {
-            return new Rayleigh(sigma);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Sigma", sigma);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the exponential distribution.
@@ -793,7 +670,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Exponential_distribution
     /// </remarks>
     /// </summary>
-    public class Exponential : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Exponential : IDistribution
     {
         #region Private data
         private double l = 1;
@@ -937,37 +815,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Exponential(this.l);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Exponential Clone()
-        {
-            return new Exponential(this.l);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Lambda", this.l);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Cauchy distribution.
@@ -976,7 +823,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Cauchy_distribution
     /// </remarks>
     /// </summary>
-    public class Cauchy : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Cauchy : IDistribution
     {
         #region Private data
         private double g = 0.5;
@@ -1120,38 +968,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Cauchy(g, x0);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Cauchy Clone()
-        {
-            return new Cauchy(g, x0);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Gamma", g);
-            info.AddValue("X0", x0);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Weibull distribution.
@@ -1160,7 +976,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Weibull_distribution
     /// </remarks>
     /// </summary>
-    public class Weibull : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Weibull : IDistribution
     {
         #region Private data
         private double l = 1;
@@ -1320,38 +1137,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Weibull(l, k);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Weibull Clone()
-        {
-            return new Weibull(l, k);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Lambda", l);
-            info.AddValue("K", k);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Laplace distribution.
@@ -1360,7 +1145,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Laplace_distribution
     /// </remarks>
     /// </summary>
-    public class Laplace : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Laplace : IDistribution
     {
         #region Private data
         private double a = 1;
@@ -1517,38 +1303,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Laplace(a, b);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Laplace Clone()
-        {
-            return new Laplace(a, b);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Alfa", a);
-            info.AddValue("Beta", b);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the geometric distribution.
@@ -1557,7 +1311,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Geometric_distribution
     /// </remarks>
     /// </summary>
-    public class Geometric : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Geometric : IDistribution
     {
         #region Private data
         private double p = 0.2;
@@ -1700,37 +1455,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Geometric(this.p);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Geometric Clone()
-        {
-            return new Geometric(this.p);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("P", p);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Poisson distribution.
@@ -1739,7 +1463,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Poisson_distribution
     /// </remarks>
     /// </summary>
-    public class Poisson : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Poisson : IDistribution
     {
         #region Private data
         private double l = 1;
@@ -1902,37 +1627,6 @@ namespace UMapx.Distribution
             return sum;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Poisson(this.l);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Poisson Clone()
-        {
-            return new Poisson(this.l);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Lambda", this.l);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the uniform distribution.
@@ -1941,7 +1635,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)
     /// </remarks>
     /// </summary>
-    public class Uniform : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Uniform : IDistribution
     {
         #region Private data
         private double a = 1;
@@ -2106,38 +1801,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Uniform(this.a, this.b);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Uniform Clone()
-        {
-            return new Uniform(this.a, this.b);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("A", this.a);
-            info.AddValue("B", this.b);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the beta distribution.
@@ -2146,7 +1809,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Beta_distribution
     /// </remarks>
     /// </summary>
-    public class Beta : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Beta : IDistribution
     {
         #region Private data
         private double a = 1;
@@ -2310,38 +1974,6 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Beta(this.a, this.b);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Beta Clone()
-        {
-            return new Beta(this.a, this.b);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("A", this.a);
-            info.AddValue("B", this.b);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Gamma-distribution.
@@ -2350,7 +1982,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Gamma_distribution
     /// </remarks>
     /// </summary>
-    public class Gamma : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Gamma : IDistribution
     {
         #region Private data
         private double thetta = 1;
@@ -2514,38 +2147,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Gamma(this.thetta, this.k);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Gamma Clone()
-        {
-            return new Gamma(this.thetta, this.k);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Thetta", this.thetta);
-            info.AddValue("K", this.k);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Pareto distribution.
@@ -2554,7 +2155,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Pareto_distribution
     /// </remarks>
     /// </summary>
-    public class Pareto : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Pareto : IDistribution
     {
         #region Private data
         private double xm = 1;
@@ -2727,38 +2329,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Pareto(this.xm, this.k);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Pareto Clone()
-        {
-            return new Pareto(this.xm, this.k);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Xm", this.xm);
-            info.AddValue("K", this.k);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the distribution of Bernoulli.
@@ -2767,7 +2337,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Bernoulli_distribution
     /// </remarks>
     /// </summary>
-    public class Bernoulli : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Bernoulli : IDistribution
     {
         #region Private data
         private double p = 0.2;
@@ -2933,37 +2504,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Bernoulli(this.P);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Bernoulli Clone()
-        {
-            return new Bernoulli(this.P);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("P", this.P);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the log-logistic distribution.
@@ -2972,7 +2512,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Log-logistic_distribution
     /// </remarks>
     /// </summary>
-    public class LogLogistic : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class LogLogistic : IDistribution
     {
         #region Private data
         private double a = 1;
@@ -3113,38 +2654,6 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new LogLogistic(this.a, this.b);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public LogLogistic Clone()
-        {
-            return new LogLogistic(this.a, this.b);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("A", this.a);
-            info.AddValue("B", this.b);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the binomial distribution.
@@ -3153,7 +2662,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Binomial_distribution
     /// </remarks>
     /// </summary>
-    public class Binomial : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Binomial : IDistribution
     {
         #region Private data
         private double n = 20;
@@ -3333,38 +2843,6 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Binomial(this.n, this.p);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Binomial Clone()
-        {
-            return new Binomial(this.n, this.p);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("N", this.n);
-            info.AddValue("P", this.p);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the hypergeometric distribution.
@@ -3373,7 +2851,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Hypergeometric_distribution
     /// </remarks>
     /// </summary>
-    public class Hypergeometric : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Hypergeometric : IDistribution
     {
         #region Private data
         private double n = 30;
@@ -3564,39 +3043,6 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Hypergeometric(n, k, d);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Hypergeometric Clone()
-        {
-            return new Hypergeometric(n, k, d);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("N", this.n);
-            info.AddValue("K", this.k);
-            info.AddValue("D", this.d);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the logistic distribution.
@@ -3605,7 +3051,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Logistic_distribution
     /// </remarks>
     /// </summary>
-    public class Logistic : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Logistic : IDistribution
     {
         #region Private data
         private double mu = 5;
@@ -3756,38 +3203,6 @@ namespace UMapx.Distribution
             return num / den;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Logistic(mu, s);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Logistic Clone()
-        {
-            return new Logistic(mu, s);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Mu", this.mu);
-            info.AddValue("S", this.s);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Rademacher distribution.
@@ -3796,7 +3211,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Rademacher_distribution
     /// </remarks>
     /// </summary>
-    public class Rademacher : IDistribution, ICloneable
+    [Serializable]
+    public class Rademacher : IDistribution
     {
         #region Rademacher components
         /// <summary>
@@ -3909,25 +3325,6 @@ namespace UMapx.Distribution
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Rademacher();
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Rademacher Clone()
-        {
-            return new Rademacher();
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the triangular distribution.
@@ -3936,7 +3333,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Triangular_distribution
     /// </remarks>
     /// </summary>
-    public class Triangular : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Triangular : IDistribution
     {
         #region Private data
         private double a;
@@ -4121,39 +3519,6 @@ namespace UMapx.Distribution
             return 0;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Triangular(a, b, c);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Triangular Clone()
-        {
-            return new Triangular(a, b, c);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("A", this.a);
-            info.AddValue("B", this.b);
-            info.AddValue("C", this.c);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the distribution of Nakagami.
@@ -4162,7 +3527,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Nakagami_distribution
     /// </remarks>
     /// </summary>
-    public class Nakagami : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Nakagami : IDistribution
     {
         #region Private data
         private double mu;
@@ -4341,38 +3707,6 @@ namespace UMapx.Distribution
             return constant * Math.Pow(x, twoMu1) * Math.Exp(nratio * x * x);
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Nakagami(mu, omega);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Nakagami Clone()
-        {
-            return new Nakagami(mu, omega);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Mu", this.mu);
-            info.AddValue("Omega", this.omega);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Levy distribution.
@@ -4381,7 +3715,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/L%C3%A9vy_distribution
     /// </remarks>
     /// </summary>
-    public class Levy : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Levy : IDistribution
     {
         #region Prviate data
         private double mu = 0;
@@ -4531,38 +3866,6 @@ namespace UMapx.Distribution
             return a * b / c;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Levy(mu, scale);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Levy Clone()
-        {
-            return new Levy(mu, scale);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Mu", this.mu);
-            info.AddValue("C", this.scale);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the logarithmic distribution.
@@ -4571,7 +3874,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Logarithmic_distribution
     /// </remarks>
     /// </summary>
-    public class Logarithmic : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Logarithmic : IDistribution
     {
         #region Private data
         private double p = 0.66;
@@ -4705,37 +4009,6 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Logarithmic(p);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Logarithmic Clone()
-        {
-            return new Logarithmic(p);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("P", this.p);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the beta distribution of the second kind.
@@ -4744,7 +4017,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Beta_prime_distribution
     /// </remarks>
     /// </summary>
-    public class BetaPrime : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class BetaPrime : IDistribution
     {
         #region Private data
         private double alpha = 1; // shape (α)
@@ -4914,38 +4188,6 @@ namespace UMapx.Distribution
             return num / den;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new BetaPrime(alpha, beta);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public BetaPrime Clone()
-        {
-            return new BetaPrime(alpha, beta);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("α", this.alpha);
-            info.AddValue("β", this.beta);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Birnbaum-Saunders distribution.
@@ -4954,7 +4196,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Birnbaum–Saunders_distribution
     /// </remarks>
     /// </summary>
-    public class BirnbaumSaunders : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class BirnbaumSaunders : IDistribution
     {
         #region Private data
         private double mu = 0;
@@ -5119,39 +4362,6 @@ namespace UMapx.Distribution
             return alpha * Special.Erfc(-z / 1.4142135623731) * 0.5;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new BirnbaumSaunders(mu, beta, gamma);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public BirnbaumSaunders Clone()
-        {
-            return new BirnbaumSaunders(mu, beta, gamma);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("μ", this.mu);
-            info.AddValue("β", this.beta);
-            info.AddValue("γ", this.gamma);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the xi-square distribution.
@@ -5160,7 +4370,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Chi-squared_distribution
     /// </remarks>
     /// </summary>
-    public class ChiSquare : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class ChiSquare : IDistribution
     {
         #region Private data
         private int k = 1;
@@ -5306,37 +4517,6 @@ namespace UMapx.Distribution
             return Special.GammaQ(k / 2.0, x / 2.0);
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new ChiSquare(k);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public ChiSquare Clone()
-        {
-            return new ChiSquare(k);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("K", this.k);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Gumbel distribution.
@@ -5345,7 +4525,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Gumbel_distribution
     /// </remarks>
     /// </summary>
-    public class Gumbel : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Gumbel : IDistribution
     {
         #region Private data
         private double mu = 0;
@@ -5488,38 +4669,6 @@ namespace UMapx.Distribution
             return (1 / beta) * Math.Exp(-(z + Math.Exp(-z)));
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Gumbel(mu, beta);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Gumbel Clone()
-        {
-            return new Gumbel(mu, beta);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("μ", this.mu);
-            info.AddValue("β", this.beta);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Student's distribution.
@@ -5528,7 +4677,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Student%27s_t-distribution
     /// </remarks>
     /// </summary>
-    public class Student : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Student : IDistribution
     {
         #region Private data
         private double lambda;
@@ -5689,37 +4839,6 @@ namespace UMapx.Distribution
             return lambda - ((degrees + 1) / 2.0) * Math.Log((x * x) / degrees);
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Student(degrees);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Student Clone()
-        {
-            return new Student(degrees);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("n", this.degrees);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the U-quadratic distribution.
@@ -5728,7 +4847,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/U-quadratic_distribution
     /// </remarks>
     /// </summary>
-    public class UQuadratic : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class UQuadratic : IDistribution
     {
         #region Private data
         double a;
@@ -5879,38 +4999,6 @@ namespace UMapx.Distribution
             return alpha * Math.Pow(x - beta, 2);
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new UQuadratic(a, b);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public UQuadratic Clone()
-        {
-            return new UQuadratic(a, b);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("a", this.a);
-            info.AddValue("b", this.b);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Fisher distribution.
@@ -5919,7 +5007,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/F-distribution
     /// </remarks>
     /// </summary>
-    public class FisherSnedecor : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class FisherSnedecor : IDistribution
     {
         #region Private data
         // Distribution parameters
@@ -6100,38 +5189,6 @@ namespace UMapx.Distribution
             return Math.Sqrt(u) / (x * b);
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new FisherSnedecor(d1, d2);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public FisherSnedecor Clone()
-        {
-            return new FisherSnedecor(d1, d2);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("d1", this.d1);
-            info.AddValue("d2", this.d2);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the distribution of Erlang.
@@ -6140,7 +5197,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Erlang_distribution
     /// </remarks>
     /// </summary>
-    public class Erlang : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Erlang : IDistribution
     {
         #region Private data
         private int k = 1;
@@ -6299,38 +5357,6 @@ namespace UMapx.Distribution
             return Special.GammaIncomplete(k, lambda * x) / Special.Factorial(k - 1);
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Erlang(this.k, this.lambda);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Erlang Clone()
-        {
-            return new Erlang(this.k, this.lambda);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("k", this.k);
-            info.AddValue("λ", this.lambda);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the compact Cauchy distribution.
@@ -6339,7 +5365,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Wrapped_Cauchy_distribution
     /// </remarks>
     /// </summary>
-    public class WrappedCauchy : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class WrappedCauchy : IDistribution
     {
         #region Private data
         private double mu;
@@ -6464,38 +5491,6 @@ namespace UMapx.Distribution
             return constant * Math.Sinh(gamma) / (Math.Cosh(gamma) - Math.Cos(x - mu));
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new WrappedCauchy(mu, gamma);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public WrappedCauchy Clone()
-        {
-            return new WrappedCauchy(mu, gamma);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("μ", this.mu);
-            info.AddValue("γ", this.gamma);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the distribution of Kumaraswa.
@@ -6504,7 +5499,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Kumaraswamy_distribution
     /// </remarks>
     /// </summary>
-    public class Kumaraswamy : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Kumaraswamy : IDistribution
     {
         #region Private data
         private double a;
@@ -6680,38 +5676,6 @@ namespace UMapx.Distribution
             return (b * Special.Beta(1.0 + ((double)n) / a, b));
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Kumaraswamy(a, b);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Kumaraswamy Clone()
-        {
-            return new Kumaraswamy(a, b);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("a", this.a);
-            info.AddValue("b", this.b);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Gompertz distribution.
@@ -6720,7 +5684,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Gompertz_distribution
     /// </remarks>
     /// </summary>
-    public class Gompertz : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Gompertz : IDistribution
     {
         #region Private data
         private double eta;
@@ -6869,38 +5834,6 @@ namespace UMapx.Distribution
             return a1 * a2 * a3;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Gompertz(this.eta, this.b);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Gompertz Clone()
-        {
-            return new Gompertz(this.eta, this.b);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("η", this.eta);
-            info.AddValue("b", this.b);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the hyperbolic secant distribution.
@@ -6909,7 +5842,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Hyperbolic_secant_distribution
     /// </remarks>
     /// </summary>
-    public class HyperbolicSecant : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class HyperbolicSecant : IDistribution
     {
         #region Distribution
         /// <summary>
@@ -6992,34 +5926,6 @@ namespace UMapx.Distribution
             return 0.5 * Maths.Sch(x * (Math.PI / 2.0));
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new HyperbolicSecant();
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public HyperbolicSecant Clone()
-        {
-            return new HyperbolicSecant();
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context) { }
-        #endregion
     }
     /// <summary>
     /// Defines the arcsine distribution.
@@ -7028,7 +5934,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Arcsine_distribution
     /// </remarks>
     /// </summary>
-    public class Arcsine : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Arcsine : IDistribution
     {
         #region Distribution
         /// <summary>
@@ -7114,34 +6021,6 @@ namespace UMapx.Distribution
             return double.NaN;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Arcsine();
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Arcsine Clone()
-        {
-            return new Arcsine();
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context) { }
-        #endregion
     }
     /// <summary>
     /// Defines the Burr distribution.
@@ -7150,7 +6029,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Burr_distribution
     /// </remarks>
     /// </summary>
-    public class Burr : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class Burr : IDistribution
     {
         #region Private data
         private double c;
@@ -7295,38 +6175,6 @@ namespace UMapx.Distribution
             return a * b / Math.Pow(d, k + 1);
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new Burr(this.c, this.k);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public Burr Clone()
-        {
-            return new Burr(this.c, this.k);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("c", this.c);
-            info.AddValue("k", this.k);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the Fisher's Z-distribution.
@@ -7335,7 +6183,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Fisher%27s_z-distribution
     /// </remarks>
     /// </summary>
-    public class FisherZ : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class FisherZ : IDistribution
     {
         #region Private data
         private double d1;
@@ -7485,38 +6334,6 @@ namespace UMapx.Distribution
             return e * j;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new FisherZ(this.d1, this.d2);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public FisherZ Clone()
-        {
-            return new FisherZ(this.d1, this.d2);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("d1", this.d1);
-            info.AddValue("d2", this.d2);
-        }
-        #endregion
     }
     #endregion
 
@@ -7528,7 +6345,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Cone-shape_distribution_function
     /// </remarks>
     /// </summary>
-    public class ConeShape : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class ConeShape : IDistribution
     {
         #region Private data
         private double a;
@@ -7643,37 +6461,6 @@ namespace UMapx.Distribution
             return 0;
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new ConeShape(this.a);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public ConeShape Clone()
-        {
-            return new ConeShape(this.a);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("α", this.a);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines the distribution of Choi Williams.
@@ -7682,7 +6469,8 @@ namespace UMapx.Distribution
     /// https://en.wikipedia.org/wiki/Choi%E2%80%93Williams_distribution_function
     /// </remarks>
     /// </summary>
-    public class ChoiWilliams : IDistribution, ICloneable, ISerializable
+    [Serializable]
+    public class ChoiWilliams : IDistribution
     {
         #region Private data
         private double a;
@@ -7792,37 +6580,6 @@ namespace UMapx.Distribution
             throw new NotSupportedException();
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        object ICloneable.Clone()
-        {
-            return new ChoiWilliams(this.a);
-        }
-        /// <summary>
-        /// Creates a copy of the distribution.
-        /// </summary>
-        /// <returns>Distribution</returns>
-        public ChoiWilliams Clone()
-        {
-            return new ChoiWilliams(this.a);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("α", this.a);
-        }
-        #endregion
     }
     #endregion
 
@@ -7830,6 +6587,7 @@ namespace UMapx.Distribution
     /// <summary>
     /// Defines the Bayes probability class.
     /// </summary>
+    [Serializable]
     public class Bayes
     {
         #region Private data

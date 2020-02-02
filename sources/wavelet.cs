@@ -35,6 +35,7 @@ namespace UMapx.Wavelet
     /// https://en.wikipedia.org/wiki/Discrete_wavelet_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class WaveletTransform : IWaveletTransform, ITransform
     {
         #region Private data
@@ -629,6 +630,7 @@ this.levels), DataLen2);
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
     /// </summary>
+    [Serializable]
     public struct WaveletPack : ICloneable, ISerializable
     {
         #region Private data
@@ -4687,6 +4689,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous complex frequency B-spline wavelet.
     /// </summary>
+    [Serializable]
     public class FbspWavelet : IComplexWavelet
     {
         #region Private data
@@ -4779,6 +4782,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous Hermitian hat wavelet.
     /// </summary>
+    [Serializable]
     public class HermitianHatWavelet : IComplexWavelet
     {
         #region Wavelet components
@@ -4811,6 +4815,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous Hermitian wavelet.
     /// </summary>
+    [Serializable]
     public class HermitianWavelet : IComplexWavelet
     {
         #region Private data
@@ -4885,6 +4890,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous complex Gabor wavelet.
     /// </summary>
+    [Serializable]
     public class GaborWavelet : IComplexWavelet
     {
         #region Private data
@@ -4981,6 +4987,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous complex Morlet wavelet.
     /// </summary>
+    [Serializable]
     public class ComplexMorletWavelet : IComplexWavelet
     {
         #region Private data
@@ -5049,6 +5056,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous complex Gaussian wavelet.
     /// </summary>
+    [Serializable]
     public class ComplexGaussianWavelet : IComplexWavelet
     {
         #region Private data
@@ -5146,6 +5154,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous Gaussian wavelet.
     /// </summary>
+    [Serializable]
     public class GaussianWavelet : IDoubleWavelet
     {
         #region Private data
@@ -5241,6 +5250,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous Mexican hat wavelet.
     /// </summary>
+    [Serializable]
     public class MexicanHatWavelet : IDoubleWavelet
     {
         #region Wavelet components
@@ -5272,6 +5282,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous Morlet wavelet.
     /// </summary>
+    [Serializable]
     public class MorletWavelet : IDoubleWavelet
     {
         #region Wavelet components
@@ -5305,6 +5316,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous Meyer wavelet.
     /// </summary>
+    [Serializable]
     public class MeyerWavelet : IDoubleWavelet
     {
         #region Wavelet components
@@ -5355,6 +5367,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous Shannon wavelet.
     /// </summary>
+    [Serializable]
     public class ShannonWavelet : IDoubleWavelet
     {
         #region Wavelet components
@@ -5386,6 +5399,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous Poisson wavelet.
     /// </summary>
+    [Serializable]
     public class PoissonWavelet : IDoubleWavelet
     {
         #region Private data
@@ -5445,6 +5459,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the continuous Haar wavelet.
     /// </summary>
+    [Serializable]
     public class HaarWavelet : IDoubleWavelet
     {
         #region Haar wavelet components
@@ -5486,6 +5501,7 @@ this.levels), DataLen2);
     /// <summary>
     /// Defines the wavelet filter.
     /// </summary>
+    [Serializable]
     public class WaveletFilter : IFilter, IBlendFilter
     {
         #region Private data

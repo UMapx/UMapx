@@ -7,7 +7,6 @@
 // Version 4.0.0
 
 using System;
-using System.Runtime.Serialization;
 
 namespace UMapx.Core
 {
@@ -23,7 +22,8 @@ namespace UMapx.Core
     /// <summary>
     /// Defines a pair of double numbers representing a line segment.
     /// </summary>
-    public struct RangeDouble : ICloneable, ISerializable
+    [Serializable]
+    public struct RangeDouble : ICloneable
     {
         #region Private data
         private double max;
@@ -153,24 +153,12 @@ namespace UMapx.Core
             return new RangeDouble(min, max);
         }
         #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data needed for serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Min", this.Min);
-            info.AddValue("Max", this.Max);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines a pair of integer numbers representing a line segment.
     /// </summary>
-    public struct RangeInt : ICloneable, ISerializable
+    [Serializable]
+    public struct RangeInt : ICloneable
     {
         #region Private data
         private int max;
@@ -300,24 +288,12 @@ namespace UMapx.Core
             return new RangeInt(min, max);
         }
         #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data needed for serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Min", this.Min);
-            info.AddValue("Max", this.Max);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines a pair of double numbers representing an ordered pair of X and Y coordinates.
     /// </summary>
-    public struct PointDouble : ICloneable, ISerializable
+    [Serializable]
+    public struct PointDouble : ICloneable
     {
         #region Private data
         private double y;
@@ -434,24 +410,12 @@ namespace UMapx.Core
             return new PointDouble(x, y);
         }
         #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data needed for serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("X", this.x);
-            info.AddValue("Y", this.y);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines a pair of integer numbers representing an ordered pair of X and Y coordinates.
     /// </summary>
-    public struct PointInt : ICloneable, ISerializable
+    [Serializable]
+    public struct PointInt : ICloneable
     {
         #region Private data
         private int y;
@@ -568,24 +532,12 @@ namespace UMapx.Core
             return new PointInt(x, y);
         }
         #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data needed for serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("X", this.x);
-            info.AddValue("Y", this.y);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines a pair of double numbers representing an ordered pair of width and height.
     /// </summary>
-    public struct SizeDouble : ICloneable, ISerializable
+    [Serializable]
+    public struct SizeDouble : ICloneable
     {
         #region Private data
         private double width;
@@ -702,24 +654,12 @@ namespace UMapx.Core
             return new SizeDouble(width, height);
         }
         #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data needed for serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Width", this.width);
-            info.AddValue("Height", this.height);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines a pair of integer numbers representing an ordered pair of width and height.
     /// </summary>
-    public struct SizeInt : ICloneable, ISerializable
+    [Serializable]
+    public struct SizeInt : ICloneable
     {
         #region Private data
         private int width;
@@ -834,19 +774,6 @@ namespace UMapx.Core
         public SizeInt Clone()
         {
             return new SizeInt(width, height);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data needed for serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Width", this.width);
-            info.AddValue("Height", this.height);
         }
         #endregion
     }

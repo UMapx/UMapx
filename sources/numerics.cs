@@ -7,7 +7,6 @@
 // Version 4.0.0
 
 using System;
-using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 
 namespace UMapx.Core
@@ -24,7 +23,8 @@ namespace UMapx.Core
     /// <summary>
     /// Defines a complex number.
     /// </summary>
-    public struct Complex : ICloneable, ISerializable
+    [Serializable]
+    public struct Complex : ICloneable
     {
         #region Private data
         /// <summary>
@@ -478,19 +478,6 @@ namespace UMapx.Core
             return new Complex(this.Real, this.Imag);
         }
         #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about an object.
-        /// </summary>
-        /// <param name="info">Data needed for object serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Real", this.Real);
-            info.AddValue("Imaginary", this.Imag);
-        }
-        #endregion
     }
     #endregion
 
@@ -501,7 +488,8 @@ namespace UMapx.Core
     /// A quaternion is a system of hypercomplex numbers that forms a four-dimensional vector space over a field of real numbers.
     /// </remarks>
     /// </summary>
-    public struct Quaternion : ICloneable, ISerializable
+    [Serializable]
+    public struct Quaternion : ICloneable
     {
         #region Public data
         /// <summary>
@@ -940,21 +928,6 @@ namespace UMapx.Core
         public Quaternion Clone()
         {
             return new Quaternion(this.X, this.Y, this.Z, this.W);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about an object.
-        /// </summary>
-        /// <param name="info">Data needed for object serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("X", this.X);
-            info.AddValue("Y", this.Y);
-            info.AddValue("Z", this.Z);
-            info.AddValue("W", this.W);
         }
         #endregion
 

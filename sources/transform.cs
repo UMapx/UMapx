@@ -28,6 +28,7 @@ namespace UMapx.Transform
     /// http://kibia.ru/teachers/kreindelin/pdf/2.pdf
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class WalshHadamardTransform : ITransform
     {
         #region Private data
@@ -353,6 +354,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class CosineTransform : ITransform
     {
         #region Private data
@@ -551,6 +553,7 @@ namespace UMapx.Transform
     /// http://sernam.ru/book_prett1.php?id=91
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class SineTransform : ITransform
     {
         #region Private data
@@ -748,6 +751,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Discrete_Hartley_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class HartleyTransform : ITransform
     {
         #region Private data
@@ -1027,6 +1031,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Discrete_Fourier_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FourierTransform : ITransform
     {
         #region Private data
@@ -1244,6 +1249,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Laplace_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LaplaceTransform : ITransform
     {
         #region Private data
@@ -1507,6 +1513,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Hilbert_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class HilbertTransform : ITransform
     {
         #region Private data
@@ -1962,6 +1969,7 @@ namespace UMapx.Transform
     /// http://www.mathworks.com/matlabcentral/fileexchange/6879-fast-walsh-hadamard-transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FastWalshHadamardTransform : ITransform
     {
         #region Private data
@@ -2647,6 +2655,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FastFourierTransform : ITransform
     {
         #region Private data
@@ -3263,6 +3272,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Discrete_Hartley_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FastHartleyTransform : ITransform
     {
         #region Private data
@@ -3490,6 +3500,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Hilbert_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FastHilbertTransform : ITransform
     {
         #region Private data
@@ -3910,6 +3921,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FastCosineTransform : ITransform
     {
         #region Private data
@@ -4234,6 +4246,7 @@ namespace UMapx.Transform
     /// http://sernam.ru/book_prett1.php?id=91
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FastSineTransform : ITransform
     {
         #region Private data
@@ -4559,6 +4572,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Laplace_transform
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class FastLaplaceTransform : ITransform
     {
         #region Private data
@@ -4939,6 +4953,7 @@ namespace UMapx.Transform
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LaplacianPyramidTransform : IPyramidTransform
     {
         #region Private data
@@ -5233,6 +5248,7 @@ namespace UMapx.Transform
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class GaussianPyramidTransform : IPyramidTransform
     {
         #region Private data
@@ -5778,11 +5794,12 @@ namespace UMapx.Transform
         #endregion
     }
     #endregion
-    
+
     #region Processing filters
     /// <summary>
     /// Defines the frequency filter.
     /// </summary>
+    [Serializable]
     public class FrequencyFilter : IFilter
     {
         #region Private data
@@ -5952,6 +5969,7 @@ namespace UMapx.Transform
     /// <summary>
     /// Defines the compression filter by threshold value.
     /// </summary>
+    [Serializable]
     public class CompressFilter : IFilter
     {
         #region Private data
@@ -6629,6 +6647,7 @@ namespace UMapx.Transform
     /// http://kaiminghe.com/eccv10/index.html
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class GuidedFilter : IFilter, IBlendFilter
     {
         #region Private data
@@ -7170,6 +7189,7 @@ namespace UMapx.Transform
     /// http://www.inf.ufrgs.br/~eslgastal/DomainTransform/Gastal_Oliveira_SIGGRAPH2011_Domain_Transform.pdf
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class DomainTransformFilter : IFilter, IBlendFilter
     {
         #region Private data
@@ -7865,6 +7885,7 @@ namespace UMapx.Transform
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LaplacianPyramidFilter : IFilter, IBlendFilter
     {
         #region Private data
@@ -8160,6 +8181,7 @@ namespace UMapx.Transform
     /// https://people.csail.mit.edu/sparis/publi/2011/siggraph/
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LocalLaplacianFilter : IFilter, IBlendFilter
     {
         #region Private data

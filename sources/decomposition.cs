@@ -28,6 +28,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Hessenberg_matrix
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Hessenberg
     {
         #region Private data
@@ -190,6 +191,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix#Generalized_eigenvalue_problem
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class GEVD
     {
         #region Private data
@@ -1576,6 +1578,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class EVD
     {
         #region Private data
@@ -2528,6 +2531,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/LU_decomposition
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LDU
     {
         #region Private data
@@ -2592,6 +2596,7 @@ namespace UMapx.Decomposition
     /// This decomposition is used to highlight diagonal matrices in other decompositions (for example, LDU-, LDL-decompositions).
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Diagonal
     {
         #region Private data
@@ -2645,6 +2650,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/LU_decomposition
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LU
     {
         #region Private data
@@ -2741,6 +2747,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Cholesky_decomposition
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Cholesky
     {
         #region Private data
@@ -2844,6 +2851,7 @@ namespace UMapx.Decomposition
     /// This decomposition is a specific form of Cholesky decomposition.
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class UDL
     {
         #region Private data
@@ -2950,6 +2958,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Cholesky_decomposition#LDL_decomposition_2
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LDL
     {
         #region Private data
@@ -3016,6 +3025,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Singular_value_decomposition
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class SVD
     {
         #region Private data
@@ -3465,6 +3475,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Polar_decomposition
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Polar
     {
         #region Private data
@@ -3520,6 +3531,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Non-negative_matrix_factorization
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class NMF
     {
         #region Private data
@@ -3660,6 +3672,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class QR
     {
         #region Private data
@@ -3848,6 +3861,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class RQ
     {
         #region Private data
@@ -3904,6 +3918,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class QL
     {
         #region Private data
@@ -3956,6 +3971,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class LQ
     {
         #region Private data
@@ -4010,6 +4026,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class GramSchmidt
     {
         #region Private data
@@ -4137,6 +4154,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Householder_transformation
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Householder
     {
         #region Private data
@@ -4396,6 +4414,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Power_iteration
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Power
     {
         #region Private data
@@ -4461,6 +4480,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Arnoldi_iteration
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Arnoldi
     {
         #region Private data
@@ -4581,6 +4601,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Lanczos_algorithm
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Lanczos
     {
         #region Private data

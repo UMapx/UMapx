@@ -27,6 +27,7 @@ namespace UMapx.Analysis
     /// This class is a solution to the problem of finding the root of a nonlinear equation of the form F(x) = 0.
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Nonlinear
     {
         #region Private data
@@ -342,6 +343,7 @@ namespace UMapx.Analysis
     /// This class is a solution to the problem of finding the maximum and minimum points of the function F(x).
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Optimization
     {
         #region Private data
@@ -450,6 +452,7 @@ namespace UMapx.Analysis
     /// This class is a solution to the problem of finding the value of the integral of the function F(x) within the values of a and b.
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Integration
     {
         #region Private data
@@ -1070,6 +1073,7 @@ namespace UMapx.Analysis
     /// <summary>
     /// Defines a class that implements numerical differentiation.
     /// </summary>
+    [Serializable]
     public class Differentation
     {
         #region Private data
@@ -1276,6 +1280,7 @@ namespace UMapx.Analysis
     /// This class is a solution to the Cauchy problem for the ordinary differential equation y' = F(x, y).
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Differential
     {
         #region Private data
@@ -1741,6 +1746,7 @@ namespace UMapx.Analysis
     /// This class is a solution to the problem of finding an intermediate value of the function F(x).
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Interpolation
     {
         #region Private data
@@ -2123,6 +2129,7 @@ namespace UMapx.Analysis
     /// http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Approximation
     {
         #region Private data
@@ -3007,6 +3014,7 @@ namespace UMapx.Analysis
     /// https://www.mathworks.com/help/matlab/ref/roots.html
     /// </remarks>
     /// </summary>
+    [Serializable]
     public class Roots
     {
         #region Private data

@@ -7,7 +7,6 @@
 // Version 4.0.0
 
 using System;
-using System.Runtime.Serialization;
 using UMapx.Core;
 
 namespace UMapx.Response
@@ -30,7 +29,8 @@ namespace UMapx.Response
     /// has a fractional rational look.
     /// </remarks>
     /// </summary>
-    public class IIR : IResponse, ICloneable, ISerializable
+    [Serializable]
+    public class IIR : IResponse
     {
         #region Private data
         private double[] a;
@@ -279,38 +279,6 @@ namespace UMapx.Response
             }
         }
         #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the filter.
-        /// </summary>
-        /// <returns>Filter</returns>
-        object ICloneable.Clone()
-        {
-            return new IIR(this.A, this.B);
-        }
-        /// <summary>
-        /// Creates a copy of the filter.
-        /// </summary>
-        /// <returns>Filter</returns>
-        public IIR Clone()
-        {
-            return new IIR(this.A, this.B);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data needed for serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("A", this.A);
-            info.AddValue("B", this.B);
-        }
-        #endregion
     }
     /// <summary>
     /// Defines a filter with a finite impulse response.
@@ -321,7 +289,8 @@ namespace UMapx.Response
     /// The denominator of the transfer function of such a filter is a certain constant.
     /// </remarks>
     /// </summary>
-    public class FIR : IResponse, ICloneable, ISerializable
+    [Serializable]
+    public class FIR : IResponse
     {
         #region Private data
         private double[] b;
@@ -514,37 +483,6 @@ namespace UMapx.Response
                 cv.B = new double[3] { 1.0, -1.0, 1.0 };
                 return cv;
             }
-        }
-        #endregion
-
-        #region Clone members
-        /// <summary>
-        /// Creates a copy of the filter.
-        /// </summary>
-        /// <returns>Filter</returns>
-        object ICloneable.Clone()
-        {
-            return new FIR(this.B);
-        }
-        /// <summary>
-        /// Creates a copy of the filter.
-        /// </summary>
-        /// <returns>Filter</returns>
-        public FIR Clone()
-        {
-            return new FIR(this.B);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data needed for serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("B", this.B);
         }
         #endregion
     }

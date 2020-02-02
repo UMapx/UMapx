@@ -8,7 +8,6 @@
 
 using System;
 using System.Drawing;
-using System.Runtime.Serialization;
 using UMapx.Core;
 
 namespace UMapx.Colorspace
@@ -25,7 +24,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model CIE Lab.
     /// </summary>
-    public struct LAB : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct LAB : IColorSpace, ICloneable
     {
         #region Private data
         private double l;
@@ -166,20 +166,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("L", this.L);
-            info.AddValue("a", this.A);
-            info.AddValue("b", this.B);
-        }
-        #endregion
-
         #region CIE Lab convert
         /// <summary>
         /// Converts a color model CIE Lab in model CIE XYZ.
@@ -252,7 +238,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model CIE XYZ.
     /// </summary>
-    public struct XYZ : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct XYZ : IColorSpace, ICloneable
     {
         #region Readonly
         /// <summary>
@@ -400,20 +387,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("X", this.X);
-            info.AddValue("Y", this.Y);
-            info.AddValue("Z", this.Z);
-        }
-        #endregion
-
         #region CIE XYZ convert
         /// <summary>
         /// Converts a color model CIE XYZ in model CIE Lab.
@@ -522,7 +495,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model СMYK.
     /// </summary>
-    public struct CMYK : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct CMYK : IColorSpace, ICloneable
     {
         #region Private data
         private double c;
@@ -681,21 +655,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Cyan", this.Cyan);
-            info.AddValue("Magenta", this.Magenta);
-            info.AddValue("Yellow", this.Yellow);
-            info.AddValue("Keycolor", this.Keycolor);
-        }
-        #endregion
-
         #region CMYK convert
         /// <summary>
         /// Converts a color model RGB in model CMYK.
@@ -756,7 +715,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model HSB.
     /// </summary>
-    public struct HSB : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct HSB : IColorSpace, ICloneable
     {
         #region Private data
         private double h;
@@ -897,20 +857,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Hue", this.Hue);
-            info.AddValue("Saturation", this.Saturation);
-            info.AddValue("Brightness", this.Brightness);
-        }
-        #endregion
-
         #region HSB convert
         /// <summary>
         /// Converts a color model RGB in model HSB.
@@ -1037,7 +983,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model HSL.
     /// </summary>
-    public struct HSL : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct HSL : IColorSpace, ICloneable
     {
         #region Private data
         private double h;
@@ -1178,20 +1125,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Hue", this.Hue);
-            info.AddValue("Saturation", this.Saturation);
-            info.AddValue("Lightness", this.Lightness);
-        }
-        #endregion
-
         #region HSL convert
         /// <summary>
         /// Converts a color model RGB in model HSL.
@@ -1320,7 +1253,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model AHSL.
     /// </summary>
-    public struct AHSL : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct AHSL : IColorSpace, ICloneable
     {
         #region Private data
         private double h;
@@ -1461,20 +1395,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Hue", this.Hue);
-            info.AddValue("Saturation", this.Saturation);
-            info.AddValue("Lightness", this.Lightness);
-        }
-        #endregion
-
         #region AHSL covnert
         /// <summary>
         /// Converts a color model RGB in model AHSL.
@@ -1590,7 +1510,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model RGB.
     /// </summary>
-    public struct RGB : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct RGB : IColorSpace, ICloneable
     {
         #region Private data
         private byte r;
@@ -1850,20 +1771,6 @@ namespace UMapx.Colorspace
         public static string ToHEX(RGB rgb)
         {
             return ToHEX(rgb.Red, rgb.Green, rgb.Blue);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Red", this.Red);
-            info.AddValue("Green", this.Green);
-            info.AddValue("Blue", this.Blue);
         }
         #endregion
 
@@ -2284,7 +2191,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model RYB.
     /// </summary>
-    public struct RYB : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct RYB : IColorSpace, ICloneable
     {
         #region Private data
         private byte r;
@@ -2437,20 +2345,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Red", this.Red);
-            info.AddValue("Yellow", this.Yellow);
-            info.AddValue("Blue", this.Blue);
-        }
-        #endregion
-
         #region RYB convert
         /// <summary>
         /// Converts a color model RGB in model RYB.
@@ -2571,7 +2465,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model sRGB.
     /// </summary>
-    public struct sRGB : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct sRGB : IColorSpace, ICloneable
     {
         #region private data
         private double r;
@@ -2712,20 +2607,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Red", this.Red);
-            info.AddValue("Green", this.Green);
-            info.AddValue("Blue", this.Blue);
-        }
-        #endregion
-
         #region sRGB convert
         /// <summary>
         /// Converts a color model RGB in model sRGB.
@@ -2771,7 +2652,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model YUV.
     /// </summary>
-    public struct YUV : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct YUV : IColorSpace, ICloneable
     {
         #region Private data
         private double y;
@@ -2912,20 +2794,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Y", this.Y);
-            info.AddValue("U", this.U);
-            info.AddValue("V", this.V);
-        }
-        #endregion
-
         #region YUV convert
         /// <summary>
         /// Converts a color model RGB in model YUV.
@@ -2978,7 +2846,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model YIQ.
     /// </summary>
-    public struct YIQ : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct YIQ : IColorSpace, ICloneable
     {
         #region Private data
         private double y;
@@ -3119,20 +2988,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Y", this.Y);
-            info.AddValue("I", this.I);
-            info.AddValue("Q", this.Q);
-        }
-        #endregion
-
         #region YIQ convert
         /// <summary>
         /// Converts a color model RGB in model YIQ.
@@ -3185,7 +3040,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model YCbCr.
     /// </summary>
-    public struct YCbCr : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct YCbCr : IColorSpace, ICloneable
     {
         #region Private data
         private double y;
@@ -3326,20 +3182,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Y", this.Y);
-            info.AddValue("Cb", this.Cb);
-            info.AddValue("Cr", this.Cr);
-        }
-        #endregion
-
         #region YCbCr convert
         /// <summary>
         /// Converts a color model RGB in model YCbCr.
@@ -3392,7 +3234,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model YDbDr.
     /// </summary>
-    public struct YDbDr : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct YDbDr : IColorSpace, ICloneable
     {
         #region Private data
         private double y;
@@ -3533,20 +3376,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Y", this.Y);
-            info.AddValue("Db", this.Db);
-            info.AddValue("Dr", this.Dr);
-        }
-        #endregion
-
         #region YDbDr convert
         /// <summary>
         /// Converts a color model RGB in model YDbDr.
@@ -3599,7 +3428,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model YCgCo.
     /// </summary>
-    public struct YCgCo : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct YCgCo : IColorSpace, ICloneable
     {
         #region Private data
         private double y;
@@ -3740,20 +3570,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Y", this.Y);
-            info.AddValue("Cg", this.Cg);
-            info.AddValue("Co", this.Co);
-        }
-        #endregion
-
         #region YCgCo convert
         /// <summary>
         /// Converts a color model RGB in model YCgCo.
@@ -3806,7 +3622,8 @@ namespace UMapx.Colorspace
     /// <summary>
     /// Defines a color model YPbPr.
     /// </summary>
-    public struct YPbPr : IColorSpace, ICloneable, ISerializable
+    [Serializable]
+    public struct YPbPr : IColorSpace, ICloneable
     {
         #region Private data
         private double y;
@@ -3947,20 +3764,6 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Y", this.Y);
-            info.AddValue("Pb", this.Pb);
-            info.AddValue("Pr", this.Pr);
-        }
-        #endregion
-
         #region YPbPr convert
         /// <summary>
         /// Converts a color model RGB in model YPbPr.
@@ -4017,7 +3820,8 @@ namespace UMapx.Colorspace
     /// Defines an unknown color model.
     /// This color model can play the role of any color space.
     /// </summary>
-    public struct Unknown : IColorSpace, ICloneable, ISerializable
+	[Serializable]
+    public struct Unknown : IColorSpace, ICloneable
     {
         #region Private data
         private double x;
@@ -4461,20 +4265,6 @@ namespace UMapx.Colorspace
         public Unknown Clone()
         {
             return new Unknown(this.X, this.Y, this.Z);
-        }
-        #endregion
-
-        #region Serialization members
-        /// <summary>
-        /// Gets information about the object.
-        /// </summary>
-        /// <param name="info">Data required for serializing and deserializing an object</param>
-        /// <param name="context">Source and destination of a given stream</param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("X", this.X);
-            info.AddValue("Y", this.Y);
-            info.AddValue("Z", this.Z);
         }
         #endregion
 
