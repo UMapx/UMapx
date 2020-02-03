@@ -38,10 +38,10 @@ using UMapx.Transform;
 using UMapx.Wavelet;
 using UMapx.Window;
 ```
-Imaging test data ([Yandex.Disk](https://yadi.sk/d/rix2T-ARtGm4Dg)).
 
 # License
 **GNU GPL v3.0**  
 
 # References
 A full list of references is given in a separate [file](docs/references.pdf).
+Imaging test data [folder](https://yadi.sk/d/rix2T-ARtGm4Dg).
