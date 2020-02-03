@@ -28,7 +28,7 @@
 Download from [release](release) folder and add **UMapx.dll** to your project.  
 ```c#
 using UMapx.Analysis;
-using UMapx.Colorspce;
+using UMapx.Colorspace;
 using UMapx.Core;
 using UMapx.Decomposition;
 using UMapx.Distribution;
