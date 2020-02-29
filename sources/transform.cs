@@ -5464,7 +5464,7 @@ namespace UMapx.Transform
                 }
             }
 
-            BoxFilterOptions.boxf(v, Direction.Both, 4);
+            BoxFilterOptions.boxf(v, Direction.Both, 2);
 
             return v;
         }
@@ -5486,7 +5486,7 @@ namespace UMapx.Transform
                 v[k + 1] = u[i];
             }
 
-            BoxFilterOptions.boxf(v, r, 4);
+            BoxFilterOptions.boxf(v, r, 2);
 
             return v;
         }
@@ -5511,7 +5511,7 @@ namespace UMapx.Transform
                 }
             }
 
-            BoxFilterOptions.boxf(v, Direction.Both, 4);
+            BoxFilterOptions.boxf(v, Direction.Both, 2);
 
             return v;
         }
@@ -5532,7 +5532,7 @@ namespace UMapx.Transform
                 v[k] = u[i];
             }
 
-            BoxFilterOptions.boxf(v, r, 4);
+            BoxFilterOptions.boxf(v, r, 2);
 
             return v;
         }
@@ -5639,7 +5639,7 @@ namespace UMapx.Transform
                 }
             }
 
-            BoxFilterOptions.boxf(v, Direction.Both, 4);
+            BoxFilterOptions.boxf(v, Direction.Both, 2);
 
             return v;
         }
@@ -5661,7 +5661,7 @@ namespace UMapx.Transform
                 v[k + 1] = u[i];
             }
 
-            BoxFilterOptions.boxf(v, r, 4);
+            BoxFilterOptions.boxf(v, r, 2);
 
             return v;
         }
@@ -5686,7 +5686,7 @@ namespace UMapx.Transform
                 }
             }
 
-            BoxFilterOptions.boxf(v, Direction.Both, 4);
+            BoxFilterOptions.boxf(v, Direction.Both, 2);
 
             return v;
         }
@@ -5707,7 +5707,7 @@ namespace UMapx.Transform
                 v[k] = u[i];
             }
 
-            BoxFilterOptions.boxf(v, r, 4);
+            BoxFilterOptions.boxf(v, r, 2);
 
             return v;
         }
@@ -6257,7 +6257,7 @@ namespace UMapx.Transform
     /// </summary>
     internal static class BoxFilterOptions
     {
-        #region Private voids
+        #region Public static voids
         /// <summary>
         /// Apply filter.
         /// </summary>
@@ -6531,19 +6531,20 @@ namespace UMapx.Transform
 
             // data
             int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            double[,] sum = new double[r, c];
-            double[,] wei = new double[r, c];
+            double[,] sum = new double[r, c], cur;
             int i, j, k;
 
             // process
             for (i = 0; i < length; i++)
             {
-                // summarize all signals:
+                cur = data[i];
+
                 for (j = 0; j < r; j++)
                 {
                     for (k = 0; k < c; k++)
                     {
-                        sum[j, k] += data[i][j, k] / length;
+                        // summarize all signals:
+                        sum[j, k] += cur[j, k] / length;
                     }
                 }
             }
@@ -6563,18 +6564,20 @@ namespace UMapx.Transform
 
             // data
             int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            Complex[,] sum = new Complex[r, c];
+            Complex[,] sum = new Complex[r, c], cur;
             int i, j, k;
 
             // process
             for (i = 0; i < length; i++)
             {
+                cur = data[i];
+
                 for (j = 0; j < r; j++)
                 {
                     for (k = 0; k < c; k++)
                     {
                         // summarize all signals:
-                        sum[j, k] += data[i][j, k] / length;
+                        sum[j, k] += cur[j, k] / length;
                     }
                 }
             }
@@ -6594,16 +6597,18 @@ namespace UMapx.Transform
 
             // data
             int r = data[0].GetLength(0);
-            double[] sum = new double[r];
+            double[] sum = new double[r], cur;
             int i, j;
 
             // process
             for (i = 0; i < length; i++)
             {
+                cur = data[i];
+
                 for (j = 0; j < r; j++)
                 {
                     // summarize all signals:
-                    sum[j] += data[i][j] / length;
+                    sum[j] += cur[j] / length;
                 }
             }
 
@@ -6622,16 +6627,18 @@ namespace UMapx.Transform
 
             // data
             int r = data[0].GetLength(0);
-            Complex[] sum = new Complex[r];
+            Complex[] sum = new Complex[r], cur;
             int i, j;
 
             // process
             for (i = 0; i < length; i++)
             {
+                cur = data[i];
+
                 for (j = 0; j < r; j++)
                 {
                     // summarize all signals:
-                    sum[j] += data[i][j] / length;
+                    sum[j] += cur[j] / length;
                 }
             }
 
@@ -6648,7 +6655,7 @@ namespace UMapx.Transform
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class GuidedFilter : IFilter, IBlendFilter
+    public class GuidedFilter : IFilter
     {
         #region Private data
         /// <summary>
@@ -6838,149 +6845,6 @@ namespace UMapx.Transform
             }
 
             return;
-        }
-        #endregion
-
-        #region Blender apply voids
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        public double[,] Apply(double[][,] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            double[,] sum = new double[r, c], cur, low;
-            int i, j, k;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (double[,])cur.Clone();
-                GuidedFilter.guidedfilter(low, this.radius, this.eps);
-
-                for (j = 0; j < r; j++)
-                {
-                    for (k = 0; k < c; k++)
-                    {
-                        // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + low[j, k] / length;
-
-                    }
-                }
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        public Complex[,] Apply(Complex[][,] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            Complex[,] sum = new Complex[r, c], cur, low;
-            int i, j, k;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (Complex[,])cur.Clone();
-                GuidedFilter.guidedfilter(low, this.radius, this.eps);
-
-                for (j = 0; j < r; j++)
-                {
-                    for (k = 0; k < c; k++)
-                    {
-                        // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + (low[j, k] / length);
-
-                    }
-                }
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        public double[] Apply(double[][] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0);
-            double[] sum = new double[r], cur, low;
-            int i, j;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (double[])cur.Clone();
-                GuidedFilter.guidedfilter(low, this.radius, this.eps);
-
-                for (j = 0; j < r; j++)
-                {
-                    // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
-                }
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        public Complex[] Apply(Complex[][] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0);
-            Complex[] sum = new Complex[r], cur, low;
-            int i, j;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (Complex[])cur.Clone();
-                GuidedFilter.guidedfilter(low, this.radius, this.eps);
-
-                for (j = 0; j < r; j++)
-                {
-                    // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
-                }
-            }
-
-            return sum;
         }
         #endregion
 
@@ -7190,7 +7054,7 @@ namespace UMapx.Transform
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class DomainTransformFilter : IFilter, IBlendFilter
+    public class DomainTransformFilter : IFilter
     {
         #region Private data
         double sigma_s;
@@ -7372,149 +7236,6 @@ namespace UMapx.Transform
             }
 
             return;
-        }
-        #endregion
-
-        #region Blender apply voids
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        public double[,] Apply(double[][,] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            double[,] sum = new double[r, c], cur, low;
-            int i, j, k;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (double[,])cur.Clone();
-                DomainTransformFilter.domainfilter(low, this.sigma_s, this.sigma_r, this.iterations);
-
-                for (j = 0; j < r; j++)
-                {
-                    for (k = 0; k < c; k++)
-                    {
-                        // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + low[j, k] / length;
-
-                    }
-                }
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        public double[] Apply(double[][] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0);
-            double[] sum = new double[r], cur, low;
-            int i, j;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (double[])cur.Clone();
-                DomainTransformFilter.domainfilter(low, this.sigma_s, this.sigma_r, this.iterations);
-
-                for (j = 0; j < r; j++)
-                {
-                    // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
-                }
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        public Complex[,] Apply(Complex[][,] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            Complex[,] sum = new Complex[r, c], cur, low;
-            int i, j, k;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (Complex[,])cur.Clone();
-                DomainTransformFilter.domainfilter(low, this.sigma_s, this.sigma_r, this.iterations);
-
-                for (j = 0; j < r; j++)
-                {
-                    for (k = 0; k < c; k++)
-                    {
-                        // summarize high and low frequencies:
-                        sum[j, k] += (1.0 + this.factor) / length * (cur[j, k] - low[j, k]) + low[j, k] / length;
-
-                    }
-                }
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        public Complex[] Apply(Complex[][] data)
-        {
-            // exception
-            int length = data.Length;
-            if (length == 0) return null;
-
-            // data
-            int r = data[0].GetLength(0);
-            Complex[] sum = new Complex[r], cur, low;
-            int i, j;
-
-            // process
-            for (i = 0; i < length; i++)
-            {
-                // lowpass filter:
-                cur = data[i];
-                low = (Complex[])cur.Clone();
-                DomainTransformFilter.domainfilter(low, this.sigma_s, this.sigma_r, this.iterations);
-
-                for (j = 0; j < r; j++)
-                {
-                    // summarize high and low frequencies:
-                    sum[j] += (1.0 + this.factor) / length * (cur[j] - low[j]) + (low[j] / length);
-                }
-            }
-
-            return sum;
         }
         #endregion
 
@@ -7886,7 +7607,7 @@ namespace UMapx.Transform
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class LaplacianPyramidFilter : IFilter, IBlendFilter
+    public class LaplacianPyramidFilter : IFilter
     {
         #region Private data
         private LaplacianPyramidTransform lap;
@@ -7931,129 +7652,6 @@ namespace UMapx.Transform
             {
                 this.factor = value;
             }
-        }
-        #endregion
-
-        #region Blender apply voids
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        public double[,] Apply(double[][,] data)
-        {
-            int length = data.Length;
-
-            if (length == 0) return null;
-
-            int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            double[][,] zero = lap.Forward(new double[r, c]), curr;
-            int nlev = zero.Length;
-
-            // process
-            for (int j = 0; j < length; j++)
-            {
-                curr = lap.Forward(data[j]);
-
-                for (int i = 0; i < nlev - 1; i++)
-                {
-                    zero[i] = Matrice.Add(zero[i], curr[i].Mul((1.0 + this.factor) / length));
-                }
-
-                zero[nlev - 1] = Matrice.Add(zero[nlev - 1], curr[nlev - 1].Div(length));
-            }
-
-            return lap.Backward(zero);
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        public Complex[,] Apply(Complex[][,] data)
-        {
-            int length = data.Length;
-
-            if (length == 0) return null;
-
-            int r = data[0].GetLength(0), c = data[0].GetLength(1);
-            Complex[][,] zero = lap.Forward(new Complex[r, c]), curr;
-            int nlev = zero.Length;
-
-            // process
-            for (int j = 0; j < length; j++)
-            {
-                curr = lap.Forward(data[j]);
-
-                for (int i = 0; i < nlev - 1; i++)
-                {
-                    zero[i] = Matrice.Add(zero[i], curr[i].Mul((1.0 + this.factor) / length));
-                }
-
-                zero[nlev - 1] = Matrice.Add(zero[nlev - 1], curr[nlev - 1].Div(length));
-            }
-
-            return lap.Backward(zero);
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        public double[] Apply(double[][] data)
-        {
-            int length = data.Length;
-
-            if (length == 0) return null;
-
-            int r = data[0].GetLength(0);
-            double[][] zero = lap.Forward(new double[r]), curr;
-            int nlev = zero.Length;
-
-            // process
-            for (int j = 0; j < length; j++)
-            {
-                curr = lap.Forward(data[j]);
-
-                for (int i = 0; i < nlev - 1; i++)
-                {
-                    zero[i] = Matrice.Add(zero[i], curr[i].Mul((1.0 + this.factor) / length));
-                }
-
-                zero[nlev - 1] = Matrice.Add(zero[nlev - 1], curr[nlev - 1].Div(length));
-            }
-
-            return lap.Backward(zero);
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        public Complex[] Apply(Complex[][] data)
-        {
-            int length = data.Length;
-
-            if (length == 0) return null;
-
-            int r = data[0].GetLength(0);
-            Complex[][] zero = lap.Forward(new Complex[r]), curr;
-            int nlev = zero.Length;
-
-            // process
-            for (int j = 0; j < length; j++)
-            {
-                curr = lap.Forward(data[j]);
-
-                for (int i = 0; i < nlev - 1; i++)
-                {
-                    zero[i] = Matrice.Add(zero[i], curr[i].Mul((1.0 + this.factor) / length));
-                }
-
-                zero[nlev - 1] = Matrice.Add(zero[nlev - 1], curr[nlev - 1].Div(length));
-            }
-
-            return lap.Backward(zero);
         }
         #endregion
 
@@ -8182,7 +7780,7 @@ namespace UMapx.Transform
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class LocalLaplacianFilter : IFilter, IBlendFilter
+    public class LocalLaplacianFilter : IFilter
     {
         #region Private data
         /// <summary>
@@ -8273,51 +7871,6 @@ namespace UMapx.Transform
             {
                 this.levels = value;
             }
-        }
-        #endregion
-
-        #region Blender apply voids
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        public double[,] Apply(double[][,] data)
-        {
-            // local laplcian filter blending
-            double[,] output = BoxFilterOptions.boxf(data);
-            LocalLaplacianFilter.llfilter(output, this.sigma, this.factor, this.n, this.levels);
-            return output;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        public Complex[,] Apply(Complex[][,] data)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        public double[] Apply(double[][] data)
-        {
-            // local laplcian filter blending
-            double[] output = BoxFilterOptions.boxf(data);
-            LocalLaplacianFilter.llfilter(output, this.sigma, this.factor, this.n, this.levels);
-            return output;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        public Complex[] Apply(Complex[][] data)
-        {
-            throw new NotSupportedException();
         }
         #endregion
 
@@ -8743,38 +8296,6 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Matrix</param>
         void Apply(Complex[,] data);
-        #endregion
-    }
-    /// <summary>
-    /// Defines the blend filter interface.
-    /// </summary>
-    public interface IBlendFilter
-    {
-        #region Interface
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        double[,] Apply(double[][,] data);
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Matrix array</param>
-        /// <returns>Matrix</returns>
-        Complex[,] Apply(Complex[][,] data);
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        double[] Apply(double[][] data);
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="data">Jagged array</param>
-        /// <returns>Array</returns>
-        Complex[] Apply(Complex[][] data);
         #endregion
     }
     #endregion

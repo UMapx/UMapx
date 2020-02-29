@@ -3820,7 +3820,7 @@ namespace UMapx.Core
         /// <returns>Double precision floating point number</returns>
         public static double Sigmoid(double x)
         {
-            return 2.0 / Math.PI * (Math.Exp(x) + Math.Exp(-x));
+            return 2.0 / Math.PI / (Math.Exp(x) + Math.Exp(-x));
         }
         #endregion
 

@@ -10697,59 +10697,60 @@ namespace UMapx.Imaging
         #endregion
     }
     /// <summary>
-    /// Defines the bitmap blending filter.
+    /// Defines the exposure fusion filter.
     /// <remarks>
-    /// Filter can be used to implement HDR effects.
     /// More information can be found on the website:
-    /// https://web.stanford.edu/class/cs231m/lectures/lecture-5-stitching-blending.pdf
-    /// (стр. 65-75)
+    /// https://web.stanford.edu/class/cs231m/project-1/exposure-fusion.pdf
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class BitmapBlender
+    public class ExposureFusion
     {
         #region Private data
-        private IBlendFilter filter;
-        private Space space;
+        private LaplacianPyramidTransform lap;
+        private GaussianPyramidTransform gap;
+        private double sigma;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Initializes the bitmap blending filter.
+        /// Initializes the exposure fusion filter.
         /// </summary>
-        /// <param name="filter">Blending filter</param>
-        /// <param name="space">Color space</param>
-        public BitmapBlender(IBlendFilter filter, Space space = Space.RGB)
+        /// <param name="levels">Number of levels</param>
+        /// <param name="sigma">Sigma (0, 1)</param>
+        public ExposureFusion(int levels, double sigma = 0.2)
         {
-            this.filter = filter;
-            this.space = space;
+            this.lap = new LaplacianPyramidTransform(levels);
+            this.gap = new GaussianPyramidTransform(levels);
+            this.sigma = sigma;
         }
         /// <summary>
-        /// Gets or sets the blending filter.
+        /// Gets or sets number of levels.
         /// </summary>
-        public IBlendFilter Filter
+        public int Levels
         {
             get
             {
-                return this.filter;
+                return this.lap.Levels;
             }
             set
             {
-                this.filter = value;
+                this.lap.Levels =
+                    this.gap.Levels = value;
             }
         }
         /// <summary>
-        /// Gets or sets the color space.
+        /// Gets or sets the sigma value (0, 1).
         /// </summary>
-        public Space Space
+        public double Sigma
         {
             get
             {
-                return this.space;
+                return this.sigma;
             }
             set
             {
-                this.space = value;
+                this.sigma = value;
             }
         }
         /// <summary>
@@ -10757,281 +10758,214 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="images">Bitmap array</param>
         /// <returns>Bitmap</returns>
-        public Bitmap Apply(params Bitmap[] images)
+        public Bitmap Apply(Bitmap[] images)
         {
-            // filter
-            switch (space)
+            // data
+            int N = images.GetLength(0);
+            double[][][,] data = new double[N][][,];
+            int height = images[0].Height;
+            int width = images[1].Width;
+            double[][,] weights = new double[N][,];
+
+            // to rgb array
+            for (int i = 0; i < N; i++)
             {
-                case Imaging.Space.HSB:
-                    return ApplyHSB(images);
-
-                case Imaging.Space.HSL:
-                    return ApplyHSL(images);
-
-                case Imaging.Space.YCbCr:
-                    return ApplyYCbCr(images);
-
-                case Imaging.Space.RGB:
-                    return ApplyRGB(images);
-
-                default:
-                    return ApplyGrayscale(images);
+                data[i] = BitmapConverter.ToRGB(images[i]);
             }
+
+            // initialize weights
+            for (int i = 0; i < N; i++)
+                weights[i] = Matrice.One(height, width);
+
+            // applying params
+            weights = Mul(weights, Exp(data, this.sigma));
+
+            // normalizing
+            double[,] z = new double[height, width];
+
+            for (int i = 0; i < N; i++)
+                z = z.Add(weights[i]);
+
+            for (int i = 0; i < N; i++)
+                weights[i] = weights[i].Div(z);
+
+            // pyramids
+            double[][,] pyrW;
+            double[][,] pyrIr;
+            double[][,] pyrIg;
+            double[][,] pyrIb;
+
+            // outputs
+            double[][,] zero = gap.Forward(new double[height, width]);
+            double[][,] r = (double[][,])zero.Clone();
+            double[][,] g = (double[][,])zero.Clone();
+            double[][,] b = (double[][,])zero.Clone();
+            int levels = r.GetLength(0);
+
+            // do job
+            for (int i = 0; i < N; i++)
+            {
+                pyrW = gap.Forward(weights[i]);
+                zero = data[i];
+                pyrIr = lap.Forward(zero[0]);
+                pyrIg = lap.Forward(zero[1]);
+                pyrIb = lap.Forward(zero[2]);
+
+                for (int l = 0; l < levels; l++)
+                {
+                    z = pyrW[l];
+
+                    r[l] = r[l].Add(z.Mul(pyrIr[l]));
+                    g[l] = g[l].Add(z.Mul(pyrIg[l]));
+                    b[l] = b[l].Add(z.Mul(pyrIb[l]));
+                }
+            }
+
+            // reconstruction
+            Bitmap bitmap = BitmapConverter.FromRGB(new double[][,] {
+                lap.Backward(r),
+                lap.Backward(g),
+                lap.Backward(b) });
+
+            return bitmap;
         }
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="images">Bitmap array</param>
+        /// <param name="images">BitmapData array</param>
         /// <returns>Bitmap</returns>
-        public Bitmap Apply(params BitmapData[] images)
+        public Bitmap Apply(BitmapData[] images)
         {
-            // filter
-            switch (space)
+            // data
+            int N = images.GetLength(0);
+            double[][][,] data = new double[N][][,];
+            int height = images[0].Height;
+            int width = images[1].Width;
+            double[][,] weights = new double[N][,];
+
+            // to rgb array
+            for (int i = 0; i < N; i++)
             {
-                case Imaging.Space.HSB:
-                    return ApplyHSB(images);
-
-                case Imaging.Space.HSL:
-                    return ApplyHSL(images);
-
-                case Imaging.Space.YCbCr:
-                    return ApplyYCbCr(images);
-
-                case Imaging.Space.RGB:
-                    return ApplyRGB(images);
-
-                default:
-                    return ApplyGrayscale(images);
+                data[i] = BitmapConverter.ToRGB(images[i]);
             }
+
+            // initialize weights
+            for (int i = 0; i < N; i++)
+                weights[i] = Matrice.One(height, width);
+
+            // applying params
+            weights = Mul(weights, Exp(data, this.sigma));
+
+            // normalizing
+            double[,] z = new double[height, width];
+
+            for (int i = 0; i < N; i++)
+                z = z.Add(weights[i]);
+
+            for (int i = 0; i < N; i++)
+                weights[i] = weights[i].Div(z);
+
+            // pyramids
+            double[][,] pyrW;
+            double[][,] pyrIr;
+            double[][,] pyrIg;
+            double[][,] pyrIb;
+
+            // outputs
+            double[][,] zero = gap.Forward(new double[height, width]);
+            double[][,] r = (double[][,])zero.Clone();
+            double[][,] g = (double[][,])zero.Clone();
+            double[][,] b = (double[][,])zero.Clone();
+            int levels = r.GetLength(0);
+
+            // do job
+            for (int i = 0; i < N; i++)
+            {
+                pyrW = gap.Forward(weights[i]);
+                zero = data[i];
+                pyrIr = lap.Forward(zero[0]);
+                pyrIg = lap.Forward(zero[1]);
+                pyrIb = lap.Forward(zero[2]);
+
+                for (int l = 0; l < levels; l++)
+                {
+                    z = pyrW[l];
+
+                    r[l] = r[l].Add(z.Mul(pyrIr[l]));
+                    g[l] = g[l].Add(z.Mul(pyrIg[l]));
+                    b[l] = b[l].Add(z.Mul(pyrIb[l]));
+                }
+            }
+
+            // reconstruction
+            Bitmap bitmap = BitmapConverter.FromRGB(new double[][,] {
+                lap.Backward(r),
+                lap.Backward(g),
+                lap.Backward(b) });
+
+            return bitmap;
         }
         #endregion
 
         #region Private voids
         /// <summary>
-        /// Apply filter.
+        /// Exponent filter.
         /// </summary>
-        /// <param name="Data">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyRGB(Bitmap[] Data)
+        /// <param name="I">Input data</param>
+        /// <param name="sigma">Sigma</param>
+        /// <returns>Output data</returns>
+        private static double[][,] Exp(double[][][,] I, double sigma)
         {
-            int length = Data.Length;
-            double[][,] r = new double[length][,];
-            double[][,] g = new double[length][,];
-            double[][,] b = new double[length][,];
-            double[][,] t;
+            // params
+            int length = I.GetLength(0);
+            double[][,] C = new double[length][,];
+            double[][,] current;
+            double[,] r, g, b;
+            double[,] result;
+            int height, width;
+            int i, j, k;
 
-            for (int i = 0; i < length; i++)
+            // do job
+            for (i = 0; i < length; i++)
             {
-                t = BitmapConverter.ToRGB(Data[i], false);
+                current = I[i];
+                r = current[0];
+                g = current[1];
+                b = current[2];
 
-                r[i] = t[2];
-                g[i] = t[1];
-                b[i] = t[0];
+                height = r.GetLength(0);
+                width = r.GetLength(1);
+                result = new double[height, width];
+
+                for (j = 0; j < height; j++)
+                {
+                    for (k = 0; k < width; k++)
+                    {
+                        result[j, k] = Math.Exp(-0.5 * Math.Pow((r[j, k] - 0.5), 2) / Math.Pow(sigma, 2)) *
+                                       Math.Exp(-0.5 * Math.Pow((g[j, k] - 0.5), 2) / Math.Pow(sigma, 2)) *
+                                       Math.Exp(-0.5 * Math.Pow((b[j, k] - 0.5), 2) / Math.Pow(sigma, 2));
+                    }
+                }
+                C[i] = result;
             }
 
-            return BitmapConverter.FromRGB(new double[][,] { this.filter.Apply(b), this.filter.Apply(g), this.filter.Apply(r) });
+            return C;
         }
         /// <summary>
-        /// Apply filter.
+        /// Implements matrix array multiplication.
         /// </summary>
-        /// <param name="bmData">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyRGB(BitmapData[] bmData)
+        /// <param name="A">Matrix array</param>
+        /// <param name="B">Matrix array</param>
+        /// <returns>Matrix array</returns>
+        private static double[][,] Mul(double[][,] A, double[][,] B)
         {
-            int length = bmData.Length;
-            double[][,] r = new double[length][,];
-            double[][,] g = new double[length][,];
-            double[][,] b = new double[length][,];
-            double[][,] t;
+            int length = A.GetLength(0);
+            double[][,] R = new double[length][,];
 
             for (int i = 0; i < length; i++)
-            {
-                t = BitmapConverter.ToRGB(bmData[i], false);
+                R[i] = A[i].Mul(B[i]);
 
-                r[i] = t[2];
-                g[i] = t[1];
-                b[i] = t[0];
-            }
-
-            return BitmapConverter.FromRGB(new double[][,] { this.filter.Apply(b), this.filter.Apply(g), this.filter.Apply(r) });
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="Data">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyGrayscale(Bitmap[] Data)
-        {
-            int length = Data.Length;
-            double[][,] r = new double[length][,];
-
-            for (int i = 0; i < length; i++)
-            {
-                r[i] = BitmapConverter.ToGrayscale(Data[i]);
-            }
-
-            return BitmapConverter.FromGrayscale(this.filter.Apply(r));
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="bmData">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyGrayscale(BitmapData[] bmData)
-        {
-            int length = bmData.Length;
-            double[][,] r = new double[length][,];
-
-            for (int i = 0; i < length; i++)
-            {
-                r[i] = BitmapConverter.ToGrayscale(bmData[i]);
-            }
-
-            return BitmapConverter.FromGrayscale(this.filter.Apply(r));
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="Data">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyYCbCr(Bitmap[] Data)
-        {
-            int length = Data.Length;
-            double[][,] yy = new double[length][,];
-            double[][,] cb = new double[length][,];
-            double[][,] cr = new double[length][,];
-            double[][,] tt;
-
-            for (int i = 0; i < length; i++)
-            {
-                tt = BitmapConverter.ToYCbCr(Data[i], false);
-
-                yy[i] = tt[0];
-                cb[i] = tt[1];
-                cr[i] = tt[2];
-            }
-
-            return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), BoxFilterOptions.boxf(cb), BoxFilterOptions.boxf(cr) });
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="bmData">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyYCbCr(BitmapData[] bmData)
-        {
-            int length = bmData.Length;
-            double[][,] yy = new double[length][,];
-            double[][,] cb = new double[length][,];
-            double[][,] cr = new double[length][,];
-            double[][,] tt;
-
-            for (int i = 0; i < length; i++)
-            {
-                tt = BitmapConverter.ToYCbCr(bmData[i], false);
-
-                yy[i] = tt[0];
-                cb[i] = tt[1];
-                cr[i] = tt[2];
-            }
-
-            return BitmapConverter.FromYCbCr(new double[][,] { this.filter.Apply(yy), BoxFilterOptions.boxf(cb), BoxFilterOptions.boxf(cr) });
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="Data">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyHSB(Bitmap[] Data)
-        {
-            int length = Data.Length;
-            double[][,] h = new double[length][,];
-            double[][,] s = new double[length][,];
-            double[][,] b = new double[length][,];
-            double[][,] t;
-
-            for (int i = 0; i < length; i++)
-            {
-                t = BitmapConverter.ToHSB(Data[i], false);
-
-                h[i] = t[0];
-                s[i] = t[1];
-                b[i] = t[2];
-            }
-
-            return BitmapConverter.FromHSB(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(b) });
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="bmData">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyHSB(BitmapData[] bmData)
-        {
-            int length = bmData.Length;
-            double[][,] h = new double[length][,];
-            double[][,] s = new double[length][,];
-            double[][,] b = new double[length][,];
-            double[][,] t;
-
-            for (int i = 0; i < length; i++)
-            {
-                t = BitmapConverter.ToHSB(bmData[i], false);
-
-                h[i] = t[0];
-                s[i] = t[1];
-                b[i] = t[2];
-            }
-
-            return BitmapConverter.FromHSB(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(b) });
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="Data">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyHSL(Bitmap[] Data)
-        {
-            int length = Data.Length;
-            double[][,] h = new double[length][,];
-            double[][,] s = new double[length][,];
-            double[][,] l = new double[length][,];
-            double[][,] t;
-
-            for (int i = 0; i < length; i++)
-            {
-                t = BitmapConverter.ToHSL(Data[i], false);
-
-                h[i] = t[0];
-                s[i] = t[1];
-                l[i] = t[2];
-            }
-
-            return BitmapConverter.FromHSL(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(l) });
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="bmData">Bitmap array</param>
-        /// <returns>Bitmap</returns>
-        private Bitmap ApplyHSL(BitmapData[] bmData)
-        {
-            int length = bmData.Length;
-            double[][,] h = new double[length][,];
-            double[][,] s = new double[length][,];
-            double[][,] l = new double[length][,];
-            double[][,] t;
-
-            for (int i = 0; i < length; i++)
-            {
-                t = BitmapConverter.ToHSL(bmData[i], false);
-
-                h[i] = t[0];
-                s[i] = t[1];
-                l[i] = t[2];
-            }
-
-            return BitmapConverter.FromHSL(new double[][,] { BoxFilterOptions.boxf(h), BoxFilterOptions.boxf(s), this.filter.Apply(l) });
+            return R;
         }
         #endregion
     }
