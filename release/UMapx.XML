@@ -19281,117 +19281,61 @@
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="T:UMapx.Imaging.BitmapBlender">
+        <member name="T:UMapx.Imaging.ExposureFusion">
             <summary>
-            Defines the bitmap blending filter.
+            Defines the exposure fusion filter.
             <remarks>
-            Filter can be used to implement HDR effects.
             More information can be found on the website:
-            https://web.stanford.edu/class/cs231m/lectures/lecture-5-stitching-blending.pdf
-            (стр. 65-75)
+            https://web.stanford.edu/class/cs231m/project-1/exposure-fusion.pdf
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.#ctor(UMapx.Transform.IBlendFilter,UMapx.Imaging.Space)">
+        <member name="M:UMapx.Imaging.ExposureFusion.#ctor(System.Int32,System.Double)">
             <summary>
-            Initializes the bitmap blending filter.
+            Initializes the exposure fusion filter.
             </summary>
-            <param name="filter">Blending filter</param>
-            <param name="space">Color space</param>
+            <param name="levels">Number of levels</param>
+            <param name="sigma">Sigma (0, 1)</param>
         </member>
-        <member name="P:UMapx.Imaging.BitmapBlender.Filter">
+        <member name="P:UMapx.Imaging.ExposureFusion.Levels">
             <summary>
-            Gets or sets the blending filter.
-            </summary>
-        </member>
-        <member name="P:UMapx.Imaging.BitmapBlender.Space">
-            <summary>
-            Gets or sets the color space.
+            Gets or sets number of levels.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.Apply(System.Drawing.Bitmap[])">
+        <member name="P:UMapx.Imaging.ExposureFusion.Sigma">
+            <summary>
+            Gets or sets the sigma value (0, 1).
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.ExposureFusion.Apply(System.Drawing.Bitmap[])">
             <summary>
             Apply filter.
             </summary>
             <param name="images">Bitmap array</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.Apply(System.Drawing.Imaging.BitmapData[])">
+        <member name="M:UMapx.Imaging.ExposureFusion.Apply(System.Drawing.Imaging.BitmapData[])">
             <summary>
             Apply filter.
             </summary>
-            <param name="images">Bitmap array</param>
+            <param name="images">BitmapData array</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyRGB(System.Drawing.Bitmap[])">
+        <member name="M:UMapx.Imaging.ExposureFusion.Exp(System.Double[0:,0:][][],System.Double)">
             <summary>
-            Apply filter.
+            Exponent filter.
             </summary>
-            <param name="Data">Bitmap array</param>
-            <returns>Bitmap</returns>
+            <param name="I">Input data</param>
+            <param name="sigma">Sigma</param>
+            <returns>Output data</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyRGB(System.Drawing.Imaging.BitmapData[])">
+        <member name="M:UMapx.Imaging.ExposureFusion.Mul(System.Double[0:,0:][],System.Double[0:,0:][])">
             <summary>
-            Apply filter.
+            Implements matrix array multiplication.
             </summary>
-            <param name="bmData">Bitmap array</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyGrayscale(System.Drawing.Bitmap[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="Data">Bitmap array</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyGrayscale(System.Drawing.Imaging.BitmapData[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap array</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyYCbCr(System.Drawing.Bitmap[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="Data">Bitmap array</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyYCbCr(System.Drawing.Imaging.BitmapData[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap array</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyHSB(System.Drawing.Bitmap[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="Data">Bitmap array</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyHSB(System.Drawing.Imaging.BitmapData[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap array</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyHSL(System.Drawing.Bitmap[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="Data">Bitmap array</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapBlender.ApplyHSL(System.Drawing.Imaging.BitmapData[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap array</param>
-            <returns>Bitmap</returns>
+            <param name="A">Matrix array</param>
+            <param name="B">Matrix array</param>
+            <returns>Matrix array</returns>
         </member>
         <member name="T:UMapx.Imaging.BitmapConverter">
             <summary>
@@ -23136,34 +23080,6 @@
             </summary>
             <param name="data">Matrix</param>
         </member>
-        <member name="M:UMapx.Transform.GuidedFilter.Apply(System.Double[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.GuidedFilter.Apply(UMapx.Core.Complex[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.GuidedFilter.Apply(System.Double[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.GuidedFilter.Apply(UMapx.Core.Complex[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
-        </member>
         <member name="M:UMapx.Transform.GuidedFilter.guidedfilter(System.Double[0:,0:],System.Int32,System.Double)">
             <summary>
             Guided filer function.
@@ -23258,34 +23174,6 @@
             Apply filter.
             </summary>
             <param name="data">Matrix</param>
-        </member>
-        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(System.Double[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(System.Double[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(UMapx.Core.Complex[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.DomainTransformFilter.Apply(UMapx.Core.Complex[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.DomainTransformFilter.domainfilter(System.Double[0:,0:],System.Double,System.Double,System.Int32)">
             <summary>
@@ -23397,34 +23285,6 @@
             Gets or sets the factor [-1, 1].
             </summary>
         </member>
-        <member name="M:UMapx.Transform.LaplacianPyramidFilter.Apply(System.Double[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.LaplacianPyramidFilter.Apply(UMapx.Core.Complex[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.LaplacianPyramidFilter.Apply(System.Double[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.LaplacianPyramidFilter.Apply(UMapx.Core.Complex[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
-        </member>
         <member name="M:UMapx.Transform.LaplacianPyramidFilter.Apply(System.Double[0:,0:])">
             <summary>
             Apply filter.
@@ -23506,34 +23366,6 @@
             <summary>
             Gets or sets the number of levels.
             </summary>
-        </member>
-        <member name="M:UMapx.Transform.LocalLaplacianFilter.Apply(System.Double[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.LocalLaplacianFilter.Apply(UMapx.Core.Complex[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.LocalLaplacianFilter.Apply(System.Double[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.LocalLaplacianFilter.Apply(UMapx.Core.Complex[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.LocalLaplacianFilter.Apply(System.Double[0:,0:])">
             <summary>
@@ -23769,39 +23601,6 @@
             Apply filter.
             </summary>
             <param name="data">Matrix</param>
-        </member>
-        <member name="T:UMapx.Transform.IBlendFilter">
-            <summary>
-            Defines the blend filter interface.
-            </summary>
-        </member>
-        <member name="M:UMapx.Transform.IBlendFilter.Apply(System.Double[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.IBlendFilter.Apply(UMapx.Core.Complex[0:,0:][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.IBlendFilter.Apply(System.Double[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.IBlendFilter.Apply(UMapx.Core.Complex[][])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Array</returns>
         </member>
         <member name="T:UMapx.Wavelet.WaveletTransform">
             <summary>
@@ -25054,34 +24853,6 @@
             Implements a wavelet filter.
             </summary>
             <param name="data">Array</param>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(System.Double[0:,0:][])">
-            <summary>
-            Implements a wavelet filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(System.Double[][])">
-            <summary>
-            Implements a wavelet filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(UMapx.Core.Complex[0:,0:][])">
-            <summary>
-            Implements a wavelet filter.
-            </summary>
-            <param name="data">Matrix array</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletFilter.Apply(UMapx.Core.Complex[][])">
-            <summary>
-            Implements a wavelet filter.
-            </summary>
-            <param name="data">Jagged array</param>
-            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Wavelet.WaveletFilter.GetLength(System.Int32,System.Int32)">
             <summary>
