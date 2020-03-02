@@ -19604,6 +19604,47 @@
             <param name="m">Matrix</param>
             <param name="Data">Bitmap</param>
         </member>
+        <member name="M:UMapx.Imaging.BitmapConverter.ToTensor(System.Drawing.Bitmap)">
+            <summary>
+            Converts a Bitmap to an RGB tensor array.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <returns>RGB tensor array</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapConverter.ToTensor(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Converts a Bitmap to an RGB tensor array.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <returns>RGB tensor array</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapConverter.FromTensor(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Converts an RGB tensor array to a color image.
+            </summary>
+            <param name="tensor">RGB tensor array</param>
+            <param name="width">Bitmap width</param>
+            <param name="height">Bitmap height</param>
+            <returns>Bitmap</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapConverter.FromTensor(System.Byte[],System.Int32,System.Int32,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Converts an RGB tensor array to a color image.
+            </summary>
+            <param name="tensor">RGBA tensor array</param>
+            <param name="width">Bitmap width</param>
+            <param name="height">Bitmap height</param>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapConverter.FromTensor(System.Byte[],System.Int32,System.Int32,System.Drawing.Bitmap)">
+            <summary>
+            Converts an RGB tensor array to a color image.
+            </summary>
+            <param name="tensor">RGBA tensor array</param>
+            <param name="width">Bitmap width</param>
+            <param name="height">Bitmap height</param>
+            <param name="Data">Bitmap</param>
+        </member>
         <member name="T:UMapx.Imaging.HoughLine">
             <summary>
             Defines the Hough line.
