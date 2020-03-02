@@ -11149,7 +11149,7 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         /// <param name="alpha">Alpha-channel</param>
         /// <returns>RGBA structure array</returns>
-        public unsafe static double[][,] ToRGB(BitmapData bmData, bool alpha = false)
+        public unsafe static double[][,] ToRGB(this BitmapData bmData, bool alpha = false)
         {
             // params
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
@@ -12161,6 +12161,111 @@ namespace UMapx.Imaging
         {
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
             FromGrayscale(m, bmData);
+            BitmapConverter.Unlock(Data, bmData);
+            return;
+        }
+        #endregion
+
+        #region Tensor
+        /// <summary>
+        /// Converts a Bitmap to an RGB tensor array.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <returns>RGB tensor array</returns>
+        public static byte[] ToTensor(this Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            byte[] rgb = ToTensor(bmData);
+            BitmapConverter.Unlock(Data, bmData);
+            return rgb;
+        }
+        /// <summary>
+        /// Converts a Bitmap to an RGB tensor array.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>RGB tensor array</returns>
+        public unsafe static byte[] ToTensor(this BitmapData bmData)
+        {
+            // params
+            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+            byte[] t = new byte[3 * height * width];
+            int pos = 0;
+
+            // do job
+            for (int j = 0; j < height; j++)
+            {
+                int k, jstride = j * stride;
+
+                for (int i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+
+                    for (int z = 0; z < 3; z++)
+                        t[pos++] = p[k + z];
+                }
+            }
+
+            return t;
+        }
+        /// <summary>
+        /// Converts an RGB tensor array to a color image.
+        /// </summary>
+        /// <param name="tensor">RGB tensor array</param>
+        /// <param name="width">Bitmap width</param>
+        /// <param name="height">Bitmap height</param>
+        /// <returns>Bitmap</returns>
+        public unsafe static Bitmap FromTensor(this byte[] tensor, int width, int height)
+        {
+            Bitmap bitmap = new Bitmap(width, height);
+            FromTensor(tensor, width, height, bitmap);
+            return bitmap;
+        }
+        /// <summary>
+        /// Converts an RGB tensor array to a color image.
+        /// </summary>
+        /// <param name="tensor">RGBA tensor array</param>
+        /// <param name="width">Bitmap width</param>
+        /// <param name="height">Bitmap height</param>
+        /// <param name="bmData">Bitmap data</param>
+        public unsafe static void FromTensor(this byte[] tensor, int width, int height, BitmapData bmData)
+        {
+            // params
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+            int pos = 0;
+
+            // do job
+            for (int j = 0; j < height; j++)
+            {
+                int k, jstride = j * stride;
+
+                for (int i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+
+                    // alpha
+                    p[k + 3] = 255;
+
+                    // rgb
+                    for (int z = 0; z < 3; z++)
+                        p[k + z] = tensor[pos++];
+                }
+            }
+
+            return;
+        }
+        /// <summary>
+        /// Converts an RGB tensor array to a color image.
+        /// </summary>
+        /// <param name="tensor">RGBA tensor array</param>
+        /// <param name="width">Bitmap width</param>
+        /// <param name="height">Bitmap height</param>
+        /// <param name="Data">Bitmap</param>
+        public static void FromTensor(this byte[] tensor, int width, int height, Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            FromTensor(tensor, width, height, bmData);
             BitmapConverter.Unlock(Data, bmData);
             return;
         }
