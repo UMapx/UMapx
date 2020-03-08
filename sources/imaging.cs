@@ -6270,14 +6270,14 @@ namespace UMapx.Imaging
 
             // transparency:
             double t = transparency / 255.0;
-            int a0, a1;
 
-            // pixel offsets:
-            int x, y, k, l;
-
-            // for each line:
-            for (y = 0; y < endY; y++)
+            // do job
+            Parallel.For(0, endY, y =>
             {
+                // pixel offsets:
+                int x, k, l;
+                int a0, a1;
+
                 // for each pixel:
                 for (x = 0; x < endX; x++)
                 {
@@ -6286,7 +6286,8 @@ namespace UMapx.Imaging
                     l = srcStride * (y         ) + 4 * (x         );
 
                     // calculating transparency:
-                    a1 = (int)(src[3] * t); a0 = 255 - a1;
+                    a1 = (int)(src[l + 3] * t);
+                    a0 = 255 - a1;
 
                     // applying filter:
                     dst[k + 0] = merge(dst[k + 0], src[l + 0], a0, a1);
@@ -6294,6 +6295,8 @@ namespace UMapx.Imaging
                     dst[k + 2] = merge(dst[k + 2], src[l + 2], a0, a1);
                 }
             }
+            );
+
             return;
         }
         /// <summary>
@@ -10778,7 +10781,7 @@ namespace UMapx.Imaging
                 weights[i] = Matrice.One(height, width);
 
             // applying params
-            weights = Mul(weights, Exp(data, this.sigma));
+            weights = Mul(weights, Exp(data, 0.2));
 
             // normalizing
             double[,] z = new double[height, width];
@@ -10854,7 +10857,7 @@ namespace UMapx.Imaging
                 weights[i] = Matrice.One(height, width);
 
             // applying params
-            weights = Mul(weights, Exp(data, this.sigma));
+            weights = Mul(weights, Exp(data, 0.2));
 
             // normalizing
             double[,] z = new double[height, width];
@@ -10966,6 +10969,263 @@ namespace UMapx.Imaging
                 R[i] = A[i].Mul(B[i]);
 
             return R;
+        }
+        #endregion
+    }
+    /// <summary>
+    /// Defines the chroma key filter.
+    /// <remarks>
+    /// More information can be found on the website:
+    /// https://en.wikipedia.org/wiki/Chroma_key
+    /// </remarks>
+    /// </summary>
+    [Serializable]
+    public class ChromakeyFilter : IBitmapFilter
+    {
+        #region Private data
+        private double y;
+        private double u;
+        private double v;
+        #endregion
+
+        #region Filter components
+        /// <summary>
+        /// Initializes the chroma key filter.
+        /// </summary>
+        /// <param name="color">Color</param>
+        /// <param name="y">Y [0, 1]</param>
+        /// <param name="u">U [0, 1]</param>
+        /// <param name="v">V [0, 1]</param>
+        public ChromakeyFilter(Color color, double y = 1.0, double u = 1.0, double v = 0.1)
+        {
+            Color = color;
+            this.y = y;
+            this.u = u;
+            this.v = v;
+        }
+        /// <summary>
+        /// gets or sets the filter color.
+        /// </summary>
+        public Color Color { get; set; }
+        /// <summary>
+        /// Gets or sets value of Y [0, 1].
+        /// </summary>
+        public double Y
+        {
+            get
+            {
+                return this.y;
+            }
+            set
+            {
+                this.y = Maths.Double(value);
+            }
+        }
+        /// <summary>
+        /// Gets or sets value of U [0, 1].
+        /// </summary>
+        public double U
+        {
+            get
+            {
+                return this.u;
+            }
+            set
+            {
+                this.u = Maths.Double(value);
+            }
+        }
+        /// <summary>
+        /// Gets or sets value of V [0, 1].
+        /// </summary>
+        public double V
+        {
+            get
+            {
+                return this.v;
+            }
+            set
+            {
+                this.v = Maths.Double(value);
+            }
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        public unsafe void Apply(BitmapData bmData)
+        {
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+            int width = bmData.Width, height = bmData.Height;
+            int stride = bmData.Stride;
+
+            // filter
+            YUV yuvf = YUV.FromRGB(Color.R, Color.G, Color.B);
+
+            // do job
+            Parallel.For(0, height, y =>
+            {
+                // bitmap color
+                bool filter = false;
+                int x, ystride, k;
+                ystride = y * stride;
+
+                for (x = 0; x < width; x++)
+                {
+                    k = ystride + x * 4;
+
+                    // mapping
+                    YUV yuvp = YUV.FromRGB(p[k + 2], p[k + 1], p[k + 0]);
+
+                    filter =  /*appling to the YUV model*/
+                            (yuvp.Y - yuvf.Y) <= this.y &&
+                            (yuvp.U - yuvf.U) <= this.u &&
+                            (yuvp.V - yuvf.V) <= this.v;
+
+                    p[k + 2] = p[k + 1] = p[k + 0] = filter ? (byte)0 : (byte)255;
+                }
+            });
+
+            return;
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        public void Apply(Bitmap Data)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            Apply(bmData);
+            BitmapConverter.Unlock(Data, bmData);
+        }
+        #endregion
+
+        #region Color methods
+        /// <summary>
+        /// Calculates the croma key color.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Color</returns>
+        public unsafe static Color GetColor(BitmapData bmData, RGBA channel)
+        {
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+            int y, x, width = bmData.Width, height = bmData.Height;
+            double r = 0;
+            double g = 0;
+            double b = 0;
+            int total = 0;
+
+            // switch
+            if (channel == RGBA.Red)
+            {
+                // red chromakey
+                for (y = 0; y < height; y++)
+                {
+                    for (x = 0; x < width; x++, p += 4)
+                    {
+                        if (p[2] > p[0] && p[2] > p[1])
+                        {
+                            r += p[2];
+                            g += p[1];
+                            b += p[0];
+                            total++;
+                        }
+                    }
+                }
+            }
+            else if (channel == RGBA.Green)
+            {
+                // green chromakey
+                for (y = 0; y < height; y++)
+                {
+                    for (x = 0; x < width; x++, p += 4)
+                    {
+                        if (p[1] > p[0] && p[1] > p[2])
+                        {
+                            r += p[2];
+                            g += p[1];
+                            b += p[0];
+                            total++;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // blue chromakey
+                for (y = 0; y < height; y++)
+                {
+                    for (x = 0; x < width; x++, p += 4)
+                    {
+                        if (p[0] > p[2] && p[0] > p[1])
+                        {
+                            r += p[2];
+                            g += p[1];
+                            b += p[0];
+                            total++;
+                        }
+                    }
+                }
+            }
+            return Color.FromArgb((int)(r / total), (int)(g / total), (int)(b / total));
+        }
+        /// <summary>
+        /// Calculates the croma key color.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <returns>Color</returns>
+        public static Color GetColor(Bitmap Data, RGBA channel)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            Color threshold = GetColor(bmData, channel);
+            BitmapConverter.Unlock(Data, bmData);
+            return threshold;
+        }
+        #endregion
+    }
+    /// <summary>
+    /// Defines the alpha channel filter.
+    /// </summary>
+    [Serializable]
+    public class AlphaChannelFilter : IBitmapFilter2
+    {
+        #region Filter components
+        /// <summary>
+        /// Initializes the alpha channel filter.
+        /// </summary>
+        public AlphaChannelFilter() { }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
+        public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
+        {
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+            byte* pSrc = (byte*)bmSrc.Scan0.ToPointer();
+            int y, x, width = bmData.Width, height = bmData.Height;
+
+            for (x = 0; x < width; x++)
+            {
+                for (y = 0; y < height; y++, p += 4, pSrc += 4)
+                {
+                    p[3] = (byte)RGB.Average(pSrc[2], pSrc[1], pSrc[0]);
+                }
+            }
+            return;
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
+        public void Apply(Bitmap Data, Bitmap Src)
+        {
+            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            Apply(bmData, bmSrc);
+            BitmapConverter.Unlock(Data, bmData);
+            BitmapConverter.Unlock(Src, bmSrc);
         }
         #endregion
     }
@@ -11149,7 +11409,7 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         /// <param name="alpha">Alpha-channel</param>
         /// <returns>RGBA structure array</returns>
-        public unsafe static double[][,] ToRGB(this BitmapData bmData, bool alpha = false)
+        public unsafe static double[][,] ToRGB(BitmapData bmData, bool alpha = false)
         {
             // params
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
