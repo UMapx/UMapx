@@ -19337,6 +19337,94 @@
             <param name="B">Matrix array</param>
             <returns>Matrix array</returns>
         </member>
+        <member name="T:UMapx.Imaging.ChromakeyFilter">
+            <summary>
+            Defines the chroma key filter.
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Chroma_key
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.ChromakeyFilter.#ctor(System.Drawing.Color,System.Double,System.Double,System.Double)">
+            <summary>
+            Initializes the chroma key filter.
+            </summary>
+            <param name="color">Color</param>
+            <param name="y">Y [0, 1]</param>
+            <param name="u">U [0, 1]</param>
+            <param name="v">V [0, 1]</param>
+        </member>
+        <member name="P:UMapx.Imaging.ChromakeyFilter.Color">
+            <summary>
+            gets or sets the filter color.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.ChromakeyFilter.Y">
+            <summary>
+            Gets or sets value of Y [0, 1].
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.ChromakeyFilter.U">
+            <summary>
+            Gets or sets value of U [0, 1].
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.ChromakeyFilter.V">
+            <summary>
+            Gets or sets value of V [0, 1].
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.ChromakeyFilter.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.ChromakeyFilter.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.ChromakeyFilter.GetColor(System.Drawing.Imaging.BitmapData,UMapx.Imaging.RGBA)">
+            <summary>
+            Calculates the croma key color.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <returns>Color</returns>
+        </member>
+        <member name="M:UMapx.Imaging.ChromakeyFilter.GetColor(System.Drawing.Bitmap,UMapx.Imaging.RGBA)">
+            <summary>
+            Calculates the croma key color.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <returns>Color</returns>
+        </member>
+        <member name="T:UMapx.Imaging.AlphaChannelFilter">
+            <summary>
+            Defines the alpha channel filter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.AlphaChannelFilter.#ctor">
+            <summary>
+            Initializes the alpha channel filter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.AlphaChannelFilter.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.AlphaChannelFilter.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
         <member name="T:UMapx.Imaging.BitmapConverter">
             <summary>
             Uses to work with bitmaps.
