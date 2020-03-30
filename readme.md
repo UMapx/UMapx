@@ -21,11 +21,11 @@
 
 ### Includes special math toolboxes:
 * **Wavelet Toolbox**. Provides wide functionality for the study of discrete and continuous wavelets. The toolbox also includes algorithms for discrete one-dimensional and two-dimensional wavelet transforms of real and complex signals.
-* **Window Toolbox**. Includes a set of tools for synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier transforms and Weyl-Heisenberg transforms ([Gabor analysis](https://github.com/asiryan/Weyl-Heisenberg-Bases-Toolbox)) for real and complex signals.
+* **Window Toolbox**. Includes a set of tools for synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier transforms and Weyl-Heisenberg transforms ([**Gabor analysis**](https://github.com/asiryan/Weyl-Heisenberg-Bases-Toolbox)) for real and complex signals.
 * **Image Processing Toolbox**. Contains efficient algorithms for processing, correcting and analyzing 32-bit raster images.
 
 # Installation
-Download from [release](release) folder and add **UMapx.dll** to your project  
+Download from [**release**](release) folder and add **UMapx.dll** to your project  
 ```c#
 using UMapx.Analysis;
 using UMapx.Colorspace;
@@ -44,5 +44,5 @@ or install using [**nuget**](https://www.nuget.org/packages/UMapx/).
 **GNU GPL v3.0**  
 
 # References
-A full list of references is given in a separate [file](docs/references.pdf).  
-Imaging test data [folder](https://yadi.sk/d/rix2T-ARtGm4Dg).  
+A full list of references is given in a separate [**file**](docs/references.pdf).  
+Imaging test data [**folder**](https://yadi.sk/d/rix2T-ARtGm4Dg).  
