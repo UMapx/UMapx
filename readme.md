@@ -38,7 +38,7 @@ using UMapx.Transform;
 using UMapx.Wavelet;
 using UMapx.Window;
 ```  
-or install to your project using [**nuget**](https://www.nuget.org/packages/UMapx/).   
+or install using [**nuget**](https://www.nuget.org/packages/UMapx/).   
 
 # License
 **GNU GPL v3.0**  
