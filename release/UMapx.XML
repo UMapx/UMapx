@@ -3426,7 +3426,7 @@
         </member>
         <member name="M:UMapx.Core.Maths.Range(System.Double,System.Double,System.Double)">
             <summary>
-            Checks if value is in the specified range.
+            Crops value in the specified range.
             </summary>
             <param name="x">Value</param>
             <param name="xmin">Minimum value</param>
@@ -3435,7 +3435,25 @@
         </member>
         <member name="M:UMapx.Core.Maths.Range(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Checks if value is in the specified range.
+            Crops value in the specified range.
+            </summary>
+            <param name="x">Value</param>
+            <param name="xmin">Minimum value</param>
+            <param name="xmax">Maximum value</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.Scale(System.Double,System.Double,System.Double)">
+            <summary>
+            Crops value in the specified range.
+            </summary>
+            <param name="x">Value</param>
+            <param name="xmin">Minimum value</param>
+            <param name="xmax">Maximum value</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.Scale(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Crops value in the specified range.
             </summary>
             <param name="x">Value</param>
             <param name="xmin">Minimum value</param>
@@ -18763,7 +18781,7 @@
             <summary>
             Initializes the HSB filter.
             </summary>
-            <param name="hue">Hue [0, 359]</param>
+            <param name="hue">Hue [-180, 180]</param>
             <param name="saturation">Saturation [-1, 1]</param>
             <param name="brightness">Brightness [-1, 1]</param>
         </member>
@@ -18774,7 +18792,7 @@
         </member>
         <member name="P:UMapx.Imaging.HSBFilter.Hue">
             <summary>
-            Hue [0, 359].
+            Hue [-180, 180].
             </summary>
         </member>
         <member name="P:UMapx.Imaging.HSBFilter.Saturation">
@@ -18804,11 +18822,11 @@
             Defines the HSL filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HSLFilter.#ctor(System.Int32,System.Double,System.Double)">
+        <member name="M:UMapx.Imaging.HSLFilter.#ctor(System.Double,System.Double,System.Double)">
             <summary>
             Initializes the HSL filter.
             </summary>
-            <param name="hue">Hue [0, 359]</param>
+            <param name="hue">Hue [-180, 180]</param>
             <param name="saturation">Saturation [-1, 1]</param>
             <param name="lightness">Lightness [-1, 1]</param>
         </member>
@@ -18819,7 +18837,7 @@
         </member>
         <member name="P:UMapx.Imaging.HSLFilter.Hue">
             <summary>
-            Hue [0, 359].
+            Hue [-180, 180].
             </summary>
         </member>
         <member name="P:UMapx.Imaging.HSLFilter.Saturation">
@@ -20608,6 +20626,64 @@
             <param name="end">End</param>
             <param name="h">Histogram</param>
             <returns>Double precision floating point number</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Statistics.Sum(System.Int32[])">
+            <summary>
+            Returns the summary of a histogram.
+            </summary>
+            <param name="values">Histogram</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Statistics.Mean(System.Int32[])">
+            <summary>
+            Returns the mean of a histogram.
+            </summary>
+            <param name="values">Histogram</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Statistics.StdDev(System.Int32[])">
+            <summary>
+            Returns the standart deviation of a histogram.
+            </summary>
+            <param name="values">Histogram</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Statistics.StdDev(System.Int32[],System.Double)">
+            <summary>
+            Returns the standart deviation of a histogram.
+            </summary>
+            <param name="values">Histogram</param>
+            <param name="mean">Mean</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Statistics.Median(System.Int32[])">
+            <summary>
+            Returns the median of a histogram.
+            </summary>
+            <param name="values">Histogram</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Statistics.GetRange(System.Int32[],System.Double)">
+            <summary>
+            Returns range of a histogram.
+            </summary>
+            <param name="values">Histogram</param>
+            <param name="percent">Percent</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Statistics.Entropy(System.Int32[])">
+            <summary>
+            Returns entropy of a histogram.
+            </summary>
+            <param name="values">Histogram</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Statistics.Mode(System.Int32[])">
+            <summary>
+            Returns mode of a histogram.
+            </summary>
+            <param name="values">Histogram</param>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Imaging.PointMatrix">
             <summary>
@@ -22516,20 +22592,26 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Transform.LaplacianPyramidTransform.#ctor(System.Int32)">
-            <summary>
-            Initializes the Laplacian pyramid transform.
-            </summary>
-            <param name="levels">Number of levels</param>
-        </member>
         <member name="M:UMapx.Transform.LaplacianPyramidTransform.#ctor">
             <summary>
             Initializes the Laplacian pyramid transform.
             </summary>
         </member>
+        <member name="M:UMapx.Transform.LaplacianPyramidTransform.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes the Laplacian pyramid transform.
+            </summary>
+            <param name="levels">Number of levels</param>
+            <param name="radius">Radius</param>
+        </member>
         <member name="P:UMapx.Transform.LaplacianPyramidTransform.Levels">
             <summary>
             Gets or sets number of levels.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.LaplacianPyramidTransform.Radius">
+            <summary>
+            Gets or sets radius.
             </summary>
         </member>
         <member name="M:UMapx.Transform.LaplacianPyramidTransform.Forward(System.Double[0:,0:])">
@@ -22630,15 +22712,21 @@
             Initializes the Gaussian pyramid transform.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.GaussianPyramidTransform.#ctor(System.Int32)">
+        <member name="M:UMapx.Transform.GaussianPyramidTransform.#ctor(System.Int32,System.Int32)">
             <summary>
             Initializes the Gaussian pyramid transform.
             </summary>
             <param name="levels">Number of levels</param>
+            <param name="radius">Radius</param>
         </member>
         <member name="P:UMapx.Transform.GaussianPyramidTransform.Levels">
             <summary>
             Gets or sets number of levels.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.GaussianPyramidTransform.Radius">
+            <summary>
+            Gets or sets radius.
             </summary>
         </member>
         <member name="M:UMapx.Transform.GaussianPyramidTransform.Forward(System.Double[0:,0:])">
@@ -22703,32 +22791,36 @@
             </summary>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Transform.GaussianPyramidTransform.upsample(System.Double[0:,0:])">
+        <member name="M:UMapx.Transform.GaussianPyramidTransform.upsample(System.Double[0:,0:],System.Int32)">
             <summary>
             
             </summary>
             <param name="u">Matrix</param>
+            <param name="radius">Radius</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.GaussianPyramidTransform.upsample(System.Double[])">
+        <member name="M:UMapx.Transform.GaussianPyramidTransform.upsample(System.Double[],System.Int32)">
             <summary>
              
             </summary>
             <param name="u">Array</param>
+            <param name="radius">Radius</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Transform.GaussianPyramidTransform.downsample(System.Double[0:,0:])">
+        <member name="M:UMapx.Transform.GaussianPyramidTransform.downsample(System.Double[0:,0:],System.Int32)">
             <summary>
             
             </summary>
             <param name="u">Matrix</param>
+            <param name="radius">Radius</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.GaussianPyramidTransform.downsample(System.Double[])">
+        <member name="M:UMapx.Transform.GaussianPyramidTransform.downsample(System.Double[],System.Int32)">
             <summary>
             
             </summary>
             <param name="u">Matrix</param>
+            <param name="radius">Radius</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.GaussianPyramidTransform.add(System.Double[0:,0:],System.Double[0:,0:])">
@@ -22763,32 +22855,36 @@
             <param name="n">Array</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Transform.GaussianPyramidTransform.upsample(UMapx.Core.Complex[0:,0:])">
+        <member name="M:UMapx.Transform.GaussianPyramidTransform.upsample(UMapx.Core.Complex[0:,0:],System.Int32)">
             <summary>
             
             </summary>
             <param name="u">Matrix</param>
+            <param name="radius">Radius</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.GaussianPyramidTransform.upsample(UMapx.Core.Complex[])">
+        <member name="M:UMapx.Transform.GaussianPyramidTransform.upsample(UMapx.Core.Complex[],System.Int32)">
             <summary>
             
             </summary>
             <param name="u">Array</param>
+            <param name="radius">Radius</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Transform.GaussianPyramidTransform.downsample(UMapx.Core.Complex[0:,0:])">
+        <member name="M:UMapx.Transform.GaussianPyramidTransform.downsample(UMapx.Core.Complex[0:,0:],System.Int32)">
             <summary>
             
             </summary>
             <param name="u">Matrix</param>
+            <param name="radius">Radius</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.GaussianPyramidTransform.downsample(UMapx.Core.Complex[])">
+        <member name="M:UMapx.Transform.GaussianPyramidTransform.downsample(UMapx.Core.Complex[],System.Int32)">
             <summary>
             
             </summary>
             <param name="u">Matrix</param>
+            <param name="radius">Radius</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.GaussianPyramidTransform.add(UMapx.Core.Complex[0:,0:],UMapx.Core.Complex[0:,0:])">
@@ -23362,14 +23458,25 @@
             Number of levels.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.LocalLaplacianFilter.#ctor(System.Double,System.Int32,System.Int32,System.Double)">
+        <member name="F:UMapx.Transform.LocalLaplacianFilter.radius">
+            <summary>
+            Radius.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.LocalLaplacianFilter.#ctor(System.Int32,System.Double,System.Int32,System.Int32,System.Double)">
             <summary>
             Initializes the local Laplace pyramid filter.
             </summary>
+            <param name="radius">Radius</param>
             <param name="sigma">σ-parameter</param>
             <param name="n">Number of samples</param>
             <param name="levels">Number of levels</param>
             <param name="factor">Factor [-1, 1]</param>
+        </member>
+        <member name="P:UMapx.Transform.LocalLaplacianFilter.Radius">
+            <summary>
+            Gets or sets radius.
+            </summary>
         </member>
         <member name="P:UMapx.Transform.LocalLaplacianFilter.Sigma">
             <summary>
@@ -23415,10 +23522,11 @@
             </summary>
             <param name="data">Matrix</param>
         </member>
-        <member name="M:UMapx.Transform.LocalLaplacianFilter.llfilter(System.Double[0:,0:],System.Double,System.Double,System.Int32,System.Int32)">
+        <member name="M:UMapx.Transform.LocalLaplacianFilter.llfilter(System.Double[0:,0:],System.Int32,System.Double,System.Double,System.Int32,System.Int32)">
             <summary>
             Local laplacian filter.
             </summary>
+            <param name="radius">Radius</param>
             <param name="input">Input data</param>
             <param name="sigma">Sigma</param>
             <param name="factor">Factor</param>
@@ -23426,11 +23534,12 @@
             <param name="levels">Levels</param>
             <returns>Output data</returns>
         </member>
-        <member name="M:UMapx.Transform.LocalLaplacianFilter.llfilter(System.Double[],System.Double,System.Double,System.Int32,System.Int32)">
+        <member name="M:UMapx.Transform.LocalLaplacianFilter.llfilter(System.Double[],System.Int32,System.Double,System.Double,System.Int32,System.Int32)">
             <summary>
             Local laplacian filter.
             </summary>
             <param name="input">Input data</param>
+            <param name="radius">Radius</param>
             <param name="sigma">Sigma</param>
             <param name="factor">Factor</param>
             <param name="n">Number of steps</param>

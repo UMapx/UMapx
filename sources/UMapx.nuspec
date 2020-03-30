@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>UMapx</id>
+    <version>4.0.1.1</version>
+    <title>UMapx</title>
+    <authors>Valery Asiryan</authors>
+    <owners>Valery Asiryan</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">GPL-3.0-only</license>
+    <projectUrl>https://github.com/asiryan/UMapx.NET/</projectUrl>
+    <icon>umapx_logo.png</icon>
+    <description>Digital signal processing library.</description>
+    <releaseNotes></releaseNotes>
+    <language>en-US</language>
+    <copyright>Valery Asiryan, Copyright 2015-2020</copyright>
+    <tags>signal-processing analysis statistics wavelets transformations imaging matrix linear-algebra</tags>
+  </metadata>
+  <files>
+    <file src="bin\Release\UMapx.dll" target="lib\net40"></file>
+	<file src="bin\Release\UMapx.xml" target="lib\net40"></file>
+    <file src="umapx_logo.png" target=""></file>
+  </files>
+</package>
