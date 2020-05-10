@@ -10762,7 +10762,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="images">Bitmap array</param>
         /// <returns>Bitmap</returns>
-        public Bitmap Apply(Bitmap[] images)
+        public Bitmap Apply(params Bitmap[] images)
         {
             // data
             int N = images.GetLength(0);
@@ -10838,7 +10838,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="images">BitmapData array</param>
         /// <returns>Bitmap</returns>
-        public Bitmap Apply(BitmapData[] images)
+        public Bitmap Apply(params BitmapData[] images)
         {
             // data
             int N = images.GetLength(0);
