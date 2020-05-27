@@ -40,7 +40,7 @@ using UMapx.Window;
 ```    
 
 # License
-**GNU GPL v3.0**  
+**MIT**  
 
 # References
 A full list of references is given in a separate [**file**](docs/references.pdf).  
