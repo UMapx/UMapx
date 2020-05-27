@@ -2,12 +2,12 @@
 <package >
   <metadata>
     <id>UMapx</id>
-    <version>4.0.1.2</version>
+    <version>4.0.2.2</version>
     <title>UMapx</title>
     <authors>Valery Asiryan</authors>
     <owners>Valery Asiryan</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">GPL-3.0-only</license>
+    <license type="expression">MIT</license>
     <projectUrl>https://github.com/asiryan/UMapx.NET/</projectUrl>
     <icon>umapx_logo.png</icon>
     <description>Digital signal processing library.</description>
