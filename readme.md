@@ -1,4 +1,4 @@
-<p align="center"><img width="20%" src="docs/umapxnet.png" /></p>
+<p align="center"><img width="35%" src="docs/umapxnet_big.png" /></p>
 
 **UMapx.NET** is a dynamic link library for digital signal processing and analysis developed in C#.
 
