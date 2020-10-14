@@ -4,10 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
     <Version>4.0.2.3</Version>
-    <PackageId>UMapx.NET</PackageId>
+    <PackageId>UMapx</PackageId>
     <Company>Valery Asiryan</Company>
     <Authors>Valery Asiryan</Authors>
-    <Product>UMapx.NET</Product>
+    <Product>UMapx</Product>
     <Copyright>Valery Asiryan, © 2015-2020</Copyright>
     <Description>Digital signal processing library.</Description>
     <PackageProjectUrl>https://github.com/asiryan/UMapx.NET</PackageProjectUrl>
