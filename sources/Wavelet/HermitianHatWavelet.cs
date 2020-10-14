@@ -1,0 +1,39 @@
+﻿using System;
+using UMapx.Core;
+
+namespace UMapx.Wavelet
+{
+    /// <summary>
+    /// Defines the continuous Hermitian hat wavelet.
+    /// </summary>
+    [Serializable]
+    public class HermitianHatWavelet : IComplexWavelet
+    {
+        #region Wavelet components
+        /// <summary>
+        /// Initializes the continuous Hermitian Hat wavelet.
+        /// </summary>
+        public HermitianHatWavelet() { }
+        /// <summary>
+        /// Returns the value of the scaling function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
+        public Complex Scaling(double x)
+        {
+            throw new NotSupportedException();
+        }
+        /// <summary>
+        /// Returns the value of the wavelet function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <returns>Function</returns>
+        public Complex Wavelet(double x)
+        {
+            double x2 = x * x;
+            double cf = 2.0 / Math.Sqrt(5) * Math.Pow(Math.PI, -0.25);
+            return cf * (1 - x2 + Maths.I * x) * Maths.Exp(-0.5 * x2);
+        }
+        #endregion
+    }
+}

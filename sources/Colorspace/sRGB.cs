@@ -1,0 +1,192 @@
+﻿using System;
+
+namespace UMapx.Colorspace
+{
+    /// <summary>
+    /// Defines a color model sRGB.
+    /// </summary>
+    [Serializable]
+    public struct sRGB : IColorSpace, ICloneable
+    {
+        #region private data
+        private double r;
+        private double g;
+        private double b;
+        #endregion
+
+        #region Structure components
+        /// <summary>
+        /// Creates an instance of the structure sRGB.
+        /// </summary>
+        /// <param name="red">Red [0, 1]</param>
+        /// <param name="green">Green [0, 1]</param>
+        /// <param name="blue">Blue [0, 1]</param>
+        public sRGB(double red, double green, double blue)
+        {
+            this.r = (red > 1) ? 1 : ((red < 0) ? 0 : red);
+            this.g = (green > 1) ? 1 : ((green < 0) ? 0 : green);
+            this.b = (blue > 1) ? 1 : ((blue < 0) ? 0 : blue);
+        }
+        /// <summary>
+        /// Defines a component of the color model [0, 1].
+        /// </summary>
+        public double Red
+        {
+            get
+            {
+                return r;
+            }
+            set
+            {
+                r = (value > 1) ? 1 : ((value < 0) ? 0 : value);
+            }
+        }
+        /// <summary>
+        /// Defines a component of the color model [0, 1].
+        /// </summary>
+        public double Green
+        {
+            get
+            {
+                return g;
+            }
+            set
+            {
+                g = (value > 1) ? 1 : ((value < 0) ? 0 : value);
+            }
+        }
+        /// <summary>
+        /// Defines a component of the color model [0, 1].
+        /// </summary>
+        public double Blue
+        {
+            get
+            {
+                return b;
+            }
+            set
+            {
+                b = (value > 1) ? 1 : ((value < 0) ? 0 : value);
+            }
+        }
+        #endregion
+
+        #region Boolean
+        /// <summary>
+        /// Checks the equality of two class objects.
+        /// </summary>
+        /// <param name="item1">sRGB structure</param>
+        /// <param name="item2">sRGB structure</param>
+        /// <returns>Boolean</returns>
+        public static bool operator ==(sRGB item1, sRGB item2)
+        {
+            return (
+                item1.Red == item2.Red
+                && item1.Green == item2.Green
+                && item1.Blue == item2.Blue
+                );
+        }
+        /// <summary>
+        /// Checks the inequality of two class objects.
+        /// </summary>
+        /// <param name="item1">sRGB structure</param>
+        /// <param name="item2">sRGB structure</param>
+        /// <returns>Boolean</returns>
+        public static bool operator !=(sRGB item1, sRGB item2)
+        {
+            return !(item1 == item2);
+        }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Defines whether the specified System.Object is equal to the current System.Object.
+        /// </summary>
+        /// <param name="obj">Element</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(Object obj)
+        {
+            if (obj == null || GetType() != obj.GetType()) return false;
+
+            return (this == (sRGB)obj);
+        }
+        /// <summary>
+        /// Plays the role of a hash function of a certain type.
+        /// </summary>
+        /// <returns>Integer number</returns>
+        public override int GetHashCode()
+        {
+            return Red.GetHashCode() ^ Green.GetHashCode() ^ Blue.GetHashCode();
+        }
+        /// <summary>
+        /// Returns a System.String object that represents the current object.
+        /// </summary>
+        /// <returns>Text as a sequence of Unicode characters</returns>
+        public override string ToString()
+        {
+            return Red.ToString() + "\n" + Green.ToString() + "\n" + Blue.ToString();
+        }
+        #endregion
+
+        #region Clone members
+        /// <summary>
+        /// Creates a copy of the color model.
+        /// </summary>
+        /// <returns>Structure</returns>
+        object ICloneable.Clone()
+        {
+            return new sRGB(this.Red, this.Green, this.Blue);
+        }
+        /// <summary>
+        /// Creates a copy of the color model.
+        /// </summary>
+        /// <returns>Structure</returns>
+        public sRGB Clone()
+        {
+            return new sRGB(this.Red, this.Green, this.Blue);
+        }
+        #endregion
+
+        #region sRGB convert
+        /// <summary>
+        /// Converts a color model RGB in model sRGB.
+        /// </summary>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <returns>sRGB structure</returns>
+        public static sRGB FromRGB(int red, int green, int blue)
+        {
+            double r = red / 255.0f;
+            double g = green / 255.0f;
+            double b = blue / 255.0f;
+
+            return new sRGB(r, g, b);
+        }
+        /// <summary>
+        /// Converts a color model RGB in model sRGB.
+        /// </summary>
+        /// <param name="rgb">RGB structure</param>
+        /// <returns>sRGB structure</returns>
+        public static sRGB FromRGB(RGB rgb)
+        {
+            return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
+        }
+        #endregion
+
+        #region RGB convert
+        /// <summary>
+        /// Converts a color model sRGB in model RGB.
+        /// </summary>
+        /// <returns>RGB structure</returns>
+        public RGB ToRGB
+        {
+            get
+            {
+                return new RGB(r * 255.0, g * 255.0, b * 255.0);
+
+            }
+        }
+        #endregion
+    }
+}

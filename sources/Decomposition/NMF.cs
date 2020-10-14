@@ -1,0 +1,146 @@
+﻿using System;
+using UMapx.Core;
+
+namespace UMapx.Decomposition
+{
+    /// <summary>
+    /// Defines non-negative matrix factorization.
+    /// <remarks>
+    /// This is a representation of a rectangular matrix A as the product of two matrices: A = W * H.
+    /// More information can be found on the website:
+    /// https://en.wikipedia.org/wiki/Non-negative_matrix_factorization
+    /// </remarks>
+    /// </summary>
+    [Serializable]
+    public class NMF
+    {
+        #region Private data
+        private double[,] w;  // W is m x r (weights)
+        private double[,] h;  // H is r x n (transformed data) (transposed)
+        private int n;   // number of input data vectors
+        private int m;   // dimension of input vector
+        private int r;   // dimension of output vector (reduced dimension)
+        #endregion
+
+        #region Initialize
+        /// <summary>
+        /// Initializes non-negative matrix factorization.
+        /// </summary>
+        /// <param name="A">Non-negative matrix</param>
+        /// <param name="r">The dimension of new matrices</param>
+        /// <param name="iterations">Number of iterations</param>
+        public NMF(double[,] A, int r, int iterations = 100)
+        {
+            this.m = A.GetLength(0);
+            this.n = A.GetLength(1);
+
+            if (n < m)
+                throw new Exception("The width of the matrix must be greater than the height");
+
+            this.r = r;
+
+            // decompose
+            nnmf(A, iterations);
+        }
+        #endregion
+
+        #region Standart voids
+        /// <summary>
+        /// Gets the left matrix.
+        /// </summary>
+        public double[,] W
+        {
+            get { return w; }
+        }
+        /// <summary>
+        /// Gets the right matrix.
+        /// </summary>
+        public double[,] H
+        {
+            get { return h; }
+        }
+        #endregion
+
+        #region Private voids
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="iterations"></param>
+        private void nnmf(double[,] A, int iterations)
+        {
+            // chose W and H randomly, W with unit norm
+            w = Matrice.Rand(m, r);
+            h = Matrice.Rand(r, n);
+            var Z = new double[r, r];
+
+            // a small epsilon is added to the
+            //  denominator to avoid overflow.
+            double eps = 10e-9;
+            int i, j, l, t;
+            double s, d;
+
+            for (t = 0; t < iterations; t++)
+            {
+                var newW = new double[m, r];
+                var newH = new double[r, n];
+
+                // Update H using the multiplicative
+                // H = H .* (W'*A) ./ (W'*W*H + eps) 
+                for (i = 0; i < r; i++)
+                {
+                    for (j = i; j < r; j++)
+                    {
+                        s = 0.0;
+                        for (l = 0; l < m; l++)
+                            s += w[l, i] * w[l, j];
+                        Z[i, j] = Z[j, i] = s;
+                    }
+
+                    for (j = 0; j < n; j++)
+                    {
+                        d = 0.0;
+                        for (l = 0; l < r; l++)
+                            d += Z[i, l] * h[l, j];
+
+                        s = 0.0;
+                        for (l = 0; l < m; l++)
+                            s += w[l, i] * A[l, j];
+
+                        newH[i, j] = h[i, j] * s / (d + eps);
+                    }
+                }
+
+                // Update W using the multiplicative
+                //   W = W .* (A*H') ./ (W*H*H' + eps)
+                for (j = 0; j < r; j++)
+                {
+                    for (i = j; i < r; i++)
+                    {
+                        s = 0.0;
+                        for (l = 0; l < m; l++)
+                            s += newH[i, l] * newH[j, l];
+                        Z[i, j] = Z[j, i] = s;
+                    }
+
+                    for (i = 0; i < m; i++)
+                    {
+                        d = 0.0;
+                        for (l = 0; l < r; l++)
+                            d += w[i, l] * Z[j, l];
+
+                        s = 0.0;
+                        for (l = 0; l < n; l++)
+                            s += A[i, l] * newH[j, l];
+
+                        newW[i, j] = w[i, j] * s / (d + eps);
+                    }
+                }
+
+                w = newW;
+                h = newH;
+            }
+        }
+        #endregion
+    }
+}
