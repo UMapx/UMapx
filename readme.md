@@ -25,7 +25,7 @@
 * **Image Processing Toolbox**. Contains efficient algorithms for processing, correcting and analyzing 32-bit raster images.
 
 # Installation
-Download **UMapx.dll** and **UMaxp.xml** from [**release**](release) folder and add to your project or use [**nuget**](https://www.nuget.org/packages/UMapx/) package manager.  
+Download **UMapx.dll** and **UMapx.xml** from [**release**](release) folder and add to your project or use [**nuget**](https://www.nuget.org/packages/UMapx/) package manager.  
 ```c#
 using UMapx.Analysis;
 using UMapx.Colorspace;
