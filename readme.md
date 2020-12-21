@@ -44,4 +44,3 @@ using UMapx.Window;
 
 # References
 A full list of references is given in a separate [**file**](docs/references.pdf).  
-Imaging test data [**folder**](https://yadi.sk/d/rix2T-ARtGm4Dg).  
