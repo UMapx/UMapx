@@ -102,7 +102,7 @@ namespace UMapx.Core
         /// </summary>
         private static Random rnd = new Random();
         /// <summary>
-        /// Implements the construction of a vector of random numbers, the values of which are distributed according to a uniform distribution.
+        /// Implements the construction of a vector of random numbers, the values of which are distributed UMapxing to a uniform distribution.
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
@@ -125,7 +125,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements the construction of a vector of random numbers, the values of which are distributed according to a uniform distribution.
+        /// Implements the construction of a vector of random numbers, the values of which are distributed UMapxing to a uniform distribution.
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
@@ -317,7 +317,7 @@ namespace UMapx.Core
         /// <param name="s">Input string</param>
         /// <param name="result">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool TryParse(string s, ref double[][] result)
+        public static bool TryParse(string s, out double[][] result)
         {
             double[][] zero = null;
             try

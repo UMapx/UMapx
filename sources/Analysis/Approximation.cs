@@ -72,24 +72,20 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public double[] Compute(double[] x, double[] y)
         {
-            double[] cf = null;
-            double error = 0;
-            string equation = null;
-
             // chose method of approximation
             switch (method)
             {
                 case Method.Polynomial:
-                    return Approximation.poly(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.poly(x, y, power, out _, out _, out _);
 
                 case Method.Logarithmic:
-                    return Approximation.logc(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.logc(x, y, power, out _, out _, out _);
 
                 case Method.Exponential:
-                    return Approximation.expn(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.expn(x, y, power, out _, out _, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.powr(x, y, power, out _, out _, out _);
             }
         }
         /// <summary>
@@ -99,25 +95,22 @@ namespace UMapx.Analysis
         /// <param name="y">Array of function values</param>
         /// <param name="cf">Approximation coefficients</param>
         /// <returns>Array</returns>
-        public double[] Compute(double[] x, double[] y, ref double[] cf)
+        public double[] Compute(double[] x, double[] y, out double[] cf)
         {
-            double error = 0;
-            string equation = null;
-
             // chose method of approximation
             switch (method)
             {
                 case Method.Polynomial:
-                    return Approximation.poly(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.poly(x, y, power, out cf, out _, out _);
 
                 case Method.Logarithmic:
-                    return Approximation.logc(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.logc(x, y, power, out cf, out _, out _);
 
                 case Method.Exponential:
-                    return Approximation.expn(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.expn(x, y, power, out cf, out _, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.powr(x, y, power, out cf, out _, out _);
             }
         }
         /// <summary>
@@ -126,26 +119,24 @@ namespace UMapx.Analysis
         /// <param name="x">Array of argument values</param>
         /// <param name="y">Array of function values</param>
         /// <param name="cf">Approximation coefficients</param>
-        /// <param name="error">Error</param>
+        /// <param name="similarity">Similarity</param>
         /// <returns>Array</returns>
-        public double[] Compute(double[] x, double[] y, ref double[] cf, ref double error)
+        public double[] Compute(double[] x, double[] y, out double[] cf, out double similarity)
         {
-            string equation = null;
-
             // chose method of approximation
             switch (method)
             {
                 case Method.Polynomial:
-                    return Approximation.poly(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.poly(x, y, power, out cf, out similarity, out _);
 
                 case Method.Logarithmic:
-                    return Approximation.logc(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.logc(x, y, power, out cf, out similarity, out _);
 
                 case Method.Exponential:
-                    return Approximation.expn(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.expn(x, y, power, out cf, out similarity, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.powr(x, y, power, out cf, out similarity, out _);
             }
         }
         /// <summary>
@@ -154,25 +145,25 @@ namespace UMapx.Analysis
         /// <param name="x">Array of argument values</param>
         /// <param name="y">Array of function values</param>
         /// <param name="cf">Approximation coefficients</param>
-        /// <param name="error">Error</param>
+        /// <param name="similarity">Similarity</param>
         /// <param name="equation">Equation</param>
         /// <returns>Array</returns>
-        public double[] Compute(double[] x, double[] y, ref double[] cf, ref double error, ref string equation)
+        public double[] Compute(double[] x, double[] y, out double[] cf, out double similarity, out string equation)
         {
             // chose method of approximation
             switch (method)
             {
                 case Method.Polynomial:
-                    return Approximation.poly(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.poly(x, y, power, out cf, out similarity, out equation);
 
                 case Method.Logarithmic:
-                    return Approximation.logc(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.logc(x, y, power, out cf, out similarity, out equation);
 
                 case Method.Exponential:
-                    return Approximation.expn(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.expn(x, y, power, out cf, out similarity, out equation);
 
                 default:
-                    return Approximation.powr(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.powr(x, y, power, out cf, out similarity, out equation);
             }
         }
 
@@ -184,24 +175,20 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public Complex[] Compute(Complex[] x, Complex[] y)
         {
-            Complex[] cf = null;
-            Complex error = 0;
-            string equation = null;
-
             // chose method of approximation
             switch (method)
             {
                 case Method.Polynomial:
-                    return Approximation.poly(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.poly(x, y, power, out _, out _, out _);
 
                 case Method.Logarithmic:
-                    return Approximation.logc(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.logc(x, y, power, out _, out _, out _);
 
                 case Method.Exponential:
-                    return Approximation.expn(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.expn(x, y, power, out _, out _, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.powr(x, y, power, out _, out _, out _);
             }
         }
         /// <summary>
@@ -211,25 +198,22 @@ namespace UMapx.Analysis
         /// <param name="y">Array of function values</param>
         /// <param name="cf">Approximation coefficients</param>
         /// <returns>Array</returns>
-        public Complex[] Compute(Complex[] x, Complex[] y, ref Complex[] cf)
+        public Complex[] Compute(Complex[] x, Complex[] y, out Complex[] cf)
         {
-            Complex error = 0;
-            string equation = null;
-
             // chose method of approximation
             switch (method)
             {
                 case Method.Polynomial:
-                    return Approximation.poly(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.poly(x, y, power, out cf, out _, out _);
 
                 case Method.Logarithmic:
-                    return Approximation.logc(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.logc(x, y, power, out cf, out _, out _);
 
                 case Method.Exponential:
-                    return Approximation.expn(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.expn(x, y, power, out cf, out _, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.powr(x, y, power, out cf, out _, out _);
             }
         }
         /// <summary>
@@ -238,26 +222,24 @@ namespace UMapx.Analysis
         /// <param name="x">Array of argument values</param>
         /// <param name="y">Array of function values</param>
         /// <param name="cf">Approximation coefficients</param>
-        /// <param name="error">Error</param>
+        /// <param name="similarity">Similarity</param>
         /// <returns>Array</returns>
-        public Complex[] Compute(Complex[] x, Complex[] y, ref Complex[] cf, ref Complex error)
+        public Complex[] Compute(Complex[] x, Complex[] y, out Complex[] cf, out Complex similarity)
         {
-            string equation = null;
-
             // chose method of approximation
             switch (method)
             {
                 case Method.Polynomial:
-                    return Approximation.poly(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.poly(x, y, power, out cf, out similarity, out _);
 
                 case Method.Logarithmic:
-                    return Approximation.logc(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.logc(x, y, power, out cf, out similarity, out _);
 
                 case Method.Exponential:
-                    return Approximation.expn(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.expn(x, y, power, out cf, out similarity, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.powr(x, y, power, out cf, out similarity, out _);
             }
         }
         /// <summary>
@@ -266,25 +248,25 @@ namespace UMapx.Analysis
         /// <param name="x">Array of argument values</param>
         /// <param name="y">Array of function values</param>
         /// <param name="cf">Approximation coefficients</param>
-        /// <param name="error">Error</param>
+        /// <param name="similarity">Similarity</param>
         /// <param name="equation">Equation</param>
         /// <returns>Array</returns>
-        public Complex[] Compute(Complex[] x, Complex[] y, ref Complex[] cf, ref Complex error, ref string equation)
+        public Complex[] Compute(Complex[] x, Complex[] y, out Complex[] cf, out Complex similarity, out string equation)
         {
             // chose method of approximation
             switch (method)
             {
                 case Method.Polynomial:
-                    return Approximation.poly(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.poly(x, y, power, out cf, out similarity, out equation);
 
                 case Method.Logarithmic:
-                    return Approximation.logc(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.logc(x, y, power, out cf, out similarity, out equation);
 
                 case Method.Exponential:
-                    return Approximation.expn(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.expn(x, y, power, out cf, out similarity, out equation);
 
                 default:
-                    return Approximation.powr(x, y, power, ref cf, ref error, ref equation);
+                    return Approximation.powr(x, y, power, out cf, out similarity, out equation);
             }
         }
         #endregion
@@ -300,7 +282,7 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static double[] poly(double[] x, double[] y, int power, ref double[] cf, ref double error, ref string equation)
+        private static double[] poly(double[] x, double[] y, int power, out double[] cf, out double error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -320,7 +302,7 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static Complex[] poly(Complex[] x, Complex[] y, int power, ref Complex[] cf, ref Complex error, ref string equation)
+        private static Complex[] poly(Complex[] x, Complex[] y, int power, out Complex[] cf, out Complex error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -340,7 +322,7 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static double[] logc(double[] x, double[] y, int power, ref double[] cf, ref double error, ref string equation)
+        private static double[] logc(double[] x, double[] y, int power, out double[] cf, out double error, out string equation)
         {
             // Options:
             int n = x.Length, i;
@@ -371,7 +353,7 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static Complex[] logc(Complex[] x, Complex[] y, int power, ref Complex[] cf, ref Complex error, ref string equation)
+        private static Complex[] logc(Complex[] x, Complex[] y, int power, out Complex[] cf, out Complex error, out string equation)
         {
             // Options:
             int n = x.Length, i;
@@ -402,7 +384,7 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static double[] expn(double[] x, double[] y, int power, ref double[] cf, ref double error, ref string equation)
+        private static double[] expn(double[] x, double[] y, int power, out double[] cf, out double error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -439,7 +421,7 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static Complex[] expn(Complex[] x, Complex[] y, int power, ref Complex[] cf, ref Complex error, ref string equation)
+        private static Complex[] expn(Complex[] x, Complex[] y, int power, out Complex[] cf, out Complex error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -476,7 +458,7 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static double[] powr(double[] x, double[] y, int power, ref double[] cf, ref double error, ref string equation)
+        private static double[] powr(double[] x, double[] y, int power, out double[] cf, out double error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -515,7 +497,7 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static Complex[] powr(Complex[] x, Complex[] y, int power, ref Complex[] cf, ref Complex error, ref string equation)
+        private static Complex[] powr(Complex[] x, Complex[] y, int power, out Complex[] cf, out Complex error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;

@@ -427,7 +427,7 @@ namespace UMapx.Core
         /// <param name="complex">Input string</param>
         /// <param name="result">Complex number</param>
         /// <returns>Boolean</returns>
-        public static bool TryParse(string complex, ref Complex result)
+        public static bool TryParse(string complex, out Complex result)
         {
             try
             {

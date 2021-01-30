@@ -8,7 +8,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the linear operation filter.
     /// <remarks>
-    /// This filter works according to the following algorithm: C (x, y) = a * A (x, y) + b * B (x, y), where A, B are the original images,
+    /// This filter works UMapxing to the following algorithm: C (x, y) = a * A (x, y) + b * B (x, y), where A, B are the original images,
     /// a, b are the coefficients.
     /// </remarks>
     /// </summary>

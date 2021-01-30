@@ -147,7 +147,7 @@ namespace UMapx.Imaging
         public enum Anaglyph
         {
             /// <summary>
-            /// Creates a stereo effect for a pair of images according to the following calculations:
+            /// Creates a stereo effect for a pair of images UMapxing to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=0;</item>
@@ -156,7 +156,7 @@ namespace UMapx.Imaging
             /// </summary>
             True,
             /// <summary>
-            /// Creates a stereo effect for a pair of images according to the following calculations:
+            /// Creates a stereo effect for a pair of images UMapxing to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=0.299*R<sub>r</sub>+0.587*G<sub>r</sub>+0.114*B<sub>r</sub>;</item>
@@ -165,7 +165,7 @@ namespace UMapx.Imaging
             /// </summary>
             Gray,
             /// <summary>
-            /// Creates a stereo effect for a pair of images according to the following calculations:
+            /// Creates a stereo effect for a pair of images UMapxing to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=R<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=G<sub>r</sub>;</item>
@@ -174,7 +174,7 @@ namespace UMapx.Imaging
             /// </summary>
             Color,
             /// <summary>
-            /// Creates a stereo effect for a pair of images according to the following calculations:
+            /// Creates a stereo effect for a pair of images UMapxing to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=G<sub>r</sub>;</item>
@@ -183,7 +183,7 @@ namespace UMapx.Imaging
             /// </summary>
             HalfColor,
             /// <summary>
-            /// Creates a stereo effect for a pair of images according to the following calculations:
+            /// Creates a stereo effect for a pair of images UMapxing to the following calculations:
             /// <list type="bullet">
             /// <item>R<sub>a</sub>=0.7*G<sub>l</sub>+0.3*B<sub>l</sub>;</item>
             /// <item>G<sub>a</sub>=G<sub>r</sub>;</item>
