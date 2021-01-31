@@ -44,7 +44,10 @@ using UMapx.Transform;
 using UMapx.Video;
 using UMapx.Wavelet;
 using UMapx.Window;
-```    
+```
+
+# Relation to other frameworks
+**UMapx.NET** is based on several separate frameworks and toolboxes ([AForge.NET](https://github.com/andrewkirillov/AForge.NET), [Accord.NET](https://github.com/accord-net/framework)) and some functions have been ported from other programming languages (MATLAB, Fortran, C++). At the same time, the purpose of this generalization was the best declarative understanding of algorithms and tools of digital signal processing, as well as optimization and performance improvement. UMapx.NET is faster than AForge.NET or Accord.NET in signal processing tasks and contains a larger set of functions for matrix analysis, linear algebra and functional analysis tasks.  
 
 # License
 **MIT**  
