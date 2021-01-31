@@ -72,7 +72,6 @@ namespace UMapx.Imaging
                 BitmapData frameData = BitmapConverter.Lock32bpp(Frame);
 
                 var alarm = ProcessFrame(bitmapData, frameData);
-                Console.WriteLine($"Alarm: {alarm}");
 
                 Data.Unlock(bitmapData);
                 Frame.Unlock(frameData);
