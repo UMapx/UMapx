@@ -96,13 +96,14 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < width; x++)
             {
-                int y, k; 
+                int y, k;
 
                 for (y = 0; y < height; y++, dst += 4, src += 4)
                 {
                     for (k = 0; k < 3; k++)
                     {
-                        dst[k] = Maths.Byte(dst[k] - src[k]);
+                        var difference = Math.Abs(dst[k] - src[k]);
+                        dst[k] = Maths.Byte(difference);
                     }
 
                     var summary = RGB.Average(dst[2], dst[1], dst[0]);
