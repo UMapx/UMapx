@@ -28,7 +28,7 @@
 # Installation
 You can build **UMapx.NET** from sources or install to your own project using nuget package manager.
 | Version | Platform | OS | Type | Download | Package |
-|:-------------|:-------------|:-------------|:-------------|:--------------|:--------------|
+|-------------|-------------|-------------|-------------|--------------|--------------|
 | 4.0.3.3 | .NET Standard 2.0 | Windows | AnyCPU | [Release](https://github.com/asiryan/UMapx.NET/releases/) | [NuGet](https://www.nuget.org/packages/UMapx/) |
 
 # Namespaces
