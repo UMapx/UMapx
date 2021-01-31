@@ -9,6 +9,7 @@ namespace UMapx.Video.DirectShow
     /// DirectShow filter information.
     /// </summary>
     /// 
+    [Serializable]
     public class FilterInfo : IComparable
     {
         /// <summary>

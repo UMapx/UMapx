@@ -10,6 +10,7 @@ namespace UMapx.Video.DirectShow
     /// <summary>
     /// Capabilities of video device such as frame size and frame rate.
     /// </summary>
+    [Serializable]
     public class VideoCapabilities
     {
         /// <summary>

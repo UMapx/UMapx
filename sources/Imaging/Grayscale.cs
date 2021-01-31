@@ -143,33 +143,5 @@ namespace UMapx.Imaging
             }
         }
         #endregion
-
-        #region IsGrayscale
-        /// <summary>
-        /// Checks if Bitmap is a grayscale image.
-        /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Boolean</returns>
-        public static bool IsGrayscale(Bitmap b)
-        {
-            bool isgrayscale = false;
-            if (b.PixelFormat == PixelFormat.Format8bppIndexed)
-            {
-                isgrayscale = true;
-                ColorPalette palette = b.Palette;
-                Color colour;
-                for (int i = 0; i < 256; i++)
-                {
-                    colour = palette.Entries[i];
-                    if ((colour.R != i) || (colour.G != i) || (colour.B != i))
-                    {
-                        isgrayscale = false;
-                        break;
-                    }
-                }
-            }
-            return isgrayscale;
-        }
-        #endregion
     }
 }

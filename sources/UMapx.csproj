@@ -8,12 +8,12 @@
     <Company>Valery Asiryan</Company>
     <Authors>Valery Asiryan</Authors>
     <Product>UMapx</Product>
-    <Copyright>Valery Asiryan, © 2015-2020</Copyright>
-    <Description>Digital signal processing library for NET.</Description>
+    <Copyright>Valery Asiryan, © 2015-2021</Copyright>
+    <Description>Digital signal processing library for .NET Core and .NET Framework. Fast and optimized.</Description>
     <PackageProjectUrl>https://github.com/asiryan/UMapx.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/asiryan/UMapx.NET</RepositoryUrl>
     <RepositoryType>Open-source</RepositoryType>
-    <PackageTags>signal-processing analysis statistics wavelets transformations imaging matrix linear-algebra</PackageTags>
+    <PackageTags>image video signal processing analytics streaming wavelet window analysis matrix decomposition transformation complex algebra</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -29,6 +29,35 @@
     <DocumentationFile>bin\Debug\netstandard2.0\UMapx.xml</DocumentationFile>
     <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Audio\ComplexFilters\**" />
+    <Compile Remove="Audio\Features\**" />
+    <Compile Remove="Audio\Filters\**" />
+    <Compile Remove="Audio\Gui\**" />
+    <Compile Remove="Audio\Signals\**" />
+    <Compile Remove="Audio\Windows\**" />
+    <EmbeddedResource Remove="Audio\ComplexFilters\**" />
+    <EmbeddedResource Remove="Audio\Features\**" />
+    <EmbeddedResource Remove="Audio\Filters\**" />
+    <EmbeddedResource Remove="Audio\Gui\**" />
+    <EmbeddedResource Remove="Audio\Signals\**" />
+    <EmbeddedResource Remove="Audio\Windows\**" />
+    <None Remove="Audio\ComplexFilters\**" />
+    <None Remove="Audio\Features\**" />
+    <None Remove="Audio\Filters\**" />
+    <None Remove="Audio\Gui\**" />
+    <None Remove="Audio\Signals\**" />
+    <None Remove="Audio\Windows\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Vision\Motion\BlobCountingObjectsProcessing.cs" />
+    <Compile Remove="Vision\Motion\CustomFrameDifferenceDetector.cs" />
+    <Compile Remove="Vision\Motion\GridMotionAreaProcessing.cs" />
+    <Compile Remove="Vision\Motion\MotionBorderHighlighting.cs" />
+    <Compile Remove="Vision\Motion\SimpleBackgroundModelingDetector.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />

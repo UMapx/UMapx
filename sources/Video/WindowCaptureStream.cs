@@ -47,6 +47,7 @@
     /// </code>
     /// </remarks>
     /// 
+    [Serializable]
     public class WindowCaptureStream : IVideoSource
     {
         private Rectangle region;

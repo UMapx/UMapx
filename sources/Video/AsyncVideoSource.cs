@@ -1,5 +1,6 @@
 ﻿namespace UMapx.Video
 {
+    using System;
     using System.Drawing;
     using System.Threading;
 
@@ -51,6 +52,7 @@
     /// </code>
     /// </remarks>
     /// 
+    [Serializable]
     public class AsyncVideoSource : IVideoSource
     {
         private readonly IVideoSource nestedVideoSource = null;

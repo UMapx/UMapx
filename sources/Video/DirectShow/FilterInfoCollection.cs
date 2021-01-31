@@ -31,6 +31,7 @@ namespace UMapx.Video.DirectShow
     /// 
     /// <seealso cref="VideoCaptureDevice"/>
     /// 
+    [Serializable]
     public class FilterInfoCollection : List<FilterInfo>
     {
         /// <summary>

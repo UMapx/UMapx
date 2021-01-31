@@ -30,6 +30,7 @@ namespace UMapx.Video.DirectShow
     /// <code source="Unit Tests\UMapx.Tests.Video\VideoCaptureDeviceTest.cs" region="doc_part_3" />
     /// </example>
     /// 
+    [Serializable]
     public class VideoCaptureDevice : IVideoSource, IDisposable
     {
         // moniker string of video capture device

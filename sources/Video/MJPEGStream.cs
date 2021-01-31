@@ -40,6 +40,7 @@ namespace UMapx.Video
     /// </code>
     /// </remarks>
     /// 
+    [Serializable]
     public partial class MJPEGStream : IVideoSource
     {
         // URL for MJPEG stream

@@ -38,6 +38,7 @@ namespace UMapx.Video.DirectShow
     /// </code>
     /// </remarks>
     /// 
+    [Serializable]
     public class FileVideoSource : IVideoSource
     {
         // video file name
@@ -472,7 +473,7 @@ namespace UMapx.Video.DirectShow
                         }
                     }
                 }
-                while (!stopEvent.WaitOne(100, false));
+                while (!stopEvent.WaitOne(0, false));
 
                 mediaControl.Stop();
             }
@@ -570,7 +571,7 @@ namespace UMapx.Video.DirectShow
                 if (parent.NewFrame != null)
                 {
                     // create new image
-                    System.Drawing.Bitmap image = new Bitmap(width, height, PixelFormat.Format24bppRgb);
+                    Bitmap image = new Bitmap(width, height, PixelFormat.Format24bppRgb);
 
                     // lock bitmap data
                     BitmapData imageData = image.LockBits(
