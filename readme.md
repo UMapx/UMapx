@@ -1,6 +1,11 @@
 <p align="center"><img width="25%" src="docs/umapxnet_big.png" /></p>
 
-**UMapx.NET** is a dynamic link library for digital signal processing and analysis developed in C#.
+**UMapx.NET** is a dynamic link library for digital signal processing and analysis developed in C#.  
+
+You can build **UMapx.NET** from sources or install to your own project using nuget package manager.
+| Version | Specification | OS | Platform | Download | Package |
+|-------------|-------------|-------------|-------------|--------------|--------------|
+| 4.0.3.3 | .NET Standard 2.0 | Windows | AnyCPU | [Release](https://github.com/asiryan/UMapx.NET/releases/) | [NuGet](https://www.nuget.org/packages/UMapx/) |
 
 # About
 ### Contains ready-made software tools:
@@ -24,12 +29,6 @@
 * **Window Toolbox**. Includes a set of tools to synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier transforms and Weyl-Heisenberg transforms ([**Gabor analysis**](https://github.com/asiryan/Weyl-Heisenberg-Toolbox)) for real and complex signals.
 * **Image Processing Toolbox**. Contains efficient algorithms to processing, correcting and analyzing 32-bit raster images.
 * **Video Processing Toolbox**. Includes a set of tools to video streaming and processing.
-
-# Installation
-You can build **UMapx.NET** from sources or install to your own project using nuget package manager.
-| Version | Specification | OS | Platform | Download | Package |
-|-------------|-------------|-------------|-------------|--------------|--------------|
-| 4.0.3.3 | .NET Standard 2.0 | Windows | AnyCPU | [Release](https://github.com/asiryan/UMapx.NET/releases/) | [NuGet](https://www.nuget.org/packages/UMapx/) |
 
 # Namespaces
 ```c#
