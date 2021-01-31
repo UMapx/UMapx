@@ -26,7 +26,12 @@
 * **Video Processing Toolbox**. Includes a set of tools to video streaming and processing.
 
 # Installation
-Download **UMapx.dll** and **UMapx.xml** from releases and add to your project or use [**nuget**](https://www.nuget.org/packages/UMapx/) package manager.  
+You can build **UMapx.NET** from sources or install to your own project using nuget package manager.
+| Version | Platform | Type | Release | Package |
+|:-------------|:-------------|:-------------|:--------------|:--------------|
+| 4.0.3.3 | .NET Standard 2.0 | AnyCPU | [Latest](https://github.com/asiryan/UMapx.NET/releases/tag/v4.0.3.3) | [NuGet](https://www.nuget.org/packages/UMapx/) |
+
+# Namespaces
 ```c#
 using UMapx.Analysis;
 using UMapx.Colorspace;
