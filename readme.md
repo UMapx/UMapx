@@ -57,4 +57,4 @@ using UMapx.Window;
 **MIT**  
 
 # References
-A full list of references is given in a separate [**file**](docs/references.pdf).  
+A full list of references is given in a separate [file](docs/references.pdf).  
