@@ -46,6 +46,10 @@ using UMapx.Wavelet;
 using UMapx.Window;
 ```
 
+# Examples of usage
+* [Local Laplacian filters](https://github.com/asiryan/Local-Laplacian-filters) - .NET Framework desktop application for HDR imaging.
+* [Portrait mode effect](https://github.com/asiryan/Portrait-mode) - High quality implementation of the portrait mode effect using Neural Networks.
+
 # Relation to other frameworks
 **UMapx.NET** is based on several separate frameworks (AForge.NET, Accord.NET, Alglib and etc). Some functions have been ported from other programming languages and their toolboxes and libraries (Fortran, MATLAB, C++, Python). The purpose of this generalization was the declarative understanding of algorithms and tools of digital signal processing, as well as optimization and performance improvement. **UMapx.NET** is faster than AForge.NET and Accord.NET in signal processing tasks and contains a larger set of functions for matrix analysis, linear algebra and functional analysis tasks. 
 
