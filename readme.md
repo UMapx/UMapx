@@ -21,7 +21,7 @@
 
 ### Includes special math toolboxes:
 * **Wavelet Toolbox**. Provides wide functionality for the study of discrete and continuous wavelets. The toolbox also includes algorithms for discrete one-dimensional and two-dimensional wavelet transforms of real and complex signals.
-* **Window Toolbox**. Includes a set of tools to synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier transforms and Weyl-Heisenberg transforms ([**Gabor analysis**](https://github.com/asiryan/Weyl-Heisenberg-Toolbox)) for real and complex signals.
+* **Window Toolbox**. Includes a set of tools to synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier transforms and Weyl-Heisenberg transforms ([Gabor analysis](https://github.com/asiryan/Weyl-Heisenberg-Toolbox)) for real and complex signals.
 * **Image Processing Toolbox**. Contains efficient algorithms to processing, correcting and analyzing 32-bit raster images.
 * **Video Processing Toolbox**. Includes a set of tools to video streaming and processing.
 
@@ -47,7 +47,7 @@ using UMapx.Window;
 ```
 
 # Examples of usage
-* [Local Laplacian filters](https://github.com/asiryan/Local-Laplacian-filters) - .NET Framework desktop application for HDR imaging.
+* [Local Laplacian filters](https://github.com/asiryan/Local-Laplacian-filters) - NET Framework desktop application for HDR imaging.
 * [Portrait mode effect](https://github.com/asiryan/Portrait-mode) - High quality implementation of the portrait mode effect using Neural Networks.
 
 # Relation to other frameworks
