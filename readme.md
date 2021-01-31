@@ -2,7 +2,7 @@
 
 **UMapx.NET** is a dynamic link library for digital signal processing and analysis developed in C#.  
 
-# About
+# UMapx.NET
 ### Contains ready-made software tools:
 * color spaces and their transformations,
 * real and complex algebra,
