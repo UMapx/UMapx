@@ -47,7 +47,7 @@ using UMapx.Window;
 ```
 
 # Relation to other frameworks
-**UMapx.NET** is based on several separate frameworks (AForge.NET, Accord.NET and etc). Some functions have been ported from other programming languages and their toolboxes and libraries (MATLAB, Fortran, C++). The purpose of this generalization was the declarative understanding of algorithms and tools of digital signal processing, as well as optimization and performance improvement. **UMapx.NET** is faster than AForge.NET or Accord.NET in signal processing tasks and contains a larger set of functions for matrix analysis, linear algebra and functional analysis tasks. 
+**UMapx.NET** is based on several separate frameworks (AForge.NET, Accord.NET and etc). Some functions have been ported from other programming languages and their toolboxes and libraries (Fortran, MATLAB, C++, Python). The purpose of this generalization was the declarative understanding of algorithms and tools of digital signal processing, as well as optimization and performance improvement. **UMapx.NET** is faster than AForge.NET or Accord.NET in signal processing tasks and contains a larger set of functions for matrix analysis, linear algebra and functional analysis tasks. 
 
 # License
 **MIT**  
