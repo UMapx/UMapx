@@ -6,7 +6,6 @@ namespace UMapx.Video.DirectShow
     using System.Drawing.Imaging;
     using System.Runtime.InteropServices;
     using System.Threading;
-    using UMapx.Imaging;
     using UMapx.Video;
     using UMapx.Video.DirectShow.Internals;
 
@@ -1772,8 +1771,10 @@ namespace UMapx.Video.DirectShow
                     args.CaptureFinished = DateTime.Now;
 
                     // lock bitmap data
-                    
-                    BitmapData imageData = BitmapConverter.Lock32bpp(image);
+                    BitmapData imageData = image.LockBits(
+                         new Rectangle(0, 0, Width, Height),
+                         ImageLockMode.WriteOnly,
+                         PixelFormat.Format24bppRgb);
 
                     // copy image data
                     int srcStride = imageData.Stride;
