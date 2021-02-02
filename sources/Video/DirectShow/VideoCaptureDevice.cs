@@ -29,8 +29,7 @@ namespace UMapx.Video.DirectShow
     /// <code source="Unit Tests\UMapx.Tests.Video\VideoCaptureDeviceTest.cs" region="doc_part_3" />
     /// </example>
     /// 
-    [Serializable]
-    public class VideoCaptureDevice : IVideoSource, IDisposable
+    public class VideoCaptureDevice : IVideoSource
     {
         // moniker string of video capture device
         private string deviceMoniker;
@@ -51,10 +50,7 @@ namespace UMapx.Video.DirectShow
         private bool provideSnapshots = false;
 
         private Thread thread = null;
-        private bool shouldStop;
-
-        private AutoResetEvent shouldWake = new AutoResetEvent(false);
-        private AutoResetEvent hasFinished = new AutoResetEvent(false);
+        private ManualResetEvent stopEvent = null;
 
         private VideoCapabilities[] videoCapabilities;
         private VideoCapabilities[] snapshotCapabilities;
@@ -150,12 +146,14 @@ namespace UMapx.Video.DirectShow
                         if (!IsRunning)
                         {
                             // create graph without playing to collect available inputs
-                            DoWork(runGraph: false);
+                            WorkerThread(false);
                         }
                         else
                         {
-                            for (int i = 0; i < 500 && crossbarVideoInputs == null; i++)
+                            for (int i = 0; (i < 500) && (crossbarVideoInputs == null); i++)
+                            {
                                 Thread.Sleep(10);
+                            }
                         }
                     }
                 }
@@ -299,7 +297,22 @@ namespace UMapx.Video.DirectShow
         /// 
         /// <remarks>Current state of video source object - running or not.</remarks>
         /// 
-        public bool IsRunning { get; private set; }
+        public bool IsRunning
+        {
+            get
+            {
+                if (thread != null)
+                {
+                    // check thread status
+                    if (thread.Join(0) == false)
+                        return true;
+
+                    // the thread is not running, free resources
+                    Free();
+                }
+                return false;
+            }
+        }
 
         /// <summary>
         /// Obsolete - no longer in use
@@ -341,12 +354,6 @@ namespace UMapx.Video.DirectShow
             get { return 0; }
             set { }
         }
-
-        /// <summary>
-        /// Gets a value indicating whether this instance has been disposed.
-        /// </summary>
-        /// <value><c>true</c> if this instance is disposed; otherwise, <c>false</c>.</value>
-        public bool IsDisposed { get { return disposedValue; } }
 
         /// <summary>
         ///   The desired average display time of the video frames, in 100-nanosecond units.
@@ -431,7 +438,9 @@ namespace UMapx.Video.DirectShow
                     lock (cacheVideoCapabilities)
                     {
                         if ((!string.IsNullOrEmpty(deviceMoniker)) && (cacheVideoCapabilities.ContainsKey(deviceMoniker)))
+                        {
                             videoCapabilities = cacheVideoCapabilities[deviceMoniker];
+                        }
                     }
 
                     if (videoCapabilities == null)
@@ -440,16 +449,17 @@ namespace UMapx.Video.DirectShow
                         {
                             // create graph without playing to get the video/snapshot capabilities only.
                             // not very clean but it works
-                            DoWork(runGraph: false);
+                            WorkerThread(false);
                         }
                         else
                         {
-                            for (int i = 0; i < 500 && videoCapabilities == null; i++)
+                            for (int i = 0; (i < 500) && (videoCapabilities == null); i++)
+                            {
                                 Thread.Sleep(10);
+                            }
                         }
                     }
                 }
-
                 // don't return null even capabilities are not provided for some reason
                 return (videoCapabilities != null) ? videoCapabilities : new VideoCapabilities[0];
             }
@@ -481,8 +491,10 @@ namespace UMapx.Video.DirectShow
                 {
                     lock (cacheSnapshotCapabilities)
                     {
-                        if (!String.IsNullOrEmpty(deviceMoniker) && cacheSnapshotCapabilities.ContainsKey(deviceMoniker))
+                        if ((!string.IsNullOrEmpty(deviceMoniker)) && (cacheSnapshotCapabilities.ContainsKey(deviceMoniker)))
+                        {
                             snapshotCapabilities = cacheSnapshotCapabilities[deviceMoniker];
+                        }
                     }
 
                     if (snapshotCapabilities == null)
@@ -491,12 +503,14 @@ namespace UMapx.Video.DirectShow
                         {
                             // create graph without playing to get the video/snapshot capabilities only.
                             // not very clean but it works
-                            DoWork(runGraph: false);
+                            WorkerThread(false);
                         }
                         else
                         {
-                            for (int i = 0; i < 500 && snapshotCapabilities == null; i++)
+                            for (int i = 0; (i < 500) && (snapshotCapabilities == null); i++)
+                            {
                                 Thread.Sleep(10);
+                            }
                         }
                     }
                 }
@@ -562,34 +576,26 @@ namespace UMapx.Video.DirectShow
         /// 
         public void Start()
         {
-            if (IsRunning)
-                throw new InvalidOperationException("The video capture device is already running.");
-
-            if (IsDisposed)
-                throw new ObjectDisposedException("The video capture device has already been disposed.");
-
-            // check source
-            if (String.IsNullOrEmpty(deviceMoniker))
-                throw new ArgumentException("Video source is not specified.");
-
-            framesReceived = 0;
-            bytesReceived = 0;
-            isCrossbarAvailable = null;
-            needToSetVideoInput = true;
-            shouldStop = false;
-
-            lock (sync)
+            if (!IsRunning)
             {
-                // create and start new thread
-                if (thread == null)
+                // check source
+                if (string.IsNullOrEmpty(deviceMoniker))
+                    throw new ArgumentException("Video source is not specified.");
+
+                framesReceived = 0;
+                bytesReceived = 0;
+                isCrossbarAvailable = null;
+                needToSetVideoInput = true;
+
+                // create events
+                stopEvent = new ManualResetEvent(false);
+
+                lock (sync)
                 {
-                    thread = new Thread(WorkerThread);
+                    // create and start new thread
+                    thread = new Thread(new ThreadStart(WorkerThread));
                     thread.Name = deviceMoniker; // mainly for debugging
                     thread.Start();
-                }
-                else
-                {
-                    this.shouldWake.Set();
                 }
             }
         }
@@ -603,10 +609,11 @@ namespace UMapx.Video.DirectShow
         /// 
         public void SignalToStop()
         {
-            if (IsRunning)
+            // stop thread
+            if (thread != null)
             {
                 // signal to stop
-                this.shouldStop = true;
+                stopEvent.Set();
             }
         }
 
@@ -619,10 +626,12 @@ namespace UMapx.Video.DirectShow
         /// 
         public void WaitForStop()
         {
-            if (IsRunning)
+            if (thread != null)
             {
-                // wait until the thread signals it has stopped
-                this.hasFinished.WaitOne();
+                // wait for thread stop
+                thread.Join();
+
+                Free();
             }
         }
 
@@ -640,12 +649,24 @@ namespace UMapx.Video.DirectShow
         /// 
         public void Stop()
         {
-            if (thread != null)
+            if (this.IsRunning)
             {
                 thread.Abort();
-                thread.Join();
-                thread = null;
+                WaitForStop();
             }
+        }
+
+        /// <summary>
+        /// Free resource.
+        /// </summary>
+        /// 
+        private void Free()
+        {
+            thread = null;
+
+            // release events
+            stopEvent.Close();
+            stopEvent = null;
         }
 
         /// <summary>
@@ -667,7 +688,7 @@ namespace UMapx.Video.DirectShow
         public void DisplayPropertyPage(IntPtr parentWindow)
         {
             // check source
-            if (String.IsNullOrEmpty(deviceMoniker))
+            if ((deviceMoniker == null) || (deviceMoniker == string.Empty))
                 throw new ArgumentException("Video source is not specified.");
 
             lock (sync)
@@ -693,11 +714,13 @@ namespace UMapx.Video.DirectShow
                 }
 
                 if (!(tempSourceObject is ISpecifyPropertyPages))
+                {
                     throw new NotSupportedException("The video source does not support configuration property page.");
+                }
 
                 DisplayPropertyPage(parentWindow, tempSourceObject);
 
-                release(ref tempSourceObject);
+                Marshal.ReleaseComObject(tempSourceObject);
             }
         }
 
@@ -728,14 +751,20 @@ namespace UMapx.Video.DirectShow
             lock (sync)
             {
                 // wait max 5 seconds till the flag gets initialized
-                for (int i = 0; i < 500 && !isCrossbarAvailable.HasValue && IsRunning; i++)
+                for (int i = 0; (i < 500) && (!isCrossbarAvailable.HasValue) && (IsRunning); i++)
+                {
                     Thread.Sleep(10);
+                }
 
-                if (!IsRunning || !isCrossbarAvailable.HasValue)
+                if ((!IsRunning) || (!isCrossbarAvailable.HasValue))
+                {
                     throw new ApplicationException("The video source must be running in order to display crossbar property page.");
+                }
 
                 if (!isCrossbarAvailable.Value)
+                {
                     throw new NotSupportedException("Crossbar configuration is not supported by currently running video source.");
+                }
 
                 // pass the request to background thread if video source is running
                 parentWindowForPropertyPage = parentWindow;
@@ -763,12 +792,14 @@ namespace UMapx.Video.DirectShow
                     if (!IsRunning)
                     {
                         // create graph without playing to collect available inputs
-                        DoWork(runGraph: false);
+                        WorkerThread(false);
                     }
                     else
                     {
-                        for (int i = 0; i < 500 && !isCrossbarAvailable.HasValue; i++)
+                        for (int i = 0; (i < 500) && (!isCrossbarAvailable.HasValue); i++)
+                        {
                             Thread.Sleep(10);
+                        }
                     }
                 }
 
@@ -813,8 +844,10 @@ namespace UMapx.Video.DirectShow
             bool ret = true;
 
             // check if source was set
-            if (String.IsNullOrEmpty(deviceMoniker))
+            if ((deviceMoniker == null) || (string.IsNullOrEmpty(deviceMoniker)))
+            {
                 throw new ArgumentException("Video source is not specified.");
+            }
 
             lock (sync)
             {
@@ -831,14 +864,16 @@ namespace UMapx.Video.DirectShow
                 }
 
                 if (!(tempSourceObject is IAMCameraControl))
+                {
                     throw new NotSupportedException("The video source does not support camera control.");
+                }
 
                 IAMCameraControl pCamControl = (IAMCameraControl)tempSourceObject;
                 int hr = pCamControl.Set(property, value, controlFlags);
 
                 ret = (hr >= 0);
 
-                release(ref tempSourceObject);
+                Marshal.ReleaseComObject(tempSourceObject);
             }
 
             return ret;
@@ -863,8 +898,10 @@ namespace UMapx.Video.DirectShow
             bool ret = true;
 
             // check if source was set
-            if (String.IsNullOrEmpty(deviceMoniker))
+            if ((deviceMoniker == null) || (string.IsNullOrEmpty(deviceMoniker)))
+            {
                 throw new ArgumentException("Video source is not specified.");
+            }
 
             lock (sync)
             {
@@ -881,14 +918,16 @@ namespace UMapx.Video.DirectShow
                 }
 
                 if (!(tempSourceObject is IAMCameraControl))
+                {
                     throw new NotSupportedException("The video source does not support camera control.");
+                }
 
                 IAMCameraControl pCamControl = (IAMCameraControl)tempSourceObject;
                 int hr = pCamControl.Get(property, out value, out controlFlags);
 
                 ret = (hr >= 0);
 
-                release(ref tempSourceObject);
+                Marshal.ReleaseComObject(tempSourceObject);
             }
 
             return ret;
@@ -916,8 +955,10 @@ namespace UMapx.Video.DirectShow
             bool ret = true;
 
             // check if source was set
-            if (String.IsNullOrEmpty(deviceMoniker))
+            if ((deviceMoniker == null) || (string.IsNullOrEmpty(deviceMoniker)))
+            {
                 throw new ArgumentException("Video source is not specified.");
+            }
 
             lock (sync)
             {
@@ -934,162 +975,12 @@ namespace UMapx.Video.DirectShow
                 }
 
                 if (!(tempSourceObject is IAMCameraControl))
+                {
                     throw new NotSupportedException("The video source does not support camera control.");
+                }
 
                 IAMCameraControl pCamControl = (IAMCameraControl)tempSourceObject;
                 int hr = pCamControl.GetRange(property, out minValue, out maxValue, out stepSize, out defaultValue, out controlFlags);
-
-                ret = (hr >= 0);
-
-                release(ref tempSourceObject);
-            }
-
-            return ret;
-        }
-        /// <summary>
-        /// Sets a specified property on the video signal adjustments.
-        /// </summary>
-        /// 
-        /// <param name="property">Specifies the property to set.</param>
-        /// <param name="value">Specifies the new value of the property.</param>
-        /// <param name="controlFlags">Specifies the desired control setting.</param>
-        /// 
-        /// <returns>Returns true on success or false otherwise.</returns>
-        /// 
-        /// <exception cref="ArgumentException">Video source is not specified - device moniker is not set.</exception>
-        /// <exception cref="ApplicationException">Failed creating device object for moniker.</exception>
-        /// <exception cref="NotSupportedException">The video source does not support camera control.</exception>
-        /// 
-        public bool SetVideoProcAmpProperty(VideoProcAmpProperty property, int value, VideoProcAmpFlags controlFlags)
-        {
-            bool ret = true;
-
-            // check if source was set
-            if (String.IsNullOrEmpty(deviceMoniker))
-                throw new ArgumentException("Video source is not specified.");
-
-            lock (sync)
-            {
-                object tempSourceObject = null;
-
-                // create source device's object
-                try
-                {
-                    tempSourceObject = FilterInfo.CreateFilter(deviceMoniker);
-                }
-                catch
-                {
-                    throw new ApplicationException("Failed creating device object for moniker.");
-                }
-
-                if (!(tempSourceObject is IAMVideoProcAmp))
-                    throw new NotSupportedException("The video source does not support video signal adjustments.");
-
-                IAMVideoProcAmp pVideoProcAmp = (IAMVideoProcAmp)tempSourceObject;
-                int hr = pVideoProcAmp.Set(property, value, controlFlags);
-
-                ret = (hr >= 0);
-
-                Marshal.ReleaseComObject(tempSourceObject);
-            }
-
-            return ret;
-        }
-
-        /// <summary>
-        /// Gets the current setting of a video signal adjustment property.
-        /// </summary>
-        /// 
-        /// <param name="property">Specifies the property to retrieve.</param>
-        /// <param name="value">Receives the value of the property.</param>
-        /// <param name="controlFlags">Receives the value indicating whether the setting is controlled manually or automatically</param>
-        /// 
-        /// <returns>Returns true on sucee or false otherwise.</returns>
-        /// 
-        /// <exception cref="ArgumentException">Video source is not specified - device moniker is not set.</exception>
-        /// <exception cref="ApplicationException">Failed creating device object for moniker.</exception>
-        /// <exception cref="NotSupportedException">The video source does not support camera control.</exception>
-        /// 
-        public bool GetVideoProcAmpProperty(VideoProcAmpProperty property, out int value, out VideoProcAmpFlags controlFlags)
-        {
-            bool ret = true;
-
-            // check if source was set
-            if (String.IsNullOrEmpty(deviceMoniker))
-                throw new ArgumentException("Video source is not specified.");
-
-            lock (sync)
-            {
-                object tempSourceObject = null;
-
-                // create source device's object
-                try
-                {
-                    tempSourceObject = FilterInfo.CreateFilter(deviceMoniker);
-                }
-                catch
-                {
-                    throw new ApplicationException("Failed creating device object for moniker.");
-                }
-
-                if (!(tempSourceObject is IAMVideoProcAmp))
-                    throw new NotSupportedException("The video source does not support video signal adjustments.");
-
-                IAMVideoProcAmp pVideoProcAmp = (IAMVideoProcAmp)tempSourceObject;
-                int hr = pVideoProcAmp.Get(property, out value, out controlFlags);
-
-                ret = (hr >= 0);
-
-                Marshal.ReleaseComObject(tempSourceObject);
-            }
-
-            return ret;
-        }
-
-        /// <summary>
-        /// Gets the range and default value of a specified video stream property.
-        /// </summary>
-        /// 
-        /// <param name="property">Specifies the property to query.</param>
-        /// <param name="minValue">Receives the minimum value of the property.</param>
-        /// <param name="maxValue">Receives the maximum value of the property.</param>
-        /// <param name="stepSize">Receives the step size for the property.</param>
-        /// <param name="defaultValue">Receives the default value of the property.</param>
-        /// <param name="controlFlags">Receives a member of the <see cref="CameraControlFlags"/> enumeration, indicating whether the property is controlled automatically or manually.</param>
-        /// 
-        /// <returns>Returns true on sucee or false otherwise.</returns>
-        /// 
-        /// <exception cref="ArgumentException">Video source is not specified - device moniker is not set.</exception>
-        /// <exception cref="ApplicationException">Failed creating device object for moniker.</exception>
-        /// <exception cref="NotSupportedException">The video source does not support camera control.</exception>
-        /// 
-        public bool GetVideoProcAmpRange(VideoProcAmpProperty property, out int minValue, out int maxValue, out int stepSize, out int defaultValue, out VideoProcAmpFlags controlFlags)
-        {
-            bool ret = true;
-
-            // check if source was set
-            if (String.IsNullOrEmpty(deviceMoniker))
-                throw new ArgumentException("Video source is not specified.");
-
-            lock (sync)
-            {
-                object tempSourceObject = null;
-
-                // create source device's object
-                try
-                {
-                    tempSourceObject = FilterInfo.CreateFilter(deviceMoniker);
-                }
-                catch
-                {
-                    throw new ApplicationException("Failed creating device object for moniker.");
-                }
-
-                if (!(tempSourceObject is IAMVideoProcAmp))
-                    throw new NotSupportedException("The video source does not support video signal adjustments.");
-
-                IAMVideoProcAmp pVideoProcAmp = (IAMVideoProcAmp)tempSourceObject;
-                int hr = pVideoProcAmp.GetRange(property, out minValue, out maxValue, out stepSize, out defaultValue, out controlFlags);
 
                 ret = (hr >= 0);
 
@@ -1105,28 +996,17 @@ namespace UMapx.Video.DirectShow
         /// 
         private void WorkerThread()
         {
-            do
-            {
-                if (this.disposedValue)
-                    return;
-
-                try
-                {
-                    this.IsRunning = true;
-                    DoWork(true);
-                }
-                finally
-                {
-                    this.IsRunning = false;
-                    this.hasFinished.Set();
-                }
-            } while (shouldWake.WaitOne());
+            WorkerThread(true);
         }
 
-        private void DoWork(bool runGraph)
+        private void WorkerThread(bool runGraph)
         {
-            var reasonToStop = ReasonToFinishPlaying.StoppedByUser;
+            ReasonToFinishPlaying reasonToStop = ReasonToFinishPlaying.StoppedByUser;
             bool isSnapshotSupported = false;
+
+            // grabber
+            Grabber videoGrabber = new Grabber(this, false, this.pixelFormat);
+            Grabber snapshotGrabber = new Grabber(this, true, this.pixelFormat);
 
             // objects
             object captureGraphObject = null;
@@ -1210,192 +1090,195 @@ namespace UMapx.Video.DirectShow
                 graph.AddFilter(snapshotGrabberBase, "grabber_snapshot");
 
                 // set media type
-                using (AMMediaType mediaType = new AMMediaType())
+                AMMediaType mediaType = new AMMediaType();
+                mediaType.MajorType = MediaType.Video;
+                mediaType.SubType = MediaSubType.ConvertFrom(pixelFormat);
+
+                videoSampleGrabber.SetMediaType(mediaType);
+                snapshotSampleGrabber.SetMediaType(mediaType);
+
+                // get crossbar object to to allows configuring pins of capture card
+                captureGraph.FindInterface(FindDirection.UpstreamOnly, Guid.Empty, sourceBase, typeof(IAMCrossbar).GUID, out crossbarObject);
+                if (crossbarObject != null)
                 {
-                    mediaType.MajorType = MediaType.Video;
-                    mediaType.SubType = MediaSubType.ConvertFrom(pixelFormat);
+                    crossbar = (IAMCrossbar)crossbarObject;
+                }
+                isCrossbarAvailable = (crossbar != null);
+                crossbarVideoInputs = ColletCrossbarVideoInputs(crossbar);
 
-                    videoSampleGrabber.SetMediaType(mediaType);
-                    snapshotSampleGrabber.SetMediaType(mediaType);
-
-                    // get crossbar object to to allows configuring pins of capture card
-                    captureGraph.FindInterface(FindDirection.UpstreamOnly, Guid.Empty, sourceBase, typeof(IAMCrossbar).GUID, out crossbarObject);
-                    if (crossbarObject != null)
-                        crossbar = (IAMCrossbar)crossbarObject;
-                    isCrossbarAvailable = (crossbar != null);
-                    crossbarVideoInputs = CollectCrossbarVideoInputs(crossbar);
-
-                    if (videoControl != null)
+                if (videoControl != null)
+                {
+                    // find Still Image output pin of the video device
+                    captureGraph.FindPin(sourceObject, PinDirection.Output,
+                        PinCategory.StillImage, MediaType.Video, false, 0, out pinStillImage);
+                    // check if it support trigger mode
+                    if (pinStillImage != null)
                     {
-                        // find Still Image output pin of the video device
-                        captureGraph.FindPin(sourceObject, PinDirection.Output,
-                            PinCategory.StillImage, MediaType.Video, false, 0, out pinStillImage);
-                        // check if it support trigger mode
-                        if (pinStillImage != null)
-                        {
-                            VideoControlFlags caps;
-                            videoControl.GetCaps(pinStillImage, out caps);
-                            isSnapshotSupported = (((caps & VideoControlFlags.ExternalTriggerEnable) != 0) ||
-                                                   ((caps & VideoControlFlags.Trigger) != 0));
-                        }
-                    }
-
-                    // grabber
-                    using (Grabber videoGrabber = new Grabber(this, snapshotMode: false, pixelFormat: this.pixelFormat))
-                    using (Grabber snapshotGrabber = new Grabber(this, snapshotMode: true, pixelFormat: this.pixelFormat))
-                    {
-                        // configure video sample grabber
-                        videoSampleGrabber.SetBufferSamples(false);
-                        videoSampleGrabber.SetOneShot(false);
-                        videoSampleGrabber.SetCallback(videoGrabber, 1);
-
-                        // configure snapshot sample grabber
-                        snapshotSampleGrabber.SetBufferSamples(true);
-                        snapshotSampleGrabber.SetOneShot(false);
-                        snapshotSampleGrabber.SetCallback(snapshotGrabber, 1);
-
-                        // configure pins
-                        GetPinCapabilitiesAndConfigureSizeAndRate(captureGraph, sourceBase,
-                            PinCategory.Capture, videoResolution, ref videoCapabilities);
-
-                        if (isSnapshotSupported)
-                        {
-                            GetPinCapabilitiesAndConfigureSizeAndRate(captureGraph, sourceBase,
-                                PinCategory.StillImage, snapshotResolution, ref snapshotCapabilities);
-                        }
-                        else
-                        {
-                            snapshotCapabilities = new VideoCapabilities[0];
-                        }
-
-                        // put video/snapshot capabilities into cache
-                        lock (cacheVideoCapabilities)
-                        {
-                            if (videoCapabilities != null && !cacheVideoCapabilities.ContainsKey(deviceMoniker))
-                                cacheVideoCapabilities.Add(deviceMoniker, videoCapabilities);
-                        }
-
-                        lock (cacheSnapshotCapabilities)
-                        {
-                            if (snapshotCapabilities != null && !cacheSnapshotCapabilities.ContainsKey(deviceMoniker))
-                                cacheSnapshotCapabilities.Add(deviceMoniker, snapshotCapabilities);
-                        }
-
-                        if (runGraph)
-                        {
-                            // render capture pin
-                            captureGraph.RenderStream(PinCategory.Capture, MediaType.Video, sourceBase, null, videoGrabberBase);
-
-                            if (videoSampleGrabber.GetConnectedMediaType(mediaType) == 0)
-                            {
-                                VideoInfoHeader vih = (VideoInfoHeader)Marshal.PtrToStructure(mediaType.FormatPtr, typeof(VideoInfoHeader));
-                                videoGrabber.Width = vih.BmiHeader.Width;
-                                videoGrabber.Height = vih.BmiHeader.Height;
-                            }
-
-                            if (isSnapshotSupported && provideSnapshots)
-                            {
-                                // render snapshot pin
-                                captureGraph.RenderStream(PinCategory.StillImage, MediaType.Video, sourceBase, null, snapshotGrabberBase);
-
-                                if (snapshotSampleGrabber.GetConnectedMediaType(mediaType) == 0)
-                                {
-                                    VideoInfoHeader vih = (VideoInfoHeader)Marshal.PtrToStructure(mediaType.FormatPtr, typeof(VideoInfoHeader));
-                                    snapshotGrabber.Width = vih.BmiHeader.Width;
-                                    snapshotGrabber.Height = vih.BmiHeader.Height;
-                                }
-                            }
-                        }
-
-                        // get media control
-                        mediaControl = (IMediaControl)graphObject;
-
-                        // get media events' interface
-                        mediaEvent = (IMediaEventEx)graphObject;
-
-                        IntPtr p1, p2;
-                        DsEvCode code;
-
-                        // run
-                        mediaControl.Run();
-
-                        if (isSnapshotSupported && provideSnapshots)
-                        {
-                            startTime = DateTime.Now;
-                            videoControl.SetMode(pinStillImage, VideoControlFlags.ExternalTriggerEnable);
-                        }
-
-                        do
-                        {
-                            if (mediaEvent != null)
-                            {
-                                if (mediaEvent.GetEvent(out code, out p1, out p2, 0) >= 0)
-                                {
-                                    mediaEvent.FreeEventParams(code, p1, p2);
-
-                                    if (code == DsEvCode.DeviceLost)
-                                    {
-                                        reasonToStop = ReasonToFinishPlaying.DeviceLost;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (needToSetVideoInput)
-                            {
-                                needToSetVideoInput = false;
-                                // set/check current input type of a video card (frame grabber)
-                                if (isCrossbarAvailable.Value)
-                                {
-                                    SetCurrentCrossbarInput(crossbar, crossbarVideoInput);
-                                    crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
-                                }
-                            }
-
-                            if (needToSimulateTrigger)
-                            {
-                                needToSimulateTrigger = false;
-
-                                if (isSnapshotSupported && provideSnapshots)
-                                    videoControl.SetMode(pinStillImage, VideoControlFlags.Trigger);
-                            }
-
-                            if (needToDisplayPropertyPage)
-                            {
-                                needToDisplayPropertyPage = false;
-                                DisplayPropertyPage(parentWindowForPropertyPage, sourceObject);
-
-                                if (crossbar != null)
-                                    crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
-                            }
-
-                            if (needToDisplayCrossBarPropertyPage)
-                            {
-                                needToDisplayCrossBarPropertyPage = false;
-
-                                if (crossbar != null)
-                                {
-                                    DisplayPropertyPage(parentWindowForPropertyPage, crossbar);
-                                    crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
-                                }
-                            }
-                        }
-                        while (!shouldStop && runGraph);
-
-                        mediaControl.Stop();
+                        VideoControlFlags caps;
+                        videoControl.GetCaps(pinStillImage, out caps);
+                        isSnapshotSupported = (((caps & VideoControlFlags.ExternalTriggerEnable) != 0) || 
+                                               ((caps & VideoControlFlags.Trigger) != 0));
                     }
                 }
-            }
-            catch (ThreadAbortException)
-            {
 
+                // configure video sample grabber
+                videoSampleGrabber.SetBufferSamples(false);
+                videoSampleGrabber.SetOneShot(false);
+                videoSampleGrabber.SetCallback(videoGrabber, 1);
+
+                // configure snapshot sample grabber
+                snapshotSampleGrabber.SetBufferSamples(true);
+                snapshotSampleGrabber.SetOneShot(false);
+                snapshotSampleGrabber.SetCallback(snapshotGrabber, 1);
+
+                // configure pins
+                GetPinCapabilitiesAndConfigureSizeAndRate(captureGraph, sourceBase,
+                    PinCategory.Capture, videoResolution, ref videoCapabilities);
+                if (isSnapshotSupported)
+                {
+                    GetPinCapabilitiesAndConfigureSizeAndRate(captureGraph, sourceBase,
+                        PinCategory.StillImage, snapshotResolution, ref snapshotCapabilities);
+                }
+                else
+                {
+                    snapshotCapabilities = new VideoCapabilities[0];
+                }
+
+                // put video/snapshot capabilities into cache
+                lock (cacheVideoCapabilities)
+                {
+                    if ((videoCapabilities != null) && (!cacheVideoCapabilities.ContainsKey(deviceMoniker)))
+                    {
+                        cacheVideoCapabilities.Add(deviceMoniker, videoCapabilities);
+                    }
+                }
+                lock (cacheSnapshotCapabilities)
+                {
+                    if ((snapshotCapabilities != null) && (!cacheSnapshotCapabilities.ContainsKey(deviceMoniker)))
+                    {
+                        cacheSnapshotCapabilities.Add(deviceMoniker, snapshotCapabilities);
+                    }
+                }
+
+                if (runGraph)
+                {
+                    // render capture pin
+                    captureGraph.RenderStream(PinCategory.Capture, MediaType.Video, sourceBase, null, videoGrabberBase);
+
+                    if (videoSampleGrabber.GetConnectedMediaType(mediaType) == 0)
+                    {
+                        VideoInfoHeader vih = (VideoInfoHeader)Marshal.PtrToStructure(mediaType.FormatPtr, typeof(VideoInfoHeader));
+
+                        videoGrabber.Width = vih.BmiHeader.Width;
+                        videoGrabber.Height = vih.BmiHeader.Height;
+
+                        mediaType.Dispose();
+                    }
+
+                    if ((isSnapshotSupported) && (provideSnapshots))
+                    {
+                        // render snapshot pin
+                        captureGraph.RenderStream(PinCategory.StillImage, MediaType.Video, sourceBase, null, snapshotGrabberBase);
+
+                        if (snapshotSampleGrabber.GetConnectedMediaType(mediaType) == 0)
+                        {
+                            VideoInfoHeader vih = (VideoInfoHeader)Marshal.PtrToStructure(mediaType.FormatPtr, typeof(VideoInfoHeader));
+
+                            snapshotGrabber.Width = vih.BmiHeader.Width;
+                            snapshotGrabber.Height = vih.BmiHeader.Height;
+
+                            mediaType.Dispose();
+                        }
+                    }
+
+                    // get media control
+                    mediaControl = (IMediaControl)graphObject;
+
+                    // get media events' interface
+                    mediaEvent = (IMediaEventEx)graphObject;
+                    IntPtr p1, p2;
+                    DsEvCode code;
+
+                    // run
+                    mediaControl.Run();
+
+                    if ((isSnapshotSupported) && (provideSnapshots))
+                    {
+                        startTime = DateTime.Now;
+                        videoControl.SetMode(pinStillImage, VideoControlFlags.ExternalTriggerEnable);
+                    }
+
+                    do
+                    {
+                        if (mediaEvent != null)
+                        {
+                            if (mediaEvent.GetEvent(out code, out p1, out p2, 0) >= 0)
+                            {
+                                mediaEvent.FreeEventParams(code, p1, p2);
+
+                                if (code == DsEvCode.DeviceLost)
+                                {
+                                    reasonToStop = ReasonToFinishPlaying.DeviceLost;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (needToSetVideoInput)
+                        {
+                            needToSetVideoInput = false;
+                            // set/check current input type of a video card (frame grabber)
+                            if (isCrossbarAvailable.Value)
+                            {
+                                SetCurrentCrossbarInput(crossbar, crossbarVideoInput);
+                                crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
+                            }
+                        }
+
+                        if (needToSimulateTrigger)
+                        {
+                            needToSimulateTrigger = false;
+
+                            if ((isSnapshotSupported) && (provideSnapshots))
+                            {
+                                videoControl.SetMode(pinStillImage, VideoControlFlags.Trigger);
+                            }
+                        }
+
+                        if (needToDisplayPropertyPage)
+                        {
+                            needToDisplayPropertyPage = false;
+                            DisplayPropertyPage(parentWindowForPropertyPage, sourceObject);
+
+                            if (crossbar != null)
+                            {
+                                crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
+                            }
+                        }
+
+                        if (needToDisplayCrossBarPropertyPage)
+                        {
+                            needToDisplayCrossBarPropertyPage = false;
+
+                            if (crossbar != null)
+                            {
+                                DisplayPropertyPage(parentWindowForPropertyPage, crossbar);
+                                crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
+                            }
+                        }
+                    }
+                    while (!stopEvent.WaitOne(100, false));
+
+                    mediaControl.Stop();
+                }
             }
             catch (Exception exception)
             {
                 // provide information to clients
                 if (VideoSourceError != null)
+                {
                     VideoSourceError(this, new VideoSourceErrorEventArgs(exception.Message));
-                else throw;
+                }
             }
             finally
             {
@@ -1414,28 +1297,41 @@ namespace UMapx.Video.DirectShow
                 videoSampleGrabber = null;
                 snapshotSampleGrabber = null;
 
-                release(ref graphObject);
-                release(ref sourceObject);
-                release(ref videoGrabberObject);
-                release(ref snapshotGrabberObject);
-                release(ref captureGraphObject);
-                release(ref crossbarObject);
-
-#if !NET35 && !MONO
-                Marshal.CleanupUnusedObjectsInCurrentContext();
-#endif
+                if (graphObject != null)
+                {
+                    Marshal.ReleaseComObject(graphObject);
+                    graphObject = null;
+                }
+                if (sourceObject != null)
+                {
+                    Marshal.ReleaseComObject(sourceObject);
+                    sourceObject = null;
+                }
+                if (videoGrabberObject != null)
+                {
+                    Marshal.ReleaseComObject(videoGrabberObject);
+                    videoGrabberObject = null;
+                }
+                if (snapshotGrabberObject != null)
+                {
+                    Marshal.ReleaseComObject(snapshotGrabberObject);
+                    snapshotGrabberObject = null;
+                }
+                if (captureGraphObject != null)
+                {
+                    Marshal.ReleaseComObject(captureGraphObject);
+                    captureGraphObject = null;
+                }
+                if (crossbarObject != null)
+                {
+                    Marshal.ReleaseComObject(crossbarObject);
+                    crossbarObject = null;
+                }
             }
 
             if (PlayingFinished != null)
-                PlayingFinished(this, reasonToStop);
-        }
-
-        private static void release(ref object obj)
-        {
-            if (obj != null)
             {
-                Marshal.FinalReleaseComObject(obj);
-                obj = null;
+                PlayingFinished(this, reasonToStop);
             }
         }
 
@@ -1445,7 +1341,7 @@ namespace UMapx.Video.DirectShow
             // iterate through device's capabilities to find mediaType for desired resolution
             int capabilitiesCount = 0, capabilitySize = 0;
             AMMediaType newMediaType = null;
-            var caps = new VideoStreamConfigCaps();
+            VideoStreamConfigCaps caps = new VideoStreamConfigCaps();
 
             streamConfig.GetNumberOfCapabilities(out capabilitiesCount, out capabilitySize);
 
@@ -1453,12 +1349,14 @@ namespace UMapx.Video.DirectShow
             {
                 try
                 {
-                    var vc = new VideoCapabilities(streamConfig, i);
+                    VideoCapabilities vc = new VideoCapabilities(streamConfig, i);
 
                     if (resolution == vc || resolution == null)
                     {
                         if (streamConfig.GetStreamCaps(i, out newMediaType, caps) == 0)
+                        {
                             break;
+                        }
                     }
                 }
                 catch
@@ -1480,7 +1378,6 @@ namespace UMapx.Video.DirectShow
 
                 streamConfig.SetFormat(newMediaType);
                 newMediaType.Dispose();
-                newMediaType = null;
             }
         }
 
@@ -1522,54 +1419,54 @@ namespace UMapx.Video.DirectShow
                     SetResolution(streamConfig, resolutionToSet);
                 }
 
-                release(ref streamConfigObject);
+                Marshal.ReleaseComObject(streamConfigObject);
             }
 
             // if failed resolving capabilities, then just create empty capabilities array,
             // so we don't try again
             if (capabilities == null)
+            {
                 capabilities = new VideoCapabilities[0];
+            }
         }
 
         // Display property page for the specified object
         private void DisplayPropertyPage(IntPtr parentWindow, object sourceObject)
         {
-            var caGUID = new CAUUID();
-
             try
             {
                 // retrieve ISpecifyPropertyPages interface of the device
                 ISpecifyPropertyPages pPropPages = (ISpecifyPropertyPages)sourceObject;
 
                 // get property pages from the property bag
+                CAUUID caGUID;
                 pPropPages.GetPages(out caGUID);
 
                 // get filter info
                 FilterInfo filterInfo = new FilterInfo(deviceMoniker);
 
                 // create and display the OlePropertyFrame
-                Win32.OleCreatePropertyFrame(parentWindow, 0, 0, filterInfo.Name, 1,
-                    ref sourceObject, caGUID.cElems, caGUID.pElems, 0, 0, IntPtr.Zero);
+                Win32.OleCreatePropertyFrame(parentWindow, 0, 0, filterInfo.Name, 1, ref sourceObject, caGUID.cElems, caGUID.pElems, 0, 0, IntPtr.Zero);
+
+                // release COM objects
+                Marshal.FreeCoTaskMem(caGUID.pElems);
             }
             catch
             {
             }
-            finally
-            {
-                if (caGUID.pElems != IntPtr.Zero)
-                    Marshal.FreeCoTaskMem(caGUID.pElems);
-            }
         }
 
         // Collect all video inputs of the specified crossbar
-        private VideoInput[] CollectCrossbarVideoInputs(IAMCrossbar crossbar)
+        private VideoInput[] ColletCrossbarVideoInputs(IAMCrossbar crossbar)
         {
             lock (cacheCrossbarVideoInputs)
             {
                 if (cacheCrossbarVideoInputs.ContainsKey(deviceMoniker))
+                {
                     return cacheCrossbarVideoInputs[deviceMoniker];
+                }
 
-                var videoInputsList = new List<VideoInput>();
+                List<VideoInput> videoInputsList = new List<VideoInput>();
 
                 if (crossbar != null)
                 {
@@ -1588,13 +1485,18 @@ namespace UMapx.Video.DirectShow
                                 continue;
 
                             if (type < PhysicalConnectorType.AudioTuner)
+                            {
                                 videoInputsList.Add(new VideoInput(i, type));
+                            }
                         }
                     }
                 }
 
-                var videoInputs = videoInputsList.ToArray();
+                VideoInput[] videoInputs = new VideoInput[videoInputsList.Count];
+                videoInputsList.CopyTo(videoInputs);
+
                 cacheCrossbarVideoInputs.Add(deviceMoniker, videoInputs);
+
                 return videoInputs;
             }
         }
@@ -1634,7 +1536,9 @@ namespace UMapx.Video.DirectShow
                     if (crossbar.get_IsRoutedTo(videoOutputPinIndex, out videoInputPinIndex) == 0)
                     {
                         PhysicalConnectorType inputType;
+
                         crossbar.get_CrossbarPinInfo(true, videoInputPinIndex, out pinIndexRelated, out inputType);
+
                         videoInput = new VideoInput(videoInputPinIndex, inputType);
                     }
                 }
@@ -1687,7 +1591,9 @@ namespace UMapx.Video.DirectShow
                     // try connecting pins
                     if ((videoInputPinIndex != -1) && (videoOutputPinIndex != -1) &&
                          (crossbar.CanRoute(videoOutputPinIndex, videoInputPinIndex) == 0))
+                    {
                         crossbar.Route(videoOutputPinIndex, videoInputPinIndex);
+                    }
                 }
             }
         }
@@ -1696,50 +1602,58 @@ namespace UMapx.Video.DirectShow
         /// Notifies clients about new frame.
         /// </summary>
         /// 
-        /// <param name="args">Event arguments containing the new frame's image.</param>
+        /// <param name="image">New frame's image.</param>
         /// 
-        private void OnNewFrame(NewFrameEventArgs args)
+        private void OnNewFrame(Bitmap image)
         {
             framesReceived++;
-            bytesReceived += args.Frame.Width * args.Frame.Height * (Bitmap.GetPixelFormatSize(args.Frame.PixelFormat) >> 3);
+            bytesReceived += image.Width * image.Height * (Bitmap.GetPixelFormatSize(image.PixelFormat) >> 3);
 
-            if (NewFrame != null && !this.shouldStop)
-                NewFrame(this, args);
+            if ((!stopEvent.WaitOne(0, false)) && (NewFrame != null))
+                NewFrame(this, new NewFrameEventArgs(image));
         }
 
         /// <summary>
         /// Notifies clients about new snapshot frame.
         /// </summary>
         /// 
-        /// <param name="args">Event arguments containing the new frame's image.</param>
+        /// <param name="image">New snapshot's image.</param>
         /// 
-        private void OnSnapshotFrame(NewFrameEventArgs args)
+        private void OnSnapshotFrame(Bitmap image)
         {
-            TimeSpan timeSinceStarted = args.CaptureFinished - args.CaptureStarted;
+            TimeSpan timeSinceStarted = DateTime.Now - startTime;
 
-            // TODO: need to find better way to ignore the first snapshot, 
-            // which is sent automatically (or better disable it)
+            // TODO: need to find better way to ignore the first snapshot, which is sent
+            // automatically (or better disable it)
             if (timeSinceStarted.TotalSeconds >= 4)
             {
-                if (SnapshotFrame != null && !this.shouldStop)
-                    SnapshotFrame(this, args);
+                if ((!stopEvent.WaitOne(0, false)) && (SnapshotFrame != null))
+                    SnapshotFrame(this, new NewFrameEventArgs(image));
             }
         }
 
         //
         // Video grabber
         //
-        private class Grabber : ISampleGrabberCB, IDisposable
+        private class Grabber : ISampleGrabberCB
         {
             private VideoCaptureDevice parent;
             private bool snapshotMode;
+            private int width, height;
             private PixelFormat pixelFormat;
-            private Bitmap image;
-            private NewFrameEventArgs args;
 
-            public int Width { get; set; }
-
-            public int Height { get; set; }
+            // Width property
+            public int Width
+            {
+                get { return width; }
+                set { width = value; }
+            }
+            // Height property
+            public int Height
+            {
+                get { return height; }
+                set { height = value; }
+            }
 
             // Constructor
             public Grabber(VideoCaptureDevice parent, bool snapshotMode, PixelFormat pixelFormat = PixelFormat.Format24bppRgb)
@@ -1760,21 +1674,14 @@ namespace UMapx.Video.DirectShow
             {
                 if (parent.NewFrame != null)
                 {
-                    if (this.image == null)
-                    {
-                        // create new image
-                        this.image = new Bitmap(Width, Height, this.pixelFormat);
-                        this.args = new NewFrameEventArgs(this.image);
-                    }
-
-                    args.CaptureStarted = parent.startTime;
-                    args.CaptureFinished = DateTime.Now;
+                    // create new image
+                    System.Drawing.Bitmap image = new Bitmap(width, height, this.pixelFormat);
 
                     // lock bitmap data
                     BitmapData imageData = image.LockBits(
-                         new Rectangle(0, 0, Width, Height),
-                         ImageLockMode.WriteOnly,
-                         PixelFormat.Format24bppRgb);
+                        new Rectangle(0, 0, width, height),
+                        ImageLockMode.ReadWrite,
+                        this.pixelFormat);
 
                     // copy image data
                     int srcStride = imageData.Stride;
@@ -1782,10 +1689,10 @@ namespace UMapx.Video.DirectShow
 
                     unsafe
                     {
-                        byte* dst = (byte*)imageData.Scan0.ToPointer() + dstStride * (Height - 1);
+                        byte* dst = (byte*)imageData.Scan0.ToPointer() + dstStride * (height - 1);
                         byte* src = (byte*)buffer.ToPointer();
 
-                        for (int y = 0; y < Height; y++)
+                        for (int y = 0; y < height; y++)
                         {
                             Win32.memcpy(dst, src, srcStride);
                             dst -= dstStride;
@@ -1799,79 +1706,19 @@ namespace UMapx.Video.DirectShow
                     // notify parent
                     if (snapshotMode)
                     {
-                        parent.OnSnapshotFrame(args);
+                        parent.OnSnapshotFrame(image);
                     }
                     else
                     {
-                        parent.OnNewFrame(args);
+                        parent.OnNewFrame(image);
                     }
 
-                    args.FrameIndex++;
+                    // release the image
+                    image.Dispose();
                 }
 
                 return 0;
             }
-
-            #region IDisposable Support
-            private bool disposedValue = false;
-
-            protected virtual void Dispose(bool disposing)
-            {
-                if (!disposedValue)
-                {
-                    if (disposing)
-                    {
-                        if (image != null)
-                            image.Dispose();
-                    }
-
-                    image = null;
-
-                    disposedValue = true;
-                }
-            }
-
-            public void Dispose()
-            {
-                Dispose(true);
-            }
-            #endregion
         }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                disposedValue = true;
-
-                if (disposing)
-                {
-                    this.Stop();
-
-                    this.hasFinished.Close();
-                    this.shouldWake.Close();
-                }
-
-                this.thread = null;
-                this.hasFinished = null;
-                this.shouldWake = null;
-            }
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
     }
 }

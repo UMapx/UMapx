@@ -1,7 +1,6 @@
 namespace UMapx.Video
 {
     using System;
-    using System.Drawing;
 
     /// <summary>
     /// Delegate for new frame event handler.
@@ -64,49 +63,27 @@ namespace UMapx.Video
     /// 
     public class NewFrameEventArgs : EventArgs
     {
+        private System.Drawing.Bitmap frame;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NewFrameEventArgs"/> class.
         /// </summary>
         /// 
         /// <param name="frame">New frame.</param>
         /// 
-        public NewFrameEventArgs(Bitmap frame)
+        public NewFrameEventArgs(System.Drawing.Bitmap frame)
         {
-            this.Frame = frame;
-            this.FrameSize = frame.Size;
+            this.frame = frame;
         }
-
-        /// <summary>
-        /// Gets the time when the frame started being captured.
-        /// </summary>
-        /// 
-        public DateTime CaptureStarted { get; set; }
-
-        /// <summary>
-        /// Gets the time when the frame finished being captured.
-        /// </summary>
-        /// 
-        public DateTime CaptureFinished { get; set; }
 
         /// <summary>
         /// New frame from video source.
         /// </summary>
         /// 
-        public Bitmap Frame { get; set; }
-
-        /// <summary>
-        /// Gets the index of this frame since the capturing started.
-        /// </summary>
-        /// 
-        public int FrameIndex { get; set; }
-
-        /// <summary>
-        /// Gets the region of the <see cref="Frame"/> which still contains 
-        /// useful data (it could be that cropping operations have reduced this
-        /// area to a smaller size, which should be reflected by this property).
-        /// </summary>
-        /// 
-        public Size FrameSize { get; set; }
+        public System.Drawing.Bitmap Frame
+        {
+            get { return frame; }
+        }
     }
 
     /// <summary>
@@ -121,24 +98,9 @@ namespace UMapx.Video
         /// <summary>
         /// Initializes a new instance of the <see cref="VideoSourceErrorEventArgs"/> class.
         /// </summary>
-        /// 
         /// <param name="description">Error description.</param>
-        /// 
         public VideoSourceErrorEventArgs(string description)
-            : this(description, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VideoSourceErrorEventArgs"/> class.
-        /// </summary>
-        /// 
-        /// <param name="exception">Error exception.</param>
-        /// 
-        public VideoSourceErrorEventArgs(Exception exception)
-            : this(exception.Message, exception)
-        {
-        }
+            : this(description, null) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VideoSourceErrorEventArgs"/> class.
@@ -165,7 +127,6 @@ namespace UMapx.Video
         /// <summary>
         /// Video source exception causing the error
         /// </summary>
-        /// 
         public Exception Exception
         {
             get { return _exception; }

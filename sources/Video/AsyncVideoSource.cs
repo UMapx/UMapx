@@ -1,7 +1,7 @@
 ﻿namespace UMapx.Video
 {
-    using System;
     using System.Drawing;
+    using System.Drawing.Imaging;
     using System.Threading;
 
     /// <summary>
@@ -52,7 +52,6 @@
     /// </code>
     /// </remarks>
     /// 
-    [Serializable]
     public class AsyncVideoSource : IVideoSource
     {
         private readonly IVideoSource nestedVideoSource = null;
@@ -370,7 +369,7 @@
             }
 
             // pass the image to processing frame and exit
-            lastVideoFrame = (Bitmap)eventArgs.Frame.Clone();
+            lastVideoFrame = CloneImage(eventArgs.Frame);
             isNewFrameAvailable.Set();
         }
 
@@ -388,7 +387,9 @@
                 }
 
                 if (NewFrame != null)
+                {
                     NewFrame(this, new NewFrameEventArgs(lastVideoFrame));
+                }
 
                 lastVideoFrame.Dispose();
                 lastVideoFrame = null;
@@ -397,6 +398,68 @@
                 // we are free now for new image
                 isProcessingThreadAvailable.Set();
             }
+        }
+
+        // Note: image cloning is taken from UMapx.Imaging.Image.Clone() to avoid reference,
+        // which may be unwanted
+
+        private static Bitmap CloneImage(Bitmap source)
+        {
+            // lock source bitmap data
+            BitmapData sourceData = source.LockBits(
+                new Rectangle(0, 0, source.Width, source.Height),
+                ImageLockMode.ReadOnly, source.PixelFormat);
+
+            // create new image
+            Bitmap destination = CloneImage(sourceData);
+
+            // unlock source image
+            source.UnlockBits(sourceData);
+
+            //
+            if (
+                (source.PixelFormat == PixelFormat.Format1bppIndexed) ||
+                (source.PixelFormat == PixelFormat.Format4bppIndexed) ||
+                (source.PixelFormat == PixelFormat.Format8bppIndexed) ||
+                (source.PixelFormat == PixelFormat.Indexed))
+            {
+                ColorPalette srcPalette = source.Palette;
+                ColorPalette dstPalette = destination.Palette;
+
+                int n = srcPalette.Entries.Length;
+
+                // copy pallete
+                for (int i = 0; i < n; i++)
+                {
+                    dstPalette.Entries[i] = srcPalette.Entries[i];
+                }
+
+                destination.Palette = dstPalette;
+            }
+
+            return destination;
+        }
+
+        private static Bitmap CloneImage(BitmapData sourceData)
+        {
+            // get source image size
+            int width = sourceData.Width;
+            int height = sourceData.Height;
+
+            // create new image
+            Bitmap destination = new Bitmap(width, height, sourceData.PixelFormat);
+
+            // lock destination bitmap data
+            BitmapData destinationData = destination.LockBits(
+                new Rectangle(0, 0, width, height),
+                ImageLockMode.ReadWrite, destination.PixelFormat);
+
+            UMapx.SystemTools.CopyUnmanagedMemory(destinationData.Scan0, sourceData.Scan0, height * sourceData.Stride);
+
+            // unlock destination image
+            destination.UnlockBits(destinationData);
+
+            return destination;
         }
     }
 }

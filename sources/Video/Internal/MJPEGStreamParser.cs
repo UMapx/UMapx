@@ -7,7 +7,6 @@
     /// <summary>
     /// Handles functionality related to parsing a MJPEG stream
     /// </summary>
-    [Serializable]
     public class MJPEGStreamParser
     {
         private const int READ_SIZE = 1024;

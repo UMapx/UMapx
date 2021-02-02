@@ -7,7 +7,6 @@
     /// <summary>
     /// Container for MJPEG stream boundaries
     /// </summary>
-    [Serializable]
     public class Boundary
     {
         private readonly static Encoding _encoding = Encoding.ASCII;

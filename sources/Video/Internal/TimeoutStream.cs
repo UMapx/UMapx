@@ -10,7 +10,6 @@
     /// Requires .NET 4.5 or above
     /// Used for .NET Standard 2.0
     /// </summary>
-    [Serializable]
     public class TimeoutStream : Stream
     {
         private const int DEFAULT_TIMEOUT_READ = 30000;

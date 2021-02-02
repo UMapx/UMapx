@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UMapx.Video.DirectShow
+﻿namespace UMapx.Video.DirectShow
 {
     /// <summary>
     /// Video input of a capture board.
@@ -10,7 +8,6 @@ namespace UMapx.Video.DirectShow
     /// which usually provide several inputs.</para>
     /// </remarks>
     /// 
-    [Serializable]
     public class VideoInput
     {
         /// <summary>

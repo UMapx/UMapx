@@ -49,7 +49,6 @@ namespace UMapx.Video
     /// </code>
     /// </remarks>
     /// 
-    [Serializable]
     public class JPEGStream : IVideoSource
 	{
         // URL for JPEG files

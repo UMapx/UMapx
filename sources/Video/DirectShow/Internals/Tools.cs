@@ -1,6 +1,5 @@
 namespace UMapx.Video.DirectShow.Internals
 {
-    using System;
     using System.Runtime.InteropServices;
 
     /// <summary>
