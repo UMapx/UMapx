@@ -58,7 +58,7 @@ namespace UMapx.Imaging
                 if (Frame == null)
                 {
                     // create initial backgroung image
-                    Frame = Data;
+                    Frame = (Bitmap)Data.Clone();
 
                     // just return for the first time
                     return 0.0;
@@ -67,15 +67,18 @@ namespace UMapx.Imaging
                 // creating clone of current frame
                 var temp = (Bitmap)Data.Clone();
 
-                // calculate alarm
+                // lock in memory
                 BitmapData bitmapData = BitmapConverter.Lock32bpp(Data);
                 BitmapData frameData = BitmapConverter.Lock32bpp(Frame);
 
+                // calculate alarm
                 var alarm = ProcessFrame(bitmapData, frameData);
 
+                // unlock
                 Data.Unlock(bitmapData);
                 Frame.Unlock(frameData);
 
+                // update detector
                 Frame.Dispose();
                 Frame = temp;
                 return alarm;

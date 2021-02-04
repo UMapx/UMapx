@@ -21,14 +21,13 @@ namespace UMapx.Imaging
         /// <returns>Icon</returns>
         public static Icon ToIco(this Bitmap b, int size)
         {
-            Bitmap bmp = new Bitmap(b, new Size(size, size));
-            MemoryStream pngstream = new MemoryStream();
-            MemoryStream icostream = new MemoryStream();
+            using Bitmap bmp = new Bitmap(b, new Size(size, size));
+            using MemoryStream pngstream = new MemoryStream();
 
             byte[] pngicon = new byte[] { 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             byte[] png;
 
-            bmp.Save(pngstream, System.Drawing.Imaging.ImageFormat.Png);
+            bmp.Save(pngstream, ImageFormat.Png);
             pngstream.Position = 0;
             png = pngstream.ToArray();
 
@@ -39,11 +38,10 @@ namespace UMapx.Imaging
             pngicon[15] = (byte)(png.Length / 256);
             pngicon[18] = (byte)(pngicon.Length);
 
+            MemoryStream icostream = new MemoryStream();
             icostream.Write(pngicon, 0, pngicon.Length);
             icostream.Write(png, 0, png.Length);
             icostream.Position = 0;
-            bmp.Dispose();
-            pngstream.Dispose();
 
             return new Icon(icostream);
         }
@@ -54,9 +52,8 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public static Bitmap ToJpeg(this Bitmap b)
         {
-            Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Jpeg);
+            b.Save(stream, ImageFormat.Jpeg);
 
             return new Bitmap(stream);
         }
@@ -67,9 +64,8 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public static Bitmap ToBmp(this Bitmap b)
         {
-            Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Bmp);
+            b.Save(stream, ImageFormat.Bmp);
 
             return new Bitmap(stream);
         }
@@ -80,9 +76,8 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public static Bitmap ToGif(this Bitmap b)
         {
-            Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Gif);
+            b.Save(stream, ImageFormat.Gif);
 
             return new Bitmap(stream);
         }
@@ -93,9 +88,8 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public static Bitmap ToPng(this Bitmap b)
         {
-            Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Png);
+            b.Save(stream, ImageFormat.Png);
 
             return new Bitmap(stream);
         }
@@ -106,9 +100,8 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public static Bitmap ToTiff(this Bitmap b)
         {
-            Bitmap bmp = new Bitmap(b);
             MemoryStream stream = new MemoryStream();
-            bmp.Save(stream, ImageFormat.Tiff);
+            b.Save(stream, ImageFormat.Tiff);
 
             return new Bitmap(stream);
         }
@@ -148,7 +141,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="b">Bitmap</param>
         /// <returns>Bitmap data</returns>
-        public static BitmapData Lock8bpp(this Bitmap b)
+        internal static BitmapData Lock8bpp(this Bitmap b)
         {
             return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
         }
