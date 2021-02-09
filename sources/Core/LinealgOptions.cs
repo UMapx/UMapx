@@ -220,11 +220,11 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static float[][] Conv(float[][] A, float[][] B, bool normalize = true)
+        public static double[,] Conv(double[,] A, double[,] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
-            int r0 = B.GetLength(0), r1 = B[0].GetLength(0);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
+            int r0 = B.GetLength(0), r1 = B.GetLength(1);
             int r0p = r0 / 2, r1p = r1 / 2;
 
             if (normalize)
@@ -232,7 +232,7 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    float k, s, div;
+                    double k, s, div;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
@@ -252,11 +252,11 @@ namespace UMapx.Core
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i][j];
+                                k = B[i,j];
 
                                 if (k != 0)
                                 {
-                                    s += A[ir][jr] * k;
+                                    s += A[ir,jr] * k;
                                     div += k;
                                 }
                             }
@@ -267,7 +267,7 @@ namespace UMapx.Core
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -276,7 +276,7 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    float k, s;
+                    double k, s;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
@@ -296,16 +296,16 @@ namespace UMapx.Core
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i][j];
+                                k = B[i,j];
 
                                 if (k != 0)
                                 {
-                                    s += A[ir][jr] * k;
+                                    s += A[ir,jr] * k;
                                 }
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -319,27 +319,26 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] Conv(Complex32[][] A, Complex32[][] B, bool normalize = true)
+        public static Complex[,] Conv(Complex[,] A, Complex[,] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
-            int r0 = B.GetLength(0), r1 = B[0].GetLength(0);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
+            int r0 = B.GetLength(0), r1 = B.GetLength(1);
             int r0p = r0 / 2, r1p = r1 / 2;
-
 
             if (normalize)
             {
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s, div;
+                    Complex k, s, div;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
+                        s = new Complex(0, 0); div = new Complex(0, 0);
                         xr = x - r1p;
 
                         for (i = 0; i < r0; i++)
@@ -352,22 +351,22 @@ namespace UMapx.Core
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i][j];
+                                k = B[i,j];
 
-                                if (k != new Complex32(0, 0))
+                                if (k != new Complex(0, 0))
                                 {
-                                    s += A[ir][jr] * k;
+                                    s += A[ir,jr] * k;
                                     div += k;
                                 }
                             }
                         }
 
-                        if (div != new Complex32(0, 0))
+                        if (div != new Complex(0, 0))
                         {
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -376,14 +375,14 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s;
+                    Complex k, s;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0);
+                        s = new Complex(0, 0);
                         xr = x - r1p;
 
                         for (i = 0; i < r0; i++)
@@ -396,16 +395,16 @@ namespace UMapx.Core
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i][j];
+                                k = B[i,j];
 
-                                if (k != new Complex32(0, 0))
+                                if (k != new Complex(0, 0))
                                 {
-                                    s += A[ir][jr] * k;
+                                    s += A[ir,jr] * k;
                                 }
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -419,27 +418,26 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] Conv(float[][] A, Complex32[][] B, bool normalize = true)
+        public static Complex[,] Conv(double[,] A, Complex[,] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
-            int r0 = B.GetLength(0), r1 = B[0].GetLength(0);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
+            int r0 = B.GetLength(0), r1 = B.GetLength(1);
             int r0p = r0 / 2, r1p = r1 / 2;
-
 
             if (normalize)
             {
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s, div;
+                    Complex k, s, div;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
+                        s = new Complex(0, 0); div = new Complex(0, 0);
                         xr = x - r1p;
 
                         for (i = 0; i < r0; i++)
@@ -452,22 +450,22 @@ namespace UMapx.Core
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i][j];
+                                k = B[i,j];
 
-                                if (k != new Complex32(0, 0))
+                                if (k != new Complex(0, 0))
                                 {
-                                    s += A[ir][jr] * k;
+                                    s += A[ir,jr] * k;
                                     div += k;
                                 }
                             }
                         }
 
-                        if (div != new Complex32(0, 0))
+                        if (div != new Complex(0, 0))
                         {
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -476,14 +474,14 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s;
+                    Complex k, s;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0);
+                        s = new Complex(0, 0);
                         xr = x - r1p;
 
                         for (i = 0; i < r0; i++)
@@ -496,16 +494,16 @@ namespace UMapx.Core
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i][j];
+                                k = B[i,j];
 
-                                if (k != new Complex32(0, 0))
+                                if (k != new Complex(0, 0))
                                 {
-                                    s += A[ir][jr] * k;
+                                    s += A[ir,jr] * k;
                                 }
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -519,28 +517,27 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] Conv(Complex32[][] A, float[][] B, bool normalize = true)
+        public static Complex[,] Conv(Complex[,] A, double[,] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
-            int r0 = B.GetLength(0), r1 = B[0].GetLength(0);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
+            int r0 = B.GetLength(0), r1 = B.GetLength(1);
             int r0p = r0 / 2, r1p = r1 / 2;
-
 
             if (normalize)
             {
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    float k;
-                    Complex32 s, div;
+                    double k;
+                    Complex s, div;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
+                        s = new Complex(0, 0); div = new Complex(0, 0);
                         xr = x - r1p;
 
                         for (i = 0; i < r0; i++)
@@ -553,22 +550,22 @@ namespace UMapx.Core
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i][j];
+                                k = B[i,j];
 
                                 if (k != 0f)
                                 {
-                                    s += A[ir][jr] * k;
+                                    s += A[ir,jr] * k;
                                     div += k;
                                 }
                             }
                         }
 
-                        if (div != new Complex32(0, 0))
+                        if (div != new Complex(0, 0))
                         {
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -577,15 +574,15 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    float k;
-                    Complex32 s;
+                    double k;
+                    Complex s;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0);
+                        s = new Complex(0, 0);
                         xr = x - r1p;
 
                         for (i = 0; i < r0; i++)
@@ -598,16 +595,16 @@ namespace UMapx.Core
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i][j];
+                                k = B[i,j];
 
                                 if (k != 0f)
                                 {
-                                    s += A[ir][jr] * k;
+                                    s += A[ir,jr] * k;
                                 }
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -624,10 +621,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static float[][] ConvHorizontal(float[][] A, float[] B, bool normalize = true)
+        public static double[,] ConvHorizontal(double[,] A, double[] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int r1 = B.GetLength(0);
             int r1p = r1 / 2;
 
@@ -636,7 +633,7 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    float k, s, div;
+                    double k, s, div;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
@@ -656,7 +653,7 @@ namespace UMapx.Core
 
                             if (k != 0)
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                                 div += k;
                             }
                         }
@@ -666,7 +663,7 @@ namespace UMapx.Core
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -675,7 +672,7 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    float k, s;
+                    double k, s;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
@@ -695,11 +692,11 @@ namespace UMapx.Core
 
                             if (k != 0)
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -713,10 +710,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static float[][] ConvVertical(float[][] A, float[] B, bool normalize = true)
+        public static double[,] ConvVertical(double[,] A, double[] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int r0 = B.GetLength(0);
             int r0p = r0 / 2;
 
@@ -725,7 +722,7 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    float k, s, div;
+                    double k, s, div;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
@@ -745,7 +742,7 @@ namespace UMapx.Core
 
                             if (k != 0)
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                                 div += k;
                             }
                         }
@@ -755,7 +752,7 @@ namespace UMapx.Core
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -764,7 +761,7 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    float k, s;
+                    double k, s;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
@@ -784,11 +781,11 @@ namespace UMapx.Core
 
                             if (k != 0)
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -803,10 +800,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] ConvHorizontal(float[][] A, Complex32[] B, bool normalize = true)
+        public static Complex[,] ConvHorizontal(double[,] A, Complex[] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
             int r1 = B.GetLength(0);
             int r1p = r1 / 2;
 
@@ -815,14 +812,14 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s, div;
+                    Complex k, s, div;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
+                        s = new Complex(0, 0); div = new Complex(0, 0);
                         xr = x - r1p;
                         ir = yr;
 
@@ -833,19 +830,19 @@ namespace UMapx.Core
 
                             k = B[j];
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                                 div += k;
                             }
                         }
 
-                        if (div != new Complex32(0, 0))
+                        if (div != new Complex(0, 0))
                         {
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -854,14 +851,14 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s;
+                    Complex k, s;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0);
+                        s = new Complex(0, 0);
                         xr = x - r1p;
                         ir = yr;
 
@@ -872,13 +869,13 @@ namespace UMapx.Core
 
                             k = B[j];
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -892,10 +889,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] ConvVertical(float[][] A, Complex32[] B, bool normalize = true)
+        public static Complex[,] ConvVertical(double[,] A, Complex[] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
             int r0 = B.GetLength(0);
             int r0p = r0 / 2;
 
@@ -904,14 +901,14 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s, div;
+                    Complex k, s, div;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
+                        s = new Complex(0, 0); div = new Complex(0, 0);
 
                         for (i = 0; i < r0; i++)
                         {
@@ -922,19 +919,19 @@ namespace UMapx.Core
 
                             k = B[i];
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                                 div += k;
                             }
                         }
 
-                        if (div != new Complex32(0, 0))
+                        if (div != new Complex(0, 0))
                         {
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -943,14 +940,14 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s;
+                    Complex k, s;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0);
+                        s = new Complex(0, 0);
 
                         for (i = 0; i < r0; i++)
                         {
@@ -961,13 +958,13 @@ namespace UMapx.Core
 
                             k = B[i];
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -982,10 +979,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] ConvHorizontal(Complex32[][] A, Complex32[] B, bool normalize = true)
+        public static Complex[,] ConvHorizontal(Complex[,] A, Complex[] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
             int r1 = B.GetLength(0);
             int r1p = r1 / 2;
 
@@ -994,14 +991,14 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s, div;
+                    Complex k, s, div;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
+                        s = new Complex(0, 0); div = new Complex(0, 0);
                         xr = x - r1p;
                         ir = yr;
 
@@ -1012,19 +1009,19 @@ namespace UMapx.Core
 
                             k = B[j];
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                                 div += k;
                             }
                         }
 
-                        if (div != new Complex32(0, 0))
+                        if (div != new Complex(0, 0))
                         {
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -1033,14 +1030,14 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s;
+                    Complex k, s;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0);
+                        s = new Complex(0, 0);
                         xr = x - r1p;
                         ir = yr;
 
@@ -1051,13 +1048,13 @@ namespace UMapx.Core
 
                             k = B[j];
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -1071,10 +1068,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] ConvVertical(Complex32[][] A, Complex32[] B, bool normalize = true)
+        public static Complex[,] ConvVertical(Complex[,] A, Complex[] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
             int r0 = B.GetLength(0);
             int r0p = r0 / 2;
 
@@ -1083,14 +1080,14 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s, div;
+                    Complex k, s, div;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
+                        s = new Complex(0, 0); div = new Complex(0, 0);
 
                         for (i = 0; i < r0; i++)
                         {
@@ -1101,19 +1098,19 @@ namespace UMapx.Core
 
                             k = B[i];
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                                 div += k;
                             }
                         }
 
-                        if (div != new Complex32(0, 0))
+                        if (div != new Complex(0, 0))
                         {
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -1122,14 +1119,14 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s;
+                    Complex k, s;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0);
+                        s = new Complex(0, 0);
 
                         for (i = 0; i < r0; i++)
                         {
@@ -1140,13 +1137,13 @@ namespace UMapx.Core
 
                             k = B[i];
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -1161,10 +1158,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] ConvHorizontal(Complex32[][] A, float[] B, bool normalize = true)
+        public static Complex[,] ConvHorizontal(Complex[,] A, double[] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
             int r1 = B.GetLength(0);
             int r1p = r1 / 2;
 
@@ -1173,14 +1170,14 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s, div;
+                    Complex k, s, div;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
+                        s = new Complex(0, 0); div = new Complex(0, 0);
                         xr = x - r1p;
                         ir = yr;
 
@@ -1189,21 +1186,21 @@ namespace UMapx.Core
                             jr = xr + j;
                             if (jr < 0) continue; if (jr >= width) break;
 
-                            k = new Complex32((float)B[j], 0);
+                            k = new Complex(B[j], 0);
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                                 div += k;
                             }
                         }
 
-                        if (div != new Complex32(0, 0))
+                        if (div != new Complex(0, 0))
                         {
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -1212,14 +1209,14 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s;
+                    Complex k, s;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0);
+                        s = new Complex(0, 0);
                         xr = x - r1p;
                         ir = yr;
 
@@ -1228,15 +1225,15 @@ namespace UMapx.Core
                             jr = xr + j;
                             if (jr < 0) continue; if (jr >= width) break;
 
-                            k = new Complex32((float)B[j], 0);
+                            k = new Complex((float)B[j], 0);
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -1250,10 +1247,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] ConvVertical(Complex32[][] A, float[] B, bool normalize = true)
+        public static Complex[,] ConvVertical(Complex[,] A, double[] B, bool normalize = true)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
             int r0 = B.GetLength(0);
             int r0p = r0 / 2;
 
@@ -1262,14 +1259,14 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s, div;
+                    Complex k, s, div;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
+                        s = new Complex(0, 0); div = new Complex(0, 0);
 
                         for (i = 0; i < r0; i++)
                         {
@@ -1278,21 +1275,21 @@ namespace UMapx.Core
 
                             jr = x;
 
-                            k = new Complex32((float)B[i], 0);
+                            k = new Complex(B[i], 0);
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                                 div += k;
                             }
                         }
 
-                        if (div != new Complex32(0, 0))
+                        if (div != new Complex(0, 0))
                         {
                             s /= div;
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -1301,14 +1298,14 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    Complex32 k, s;
+                    Complex k, s;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
 
                     for (x = 0; x < width; x++)
                     {
-                        s = new Complex32(0, 0);
+                        s = new Complex(0, 0);
 
                         for (i = 0; i < r0; i++)
                         {
@@ -1317,15 +1314,15 @@ namespace UMapx.Core
 
                             jr = x;
 
-                            k = new Complex32((float)B[i], 0);
+                            k = new Complex(B[i], 0);
 
-                            if (k != new Complex32(0, 0))
+                            if (k != new Complex(0, 0))
                             {
-                                s += A[ir][jr] * k;
+                                s += A[ir,jr] * k;
                             }
                         }
 
-                        H[y][x] = s;
+                        H[y,x] = s;
                     }
                 });
             }
@@ -1342,23 +1339,23 @@ namespace UMapx.Core
         /// <param name="r1">Size</param>
         /// <param name="threshold">Threshold</param>
         /// <returns>Jagged array</returns>
-        public static float[][] MorphHorizontal(float[][] A, int r1, int threshold)
+        public static double[,] MorphHorizontal(double[,] A, int r1, int threshold)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int r1p = r1 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                float[] s;
+                double[] s;
                 int j, x;
                 int xr, yr = y;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = new float[r1];
+                    s = new double[r1];
                     xr = x - r1p;
                     ir = yr;
 
@@ -1367,12 +1364,12 @@ namespace UMapx.Core
                         jr = xr + j;
                         if (jr < 0) continue; if (jr >= width) break;
 
-                        s[j] = A[ir][jr];
+                        s[j] = A[ir,jr];
                     }
 
                     Array.Sort(s);
 
-                    H[y][x] = s[threshold];
+                    H[y,x] = s[threshold];
                 }
             });
 
@@ -1385,23 +1382,23 @@ namespace UMapx.Core
         /// <param name="r0">Size</param>
         /// <param name="threshold">Threshold</param>
         /// <returns>Jagged array</returns>
-        public static float[][] MorphVertical(float[][] A, int r0, int threshold)
+        public static double[,] MorphVertical(double[,] A, int r0, int threshold)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int r0p = r0 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                float[] s;
+                double[] s;
                 int i, x;
                 int yr = y - r0p;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = new float[r0];
+                    s = new double[r0];
 
                     for (i = 0; i < r0; i++)
                     {
@@ -1410,12 +1407,12 @@ namespace UMapx.Core
 
                         jr = x;
 
-                        s[i] = A[ir][jr];
+                        s[i] = A[ir,jr];
                     }
 
                     Array.Sort(s);
 
-                    H[y][x] = s[threshold];
+                    H[y,x] = s[threshold];
                 }
             });
 
@@ -1427,23 +1424,23 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
         /// <returns>Jagged array</returns>
-        public static float[][] MinHorizontal(float[][] A, int r1)
+        public static double[,] MinHorizontal(double[,] A, int r1)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int r1p = r1 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                float s;
+                double s;
                 int j, x;
                 int xr, yr = y;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = float.MaxValue;
+                    s = double.MaxValue;
                     xr = x - r1p;
                     ir = yr;
 
@@ -1452,10 +1449,10 @@ namespace UMapx.Core
                         jr = xr + j;
                         if (jr < 0) continue; if (jr >= width) break;
 
-                        s = (A[ir][jr] < s) ? A[ir][jr] : s;
+                        s = (A[ir,jr] < s) ? A[ir,jr] : s;
                     }
 
-                    H[y][x] = s;
+                    H[y,x] = s;
                 }
             });
 
@@ -1467,23 +1464,23 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
         /// <returns>Jagged array</returns>
-        public static float[][] MinVertical(float[][] A, int r0)
+        public static double[,] MinVertical(double[,] A, int r0)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int r0p = r0 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                float s;
+                double s;
                 int i, x;
                 int yr = y - r0p;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = float.MaxValue;
+                    s = double.MaxValue;
 
                     for (i = 0; i < r0; i++)
                     {
@@ -1492,10 +1489,10 @@ namespace UMapx.Core
 
                         jr = x;
 
-                        s = (A[ir][jr] < s) ? A[ir][jr] : s;
+                        s = (A[ir,jr] < s) ? A[ir,jr] : s;
                     }
 
-                    H[y][x] = s;
+                    H[y,x] = s;
                 }
             });
 
@@ -1507,23 +1504,23 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
         /// <returns>Jagged array</returns>
-        public static float[][] MaxHorizontal(float[][] A, int r1)
+        public static double[,] MaxHorizontal(double[,] A, int r1)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int r1p = r1 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                float s;
+                double s;
                 int j, x;
                 int xr, yr = y;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = float.MinValue;
+                    s = double.MinValue;
                     xr = x - r1p;
                     ir = yr;
 
@@ -1532,10 +1529,10 @@ namespace UMapx.Core
                         jr = xr + j;
                         if (jr < 0) continue; if (jr >= width) break;
 
-                        s = (A[ir][jr] > s) ? A[ir][jr] : s;
+                        s = (A[ir,jr] > s) ? A[ir,jr] : s;
                     }
 
-                    H[y][x] = s;
+                    H[y,x] = s;
                 }
             });
 
@@ -1547,23 +1544,23 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
         /// <returns>Jagged array</returns>
-        public static float[][] MaxVertical(float[][] A, int r0)
+        public static double[,] MaxVertical(double[,] A, int r0)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int r0p = r0 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                float s;
+                double s;
                 int i, x;
                 int yr = y - r0p;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = float.MinValue;
+                    s = double.MinValue;
 
                     for (i = 0; i < r0; i++)
                     {
@@ -1572,10 +1569,10 @@ namespace UMapx.Core
 
                         jr = x;
 
-                        s = (A[ir][jr] > s) ? A[ir][jr] : s;
+                        s = (A[ir,jr] > s) ? A[ir,jr] : s;
                     }
 
-                    H[y][x] = s;
+                    H[y,x] = s;
                 }
             });
 
@@ -1590,39 +1587,39 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
         /// <returns>Jagged array</returns>
-        public static float[][] MeanHorizontal(float[][] A, int r1)
+        public static double[,] MeanHorizontal(double[,] A, int r1)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int h = r1 >= width ? width - 1 : r1;
             int v = h >> 1;
             int dl = width - v;
 
             Parallel.For(0, height, y =>
             {
-                float s = 0;
+                double s = 0;
                 int x;
 
                 for (x = 0; x < h; x++)
                 {
-                    s += A[y][x];
+                    s += A[y, x];
                 }
 
                 for (x = 0; x < v; x++)
                 {
-                    H[y][x] = s / h;
+                    H[y,x] = s / h;
                 }
 
                 for (x = v; x < dl; x++)
                 {
-                    s = s - A[y][x - v] + A[y][x + v];
-                    H[y][x] = s / h;
+                    s = s - A[y, x - v] + A[y, x + v];
+                    H[y, x] = s / h;
                 }
 
                 for (x = dl; x < width; x++)
                 {
-                    s = s - A[y][x - v] + A[y][x];
-                    H[y][x] = s / h;
+                    s = s - A[y, x - v] + A[y, x];
+                    H[y, x] = s / h;
                 }
             });
 
@@ -1634,39 +1631,39 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
         /// <returns>Jagged array</returns>
-        public static float[][] MeanVertical(float[][] A, int r0)
+        public static double[,] MeanVertical(double[,] A, int r0)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            float[][] H = LinealgOptions.ToJagged(new double[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            double[,] H = new double[height, width];
             int h = r0 >= height ? height - 1 : r0;
             int v = h >> 1;
             int dl = height - v;
 
             Parallel.For(0, width, x =>
             {
-                float s = 0;
+                double s = 0;
                 int y;
 
                 for (y = 0; y < h; y++)
                 {
-                    s += A[y][x];
+                    s += A[y, x];
                 }
 
                 for (y = 0; y < v; y++)
                 {
-                    H[y][x] = s / h;
+                    H[y, x] = s / h;
                 }
 
                 for (y = v; y < dl; y++)
                 {
-                    s = s - A[y - v][x] + A[y + v][x];
-                    H[y][x] = s / h;
+                    s = s - A[y - v, x] + A[y + v, x];
+                    H[y, x] = s / h;
                 }
 
                 for (y = dl; y < height; y++)
                 {
-                    s = s - A[y - v][x] + A[y][x];
-                    H[y][x] = s / h;
+                    s = s - A[y - v, x] + A[y, x];
+                    H[y, x] = s / h;
                 }
 
             });
@@ -1679,40 +1676,39 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] MeanHorizontal(Complex32[][] A, int r1)
+        public static Complex[,] MeanHorizontal(Complex[,] A, int r1)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
             int h = r1 >= width ? width - 1 : r1;
             int v = h >> 1;
             int dl = width - v;
 
             Parallel.For(0, height, y =>
             {
-                Complex32 s = new Complex32(0, 0);
+                Complex s = 0;
                 int x;
-
 
                 for (x = 0; x < h; x++)
                 {
-                    s += A[y][x];
+                    s += A[y, x];
                 }
 
                 for (x = 0; x < v; x++)
                 {
-                    H[y][x] = s / h;
+                    H[y, x] = s / h;
                 }
 
                 for (x = v; x < dl; x++)
                 {
-                    s = s - A[y][x - v] + A[y][x + v];
-                    H[y][x] = s / h;
+                    s = s - A[y, x - v] + A[y, x + v];
+                    H[y, x] = s / h;
                 }
 
                 for (x = dl; x < width; x++)
                 {
-                    s = s - A[y][x - v] + A[y][x];
-                    H[y][x] = s / h;
+                    s = s - A[y, x - v] + A[y, x];
+                    H[y, x] = s / h;
                 }
             });
 
@@ -1724,40 +1720,39 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] MeanVertical(Complex32[][] A, int r0)
+        public static Complex[,] MeanVertical(Complex[,] A, int r0)
         {
-            int height = A.GetLength(0), width = A[0].GetLength(0);
-            Complex32[][] H = LinealgOptions.ToJagged(new Complex[height, width]);
+            int height = A.GetLength(0), width = A.GetLength(1);
+            Complex[,] H = new Complex[height, width];
             int h = r0 >= height ? height - 1 : r0;
             int v = h >> 1;
             int dl = height - v;
 
             Parallel.For(0, width, x =>
             {
-                Complex32 s = new Complex32(0, 0);
+                Complex s = 0;
                 int y;
-
 
                 for (y = 0; y < h; y++)
                 {
-                    s += A[y][x];
+                    s += A[y, x];
                 }
 
                 for (y = 0; y < v; y++)
                 {
-                    H[y][x] = s / h;
+                    H[y, x] = s / h;
                 }
 
                 for (y = v; y < dl; y++)
                 {
-                    s = s - A[y - v][x] + A[y + v][x];
-                    H[y][x] = s / h;
+                    s = s - A[y - v, x] + A[y + v, x];
+                    H[y, x] = s / h;
                 }
 
                 for (y = dl; y < height; y++)
                 {
-                    s = s - A[y - v][x] + A[y][x];
-                    H[y][x] = s / h;
+                    s = s - A[y - v, x] + A[y, x];
+                    H[y, x] = s / h;
                 }
 
             });

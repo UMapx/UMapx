@@ -5,111 +5,73 @@ using UMapx.Core;
 namespace UMapx.Transform
 {
     /// <summary>
-    /// Defines the fast Walsh-Hadamard transform.
+    /// Defines the delta transform.
     /// <remarks>
     /// More information can be found on the website:
-    /// http://www.mathworks.com/matlabcentral/fileexchange/6879-fast-walsh-hadamard-transform
+    /// https://en.wikipedia.org/wiki/Delta_encoding
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class FastWalshHadamardTransform : ITransform
+    public class DeltaTransform : ITransform
     {
-        #region Private data
-        /// <summary>
-        /// Processing direction.
-        /// </summary>
-        private Direction direction;
-        /// <summary>
-        /// Normalized transform or not.
-        /// </summary>
-        private bool normalized;
-        #endregion
-
         #region Initialize
         /// <summary>
-        /// Initializes the fast Walsh-Hadamard transform.
+        /// Initializes the delta transform.
         /// </summary>
-        /// <param name="normalized">Normalized transform or not</param>
         /// <param name="direction">Processing direction</param>
-        public FastWalshHadamardTransform(bool normalized = true, Direction direction = Direction.Vertical)
+        public DeltaTransform(Direction direction = Direction.Vertical)
         {
-            this.normalized = normalized; this.direction = direction;
-        }
-        /// <summary>
-        /// Normalized transform or not.
-        /// </summary>
-        public bool Normalized
-        {
-            get
-            {
-                return this.normalized;
-            }
-            set
-            {
-                this.normalized = value;
-            }
+            Direction = direction;
         }
         /// <summary>
         /// Gets or sets the processing direction.
         /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
-        }
+        public Direction Direction { get; set; }
         #endregion
 
-        #region Fast Walsh-Hadamard Transform
+        #region Delta transform
         /// <summary>
-        /// Forward Walsh-Hadamard transform.
+        /// Forward delta transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
-            int N = A.Length;
-            if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
-
             double[] B = (double[])A.Clone();
-            fwht(B);
+            int length = B.Length;
+            double last = 0;
 
-            if (normalized)
+            for (int i = 0; i < length; i++)
             {
-                B = Matrice.Div(B, Math.Sqrt(N));
+                var current = B[i];
+                B[i] = current - last;
+                last = current;
             }
 
             return B;
         }
         /// <summary>
-        /// Backward Walsh-Hadamard transform.
+        /// Backward delta transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
-            int N = B.Length;
-            if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
-
             double[] A = (double[])B.Clone();
-            fwht(A);
+            int length = A.Length;
+            double last = 0;
 
-            if (normalized)
+            for (int i = 0; i < length; i++)
             {
-                A = Matrice.Div(A, Math.Sqrt(N));
+                var delta = A[i];
+                A[i] = delta + last;
+                last = A[i];
             }
 
             return A;
         }
         /// <summary>
-        /// Forward Walsh-Hadamard transform.
+        /// Forward delta transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -119,7 +81,7 @@ namespace UMapx.Transform
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 Parallel.For(0, N, i =>
                 {
@@ -131,7 +93,7 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    fwht(row);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -150,21 +112,15 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fwht(col);
+                    col = Forward(col);
 
                     for (i = 0; i < N; i++)
                     {
                         B[i, j] = col[i];
                     }
-                }
-                );
-
-                if (normalized == true)
-                {
-                    B = Matrice.Div(B, Math.Sqrt(N * M));
-                }
+                });
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
@@ -176,19 +132,13 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fwht(col);
+                    col = Forward(col);
 
                     for (i = 0; i < N; i++)
                     {
                         B[i, j] = col[i];
                     }
-                }
-                );
-
-                if (normalized == true)
-                {
-                    B = Matrice.Div(B, Math.Sqrt(N));
-                }
+                });
             }
             else
             {
@@ -202,24 +152,19 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    fwht(row);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
                         B[i, j] = row[j];
                     }
                 });
-
-                if (normalized == true)
-                {
-                    B = Matrice.Div(B, Math.Sqrt(M));
-                }
             }
 
             return B;
         }
         /// <summary>
-        /// Backward Walsh-Hadamard transform.
+        /// Backward delta transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
@@ -229,7 +174,7 @@ namespace UMapx.Transform
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 Parallel.For(0, M, j =>
                 {
@@ -239,7 +184,7 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    fwht(col);
+                    col = Backward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -257,7 +202,7 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fwht(row);
+                    row = Backward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -265,13 +210,8 @@ namespace UMapx.Transform
                     }
                 }
                 );
-
-                if (normalized == true)
-                {
-                    A = Matrice.Div(A, Math.Sqrt(N * M));
-                }
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
@@ -281,19 +221,13 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    fwht(col);
+                    col = Backward(col);
 
                     for (i = 0; i < N; i++)
                     {
                         A[i, j] = col[i];
                     }
-                }
-                );
-
-                if (normalized == true)
-                {
-                    A = Matrice.Div(A, Math.Sqrt(N));
-                }
+                });
             }
             else
             {
@@ -306,66 +240,59 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fwht(row);
+                    row = Backward(row);
 
                     for (j = 0; j < M; j++)
                     {
                         A[i, j] = row[j];
                     }
                 });
-
-                if (normalized == true)
-                {
-                    A = Matrice.Div(A, Math.Sqrt(M));
-                }
             }
 
             return A;
         }
         /// <summary>
-        /// Forward Walsh-Hadamard transform.
+        /// Forward delta transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
-            int N = A.Length;
-            if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
-
             Complex[] B = (Complex[])A.Clone();
-            fwht(B);
+            int length = B.Length;
+            Complex last = 0;
 
-            if (normalized)
+            for (int i = 0; i < length; i++)
             {
-                B = Matrice.Div(B, Math.Sqrt(N));
+                var current = B[i];
+                B[i] = current - last;
+                last = current;
             }
 
             return B;
         }
         /// <summary>
-        /// Backward Walsh-Hadamard transform.
+        /// Backward delta transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
-            int N = B.Length;
-            if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
-
             Complex[] A = (Complex[])B.Clone();
-            fwht(A);
+            int length = A.Length;
+            Complex last = 0;
 
-            if (normalized)
+            for (int i = 0; i < length; i++)
             {
-                A = Matrice.Div(A, Math.Sqrt(N));
+                var delta = A[i];
+                A[i] = delta + last;
+                last = A[i];
             }
 
             return A;
         }
         /// <summary>
-        /// Forward Walsh-Hadamard transform.
+        /// Forward delta transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -375,7 +302,7 @@ namespace UMapx.Transform
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 Parallel.For(0, N, i =>
                 {
@@ -387,7 +314,7 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    fwht(row);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -406,21 +333,15 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fwht(col);
+                    col = Forward(col);
 
                     for (i = 0; i < N; i++)
                     {
                         B[i, j] = col[i];
                     }
-                }
-                );
-
-                if (normalized == true)
-                {
-                    B = Matrice.Div(B, Math.Sqrt(N * M));
-                }
+                });
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
@@ -432,19 +353,13 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fwht(col);
+                    col = Forward(col);
 
                     for (i = 0; i < N; i++)
                     {
                         B[i, j] = col[i];
                     }
-                }
-                );
-
-                if (normalized == true)
-                {
-                    B = Matrice.Div(B, Math.Sqrt(N));
-                }
+                });
             }
             else
             {
@@ -458,24 +373,19 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    fwht(row);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
                         B[i, j] = row[j];
                     }
                 });
-
-                if (normalized == true)
-                {
-                    B = Matrice.Div(B, Math.Sqrt(M));
-                }
             }
 
             return B;
         }
         /// <summary>
-        /// Backward Walsh-Hadamard transform.
+        /// Backward delta transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
@@ -485,7 +395,7 @@ namespace UMapx.Transform
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 Parallel.For(0, M, j =>
                 {
@@ -495,7 +405,7 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    fwht(col);
+                    col = Backward(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -513,7 +423,7 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fwht(row);
+                    row = Backward(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -521,13 +431,8 @@ namespace UMapx.Transform
                     }
                 }
                 );
-
-                if (normalized == true)
-                {
-                    A = Matrice.Div(A, Math.Sqrt(N * M));
-                }
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
@@ -537,19 +442,13 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    fwht(col);
+                    col = Backward(col);
 
                     for (i = 0; i < N; i++)
                     {
                         A[i, j] = col[i];
                     }
-                }
-                );
-
-                if (normalized == true)
-                {
-                    A = Matrice.Div(A, Math.Sqrt(N));
-                }
+                });
             }
             else
             {
@@ -562,94 +461,16 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fwht(row);
+                    row = Backward(row);
 
                     for (j = 0; j < M; j++)
                     {
                         A[i, j] = row[j];
                     }
                 });
-
-                if (normalized == true)
-                {
-                    A = Matrice.Div(A, Math.Sqrt(M));
-                }
             }
 
             return A;
-        }
-        #endregion
-
-        #region Private data
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="data">Array</param>
-        private void fwht(double[] data)
-        {
-            int N = data.Length;
-            int log2N = (int)Maths.Log2(N);
-            double x_even, x_odd;
-
-            int k0 = N, k1 = 1, k2 = N / 2;
-            int x, y, z, i, j, l;
-
-            for (x = 0; x < log2N; x++)
-            {
-                l = 0;
-
-                for (y = 0; y < k1; y++, l += k0)
-                {
-                    for (z = 0; z < k2; z++)
-                    {
-                        i = z + l; j = i + k2;
-
-                        x_even = data[i];
-                        x_odd = data[j];
-
-                        data[i] = x_even + x_odd;
-                        data[j] = x_even - x_odd;
-                    }
-                }
-
-                k0 /= 2; k1 *= 2; k2 /= 2;
-            }
-            return;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="data">Array</param>
-        private void fwht(Complex[] data)
-        {
-            int N = data.Length;
-            int log2N = (int)Maths.Log2(N);
-            Complex x_even, x_odd;
-
-            int k0 = N, k1 = 1, k2 = N / 2;
-            int x, y, z, i, j, l;
-
-            for (x = 0; x < log2N; x++)
-            {
-                l = 0;
-
-                for (y = 0; y < k1; y++, l += k0)
-                {
-                    for (z = 0; z < k2; z++)
-                    {
-                        i = z + l; j = i + k2;
-
-                        x_even = data[i];
-                        x_odd = data[j];
-
-                        data[i] = x_even + x_odd;
-                        data[j] = x_even - x_odd;
-                    }
-                }
-
-                k0 /= 2; k1 *= 2; k2 /= 2;
-            }
-            return;
         }
         #endregion
     }

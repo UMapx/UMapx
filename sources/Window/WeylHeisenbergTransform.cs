@@ -92,14 +92,61 @@ namespace UMapx.Window
         /// Matrix dimension[N, N], where N = M * L.
         /// </remarks>
         /// </summary>
+        /// <param name="g0">Function</param>
+        /// <param name="M">Number of frequency shifts</param>
+        /// <returns>Matrix</returns>
+        public static Complex[,] Matrix(double[] g0, int M)
+        {
+            int N = g0.Length, L = N / M;
+
+            if (L <= 0)
+                throw new Exception("Number of frequency shifts not defined correctly");
+
+            Complex[,] G = new Complex[N, N];
+            Complex c = 2 * Maths.Pi * Maths.I;
+            double a = M / 2.0;
+
+            Parallel.For(0, N, n =>
+            {
+                double phase = n - a / 2.0;
+                int k, l, u, i, j;
+                Complex exp, psi;
+
+                for (k = 0; k < M; k++)
+                {
+                    exp = Maths.Exp(c * k / M * phase);
+
+                    for (l = 0; l < L; l++)
+                    {
+                        u = l * M + k;
+                        i = Maths.Mod(n - l * M, N);
+                        j = Maths.Mod(n + M / 2 - l * M, N);
+
+                        psi = new Complex(
+                            (g0[i] * exp).Real,
+                            (Maths.I * g0[j] * exp).Real);
+
+                        G[n, u] = psi;
+                    }
+                }
+            });
+
+            return G;
+        }
+        /// <summary>
+        /// Returns the complex Weyl-Heisenberg basis matrix.
+        /// <remarks>
+        /// Matrix dimension[N, N], where N = M * L.
+        /// </remarks>
+        /// </summary>
         /// <param name="window">Windows function</param>
         /// <param name="N">Number of samples</param>
         /// <param name="M">Number of frequency shifts</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] WeylHeisenberg(IWindow window, int N, int M, bool orthogonalize = true)
+        public static Complex[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
         {
-            return WeylHeisenbergTransform.WeylHeisenberg(WeylHeisenbergTransform.GetPacket(window, N), M, orthogonalize);
+            return WeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.GetPacket(window, N), M, orthogonalize);
         }
         /// <summary>
         /// Returns the complex Weyl-Heisenberg basis matrix.
@@ -111,14 +158,16 @@ namespace UMapx.Window
         /// <param name="M">Number of frequency shifts</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] WeylHeisenberg(double[] g0, int M, bool orthogonalize = true)
+        public static Complex[,] Matrix(double[] g0, int M, bool orthogonalize = true)
         {
             if (orthogonalize)
             {
-                return WeylHeisenbergTransform.WeylHeisenberg(WeylHeisenbergTransform.Zak(g0, M), M);
+                ZakTransform zakTransform = new ZakTransform(M);
+
+                return WeylHeisenbergTransform.Matrix(zakTransform.Forward(g0), M);
             }
 
-            return WeylHeisenbergTransform.WeylHeisenberg(g0, M);
+            return WeylHeisenbergTransform.Matrix(g0, M);
         }
         /// <summary>
         /// Returns a vector of window function values.
@@ -171,53 +220,6 @@ namespace UMapx.Window
 
             return w;
         }
-        /// <summary>
-        /// Returns the complex Weyl-Heisenberg basis matrix.
-        /// <remarks>
-        /// Matrix dimension[N, N], where N = M * L.
-        /// </remarks>
-        /// </summary>
-        /// <param name="g0">Function</param>
-        /// <param name="M">Number of frequency shifts</param>
-        /// <returns>Matrix</returns>
-        private static Complex[,] WeylHeisenberg(double[] g0, int M)
-        {
-            int N = g0.Length, L = N / M;
-
-            if (L <= 0)
-                throw new Exception("Number of frequency shifts not defined correctly");
-
-            Complex[,] G = new Complex[N, N];
-            Complex c = 2 * Maths.Pi * Maths.I;
-            double a = M / 2.0;
-
-            Parallel.For(0, N, n =>
-            {
-                double phase = n - a / 2.0;
-                int k, l, u, i, j;
-                Complex exp, psi;
-
-                for (k = 0; k < M; k++)
-                {
-                    exp = Maths.Exp(c * k / M * phase);
-
-                    for (l = 0; l < L; l++)
-                    {
-                        u = l * M + k;
-                        i = Maths.Mod(n - l * M, N);
-                        j = Maths.Mod(n + M / 2 - l * M, N);
-
-                        psi = new Complex(
-                            (g0[i] * exp).Real,
-                            (Maths.I * g0[j] * exp).Real);
-
-                        G[n, u] = psi;
-                    }
-                }
-            });
-
-            return G;
-        }
         #endregion
 
         #region Weyl-Heisenberg Transform
@@ -229,7 +231,7 @@ namespace UMapx.Window
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
-            Complex[,] U = WeylHeisenbergTransform.WeylHeisenberg(this.window, N, this.m, true);
+            Complex[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
             Complex[] B = Matrice.Dot(A, U.Hermitian());
             return B;
         }
@@ -241,7 +243,7 @@ namespace UMapx.Window
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
-            Complex[,] U = WeylHeisenbergTransform.WeylHeisenberg(this.window, N, this.m, true);
+            Complex[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
             Complex[] A = Matrice.Dot(B, U);
             return A;
         }
@@ -253,8 +255,8 @@ namespace UMapx.Window
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            Complex[,] U = WeylHeisenbergTransform.WeylHeisenberg(this.window, N, this.m, true);
-            Complex[,] V = WeylHeisenbergTransform.WeylHeisenberg(this.window, M, this.m, true);
+            Complex[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
+            Complex[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
             Complex[,] B;
 
             if (direction == Direction.Both)
@@ -279,8 +281,8 @@ namespace UMapx.Window
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            Complex[,] U = WeylHeisenbergTransform.WeylHeisenberg(this.window, N, this.m, true);
-            Complex[,] V = WeylHeisenbergTransform.WeylHeisenberg(this.window, M, this.m, true);
+            Complex[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
+            Complex[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
             Complex[,] A;
 
             if (direction == Direction.Both)
@@ -332,150 +334,6 @@ namespace UMapx.Window
         public double[,] Backward(double[,] B)
         {
             throw new NotSupportedException();
-        }
-        #endregion
-
-        #region Zak components
-        private static FourierTransform DFT = new FourierTransform(false, Direction.Vertical);
-        private static FastFourierTransform FFT = new FastFourierTransform(false, Direction.Vertical);
-
-        /// <summary>
-        /// Implements Zak-orthogonalization of the vector.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="M">Number of frequency shifts</param>
-        /// <returns>Array</returns>
-        public static double[] Zak(double[] v, int M)
-        {
-            // Fast shaping orthogonalization algorithm
-            // WH functions using a discrete Zak transform.
-            // V.P. Volchkov, D.A. Petrov and V.M. Asiryan.
-            // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
-
-            int N = v.Length;
-            double[] vort = new double[N];
-            int L = N / M, L2 = L * 2, i, j;
-            Complex[,] G = new Complex[L2, N];
-            Complex[,] Z;
-
-            for (i = 0; i < L2; i++)
-            {
-                for (j = 0; j < N; j++)
-                {
-                    G[i, j] = v[Maths.Mod(j + M / 2 * i, N)];
-                }
-            }
-
-            if (Maths.IsPower(L2, 2))
-            {
-                Z = FFT.Forward(G);
-            }
-            else
-            {
-                Z = DFT.Forward(G);
-            }
-
-            double w = 2 / Math.Sqrt(M);
-            double even, odd, phi;
-            Complex z1, z2;
-
-            for (i = 0; i < L; i++)
-            {
-                for (j = 0; j < N; j++)
-                {
-                    z1 = Z[i, j];
-                    z2 = Z[L + i, j];
-
-                    even = Math.Pow(z1.Abs, 2);
-                    odd = Math.Pow(z2.Abs, 2);
-                    phi = w / Math.Sqrt(even + odd);
-
-                    Z[i, j] = z1 * phi;
-                    Z[L + i, j] = z2 * phi;
-                }
-            }
-
-            Complex sum;
-            for (i = 0; i < N; i++)
-            {
-                sum = 0;
-                for (j = 0; j < L2; j++)
-                {
-                    sum += Z[j, i];
-                }
-                vort[i] = (sum / L2).Real;
-            }
-
-            return vort;
-        }
-        /// <summary>
-        /// Implements Zak-orthogonalization of the vector.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="M">Number of frequency shifts</param>
-        /// <returns>Array</returns>
-        public static Complex[] Zak(Complex[] v, int M)
-        {
-            // Fast shaping orthogonalization algorithm
-            // WH functions using a discrete Zak transform.
-            // V.P. Volchkov, D.A. Petrov and V.M. Asiryan.
-            // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
-
-            int N = v.Length;
-            Complex[] vort = new Complex[N];
-            int L = N / M, L2 = L * 2, i, j;
-            Complex[,] G = new Complex[L2, N];
-            Complex[,] Z;
-
-            for (i = 0; i < L2; i++)
-            {
-                for (j = 0; j < N; j++)
-                {
-                    G[i, j] = v[Maths.Mod(j + M / 2 * i, N)];
-                }
-            }
-
-            if (Maths.IsPower(L2, 2))
-            {
-                Z = FFT.Forward(G);
-            }
-            else
-            {
-                Z = DFT.Forward(G);
-            }
-
-            double w = 2 / Math.Sqrt(M);
-            double even, odd, phi;
-            Complex z1, z2;
-
-            for (i = 0; i < L; i++)
-            {
-                for (j = 0; j < N; j++)
-                {
-                    z1 = Z[i, j];
-                    z2 = Z[L + i, j];
-
-                    even = Math.Pow(z1.Abs, 2);
-                    odd = Math.Pow(z2.Abs, 2);
-                    phi = w / Math.Sqrt(even + odd);
-
-                    Z[i, j] = z1 * phi;
-                    Z[L + i, j] = z2 * phi;
-                }
-            }
-
-            Complex sum;
-            for (i = 0; i < N; i++)
-            {
-                sum = 0;
-                for (j = 0; j < L2; j++)
-                {
-                    sum += Z[j, i];
-                }
-                vort[i] = sum / L2;
-            }
-
-            return vort;
         }
         #endregion
     }

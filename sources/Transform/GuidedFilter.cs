@@ -230,8 +230,8 @@ namespace UMapx.Transform
             double[,] y = Matrice.Pow(input, 2.0);
 
             // Applying fast box filter:
-            BoxFilterOptions.boxf(x, Direction.Both, r);
-            BoxFilterOptions.boxf(y, Direction.Both, r);
+            x = x.Mean(r, r);
+            y = y.Mean(r, r);
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
@@ -251,8 +251,8 @@ namespace UMapx.Transform
                 }
 
             // Applying fast box filter:
-            BoxFilterOptions.boxf(a, Direction.Both, r);
-            BoxFilterOptions.boxf(b, Direction.Both, r);
+            a = a.Mean(r, r);
+            b = b.Mean(r, r);
 
             // Calculating μ(a) * I + μ(b):
             double[,] q = new double[l0, l1];
@@ -278,8 +278,8 @@ namespace UMapx.Transform
             Complex[,] y = Matrice.Pow(input, 2.0);
 
             // Applying fast box filter:
-            BoxFilterOptions.boxf(x, Direction.Both, r);
-            BoxFilterOptions.boxf(y, Direction.Both, r);
+            x = x.Mean(r, r);
+            y = y.Mean(r, r);
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
@@ -299,8 +299,8 @@ namespace UMapx.Transform
                 }
 
             // Applying fast box filter:
-            BoxFilterOptions.boxf(a, Direction.Both, r);
-            BoxFilterOptions.boxf(b, Direction.Both, r);
+            a = a.Mean(r, r);
+            b = b.Mean(r, r);
 
             // Calculating μ(a) * I + μ(b):
             Complex[,] q = new Complex[l0, l1];
@@ -326,8 +326,8 @@ namespace UMapx.Transform
             double[] y = Matrice.Pow(input, 2.0);
 
             // Applying fast box filter:
-            BoxFilterOptions.boxf(x, length, r);
-            BoxFilterOptions.boxf(y, length, r);
+            x = x.Mean(r);
+            y = y.Mean(r);
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
@@ -345,8 +345,8 @@ namespace UMapx.Transform
             }
 
             // Applying fast box filter:
-            BoxFilterOptions.boxf(a, length, r);
-            BoxFilterOptions.boxf(b, length, r);
+            a = a.Mean(r);
+            b = b.Mean(r);
 
             // Calculating μ(a) * I + μ(b):
             double[] q = new double[length];
@@ -371,8 +371,8 @@ namespace UMapx.Transform
             Complex[] y = Matrice.Pow(input, 2.0);
 
             // Applying fast box filter:
-            BoxFilterOptions.boxf(x, length, r);
-            BoxFilterOptions.boxf(y, length, r);
+            x = x.Mean(r);
+            y = y.Mean(r);
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
@@ -390,8 +390,8 @@ namespace UMapx.Transform
             }
 
             // Applying fast box filter:
-            BoxFilterOptions.boxf(a, length, r);
-            BoxFilterOptions.boxf(b, length, r);
+            a = a.Mean(r);
+            b = b.Mean(r);
 
             // Calculating μ(a) * I + μ(b):
             Complex[] q = new Complex[length];

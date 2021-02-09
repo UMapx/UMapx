@@ -87,8 +87,9 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
-            double[] g0 = WeylHeisenbergTransform.Zak(WeylHeisenbergTransform.GetPacket(this.window, A.Length), this.m);
-            return FastWeylHeisenbergTransform.WHT(A, g0, m);
+            double[] g0 = WeylHeisenbergTransform.GetPacket(this.window, A.Length);
+            ZakTransform zakTransform = new ZakTransform(m);
+            return FastWeylHeisenbergTransform.WHT(A, zakTransform.Forward(g0), m);
         }
         /// <summary>
         /// Backward Weyl-Heisenberg transform.
@@ -97,8 +98,9 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
-            double[] g0 = WeylHeisenbergTransform.Zak(WeylHeisenbergTransform.GetPacket(this.window, B.Length), this.m);
-            return FastWeylHeisenbergTransform.IWHT(B, g0, m);
+            double[] g0 = WeylHeisenbergTransform.GetPacket(this.window, B.Length);
+            ZakTransform zakTransform = new ZakTransform(m);
+            return FastWeylHeisenbergTransform.IWHT(B, zakTransform.Forward(g0), m);
         }
         /// <summary>
         /// Forward Weyl-Heisenberg transform.
@@ -110,8 +112,9 @@ namespace UMapx.Window
             Complex[,] B = (Complex[,])A.Clone();
             int N = B.GetLength(0), M = B.GetLength(1);
 
-            double[] g0 = WeylHeisenbergTransform.Zak(WeylHeisenbergTransform.GetPacket(this.window, N), this.m);
-            double[] g1 = WeylHeisenbergTransform.Zak(WeylHeisenbergTransform.GetPacket(this.window, M), this.m);
+            ZakTransform zakTransform = new ZakTransform(m);
+            double[] g0 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, N));
+            double[] g1 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, M));
 
             if (direction == Direction.Both)
             {
@@ -205,8 +208,9 @@ namespace UMapx.Window
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
-            double[] g0 = WeylHeisenbergTransform.Zak(WeylHeisenbergTransform.GetPacket(this.window, N), this.m);
-            double[] g1 = WeylHeisenbergTransform.Zak(WeylHeisenbergTransform.GetPacket(this.window, M), this.m);
+            ZakTransform zakTransform = new ZakTransform(m);
+            double[] g0 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, N));
+            double[] g1 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, M));
 
             if (direction == Direction.Both)
             {

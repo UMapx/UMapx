@@ -244,9 +244,7 @@ namespace UMapx.Transform
                 }
             }
 
-            BoxFilterOptions.boxf(v, Direction.Both, radius);
-
-            return v;
+            return v.Mean(radius, radius);
         }
         /// <summary>
         ///  
@@ -267,9 +265,7 @@ namespace UMapx.Transform
                 v[k + 1] = u[i];
             }
 
-            BoxFilterOptions.boxf(v, r, radius);
-
-            return v;
+            return v.Mean(radius);
         }
         /// <summary>
         /// 
@@ -293,9 +289,7 @@ namespace UMapx.Transform
                 }
             }
 
-            BoxFilterOptions.boxf(v, Direction.Both, radius);
-
-            return v;
+            return v.Mean(radius, radius);
         }
         /// <summary>
         /// 
@@ -315,9 +309,7 @@ namespace UMapx.Transform
                 v[k] = u[i];
             }
 
-            BoxFilterOptions.boxf(v, r, radius);
-
-            return v;
+            return v.Mean(radius);
         }
         /// <summary>
         /// 
@@ -423,9 +415,7 @@ namespace UMapx.Transform
                 }
             }
 
-            BoxFilterOptions.boxf(v, Direction.Both, radius);
-
-            return v;
+            return v.Mean(radius, radius);
         }
         /// <summary>
         /// 
@@ -446,9 +436,7 @@ namespace UMapx.Transform
                 v[k + 1] = u[i];
             }
 
-            BoxFilterOptions.boxf(v, r, radius);
-
-            return v;
+            return v.Mean(radius);
         }
         /// <summary>
         /// 
@@ -472,9 +460,7 @@ namespace UMapx.Transform
                 }
             }
 
-            BoxFilterOptions.boxf(v, Direction.Both, radius);
-
-            return v;
+            return v.Mean(radius, radius);
         }
         /// <summary>
         /// 
@@ -494,9 +480,7 @@ namespace UMapx.Transform
                 v[k] = u[i];
             }
 
-            BoxFilterOptions.boxf(v, r, radius);
-
-            return v;
+            return v.Mean(radius);
         }
         /// <summary>
         /// 

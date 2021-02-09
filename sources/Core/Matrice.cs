@@ -2914,7 +2914,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static double[,] Conv(this double[,] m, double[,] n, bool normalize = true)
         {
-            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            return LinealgOptions.Conv(m, n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -2925,7 +2925,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex[,] Conv(this Complex[,] m, Complex[,] n, bool normalize = true)
         {
-            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            return LinealgOptions.Conv(m, n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -2936,7 +2936,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex[,] Conv(this Complex[,] m, double[,] n, bool normalize = true)
         {
-            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            return LinealgOptions.Conv(m, n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -2947,7 +2947,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex[,] Conv(this double[,] m, Complex[,] n, bool normalize = true)
         {
-            return LinealgOptions.FromJagged(LinealgOptions.Conv(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+            return LinealgOptions.Conv(m, n, normalize);
         }
         #endregion
 
@@ -2965,21 +2965,15 @@ namespace UMapx.Core
             // direction of processing
             if (direction == Direction.Horizontal)
             {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+                return LinealgOptions.ConvHorizontal(m, n, normalize);
             }
             else if (direction == Direction.Vertical)
             {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+                return LinealgOptions.ConvVertical(m, n, normalize);
             }
 
             // both processing
-            float[] nn = LinealgOptions.ToJagged(n);
-            float[][] mm = LinealgOptions.ToJagged(m);
-
-            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
+            return LinealgOptions.ConvVertical(LinealgOptions.ConvHorizontal(m, n, normalize), n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -2994,21 +2988,15 @@ namespace UMapx.Core
             // direction of processing
             if (direction == Direction.Horizontal)
             {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+                return LinealgOptions.ConvHorizontal(m, n, normalize);
             }
             else if (direction == Direction.Vertical)
             {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+                return LinealgOptions.ConvVertical(m, n, normalize);
             }
 
             // both processing
-            LinealgOptions.Complex32[] nn = LinealgOptions.ToJagged(n);
-            float[][] mm = LinealgOptions.ToJagged(m);
-
-            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
+            return LinealgOptions.ConvVertical(LinealgOptions.ConvHorizontal(m, n, normalize), n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -3023,21 +3011,15 @@ namespace UMapx.Core
             // direction of processing
             if (direction == Direction.Horizontal)
             {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+                return LinealgOptions.ConvHorizontal(m, n, normalize);
             }
             else if (direction == Direction.Vertical)
             {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+                return LinealgOptions.ConvVertical(m, n, normalize);
             }
 
             // both processing
-            float[] nn = LinealgOptions.ToJagged(n);
-            LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
-
-            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
+            return LinealgOptions.ConvVertical(LinealgOptions.ConvHorizontal(m, n, normalize), n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -3052,21 +3034,15 @@ namespace UMapx.Core
             // direction of processing
             if (direction == Direction.Horizontal)
             {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvHorizontal(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+                return LinealgOptions.ConvHorizontal(m, n, normalize);
             }
             else if (direction == Direction.Vertical)
             {
-                return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                    LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n), normalize));
+                return LinealgOptions.ConvVertical(m, n, normalize);
             }
 
             // both processing
-            LinealgOptions.Complex32[] nn = LinealgOptions.ToJagged(n);
-            LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
-
-            return LinealgOptions.FromJagged(LinealgOptions.ConvVertical(
-                                             LinealgOptions.ConvHorizontal(mm, nn, normalize), nn, normalize));
+            return LinealgOptions.ConvVertical(LinealgOptions.ConvHorizontal(m, n, normalize), n, normalize);
         }
         #endregion
 
@@ -3079,10 +3055,7 @@ namespace UMapx.Core
         /// <param name="r1">Width radius</param>
         public static double[,] Min(this double[,] m, int r0, int r1)
         {
-            // both processing
-            float[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MinVertical(
-                                             LinealgOptions.MinHorizontal(mm, r1), r0));
+            return LinealgOptions.MinVertical(LinealgOptions.MinHorizontal(m, r1), r0);
         }
         /// <summary>
         /// Returns the matrix result of morphological maximum.
@@ -3092,10 +3065,7 @@ namespace UMapx.Core
         /// <param name="r1">Width radius</param>
         public static double[,] Max(this double[,] m, int r0, int r1)
         {
-            // both processing
-            float[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MaxVertical(
-                                             LinealgOptions.MaxHorizontal(mm, r1), r0));
+            return LinealgOptions.MaxVertical(LinealgOptions.MaxHorizontal(m, r1), r0);
         }
         /// <summary>
         /// Returns the matrix result of morphology.
@@ -3106,10 +3076,7 @@ namespace UMapx.Core
         /// <param name="threshold">Threshold</param>
         public static double[,] Morph(this double[,] m, int r0, int r1, int threshold)
         {
-            // both processing
-            float[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MorphVertical(
-                                             LinealgOptions.MorphHorizontal(mm, r1, threshold), r0, threshold));
+            return LinealgOptions.MorphVertical(LinealgOptions.MorphHorizontal(m, r1, threshold), r0, threshold);
         }
         #endregion
 
@@ -3123,9 +3090,7 @@ namespace UMapx.Core
         public static double[,] Mean(this double[,] m, int r0, int r1)
         {
             // both processing
-            float[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MeanVertical(
-                                             LinealgOptions.MeanHorizontal(mm, r1), r0));
+            return LinealgOptions.MeanVertical(LinealgOptions.MeanHorizontal(m, r1), r0);
         }
         /// <summary>
         /// Returns the result matrix of local averaging.
@@ -3135,10 +3100,7 @@ namespace UMapx.Core
         /// <param name="r1">Width radius</param>
         public static Complex[,] Mean(this Complex[,] m, int r0, int r1)
         {
-            // both processing
-            LinealgOptions.Complex32[][] mm = LinealgOptions.ToJagged(m);
-            return LinealgOptions.FromJagged(LinealgOptions.MeanVertical(
-                                             LinealgOptions.MeanHorizontal(mm, r1), r0));
+            return LinealgOptions.MeanVertical(LinealgOptions.MeanHorizontal(m, r1), r0);
         }
         #endregion
 
@@ -6174,6 +6136,9 @@ namespace UMapx.Core
         public static double[] Mean(this double[] v, int r)
         {
             int l = v.Length;
+            if (l == 1)
+                return v;
+
             double[] output = new double[l];
             int r2 = r >> 1;
             int dl = l - r2;
@@ -6212,6 +6177,9 @@ namespace UMapx.Core
         public static Complex[] Mean(this Complex[] v, int r)
         {
             int l = v.Length;
+            if (l == 1)
+                return v;
+
             Complex[] output = new Complex[l];
             int r2 = r >> 1;
             int dl = l - r2;
