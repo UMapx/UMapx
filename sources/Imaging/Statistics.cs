@@ -247,7 +247,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Integer number</returns>
-        private static int MaxIndex(double[] data)
+        public static int MaxIndex(double[] data)
         {
             int index = 0, length = data.Length - 1, i;
             double maximum = data[index];
@@ -268,7 +268,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Integer number</returns>
-        private static int MaxIndex(int[] data)
+        public static int MaxIndex(int[] data)
         {
             int index = 0, length = data.Length - 1, i;
             int maximum = data[index];
@@ -289,7 +289,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Integer number</returns>
-        private static int MinIndex(double[] data)
+        public static int MinIndex(double[] data)
         {
             int index = 0, length = data.Length - 1, i;
             double minimum = data[index];
@@ -310,7 +310,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Integer number</returns>
-        private static int MinIndex(int[] data)
+        public static int MinIndex(int[] data)
         {
             int index = 0, length = data.Length - 1, i;
             int minimum = data[index];

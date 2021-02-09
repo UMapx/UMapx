@@ -11,7 +11,7 @@ namespace UMapx.Window
     /// The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
     /// Weyl-Heisenberg transforms.
     /// More information can be found on the website:
-    /// https://elibrary.ru/title_about.asp?id=58245
+    /// https://ieeexplore.ieee.org/document/9117707/
     /// </remarks>
     /// </summary>
     [Serializable]

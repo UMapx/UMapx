@@ -1,10 +1,12 @@
-﻿using UMapx.Core;
+﻿using System;
+using UMapx.Core;
 
 namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the multidimensional transform.
     /// </summary>
+    [Serializable]
     public class MultidimensionalTransform
     {
         #region Initialize

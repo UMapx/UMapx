@@ -1,10 +1,12 @@
-﻿using UMapx.Core;
+﻿using System;
+using UMapx.Core;
 
 namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the multidimensional filter.
     /// </summary>
+    [Serializable]
     public class MultidimensionalFilter
     {
         #region Initialize
@@ -17,7 +19,7 @@ namespace UMapx.Transform
             Filter = filter;
         }
         /// <summary>
-        /// Gets or sets transform.
+        /// Gets or sets filter.
         /// </summary>
         public IFilter Filter { get; set; }
         #endregion

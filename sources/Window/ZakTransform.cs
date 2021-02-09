@@ -7,6 +7,7 @@ namespace UMapx.Window
     /// <summary>
     /// Defines the Zak transform.
     /// </summary>
+    [Serializable]
     public class ZakTransform : ITransform
     {
         #region Private data

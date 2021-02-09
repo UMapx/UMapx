@@ -1,17 +1,19 @@
-﻿using UMapx.Core;
+﻿using System;
+using UMapx.Core;
 
 namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the multidimensional pyramid transform.
     /// </summary>
+    [Serializable]
     public class MultidimensionalPyramidTransform
     {
         #region Initialize
         /// <summary>
         /// Initializes the multidimensional pyramid transform.
         /// </summary>
-        /// <param name="transform">ITransform</param>
+        /// <param name="transform">IPyramidTransform</param>
         public MultidimensionalPyramidTransform(IPyramidTransform transform)
         {
             Transform = transform;

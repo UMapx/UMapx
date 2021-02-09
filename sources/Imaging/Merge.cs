@@ -21,9 +21,17 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the merge filter.
         /// </summary>
+        /// <param name="transparency">Transparency [0, 255]</param>
+        public Merge(int transparency = 255)
+        {
+            Transparency = transparency;
+        }
+        /// <summary>
+        /// Initializes the merge filter.
+        /// </summary>
         /// <param name="point">A pair of integers representing an ordered pair of X and Y coordinates</param>
         /// <param name="transparency">Transparency [0, 255]</param>
-        public Merge(PointInt point, int transparency = 128)
+        public Merge(PointInt point, int transparency = 255)
         {
             Point = point;
             Transparency = transparency;
@@ -34,15 +42,11 @@ namespace UMapx.Imaging
         /// <param name="x">Coordinate X</param>
         /// <param name="y">Coordinate Y</param>
         /// <param name="transparency">Transparency [0, 255]</param>
-        public Merge(int x, int y, int transparency)
+        public Merge(int x, int y, int transparency = 255)
         {
             Point = new PointInt(x, y);
             Transparency = transparency;
         }
-        /// <summary>
-        /// Initializes the merge filter.
-        /// </summary>
-        public Merge() { }
         /// <summary>
         /// Gets or sets the transparency value [0, 255].
         /// </summary>

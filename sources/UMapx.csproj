@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/asiryan/UMapx.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/asiryan/UMapx.NET</RepositoryUrl>
     <RepositoryType>Open-source</RepositoryType>
-    <PackageTags>image video signal processing analytics streaming wavelet window analysis matrix decomposition transformation complex algebra</PackageTags>
+    <PackageTags>image video signal processing analytics streaming wavelet fourier analysis matrix decomposition transformation complex algebra</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -21,6 +21,8 @@
     <PackageIcon>umapxnet.png</PackageIcon>
     <AssemblyVersion>4.0.4.1</AssemblyVersion>
     <FileVersion>4.0.4.1</FileVersion>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>umapxnet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

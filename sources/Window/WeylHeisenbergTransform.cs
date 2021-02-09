@@ -9,7 +9,7 @@ namespace UMapx.Window
     /// Defines a group of orthogonal bases and discrete Weyl-Heisenberg transforms.
     /// <remarks>
     /// More information can be found on the website:
-    /// https://elibrary.ru/item.asp?id=29767333
+    /// https://ieeexplore.ieee.org/document/9117707/
     /// </remarks>
     /// </summary>
     [Serializable]
