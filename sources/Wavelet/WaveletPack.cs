@@ -4068,7 +4068,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns Battle-Lemarie wavelet (2).
         /// </summary>
-        public static WaveletPack BattleLemarie2
+        public static WaveletPack BL2
         {
             get
             {
@@ -4082,7 +4082,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns Battle-Lemarie wavelet (4).
         /// </summary>
-        public static WaveletPack BattleLemarie4
+        public static WaveletPack BL4
         {
             get
             {
@@ -4096,7 +4096,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns Battle-Lemarie wavelet (6).
         /// </summary>
-        public static WaveletPack BattleLemarie6
+        public static WaveletPack BL6
         {
             get
             {
