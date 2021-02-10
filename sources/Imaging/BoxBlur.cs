@@ -88,7 +88,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapConverter.Lock32bpp(Data);
             Apply(bmData);
             BitmapConverter.Unlock(Data, bmData);
-            return;
         }
         #endregion
 
