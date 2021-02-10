@@ -19,8 +19,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>umapxnet.png</PackageIcon>
-    <AssemblyVersion>4.0.4.1</AssemblyVersion>
-    <FileVersion>4.0.4.1</FileVersion>
+    <AssemblyVersion>4.0.4.2</AssemblyVersion>
+    <FileVersion>4.0.4.2</FileVersion>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>umapxnet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>

@@ -58,7 +58,6 @@ namespace UMapx.Window
         /// <returns>Double precision floating point number</returns>
         public override double Function(double x, int frameSize)
         {
-            // Вычисление функции:
             double a = G(-0.5) * (G(x + frameSize) + G(x - frameSize));
             double b = G(-0.5 + frameSize) + G(-0.5 - frameSize);
             return G(x) - a / b;
