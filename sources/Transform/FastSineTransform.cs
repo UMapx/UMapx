@@ -7,6 +7,8 @@ namespace UMapx.Transform
     /// <summary>
     /// Defines the fast sine transform.
     /// <remarks>
+    /// NOT RECOMMENDED.
+    /// 
     /// More information can be found on the website:
     /// http://sernam.ru/book_prett1.php?id=91
     /// </remarks>

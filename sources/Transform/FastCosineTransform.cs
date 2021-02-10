@@ -32,7 +32,7 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public FastCosineTransform(Direction direction = Direction.Vertical)
         {
-            this.FFT = new FastFourierTransform(true, Direction.Both);
+            this.FFT = new FastFourierTransform(false, Direction.Both);
             this.direction = direction;
         }
         /// <summary>
@@ -59,23 +59,27 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public double[] Forward(double[] A)
         {
-            int N = A.Length, N2 = N * 2, i, k;
-            Complex[] B = new Complex[N2];
+            int N = A.Length, N2 = N / 2, i, k;
+            Complex[] B = new Complex[N];
 
-            for (i = 0; i < N; i++)
+            for (i = 0; i < N2; i++)
             {
-                B[i] = A[i];
+                var j = 2 * i;
+                B[i     ] = A[j];
+                B[i + N2] = A[N - j - 1];
             }
 
             B = FFT.Forward(B);
 
             double[] C = new double[N];
-            Complex c = -Maths.I * Maths.Pi / N2;
+
+            Complex c = -Maths.I * Maths.Pi / ( 2 * N );
 
             for (k = 0; k < N; k++)
             {
-                C[k] = 2.0 * (B[k] * Maths.Exp(c * k)).Real;
+                C[k] = 2.0 * (B[k] * Maths.Exp(c * k)).Real / Math.Sqrt( 2 * N );
             }
+
             C[0] = C[0] / Math.Sqrt(2); // DCT-I
 
             return C;
@@ -87,25 +91,26 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public double[] Backward(double[] B)
         {
-            int N = B.Length, N2 = N * 2, i, k;
-            Complex[] A = new Complex[N2];
-            double Bk, temp, c = Maths.Pi / N2;
-
-            B[0] /= Math.Sqrt(2); // DCT-I
+            int N = B.Length, N2 = N / 2, i, k;
+            Complex[] A = new Complex[N];
+            Complex c = Maths.I * Maths.Pi / ( 2 * N );
 
             for (k = 0; k < N; k++)
             {
-                Bk = B[k];
-                temp = k * c;
-                A[k] = new Complex(Bk * Math.Cos(temp), Bk * Math.Sin(temp));
+                A[k] = B[k] * Maths.Exp(c * k) * Math.Sqrt(2 * N);
             }
 
+            A[0] /= Math.Sqrt(2); // DCT-I
+
             A = FFT.Backward(A);
+
             double[] C = new double[N];
 
-            for (i = 0; i < N; i++)
+            for (i = 0; i < N2; i++)
             {
-                C[i] = A[i].Real * 2;
+                var j = 2 * i;
+                C[j    ] = A[i        ].Real / N;
+                C[j + 1] = A[N - i - 1].Real / N;
             }
 
             return C;
