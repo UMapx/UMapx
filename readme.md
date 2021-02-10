@@ -42,6 +42,7 @@ using UMapx.Imaging;
 using UMapx.Response;
 using UMapx.Transform;
 using UMapx.Video;
+using UMapx.Visualization;
 using UMapx.Wavelet;
 using UMapx.Window;
 ```
