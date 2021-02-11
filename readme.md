@@ -3,7 +3,7 @@
 **UMapx.NET** is a cross-platform library for digital signal processing and analysis developed in C#.  
 
 # UMapx.NET
-### Contains ready-made software tools:
+### Contains ready-made math tools:
 * color spaces and their transformations,
 * real and complex algebra,
 * statistical distributions,
