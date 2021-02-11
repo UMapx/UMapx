@@ -25,6 +25,10 @@ namespace UMapx.Visualization
         /// Scatter panes.
         /// </summary>
         protected List<GraphPane> ScatterPanes = new List<GraphPane>();
+        /// <summary>
+        /// Image pane.
+        /// </summary>
+        protected Bitmap ImagePane;
         #endregion
 
         #region Control voids and overrides
@@ -124,11 +128,15 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets shapes.
         /// </summary>
-        public bool Shapes { get; set; } = false;
+        public bool Shapes { get; set; } = true;
         /// <summary>
         /// Gets or sets grid.
         /// </summary>
         public bool Grid { get; set; } = false;
+        /// <summary>
+        /// Gets or sets property of auto range axes.
+        /// </summary>
+        public bool AutoRange { get; set; } = true;
         #endregion
 
         #region Figure options and graph options
@@ -136,7 +144,7 @@ namespace UMapx.Visualization
         /// Draws figure to graphics object.
         /// </summary>
         /// <param name="graphics">Graphics</param>
-        public void Show(Graphics graphics)
+        public void Draw(Graphics graphics)
         {
             #region Figure data
             // figure and canvas options
@@ -157,6 +165,49 @@ namespace UMapx.Visualization
             int dw = (figure_width - canvas_width) / 2, dh = (figure_height - canvas_height) / 2;
             #endregion
 
+            #region Autorange
+            //autorange or not?
+            if (ImagePane is object)
+            {
+                xmin = ymin = 0;
+                xmax = size.Width;
+                ymax = size.Height;
+            }
+            else if (AutoRange)
+            {
+                xmin = ymin = double.MaxValue;
+                xmax = ymax = double.MinValue;
+
+                foreach (var pane in PlotPanes)
+                {
+                    xmin = Math.Min(xmin, pane.X.Min());
+                    xmax = Math.Max(xmax, pane.X.Max());
+                    ymin = Math.Min(ymin, pane.Y.Min());
+                    ymax = Math.Max(ymax, pane.Y.Max());
+                }
+
+                foreach (var pane in StemPanes)
+                {
+                    xmin = Math.Min(xmin, pane.X.Min());
+                    xmax = Math.Max(xmax, pane.X.Max());
+                    ymin = Math.Min(ymin, pane.Y.Min());
+                    ymax = Math.Max(ymax, pane.Y.Max());
+                }
+
+                foreach (var pane in ScatterPanes)
+                {
+                    xmin = Math.Min(xmin, pane.X.Min());
+                    xmax = Math.Max(xmax, pane.X.Max());
+                    ymin = Math.Min(ymin, pane.Y.Min());
+                    ymax = Math.Max(ymax, pane.Y.Max());
+                }
+            }
+            else
+            {
+                // user defined rangeX and rangeY
+            }
+            #endregion
+
             #region Numeric marks
             // points:
             double[] X = Points.GetPoints(xmin, xmax, xscale);
@@ -165,7 +216,7 @@ namespace UMapx.Visualization
             using SolidBrush br = new SolidBrush(Style.ColorMarks);
             using Pen pen1 = new Pen(Style.ColorGrid, Style.DepthShapes);
             using Pen pen2 = new Pen(Style.ColorShapes, Style.DepthShapes);
-            int min = Math.Min(dx, dy), s = min / 4;
+            int min = Math.Min(dx, dy), s = min / 8;
             string numerics;
             int xlength, ylength, i;
             int xpoint, ypoint;
@@ -225,91 +276,101 @@ namespace UMapx.Visualization
             #endregion
 
             #region Graph painting
-            float r0 = 3;
-            float radius;
-
-            // Plotting:
-            foreach (var current in PlotPanes)
+            if (ImagePane is object)
             {
-                radius = (current.Depth + r0) * 2;
-
-                switch (current.Type)
-                {
-                    case Symbol.None:
-                        PlotLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
-                        break;
-
-                    case Symbol.Circle:
-                        PlotCircle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, false);
-                        break;
-
-                    case Symbol.Ball:
-                        PlotCircle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, true);
-                        break;
-
-                    case Symbol.Rectangle:
-                        PlotRectangle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, false);
-                        break;
-
-                    case Symbol.Polygon:
-                        PlotRectangle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, true);
-                        break;
-                }
+                // 2D plotting
+                Rectangle rectangle = new Rectangle(0, 0, canvas_width, canvas_height);
+                canvas_grpahics.DrawImage(ImagePane, rectangle);
             }
-            // Stemming:
-            foreach (var current in StemPanes)
+            else
             {
-                radius = (current.Depth + r0) * 2;
+                // 1D plotting
+                float r0 = 4;
+                float radius;
 
-                switch (current.Type)
+                // Plotting:
+                foreach (var current in PlotPanes)
                 {
-                    case Symbol.None:
-                        StemLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
-                        break;
+                    radius = (current.Depth + r0) * 2;
 
-                    case Symbol.Circle:
-                        StemCircle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, false);
-                        break;
+                    switch (current.Type)
+                    {
+                        case Symbol.None:
+                            PlotLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
+                            break;
 
-                    case Symbol.Ball:
-                        StemCircle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, true);
-                        break;
+                        case Symbol.Circle:
+                            PlotCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                            break;
 
-                    case Symbol.Rectangle:
-                        StemRectangle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, false);
-                        break;
+                        case Symbol.Ball:
+                            PlotCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                            break;
 
-                    case Symbol.Polygon:
-                        StemRectangle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, true);
-                        break;
+                        case Symbol.Rectangle:
+                            PlotRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                            break;
+
+                        case Symbol.Polygon:
+                            PlotRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                            break;
+                    }
                 }
-            }
-            // Scattering:
-            foreach (var current in ScatterPanes)
-            {
-                radius = (current.Depth + r0) * 2;
-
-                switch (current.Type)
+                // Stemming:
+                foreach (var current in StemPanes)
                 {
-                    case Symbol.None:
-                        ScatterLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
-                        break;
+                    radius = (current.Depth + r0) * 2;
 
-                    case Symbol.Circle:
-                        ScatterCircle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, false);
-                        break;
+                    switch (current.Type)
+                    {
+                        case Symbol.None:
+                            StemLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
+                            break;
 
-                    case Symbol.Ball:
-                        ScatterCircle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, true);
-                        break;
+                        case Symbol.Circle:
+                            StemCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                            break;
 
-                    case Symbol.Rectangle:
-                        ScatterRectangle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, false);
-                        break;
+                        case Symbol.Ball:
+                            StemCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                            break;
 
-                    case Symbol.Polygon:
-                        ScatterRectangle(canvas_grpahics, current.X, current.Y, 1, current.Color, radius, true);
-                        break;
+                        case Symbol.Rectangle:
+                            StemRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                            break;
+
+                        case Symbol.Polygon:
+                            StemRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                            break;
+                    }
+                }
+                // Scattering:
+                foreach (var current in ScatterPanes)
+                {
+                    radius = (current.Depth + r0) * 2;
+
+                    switch (current.Type)
+                    {
+                        case Symbol.None:
+                            ScatterLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
+                            break;
+
+                        case Symbol.Circle:
+                            ScatterCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                            break;
+
+                        case Symbol.Ball:
+                            ScatterCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                            break;
+
+                        case Symbol.Rectangle:
+                            ScatterRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                            break;
+
+                        case Symbol.Polygon:
+                            ScatterRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                            break;
+                    }
                 }
             }
             #endregion
@@ -345,6 +406,14 @@ namespace UMapx.Visualization
             graphics.DrawImage(figure, new Point(0, 0));
             graphics.DrawImage(canvas, new Point(dw, dh));
             #endregion
+        }
+        /// <summary>
+        /// Show image at the figure.
+        /// </summary>
+        /// <param name="bitmap">Bitmap</param>
+        public void Image(Bitmap bitmap)
+        {
+            ImagePane = (Bitmap)bitmap.Clone();
         }
         /// <summary>
         /// Adds graph pane to continuous plot.
@@ -459,6 +528,8 @@ namespace UMapx.Visualization
             PlotPanes.Clear();
             StemPanes.Clear();
             ScatterPanes.Clear();
+            ImagePane.Dispose();
+            ImagePane = null;
             return;
         }
         #endregion
