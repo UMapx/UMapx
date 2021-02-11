@@ -7,7 +7,7 @@ using UMapx.Core;
 namespace UMapx.Visualization
 {
     /// <summary>
-    /// Defines the figure to plotting in a Cartesian coordinate system. 
+    /// Defines the figure to plotting in a Cartesian coordinate system.
     /// </summary>
     [Serializable]
     public class Figure
@@ -276,13 +276,13 @@ namespace UMapx.Visualization
             #endregion
 
             #region Graph painting
-            if (ImagePane is object)
+            //if (ImagePane is object)
             {
                 // 2D plotting
                 Rectangle rectangle = new Rectangle(0, 0, canvas_width, canvas_height);
                 canvas_grpahics.DrawImage(ImagePane, rectangle);
             }
-            else
+            //else
             {
                 // 1D plotting
                 float r0 = 4;
