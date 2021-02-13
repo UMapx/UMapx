@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using UMapx.Core;
 
 namespace UMapx.Visualization
@@ -1016,7 +1015,7 @@ namespace UMapx.Visualization
         /// <returns></returns>
         private string GetNumString(double num)
         {
-            string numerics = num.ToString("0.00", CultureInfo.InvariantCulture);
+            string numerics = num.ToString("0.00");
             int l1 = numerics.Length - 1;
 
             if (numerics[l1] == '0')

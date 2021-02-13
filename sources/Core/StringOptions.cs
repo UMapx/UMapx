@@ -115,8 +115,8 @@ namespace UMapx.Core
             string u = s.Replace(" ", "");
             int i, k = 0;
             int length = u.Length;
-            string re = "" + u[0];
-            string im = "";
+            string re = string.Empty + u[0];
+            string im = string.Empty;
 
             if (!u.Contains("i"))
             {

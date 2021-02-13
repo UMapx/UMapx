@@ -3842,7 +3842,7 @@
         </member>
         <member name="T:UMapx.Core.Jagged">
             <summary>
-            Uses to work with gear arrays.
+            Uses to work with jagged arrays.
             </summary>
         </member>
         <member name="M:UMapx.Core.Jagged.ToJagged(System.Double[0:,0:])">

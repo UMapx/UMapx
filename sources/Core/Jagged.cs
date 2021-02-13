@@ -3,9 +3,9 @@
 namespace UMapx.Core
 {
     /// <summary>
-    /// Uses to work with gear arrays.
+    /// Uses to work with jagged arrays.
     /// </summary>
-    public static class Jagged
+    internal static class Jagged
     {
         #region Conversions
         /// <summary>
