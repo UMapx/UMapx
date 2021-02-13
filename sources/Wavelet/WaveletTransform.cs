@@ -98,7 +98,7 @@ namespace UMapx.Wavelet
             int nLevels = (int)Math.Min(Maths.Log2(A.Length), this.levels);
 
             // forward multi-scale wavelet transform
-            for (int i = 0; i < this.levels; i++)
+            for (int i = 0; i < nLevels; i++)
             {
                 A = this.dwt(A, i);
             }
@@ -116,7 +116,7 @@ namespace UMapx.Wavelet
             int nLevels = (int)Math.Min(Maths.Log2(B.Length), this.levels);
 
             // backward multi-scale wavelet transform
-            for (int i = this.levels; i > 0; i--)
+            for (int i = nLevels; i > 0; i--)
             {
                 B = this.idwt(B, i);
             }
@@ -137,8 +137,7 @@ namespace UMapx.Wavelet
             double[,] output = (double[,])A.Clone();
             double[] buff2 = new double[DataLen2];
             double[] buff1 = new double[DataLen1];
-            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1),
-                this.levels), DataLen2);
+            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
 
             // do job
             for (int lev = 0; lev < nLevels; lev++)
@@ -182,8 +181,7 @@ namespace UMapx.Wavelet
             double[,] output = (double[,])B.Clone();
             double[] buff1 = new double[DataLen1];
             double[] buff2 = new double[DataLen2];
-            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1),
-    this.levels), DataLen2);
+            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
 
             // do job
             for (int lev = nLevels; lev > 0; lev--)
@@ -219,7 +217,7 @@ namespace UMapx.Wavelet
             int nLevels = (int)Math.Min(Maths.Log2(A.Length), this.levels);
 
             // forward multi-scale wavelet transform
-            for (int i = 0; i < this.levels; i++)
+            for (int i = 0; i < nLevels; i++)
             {
                 A = this.dwt(A, i);
             }
@@ -237,7 +235,7 @@ namespace UMapx.Wavelet
             int nLevels = (int)Math.Min(Maths.Log2(B.Length), this.levels);
 
             // backward multi-scale wavelet transform
-            for (int i = this.levels; i > 0; i--)
+            for (int i = nLevels; i > 0; i--)
             {
                 B = this.idwt(B, i);
             }
@@ -258,8 +256,7 @@ namespace UMapx.Wavelet
             Complex[,] output = (Complex[,])A.Clone();
             Complex[] buff2 = new Complex[DataLen2];
             Complex[] buff1 = new Complex[DataLen1];
-            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1),
-this.levels), DataLen2);
+            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
 
             // do job
             for (int lev = 0; lev < nLevels; lev++)
@@ -303,8 +300,7 @@ this.levels), DataLen2);
             Complex[,] output = (Complex[,])B.Clone();
             Complex[] buff1 = new Complex[DataLen1];
             Complex[] buff2 = new Complex[DataLen2];
-            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1),
-    this.levels), DataLen2);
+            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
 
             // do job
             for (int lev = nLevels; lev > 0; lev--)

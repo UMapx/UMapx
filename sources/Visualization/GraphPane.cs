@@ -9,7 +9,7 @@ namespace UMapx.Visualization
     [Serializable]
     public class GraphPane
     {
-        #region Struct components
+        #region Class components
         /// <summary>
         /// Initializes the graph pane.
         /// </summary>
