@@ -262,104 +262,12 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static double[,] Invert(this double[,] m)
         {
-            int n = m.GetLength(0);
-
-            if (n != m.GetLength(1))
-                throw new Exception("The matrix must be square");
-
-            double[][] z = m.ToJagged();
-            int n2 = n * 2;
-            double[] w;
-            double[] v;
-            double[][] a = new double[n][];
-            int i, j;
-
-            for (i = 0; i < n; i++)
+            if (m.GetLength(0) != m.GetLength(1))
             {
-                w = z[i];
-                v = new double[n2];
-
-                for (j = 0; j < n; j++)
-                {
-                    v[j] = w[j];
-                }
-
-                a[i] = v;
-                a[i][i + n] = 1;
+                return m;
             }
 
-            const double epsilon = 1e-4;
-            int k, c, l, t;
-            double temp, factor, div1, div2;
-
-            for (i = 0; i < n; i++)
-            {
-                v = a[i];
-
-                // first decomposition:
-                for (k = i + 1; k < n; k++)
-                {
-                    w = a[k];
-
-                    if (Math.Abs(w[i]) > epsilon)
-                    {
-                        for (c = 0; c < n2; c++)
-                        {
-                            temp = v[c];
-                            v[c] = w[c];
-                            w[c] = temp;
-                        }
-                        break;
-                    }
-                }
-                {
-                    // second decomposition:
-                    div1 = v[i];
-
-                    for (j = 0; j < n2; j++)
-                    {
-                        if (j != i)
-                        {
-                            v[j] /= div1;
-                        }
-                    }
-
-                    v[i] = 1;
-                    div2 = v[i];
-
-                    for (t = 0; t < n; t++)
-                    {
-                        if (t != i)
-                        {
-                            w = a[t];
-                            factor = w[i] / div2;
-
-                            for (l = 0; l < n2; l++)
-                            {
-                                w[l] -= factor * v[l];
-                            }
-                        }
-                    }
-                }
-            }
-
-            // building invert matrix:
-            double[][] inv = new double[n][];
-
-            for (i = 0; i < n; i++)
-            {
-                w = new double[n];
-                v = a[i];
-
-                for (j = 0; j < n; j++)
-                {
-                    w[j] = v[j + n];
-                }
-
-                inv[i] = w;
-            }
-
-            return inv.FromJagged();
+            return LinealgOptions.FromJagged(LinealgOptions.Invert(LinealgOptions.ToJagged(m)));
         }
         /// <summary>
         /// Implements the transpose of the matrix.
@@ -389,104 +297,12 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex[,] Invert(this Complex[,] m)
         {
-            int n = m.GetLength(0);
-
-            if (n != m.GetLength(1))
-                throw new Exception("The matrix must be square");
-
-            Complex[][] z = m.ToJagged();
-            int n2 = n * 2;
-            Complex[] w;
-            Complex[] v;
-            Complex[][] a = new Complex[n][];
-            int i, j;
-
-            for (i = 0; i < n; i++)
+            if (m.GetLength(0) != m.GetLength(1))
             {
-                w = z[i];
-                v = new Complex[n2];
-
-                for (j = 0; j < n; j++)
-                {
-                    v[j] = w[j];
-                }
-
-                a[i] = v;
-                a[i][i + n] = 1;
+                return m;
             }
 
-            const double epsilon = 1e-4;
-            int k, c, l, t;
-            Complex temp, factor, div1, div2;
-
-            for (i = 0; i < n; i++)
-            {
-                v = a[i];
-
-                // first decomposition:
-                for (k = i + 1; k < n; k++)
-                {
-                    w = a[k];
-
-                    if (Maths.Abs(w[i]) > epsilon)
-                    {
-                        for (c = 0; c < n2; c++)
-                        {
-                            temp = v[c];
-                            v[c] = w[c];
-                            w[c] = temp;
-                        }
-                        break;
-                    }
-                }
-                {
-                    // second decomposition:
-                    div1 = v[i];
-
-                    for (j = 0; j < n2; j++)
-                    {
-                        if (j != i)
-                        {
-                            v[j] /= div1;
-                        }
-                    }
-
-                    v[i] = 1;
-                    div2 = v[i];
-
-                    for (t = 0; t < n; t++)
-                    {
-                        if (t != i)
-                        {
-                            w = a[t];
-                            factor = w[i] / div2;
-
-                            for (l = 0; l < n2; l++)
-                            {
-                                w[l] -= factor * v[l];
-                            }
-                        }
-                    }
-                }
-            }
-
-            // building invert matrix:
-            Complex[][] inv = new Complex[n][];
-
-            for (i = 0; i < n; i++)
-            {
-                w = new Complex[n];
-                v = a[i];
-
-                for (j = 0; j < n; j++)
-                {
-                    w[j] = v[j + n];
-                }
-
-                inv[i] = w;
-            }
-
-            return inv.FromJagged();
+            return LinealgOptions.FromJagged(LinealgOptions.Invert(LinealgOptions.ToJagged(m)));
         }
         /// <summary>
         /// Implements the transpose of the matrix.

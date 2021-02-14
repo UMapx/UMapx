@@ -70,14 +70,14 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="powOf2">Power of 2</param>
         /// <returns>Matrix</returns>
-        public static double[,] Hadamard(int powOf2)
+        public static double[,] Matrix(int powOf2)
         {
             int iterations = powOf2 - 1;
-            double[,] hadamard = WalshHadamardTransform.Hadamard();
+            double[,] hadamard = WalshHadamardTransform.Matrix();
 
             if (iterations > 0)
             {
-                double[,] H = WalshHadamardTransform.Hadamard();
+                double[,] H = WalshHadamardTransform.Matrix();
 
                 for (int i = 0; i < iterations; i++)
                 {
@@ -92,9 +92,9 @@ namespace UMapx.Transform
         /// Implements the construction of the Walsh-Hadamard matrix [2 x 2].
         /// </summary>
         /// <returns>Matrix</returns>
-        public static double[,] Hadamard()
+        public static double[,] Matrix()
         {
-            return (new double[2, 2] { { 1, 1 }, { 1, -1 } });
+            return new double[2, 2] { { 1, 1 }, { 1, -1 } };
         }
         #endregion
 
@@ -112,7 +112,7 @@ namespace UMapx.Transform
                 throw new Exception("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
-            double[,] U = WalshHadamardTransform.Hadamard(n);
+            double[,] U = WalshHadamardTransform.Matrix(n);
             double[] B = Matrice.Dot(A, U);
 
             if (normalized)
@@ -135,7 +135,7 @@ namespace UMapx.Transform
                 throw new Exception("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
-            double[,] U = WalshHadamardTransform.Hadamard(n);
+            double[,] U = WalshHadamardTransform.Matrix(n);
             double[] A = Matrice.Dot(B, U.Transponate());
 
             if (normalized)
@@ -157,8 +157,8 @@ namespace UMapx.Transform
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
                 throw new Exception("Dimension of the signal must be a power of 2");
 
-            double[,] U = WalshHadamardTransform.Hadamard((int)Maths.Log2(N));
-            double[,] V = WalshHadamardTransform.Hadamard((int)Maths.Log2(M));
+            double[,] U = WalshHadamardTransform.Matrix((int)Maths.Log2(N));
+            double[,] V = WalshHadamardTransform.Matrix((int)Maths.Log2(M));
             double[,] B;
 
             if (direction == Direction.Both)
@@ -191,8 +191,8 @@ namespace UMapx.Transform
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
                 throw new Exception("Dimension of the signal must be a power of 2");
 
-            double[,] U = WalshHadamardTransform.Hadamard((int)Maths.Log2(N));
-            double[,] V = WalshHadamardTransform.Hadamard((int)Maths.Log2(M));
+            double[,] U = WalshHadamardTransform.Matrix((int)Maths.Log2(N));
+            double[,] V = WalshHadamardTransform.Matrix((int)Maths.Log2(M));
             double[,] A;
 
             if (direction == Direction.Both)
@@ -226,7 +226,7 @@ namespace UMapx.Transform
                 throw new Exception("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
-            double[,] U = WalshHadamardTransform.Hadamard(n);
+            double[,] U = WalshHadamardTransform.Matrix(n);
             Complex[] B = Matrice.Dot(A, U);
 
             if (normalized)
@@ -249,7 +249,7 @@ namespace UMapx.Transform
                 throw new Exception("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
-            double[,] U = WalshHadamardTransform.Hadamard(n);
+            double[,] U = WalshHadamardTransform.Matrix(n);
             Complex[] A = Matrice.Dot(B, U.Transponate());
 
             if (normalized)
@@ -271,8 +271,8 @@ namespace UMapx.Transform
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
                 throw new Exception("Dimension of the signal must be a power of 2");
 
-            double[,] U = WalshHadamardTransform.Hadamard((int)Maths.Log2(N));
-            double[,] V = WalshHadamardTransform.Hadamard((int)Maths.Log2(M));
+            double[,] U = WalshHadamardTransform.Matrix((int)Maths.Log2(N));
+            double[,] V = WalshHadamardTransform.Matrix((int)Maths.Log2(M));
             Complex[,] B;
 
             if (direction == Direction.Both)
@@ -305,8 +305,8 @@ namespace UMapx.Transform
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
                 throw new Exception("Dimension of the signal must be a power of 2");
 
-            double[,] U = WalshHadamardTransform.Hadamard((int)Maths.Log2(N));
-            double[,] V = WalshHadamardTransform.Hadamard((int)Maths.Log2(M));
+            double[,] U = WalshHadamardTransform.Matrix((int)Maths.Log2(N));
+            double[,] V = WalshHadamardTransform.Matrix((int)Maths.Log2(M));
             Complex[,] A;
 
             if (direction == Direction.Both)

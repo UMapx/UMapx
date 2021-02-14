@@ -70,7 +70,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Fourier(int n)
+        public static Complex[,] Matrix(int n)
         {
             Complex[,] H = new Complex[n, n];
             int i, j;
@@ -95,7 +95,7 @@ namespace UMapx.Transform
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
-            Complex[,] U = FourierTransform.Fourier(N);
+            Complex[,] U = FourierTransform.Matrix(N);
             Complex[] B = Matrice.Dot(A, U);
 
             if (normalized)
@@ -113,7 +113,7 @@ namespace UMapx.Transform
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
-            Complex[,] U = FourierTransform.Fourier(N);
+            Complex[,] U = FourierTransform.Matrix(N);
             Complex[] A = Matrice.Dot(B, U.Hermitian());
 
             if (normalized)
@@ -131,8 +131,8 @@ namespace UMapx.Transform
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            Complex[,] U = FourierTransform.Fourier(N);
-            Complex[,] V = FourierTransform.Fourier(M);
+            Complex[,] U = FourierTransform.Matrix(N);
+            Complex[,] V = FourierTransform.Matrix(M);
             Complex[,] B;
 
             if (direction == Direction.Both)
@@ -161,8 +161,8 @@ namespace UMapx.Transform
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            Complex[,] U = FourierTransform.Fourier(N);
-            Complex[,] V = FourierTransform.Fourier(M);
+            Complex[,] U = FourierTransform.Matrix(N);
+            Complex[,] V = FourierTransform.Matrix(M);
             Complex[,] A;
 
             if (direction == Direction.Both)

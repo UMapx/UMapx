@@ -70,7 +70,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Hartley(int n)
+        public static double[,] Matrix(int n)
         {
             int j, i;
             double[,] H = new double[n, n];
@@ -97,7 +97,7 @@ namespace UMapx.Transform
         public double[] Forward(double[] A)
         {
             int N = A.Length;
-            double[,] U = HartleyTransform.Hartley(N);
+            double[,] U = HartleyTransform.Matrix(N);
             double[] B = Matrice.Dot(A, U);
 
             if (normalized)
@@ -115,7 +115,7 @@ namespace UMapx.Transform
         public double[] Backward(double[] B)
         {
             int N = B.Length;
-            double[,] U = HartleyTransform.Hartley(N);
+            double[,] U = HartleyTransform.Matrix(N);
             double[] A = Matrice.Dot(B, U.Transponate());
 
             if (normalized)
@@ -133,8 +133,8 @@ namespace UMapx.Transform
         public double[,] Forward(double[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            double[,] U = HartleyTransform.Hartley(N);
-            double[,] V = HartleyTransform.Hartley(M);
+            double[,] U = HartleyTransform.Matrix(N);
+            double[,] V = HartleyTransform.Matrix(M);
             double[,] B;
 
             if (direction == Direction.Both)
@@ -163,8 +163,8 @@ namespace UMapx.Transform
         public double[,] Backward(double[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            double[,] U = HartleyTransform.Hartley(N);
-            double[,] V = HartleyTransform.Hartley(M);
+            double[,] U = HartleyTransform.Matrix(N);
+            double[,] V = HartleyTransform.Matrix(M);
             double[,] A;
 
             if (direction == Direction.Both)
@@ -193,7 +193,7 @@ namespace UMapx.Transform
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
-            double[,] U = HartleyTransform.Hartley(N);
+            double[,] U = HartleyTransform.Matrix(N);
             Complex[] B = Matrice.Dot(A, U);
 
             if (normalized)
@@ -211,7 +211,7 @@ namespace UMapx.Transform
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
-            double[,] U = HartleyTransform.Hartley(N);
+            double[,] U = HartleyTransform.Matrix(N);
             Complex[] A = Matrice.Dot(B, U.Transponate());
 
             if (normalized)
@@ -229,8 +229,8 @@ namespace UMapx.Transform
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            double[,] U = HartleyTransform.Hartley(N);
-            double[,] V = HartleyTransform.Hartley(M);
+            double[,] U = HartleyTransform.Matrix(N);
+            double[,] V = HartleyTransform.Matrix(M);
             Complex[,] B;
 
             if (direction == Direction.Both)
@@ -259,8 +259,8 @@ namespace UMapx.Transform
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            double[,] U = HartleyTransform.Hartley(N);
-            double[,] V = HartleyTransform.Hartley(M);
+            double[,] U = HartleyTransform.Matrix(N);
+            double[,] V = HartleyTransform.Matrix(M);
             Complex[,] A;
 
             if (direction == Direction.Both)

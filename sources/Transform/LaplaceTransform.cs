@@ -97,7 +97,7 @@ namespace UMapx.Transform
         /// <param name="sigma">Standard deviation (0, 1)</param>
         /// <param name="backward">Return backward transformation matrix or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Laplace(int n, double sigma, bool backward = false)
+        public static Complex[,] Matrix(int n, double sigma, bool backward = false)
         {
             Complex[,] H = new Complex[n, n];
             double factor;
@@ -141,7 +141,7 @@ namespace UMapx.Transform
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
-            Complex[,] U = LaplaceTransform.Laplace(N, sigma);
+            Complex[,] U = LaplaceTransform.Matrix(N, sigma);
             Complex[] B = Matrice.Dot(A, U);
 
             if (normalized)
@@ -159,7 +159,7 @@ namespace UMapx.Transform
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
-            Complex[,] U = LaplaceTransform.Laplace(N, sigma, true);
+            Complex[,] U = LaplaceTransform.Matrix(N, sigma, true);
             Complex[] A = Matrice.Dot(B, U.Hermitian());
 
             if (normalized)
@@ -177,8 +177,8 @@ namespace UMapx.Transform
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            Complex[,] U = LaplaceTransform.Laplace(N, sigma);
-            Complex[,] V = LaplaceTransform.Laplace(M, sigma);
+            Complex[,] U = LaplaceTransform.Matrix(N, sigma);
+            Complex[,] V = LaplaceTransform.Matrix(M, sigma);
             Complex[,] B;
 
             if (direction == Direction.Both)
@@ -207,8 +207,8 @@ namespace UMapx.Transform
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            Complex[,] U = LaplaceTransform.Laplace(N, sigma, true);
-            Complex[,] V = LaplaceTransform.Laplace(M, sigma, true);
+            Complex[,] U = LaplaceTransform.Matrix(N, sigma, true);
+            Complex[,] V = LaplaceTransform.Matrix(M, sigma, true);
             Complex[,] A;
 
             if (direction == Direction.Both)

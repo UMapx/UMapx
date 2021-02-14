@@ -51,7 +51,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Cosine(int n)
+        public static double[,] Matrix(int n)
         {
             int j, i;
             double[,] H = new double[n, n];
@@ -80,7 +80,7 @@ namespace UMapx.Transform
         public double[] Forward(double[] A)
         {
             int N = A.Length;
-            double[,] U = CosineTransform.Cosine(N);
+            double[,] U = CosineTransform.Matrix(N);
             return Matrice.Dot(A, U);
         }
         /// <summary>
@@ -91,7 +91,7 @@ namespace UMapx.Transform
         public double[] Backward(double[] B)
         {
             int N = B.Length;
-            double[,] U = CosineTransform.Cosine(N);
+            double[,] U = CosineTransform.Matrix(N);
             return Matrice.Dot(B, U.Transponate());
         }
         /// <summary>
@@ -102,8 +102,8 @@ namespace UMapx.Transform
         public double[,] Forward(double[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            double[,] U = CosineTransform.Cosine(N);
-            double[,] V = CosineTransform.Cosine(M);
+            double[,] U = CosineTransform.Matrix(N);
+            double[,] V = CosineTransform.Matrix(M);
 
             if (direction == Direction.Both)
             {
@@ -123,8 +123,8 @@ namespace UMapx.Transform
         public double[,] Backward(double[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            double[,] U = CosineTransform.Cosine(N);
-            double[,] V = CosineTransform.Cosine(M);
+            double[,] U = CosineTransform.Matrix(N);
+            double[,] V = CosineTransform.Matrix(M);
 
             if (direction == Direction.Both)
             {
@@ -144,7 +144,7 @@ namespace UMapx.Transform
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
-            double[,] U = CosineTransform.Cosine(N);
+            double[,] U = CosineTransform.Matrix(N);
             return Matrice.Dot(A, U);
         }
         /// <summary>
@@ -155,7 +155,7 @@ namespace UMapx.Transform
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
-            double[,] U = CosineTransform.Cosine(N);
+            double[,] U = CosineTransform.Matrix(N);
             return Matrice.Dot(B, U.Transponate());
         }
         /// <summary>
@@ -166,8 +166,8 @@ namespace UMapx.Transform
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            double[,] U = CosineTransform.Cosine(N);
-            double[,] V = CosineTransform.Cosine(M);
+            double[,] U = CosineTransform.Matrix(N);
+            double[,] V = CosineTransform.Matrix(M);
 
             if (direction == Direction.Both)
             {
@@ -187,8 +187,8 @@ namespace UMapx.Transform
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            double[,] U = CosineTransform.Cosine(N);
-            double[,] V = CosineTransform.Cosine(M);
+            double[,] U = CosineTransform.Matrix(N);
+            double[,] V = CosineTransform.Matrix(M);
 
             if (direction == Direction.Both)
             {

@@ -113,6 +113,281 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Inversion
+        /// <summary>
+        /// Implements the matrix inversion operation.
+        /// </summary>
+        /// <param name="working">Square matrix</param>
+        /// <returns>Matrix</returns>
+        public static float[][] Invert(float[][] working)
+        {
+            // There are faster ways to do this, but for simplicity
+            // and to get something working quickly, I'll just write a 
+            // simple Gaussian-elimination matrix inverter here, and look 
+            // at speeding things up later.
+            // https://gswce.net/?p=585
+
+            float epsilon = 1e-32f;
+
+            // This routine destroys the matrix it's working on, so I'll first 
+            // make a copy of it, as well as setting up the output matrix invA 
+            // as a unit matrix of the appropriate size:
+            int dimension = working.GetLength(0);
+            float[][] inverse = ToJagged(new double[dimension, dimension]);
+            // C# will set the initial values to zero, so to create a unit
+            // matrix, I just need to fill in the diagonal elements:
+            for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = 1.0f;
+
+            // OK, first convert working to upper triangular form:
+            for (int loop = 0; loop < dimension; loop++) // for each row
+            {
+                int currentRow = loop;
+
+                // First step is pivoting: make sure the biggest element
+                // remaining in any column is on the next row.  First, find
+                // the biggest element remaining in the current column:
+                float biggestSoFar = 0.0f; int biggestRow = currentRow;
+                for (int x = currentRow; x < dimension; x++)
+                {
+                    float sizeOfThis = (float)Maths.Abs(working[x][currentRow]);
+                    if (sizeOfThis > biggestSoFar)
+                    {
+                        biggestSoFar = sizeOfThis;
+                        biggestRow = x;
+                    }
+                }
+
+                // and if this is not at the top, swop the rows of working
+                // and inverse around until it is:
+                if (biggestRow != currentRow)
+                {
+                    float temp;
+                    for (int lop = currentRow; lop < dimension; lop++)
+                    {
+                        temp = working[currentRow][lop];
+                        working[currentRow][lop] = working[biggestRow][lop];
+                        working[biggestRow][lop] = temp;
+                    }
+                    for (int lop = 0; lop < dimension; lop++)
+                    {
+                        temp = inverse[currentRow][lop];
+                        inverse[currentRow][lop] = inverse[biggestRow][lop];
+                        inverse[biggestRow][lop] = temp;
+                    }
+                }
+
+                // Then, go down the matrix subtracting as necessary
+                // to get rid of the lower-triangular elements:
+                for (int lop = currentRow + 1; lop < dimension; lop++)
+                {
+                    // Matrix might be ill-conditioned.  I should check:
+                    if (working[currentRow][currentRow] == 0)
+                    {
+                        working[currentRow][currentRow] = epsilon;
+                    }
+                    float factor = working[lop][currentRow] / working[currentRow][currentRow];
+
+                    // If the matrix is fairly sparse (quite common for this
+                    // application), it might make sense to check that the 
+                    // lower elements are not already zero before doing all
+                    // the scaling and replacing:
+                    if (factor != 0.0)
+                    {
+                        // Only have to do from current row on in working, but due
+                        // to pivoting, might have to do the entire row in inverse:
+                        for (int lp = currentRow; lp < dimension; lp++)
+                            working[lop][lp] -= factor * working[currentRow][lp];
+                        for (int lp = 0; lp < dimension; lp++)
+                            inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                    }
+                }
+                // That's it for this row, now on to the next one...
+            }
+
+            // Now with the working matrix in upper-triangular form, continue the same
+            // process amongst the upper-triangular elements to convert working into
+            // diagonal form:
+            for (int loop = dimension - 1; loop >= 0; loop--) // for each row
+            {
+                int currentRow = loop;
+
+                // Matrix might be ill-conditioned.  I should check:
+                if (working[currentRow][currentRow] == 0)
+                {
+                    working[currentRow][currentRow] = epsilon;
+                }
+
+                // Then, go up the matrix subtracting as necessary to get 
+                // rid of the remaining upper-triangular elements:
+                for (int lop = currentRow - 1; lop >= 0; lop--)
+                {
+                    float factor = working[lop][currentRow] / working[currentRow][currentRow];
+
+                    // There's only one element in working to change (the other elements
+                    // in the row of working are all zero), and that will always be set
+                    // to zero; but you might have to do the entire row in inverse:
+                    working[lop][currentRow] = 0.0f;
+
+                    if (factor != 0.0f)
+                    {
+                        for (int lp = 0; lp < dimension; lp++)
+                        {
+                            inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                        }
+                    }
+                }
+                // That's it for this row, now on to the next one...
+            }
+
+            // Should now have working as a diagonal matrix.  Final thing is 
+            // to scale all the rows:
+            for (int loop = 0; loop < dimension; loop++)
+            {
+                float scale = working[loop][loop];
+                for (int lop = 0; lop < dimension; lop++) inverse[loop][lop] /= scale;
+            }
+
+            // That's it.  inverse should now be the inverse of the original matrix.
+            return inverse;
+        }
+        /// <summary>
+        /// Implements the matrix inversion operation.
+        /// </summary>
+        /// <param name="working">Square matrix</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[][] Invert(Complex32[][] working)
+        {
+            // There are faster ways to do this, but for simplicity
+            // and to get something working quickly, I'll just write a 
+            // simple Gaussian-elimination matrix inverter here, and look 
+            // at speeding things up later.
+            // https://gswce.net/?p=585
+
+            float epsilon = 1e-32f;
+
+            // This routine destroys the matrix it's working on, so I'll first 
+            // make a copy of it, as well as setting up the output matrix invA 
+            // as a unit matrix of the appropriate size:
+            int dimension = working.GetLength(0);
+            Complex32[][] inverse = ToJagged(new Complex[dimension, dimension]);
+            // C# will set the initial values to zero, so to create a unit
+            // matrix, I just need to fill in the diagonal elements:
+            for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = new Complex32(1.0f, 0);
+
+            // OK, first convert working to upper triangular form:
+            for (int loop = 0; loop < dimension; loop++) // for each row
+            {
+                int currentRow = loop;
+
+                // First step is pivoting: make sure the biggest element
+                // remaining in any column is on the next row.  First, find
+                // the biggest element remaining in the current column:
+                float biggestSoFar = 0.0f; int biggestRow = currentRow;
+                for (int x = currentRow; x < dimension; x++)
+                {
+                    float sizeOfThis = working[x][currentRow].Abs;
+                    if (sizeOfThis > biggestSoFar)
+                    {
+                        biggestSoFar = sizeOfThis;
+                        biggestRow = x;
+                    }
+                }
+
+                // and if this is not at the top, swop the rows of working
+                // and inverse around until it is:
+                if (biggestRow != currentRow)
+                {
+                    Complex32 temp;
+                    for (int lop = currentRow; lop < dimension; lop++)
+                    {
+                        temp = working[currentRow][lop];
+                        working[currentRow][lop] = working[biggestRow][lop];
+                        working[biggestRow][lop] = temp;
+                    }
+                    for (int lop = 0; lop < dimension; lop++)
+                    {
+                        temp = inverse[currentRow][lop];
+                        inverse[currentRow][lop] = inverse[biggestRow][lop];
+                        inverse[biggestRow][lop] = temp;
+                    }
+                }
+
+                // Then, go down the matrix subtracting as necessary
+                // to get rid of the lower-triangular elements:
+                for (int lop = currentRow + 1; lop < dimension; lop++)
+                {
+                    // Matrix might be ill-conditioned.  I should check:
+                    if (working[currentRow][currentRow] == new Complex32(0, 0))
+                    {
+                        working[currentRow][currentRow] = new Complex32(epsilon, 0);
+                    }
+                    Complex32 factor = working[lop][currentRow] / working[currentRow][currentRow];
+
+                    // If the matrix is fairly sparse (quite common for this
+                    // application), it might make sense to check that the 
+                    // lower elements are not already zero before doing all
+                    // the scaling and replacing:
+                    if (factor != new Complex32(0, 0))
+                    {
+                        // Only have to do from current row on in working, but due
+                        // to pivoting, might have to do the entire row in inverse:
+                        for (int lp = currentRow; lp < dimension; lp++)
+                            working[lop][lp] -= factor * working[currentRow][lp];
+                        for (int lp = 0; lp < dimension; lp++)
+                            inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                    }
+                }
+                // That's it for this row, now on to the next one...
+            }
+
+            // Now with the working matrix in upper-triangular form, continue the same
+            // process amongst the upper-triangular elements to convert working into
+            // diagonal form:
+            for (int loop = dimension - 1; loop >= 0; loop--) // for each row
+            {
+                int currentRow = loop;
+
+                // Matrix might be ill-conditioned.  I should check:
+                if (working[currentRow][currentRow] == new Complex32(0, 0))
+                {
+                    working[currentRow][currentRow] = new Complex32(epsilon, 0);
+                }
+
+                // Then, go up the matrix subtracting as necessary to get 
+                // rid of the remaining upper-triangular elements:
+                for (int lop = currentRow - 1; lop >= 0; lop--)
+                {
+                    Complex32 factor = working[lop][currentRow] / working[currentRow][currentRow];
+
+                    // There's only one element in working to change (the other elements
+                    // in the row of working are all zero), and that will always be set
+                    // to zero; but you might have to do the entire row in inverse:
+                    working[lop][currentRow] = new Complex32(0, 0);
+
+                    if (factor != new Complex32(0, 0))
+                    {
+                        for (int lp = 0; lp < dimension; lp++)
+                        {
+                            inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                        }
+                    }
+                }
+                // That's it for this row, now on to the next one...
+            }
+
+            // Should now have working as a diagonal matrix.  Final thing is 
+            // to scale all the rows:
+            for (int loop = 0; loop < dimension; loop++)
+            {
+                Complex32 scale = working[loop][loop];
+                for (int lop = 0; lop < dimension; lop++) inverse[loop][lop] /= scale;
+            }
+
+            // That's it.  inverse should now be the inverse of the original matrix.
+            return inverse;
+        }
+        #endregion
+
         #region Multiplication
         /// <summary>
         /// Implements the multiplication of matrices presented in the form of jagged arrays.
@@ -1953,6 +2228,26 @@ namespace UMapx.Core
             public Complex32(float re, float im)
             {
                 this.Real = re; this.Imag = im;
+            }
+            /// <summary>
+            /// Gets the value of the module.
+            /// </summary>
+            public float Abs
+            {
+                get
+                {
+                    return (float)Math.Sqrt(Real * Real + Imag * Imag);
+                }
+            }
+            /// <summary>
+            /// Gets the value of the phase.
+            /// </summary>
+            public float Angle
+            {
+                get
+                {
+                    return (float)Math.Atan2(Imag, Real);
+                }
             }
             #endregion
 

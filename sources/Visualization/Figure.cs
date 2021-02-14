@@ -123,7 +123,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets the scale factor for the canvas [0.5, 0.8]. 
         /// </summary>
-        public double Scaling { get; set; } = 0.8;
+        public double Scaling { get; set; } = 0.7;
         /// <summary>
         /// Gets or sets shapes.
         /// </summary>
@@ -275,7 +275,7 @@ namespace UMapx.Visualization
             #endregion
 
             #region Graph painting
-            //if (ImagePane is object)
+            if (ImagePane is object)
             {
                 // 2D plotting
                 Rectangle rectangle = new Rectangle(0, 0, canvas_width, canvas_height);
