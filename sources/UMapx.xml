@@ -31487,24 +31487,22 @@
         <member name="T:UMapx.Wavelet.WaveletFilter">
             <summary>
             Defines the wavelet filter.
+            <remarks>
+            For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
+            
+            </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletFilter.#ctor(UMapx.Wavelet.WaveletTransform,System.Double,System.Double)">
+        <member name="M:UMapx.Wavelet.WaveletFilter.#ctor(UMapx.Wavelet.WaveletDecomposition,System.Double)">
             <summary>
             Initializes the wavelet filter.
             </summary>
-            <param name="dwt">Discrete wavelet transform</param>
+            <param name="waveletDecomposition">Discrete wavelet decomposition</param>
             <param name="factor">Factor [-1, 1]</param>
-            <param name="accuracy">Accuracy [0, 1]</param>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletFilter.DWT">
+        <member name="P:UMapx.Wavelet.WaveletFilter.WaveletDecomposition">
             <summary>
             Gets or sets the discrete wavelet transform.
-            </summary>
-        </member>
-        <member name="P:UMapx.Wavelet.WaveletFilter.Accuracy">
-            <summary>
-            Gets or sets the accuracy of the filter [0, 1].
             </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletFilter.Factor">
@@ -31535,22 +31533,6 @@
             Implements a wavelet filter.
             </summary>
             <param name="data">Array</param>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletFilter.GetLength(System.Int32,System.Int32)">
-            <summary>
-            Returns the length value for transform.
-            </summary>
-            <param name="n">Length</param>
-            <param name="levels">Number of levels</param>
-            <returns>Length</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletFilter.GetMaxLevels(System.Int32,System.Int32)">
-            <summary>
-            Returns max levels of 2^K transform.
-            </summary>
-            <param name="n">Length</param>
-            <param name="levels">Levels</param>
-            <returns>New length</returns>
         </member>
         <member name="T:UMapx.Wavelet.WaveletPack">
             <summary>
