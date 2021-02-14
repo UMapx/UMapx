@@ -21049,87 +21049,6 @@
             <param name="w">Frequency (rad / s)</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="T:UMapx.Transform.CompressFilter">
-            <summary>
-            Defines the compression filter by threshold value.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.CompressFilter.threshold">
-            <summary>
-            Threshold value.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.CompressFilter.compresstype">
-            <summary>
-            Compress type.
-            </summary>
-        </member>
-        <member name="M:UMapx.Transform.CompressFilter.#ctor">
-            <summary>
-            Initializes the compression filter by threshold value.
-            </summary>
-        </member>
-        <member name="M:UMapx.Transform.CompressFilter.#ctor(System.Double,UMapx.Transform.CompressFilter.Compress)">
-            <summary>
-            Initializes the compression filter by threshold value.
-            </summary>
-            <param name="threshold">Threshold value</param>
-            <param name="compresstype">Compress type</param>
-        </member>
-        <member name="P:UMapx.Transform.CompressFilter.CompressType">
-            <summary>
-            Gets or sets the compress type.
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.CompressFilter.Threshold">
-            <summary>
-            Gets or sets the threshold value.
-            </summary>
-        </member>
-        <member name="M:UMapx.Transform.CompressFilter.Apply(System.Double[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Array</param>
-        </member>
-        <member name="M:UMapx.Transform.CompressFilter.Apply(UMapx.Core.Complex[])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Array</param>
-        </member>
-        <member name="M:UMapx.Transform.CompressFilter.Apply(System.Double[0:,0:])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix</param>
-        </member>
-        <member name="M:UMapx.Transform.CompressFilter.Apply(UMapx.Core.Complex[0:,0:])">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="data">Matrix</param>
-        </member>
-        <member name="T:UMapx.Transform.CompressFilter.Compress">
-            <summary>
-            Defines the compress type.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.CompressFilter.Compress.Abs">
-            <summary>
-            Absolute compression.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.CompressFilter.Compress.Under">
-            <summary>
-            ompression of values is less than threshold.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.CompressFilter.Compress.Over">
-            <summary>
-            Compression of values is greater than the threshold.
-            </summary>
-        </member>
         <member name="T:UMapx.Transform.CosineTransform">
             <summary>
             Defines the cosine transform.
@@ -23718,6 +23637,87 @@
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
+        </member>
+        <member name="T:UMapx.Transform.ThresholdFilter">
+            <summary>
+            Defines the threshold filter.
+            </summary>
+        </member>
+        <member name="F:UMapx.Transform.ThresholdFilter.threshold">
+            <summary>
+            Threshold value.
+            </summary>
+        </member>
+        <member name="F:UMapx.Transform.ThresholdFilter.type">
+            <summary>
+            Threshold type.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.ThresholdFilter.#ctor">
+            <summary>
+            Initializes the threshold filter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.ThresholdFilter.#ctor(System.Double,UMapx.Transform.ThresholdFilter.ThresholdType)">
+            <summary>
+            Initializes the threshold filter.
+            </summary>
+            <param name="threshold">Threshold value</param>
+            <param name="type">Compress type</param>
+        </member>
+        <member name="P:UMapx.Transform.ThresholdFilter.Type">
+            <summary>
+            Gets or sets the threshold type.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.ThresholdFilter.Threshold">
+            <summary>
+            Gets or sets the threshold value.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.ThresholdFilter.Apply(System.Double[])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Array</param>
+        </member>
+        <member name="M:UMapx.Transform.ThresholdFilter.Apply(UMapx.Core.Complex[])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Array</param>
+        </member>
+        <member name="M:UMapx.Transform.ThresholdFilter.Apply(System.Double[0:,0:])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Matrix</param>
+        </member>
+        <member name="M:UMapx.Transform.ThresholdFilter.Apply(UMapx.Core.Complex[0:,0:])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Matrix</param>
+        </member>
+        <member name="T:UMapx.Transform.ThresholdFilter.ThresholdType">
+            <summary>
+            Defines the threshold type.
+            </summary>
+        </member>
+        <member name="F:UMapx.Transform.ThresholdFilter.ThresholdType.Abs">
+            <summary>
+            Absolute.
+            </summary>
+        </member>
+        <member name="F:UMapx.Transform.ThresholdFilter.ThresholdType.Under">
+            <summary>
+            Under.
+            </summary>
+        </member>
+        <member name="F:UMapx.Transform.ThresholdFilter.ThresholdType.Over">
+            <summary>
+            Over.
+            </summary>
         </member>
         <member name="T:UMapx.Transform.WalshHadamardTransform">
             <summary>
@@ -31489,7 +31489,7 @@
             Defines the wavelet filter.
             <remarks>
             For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
-            
+            It is recommended to use Coiflets (C1, C2, C3, C4 and C5).
             </remarks>
             </summary>
         </member>

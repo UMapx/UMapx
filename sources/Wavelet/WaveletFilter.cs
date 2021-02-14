@@ -8,7 +8,7 @@ namespace UMapx.Wavelet
     /// Defines the wavelet filter.
     /// <remarks>
     /// For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
-    /// 
+    /// It is recommended to use Coiflets (C1, C2, C3, C4 and C5).
     /// </remarks>
     /// </summary>
     [Serializable]
@@ -89,7 +89,6 @@ namespace UMapx.Wavelet
         /// Implements a wavelet filter.
         /// </summary>
         /// <param name="data">Array</param>
-
         public void Apply(double[] data)
         {
             var B = WaveletDecomposition.Forward(data);

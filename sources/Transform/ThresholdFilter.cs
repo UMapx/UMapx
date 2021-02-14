@@ -4,10 +4,10 @@ using UMapx.Core;
 namespace UMapx.Transform
 {
     /// <summary>
-    /// Defines the compression filter by threshold value.
+    /// Defines the threshold filter.
     /// </summary>
     [Serializable]
-    public class CompressFilter : IFilter
+    public class ThresholdFilter : IFilter
     {
         #region Private data
         /// <summary>
@@ -15,38 +15,38 @@ namespace UMapx.Transform
         /// </summary>
         private double threshold = 0;
         /// <summary>
-        /// Compress type.
+        /// Threshold type.
         /// </summary>
-        private Compress compresstype = Compress.Abs;
+        private ThresholdType type = ThresholdType.Abs;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Initializes the compression filter by threshold value.
+        /// Initializes the threshold filter.
         /// </summary>
-        public CompressFilter() { }
+        public ThresholdFilter() { }
         /// <summary>
-        /// Initializes the compression filter by threshold value.
+        /// Initializes the threshold filter.
         /// </summary>
         /// <param name="threshold">Threshold value</param>
-        /// <param name="compresstype">Compress type</param>
-        public CompressFilter(double threshold, Compress compresstype = Compress.Abs)
+        /// <param name="type">Compress type</param>
+        public ThresholdFilter(double threshold, ThresholdType type = ThresholdType.Abs)
         {
             this.threshold = threshold;
-            this.compresstype = compresstype;
+            this.type = type;
         }
         /// <summary>
-        /// Gets or sets the compress type.
+        /// Gets or sets the threshold type.
         /// </summary>
-        public Compress CompressType
+        public ThresholdType Type
         {
             get
             {
-                return this.compresstype;
+                return this.type;
             }
             set
             {
-                this.compresstype = value;
+                this.type = value;
             }
         }
         /// <summary>
@@ -72,7 +72,7 @@ namespace UMapx.Transform
             int length = data.Length;
             int i;
 
-            if (this.compresstype == Compress.Abs)
+            if (this.type == ThresholdType.Abs)
             {
                 for (i = 0; i < length; i++)
                 {
@@ -82,7 +82,7 @@ namespace UMapx.Transform
                     }
                 }
             }
-            else if (this.compresstype == Compress.Over)
+            else if (this.type == ThresholdType.Over)
             {
                 for (i = 0; i < length; i++)
                 {
@@ -113,7 +113,7 @@ namespace UMapx.Transform
             int length = data.Length;
             int i;
 
-            if (this.compresstype == Compress.Abs)
+            if (this.type == ThresholdType.Abs)
             {
                 for (i = 0; i < length; i++)
                 {
@@ -123,7 +123,7 @@ namespace UMapx.Transform
                     }
                 }
             }
-            else if (this.compresstype == Compress.Over)
+            else if (this.type == ThresholdType.Over)
             {
                 for (i = 0; i < length; i++)
                 {
@@ -164,7 +164,7 @@ namespace UMapx.Transform
             int height = data.GetLength(0);
             int i, j;
 
-            if (this.compresstype == Compress.Abs)
+            if (this.type == ThresholdType.Abs)
             {
                 for (i = 0; i < height; i++)
                 {
@@ -177,7 +177,7 @@ namespace UMapx.Transform
                     }
                 }
             }
-            else if (this.compresstype == Compress.Over)
+            else if (this.type == ThresholdType.Over)
             {
                 for (i = 0; i < height; i++)
                 {
@@ -215,7 +215,7 @@ namespace UMapx.Transform
             int height = data.GetLength(0);
             int i, j;
 
-            if (this.compresstype == Compress.Abs)
+            if (this.type == ThresholdType.Abs)
             {
                 for (i = 0; i < height; i++)
                 {
@@ -228,7 +228,7 @@ namespace UMapx.Transform
                     }
                 }
             }
-            else if (this.compresstype == Compress.Over)
+            else if (this.type == ThresholdType.Over)
             {
                 for (i = 0; i < height; i++)
                 {
@@ -266,23 +266,23 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Compress type
+        #region Threshold type
         /// <summary>
-        /// Defines the compress type.
+        /// Defines the threshold type.
         /// </summary>
-        public enum Compress
+        public enum ThresholdType
         {
             #region Types
             /// <summary>
-            /// Absolute compression.
+            /// Absolute.
             /// </summary>
             Abs,
             /// <summary>
-            /// ompression of values is less than threshold.
+            /// Under.
             /// </summary>
             Under,
             /// <summary>
-            /// Compression of values is greater than the threshold.
+            /// Over.
             /// </summary>
             Over,
             #endregion

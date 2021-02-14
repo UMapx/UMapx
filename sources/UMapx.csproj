@@ -9,7 +9,7 @@
     <Authors>Valery Asiryan</Authors>
     <Product>UMapx</Product>
     <Copyright>Valery Asiryan, © 2015-2021</Copyright>
-    <Description>Digital signal processing library for .NET Core and .NET Framework. Fast and optimized.</Description>
+    <Description>Cross-platform .NET library for digital signal processing. Fast and optimized.</Description>
     <PackageProjectUrl>https://github.com/asiryan/UMapx.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/asiryan/UMapx.NET</RepositoryUrl>
     <RepositoryType>Open-source</RepositoryType>
