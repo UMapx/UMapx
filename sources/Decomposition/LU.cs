@@ -30,7 +30,7 @@ namespace UMapx.Decomposition
                 throw new Exception("The matrix must be square");
 
             // LU-decomposition:
-            ludecomp(A.ToJagged());
+            ludecomp(Jagged.ToJagged(A));
         }
         #endregion
 

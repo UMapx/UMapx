@@ -5,7 +5,7 @@ using System.IO;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// 
+    /// Uses to work with bitmap formats.
     /// </summary>
     public static class BitmapFormat
     {

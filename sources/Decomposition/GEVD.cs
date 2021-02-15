@@ -142,7 +142,7 @@ namespace UMapx.Decomposition
         {
             get
             {
-                return Z.FromJagged();
+                return Jagged.FromJagged(Z);
             }
         }
         /// <summary>

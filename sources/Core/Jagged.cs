@@ -5,7 +5,7 @@ namespace UMapx.Core
     /// <summary>
     /// Uses to work with jagged arrays.
     /// </summary>
-    public static class Jagged
+    internal static class Jagged
     {
         #region Conversions
         /// <summary>
@@ -13,7 +13,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Jagged array</returns>
-        public static float[][] ToJagged(this float[,] m)
+        public static float[][] ToJagged(float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             float[][] jagged = new float[ml][];
@@ -36,7 +36,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="jagged">Jagged array</param>
         /// <returns>Matrix</returns>
-        public static float[,] FromJagged(this float[][] jagged)
+        public static float[,] FromJagged(float[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
             float[,] m = new float[ml, mr];
@@ -56,7 +56,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Jagged array</returns>
-        public static Complex[][] ToJagged(this Complex[,] m)
+        public static Complex[][] ToJagged(Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             Complex[][] jagged = new Complex[ml][];
@@ -79,7 +79,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="jagged">Jagged array</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] FromJagged(this Complex[][] jagged)
+        public static Complex[,] FromJagged(Complex[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
             Complex[,] m = new Complex[ml, mr];
@@ -276,111 +276,6 @@ namespace UMapx.Core
             }
 
             return H;
-        }
-        #endregion
-
-        #region Parse methods
-        /// <summary>
-        /// Parses the original string into a matrix of float numbers.
-        /// <remarks>
-        /// Example: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
-        /// </remarks>
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="s">Input string</param>
-        /// <returns>Matrix</returns>
-        public static float[][] Parse(this float[][] a, string s)
-        {
-            string[] rows = StringOptions.Matpar(s);
-            string[] nums;
-            int r = rows.Length, n;
-            float[][] H = new float[r][];
-            int i, j;
-
-            // collecting rows:
-            for (i = 0; i < r; i++)
-            {
-                nums = rows[i].Split('|');
-                n = nums.Length;
-                H[i] = new float[n];
-
-                for (j = 0; j < n; j++)
-                {
-                    H[i][j] = float.Parse(nums[j]);
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Tries to parse the original row into a matrix of float numbers.
-        /// </summary>
-        /// <param name="s">Input string</param>
-        /// <param name="result">Matrix</param>
-        /// <returns>Boolean</returns>
-        public static bool TryParse(string s, out float[][] result)
-        {
-            float[][] zero = null;
-            try
-            {
-                result = Jagged.Parse(zero, s);
-                return true;
-            }
-            catch (FormatException)
-            {
-                result = zero;
-                return false;
-            }
-        }
-        /// <summary>
-        /// Parses the original string into a matrix of complex numbers.
-        /// </summary>
-        /// <remarks>
-        /// Example: "[1 + 2i, 2 + 4i; 3 + 6i, 4 + 8i]";
-        /// </remarks>
-        /// <param name="a">Matrix</param>
-        /// <param name="s">Input string</param>
-        /// <returns>Matrix</returns>
-        public static Complex[][] Parse(this Complex[][] a, string s)
-        {
-            string[] rows = StringOptions.Matpar(s);
-            string[] nums;
-            int r = rows.Length, n;
-            Complex[][] H = new Complex[r][];
-            int i, j;
-
-            // collecting rows:
-            for (i = 0; i < r; i++)
-            {
-                nums = rows[i].Split('|');
-                n = nums.Length;
-                H[i] = new Complex[n];
-
-                for (j = 0; j < n; j++)
-                {
-                    H[i][j] = StringOptions.Compar(nums[j]);
-                }
-            }
-            return H;
-        }
-        /// <summary>
-        /// Tries to parse the original row into a matrix of complex numbers.
-        /// </summary>
-        /// <param name="s">Input string</param>
-        /// <param name="result">Matrix</param>
-        /// <returns>Boolean</returns>
-        public static bool TryParse(string s, ref Complex[][] result)
-        {
-            Complex[][] zero = null;
-            try
-            {
-                result = Jagged.Parse(zero, s);
-                return true;
-            }
-            catch (FormatException)
-            {
-                result = zero;
-                return false;
-            }
         }
         #endregion
 

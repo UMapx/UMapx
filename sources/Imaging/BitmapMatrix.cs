@@ -7,7 +7,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses to work with bitmaps.
+    /// Uses to work with bitmap matrices.
     /// </summary>
     public static class BitmapMatrix
     {

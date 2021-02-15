@@ -197,7 +197,7 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Private voids
+        #region Domain private voids
         // **************************************************
         //              DOMAIN TRANSFORM FILTER
         // **************************************************
@@ -227,8 +227,8 @@ namespace UMapx.Transform
             int i, j;
 
             // get differences
-            float[,] dIcdx = Matrice.Diff(I, 1, Direction.Horizontal);
-            float[,] dIcdy = Matrice.Diff(I, 1, Direction.Vertical);
+            float[,] dIcdx = DomainTransformFilter.Diff(I, 1, Direction.Horizontal);
+            float[,] dIcdy = DomainTransformFilter.Diff(I, 1, Direction.Vertical);
 
             // shift patterns
             float[,] dIdx = new float[h, w];
@@ -280,8 +280,8 @@ namespace UMapx.Transform
             int i, j;
 
             // get differences
-            Complex[,] dIcdx = Matrice.Diff(I, 1, Direction.Horizontal);
-            Complex[,] dIcdy = Matrice.Diff(I, 1, Direction.Vertical);
+            Complex[,] dIcdx = DomainTransformFilter.Diff(I, 1, Direction.Horizontal);
+            Complex[,] dIcdy = DomainTransformFilter.Diff(I, 1, Direction.Vertical);
 
             // shift patterns
             Complex[,] dIdx = new Complex[h, w];
@@ -332,7 +332,7 @@ namespace UMapx.Transform
             int i;
 
             // get differences
-            float[] dIcdy = Matrice.Diff(I, 1);
+            float[] dIcdy = DomainTransformFilter.Diff(I, 1);
 
             // shift patterns
             float[] dIdy = new float[h];
@@ -372,7 +372,7 @@ namespace UMapx.Transform
             int i;
 
             // get differences
-            Complex[] dIcdy = Matrice.Diff(I, 1);
+            Complex[] dIcdy = DomainTransformFilter.Diff(I, 1);
 
             // shift patterns
             Complex[] dIdy = new Complex[h];
@@ -554,6 +554,343 @@ namespace UMapx.Transform
                 F[i] = F[i] + V[i + 1] * (F[i + 1] - F[i]);
 
             return;
+        }
+        #endregion
+
+        #region Diff private voids
+        /// <summary>
+        /// Returns the difference of matrix elements.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="n">Order</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
+        private static float[,] Diff(float[,] a, int n, Direction direction, bool reverse = false)
+        {
+            // start
+            int i, r, c;
+
+            // direction of processing
+            if (direction == Direction.Horizontal)
+            {
+                // do job
+                for (i = 0; i < n; i++)
+                {
+                    c = a.GetLength(1);
+
+                    if (c == 0)
+                        break;
+
+                    a = DiffHorizontal(a, reverse);
+                }
+            }
+            else if (direction == Direction.Vertical)
+            {
+                // do job
+                for (i = 0; i < n; i++)
+                {
+                    r = a.GetLength(0);
+
+                    if (r == 0)
+                        break;
+
+                    a = DiffVertical(a, reverse);
+                }
+            }
+            else
+            {
+                // do job
+                for (i = 0; i < n; i++)
+                {
+                    r = a.GetLength(0);
+                    c = a.GetLength(1);
+
+                    if (c == 0 || r == 0)
+                        break;
+
+                    a = DiffVertical(a, reverse);
+                    a = DiffHorizontal(a, reverse);
+                }
+            }
+
+            return a;
+        }
+        /// <summary>
+        /// Returns the difference of matrix elements.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
+        private static float[,] DiffVertical(float[,] a, bool reverse = false)
+        {
+            // vertical direction 
+            // of processing
+            int r = a.GetLength(0) - 1;
+            int m = a.GetLength(1);
+            if (r == 0)
+                return new float[0, m];
+
+            // new array
+            float[,] y = new float[r, m];
+            int i, k;
+
+            // do job
+            if (reverse)
+            {
+                for (k = 0; k < m; k++)
+                    for (i = r; i > 0; i--)
+                        y[i - 1, k] = a[i - 1, k] - a[i, k];
+            }
+            else
+            {
+                for (k = 0; k < m; k++)
+                    for (i = r; i > 0; i--)
+                        y[i - 1, k] = a[i, k] - a[i - 1, k];
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Returns the difference of matrix elements.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
+        private static float[,] DiffHorizontal(float[,] a, bool reverse = false)
+        {
+            // horizontal direction 
+            // of processing
+            int c = a.GetLength(1) - 1;
+            int m = a.GetLength(0);
+            if (c == 0)
+                return new float[m, 0];
+
+            // new array
+            float[,] y = new float[m, c];
+            int i, k;
+
+            // do job
+            if (reverse)
+            {
+                for (k = 0; k < m; k++)
+                    for (i = c; i > 0; i--)
+                        y[k, i - 1] = a[k, i - 1] - a[k, i];
+            }
+            else
+            {
+                for (k = 0; k < m; k++)
+                    for (i = c; i > 0; i--)
+                        y[k, i - 1] = a[k, i] - a[k, i - 1];
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Returns the difference of matrix elements.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="n">Order</param>
+        /// <param name="direction">Processing direction</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
+        private static Complex[,] Diff(Complex[,] a, int n, Direction direction, bool reverse = false)
+        {
+            // start
+            int i, r, c;
+
+            // direction of processing
+            if (direction == Direction.Horizontal)
+            {
+                // do job
+                for (i = 0; i < n; i++)
+                {
+                    c = a.GetLength(1);
+
+                    if (c == 0)
+                        break;
+
+                    a = DiffHorizontal(a, reverse);
+                }
+            }
+            else if (direction == Direction.Vertical)
+            {
+                // do job
+                for (i = 0; i < n; i++)
+                {
+                    r = a.GetLength(0);
+
+                    if (r == 0)
+                        break;
+
+                    a = DiffVertical(a, reverse);
+                }
+            }
+            else
+            {
+                // do job
+                for (i = 0; i < n; i++)
+                {
+                    r = a.GetLength(0);
+                    c = a.GetLength(1);
+
+                    if (c == 0 || r == 0)
+                        break;
+
+                    a = DiffVertical(a, reverse);
+                    a = DiffHorizontal(a, reverse);
+                }
+            }
+
+            return a;
+        }
+        /// <summary>
+        /// Returns the difference of matrix elements.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
+        private static Complex[,] DiffVertical(Complex[,] a, bool reverse = false)
+        {
+            // vertical direction 
+            // of processing
+            int r = a.GetLength(0) - 1;
+            int m = a.GetLength(1);
+            if (r == 0)
+                return new Complex[0, m];
+
+            // new array
+            Complex[,] y = new Complex[r, m];
+            int i, k;
+
+            // do job
+            if (reverse)
+            {
+                for (k = 0; k < m; k++)
+                    for (i = r; i > 0; i--)
+                        y[i - 1, k] = a[i - 1, k] - a[i, k];
+            }
+            else
+            {
+                for (k = 0; k < m; k++)
+                    for (i = r; i > 0; i--)
+                        y[i - 1, k] = a[i, k] - a[i - 1, k];
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Returns the difference of matrix elements.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Matrix</returns>
+        private static Complex[,] DiffHorizontal(Complex[,] a, bool reverse = false)
+        {
+            // horizontal direction 
+            // of processing
+            int c = a.GetLength(1) - 1;
+            int m = a.GetLength(0);
+            if (c == 0)
+                return new Complex[m, 0];
+
+            // new array
+            Complex[,] y = new Complex[m, c];
+            int i, k;
+
+            // do job
+            if (reverse)
+            {
+                for (k = 0; k < m; k++)
+                    for (i = c; i > 0; i--)
+                        y[k, i - 1] = a[k, i - 1] - a[k, i];
+            }
+            else
+            {
+                for (k = 0; k < m; k++)
+                    for (i = c; i > 0; i--)
+                        y[k, i - 1] = a[k, i] - a[k, i - 1];
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Returns the difference of vector elements.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="n">Order</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Array</returns>
+        private static float[] Diff(float[] v, int n, bool reverse = false)
+        {
+            // start
+            float[] z;
+            float[] y = v;
+            int i, j, length;
+
+            // do job
+            for (j = 0; j < n; j++)
+            {
+                z = y;
+                length = z.Length - 1;
+
+                if (length == 0)
+                    return new float[0];
+
+                y = new float[length];
+
+                if (reverse)
+                {
+                    for (i = length; i > 0; i--)
+                        y[i - 1] = z[i - 1] - z[i];
+                }
+                else
+                {
+                    for (i = length; i > 0; i--)
+                        y[i - 1] = z[i] - z[i - 1];
+                }
+            }
+
+            return y;
+        }
+        /// <summary>
+        /// Returns the difference of vector elements.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="n">Order</param>
+        /// <param name="reverse">Reverse processing or not</param>
+        /// <returns>Array</returns>
+        private static Complex[] Diff(Complex[] v, int n, bool reverse = false)
+        {
+            // start
+            Complex[] z;
+            Complex[] y = v;
+            int i, j, length;
+
+            // do job
+            for (j = 0; j < n; j++)
+            {
+                z = y;
+                length = z.Length - 1;
+
+                if (length == 0)
+                    return new Complex[0];
+
+                y = new Complex[length];
+
+                if (reverse)
+                {
+                    for (i = length; i > 0; i--)
+                        y[i - 1] = z[i - 1] - z[i];
+                }
+                else
+                {
+                    for (i = length; i > 0; i--)
+                        y[i - 1] = z[i] - z[i - 1];
+                }
+            }
+
+            return y;
         }
         #endregion
     }

@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// 
+    /// Uses to work with bitmap tensors.
     /// </summary>
     public static class BitmapTensor
     {
@@ -394,7 +394,7 @@ namespace UMapx.Imaging
         /// <param name="image">RGB tensor arrays</param>
         /// <param name="b">Vector</param>
         /// <param name="tensorOperator">Operator</param>
-        public static void Operator(this float[][] image, float[] b, ITensorOperator tensorOperator)
+        public static void Compute(this float[][] image, float[] b, ITensorOperator tensorOperator)
         {
             int count = image.Length;
 
@@ -411,7 +411,7 @@ namespace UMapx.Imaging
         /// <param name="image">RGB tensor arrays</param>
         /// <param name="b">Value</param>
         /// <param name="tensorOperator">Operator</param>
-        public static void Operator(this float[][] image, float b, ITensorOperator tensorOperator)
+        public static void Compute(this float[][] image, float b, ITensorOperator tensorOperator)
         {
             int count = image.Length;
 

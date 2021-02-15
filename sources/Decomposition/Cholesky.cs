@@ -29,7 +29,7 @@ namespace UMapx.Decomposition
                 throw new Exception("The matrix must be square");
 
             // Cholesky decomposition:
-            chol(A.ToJagged());
+            chol(Jagged.ToJagged(A));
         }
         #endregion
 

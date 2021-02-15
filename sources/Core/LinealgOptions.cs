@@ -133,7 +133,7 @@ namespace UMapx.Core
             // make a copy of it, as well as setting up the output matrix invA 
             // as a unit matrix of the appropriate size:
             int dimension = working.GetLength(0);
-            float[][] inverse = Jagged.ToJagged(new float[dimension, dimension]);
+            float[][] inverse = Jagged.Zero(dimension, dimension);
             // C# will set the initial values to zero, so to create a unit
             // matrix, I just need to fill in the diagonal elements:
             for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = 1.0f;
@@ -269,7 +269,7 @@ namespace UMapx.Core
             // make a copy of it, as well as setting up the output matrix invA 
             // as a unit matrix of the appropriate size:
             int dimension = working.GetLength(0);
-            Complex[][] inverse = Jagged.ToJagged(new Complex[dimension, dimension]);
+            Complex[][] inverse = Jagged.ToComplex(Jagged.Zero(dimension, dimension));
             // C# will set the initial values to zero, so to create a unit
             // matrix, I just need to fill in the diagonal elements:
             for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = new Complex(1.0f, 0);

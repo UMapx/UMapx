@@ -2009,7 +2009,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[,] Tofloat(this float[,] m)
+        public static float[,] ToFloat(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             float[,] H = new float[r0, r1];
@@ -2135,33 +2135,6 @@ namespace UMapx.Core
         #endregion
 
         #region Matrix statistics
-        /// <summary>
-        /// Sorts the matrix.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        public static void Sort(this float[,] m)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            int i, j, k;
-            float temp;
-
-            for (k = 0; k < mr; k++)
-            {
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = i + 1; j < ml; j++)
-                    {
-                        if (m[i, k] > m[j, k])
-                        {
-                            temp = m[i, k];
-                            m[i, k] = m[j, k];
-                            m[j, k] = temp;
-                        }
-                    }
-                }
-            }
-            return;
-        }
         /// <summary>
         /// Returns the vector of matrix sums.
         /// </summary>
@@ -2297,14 +2270,98 @@ namespace UMapx.Core
             return kernel;
         }
         /// <summary>
+        /// Returns the vector of the matrix mode.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
+        public static float[] Mode(this float[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            float[] h = new float[mr];
+            float[] kernel = new float[ml];
+            int i, j;
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    kernel[j] = m[j, i];
+                }
+
+                h[i] = Matrice.Mode(kernel);
+            }
+            return h;
+        }
+        /// <summary>
+        /// Returns the vector of the matrix mode.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <returns>Array</returns>
+        public static Complex[] Mode(this Complex[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            Complex[] h = new Complex[mr];
+            Complex[] kernel = new Complex[ml];
+            int i, j;
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    kernel[j] = m[j, i];
+                }
+
+                h[i] = Matrice.Mode(kernel);
+            }
+            return h;
+        }
+        /// <summary>
+        /// Sorts the matrix.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        public static float[,] Sort(this float[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            float[,] h = new float[ml, mr];
+            float[] kernel = new float[ml];
+            int i, j;
+
+            for (i = 0; i < mr; i++)
+            {
+                for (j = 0; j < ml; j++)
+                {
+                    kernel[j] = m[j, i];
+                }
+
+                Array.Sort(kernel);
+
+                for (j = 0; j < ml; j++)
+                {
+                    h[j, i] = kernel[j];
+                }
+            }
+            return h;
+        }
+        /// <summary>
         /// Returns the maximum matrix vector.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
         public static float[] Max(this float[,] m)
         {
+            return Max(m, out _);
+        }
+        /// <summary>
+        /// Returns the maximum matrix vector.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="index">Index array</param>
+        /// <returns>Array</returns>
+        public static float[] Max(this float[,] m, out int[] index)
+        {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             float[] v = new float[mr];
+            index = new int[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
@@ -2319,6 +2376,7 @@ namespace UMapx.Core
                     if (m[j, i] > v[i])
                     {
                         v[i] = m[j, i];
+                        index[i] = j;
                     }
                 }
             }
@@ -2331,8 +2389,19 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Min(this float[,] m)
         {
+            return Min(m, out _);
+        }
+        /// <summary>
+        /// Returns the minimum matrix vector.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="index">Index array</param>
+        /// <returns>Array</returns>
+        public static float[] Min(this float[,] m, out int[] index)
+        {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             float[] v = new float[mr];
+            index = new int[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
@@ -2347,6 +2416,7 @@ namespace UMapx.Core
                     if (m[j, i] < v[i])
                     {
                         v[i] = m[j, i];
+                        index[i] = j;
                     }
                 }
             }
@@ -4162,7 +4232,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static float[] Tofloat(this float[] v)
+        public static float[] ToFloat(this float[] v)
         {
             int length = v.Length;
             float max = Matrice.Max(v);
@@ -4340,42 +4410,6 @@ namespace UMapx.Core
 
         #region Vector statistics
         /// <summary>
-        /// Returns the covariance value of a vector.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
-        public static float Cov(this float[] v)
-        {
-            int xlength = v.Length;
-            float xv = Matrice.Mean(v);
-            float total = 0;
-            int i;
-
-            for (i = 0; i < xlength; i++)
-            {
-                total += v[i] * v[i] - xv * xv;
-            }
-            return total / (xlength - 1);
-        }
-        /// <summary>
-        /// Returns the covariance value of a vector.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <returns>Complex number</returns>
-        public static Complex Cov(this Complex[] v)
-        {
-            int xlength = v.Length;
-            Complex xv = Matrice.Mean(v);
-            Complex total = 0;
-            int i;
-
-            for (i = 0; i < xlength; i++)
-            {
-                total += v[i] * v[i] - xv * xv;
-            }
-            return total / (xlength - 1);
-        }
-        /// <summary>
         /// Returns the total value of a vector.
         /// </summary>
         /// <param name="v">Array</param>
@@ -4476,25 +4510,6 @@ namespace UMapx.Core
                 total /= v[i];
             }
             return total;
-        }
-        /// <summary>
-        /// Returns the entropy of a vector.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
-        public static float Entropy(this float[] v)
-        {
-            float H = 0;
-            int length = v.Length, i;
-
-            for (i = 0; i < length; i++)
-            {
-                if (v[i] > 0)
-                {
-                    H += -v[i] * (float)Maths.Log2(v[i]);
-                }
-            }
-            return H;
         }
         /// <summary>
         /// Returns the average value of a vector.
@@ -4679,26 +4694,14 @@ namespace UMapx.Core
             return frequent;
         }
         /// <summary>
-        /// Returns the minimum and maximum values of a vector.
+        /// Sorts the vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Pair of numbers</returns>
-        public static RangeFloat Extremum(this float[] v)
+        public static float[] Sort(this float[] v)
         {
-            float max = float.MinValue, min = float.MaxValue;
-            int length = v.Length;
-            float c;
-
-            for (int i = 0; i < length; i++)
-            {
-                c = v[i];
-
-                if (c > max)
-                    max = c;
-                if (c < min)
-                    min = c;
-            }
-            return new RangeFloat(min, max);
+            float[] w = (float[])v.Clone();
+            Array.Sort(w);
+            return w;
         }
         /// <summary>
         /// Gets the value of the minimum element of the vector.
@@ -4707,9 +4710,20 @@ namespace UMapx.Core
         /// <returns>float precision floating point number</returns>
         public static float Min(this float[] v)
         {
-            int index = 0, length = v.Length;
+            return Min(v, out _);
+        }
+        /// <summary>
+        /// Gets the value of the minimum element of the vector.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="index">Max index</param>
+        /// <returns>float precision floating point number</returns>
+        public static float Min(this float[] v, out int index)
+        {
+            int length = v.Length;
             float minimum = float.MaxValue;
             float c;
+            index = 0;
 
             for (int i = 0; i < length; i++)
             {
@@ -4721,6 +4735,7 @@ namespace UMapx.Core
                     index = i;
                 }
             }
+
             return minimum;
         }
         /// <summary>
@@ -4730,9 +4745,20 @@ namespace UMapx.Core
         /// <returns>float precision floating point number</returns>
         public static float Max(this float[] v)
         {
-            int index = 0, length = v.Length;
+            return Max(v, out _);
+        }
+        /// <summary>
+        /// Gets the value of the maximum element of the vector.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="index">Max index</param>
+        /// <returns>float precision floating point number</returns>
+        public static float Max(this float[] v, out int index)
+        {
+            int length = v.Length;
             float maximum = float.MinValue;
             float c;
+            index = 0;
 
             for (int i = 0; i < length; i++)
             {
@@ -4759,59 +4785,59 @@ namespace UMapx.Core
             return u[threshold];
         }
         /// <summary>
-        /// Sorts the vector.
+        /// Returns the covariance value of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        public static void Sort(this float[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Cov(this float[] v)
         {
-            int i, j, length = v.Length;
-            float temp;
-            for (i = 0; i < length; i++)
+            int xlength = v.Length;
+            float xv = Matrice.Mean(v);
+            float total = 0;
+            int i;
+
+            for (i = 0; i < xlength; i++)
             {
-                for (j = i + 1; j < length; j++)
-                {
-                    if (v[i] > v[j])
-                    {
-                        temp = v[i];
-                        v[i] = v[j];
-                        v[j] = temp;
-                    }
-                }
+                total += v[i] * v[i] - xv * xv;
             }
-            return;
+            return total / (xlength - 1);
         }
         /// <summary>
-        /// Sorts the vector.
+        /// Returns the covariance value of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="r">Start</param>
-        /// <param name="l">End</param>
-        public static void Sort(this float[] v, int r, int l)
+        /// <returns>Complex number</returns>
+        public static Complex Cov(this Complex[] v)
         {
-            float temp;
-            float x = v[r + (l - r) / 2];
-            int i = r;
-            int j = l;
+            int xlength = v.Length;
+            Complex xv = Matrice.Mean(v);
+            Complex total = 0;
+            int i;
 
-            while (i <= j)
+            for (i = 0; i < xlength; i++)
             {
-                while (v[i] < x) i++;
-                while (v[j] > x) j--;
-                if (i <= j)
+                total += v[i] * v[i] - xv * xv;
+            }
+            return total / (xlength - 1);
+        }
+        /// <summary>
+        /// Returns the entropy of a vector.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <returns>float precision floating point number</returns>
+        public static float Entropy(this float[] v)
+        {
+            float H = 0;
+            int length = v.Length, i;
+
+            for (i = 0; i < length; i++)
+            {
+                if (v[i] > 0)
                 {
-                    temp = v[i];
-                    v[i] = v[j];
-                    v[j] = temp;
-                    i++;
-                    j--;
+                    H += -v[i] * (float)Maths.Log2(v[i]);
                 }
             }
-            if (i < l)
-                Sort(v, i, l);
-
-            if (r < j)
-                Sort(v, r, j);
-            return;
+            return H;
         }
         #endregion
 
@@ -6970,343 +6996,6 @@ namespace UMapx.Core
                 }
             }
             return H;
-        }
-        #endregion
-
-        #region Diff voids
-        /// <summary>
-        /// Returns the difference of matrix elements.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="n">Order</param>
-        /// <param name="direction">Processing direction</param>
-        /// <param name="reverse">Reverse processing or not</param>
-        /// <returns>Matrix</returns>
-        public static float[,] Diff(float[,] a, int n, Direction direction, bool reverse = false)
-        {
-            // start
-            int i, r, c;
-
-            // direction of processing
-            if (direction == Direction.Horizontal)
-            {
-                // do job
-                for (i = 0; i < n; i++)
-                {
-                    c = a.GetLength(1);
-
-                    if (c == 0)
-                        break;
-
-                    a = DiffHorizontal(a, reverse);
-                }
-            }
-            else if (direction == Direction.Vertical)
-            {
-                // do job
-                for (i = 0; i < n; i++)
-                {
-                    r = a.GetLength(0);
-
-                    if (r == 0)
-                        break;
-
-                    a = DiffVertical(a, reverse);
-                }
-            }
-            else
-            {
-                // do job
-                for (i = 0; i < n; i++)
-                {
-                    r = a.GetLength(0);
-                    c = a.GetLength(1);
-
-                    if (c == 0 || r == 0)
-                        break;
-
-                    a = DiffVertical(a, reverse);
-                    a = DiffHorizontal(a, reverse);
-                }
-            }
-
-            return a;
-        }
-        /// <summary>
-        /// Returns the difference of matrix elements.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="reverse">Reverse processing or not</param>
-        /// <returns>Matrix</returns>
-        private static float[,] DiffVertical(float[,] a, bool reverse = false)
-        {
-            // vertical direction 
-            // of processing
-            int r = a.GetLength(0) - 1;
-            int m = a.GetLength(1);
-            if (r == 0)
-                return new float[0, m];
-
-            // new array
-            float[,] y = new float[r, m];
-            int i, k;
-
-            // do job
-            if (reverse)
-            {
-                for (k = 0; k < m; k++)
-                    for (i = r; i > 0; i--)
-                        y[i - 1, k] = a[i - 1, k] - a[i, k];
-            }
-            else
-            {
-                for (k = 0; k < m; k++)
-                    for (i = r; i > 0; i--)
-                        y[i - 1, k] = a[i, k] - a[i - 1, k];
-            }
-
-            return y;
-        }
-        /// <summary>
-        /// Returns the difference of matrix elements.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="reverse">Reverse processing or not</param>
-        /// <returns>Matrix</returns>
-        private static float[,] DiffHorizontal(float[,] a, bool reverse = false)
-        {
-            // horizontal direction 
-            // of processing
-            int c = a.GetLength(1) - 1;
-            int m = a.GetLength(0);
-            if (c == 0)
-                return new float[m, 0];
-
-            // new array
-            float[,] y = new float[m, c];
-            int i, k;
-
-            // do job
-            if (reverse)
-            {
-                for (k = 0; k < m; k++)
-                    for (i = c; i > 0; i--)
-                        y[k, i - 1] = a[k, i - 1] - a[k, i];
-            }
-            else
-            {
-                for (k = 0; k < m; k++)
-                    for (i = c; i > 0; i--)
-                        y[k, i - 1] = a[k, i] - a[k, i - 1];
-            }
-
-            return y;
-        }
-        /// <summary>
-        /// Returns the difference of matrix elements.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="n">Order</param>
-        /// <param name="direction">Processing direction</param>
-        /// <param name="reverse">Reverse processing or not</param>
-        /// <returns>Matrix</returns>
-        public static Complex[,] Diff(Complex[,] a, int n, Direction direction, bool reverse = false)
-        {
-            // start
-            int i, r, c;
-
-            // direction of processing
-            if (direction == Direction.Horizontal)
-            {
-                // do job
-                for (i = 0; i < n; i++)
-                {
-                    c = a.GetLength(1);
-
-                    if (c == 0)
-                        break;
-
-                    a = DiffHorizontal(a, reverse);
-                }
-            }
-            else if (direction == Direction.Vertical)
-            {
-                // do job
-                for (i = 0; i < n; i++)
-                {
-                    r = a.GetLength(0);
-
-                    if (r == 0)
-                        break;
-
-                    a = DiffVertical(a, reverse);
-                }
-            }
-            else
-            {
-                // do job
-                for (i = 0; i < n; i++)
-                {
-                    r = a.GetLength(0);
-                    c = a.GetLength(1);
-
-                    if (c == 0 || r == 0)
-                        break;
-
-                    a = DiffVertical(a, reverse);
-                    a = DiffHorizontal(a, reverse);
-                }
-            }
-
-            return a;
-        }
-        /// <summary>
-        /// Returns the difference of matrix elements.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="reverse">Reverse processing or not</param>
-        /// <returns>Matrix</returns>
-        private static Complex[,] DiffVertical(Complex[,] a, bool reverse = false)
-        {
-            // vertical direction 
-            // of processing
-            int r = a.GetLength(0) - 1;
-            int m = a.GetLength(1);
-            if (r == 0)
-                return new Complex[0, m];
-
-            // new array
-            Complex[,] y = new Complex[r, m];
-            int i, k;
-
-            // do job
-            if (reverse)
-            {
-                for (k = 0; k < m; k++)
-                    for (i = r; i > 0; i--)
-                        y[i - 1, k] = a[i - 1, k] - a[i, k];
-            }
-            else
-            {
-                for (k = 0; k < m; k++)
-                    for (i = r; i > 0; i--)
-                        y[i - 1, k] = a[i, k] - a[i - 1, k];
-            }
-
-            return y;
-        }
-        /// <summary>
-        /// Returns the difference of matrix elements.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="reverse">Reverse processing or not</param>
-        /// <returns>Matrix</returns>
-        private static Complex[,] DiffHorizontal(Complex[,] a, bool reverse = false)
-        {
-            // horizontal direction 
-            // of processing
-            int c = a.GetLength(1) - 1;
-            int m = a.GetLength(0);
-            if (c == 0)
-                return new Complex[m, 0];
-
-            // new array
-            Complex[,] y = new Complex[m, c];
-            int i, k;
-
-            // do job
-            if (reverse)
-            {
-                for (k = 0; k < m; k++)
-                    for (i = c; i > 0; i--)
-                        y[k, i - 1] = a[k, i - 1] - a[k, i];
-            }
-            else
-            {
-                for (k = 0; k < m; k++)
-                    for (i = c; i > 0; i--)
-                        y[k, i - 1] = a[k, i] - a[k, i - 1];
-            }
-
-            return y;
-        }
-        /// <summary>
-        /// Returns the difference of vector elements.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="n">Order</param>
-        /// <param name="reverse">Reverse processing or not</param>
-        /// <returns>Array</returns>
-        public static float[] Diff(this float[] v, int n, bool reverse = false)
-        {
-            // start
-            float[] z;
-            float[] y = v;
-            int i, j, length;
-
-            // do job
-            for (j = 0; j < n; j++)
-            {
-                z = y;
-                length = z.Length - 1;
-
-                if (length == 0)
-                    return new float[0];
-
-                y = new float[length];
-
-                if (reverse)
-                {
-                    for (i = length; i > 0; i--)
-                        y[i - 1] = z[i - 1] - z[i];
-                }
-                else
-                {
-                    for (i = length; i > 0; i--)
-                        y[i - 1] = z[i] - z[i - 1];
-                }
-            }
-
-            return y;
-        }
-        /// <summary>
-        /// Returns the difference of vector elements.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="n">Order</param>
-        /// <param name="reverse">Reverse processing or not</param>
-        /// <returns>Array</returns>
-        public static Complex[] Diff(this Complex[] v, int n, bool reverse = false)
-        {
-            // start
-            Complex[] z;
-            Complex[] y = v;
-            int i, j, length;
-
-            // do job
-            for (j = 0; j < n; j++)
-            {
-                z = y;
-                length = z.Length - 1;
-
-                if (length == 0)
-                    return new Complex[0];
-
-                y = new Complex[length];
-
-                if (reverse)
-                {
-                    for (i = length; i > 0; i--)
-                        y[i - 1] = z[i - 1] - z[i];
-                }
-                else
-                {
-                    for (i = length; i > 0; i--)
-                        y[i - 1] = z[i] - z[i - 1];
-                }
-            }
-
-            return y;
         }
         #endregion
 
