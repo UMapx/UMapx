@@ -13,10 +13,10 @@ namespace UMapx.Imaging
     public class CMYKFilter : IBitmapFilter
     {
         #region Private data
-        private double cyan;
-        private double magenta;
-        private double yellow;
-        private double keycolor;
+        private float cyan;
+        private float magenta;
+        private float yellow;
+        private float keycolor;
         #endregion
 
         #region Filter components
@@ -27,7 +27,7 @@ namespace UMapx.Imaging
         /// <param name="magenta">Magenta [-1, 1]</param>
         /// <param name="yellow">Yellow [-1, 1]</param>
         /// <param name="keycolor">Keycolor [-1, 1]</param>
-        public CMYKFilter(double cyan, double magenta, double yellow, double keycolor)
+        public CMYKFilter(float cyan, float magenta, float yellow, float keycolor)
         {
             Cyan = cyan;
             Magenta = magenta;
@@ -44,7 +44,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Cyan [-1, 1].
         /// </summary>
-        public double Cyan
+        public float Cyan
         {
             get
             {
@@ -58,7 +58,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Magenta [-1, 1].
         /// </summary>
-        public double Magenta
+        public float Magenta
         {
             get
             {
@@ -72,7 +72,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Yellow [-1, 1].
         /// </summary>
-        public double Yellow
+        public float Yellow
         {
             get
             {
@@ -86,7 +86,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Keycolor [-1, 1].
         /// </summary>
-        public double Keycolor
+        public float Keycolor
         {
             get
             {
@@ -137,9 +137,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return;
         }
         #endregion

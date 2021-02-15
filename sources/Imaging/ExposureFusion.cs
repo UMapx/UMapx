@@ -19,7 +19,7 @@ namespace UMapx.Imaging
         #region Private data
         private LaplacianPyramidTransform lap;
         private GaussianPyramidTransform gap;
-        private double sigma;
+        private float sigma;
         #endregion
 
         #region Filter components
@@ -28,7 +28,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="levels">Number of levels</param>
         /// <param name="sigma">Sigma (0, 1)</param>
-        public ExposureFusion(int levels, double sigma = 0.2)
+        public ExposureFusion(int levels, float sigma = 0.2f)
         {
             this.lap = new LaplacianPyramidTransform(levels);
             this.gap = new GaussianPyramidTransform(levels);
@@ -52,7 +52,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the sigma value (0, 1).
         /// </summary>
-        public double Sigma
+        public float Sigma
         {
             get
             {
@@ -60,7 +60,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.sigma = value;
+                this.sigma = Maths.Float(value);
             }
         }
         /// <summary>
@@ -72,15 +72,15 @@ namespace UMapx.Imaging
         {
             // data
             int N = images.GetLength(0);
-            double[][][,] data = new double[N][][,];
+            float[][][,] data = new float[N][][,];
             int height = images[0].Height;
             int width = images[1].Width;
-            double[][,] weights = new double[N][,];
+            float[][,] weights = new float[N][,];
 
             // to rgb array
             for (int i = 0; i < N; i++)
             {
-                data[i] = BitmapConverter.ToRGB(images[i]);
+                data[i] = BitmapMatrix.ToRGB(images[i]);
             }
 
             // initialize weights
@@ -91,7 +91,7 @@ namespace UMapx.Imaging
             weights = Mul(weights, Exp(data, this.sigma));
 
             // normalizing
-            double[,] z = new double[height, width];
+            float[,] z = new float[height, width];
 
             for (int i = 0; i < N; i++)
                 z = z.Add(weights[i]);
@@ -100,16 +100,16 @@ namespace UMapx.Imaging
                 weights[i] = weights[i].Div(z);
 
             // pyramids
-            double[][,] pyrW;
-            double[][,] pyrIr;
-            double[][,] pyrIg;
-            double[][,] pyrIb;
+            float[][,] pyrW;
+            float[][,] pyrIr;
+            float[][,] pyrIg;
+            float[][,] pyrIb;
 
             // outputs
-            double[][,] zero = gap.Forward(new double[height, width]);
-            double[][,] r = (double[][,])zero.Clone();
-            double[][,] g = (double[][,])zero.Clone();
-            double[][,] b = (double[][,])zero.Clone();
+            float[][,] zero = gap.Forward(new float[height, width]);
+            float[][,] r = (float[][,])zero.Clone();
+            float[][,] g = (float[][,])zero.Clone();
+            float[][,] b = (float[][,])zero.Clone();
             int levels = r.GetLength(0);
 
             // do job
@@ -132,7 +132,7 @@ namespace UMapx.Imaging
             }
 
             // reconstruction
-            Bitmap bitmap = BitmapConverter.FromRGB(new double[][,] {
+            Bitmap bitmap = BitmapMatrix.FromRGB(new float[][,] {
                 lap.Backward(r),
                 lap.Backward(g),
                 lap.Backward(b) });
@@ -148,15 +148,15 @@ namespace UMapx.Imaging
         {
             // data
             int N = images.GetLength(0);
-            double[][][,] data = new double[N][][,];
+            float[][][,] data = new float[N][][,];
             int height = images[0].Height;
             int width = images[1].Width;
-            double[][,] weights = new double[N][,];
+            float[][,] weights = new float[N][,];
 
             // to rgb array
             for (int i = 0; i < N; i++)
             {
-                data[i] = BitmapConverter.ToRGB(images[i]);
+                data[i] = BitmapMatrix.ToRGB(images[i]);
             }
 
             // initialize weights
@@ -167,7 +167,7 @@ namespace UMapx.Imaging
             weights = Mul(weights, Exp(data, this.sigma));
 
             // normalizing
-            double[,] z = new double[height, width];
+            float[,] z = new float[height, width];
 
             for (int i = 0; i < N; i++)
                 z = z.Add(weights[i]);
@@ -176,16 +176,16 @@ namespace UMapx.Imaging
                 weights[i] = weights[i].Div(z);
 
             // pyramids
-            double[][,] pyrW;
-            double[][,] pyrIr;
-            double[][,] pyrIg;
-            double[][,] pyrIb;
+            float[][,] pyrW;
+            float[][,] pyrIr;
+            float[][,] pyrIg;
+            float[][,] pyrIb;
 
             // outputs
-            double[][,] zero = gap.Forward(new double[height, width]);
-            double[][,] r = (double[][,])zero.Clone();
-            double[][,] g = (double[][,])zero.Clone();
-            double[][,] b = (double[][,])zero.Clone();
+            float[][,] zero = gap.Forward(new float[height, width]);
+            float[][,] r = (float[][,])zero.Clone();
+            float[][,] g = (float[][,])zero.Clone();
+            float[][,] b = (float[][,])zero.Clone();
             int levels = r.GetLength(0);
 
             // do job
@@ -208,7 +208,7 @@ namespace UMapx.Imaging
             }
 
             // reconstruction
-            Bitmap bitmap = BitmapConverter.FromRGB(new double[][,] {
+            Bitmap bitmap = BitmapMatrix.FromRGB(new float[][,] {
                 lap.Backward(r),
                 lap.Backward(g),
                 lap.Backward(b) });
@@ -224,14 +224,14 @@ namespace UMapx.Imaging
         /// <param name="I">Input data</param>
         /// <param name="sigma">Sigma</param>
         /// <returns>Output data</returns>
-        private static double[][,] Exp(double[][][,] I, double sigma)
+        private static float[][,] Exp(float[][][,] I, float sigma)
         {
             // params
             int length = I.GetLength(0);
-            double[][,] C = new double[length][,];
-            double[][,] current;
-            double[,] r, g, b;
-            double[,] result;
+            float[][,] C = new float[length][,];
+            float[][,] current;
+            float[,] r, g, b;
+            float[,] result;
             int height, width;
             int i, j, k;
 
@@ -245,15 +245,15 @@ namespace UMapx.Imaging
 
                 height = r.GetLength(0);
                 width = r.GetLength(1);
-                result = new double[height, width];
+                result = new float[height, width];
 
                 for (j = 0; j < height; j++)
                 {
                     for (k = 0; k < width; k++)
                     {
-                        result[j, k] = Math.Exp(-0.5 * Math.Pow((r[j, k] - 0.5), 2) / Math.Pow(sigma, 2)) *
-                                       Math.Exp(-0.5 * Math.Pow((g[j, k] - 0.5), 2) / Math.Pow(sigma, 2)) *
-                                       Math.Exp(-0.5 * Math.Pow((b[j, k] - 0.5), 2) / Math.Pow(sigma, 2));
+                        result[j, k] = (float)Math.Exp(-0.5 * Math.Pow((r[j, k] - 0.5), 2) / Math.Pow(sigma, 2)) *
+                                       (float)Math.Exp(-0.5 * Math.Pow((g[j, k] - 0.5), 2) / Math.Pow(sigma, 2)) *
+                                       (float)Math.Exp(-0.5 * Math.Pow((b[j, k] - 0.5), 2) / Math.Pow(sigma, 2));
                     }
                 }
                 C[i] = result;
@@ -267,10 +267,10 @@ namespace UMapx.Imaging
         /// <param name="A">Matrix array</param>
         /// <param name="B">Matrix array</param>
         /// <returns>Matrix array</returns>
-        private static double[][,] Mul(double[][,] A, double[][,] B)
+        private static float[][,] Mul(float[][,] A, float[][,] B)
         {
             int length = A.GetLength(0);
-            double[][,] R = new double[length][,];
+            float[][,] R = new float[length][,];
 
             for (int i = 0; i < length; i++)
                 R[i] = A[i].Mul(B[i]);

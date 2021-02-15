@@ -71,18 +71,18 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             int N = A.Length;
             if (!Maths.IsPower(N, 2))
                 throw new Exception("Dimension of the signal must be a power of 2");
 
-            double[] B = (double[])A.Clone();
+            float[] B = (float[])A.Clone();
             fwht(B);
 
             if (normalized)
             {
-                B = Matrice.Div(B, Math.Sqrt(N));
+                B = Matrice.Div(B, Maths.Sqrt(N));
             }
 
             return B;
@@ -92,18 +92,18 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             int N = B.Length;
             if (!Maths.IsPower(N, 2))
                 throw new Exception("Dimension of the signal must be a power of 2");
 
-            double[] A = (double[])B.Clone();
+            float[] A = (float[])B.Clone();
             fwht(A);
 
             if (normalized)
             {
-                A = Matrice.Div(A, Math.Sqrt(N));
+                A = Matrice.Div(A, Maths.Sqrt(N));
             }
 
             return A;
@@ -113,9 +113,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
-            double[,] B = (double[,])A.Clone();
+            float[,] B = (float[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -123,7 +123,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -142,7 +142,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -161,14 +161,14 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = Matrice.Div(B, Math.Sqrt(N * M));
+                    B = Matrice.Div(B, Maths.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -187,14 +187,14 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = Matrice.Div(B, Math.Sqrt(N));
+                    B = Matrice.Div(B, Maths.Sqrt(N));
                 }
             }
             else
             {
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -212,7 +212,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = Matrice.Div(B, Math.Sqrt(M));
+                    B = Matrice.Div(B, Maths.Sqrt(M));
                 }
             }
 
@@ -223,9 +223,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
-            double[,] A = (double[,])B.Clone();
+            float[,] A = (float[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -233,7 +233,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -250,7 +250,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -268,14 +268,14 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = Matrice.Div(A, Math.Sqrt(N * M));
+                    A = Matrice.Div(A, Maths.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -292,14 +292,14 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = Matrice.Div(A, Math.Sqrt(N));
+                    A = Matrice.Div(A, Maths.Sqrt(N));
                 }
             }
             else
             {
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -316,7 +316,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = Matrice.Div(A, Math.Sqrt(M));
+                    A = Matrice.Div(A, Maths.Sqrt(M));
                 }
             }
 
@@ -585,11 +585,11 @@ namespace UMapx.Transform
         ///
         /// </summary>
         /// <param name="data">Array</param>
-        private void fwht(double[] data)
+        private void fwht(float[] data)
         {
             int N = data.Length;
             int log2N = (int)Maths.Log2(N);
-            double x_even, x_odd;
+            float x_even, x_odd;
 
             int k0 = N, k1 = 1, k2 = N / 2;
             int x, y, z, i, j, l;

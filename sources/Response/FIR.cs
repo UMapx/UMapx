@@ -16,7 +16,7 @@ namespace UMapx.Response
     public class FIR : IResponse
     {
         #region Private data
-        private double[] b;
+        private float[] b;
         #endregion
 
         #region FIR Components
@@ -28,14 +28,14 @@ namespace UMapx.Response
         /// Initializes a filter with a finite impulse response.
         /// </summary>
         /// <param name="b">Array of signal coefficients</param>
-        public FIR(double[] b)
+        public FIR(float[] b)
         {
             B = b;
         }
         /// <summary>
         /// Gets or sets the array of signal coefficients.
         /// </summary>
-        public double[] B
+        public float[] B
         {
             get
             {
@@ -51,12 +51,12 @@ namespace UMapx.Response
         /// </summary>
         /// <param name="u">Array</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
-        public double[] Reaction(double[] u)
+        public float[] Reaction(float[] u)
         {
             int length = u.Length;
-            double[] y = new double[length];
+            float[] y = new float[length];
 
-            double input;
+            float input;
             int t, P = b.Length;
             int n, i;
 
@@ -81,11 +81,11 @@ namespace UMapx.Response
         /// </summary>
         /// <param name="w">Array of frequencies (rad / s)</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
-        public double[] Amplitude(double[] w)
+        public float[] Amplitude(float[] w)
         {
             int i, j, length = b.Length;
             Complex K1;
-            double[] amplitude = new double[w.Length];
+            float[] amplitude = new float[w.Length];
 
             for (j = 0; j < w.Length; j++)
             {
@@ -104,11 +104,11 @@ namespace UMapx.Response
         /// </summary>
         /// <param name="w">Array of frequencies (rad / s)</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
-        public double[] Phase(double[] w)
+        public float[] Phase(float[] w)
         {
             int j, i, length = b.Length;
             Complex K1;
-            double[] phase = new double[w.Length];
+            float[] phase = new float[w.Length];
 
             for (j = 0; j < w.Length; j++)
             {
@@ -126,8 +126,8 @@ namespace UMapx.Response
         /// Returns the amplitude value at the given frequency.
         /// </summary>
         /// <param name="w">Frequency (rad / s)</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Amplitude(double w)
+        /// <returns>float precision floating point number</returns>
+        public float Amplitude(float w)
         {
             int i;
             int length = b.Length;
@@ -143,8 +143,8 @@ namespace UMapx.Response
         /// Returns the phase value at the given frequency.
         /// </summary>
         /// <param name="w">Frequency (rad / s)</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Phase(double w)
+        /// <returns>float precision floating point number</returns>
+        public float Phase(float w)
         {
             int i;
             int length = b.Length;
@@ -167,7 +167,7 @@ namespace UMapx.Response
             get
             {
                 FIR cv = new FIR();
-                cv.B = new double[3] { 1.0, 1.0, 0.0 };
+                cv.B = new float[3] { 1.0f, 1.0f, 0.0f };
                 return cv;
             }
         }
@@ -179,7 +179,7 @@ namespace UMapx.Response
             get
             {
                 FIR cv = new FIR();
-                cv.B = new double[3] { 1.0, -1.0, 0.0 };
+                cv.B = new float[3] { 1.0f, -1.0f, 0.0f };
                 return cv;
             }
         }
@@ -191,7 +191,7 @@ namespace UMapx.Response
             get
             {
                 FIR cv = new FIR();
-                cv.B = new double[3] { 1.0, 1.0, -1.0 };
+                cv.B = new float[3] { 1.0f, 1.0f, -1.0f };
                 return cv;
             }
         }
@@ -203,7 +203,7 @@ namespace UMapx.Response
             get
             {
                 FIR cv = new FIR();
-                cv.B = new double[3] { 1.0, -1.0, 1.0 };
+                cv.B = new float[3] { 1.0f, -1.0f, 1.0f };
                 return cv;
             }
         }

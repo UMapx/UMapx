@@ -16,7 +16,7 @@ namespace UMapx.Analysis
     {
         #region Private data
         private EVD eig;
-        private double eps;
+        private float eps;
         #endregion
 
         #region Class components
@@ -24,14 +24,14 @@ namespace UMapx.Analysis
         /// Initializes a class of equations using the spectral decomposition of a matrix.
         /// </summary>
         /// <param name="eps">Epsilon [0, 1]</param>
-        public Roots(double eps = 1e-16)
+        public Roots(float eps = 1e-16f)
         {
             this.Eps = eps;
         }
         /// <summary>
         /// Gets or sets an error [0, 1].
         /// </summary>
-        public double Eps
+        public float Eps
         {
             get
             {
@@ -39,7 +39,7 @@ namespace UMapx.Analysis
             }
             set
             {
-                this.eps = Maths.Double(value);
+                this.eps = Maths.Float(value);
             }
         }
         /// <summary>
@@ -47,7 +47,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="polynomial">Polynomial</param>
         /// <returns>Array</returns>
-        public Complex[] Compute(double[] polynomial)
+        public Complex[] Compute(float[] polynomial)
         {
             // MATLAB roots method
             // represented by Valery Asiryan, 2018.
@@ -73,8 +73,8 @@ namespace UMapx.Analysis
 
             // get scaling factor:
             int m = length - index - 1;
-            double scale = polynomial[index];
-            double[] c = new double[m];
+            float scale = polynomial[index];
+            float[] c = new float[m];
 
             // create new polynomial:
             for (i = 0; i < m; i++)
@@ -94,7 +94,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="roots">Roots</param>
         /// <returns>Array</returns>
-        public double[] Compute(Complex[] roots)
+        public float[] Compute(Complex[] roots)
         {
             // MATLAB roots method
             // represented by Valery Asiryan, 2018.

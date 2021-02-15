@@ -12,12 +12,12 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        void Apply(double[] data);
+        void Apply(float[] data);
         /// <summary>
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        void Apply(double[,] data);
+        void Apply(float[,] data);
         /// <summary>
         /// Apply filter.
         /// </summary>

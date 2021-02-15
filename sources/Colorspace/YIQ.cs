@@ -9,9 +9,9 @@ namespace UMapx.Colorspace
     public struct YIQ : IColorSpace, ICloneable
     {
         #region Private data
-        private double y;
-        private double i;
-        private double q;
+        private float y;
+        private float i;
+        private float q;
         #endregion
 
         #region Stucture components
@@ -21,7 +21,7 @@ namespace UMapx.Colorspace
         /// <param name="y">Y [0, 1]</param>
         /// <param name="i">I [-0.5957, 0.5957]</param>
         /// <param name="q">Q [-0.5226, 0.5226]</param>
-        public YIQ(double y, double i, double q)
+        public YIQ(float y, float i, float q)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
             this.i = (i > 0.5957f) ? 0.5957f : ((i < -0.5957f) ? -0.5957f : i);
@@ -30,7 +30,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Y
+        public float Y
         {
             get
             {
@@ -44,7 +44,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-0.5957, 0.5957].
         /// </summary>
-        public double I
+        public float I
         {
             get
             {
@@ -58,7 +58,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-0.5226, 0.5226].
         /// </summary>
-        public double Q
+        public float Q
         {
             get
             {
@@ -157,13 +157,13 @@ namespace UMapx.Colorspace
         /// <returns>YIQ structure</returns>
         public static YIQ FromRGB(int red, int green, int blue)
         {
-            double r = red / 255.0f;
-            double g = green / 255.0f;
-            double b = blue / 255.0f;
+            float r = red / 255.0f;
+            float g = green / 255.0f;
+            float b = blue / 255.0f;
 
-            double Y = 0.299f * r + 0.587f * g + 0.114f * b;
-            double I = 0.596f * r - 0.274f * g - 0.322f * b;
-            double Q = 0.211f * r - 0.522f * g + 0.311f * b;
+            float Y = 0.299f * r + 0.587f * g + 0.114f * b;
+            float I = 0.596f * r - 0.274f * g - 0.322f * b;
+            float Q = 0.211f * r - 0.522f * g + 0.311f * b;
 
             return new YIQ(Y, I, Q);
         }

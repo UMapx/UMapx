@@ -10,7 +10,7 @@ namespace UMapx.Imaging
     public class ShiftCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        private double offset;
+        private float offset;
         #endregion
 
         #region Filter components
@@ -19,14 +19,14 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="offset">Offset (-0.5, 0.5)</param>
         /// <param name="space">Color space</param>
-        public ShiftCorrection(double offset, Space space)
+        public ShiftCorrection(float offset, Space space)
         {
             Offset = offset; Space = space;
         }
         /// <summary>
         /// Gets or sets the offset value (-0.5, 0.5).
         /// </summary>
-        public double Offset
+        public float Offset
         {
             get
             {
@@ -34,7 +34,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.offset = Maths.Range(value, -0.49998, 0.49998);
+                this.offset = Maths.Range(value, -0.49998f, 0.49998f);
                 this.rebuild = true;
             }
         }

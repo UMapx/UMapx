@@ -13,7 +13,7 @@ namespace UMapx.Imaging
     public class SaturationCorrection : IBitmapFilter
     {
         #region Private data
-        private double saturation;
+        private float saturation;
         #endregion
 
         #region Filter components
@@ -21,7 +21,7 @@ namespace UMapx.Imaging
         /// Initializes the saturation correction filter.
         /// </summary>
         /// <param name="saturation">Saturation [-100, 100]</param>
-        public SaturationCorrection(double saturation)
+        public SaturationCorrection(float saturation)
         {
             Saturation = saturation;
         }
@@ -35,7 +35,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the saturation value [-100, 100].
         /// </summary>
-        public double Saturation
+        public float Saturation
         {
             get
             {
@@ -54,7 +54,7 @@ namespace UMapx.Imaging
         {
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();
-            double s = this.saturation / 255.0;
+            float s = this.saturation / 255.0f;
 
             Parallel.For(0, height, y =>
             {
@@ -82,9 +82,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
         }
         #endregion
     }

@@ -15,8 +15,8 @@ namespace UMapx.Decomposition
     public class LU
     {
         #region Private data
-        private double[][] lower;
-        private double[][] upper;
+        private float[][] lower;
+        private float[][] upper;
         #endregion
 
         #region Initialize
@@ -24,7 +24,7 @@ namespace UMapx.Decomposition
         /// Initializes LU decomposition.
         /// </summary>
         /// <param name="A">Square matrix</param>
-        public LU(double[,] A)
+        public LU(float[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
@@ -38,14 +38,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the lower triangular matrix.
         /// </summary>
-        public double[,] L
+        public float[,] L
         {
             get { return Jagged.FromJagged(lower); }
         }
         /// <summary>
         /// Gets the upper triangular matrix.
         /// </summary>
-        public double[,] U
+        public float[,] U
         {
             get { return Jagged.FromJagged(upper); }
         }
@@ -56,11 +56,11 @@ namespace UMapx.Decomposition
         /// 
         /// </summary>
         /// <param name="a"></param>
-        private void ludecomp(double[][] a)
+        private void ludecomp(float[][] a)
         {
             int i, j, k;
             int n = a.GetLength(0);
-            double alpha, beta;
+            float alpha, beta;
             this.upper = Jagged.Zero(n, n);
             this.lower = Jagged.Zero(n, n);
 

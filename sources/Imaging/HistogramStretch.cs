@@ -10,7 +10,7 @@ namespace UMapx.Imaging
     public class HistogramStretch : Correction, IBitmapFilter
     {
         #region Private data
-        private RangeDouble range;
+        private RangeFloat range;
         #endregion
 
         #region Filter components
@@ -20,9 +20,9 @@ namespace UMapx.Imaging
         /// <param name="min">Minimum intensity [0, 1]</param>
         /// <param name="max">Maximum intensity [0, 1]</param>
         /// <param name="space">Color space</param>
-        public HistogramStretch(double min, double max, Space space)
+        public HistogramStretch(float min, float max, Space space)
         {
-            Range = new RangeDouble(min, max);
+            Range = new RangeFloat(min, max);
             Space = space;
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="range">Intensity range</param>
         /// <param name="space">Color space</param>
-        public HistogramStretch(RangeDouble range, Space space)
+        public HistogramStretch(RangeFloat range, Space space)
         {
             Range = range;
             Space = space;
@@ -38,7 +38,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the intensity range.
         /// </summary>
-        public RangeDouble Range
+        public RangeFloat Range
         {
             get
             {

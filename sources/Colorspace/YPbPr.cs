@@ -9,9 +9,9 @@ namespace UMapx.Colorspace
     public struct YPbPr : IColorSpace, ICloneable
     {
         #region Private data
-        private double y;
-        private double pb;
-        private double pr;
+        private float y;
+        private float pb;
+        private float pr;
         #endregion
 
         #region Structure components
@@ -21,16 +21,16 @@ namespace UMapx.Colorspace
         /// <param name="y">Y [0, 1]</param>
         /// <param name="pb">Pb [-0.5, 0.5]</param>
         /// <param name="pr">Pr [-0.5, 0.5]</param>
-        public YPbPr(double y, double pb, double pr)
+        public YPbPr(float y, float pb, float pr)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
-            this.pb = (pb > 0.5) ? 0.5 : ((pb < -0.5) ? -0.5 : pb);
-            this.pr = (pr > 0.5) ? 0.5 : ((pr < -0.5) ? -0.5 : pr);
+            this.pb = (pb > 0.5) ? 0.5f : ((pb < -0.5) ? -0.5f : pb);
+            this.pr = (pr > 0.5) ? 0.5f : ((pr < -0.5) ? -0.5f : pr);
         }
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Y
+        public float Y
         {
             get
             {
@@ -44,7 +44,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-0.5, 0.5].
         /// </summary>
-        public double Pb
+        public float Pb
         {
             get
             {
@@ -52,13 +52,13 @@ namespace UMapx.Colorspace
             }
             set
             {
-                pb = (value > 0.5) ? 0.5 : ((value < -0.5) ? -0.5 : value);
+                pb = (value > 0.5) ? 0.5f : ((value < -0.5) ? -0.5f : value);
             }
         }
         /// <summary>
         /// Defines a component of the color model [-0.5, 0.5].
         /// </summary>
-        public double Pr
+        public float Pr
         {
             get
             {
@@ -66,7 +66,7 @@ namespace UMapx.Colorspace
             }
             set
             {
-                pr = (value > 0.5) ? 0.5 : ((value < -0.5) ? -0.5 : value);
+                pr = (value > 0.5) ? 0.5f : ((value < -0.5) ? -0.5f : value);
             }
         }
         #endregion
@@ -157,13 +157,13 @@ namespace UMapx.Colorspace
         /// <returns>YPbPr structure</returns>
         public static YPbPr FromRGB(int red, int green, int blue)
         {
-            double r = red / 255.0;
-            double g = green / 255.0;
-            double b = blue / 255.0;
+            float r = red / 255.0f;
+            float g = green / 255.0f;
+            float b = blue / 255.0f;
 
-            double Y = 0.299 * r + 0.587 * g + 0.114 * b;
-            double Cb = -0.169 * r - 0.331 * g + 0.500 * b;
-            double Cr = 0.500 * r - 0.419 * g - 0.081 * b;
+            float Y = 0.299f * r + 0.587f * g + 0.114f * b;
+            float Cb = -0.169f * r - 0.331f * g + 0.500f * b;
+            float Cr = 0.500f * r - 0.419f * g - 0.081f * b;
 
             return new YPbPr(Y, Cb, Cr);
         }

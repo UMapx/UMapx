@@ -59,7 +59,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             int N = A.Length, N2 = N * 2, i, k;
             Complex[] B = new Complex[N2];
@@ -71,15 +71,15 @@ namespace UMapx.Transform
 
             B = FFT.Forward(B);
 
-            double[] C = new double[N];
+            float[] C = new float[N];
             Complex c = -Maths.I * Maths.Pi / N;
 
             for (k = 0; k < N; k++)
             {
-                C[k] = 2.0 * (B[k] * Maths.Exp(c * k)).Imag;
+                C[k] = 2.0f * (B[k] * Maths.Exp(c * k)).Imag;
             }
 
-            C[0] = A[N - 1] / Math.Sqrt(2);
+            C[0] = A[N - 1] / Maths.Sqrt2;
 
             return C;
         }
@@ -88,28 +88,28 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             int N = B.Length, N2 = N * 2, i, k;
             Complex[] A = new Complex[N2];
-            double Bk, temp, c = Maths.Pi / N;
+            float Bk, temp, c = Maths.Pi / N;
 
             for (k = 0; k < N; k++)
             {
                 Bk = B[k];
                 temp = k * c;
-                A[k] = new Complex(Bk * Math.Cos(temp), Bk * Math.Sin(temp));
+                A[k] = new Complex(Bk * (float)Math.Cos(temp), Bk * (float)Math.Sin(temp));
             }
 
             A = FFT.Backward(A);
-            double[] C = new double[N];
+            float[] C = new float[N];
 
             for (i = 0; i < N; i++)
             {
-                C[i] = -A[i].Imag * 2.0;
+                C[i] = -A[i].Imag * 2.0f;
             }
 
-            C[N - 1] = B[0] * Math.Sqrt(2);
+            C[N - 1] = B[0] * Maths.Sqrt2;
 
             return C;
         }
@@ -118,9 +118,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
-            double[,] B = (double[,])A.Clone();
+            float[,] B = (float[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -128,7 +128,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -147,7 +147,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -167,7 +167,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -187,7 +187,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -211,9 +211,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
-            double[,] A = (double[,])B.Clone();
+            float[,] A = (float[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -221,7 +221,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -238,7 +238,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -258,7 +258,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -276,7 +276,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)

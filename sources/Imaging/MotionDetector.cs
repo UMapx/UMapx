@@ -68,8 +68,8 @@ namespace UMapx.Imaging
                 var temp = (Bitmap)Data.Clone();
 
                 // lock in memory
-                BitmapData bitmapData = BitmapConverter.Lock32bpp(Data);
-                BitmapData frameData = BitmapConverter.Lock32bpp(Frame);
+                BitmapData bitmapData = BitmapFormat.Lock32bpp(Data);
+                BitmapData frameData = BitmapFormat.Lock32bpp(Frame);
 
                 // calculate alarm
                 var alarm = ProcessFrame(bitmapData, frameData);

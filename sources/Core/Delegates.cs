@@ -4,8 +4,8 @@
     /// Defines the delegate of a continuous function that depends on a single argument.
     /// </summary>
     /// <param name="x">Argument</param>
-    /// <returns>Double precision floating point number</returns>
-    public delegate double IDouble(double x);
+    /// <returns>float precision floating point number</returns>
+    public delegate float IFloat(float x);
     /// <summary>
     /// Defines the delegate of a continuous function that depends on a single argument.
     /// </summary>
@@ -17,8 +17,8 @@
     /// </summary>
     /// <param name="x">First argument</param>
     /// <param name="y">Second argument</param>
-    /// <returns>Double precision floating point number</returns>
-    public delegate double IDoubleMesh(double x, double y);
+    /// <returns>float precision floating point number</returns>
+    public delegate float IFloatMesh(float x, float y);
     /// <summary>
     /// Defines the delegate of a continuous function that depends on two arguments.
     /// </summary>

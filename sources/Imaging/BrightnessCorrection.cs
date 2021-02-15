@@ -13,7 +13,7 @@ namespace UMapx.Imaging
     public class BrightnessCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        private double brightness;
+        private float brightness;
         #endregion
 
         #region Filter components
@@ -22,7 +22,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="brightness">Brightness [-1, 1]</param>
         /// <param name="space">Color space</param>
-        public BrightnessCorrection(double brightness, Space space)
+        public BrightnessCorrection(float brightness, Space space)
         {
             Brightness = brightness; this.Space = space;
         }
@@ -31,12 +31,12 @@ namespace UMapx.Imaging
         /// </summary>
         public BrightnessCorrection()
         {
-            Brightness = 0.5;
+            Brightness = 0.5f;
         }
         /// <summary>
         /// Gets or sets the brightness value [-1, 1].
         /// </summary>
-        public double Brightness
+        public float Brightness
         {
             get
             {
@@ -53,7 +53,7 @@ namespace UMapx.Imaging
         /// </summary>
         protected override void Rebuild()
         {
-            this.values = Intensity.Add(this.brightness / 2.0, 256);
+            this.values = Intensity.Add(this.brightness / 2.0f, 256);
         }
         #endregion
     }

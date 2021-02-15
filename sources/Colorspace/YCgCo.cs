@@ -9,9 +9,9 @@ namespace UMapx.Colorspace
     public struct YCgCo : IColorSpace, ICloneable
     {
         #region Private data
-        private double y;
-        private double cg;
-        private double co;
+        private float y;
+        private float cg;
+        private float co;
         #endregion
 
         #region Structure components
@@ -21,16 +21,16 @@ namespace UMapx.Colorspace
         /// <param name="y">Y [0, 1]</param>
         /// <param name="cg">Cg [-0.5, 0.5]</param>
         /// <param name="co">Co [-0.5, 0.5]</param>
-        public YCgCo(double y, double cg, double co)
+        public YCgCo(float y, float cg, float co)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
-            this.cg = (cg > 0.5) ? 0.5 : ((cg < -0.5) ? -0.5 : cg);
-            this.co = (co > 0.5) ? 0.5 : ((co < -0.5) ? -0.5 : co);
+            this.cg = (cg > 0.5) ? 0.5f : ((cg < -0.5) ? -0.5f : cg);
+            this.co = (co > 0.5) ? 0.5f : ((co < -0.5) ? -0.5f : co);
         }
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Y
+        public float Y
         {
             get
             {
@@ -44,7 +44,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-0.5, 0.5].
         /// </summary>
-        public double Cg
+        public float Cg
         {
             get
             {
@@ -52,13 +52,13 @@ namespace UMapx.Colorspace
             }
             set
             {
-                cg = (value > 0.5) ? 0.5 : ((value < -0.5) ? -0.5 : value);
+                cg = (value > 0.5) ? 0.5f : ((value < -0.5) ? -0.5f : value);
             }
         }
         /// <summary>
         /// Defines a component of the color model [-0.5, 0.5].
         /// </summary>
-        public double Co
+        public float Co
         {
             get
             {
@@ -66,7 +66,7 @@ namespace UMapx.Colorspace
             }
             set
             {
-                co = (value > 0.5) ? 0.5 : ((value < -0.5) ? -0.5 : value);
+                co = (value > 0.5) ? 0.5f : ((value < -0.5) ? -0.5f : value);
             }
         }
         #endregion
@@ -157,13 +157,13 @@ namespace UMapx.Colorspace
         /// <returns>YCgCo structure</returns>
         public static YCgCo FromRGB(int red, int green, int blue)
         {
-            double r = red / 255.0;
-            double g = green / 255.0;
-            double b = blue / 255.0;
+            float r = red / 255.0f;
+            float g = green / 255.0f;
+            float b = blue / 255.0f;
 
-            double Y = 0.25 * r + 0.5 * g + 0.25 * b;
-            double Cg = -0.25 * r + 0.5 * g - 0.25 * b;
-            double Co = 0.5 * r - 0.0 * g - 0.5 * b;
+            float Y = 0.25f * r + 0.5f * g + 0.25f * b;
+            float Cg = -0.25f * r + 0.5f * g - 0.25f * b;
+            float Co = 0.5f * r - 0.0f * g - 0.5f * b;
 
             return new YCgCo(Y, Cg, Co);
         }

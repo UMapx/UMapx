@@ -16,8 +16,8 @@ namespace UMapx.Response
     public class IIR : IResponse
     {
         #region Private data
-        private double[] a;
-        private double[] b;
+        private float[] a;
+        private float[] b;
         #endregion
 
         #region IIR Components
@@ -30,14 +30,14 @@ namespace UMapx.Response
         /// </summary>
         /// <param name="b">Array of signal coefficients</param>
         /// <param name="a">Array of feedback coefficients</param>
-        public IIR(double[] b, double[] a)
+        public IIR(float[] b, float[] a)
         {
             B = b; A = a;
         }
         /// <summary>
         /// Gets or sets the array of feedback coefficients.
         /// </summary>
-        public double[] A
+        public float[] A
         {
             get
             {
@@ -51,7 +51,7 @@ namespace UMapx.Response
         /// <summary>
         /// Gets or sets the array of signal coefficients.
         /// </summary>
-        public double[] B
+        public float[] B
         {
             get
             {
@@ -67,11 +67,11 @@ namespace UMapx.Response
         /// </summary>
         /// <param name="u">Array</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
-        public double[] Reaction(double[] u)
+        public float[] Reaction(float[] u)
         {
             int length = u.Length;
-            double[] y = new double[length];
-            double input, output;
+            float[] y = new float[length];
+            float input, output;
             int t, P = b.Length, Q = a.Length;
             int n, i, k;
 
@@ -103,14 +103,14 @@ namespace UMapx.Response
         /// </summary>
         /// <param name="w">Array of frequencies (rad / s)</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
-        public double[] Amplitude(double[] w)
+        public float[] Amplitude(float[] w)
         {
             int i, j;
             Complex K1;
             Complex K2;
             int length = w.Length;
             int P = b.Length, Q = a.Length;
-            double[] amplitude = new double[length];
+            float[] amplitude = new float[length];
 
             for (j = 0; j < length; j++)
             {
@@ -129,14 +129,14 @@ namespace UMapx.Response
         /// </summary>
         /// <param name="w">Array of frequencies (rad / s)</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
-        public double[] Phase(double[] w)
+        public float[] Phase(float[] w)
         {
             int i, j;
             Complex K1;
             Complex K2;
             int length = w.Length;
             int P = b.Length, Q = a.Length;
-            double[] phase = new double[length];
+            float[] phase = new float[length];
 
             for (j = 0; j < w.Length; j++)
             {
@@ -154,8 +154,8 @@ namespace UMapx.Response
         /// Returns the amplitude value at the given frequency.
         /// </summary>
         /// <param name="w">Frequency (rad / s)</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Amplitude(double w)
+        /// <returns>float precision floating point number</returns>
+        public float Amplitude(float w)
         {
             int i;
             Complex K1 = new Complex(0, 0);
@@ -170,8 +170,8 @@ namespace UMapx.Response
         /// Returns the phase value at the given frequency.
         /// </summary>
         /// <param name="w">Frequency (rad / s)</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Phase(double w)
+        /// <returns>float precision floating point number</returns>
+        public float Phase(float w)
         {
             int i;
             Complex K1 = new Complex(0, 0);
@@ -217,8 +217,8 @@ namespace UMapx.Response
             get
             {
                 IIR cv = new IIR();
-                cv.B = new double[3] { 1.0, 1.0, 0.0 };
-                cv.A = new double[3] { 0.0, 0.5, 0.5 };
+                cv.B = new float[3] { 1.0f, 1.0f, 0.0f };
+                cv.A = new float[3] { 0.0f, 0.5f, 0.5f };
                 return cv;
             }
         }
@@ -230,8 +230,8 @@ namespace UMapx.Response
             get
             {
                 IIR cv = new IIR();
-                cv.B = new double[3] { 1.0, -1.0, 0.0 };
-                cv.A = new double[3] { 0.0, 0.5, 0.5 };
+                cv.B = new float[3] { 1.0f, -1.0f, 0.0f };
+                cv.A = new float[3] { 0.0f, 0.5f, 0.5f };
                 return cv;
             }
         }
@@ -243,8 +243,8 @@ namespace UMapx.Response
             get
             {
                 IIR cv = new IIR();
-                cv.B = new double[3] { 1.0, 1.0, -1.0 };
-                cv.A = new double[3] { 0.0, 0.5, -0.5 };
+                cv.B = new float[3] { 1.0f, 1.0f, -1.0f };
+                cv.A = new float[3] { 0.0f, 0.5f, -0.5f };
                 return cv;
             }
         }
@@ -256,8 +256,8 @@ namespace UMapx.Response
             get
             {
                 IIR cv = new IIR();
-                cv.B = new double[3] { 1.0, -1.0, 1.0 };
-                cv.A = new double[3] { 0.0, 0.5, 0.5 };
+                cv.B = new float[3] { 1.0f, -1.0f, 1.0f };
+                cv.A = new float[3] { 0.0f, 0.5f, 0.5f };
                 return cv;
             }
         }

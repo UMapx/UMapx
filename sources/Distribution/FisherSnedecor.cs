@@ -19,9 +19,9 @@ namespace UMapx.Distribution
         private int d2;
 
         // Derived values
-        private double b;
-        private double? mean;
-        private double? variance;
+        private float b;
+        private float? mean;
+        private float? variance;
         #endregion
 
         #region Fisher-Snedecor components
@@ -40,7 +40,7 @@ namespace UMapx.Distribution
             this.d1 = d1;
             this.d2 = d2;
 
-            this.b = Special.Beta(d1 * 0.5, d2 * 0.5);
+            this.b = Special.Beta(d1 * 0.5f, d2 * 0.5f);
         }
         /// <summary>
         /// Gets the value of the first degree of freedom.
@@ -59,7 +59,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -67,11 +67,11 @@ namespace UMapx.Distribution
                 {
                     if (d2 <= 2)
                     {
-                        mean = Double.NaN;
+                        mean = float.NaN;
                     }
                     else
                     {
-                        mean = d2 / (d2 - 2.0);
+                        mean = d2 / (d2 - 2.0f);
                     }
                 }
 
@@ -81,14 +81,14 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
@@ -96,11 +96,11 @@ namespace UMapx.Distribution
                 {
                     if (d2 <= 4)
                     {
-                        variance = Double.NaN;
+                        variance = float.NaN;
                     }
                     else
                     {
-                        variance = (2.0 * d2 * d2 * (d1 + d2 - 2)) /
+                        variance = (2.0f * d2 * d2 * (d1 + d2 - 2)) /
                             (d1 * (d2 - 2) * (d2 - 2) * (d2 - 4));
                     }
                 }
@@ -111,56 +111,56 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
                 if (d1 > 2)
                 {
-                    double a = (d1 - 2.0) / d1;
-                    double b = d2 / (d2 + 2.0);
+                    float a = (d1 - 2.0f) / d1;
+                    float b = d2 / (d2 + 2.0f);
                     return a * b;
                 }
 
-                return Double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
                 if (d2 > 6)
                 {
-                    double v1 = 2 * d1 + d2 - 2;
-                    double v2 = Math.Sqrt(8 * (d2 - 4));
-                    double v3 = Math.Sqrt(d1 * (d1 + d2 - 2));
-                    double v4 = d2 - 6;
+                    float v1 = 2 * d1 + d2 - 2;
+                    float v2 = (float)Math.Sqrt(8 * (d2 - 4));
+                    float v3 = (float)Math.Sqrt(d1 * (d1 + d2 - 2));
+                    float v4 = d2 - 6;
                     return v1 * v2 / (v3 * v4);
                 }
-                return double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
-            get { return new RangeDouble(0, double.PositiveInfinity); }
+            get { return new RangeFloat(0, float.PositiveInfinity); }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }
@@ -168,28 +168,28 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x <= 0)
                 return 0;
 
-            double u = (d1 * x) / (d1 * x + d2);
-            return Special.BetaIncomplete(d1 * 0.5, d2 * 0.5, u);
+            float u = (d1 * x) / (d1 * x + d2);
+            return Special.BetaIncomplete(d1 * 0.5f, d2 * 0.5f, u);
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x <= 0)
                 return 0;
 
-            double u = Math.Pow(d1 * x, d1) * Math.Pow(d2, d2) /
-                Math.Pow(d1 * x + d2, d1 + d2);
-            return Math.Sqrt(u) / (x * b);
+            float u = (float)Math.Pow(d1 * x, d1) * (float)Math.Pow(d2, d2) /
+                (float)Math.Pow(d1 * x + d2, d1 + d2);
+            return (float)Math.Sqrt(u) / (x * b);
         }
         #endregion
     }

@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Gumbel : IDistribution
     {
         #region Private data
-        private double mu = 0;
-        private double beta = 1;
+        private float mu = 0;
+        private float beta = 1;
         #endregion
 
         #region Gumbel components
@@ -24,14 +24,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="mu">Shear rate μ ∈ (-inf, +inf)</param>
         /// <param name="beta">Scale factor β ∈ (0, +inf).</param>
-        public Gumbel(double mu, double beta)
+        public Gumbel(float mu, float beta)
         {
             Mu = mu; Beta = beta;
         }
         /// <summary>
         /// Gets or sets the shift factor μ ∈ (-inf, +inf).
         /// </summary>
-        public double Mu
+        public float Mu
         {
             get
             {
@@ -45,7 +45,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the scale factor β ∈ (0, +inf).
         /// </summary>
-        public double Beta
+        public float Beta
         {
             get
             {
@@ -62,17 +62,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(double.NegativeInfinity, double.PositiveInfinity);
+                return new RangeFloat(float.NegativeInfinity, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -82,24 +82,24 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
-                return mu - beta * Math.Log(Math.Log(2));
+                return mu - beta * (float)Math.Log(Math.Log(2));
             }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
-            get { return ((Math.PI * Math.PI) / 6.0) * beta * beta; }
+            get { return (float)((Math.PI * Math.PI) / 6.0) * beta * beta; }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -109,49 +109,49 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
-                return 1.14;
+                return 1.14f;
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                return 12.0 / 5;
+                return 12.0f / 5;
             }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
-            get { return Math.Log(beta) + Maths.Gamma + 1; }
+            get { return (float)Math.Log(beta) + Maths.Gamma + 1; }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
-            double z = (x - mu) / beta;
-            return Math.Exp(-Math.Exp(-z));
+            float z = (x - mu) / beta;
+            return (float)Math.Exp(-Math.Exp(-z));
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
-            double z = (x - mu) / beta;
-            return (1 / beta) * Math.Exp(-(z + Math.Exp(-z)));
+            float z = (x - mu) / beta;
+            return (1 / beta) * (float)Math.Exp(-(z + Math.Exp(-z)));
         }
         #endregion
     }

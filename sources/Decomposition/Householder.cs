@@ -21,8 +21,8 @@ namespace UMapx.Decomposition
     {
         #region Private data
         private int n;
-        private double[] Re, Im;
-        private double[][] matrices;
+        private float[] Re, Im;
+        private float[][] matrices;
         #endregion
 
         #region Initialize
@@ -30,12 +30,12 @@ namespace UMapx.Decomposition
         /// Initializes Householder transformation.
         /// </summary>
         /// <param name="v">Array</param>
-        public Householder(double[] v)
+        public Householder(float[] v)
         {
             // properties:
             this.n = v.Length;
             this.Re = Matrice.One(n);
-            this.Im = new double[n];
+            this.Im = new float[n];
 
             // reflection to 
             // Householder matrix:
@@ -45,15 +45,15 @@ namespace UMapx.Decomposition
         /// Initializes Householder transformation.
         /// </summary>
         /// <param name="A">Square matrix</param>
-        public Householder(double[,] A)
+        public Householder(float[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
 
             // properties:
             this.n = A.GetLength(0);
-            this.Re = new double[n];
-            this.Im = new double[n];
+            this.Re = new float[n];
+            this.Im = new float[n];
 
             // reduction to 
             // tridiagonalization matrix:
@@ -65,7 +65,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the Householder matrix.
         /// </summary>
-        public double[,] H
+        public float[,] H
         {
             get
             {
@@ -75,11 +75,11 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the diagonal matrix.
         /// </summary>
-        public double[,] T
+        public float[,] T
         {
             get
             {
-                double[,] D = new double[n, n];
+                float[,] D = new float[n, n];
                 int i;
 
                 // diagonal:
@@ -105,26 +105,26 @@ namespace UMapx.Decomposition
         /// 
         /// </summary>
         /// <param name="v"></param>
-        private void hmatx(double[] v)
+        private void hmatx(float[] v)
         {
             // [1] Alston S. Householder, "Unitary Triangularization of a Nonsymmetric Matrix", 
             // Journal of the ACM 5, 339-242, 1958;
             // [2] G. W. Stewart, Matrix Algorithms: Volume 1: Basic Decompositions, SIAM, xix+458, 1998.
             // 
             // Get Householder vector:
-            double[] w = Matrice.Householder(v);
+            float[] w = Matrice.Householder(v);
 
             // Get Householder matrix:
             int n = w.Length, i, j;
-            double[] z;
-            this.matrices = new double[n][];
+            float[] z;
+            this.matrices = new float[n][];
 
             // M = I - w * w':
             for (i = 0; i < n; i++)
             {
                 // eye vector
-                z = new double[n];
-                z[i] = 1.0;
+                z = new float[n];
+                z[i] = 1.0f;
 
                 for (j = 0; j < n; j++)
                 {
@@ -140,7 +140,7 @@ namespace UMapx.Decomposition
         /// 
         /// </summary>
         /// <param name="a"></param>
-        private void tred2(double[,] a)
+        private void tred2(float[,] a)
         {
             int i, j, k;
             this.matrices = Jagged.ToJagged(a);
@@ -153,7 +153,7 @@ namespace UMapx.Decomposition
                 Re[j] = matrices[n - 1][j];
             }
 
-            double scale, h, f, g, hh;
+            float scale, h, f, g, hh;
 
             // Householder reduction to tridiagonal form.
             for (i = n - 1; i > 0; i--)
@@ -184,7 +184,7 @@ namespace UMapx.Decomposition
                     }
 
                     f = Re[i - 1];
-                    g = (Double)System.Math.Sqrt(h);
+                    g = (float)System.Math.Sqrt(h);
                     if (f > 0) g = -g;
 
                     Im[i] = scale * g;

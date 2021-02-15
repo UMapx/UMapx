@@ -14,7 +14,7 @@ namespace UMapx.Distribution
     public class ChoiWilliams : IDistribution
     {
         #region Private data
-        private double a;
+        private float a;
         #endregion
 
         #region Choi-Williams components
@@ -22,14 +22,14 @@ namespace UMapx.Distribution
         /// Initializes the Choi-Williams distribution.
         /// </summary>
         /// <param name="a">Coefficient</param>
-        public ChoiWilliams(double a = 0.001)
+        public ChoiWilliams(float a = 0.001f)
         {
             A = a;
         }
         /// <summary>
         /// Gets or sets the coefficient value.
         /// </summary>
-        public double A
+        public float A
         {
             get
             {
@@ -43,59 +43,59 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(double.NegativeInfinity, double.PositiveInfinity);
+                return new RangeFloat(float.NegativeInfinity, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }
@@ -104,19 +104,19 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="eta">Argument</param>
         /// <param name="tau">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double eta, double tau)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float eta, float tau)
         {
-            double ksi = eta * tau;
-            return Math.Exp(-a * ksi * ksi);
+            float ksi = eta * tau;
+            return (float)Math.Exp(-a * ksi * ksi);
         }
         /// <summary>
         /// Returns the value of the kernel distribution function.
         /// </summary>
         /// <param name="t">Argument</param>
         /// <param name="tau">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double t, double tau)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float t, float tau)
         {
             throw new NotSupportedException();
         }

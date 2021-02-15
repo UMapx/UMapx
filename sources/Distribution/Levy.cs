@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Levy : IDistribution
     {
         #region Prviate data
-        private double mu = 0;
-        private double scale = 1;
+        private float mu = 0;
+        private float scale = 1;
         #endregion
 
         #region Levy components
@@ -24,14 +24,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="mu">Shear rate μ</param>
         /// <param name="c">Scale factor (>0)</param>
-        public Levy(double mu, double c)
+        public Levy(float mu, float c)
         {
             Mu = mu; C = c;
         }
         /// <summary>
         /// Gets or sets the shift factor.
         /// </summary>
-        public double Mu
+        public float Mu
         {
             get
             {
@@ -45,7 +45,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the scale factor (> 0).
         /// </summary>
-        public double C
+        public float C
         {
             get
             {
@@ -62,101 +62,101 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(mu, double.PositiveInfinity);
+                return new RangeFloat(mu, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
-            get { return Double.PositiveInfinity; }
+            get { return float.PositiveInfinity; }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
-            get { return Double.PositiveInfinity; }
+            get { return float.PositiveInfinity; }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
                 if (mu == 0)
                 {
-                    return scale / 3.0;
+                    return scale / 3.0f;
                 }
-                return Double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get
             {
-                return (1.0 + 3.0 * Maths.Gamma + Math.Log(16 * Math.PI * scale * scale)) / 2.0;
+                return (1.0f + 3.0f * Maths.Gamma + (float)Math.Log(16 * Math.PI * scale * scale)) / 2.0f;
             }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < mu)
             {
                 return 0;
             }
 
-            return Special.Erfc(Math.Sqrt(scale / (2 * (x - mu))));
+            return Special.Erfc((float)Math.Sqrt(scale / (2 * (x - mu))));
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < mu)
             {
                 return 0;
             }
-            double z = x - mu;
-            double a = Math.Sqrt(scale / (2.0 * Math.PI));
-            double b = Math.Exp(-(scale / (2 * z)));
-            double c = Math.Pow(z, 3.0 / 2.0);
+            float z = x - mu;
+            float a = (float)Math.Sqrt(scale / (2.0 * Math.PI));
+            float b = (float)Math.Exp(-(scale / (2 * z)));
+            float c = (float)Math.Pow(z, 3.0 / 2.0);
 
             return a * b / c;
         }

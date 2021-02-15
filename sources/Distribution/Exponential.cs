@@ -14,7 +14,7 @@ namespace UMapx.Distribution
     public class Exponential : IDistribution
     {
         #region Private data
-        private double l = 1;
+        private float l = 1;
         #endregion
 
         #region Exp components
@@ -26,14 +26,14 @@ namespace UMapx.Distribution
         /// Initializes an exponential distribution.
         /// </summary>
         /// <param name="lambda">Intensity parameter (0, + inf)</param>
-        public Exponential(double lambda)
+        public Exponential(float lambda)
         {
             Lambda = lambda;
         }
         /// <summary>
         /// Gets or sets the value of the intensity parameter (0, + inf).
         /// </summary>
-        public double Lambda
+        public float Lambda
         {
             get
             {
@@ -50,17 +50,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -70,7 +70,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
@@ -80,17 +80,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
-                return 0.0;
+                return 0.0f;
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
@@ -100,29 +100,29 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
-                return 2.0;
+                return 2.0f;
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                return 6.0;
+                return 6.0f;
             }
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < 0)
             {
@@ -134,8 +134,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < 0)
             {
@@ -146,8 +146,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get
             {

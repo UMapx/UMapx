@@ -14,8 +14,8 @@ namespace UMapx.Imaging
     public class LevelsCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        private RangeDouble input;
-        private RangeDouble output;
+        private RangeFloat input;
+        private RangeFloat output;
         #endregion
 
         #region Filter components
@@ -25,7 +25,7 @@ namespace UMapx.Imaging
         /// <param name="input">Input channel values</param>
         /// <param name="output">Output channel values</param>
         /// <param name="space">Color space</param>
-        public LevelsCorrection(RangeDouble input, RangeDouble output, Space space)
+        public LevelsCorrection(RangeFloat input, RangeFloat output, Space space)
         {
             Input = input; Output = output; this.Space = space;
         }
@@ -34,13 +34,13 @@ namespace UMapx.Imaging
         /// </summary>
         public LevelsCorrection()
         {
-            Input = new RangeDouble(0, 1);
-            Output = new RangeDouble(0, 1);
+            Input = new RangeFloat(0, 1);
+            Output = new RangeFloat(0, 1);
         }
         /// <summary>
         /// Gets or sets input channel values.
         /// </summary>
-        public RangeDouble Input
+        public RangeFloat Input
         {
             get
             {
@@ -55,7 +55,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets output channel values.
         /// </summary>
-        public RangeDouble Output
+        public RangeFloat Output
         {
             get
             {

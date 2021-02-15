@@ -14,9 +14,9 @@ namespace UMapx.Imaging
     public class SingleScaleRetinex : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        private double a;
-        private double b;
-        private double nbase;
+        private float a;
+        private float b;
+        private float nbase;
         #endregion
 
         #region Filter components
@@ -28,7 +28,7 @@ namespace UMapx.Imaging
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
         /// <param name="nbase">Logarithm base</param>
-        public SingleScaleRetinex(int radius, Space space, double a = 1, double b = 0, double nbase = Math.PI)
+        public SingleScaleRetinex(int radius, Space space, float a = 1, float b = 0, float nbase = Maths.Pi)
         {
             gb = new BoxBlur(radius);
             Space = space; A = a; B = b; Base = nbase;
@@ -42,7 +42,7 @@ namespace UMapx.Imaging
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
         /// <param name="nbase">Logarithm base</param>
-        public SingleScaleRetinex(int width, int height, Space space, double a = 1, double b = 0, double nbase = Math.PI)
+        public SingleScaleRetinex(int width, int height, Space space, float a = 1, float b = 0, float nbase = Maths.Pi)
         {
             gb = new BoxBlur(width, height);
             Space = space; A = a; B = b; Base = nbase;
@@ -55,7 +55,7 @@ namespace UMapx.Imaging
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
         /// <param name="nbase">Logarithm base</param>
-        public SingleScaleRetinex(SizeInt size, Space space, double a = 1, double b = 0, double nbase = Math.PI)
+        public SingleScaleRetinex(SizeInt size, Space space, float a = 1, float b = 0, float nbase = Maths.Pi)
         {
             gb = new BoxBlur(size);
             Space = space; A = a; B = b; Base = nbase;
@@ -63,7 +63,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the contrast [-1, 1].
         /// </summary>
-        public double A
+        public float A
         {
             get
             {
@@ -78,7 +78,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the offset value (0, 1].
         /// </summary>
-        public double B
+        public float B
         {
             get
             {
@@ -93,7 +93,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the logarithm base.
         /// </summary>
-        public double Base
+        public float Base
         {
             get
             {

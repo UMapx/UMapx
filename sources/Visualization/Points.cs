@@ -16,9 +16,9 @@ namespace UMapx.Visualization
         /// <param name="amax"></param>
         /// <param name="width"></param>
         /// <returns></returns>
-        public static double Point2X(double a, double amin, double amax, double width)
+        public static float Point2X(float a, float amin, float amax, float width)
         {
-            double dx = (amax - amin) / width;
+            float dx = (amax - amin) / width;
             return a * dx + amin;
         }
         /// <summary>
@@ -29,9 +29,9 @@ namespace UMapx.Visualization
         /// <param name="amax"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public static double Point2Y(double a, double amin, double amax, double height)
+        public static float Point2Y(float a, float amin, float amax, float height)
         {
-            double dy = (amax - amin) / height;
+            float dy = (amax - amin) / height;
             return (height - a) * dy + amin;
         }
         /// <summary>
@@ -42,9 +42,9 @@ namespace UMapx.Visualization
         /// <param name="amax"></param>
         /// <param name="width"></param>
         /// <returns></returns>
-        public static double X2Point(double a, double amin, double amax, double width)
+        public static float X2Point(float a, float amin, float amax, float width)
         {
-            double dx = (amax - amin) / width;
+            float dx = (amax - amin) / width;
             return (a - amin) / dx;
         }
         /// <summary>
@@ -55,9 +55,9 @@ namespace UMapx.Visualization
         /// <param name="amax"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public static double Y2Point(double a, double amin, double amax, double height)
+        public static float Y2Point(float a, float amin, float amax, float height)
         {
-            double dy = (amax - amin) / height;
+            float dy = (amax - amin) / height;
             return height - (a - amin) / dy;
         }
         /// <summary>
@@ -65,13 +65,13 @@ namespace UMapx.Visualization
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
-        public static bool IsSingularPoint(double a)
+        public static bool IsSingularPoint(float a)
         {
-            if (double.IsNaN(a))
+            if (float.IsNaN(a))
             {
                 return true;
             }
-            else if (double.IsNegativeInfinity(a) || double.IsPositiveInfinity(a))
+            else if (float.IsNegativeInfinity(a) || float.IsPositiveInfinity(a))
             {
                 return true;
             }
@@ -84,7 +84,7 @@ namespace UMapx.Visualization
         /// <param name="amin"></param>
         /// <param name="amax"></param>
         /// <returns></returns>
-        public static double ClipPoint(double a, double amin, double amax)
+        public static float ClipPoint(float a, float amin, float amax)
         {
             if (a < amin)
             {
@@ -103,11 +103,11 @@ namespace UMapx.Visualization
         /// <param name="max"></param>
         /// <param name="points"></param>
         /// <returns></returns>
-        public static double[] GetPoints(double min, double max, int points)
+        public static float[] GetPoints(float min, float max, int points)
         {
-            double delta = Math.Round((max - min) / points, 2);
-            double[] marks = new double[points + 1];
-            double c = min;
+            float delta = (float)Math.Round((max - min) / points, 2);
+            float[] marks = new float[points + 1];
+            float c = min;
 
             for (int i = 0; i < points + 1; i++)
             {

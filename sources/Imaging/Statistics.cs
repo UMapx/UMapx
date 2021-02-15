@@ -95,9 +95,9 @@ namespace UMapx.Imaging
         /// <returns>Array</returns>
         public static int[] Histogram(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             int[] rgb = Histogram(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return rgb;
         }
         /// <summary>
@@ -108,9 +108,9 @@ namespace UMapx.Imaging
         /// <returns>Array</returns>
         public static int[] Histogram(Bitmap Data, RGBA channel)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             int[] rgb = Histogram(bmData, channel);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return rgb;
         }
         #endregion
@@ -138,7 +138,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="H">Histogram</param>
         /// <returns>Array</returns>
-        public static double[] Equalize(int[] H)
+        public static float[] Equalize(int[] H)
         {
             // CDF calculating
             int length = H.Length;
@@ -147,8 +147,8 @@ namespace UMapx.Imaging
             int max = Statistics.MaxIndex(cdf);
 
             // table
-            double[] table = new double[length];
-            double factor = cdf[max] - cdf[min];
+            float[] table = new float[length];
+            float factor = cdf[max] - cdf[min];
 
             // scaling
             for (int i = 0; i < length; i++)
@@ -189,9 +189,9 @@ namespace UMapx.Imaging
         /// <returns>Integer number</returns>
         public static int OtsuThreshold(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             int threshold = OtsuThreshold(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return threshold;
         }
         #endregion
@@ -234,9 +234,9 @@ namespace UMapx.Imaging
         /// <returns>Integer number</returns>
         public static int SISThreshold(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             int threshold = SISThreshold(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return threshold;
         }
         #endregion

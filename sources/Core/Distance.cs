@@ -13,18 +13,18 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Euclidean(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Euclidean(float[] p, float[] q)
         {
-            double sum = 0;
+            float sum = 0;
             int n = p.Length;
 
             for (int k = 0; k < n; k++)
             {
-                sum += Math.Pow(p[k] - q[k], 2);
+                sum += (float)Math.Pow(p[k] - q[k], 2);
             }
 
-            return Math.Sqrt(sum);
+            return (float)Math.Sqrt(sum);
         }
         #endregion
 
@@ -34,12 +34,12 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Chebyshev(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Chebyshev(float[] p, float[] q)
         {
             int n = p.Length;
-            double max = Math.Abs(p[0] - q[0]);
-            double tmp;
+            float max = Math.Abs(p[0] - q[0]);
+            float tmp;
 
             for (int k = 1; k < n; k++)
             {
@@ -57,10 +57,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Manhattan(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Manhattan(float[] p, float[] q)
         {
-            double sum = 0;
+            float sum = 0;
             int n = p.Length;
 
             for (int k = 0; k < n; k++)
@@ -78,13 +78,13 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Angular(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Angular(float[] p, float[] q)
         {
             int n = p.Length;
-            double s = 0;
-            double x = 0;
-            double y = 0;
+            float s = 0;
+            float x = 0;
+            float y = 0;
 
             for (int i = 0; i < n; i++)
             {
@@ -93,10 +93,10 @@ namespace UMapx.Core
                 y += q[i] * q[i];
             }
 
-            double den = Math.Sqrt(x) * Math.Sqrt(y);
-            double similarity = s == 0 ? 1.0 : 1.0 - (s / den);
+            float den = (float)Math.Sqrt(x) * (float)Math.Sqrt(y);
+            float similarity = s == 0 ? 1.0f : 1.0f - (s / den);
 
-            return Math.Acos(similarity);
+            return (float)Math.Acos(similarity);
         }
         #endregion
 
@@ -106,12 +106,12 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double BrayCurtis(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float BrayCurtis(float[] p, float[] q)
         {
             int n = p.Length;
-            double x = 0;
-            double y = 0;
+            float x = 0;
+            float y = 0;
 
             for (int i = 0; i < n; i++)
             {
@@ -129,11 +129,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Canberra(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Canberra(float[] p, float[] q)
         {
             int n = p.Length;
-            double sum = 0;
+            float sum = 0;
 
             for (int i = 0; i < n; i++)
             {
@@ -149,8 +149,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Dice(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Dice(float[] p, float[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -164,7 +164,7 @@ namespace UMapx.Core
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            return (tf + ft) / (double)(2 * tt + ft + tf);
+            return (tf + ft) / (float)(2 * tt + ft + tf);
         }
         #endregion
 
@@ -174,18 +174,18 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Hellinger(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Hellinger(float[] p, float[] q)
         {
             int n = p.Length;
-            double sum = 0;
+            float sum = 0;
 
             for (int i = 0; i < n; i++)
             {
-                sum += Math.Pow(Math.Sqrt(p[i]) - Math.Sqrt(q[i]), 2);
+                sum += (float)Math.Pow(Math.Sqrt(p[i]) - Math.Sqrt(q[i]), 2);
             }
 
-            return sum / Math.Sqrt(2);
+            return sum / Maths.Sqrt2;
         }
         #endregion
 
@@ -195,8 +195,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Jaccard(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Jaccard(float[] p, float[] q)
         {
             int n = p.Length;
             int inter = 0;
@@ -212,7 +212,7 @@ namespace UMapx.Core
                 }
             }
 
-            return (union == 0) ? 0 : 1.0 - (inter / (double)union);
+            return (union == 0) ? 0 : 1.0f - (inter / (float)union);
         }
         #endregion
 
@@ -222,8 +222,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Kulczynski(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Kulczynski(float[] p, float[] q)
         {
             // TODO: Rewrite the integer dissimilarities (Yule, Russel-Rao,...)
             // using generics
@@ -239,8 +239,8 @@ namespace UMapx.Core
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            double num = tf + ft - tt + n;
-            double den = ft + tf + n;
+            float num = tf + ft - tt + n;
+            float den = ft + tf + n;
             return num / den;
         }
         #endregion
@@ -252,17 +252,17 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <param name="order">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Minkowski(double[] p, double[] q, double order)
+        /// <returns>float precision floating point number</returns>
+        public static float Minkowski(float[] p, float[] q, float order)
         {
             int n = p.Length;
-            double sum = 0;
+            float sum = 0;
 
             for (int i = 0; i < n; i++)
             {
-                sum += Math.Pow(Math.Abs(p[i] - q[i]), order);
+                sum += (float)Math.Pow(Math.Abs(p[i] - q[i]), order);
             }
-            return Math.Pow(sum, 1 / order);
+            return (float)Math.Pow(sum, 1 / order);
         }
         #endregion
 
@@ -272,8 +272,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double RusselRao(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float RusselRao(float[] p, float[] q)
         {
             int n = p.Length;
             int tt = 0;
@@ -283,7 +283,7 @@ namespace UMapx.Core
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            return (n - tt) / (double)(n);
+            return (n - tt) / (float)(n);
         }
         #endregion
 
@@ -293,8 +293,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double SokalMichener(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float SokalMichener(float[] p, float[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -311,7 +311,7 @@ namespace UMapx.Core
             }
 
             int r = 2 * (tf + ft);
-            return r / (double)(ff + tt + r);
+            return r / (float)(ff + tt + r);
         }
         #endregion
 
@@ -321,8 +321,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double SokalSneath(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float SokalSneath(float[] p, float[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -337,7 +337,7 @@ namespace UMapx.Core
             }
 
             int r = 2 * (tf + ft);
-            return r / (double)(tt + r);
+            return r / (float)(tt + r);
         }
         #endregion
 
@@ -347,8 +347,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Yule(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float Yule(float[] p, float[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -364,7 +364,7 @@ namespace UMapx.Core
                 if (p[i] == 0 && q[i] == 0) ff++;
             }
 
-            double r = 2 * (tf + ft);
+            float r = 2 * (tf + ft);
             return r / (tt + ff + r / 2);
         }
         #endregion
@@ -375,12 +375,12 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double SquareEuclidian(double[] p, double[] q)
+        /// <returns>float precision floating point number</returns>
+        public static float SquareEuclidian(float[] p, float[] q)
         {
             int n = p.Length;
-            double sum = 0.0;
-            double u;
+            float sum = 0.0f;
+            float u;
 
             for (int i = 0; i < n; i++)
             {

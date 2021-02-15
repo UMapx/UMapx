@@ -46,7 +46,7 @@ namespace UMapx.Analysis
         /// <param name="x">Array of values argument</param>
         /// <param name="y0">Value</param>
         /// <returns>Array of function values</returns>
-        public double[] Compute(IDoubleMesh function, double[] x, double y0)
+        public float[] Compute(IFloatMesh function, float[] x, float y0)
         {
             // chose method of differentiation
             switch (method)
@@ -100,7 +100,7 @@ namespace UMapx.Analysis
         /// <param name="y0">Value</param>
         /// <param name="order">Order</param>
         /// <returns>Array of function values</returns>
-        public double[] Compute(IDoubleMesh function, double[] x, double y0, int order = 2)
+        public float[] Compute(IFloatMesh function, float[] x, float y0, int order = 2)
         {
             int n = x.Length - 1;
 
@@ -110,10 +110,10 @@ namespace UMapx.Analysis
             {
                 // params
                 int i, j, k = order + 1;
-                double[] y = new double[n];
-                double[] r = new double[k];
-                double[] c = Differential.GetCoefficients(order);
-                double h, t, sum;
+                float[] y = new float[n];
+                float[] r = new float[k];
+                float[] c = Differential.GetCoefficients(order);
+                float h, t, sum;
 
                 // compute first points by order
                 for (i = 0; i < k; i++)
@@ -167,7 +167,7 @@ namespace UMapx.Analysis
                 int i, j, k = order + 1;
                 Complex[] y = new Complex[n];
                 Complex[] r = new Complex[k];
-                double[] c = Differential.GetCoefficients(order);
+                float[] c = Differential.GetCoefficients(order);
                 Complex h, t, sum;
 
                 // compute first points by order
@@ -210,23 +210,22 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>Array</returns>
-        public static double[] GetCoefficients(int order)
+        public static float[] GetCoefficients(int order)
         {
-            double[,] A = new double[order, order];
-            double[] c = new double[order];
+            float[,] A = new float[order, order];
+            float[] c = new float[order];
             int i, j;
 
             for (i = 0; i < order; i++)
             {
                 for (j = 0; j < order; j++)
                 {
-                    A[i, j] = Math.Pow(j, i);
+                    A[i, j] = (float)Math.Pow(j, i);
                 }
-                c[i] = Math.Pow(-1, i) / (i + 1);
+                c[i] = (float)Math.Pow(-1, i) / (i + 1);
             }
 
             return A.Solve(c);
-            //return c.Dot(A.Invert());
         }
         #endregion
 
@@ -238,11 +237,11 @@ namespace UMapx.Analysis
         /// <param name="x"></param>
         /// <param name="y0"></param>
         /// <returns></returns>
-        private static double[] euler(IDoubleMesh f, double[] x, double y0)
+        private static float[] euler(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
-            double xnew, ynew = y0, h;
-            double[] result = new double[n];
+            float xnew, ynew = y0, h;
+            float[] result = new float[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -260,18 +259,18 @@ namespace UMapx.Analysis
         /// <param name="x"></param>
         /// <param name="y0"></param>
         /// <returns></returns>
-        private static double[] rungeKutta2(IDoubleMesh f, double[] x, double y0)
+        private static float[] rungeKutta2(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
-            double xnew, ynew = y0, h, k1, k2;
-            double[] result = new double[n];
+            float xnew, ynew = y0, h, k1, k2;
+            float[] result = new float[n];
 
             for (int i = 0; i < n; i++)
             {
                 h = x[i + 1] - x[i];
                 xnew = x[i];
                 k1 = h * f(xnew, ynew);
-                k2 = h * f(xnew + 0.5 * h, ynew + 0.5 * k1);
+                k2 = h * f(xnew + 0.5f * h, ynew + 0.5f * k1);
                 ynew = ynew + k2;
                 xnew = xnew + h;
                 result[i] = ynew;
@@ -285,19 +284,19 @@ namespace UMapx.Analysis
         /// <param name="x"></param>
         /// <param name="y0"></param>
         /// <returns></returns>
-        private static double[] rungeKutta4(IDoubleMesh f, double[] x, double y0)
+        private static float[] rungeKutta4(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
-            double xnew, ynew = y0, h, k1, k2, k3, k4;
-            double[] result = new double[n];
+            float xnew, ynew = y0, h, k1, k2, k3, k4;
+            float[] result = new float[n];
 
             for (int i = 0; i < n; i++)
             {
                 h = x[i + 1] - x[i];
                 xnew = x[i];
                 k1 = h * f(xnew, ynew);
-                k2 = h * f(xnew + 0.5 * h, ynew + 0.5 * k1);
-                k3 = h * f(xnew + 0.5 * h, ynew + 0.5 * k2);
+                k2 = h * f(xnew + 0.5f * h, ynew + 0.5f * k1);
+                k3 = h * f(xnew + 0.5f * h, ynew + 0.5f * k2);
                 k4 = h * f(xnew + h, ynew + k3);
                 ynew = ynew + (k1 + 2 * k2 + 2 * k3 + k4) / 6;
                 xnew = xnew + h;
@@ -312,23 +311,23 @@ namespace UMapx.Analysis
         /// <param name="x"></param>
         /// <param name="y0"></param>
         /// <returns></returns>
-        private static double[] fehlberg(IDoubleMesh f, double[] x, double y0)
+        private static float[] fehlberg(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
-            double xnew, ynew = y0, h, k1, k2, k3, k4, k5, k6;
-            double[] result = new double[n];
+            float xnew, ynew = y0, h, k1, k2, k3, k4, k5, k6;
+            float[] result = new float[n];
 
             for (int i = 0; i < n; i++)
             {
                 h = x[i + 1] - x[i];
                 xnew = x[i];
                 k1 = h * f(xnew, ynew);
-                k2 = h * f(xnew + 0.25 * h, ynew + 0.25 * k1);
+                k2 = h * f(xnew + 0.25f * h, ynew + 0.25f * k1);
                 k3 = h * f(xnew + 3 * h / 8, ynew + 3 * k1 / 32 + 9 * k2 / 32);
                 k4 = h * f(xnew + 12 * h / 13, ynew + 1932 * k1 / 2197 - 7200 * k2 / 2197 + 7296 * k3 / 2197);
                 k5 = h * f(xnew + h, ynew + 439 * k1 / 216 - 8 * k2 + 3680 * k3 / 513 - 845 * k4 / 4104);
-                k6 = h * f(xnew + 0.5 * h, ynew - 8 * k1 / 27 + 2 * k2 - 3544 * k3 / 2565 + 1859 * k4 / 4104 - 11 * k5 / 40);
-                ynew = ynew + 25 * k1 / 216 + 1408 * k3 / 2565 + 2197 * k4 / 4104 - 0.2 * k5;
+                k6 = h * f(xnew + 0.5f * h, ynew - 8 * k1 / 27 + 2 * k2 - 3544 * k3 / 2565 + 1859 * k4 / 4104 - 11 * k5 / 40);
+                ynew = ynew + 25 * k1 / 216 + 1408 * k3 / 2565 + 2197 * k4 / 4104 - 0.2f * k5;
                 xnew = xnew + h;
                 result[i] = ynew;
             }

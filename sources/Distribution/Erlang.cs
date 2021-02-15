@@ -15,7 +15,7 @@ namespace UMapx.Distribution
     {
         #region Private data
         private int k = 1;
-        private double lambda = 0.5;
+        private float lambda = 0.5f;
         #endregion
 
         #region Erlang distribution
@@ -24,7 +24,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="k">Form parameter k ∈ (0, +inf)</param>
         /// <param name="lambda">λ-parameter λ ∈ (0, +inf)</param>
-        public Erlang(int k, double lambda)
+        public Erlang(int k, float lambda)
         {
             K = k; Lambda = lambda;
         }
@@ -48,7 +48,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter λ ∈ (0, +inf).
         /// </summary>
-        public double Lambda
+        public float Lambda
         {
             get
             {
@@ -65,17 +65,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -85,27 +85,27 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
-                return double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
-                return this.k / Math.Pow(this.lambda, 2.0);
+                return this.k / (float)Math.Pow(this.lambda, 2.0);
             }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -115,57 +115,57 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
-                return 2.0 / Math.Sqrt(k);
+                return 2.0f / (float)Math.Sqrt(k);
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                return 6.0 / k;
+                return 6.0f / k;
             }
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get
             {
-                return (1 - k) * Special.DiGamma(k) + Math.Log(Special.Gamma(k) / lambda) + k;
+                return (1 - k) * Special.DiGamma(k) + (float)Math.Log(Special.Gamma(k) / lambda) + k;
             }
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < 0)
             {
-                return double.NaN;
+                return float.NaN;
             }
-            return Math.Pow(lambda, k) * Math.Pow(x, k - 1) * Math.Exp(-lambda * x) / Special.Factorial(k - 1);
+            return (float)Math.Pow(lambda, k) * (float)Math.Pow(x, k - 1) * (float)Math.Exp(-lambda * x) / Special.Factorial(k - 1);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < 0)
             {
-                return double.NaN;
+                return float.NaN;
             }
             return Special.GammaIncomplete(k, lambda * x) / Special.Factorial(k - 1);
         }

@@ -21,7 +21,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Contrast.
         /// </summary>
-        protected double[,] values;
+        protected float[,] values;
         /// <summary>
         /// Color space.
         /// </summary>
@@ -40,7 +40,7 @@ namespace UMapx.Imaging
         {
             gb = new BoxBlur(3);
             Space = Space.RGB;
-            Values = new double[256, 256];
+            Values = new float[256, 256];
         }
         /// <summary>
         /// Initializes the local mask correction filter.
@@ -48,7 +48,7 @@ namespace UMapx.Imaging
         /// <param name="radius">Radius</param>
         /// <param name="space">Color space</param>
         /// <param name="values">Matrix mask</param>
-        public LocalCorrection(int radius, double[,] values, Space space)
+        public LocalCorrection(int radius, float[,] values, Space space)
         {
             gb = new BoxBlur(radius);
             Space = space;
@@ -61,7 +61,7 @@ namespace UMapx.Imaging
         /// <param name="height">Filter height</param>
         /// <param name="space">Color space</param>
         /// <param name="values">Matrix mask</param>
-        public LocalCorrection(int width, int height, double[,] values, Space space)
+        public LocalCorrection(int width, int height, float[,] values, Space space)
         {
             gb = new BoxBlur(width, height);
             Space = space;
@@ -73,7 +73,7 @@ namespace UMapx.Imaging
         /// <param name="size">Filter size</param>
         /// <param name="space">Color space</param>
         /// <param name="values">Matrix mask</param>
-        public LocalCorrection(SizeInt size, double[,] values, Space space)
+        public LocalCorrection(SizeInt size, float[,] values, Space space)
         {
             gb = new BoxBlur(size);
             Space = space;
@@ -110,7 +110,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the matrix mask.
         /// </summary>
-        public double[,] Values
+        public float[,] Values
         {
             get
             {
@@ -166,11 +166,11 @@ namespace UMapx.Imaging
         /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
             return;
         }
         /// <summary>
@@ -180,11 +180,11 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
             return;
         }
@@ -200,7 +200,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.GetLength(0) - 1;
+            float length = values.GetLength(0) - 1;
 
             Parallel.For(0, height, j =>
             {
@@ -226,7 +226,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.GetLength(0) - 1;
+            float length = values.GetLength(0) - 1;
 
             Parallel.For(0, height, j =>
             {
@@ -256,7 +256,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.GetLength(0) - 1;
+            float length = values.GetLength(0) - 1;
 
             Parallel.For(0, height, j =>
             {
@@ -288,7 +288,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.GetLength(0) - 1;
+            float length = values.GetLength(0) - 1;
 
             Parallel.For(0, height, j =>
             {
@@ -320,7 +320,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer(), pSrc = (byte*)bmSrc.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.GetLength(0) - 1;
+            float length = values.GetLength(0) - 1;
 
             Parallel.For(0, height, j =>
             {

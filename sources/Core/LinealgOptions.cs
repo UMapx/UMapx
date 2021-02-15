@@ -21,15 +21,15 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="element">"Element</param>
         /// <param name="n">Radius</param>
-        /// <returns>Double precision floating point number</returns>
-        public unsafe static double Determinant(double* element, int n)
+        /// <returns>float precision floating point number</returns>
+        public unsafe static float Determinant(float* element, int n)
         {
-            double* mtx_u_ii, mtx_ii_j;
-            double* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
-            double val, det = 1;
+            float* mtx_u_ii, mtx_ii_j;
+            float* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
+            float val, det = 1;
             int d = 0;
 
-            for (double* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
+            for (float* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
             {
                 {
                     val = Math.Abs(*(mtx_ii_j = element));
@@ -39,7 +39,7 @@ namespace UMapx.Core
                             val = Math.Abs(*(mtx_ii_j = mtx_u_ii));
                     }
 
-                    if (Math.Abs(val - 0) < double.Epsilon) return double.NaN;
+                    if (Math.Abs(val - 0) < float.Epsilon) return float.NaN;
 
                     if (mtx_ii_j != element)
                     {
@@ -87,7 +87,7 @@ namespace UMapx.Core
                             val = (Complex)Maths.Abs(*(mtx_ii_j = mtx_u_ii));
                     }
 
-                    if (Maths.Abs(val - 0) < double.Epsilon) return (Complex)double.NaN;
+                    if (Maths.Abs(val - 0) < float.Epsilon) return (Complex)float.NaN;
 
                     if (mtx_ii_j != element)
                     {
@@ -133,7 +133,7 @@ namespace UMapx.Core
             // make a copy of it, as well as setting up the output matrix invA 
             // as a unit matrix of the appropriate size:
             int dimension = working.GetLength(0);
-            float[][] inverse = ToJagged(new double[dimension, dimension]);
+            float[][] inverse = Jagged.ToJagged(new float[dimension, dimension]);
             // C# will set the initial values to zero, so to create a unit
             // matrix, I just need to fill in the diagonal elements:
             for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = 1.0f;
@@ -255,7 +255,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="working">Square matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex32[][] Invert(Complex32[][] working)
+        public static Complex[][] Invert(Complex[][] working)
         {
             // There are faster ways to do this, but for simplicity
             // and to get something working quickly, I'll just write a 
@@ -269,10 +269,10 @@ namespace UMapx.Core
             // make a copy of it, as well as setting up the output matrix invA 
             // as a unit matrix of the appropriate size:
             int dimension = working.GetLength(0);
-            Complex32[][] inverse = ToJagged(new Complex[dimension, dimension]);
+            Complex[][] inverse = Jagged.ToJagged(new Complex[dimension, dimension]);
             // C# will set the initial values to zero, so to create a unit
             // matrix, I just need to fill in the diagonal elements:
-            for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = new Complex32(1.0f, 0);
+            for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = new Complex(1.0f, 0);
 
             // OK, first convert working to upper triangular form:
             for (int loop = 0; loop < dimension; loop++) // for each row
@@ -297,7 +297,7 @@ namespace UMapx.Core
                 // and inverse around until it is:
                 if (biggestRow != currentRow)
                 {
-                    Complex32 temp;
+                    Complex temp;
                     for (int lop = currentRow; lop < dimension; lop++)
                     {
                         temp = working[currentRow][lop];
@@ -317,17 +317,17 @@ namespace UMapx.Core
                 for (int lop = currentRow + 1; lop < dimension; lop++)
                 {
                     // Matrix might be ill-conditioned.  I should check:
-                    if (working[currentRow][currentRow] == new Complex32(0, 0))
+                    if (working[currentRow][currentRow] == new Complex(0, 0))
                     {
-                        working[currentRow][currentRow] = new Complex32(epsilon, 0);
+                        working[currentRow][currentRow] = new Complex(epsilon, 0);
                     }
-                    Complex32 factor = working[lop][currentRow] / working[currentRow][currentRow];
+                    Complex factor = working[lop][currentRow] / working[currentRow][currentRow];
 
                     // If the matrix is fairly sparse (quite common for this
                     // application), it might make sense to check that the 
                     // lower elements are not already zero before doing all
                     // the scaling and replacing:
-                    if (factor != new Complex32(0, 0))
+                    if (factor != new Complex(0, 0))
                     {
                         // Only have to do from current row on in working, but due
                         // to pivoting, might have to do the entire row in inverse:
@@ -348,23 +348,23 @@ namespace UMapx.Core
                 int currentRow = loop;
 
                 // Matrix might be ill-conditioned.  I should check:
-                if (working[currentRow][currentRow] == new Complex32(0, 0))
+                if (working[currentRow][currentRow] == new Complex(0, 0))
                 {
-                    working[currentRow][currentRow] = new Complex32(epsilon, 0);
+                    working[currentRow][currentRow] = new Complex(epsilon, 0);
                 }
 
                 // Then, go up the matrix subtracting as necessary to get 
                 // rid of the remaining upper-triangular elements:
                 for (int lop = currentRow - 1; lop >= 0; lop--)
                 {
-                    Complex32 factor = working[lop][currentRow] / working[currentRow][currentRow];
+                    Complex factor = working[lop][currentRow] / working[currentRow][currentRow];
 
                     // There's only one element in working to change (the other elements
                     // in the row of working are all zero), and that will always be set
                     // to zero; but you might have to do the entire row in inverse:
-                    working[lop][currentRow] = new Complex32(0, 0);
+                    working[lop][currentRow] = new Complex(0, 0);
 
-                    if (factor != new Complex32(0, 0))
+                    if (factor != new Complex(0, 0))
                     {
                         for (int lp = 0; lp < dimension; lp++)
                         {
@@ -379,7 +379,7 @@ namespace UMapx.Core
             // to scale all the rows:
             for (int loop = 0; loop < dimension; loop++)
             {
-                Complex32 scale = working[loop][loop];
+                Complex scale = working[loop][loop];
                 for (int lop = 0; lop < dimension; lop++) inverse[loop][lop] /= scale;
             }
 
@@ -419,7 +419,7 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="B">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] Mul(Complex32[][] A, Complex32[][] B)
+        public static Complex[][] Mul(Complex[][] A, Complex[][] B)
         {
             if (A[0].GetLength(0) != B.GetLength(0))
                 throw new Exception(exception);
@@ -427,11 +427,11 @@ namespace UMapx.Core
             int height = A.GetLength(0);
             int width = B[0].GetLength(0);
             int length = B.GetLength(0);
-            Complex32[][] C = new Complex32[height][];
+            Complex[][] C = new Complex[height][];
 
             Parallel.For(0, height, i =>
             {
-                C[i] = new Complex32[width];
+                C[i] = new Complex[width];
                 LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
             });
 
@@ -443,7 +443,7 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="B">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] Mul(Complex32[][] A, float[][] B)
+        public static Complex[][] Mul(Complex[][] A, float[][] B)
         {
             if (A[0].GetLength(0) != B.GetLength(0))
                 throw new Exception(exception);
@@ -451,11 +451,11 @@ namespace UMapx.Core
             int height = A.GetLength(0);
             int width = B[0].GetLength(0);
             int length = B.GetLength(0);
-            Complex32[][] C = new Complex32[height][];
+            Complex[][] C = new Complex[height][];
 
             Parallel.For(0, height, i =>
             {
-                C[i] = new Complex32[width];
+                C[i] = new Complex[width];
                 LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
             });
 
@@ -467,7 +467,7 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="B">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public static Complex32[][] Mul(float[][] A, Complex32[][] B)
+        public static Complex[][] Mul(float[][] A, Complex[][] B)
         {
             if (A[0].GetLength(0) != B.GetLength(0))
                 throw new Exception(exception);
@@ -475,11 +475,11 @@ namespace UMapx.Core
             int height = A.GetLength(0);
             int width = B[0].GetLength(0);
             int length = B.GetLength(0);
-            Complex32[][] C = new Complex32[height][];
+            Complex[][] C = new Complex[height][];
 
             Parallel.For(0, height, i =>
             {
-                C[i] = new Complex32[width];
+                C[i] = new Complex[width];
                 LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
             });
 
@@ -495,10 +495,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static double[,] Conv(double[,] A, double[,] B, bool normalize = true)
+        public static float[,] Conv(float[,] A, float[,] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int r0 = B.GetLength(0), r1 = B.GetLength(1);
             int r0p = r0 / 2, r1p = r1 / 2;
 
@@ -507,7 +507,7 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    double k, s, div;
+                    float k, s, div;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
@@ -551,7 +551,7 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    double k, s;
+                    float k, s;
                     int i, j, x;
                     int xr, yr = y - r0p;
                     int ir, jr;
@@ -693,7 +693,7 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex[,] Conv(double[,] A, Complex[,] B, bool normalize = true)
+        public static Complex[,] Conv(float[,] A, Complex[,] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
             Complex[,] H = new Complex[height, width];
@@ -792,7 +792,7 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex[,] Conv(Complex[,] A, double[,] B, bool normalize = true)
+        public static Complex[,] Conv(Complex[,] A, float[,] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
             Complex[,] H = new Complex[height, width];
@@ -804,7 +804,7 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    double k;
+                    float k;
                     Complex s, div;
                     int i, j, x;
                     int xr, yr = y - r0p;
@@ -849,7 +849,7 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    double k;
+                    float k;
                     Complex s;
                     int i, j, x;
                     int xr, yr = y - r0p;
@@ -896,10 +896,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static double[,] ConvHorizontal(double[,] A, double[] B, bool normalize = true)
+        public static float[,] ConvHorizontal(float[,] A, float[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int r1 = B.GetLength(0);
             int r1p = r1 / 2;
 
@@ -908,7 +908,7 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    double k, s, div;
+                    float k, s, div;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
@@ -947,7 +947,7 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    double k, s;
+                    float k, s;
                     int j, x;
                     int xr, yr = y;
                     int ir, jr;
@@ -985,10 +985,10 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static double[,] ConvVertical(double[,] A, double[] B, bool normalize = true)
+        public static float[,] ConvVertical(float[,] A, float[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int r0 = B.GetLength(0);
             int r0p = r0 / 2;
 
@@ -997,7 +997,7 @@ namespace UMapx.Core
                 // normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    double k, s, div;
+                    float k, s, div;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
@@ -1036,7 +1036,7 @@ namespace UMapx.Core
                 // non-normalize convolution:
                 Parallel.For(0, height, y =>
                 {
-                    double k, s;
+                    float k, s;
                     int i, x;
                     int yr = y - r0p;
                     int ir, jr;
@@ -1075,7 +1075,7 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex[,] ConvHorizontal(double[,] A, Complex[] B, bool normalize = true)
+        public static Complex[,] ConvHorizontal(float[,] A, Complex[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
             Complex[,] H = new Complex[height, width];
@@ -1164,7 +1164,7 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex[,] ConvVertical(double[,] A, Complex[] B, bool normalize = true)
+        public static Complex[,] ConvVertical(float[,] A, Complex[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
             Complex[,] H = new Complex[height, width];
@@ -1433,7 +1433,7 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex[,] ConvHorizontal(Complex[,] A, double[] B, bool normalize = true)
+        public static Complex[,] ConvHorizontal(Complex[,] A, float[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
             Complex[,] H = new Complex[height, width];
@@ -1522,7 +1522,7 @@ namespace UMapx.Core
         /// <param name="B">Jagged array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Jagged array</returns>
-        public static Complex[,] ConvVertical(Complex[,] A, double[] B, bool normalize = true)
+        public static Complex[,] ConvVertical(Complex[,] A, float[] B, bool normalize = true)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
             Complex[,] H = new Complex[height, width];
@@ -1614,23 +1614,23 @@ namespace UMapx.Core
         /// <param name="r1">Size</param>
         /// <param name="threshold">Threshold</param>
         /// <returns>Jagged array</returns>
-        public static double[,] MorphHorizontal(double[,] A, int r1, int threshold)
+        public static float[,] MorphHorizontal(float[,] A, int r1, int threshold)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int r1p = r1 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                double[] s;
+                float[] s;
                 int j, x;
                 int xr, yr = y;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = new double[r1];
+                    s = new float[r1];
                     xr = x - r1p;
                     ir = yr;
 
@@ -1657,23 +1657,23 @@ namespace UMapx.Core
         /// <param name="r0">Size</param>
         /// <param name="threshold">Threshold</param>
         /// <returns>Jagged array</returns>
-        public static double[,] MorphVertical(double[,] A, int r0, int threshold)
+        public static float[,] MorphVertical(float[,] A, int r0, int threshold)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int r0p = r0 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                double[] s;
+                float[] s;
                 int i, x;
                 int yr = y - r0p;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = new double[r0];
+                    s = new float[r0];
 
                     for (i = 0; i < r0; i++)
                     {
@@ -1699,23 +1699,23 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
         /// <returns>Jagged array</returns>
-        public static double[,] MinHorizontal(double[,] A, int r1)
+        public static float[,] MinHorizontal(float[,] A, int r1)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int r1p = r1 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                double s;
+                float s;
                 int j, x;
                 int xr, yr = y;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = double.MaxValue;
+                    s = float.MaxValue;
                     xr = x - r1p;
                     ir = yr;
 
@@ -1739,23 +1739,23 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
         /// <returns>Jagged array</returns>
-        public static double[,] MinVertical(double[,] A, int r0)
+        public static float[,] MinVertical(float[,] A, int r0)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int r0p = r0 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                double s;
+                float s;
                 int i, x;
                 int yr = y - r0p;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = double.MaxValue;
+                    s = float.MaxValue;
 
                     for (i = 0; i < r0; i++)
                     {
@@ -1779,23 +1779,23 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
         /// <returns>Jagged array</returns>
-        public static double[,] MaxHorizontal(double[,] A, int r1)
+        public static float[,] MaxHorizontal(float[,] A, int r1)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int r1p = r1 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                double s;
+                float s;
                 int j, x;
                 int xr, yr = y;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = double.MinValue;
+                    s = float.MinValue;
                     xr = x - r1p;
                     ir = yr;
 
@@ -1819,23 +1819,23 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
         /// <returns>Jagged array</returns>
-        public static double[,] MaxVertical(double[,] A, int r0)
+        public static float[,] MaxVertical(float[,] A, int r0)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int r0p = r0 / 2;
 
             // morphology:
             Parallel.For(0, height, y =>
             {
-                double s;
+                float s;
                 int i, x;
                 int yr = y - r0p;
                 int ir, jr;
 
                 for (x = 0; x < width; x++)
                 {
-                    s = double.MinValue;
+                    s = float.MinValue;
 
                     for (i = 0; i < r0; i++)
                     {
@@ -1862,17 +1862,17 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
         /// <returns>Jagged array</returns>
-        public static double[,] MeanHorizontal(double[,] A, int r1)
+        public static float[,] MeanHorizontal(float[,] A, int r1)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int h = r1 >= width ? width - 1 : r1;
             int v = h >> 1;
             int dl = width - v;
 
             Parallel.For(0, height, y =>
             {
-                double s = 0;
+                float s = 0;
                 int x;
 
                 for (x = 0; x < h; x++)
@@ -1906,17 +1906,17 @@ namespace UMapx.Core
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
         /// <returns>Jagged array</returns>
-        public static double[,] MeanVertical(double[,] A, int r0)
+        public static float[,] MeanVertical(float[,] A, int r0)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
-            double[,] H = new double[height, width];
+            float[,] H = new float[height, width];
             int h = r0 >= height ? height - 1 : r0;
             int v = h >> 1;
             int dl = height - v;
 
             Parallel.For(0, width, x =>
             {
-                double s = 0;
+                float s = 0;
                 int y;
 
                 for (y = 0; y < h; y++)
@@ -2036,420 +2036,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Jagged array
-        /// <summary>
-        /// Returns jagged array.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Jagged array</returns>
-        public static float[][] ToJagged(double[,] m)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            float[][] jagged = new float[ml][];
-            float[] dummy;
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                dummy = new float[mr];
-                for (j = 0; j < mr; j++)
-                {
-                    dummy[j] = (float)m[i, j];
-                }
-                jagged[i] = dummy;
-            }
-            return jagged;
-        }
-        /// <summary>
-        /// Returns matrix.
-        /// </summary>
-        /// <param name="jagged">Jagged array</param>
-        /// <returns>Matrix</returns>
-        public static double[,] FromJagged(float[][] jagged)
-        {
-            int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
-            double[,] m = new double[ml, mr];
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    m[i, j] = jagged[i][j];
-                }
-            }
-            return m;
-        }
-        /// <summary>
-        /// Returns jagged array.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[][] ToJagged(Complex[,] m)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            Complex32[][] jagged = new Complex32[ml][];
-            Complex32[] dummy;
-            Complex mij;
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                dummy = new Complex32[mr];
-                for (j = 0; j < mr; j++)
-                {
-                    mij = m[i, j];
-                    dummy[j] = new Complex32((float)mij.Real, (float)mij.Imag);
-                }
-                jagged[i] = dummy;
-            }
-            return jagged;
-        }
-        /// <summary>
-        /// Returns matrix.
-        /// </summary>
-        /// <param name="jagged">Jagged array</param>
-        /// <returns>Matrix</returns>
-        public static Complex[,] FromJagged(Complex32[][] jagged)
-        {
-            int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
-            Complex[,] m = new Complex[ml, mr];
-            Complex32 jaggedij;
-            int i, j;
-
-            for (i = 0; i < ml; i++)
-            {
-                for (j = 0; j < mr; j++)
-                {
-                    jaggedij = jagged[i][j];
-                    m[i, j] = new Complex(jaggedij.Real, jaggedij.Imag);
-                }
-            }
-            return m;
-        }
-
-        /// <summary>
-        /// Returns jagged array.
-        /// </summary>
-        /// <param name="m">Array</param>
-        /// <returns>Jagged array</returns>
-        public static float[] ToJagged(double[] m)
-        {
-            int n = m.GetLength(0);
-            float[] jagged = new float[n];
-            int i;
-
-            for (i = 0; i < n; i++)
-            {
-                jagged[i] = (float)m[i];
-            }
-            return jagged;
-        }
-        /// <summary>
-        /// Returns matrix.
-        /// </summary>
-        /// <param name="jagged">Jagged array</param>
-        /// <returns>Matrix</returns>
-        public static double[] FromJagged(float[] jagged)
-        {
-            int n = jagged.GetLength(0);
-            double[] m = new double[n];
-            int i;
-
-            for (i = 0; i < n; i++)
-            {
-                m[i] = jagged[i];
-            }
-            return m;
-        }
-        /// <summary>
-        /// Returns jagged array.
-        /// </summary>
-        /// <param name="m">Array</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[] ToJagged(Complex[] m)
-        {
-            int n = m.GetLength(0);
-            Complex32[] jagged = new Complex32[n];
-            Complex mi;
-            int i;
-
-            for (i = 0; i < n; i++)
-            {
-                mi = m[i];
-                jagged[i] = new Complex32((float)mi.Real, (float)mi.Imag);
-            }
-            return jagged;
-        }
-        /// <summary>
-        /// Returns matrix.
-        /// </summary>
-        /// <param name="jagged">Jagged array</param>
-        /// <returns>Matrix</returns>
-        public static Complex[] FromJagged(Complex32[] jagged)
-        {
-            int n = jagged.GetLength(0);
-            Complex[] m = new Complex[n];
-            Complex32 mi;
-            int i;
-
-            for (i = 0; i < n; i++)
-            {
-                mi = jagged[i];
-                m[i] = new Complex(mi.Real, mi.Imag);
-            }
-            return m;
-        }
-        #endregion
-
-        #region Complex32
-        /// <summary>
-        /// Complex (32 bit).
-        /// </summary>
-        public struct Complex32
-        {
-            #region Private data
-            /// <summary>
-            /// Real part.
-            /// </summary>
-            public float Real;
-            /// <summary>
-            /// Imaginary part.
-            /// </summary>
-            public float Imag;
-            #endregion
-
-            #region Struct Components
-            /// <summary>
-            /// Complex (32 bit).
-            /// </summary>
-            /// <param name="re">Real part of the complex number</param>
-            /// <param name="im">Imaginary part of a complex number</param>
-            public Complex32(float re, float im)
-            {
-                this.Real = re; this.Imag = im;
-            }
-            /// <summary>
-            /// Gets the value of the module.
-            /// </summary>
-            public float Abs
-            {
-                get
-                {
-                    return (float)Math.Sqrt(Real * Real + Imag * Imag);
-                }
-            }
-            /// <summary>
-            /// Gets the value of the phase.
-            /// </summary>
-            public float Angle
-            {
-                get
-                {
-                    return (float)Math.Atan2(Imag, Real);
-                }
-            }
-            #endregion
-
-            #region Overrides
-            /// <summary>
-            /// Returns the hash code for this object.
-            /// </summary>
-            /// <returns>Integer number</returns>
-            public override int GetHashCode()
-            {
-                return Real.GetHashCode() ^ Imag.GetHashCode();
-            }
-            /// <summary>
-            /// Gets a value indicating whether this instance is equal to the given value of type Complex32.
-            /// </summary>
-            /// <param name="obj">Object</param>
-            /// <returns>Boolean</returns>
-            public override bool Equals(object obj)
-            {
-                return (obj is Complex32) ? (this == (Complex32)obj) : false;
-            }
-            #endregion
-
-            #region Bools
-            /// <summary>
-            /// Checks if two objects of type Complex are equal to each other.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Boolean</returns>
-            public static bool operator ==(Complex32 a, Complex32 b)
-            {
-                return ((a.Real == b.Real) && (a.Imag == b.Imag));
-            }
-            /// <summary>
-            /// Checks if two objects of type Complex are not equal to each other.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Boolean</returns>
-            public static bool operator !=(Complex32 a, Complex32 b)
-            {
-                return !(a == b);
-            }
-            #endregion
-
-            #region Operators
-            /// <summary>
-            /// The sum of two complex numbers.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator +(Complex32 a, Complex32 b)
-            {
-                return new Complex32(a.Real + b.Real, a.Imag + b.Imag);
-            }
-            /// <summary>
-            /// The sum of a complex number and a real number.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator +(Complex32 a, float b)
-            {
-                return new Complex32(a.Real + b, a.Imag);
-            }
-            /// <summary>
-            /// The sum of a complex number and a real number.
-            /// </summary>
-            /// <param name="a">Number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator +(float a, Complex32 b)
-            {
-                return new Complex32(b.Real + a, b.Imag);
-            }
-
-
-            /// <summary>
-            /// The difference of two complex numbers.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator -(Complex32 a, Complex32 b)
-            {
-                return new Complex32(a.Real - b.Real, a.Imag - b.Imag);
-            }
-            /// <summary>
-            /// The difference between a complex number and a real number.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator -(Complex32 a, float b)
-            {
-                return new Complex32(a.Real - b, a.Imag);
-            }
-            /// <summary>
-            /// The difference between a complex number and a real number.
-            /// </summary>
-            /// <param name="a">Number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator -(float a, Complex32 b)
-            {
-                return new Complex32(a - b.Real, b.Imag);
-            }
-            /// <summary>
-            /// Inverts complex number.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator -(Complex32 a)
-            {
-                return new Complex32(-a.Real, -a.Imag);
-            }
-
-
-            /// <summary>
-            /// Multiplies one complex number by another.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator *(Complex32 a, Complex32 b)
-            {
-                float aRe = a.Real, aIm = a.Imag;
-                float bRe = b.Real, bIm = b.Imag;
-
-                return new Complex32(aRe * bRe - aIm * bIm, aRe * bIm + aIm * bRe);
-            }
-            /// <summary>
-            /// Multiplies real number by complex number.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator *(float a, Complex32 b)
-            {
-                return new Complex32(b.Real * a, b.Imag * a);
-            }
-            /// <summary>
-            /// Multiplies complex number by real number.
-            /// </summary>
-            /// <param name="a">Number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator *(Complex32 a, float b)
-            {
-                return new Complex32(a.Real * b, a.Imag * b);
-            }
-
-
-            /// <summary>
-            /// Divides one complex number by another.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator /(Complex32 a, Complex32 b)
-            {
-                float aRe = a.Real, aIm = a.Imag;
-                float bRe = b.Real, bIm = b.Imag;
-                float abs = bRe * bRe + bIm * bIm;
-                float inv = 1 / abs;
-
-                return new Complex32((aRe * bRe + aIm * bIm) * inv, (aIm * bRe - aRe * bIm) * inv);
-            }
-            /// <summary>
-            /// Divides complex number by real number.
-            /// </summary>
-            /// <param name="a">Complex number</param>
-            /// <param name="b">Number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator /(Complex32 a, float b)
-            {
-                return new Complex32(a.Real / b, a.Imag / b);
-            }
-            /// <summary>
-            /// Divides real number by complex number.
-            /// </summary>
-            /// <param name="a">Number</param>
-            /// <param name="b">Complex number</param>
-            /// <returns>Complex number</returns>
-            public static Complex32 operator /(float a, Complex32 b)
-            {
-                if (b.Imag == 0)
-                {
-                    return new Complex32(a / b.Real, 0);
-                }
-                else if (b.Real == 0)
-                {
-                    return new Complex32(0, a / b.Imag);
-                }
-                return new Complex32(a / b.Real, a / b.Imag);
-            }
-            #endregion
-        }
-        #endregion
-
         #region Modified Whittle multiply optimizations
         /// <summary>
         /// Implements matrix multiplication using modified Whittle optimization.
@@ -2483,10 +2069,10 @@ namespace UMapx.Core
         /// <param name="iRowC">Row of C</param>
         /// <param name="length">Length</param>
         /// <param name="width">Width</param>
-        private static void Whittle_Mul(Complex32[] iRowA, Complex32[][] B, Complex32[] iRowC, int length, int width)
+        private static void Whittle_Mul(Complex[] iRowA, Complex[][] B, Complex[] iRowC, int length, int width)
         {
-            Complex32[] kRowB;
-            Complex32 ikA;
+            Complex[] kRowB;
+            Complex ikA;
             int k, j;
 
             for (k = 0; k < length; k++)
@@ -2507,10 +2093,10 @@ namespace UMapx.Core
         /// <param name="iRowC">Row of C</param>
         /// <param name="length">Length</param>
         /// <param name="width">Width</param>
-        private static void Whittle_Mul(Complex32[] iRowA, float[][] B, Complex32[] iRowC, int length, int width)
+        private static void Whittle_Mul(Complex[] iRowA, float[][] B, Complex[] iRowC, int length, int width)
         {
             float[] kRowB;
-            Complex32 ikA;
+            Complex ikA;
             int k, j;
 
             for (k = 0; k < length; k++)
@@ -2531,9 +2117,9 @@ namespace UMapx.Core
         /// <param name="iRowC">Row of C</param>
         /// <param name="length">Length</param>
         /// <param name="width">Width</param>
-        private static void Whittle_Mul(float[] iRowA, Complex32[][] B, Complex32[] iRowC, int length, int width)
+        private static void Whittle_Mul(float[] iRowA, Complex[][] B, Complex[] iRowC, int length, int width)
         {
-            Complex32[] kRowB;
+            Complex[] kRowB;
             float ikA;
             int k, j;
 

@@ -87,7 +87,7 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public Complex[] Forward(Complex[] A)
         {
-            double[] g0 = WeylHeisenbergTransform.GetPacket(this.window, A.Length);
+            float[] g0 = WeylHeisenbergTransform.GetPacket(this.window, A.Length);
             ZakTransform zakTransform = new ZakTransform(m);
             return FastWeylHeisenbergTransform.WHT(A, zakTransform.Forward(g0), m);
         }
@@ -98,7 +98,7 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public Complex[] Backward(Complex[] B)
         {
-            double[] g0 = WeylHeisenbergTransform.GetPacket(this.window, B.Length);
+            float[] g0 = WeylHeisenbergTransform.GetPacket(this.window, B.Length);
             ZakTransform zakTransform = new ZakTransform(m);
             return FastWeylHeisenbergTransform.IWHT(B, zakTransform.Forward(g0), m);
         }
@@ -113,8 +113,8 @@ namespace UMapx.Window
             int N = B.GetLength(0), M = B.GetLength(1);
 
             ZakTransform zakTransform = new ZakTransform(m);
-            double[] g0 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, N));
-            double[] g1 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, M));
+            float[] g0 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, N));
+            float[] g1 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, M));
 
             if (direction == Direction.Both)
             {
@@ -209,8 +209,8 @@ namespace UMapx.Window
             int M = B.GetLength(1);
 
             ZakTransform zakTransform = new ZakTransform(m);
-            double[] g0 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, N));
-            double[] g1 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, M));
+            float[] g0 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, N));
+            float[] g1 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, M));
 
             if (direction == Direction.Both)
             {
@@ -298,7 +298,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             throw new NotSupportedException();
         }
@@ -307,7 +307,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             throw new NotSupportedException();
         }
@@ -316,7 +316,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             throw new NotSupportedException();
         }
@@ -325,7 +325,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             throw new NotSupportedException();
         }
@@ -339,7 +339,7 @@ namespace UMapx.Window
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts</param>
         /// <returns>Array</returns>
-        public static Complex[] WHT(Complex[] input, double[] g0, int M)
+        public static Complex[] WHT(Complex[] input, float[] g0, int M)
         {
             // The function implements a fast Weil-Heisenberg direct transformation algorithm,
             // stated in the following articles:
@@ -445,7 +445,7 @@ namespace UMapx.Window
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts</param>
         /// <returns>Array</returns>
-        public static Complex[] IWHT(Complex[] input, double[] g0, int M)
+        public static Complex[] IWHT(Complex[] input, float[] g0, int M)
         {
             // The function implements a fast Weil-Heisenberg direct transformation algorithm,
             // stated in the following articles:

@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class LogGaussian : IDistribution
     {
         #region Private data
-        private double sigma = 1;
-        private double mu = 0;
+        private float sigma = 1;
+        private float mu = 0;
         #endregion;
 
         #region GaussianLog components
@@ -28,7 +28,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="sigma">Standard deviation</param>
         /// <param name="mu">Mathematical expectation</param>
-        public LogGaussian(double sigma, double mu)
+        public LogGaussian(float sigma, float mu)
         {
             Sigma = sigma;
             Mu = mu;
@@ -36,7 +36,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the standard deviation.
         /// </summary>
-        public double Sigma
+        public float Sigma
         {
             get
             {
@@ -53,7 +53,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the mathematical expectation.
         /// </summary>
-        public double Mu
+        public float Mu
         {
             get
             {
@@ -67,17 +67,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -87,7 +87,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
@@ -97,7 +97,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
@@ -107,7 +107,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -117,58 +117,58 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
-                return (Maths.Exp(sigma * sigma) + 2.0) * Maths.Sqrt(Maths.Exp(sigma * sigma) - 1.0);
+                return (float)(Maths.Exp(sigma * sigma) + 2.0) * Maths.Sqrt(Maths.Exp(sigma * sigma) - 1.0f);
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                return Maths.Exp(4 * sigma * sigma) + 2.0 * Maths.Exp(3 * sigma * sigma) + 3.0 * Maths.Exp(3 * sigma * sigma) - 6.0;
+                return (float)Maths.Exp(4 * sigma * sigma) + 2.0f * Maths.Exp(3 * sigma * sigma) + 3.0f * Maths.Exp(3 * sigma * sigma) - 6.0f;
             }
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < 0)
             {
                 return 0;
             }
-            return Maths.Exp(Maths.Pow((Maths.Log(x) - mu), 2) / (-2.0 * sigma * sigma)) / (Maths.Sqrt(2.0 * Maths.Pi) * sigma * x);
+            return Maths.Exp(Maths.Pow((Maths.Log(x) - mu), 2) / (-2.0f * sigma * sigma)) / (Maths.Sqrt(2.0f * Maths.Pi) * sigma * x);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < 0)
             {
                 return 0;
             }
-            return 0.5 + 0.5 * Special.Erf((Maths.Log(x) - mu) / Maths.Sqrt(sigma * 1.414));
+            return 0.5f + 0.5f * Special.Erf((Maths.Log(x) - mu) / Maths.Sqrt(sigma * Maths.Sqrt2));
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get
             {
-                return 0.5 + 0.5 * Maths.Log(2 * Maths.Pi * sigma * sigma) + mu;
+                return 0.5f + 0.5f * Maths.Log(2 * Maths.Pi * sigma * sigma) + mu;
             }
         }
         #endregion

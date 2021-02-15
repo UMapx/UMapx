@@ -14,9 +14,9 @@ namespace UMapx.Distribution
     public class Hypergeometric : IDistribution
     {
         #region Private data
-        private double n = 30;
-        private double k = 20;
-        private double d = 20;
+        private float n = 30;
+        private float k = 20;
+        private float d = 20;
         #endregion
 
         #region Hypergeometric components
@@ -30,14 +30,14 @@ namespace UMapx.Distribution
         /// <param name="n">Parameter N [0, +inf]</param>
         /// <param name="k">Parameter D [0, N]</param>
         /// <param name="d">Parameter K [0, N]</param>
-        public Hypergeometric(double n, double k, double d)
+        public Hypergeometric(float n, float k, float d)
         {
             N = n; K = k; D = d;
         }
         /// <summary>
         /// Gets or sets the value of the parameter N [0, +inf].
         /// </summary>
-        public double N
+        public float N
         {
             get
             {
@@ -54,7 +54,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter D [0, N].
         /// </summary>
-        public double D
+        public float D
         {
             get
             {
@@ -71,7 +71,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter k [0, N].
         /// </summary>
-        public double K
+        public float K
         {
             get
             {
@@ -88,17 +88,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, k);
+                return new RangeFloat(0, k);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -108,55 +108,55 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
-            get { return k * (d / n) * ((n - d) / n) * ((n - k) / (n - 1.0)); }
+            get { return k * (d / n) * ((n - d) / n) * ((n - k) / (n - 1.0f)); }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
-                double num = (k + 1) * (d + 1);
-                double den = n + 2;
-                return Math.Floor(num / den);
+                float num = (k + 1) * (d + 1);
+                float den = n + 2;
+                return (float)Math.Floor(num / den);
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
-                return double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
-                double k1 = (n - 2 * d) * Math.Pow(n - 1, 0.5) * (n - 2 * k);
-                double k2 = (n * d * (n - d) * Math.Pow(n - k, 0.5) * (n - 2));
+                float k1 = (n - 2 * d) * (float)Math.Pow(n - 1, 0.5) * (n - 2 * k);
+                float k2 = (n * d * (n - d) * (float)Math.Pow(n - k, 0.5) * (n - 2));
                 return k1 / k2;
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                double n2 = n * n;
-                double k1 = (n2 * (n - 1)) / (k * (n - 2) * (n - 3) * (n - k));
-                double k2 = (n * (n + 1) - 6 * n * (n - k)) / (d * (n - d));
-                double k3 = (3 * n * (n - k) * (n + 6)) / n2 - 6;
+                float n2 = n * n;
+                float k1 = (n2 * (n - 1)) / (k * (n - 2) * (n - 3) * (n - k));
+                float k2 = (n * (n + 1) - 6 * n * (n - k)) / (d * (n - d));
+                float k3 = (3 * n * (n - k) * (n + 6)) / n2 - 6;
                 return k1 * (k2 + k3);
             }
         }
@@ -164,27 +164,27 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < Math.Max(0, k + d - n) || x > Math.Min(d, k))
             {
                 return 0;
             }
 
-            double a = Special.Binomial(d, x);
-            double b = Special.Binomial(n - d, k - x);
-            double c = Special.Binomial(n, k);
+            float a = Special.Binomial(d, x);
+            float b = Special.Binomial(n - d, k - x);
+            float c = Special.Binomial(n, k);
             return (a * b) / c;
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
-            double sum = 0;
+            float sum = 0;
             int k = (int)x;
             for (int i = 0; i <= k; i++)
             {
@@ -196,8 +196,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }

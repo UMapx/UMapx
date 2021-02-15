@@ -21,77 +21,77 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get { return 0; }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { return 0; }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get { return 1; }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get { return 0; }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { return 0; }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { return 2; }
         }
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
-            get { return new RangeDouble(Double.NegativeInfinity, Double.PositiveInfinity); }
+            get { return new RangeFloat(float.NegativeInfinity, float.PositiveInfinity); }
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
-            get { return (4.0 / Math.PI) * Maths.G; }
+            get { return (4.0f / Maths.Pi) * Maths.G; }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
-            double angle = Math.Atan(Math.Exp(x * Math.PI / 2.0));
-            return 2 * angle / Math.PI;
+            float angle = (float)Math.Atan(Math.Exp(x * Math.PI / 2.0));
+            return 2 * angle / Maths.Pi;
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
-            return 0.5 * Maths.Sch(x * (Math.PI / 2.0));
+            return 0.5f * Maths.Sch(x * (Maths.Pi / 2.0f));
         }
         #endregion
     }

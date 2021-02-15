@@ -345,7 +345,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             throw new NotSupportedException();
         }
@@ -354,7 +354,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             throw new NotSupportedException();
         }
@@ -363,7 +363,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             throw new NotSupportedException();
         }
@@ -372,7 +372,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             throw new NotSupportedException();
         }
@@ -404,7 +404,7 @@ namespace UMapx.Transform
             int tn = 1, tm, k, i, even, odd;
             Complex[] rotation;
             Complex t, ce, co;
-            double tr, ti;
+            float tr, ti;
 
             for (k = 1; k <= m; k++)
             {
@@ -449,7 +449,7 @@ namespace UMapx.Transform
             int tn = 1, tm, k, i, even, odd;
             Complex[] rotation;
             Complex t, ce, co;
-            double tr, ti;
+            float tr, ti;
 
             for (k = 1; k <= m; k++)
             {
@@ -525,12 +525,12 @@ namespace UMapx.Transform
             if (complexRotation[numberOfBits - 1, directionIndex] == null)
             {
                 int n = 1 << (numberOfBits - 1), i;
-                double uR = 1.0;
-                double uI = 0.0;
-                double angle = -System.Math.PI / n;
-                double wR = System.Math.Cos(angle);
-                double wI = System.Math.Sin(angle);
-                double t;
+                float uR = 1.0f;
+                float uI = 0.0f;
+                float angle = -Maths.Pi / n;
+                float wR = Maths.Cos(angle);
+                float wI = Maths.Sin(angle);
+                float t;
                 Complex[] rotation = new Complex[n];
 
                 for (i = 0; i < n; i++)
@@ -558,12 +558,12 @@ namespace UMapx.Transform
             if (complexRotation[numberOfBits - 1, directionIndex] == null)
             {
                 int n = 1 << (numberOfBits - 1), i;
-                double uR = 1.0;
-                double uI = 0.0;
-                double angle = System.Math.PI / n;
-                double wR = System.Math.Cos(angle);
-                double wI = System.Math.Sin(angle);
-                double t;
+                float uR = 1.0f;
+                float uI = 0.0f;
+                float angle = Maths.Pi / n;
+                float wR = Maths.Cos(angle);
+                float wI = Maths.Sin(angle);
+                float t;
                 Complex[] rotation = new Complex[n];
 
                 for (i = 0; i < n; i++)

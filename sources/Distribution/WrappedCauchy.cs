@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class WrappedCauchy : IDistribution
     {
         #region Private data
-        private double mu;
-        private double gamma;
+        private float mu;
+        private float gamma;
         #endregion
 
         #region Wrapped distribution
@@ -24,7 +24,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="mu">Parameter μ</param>
         /// <param name="gamma">Parameter γ > 0</param>
-        public WrappedCauchy(double mu, double gamma)
+        public WrappedCauchy(float mu, float gamma)
         {
             this.mu = mu;
             this.gamma = gamma;
@@ -32,7 +32,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter μ.
         /// </summary>
-        public double Mu
+        public float Mu
         {
             get
             {
@@ -46,7 +46,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter γ > 0.
         /// </summary>
-        public double Gamma
+        public float Gamma
         {
             get
             {
@@ -63,65 +63,65 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get { return mu; }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
-            get { return 1 - Math.Exp(-gamma); }
+            get { return 1 - (float)Math.Exp(-gamma); }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
-            get { return new RangeDouble(-Math.PI, Math.PI); }
+            get { return new RangeFloat(-Maths.Pi, Maths.Pi); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
-            get { return Math.Log(2 * Math.PI * (1 - Math.Exp(-2 * gamma))); }
+            get { return (float)Math.Log(2 * Math.PI * (1 - Math.Exp(-2 * gamma))); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             throw new NotSupportedException();
         }
@@ -129,11 +129,11 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
-            double constant = (1.0 / (2 * Math.PI));
-            return constant * Math.Sinh(gamma) / (Math.Cosh(gamma) - Math.Cos(x - mu));
+            float constant = (float)(1.0 / (2 * Math.PI));
+            return constant * (float)Math.Sinh(gamma) / (float)(Math.Cosh(gamma) - Math.Cos(x - mu));
         }
         #endregion
     }

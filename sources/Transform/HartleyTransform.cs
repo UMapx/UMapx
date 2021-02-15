@@ -70,11 +70,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Matrix(int n)
+        public static float[,] Matrix(int n)
         {
             int j, i;
-            double[,] H = new double[n, n];
-            double s = (2.0f * Maths.Pi) / n;
+            float[,] H = new float[n, n];
+            float s = (2.0f * Maths.Pi) / n;
 
             for (i = 0; i < n; i++)
             {
@@ -94,15 +94,15 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             int N = A.Length;
-            double[,] U = HartleyTransform.Matrix(N);
-            double[] B = Matrice.Dot(A, U);
+            float[,] U = HartleyTransform.Matrix(N);
+            float[] B = Matrice.Dot(A, U);
 
             if (normalized)
             {
-                B = Matrice.Div(B, Math.Sqrt(N));
+                B = Matrice.Div(B, Maths.Sqrt(N));
             }
 
             return B;
@@ -112,15 +112,15 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             int N = B.Length;
-            double[,] U = HartleyTransform.Matrix(N);
-            double[] A = Matrice.Dot(B, U.Transponate());
+            float[,] U = HartleyTransform.Matrix(N);
+            float[] A = Matrice.Dot(B, U.Transponate());
 
             if (normalized)
             {
-                A = Matrice.Div(A, Math.Sqrt(N));
+                A = Matrice.Div(A, Maths.Sqrt(N));
             }
 
             return A;
@@ -130,27 +130,27 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            double[,] U = HartleyTransform.Matrix(N);
-            double[,] V = HartleyTransform.Matrix(M);
-            double[,] B;
+            float[,] U = HartleyTransform.Matrix(N);
+            float[,] V = HartleyTransform.Matrix(M);
+            float[,] B;
 
             if (direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transponate());
-                B = normalized ? B.Div(Math.Sqrt(N * M)) : B;
+                B = normalized ? B.Div(Maths.Sqrt(N * M)) : B;
             }
             else if (direction == Direction.Vertical)
             {
                 B = U.Dot(A);
-                B = normalized ? B.Div(Math.Sqrt(N)) : B;
+                B = normalized ? B.Div(Maths.Sqrt(N)) : B;
             }
             else
             {
                 B = A.Dot(V.Transponate());
-                B = normalized ? B.Div(Math.Sqrt(M)) : B;
+                B = normalized ? B.Div(Maths.Sqrt(M)) : B;
             }
 
             return B;
@@ -160,27 +160,27 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            double[,] U = HartleyTransform.Matrix(N);
-            double[,] V = HartleyTransform.Matrix(M);
-            double[,] A;
+            float[,] U = HartleyTransform.Matrix(N);
+            float[,] V = HartleyTransform.Matrix(M);
+            float[,] A;
 
             if (direction == Direction.Both)
             {
                 A = U.Transponate().Dot(B).Dot(V);
-                A = normalized ? A.Div(Math.Sqrt(N * M)) : A;
+                A = normalized ? A.Div(Maths.Sqrt(N * M)) : A;
             }
             else if (direction == Direction.Vertical)
             {
                 A = U.Transponate().Dot(B);
-                A = normalized ? A.Div(Math.Sqrt(N)) : A;
+                A = normalized ? A.Div(Maths.Sqrt(N)) : A;
             }
             else
             {
                 A = B.Dot(V);
-                A = normalized ? A.Div(Math.Sqrt(M)) : A;
+                A = normalized ? A.Div(Maths.Sqrt(M)) : A;
             }
 
             return A;
@@ -193,7 +193,7 @@ namespace UMapx.Transform
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
-            double[,] U = HartleyTransform.Matrix(N);
+            float[,] U = HartleyTransform.Matrix(N);
             Complex[] B = Matrice.Dot(A, U);
 
             if (normalized)
@@ -211,7 +211,7 @@ namespace UMapx.Transform
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
-            double[,] U = HartleyTransform.Matrix(N);
+            float[,] U = HartleyTransform.Matrix(N);
             Complex[] A = Matrice.Dot(B, U.Transponate());
 
             if (normalized)
@@ -229,8 +229,8 @@ namespace UMapx.Transform
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            double[,] U = HartleyTransform.Matrix(N);
-            double[,] V = HartleyTransform.Matrix(M);
+            float[,] U = HartleyTransform.Matrix(N);
+            float[,] V = HartleyTransform.Matrix(M);
             Complex[,] B;
 
             if (direction == Direction.Both)
@@ -259,8 +259,8 @@ namespace UMapx.Transform
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            double[,] U = HartleyTransform.Matrix(N);
-            double[,] V = HartleyTransform.Matrix(M);
+            float[,] U = HartleyTransform.Matrix(N);
+            float[,] V = HartleyTransform.Matrix(M);
             Complex[,] A;
 
             if (direction == Direction.Both)

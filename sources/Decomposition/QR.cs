@@ -17,8 +17,8 @@ namespace UMapx.Decomposition
     {
         #region Private data
         private int m, n;
-        private double[][] qr;
-        private double[] diag;
+        private float[][] qr;
+        private float[] diag;
         #endregion
 
         #region Initialize
@@ -26,7 +26,7 @@ namespace UMapx.Decomposition
         /// Initializes QR decomposition.
         /// </summary>
         /// <param name="A">Matrix</param>
-        public QR(double[,] A)
+        public QR(float[,] A)
         {
             qrdecomp(A);
         }
@@ -36,11 +36,11 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns a matrix containing Householder reflection vectors.
         /// </summary>
-        public double[,] H
+        public float[,] H
         {
             get
             {
-                double[,] H = new double[m, n];
+                float[,] H = new float[m, n];
                 for (int i = 0; i < m; i++)
                 {
                     for (int j = 0; j < n; j++)
@@ -62,11 +62,11 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the upper triangular matrix R.
         /// </summary>
-        public double[,] R
+        public float[,] R
         {
             get
             {
-                var r = new double[n, n]; // GeneralMatrix X = new GeneralMatrix(n, n);
+                var r = new float[n, n]; // GeneralMatrix X = new GeneralMatrix(n, n);
 
                 for (int i = 0; i < n; i++)
                 {
@@ -92,13 +92,13 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the orthogonal matrix Q.
         /// </summary>
-        public double[,] Q
+        public float[,] Q
         {
             get
             {
-                double[,] q = new double[m, n];
+                float[,] q = new float[m, n];
                 int i, j, k;
-                double s;
+                float s;
 
                 for (k = n - 1; k >= 0; k--)
                 {
@@ -135,14 +135,14 @@ namespace UMapx.Decomposition
         /// 
         /// </summary>
         /// <param name="A"></param>
-        private void qrdecomp(double[,] A)
+        private void qrdecomp(float[,] A)
         {
             // params
             this.m = A.GetLength(0);
             this.n = A.GetLength(1);
-            this.diag = new double[n];
+            this.diag = new float[n];
             this.qr = Jagged.ToJagged(A);
-            double nrm, s;
+            float nrm, s;
             int k, i, j;
 
             // Main loop.

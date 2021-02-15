@@ -18,9 +18,9 @@ namespace UMapx.Imaging
     {
         #region Private data
         private BoxBlur gb;     // box blur filter,
-        private double mR;      // mean of red channel,
-        private double mG;      // mean of green channel,
-        private double mB;      // mean of blue channel.
+        private float mR;      // mean of red channel,
+        private float mG;      // mean of green channel,
+        private float mB;      // mean of blue channel.
         #endregion
 
         #region Filter components
@@ -81,11 +81,11 @@ namespace UMapx.Imaging
         /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
             return;
         }
         /// <summary>
@@ -95,11 +95,11 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
             return;
         }
@@ -155,8 +155,8 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int y, x, width = bmData.Width, height = bmData.Height;
-            double total = width * height;
-            double r = 0, g = 0, b = 0;
+            float total = width * height;
+            float r = 0, g = 0, b = 0;
 
             for (y = 0; y < height; y++)
             {

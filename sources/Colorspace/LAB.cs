@@ -9,9 +9,9 @@ namespace UMapx.Colorspace
     public struct LAB : IColorSpace, ICloneable
     {
         #region Private data
-        private double l;
-        private double a;
-        private double b;
+        private float l;
+        private float a;
+        private float b;
         #endregion
 
         #region Structure components
@@ -21,16 +21,16 @@ namespace UMapx.Colorspace
         /// <param name="l">Component L [0, 100]</param>
         /// <param name="a">Component a [-127, 127]</param>
         /// <param name="b">Component b [-127, 127]</param>
-        public LAB(double l, double a, double b)
+        public LAB(float l, float a, float b)
         {
-            this.l = (l > 100.0) ? 100.0 : ((l < 0) ? 0 : l);
-            this.a = (a > 127.0) ? 127.0 : ((a < -127) ? -127 : a);
-            this.b = (b > 127.0) ? 127.0 : ((b < -127) ? -127 : b);
+            this.l = (l > 100.0) ? 100.0f : ((l < 0) ? 0 : l);
+            this.a = (a > 127.0) ? 127.0f : ((a < -127) ? -127 : a);
+            this.b = (b > 127.0) ? 127.0f : ((b < -127) ? -127 : b);
         }
         /// <summary>
         /// Defines a component of the model [0, 100].
         /// </summary>
-        public double L
+        public float L
         {
             get
             {
@@ -38,13 +38,13 @@ namespace UMapx.Colorspace
             }
             set
             {
-                this.l = (value > 100.0) ? 100.0 : ((value < 0) ? 0 : value);
+                this.l = (value > 100.0) ? 100.0f : ((value < 0) ? 0 : value);
             }
         }
         /// <summary>
         /// Defines a component of the model [-127, 127].
         /// </summary>
-        public double A
+        public float A
         {
             get
             {
@@ -52,13 +52,13 @@ namespace UMapx.Colorspace
             }
             set
             {
-                this.a = (value > 127.0) ? 127.0 : ((value < -127) ? -127 : value);
+                this.a = (value > 127.0) ? 127.0f : ((value < -127) ? -127 : value);
             }
         }
         /// <summary>
         /// Defines a component of the model [-127, 127].
         /// </summary>
-        public double B
+        public float B
         {
             get
             {
@@ -66,7 +66,7 @@ namespace UMapx.Colorspace
             }
             set
             {
-                this.b = (value > 127.0) ? 127.0 : ((value < -127) ? -127 : value);
+                this.b = (value > 127.0) ? 127.0f : ((value < -127) ? -127 : value);
             }
         }
         #endregion
@@ -155,14 +155,14 @@ namespace UMapx.Colorspace
         /// <param name="a">Component a</param>
         /// <param name="b">Component b</param>
         /// <returns>CIE XYZ structure</returns>
-        public static XYZ ToXYZ(double l, double a, double b)
+        public static XYZ ToXYZ(float l, float a, float b)
         {
-            double theta = 6.0 / 29.0;
-            double fy = (l + 16) / 116.0;
-            double fx = fy + (a / 500.0);
-            double fz = fy - (b / 200.0);
-            double theta2 = theta * theta;
-            double k = 16.0 / 116.0;
+            float theta = 6.0f / 29.0f;
+            float fy = (l + 16) / 116.0f;
+            float fx = fy + (a / 500.0f);
+            float fz = fy - (b / 200.0f);
+            float theta2 = theta * theta;
+            float k = 16.0f / 116.0f;
             XYZ D65 = XYZ.White;
 
             return new XYZ(

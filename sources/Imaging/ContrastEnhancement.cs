@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     public class ContrastEnhancement : Correction, IBitmapFilter
     {
         #region Private data
-        private double contrast;
+        private float contrast;
         #endregion
 
         #region Filter components
@@ -18,14 +18,14 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="contrast">Contrast [-1, 1]</param>
         /// <param name="space">Color space</param>
-        public ContrastEnhancement(double contrast, Space space)
+        public ContrastEnhancement(float contrast, Space space)
         {
             Space = space; Contrast = contrast;
         }
         /// <summary>
         /// Gets or sets the contrast coefficent value [-1, 1].
         /// </summary>
-        public double Contrast
+        public float Contrast
         {
             get
             {

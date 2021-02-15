@@ -18,11 +18,11 @@ namespace UMapx.Transform
         /// <summary>
         /// Epsilon.
         /// </summary>
-        private double eps;
+        private float eps;
         /// <summary>
         /// Factor.
         /// </summary>
-        private double factor;
+        private float factor;
         /// <summary>
         /// Radius.
         /// </summary>
@@ -36,7 +36,7 @@ namespace UMapx.Transform
         /// <param name="radius">Radius (>1)</param>
         /// <param name="eps">Epsilon (0, 1)</param>
         /// <param name="factor">Factor [-1, 1]</param>
-        public GuidedFilter(int radius, double eps = 0.025, double factor = -1.0)
+        public GuidedFilter(int radius, float eps = 0.025f, float factor = -1.0f)
         {
             this.radius = radius;
             this.Eps = eps;
@@ -62,7 +62,7 @@ namespace UMapx.Transform
         /// Optimal value ε = 0.025.
         /// </remarks>
         /// </summary>
-        public double Eps
+        public float Eps
         {
             get
             {
@@ -70,13 +70,13 @@ namespace UMapx.Transform
             }
             set
             {
-                this.eps = Maths.Double(value);
+                this.eps = Maths.Float(value);
             }
         }
         /// <summary>
         /// Gets or sets the factor [-1, 1].
         /// </summary>
-        public double Factor
+        public float Factor
         {
             get
             {
@@ -96,7 +96,7 @@ namespace UMapx.Transform
         /// <param name="s">σs</param>
         /// <param name="r">σr</param>
         /// <returns>Guided filter</returns>
-        public static GuidedFilter FromBilateral(int s, double r)
+        public static GuidedFilter FromBilateral(int s, float r)
         {
             return new GuidedFilter(s, r * r);
         }
@@ -107,7 +107,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(double[] data)
+        public void Apply(float[] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -117,12 +117,12 @@ namespace UMapx.Transform
                 int i;
 
                 // guided filter
-                double[] copy = (double[])data.Clone();
+                float[] copy = (float[])data.Clone();
                 GuidedFilter.guidedfilter(copy, this.radius, this.eps);
 
                 // process
                 for (i = 0; i < l0; i++)
-                    data[i] = (1.0 + this.factor) * (data[i] - copy[i]) + copy[i];
+                    data[i] = (1.0f + this.factor) * (data[i] - copy[i]) + copy[i];
             }
 
             return;
@@ -131,7 +131,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(double[,] data)
+        public void Apply(float[,] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -142,13 +142,13 @@ namespace UMapx.Transform
                 int i, j;
 
                 // guided filter
-                double[,] copy = (double[,])data.Clone();
+                float[,] copy = (float[,])data.Clone();
                 GuidedFilter.guidedfilter(copy, this.radius, this.eps);
 
                 // process
                 for (i = 0; i < l0; i++)
                     for (j = 0; j < l1; j++)
-                        data[i, j] = (1.0 + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
+                        data[i, j] = (1.0f + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
             }
 
             return;
@@ -220,14 +220,14 @@ namespace UMapx.Transform
         /// <param name="input">Input signal</param>
         /// <param name="r">Filter size</param>
         /// <param name="eps">Epsilon (0, 1)</param>
-        internal static void guidedfilter(double[,] input, int r, double eps)
+        internal static void guidedfilter(float[,] input, int r, float eps)
         {
             // Input signal properties:
             int l0 = input.GetLength(0), l1 = input.GetLength(1), i, j;
 
             // Calculating μ(I) and μ(I^2):
-            double[,] x = (double[,])input.Clone();
-            double[,] y = Matrice.Pow(input, 2.0);
+            float[,] x = (float[,])input.Clone();
+            float[,] y = Matrice.Pow(input, 2.0f);
 
             // Applying fast box filter:
             x = x.Mean(r, r);
@@ -235,14 +235,14 @@ namespace UMapx.Transform
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
-            double[,] c = new double[l0, l1];
+            float[,] c = new float[l0, l1];
             for (i = 0; i < l0; i++)
                 for (j = 0; j < l1; j++)
                     c[i, j] = y[i, j] - x[i, j] * x[i, j];
 
             // Calculating μ(a) and μ(b):
-            double[,] a = new double[l0, l1];
-            double[,] b = new double[l0, l1];
+            float[,] a = new float[l0, l1];
+            float[,] b = new float[l0, l1];
             for (i = 0; i < l0; i++)
                 for (j = 0; j < l1; j++)
                 {
@@ -255,7 +255,7 @@ namespace UMapx.Transform
             b = b.Mean(r, r);
 
             // Calculating μ(a) * I + μ(b):
-            double[,] q = new double[l0, l1];
+            float[,] q = new float[l0, l1];
             for (i = 0; i < l0; i++)
                 for (j = 0; j < l1; j++)
                     input[i, j] = a[i, j] * input[i, j] + b[i, j];
@@ -268,14 +268,14 @@ namespace UMapx.Transform
         /// <param name="input">Input signal</param>
         /// <param name="r">Filter size</param>
         /// <param name="eps">Epsilon (0, 1)</param>
-        internal static void guidedfilter(Complex[,] input, int r, double eps)
+        internal static void guidedfilter(Complex[,] input, int r, float eps)
         {
             // Input signal properties:
             int l0 = input.GetLength(0), l1 = input.GetLength(1), i, j;
 
             // Calculating μ(I) and μ(I^2):
             Complex[,] x = (Complex[,])input.Clone();
-            Complex[,] y = Matrice.Pow(input, 2.0);
+            Complex[,] y = Matrice.Pow(input, 2.0f);
 
             // Applying fast box filter:
             x = x.Mean(r, r);
@@ -316,14 +316,14 @@ namespace UMapx.Transform
         /// <param name="input">Input signal</param>
         /// <param name="r">Filter size</param>
         /// <param name="eps">Epsilon (0, 1)</param>
-        internal static void guidedfilter(double[] input, int r, double eps)
+        internal static void guidedfilter(float[] input, int r, float eps)
         {
             // Input signal properties:
             int length = input.Length, i;
 
             // Calculating μ(I) and μ(I^2):
-            double[] x = (double[])input.Clone();
-            double[] y = Matrice.Pow(input, 2.0);
+            float[] x = (float[])input.Clone();
+            float[] y = Matrice.Pow(input, 2.0f);
 
             // Applying fast box filter:
             x = x.Mean(r);
@@ -331,13 +331,13 @@ namespace UMapx.Transform
 
             // Calculating cov(I):
             // This is the covariance of input in each local patch:
-            double[] c = new double[length];
+            float[] c = new float[length];
             for (i = 0; i < length; i++)
                 c[i] = y[i] - x[i] * x[i];
 
             // Calculating μ(a) and μ(b):
-            double[] a = new double[length];
-            double[] b = new double[length];
+            float[] a = new float[length];
+            float[] b = new float[length];
             for (i = 0; i < length; i++)
             {
                 a[i] = c[i] / (c[i] + eps);
@@ -349,7 +349,7 @@ namespace UMapx.Transform
             b = b.Mean(r);
 
             // Calculating μ(a) * I + μ(b):
-            double[] q = new double[length];
+            float[] q = new float[length];
             for (i = 0; i < length; i++)
                 input[i] = a[i] * input[i] + b[i];
 
@@ -361,14 +361,14 @@ namespace UMapx.Transform
         /// <param name="input">Input signal</param>
         /// <param name="r">Filter size</param>
         /// <param name="eps">Epsilon (0, 1)</param>
-        internal static void guidedfilter(Complex[] input, int r, double eps)
+        internal static void guidedfilter(Complex[] input, int r, float eps)
         {
             // Input signal properties:
             int length = input.Length, i;
 
             // Calculating μ(I) and μ(I^2):
             Complex[] x = (Complex[])input.Clone();
-            Complex[] y = Matrice.Pow(input, 2.0);
+            Complex[] y = Matrice.Pow(input, 2.0f);
 
             // Applying fast box filter:
             x = x.Mean(r);

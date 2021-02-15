@@ -50,8 +50,8 @@ namespace UMapx.Analysis
         /// <param name="z">Function matrix</param>
         /// <param name="xl">The value of the first argument to calculate</param>
         /// <param name="yl">The value of the second argument to calculate</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Compute(double[] x, double[] y, double[,] z, double xl, double yl)
+        /// <returns>float precision floating point number</returns>
+        public float Compute(float[] x, float[] y, float[,] z, float xl, float yl)
         {
             return bilinear(x, y, z, xl, yl);
         }
@@ -61,8 +61,8 @@ namespace UMapx.Analysis
         /// <param name="x">Array of values of the argument</param>
         /// <param name="y">Array of values of the function</param>
         /// <param name="xl">The value of the argument to calculate</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Compute(double[] x, double[] y, double xl)
+        /// <returns>float precision floating point number</returns>
+        public float Compute(float[] x, float[] y, float xl)
         {
             // chose method of interpolation
             switch (method)
@@ -112,9 +112,9 @@ namespace UMapx.Analysis
         /// <param name="y"></param>
         /// <param name="xl"></param>
         /// <returns></returns>
-        private static double linear(double[] x, double[] y, double xl)
+        private static float linear(float[] x, float[] y, float xl)
         {
-            double yval = 0.0;
+            float yval = 0.0f;
             int length = x.Length - 1;
 
             for (int i = 0; i < length; i++)
@@ -135,9 +135,9 @@ namespace UMapx.Analysis
         /// <param name="xval"></param>
         /// <param name="yval"></param>
         /// <returns></returns>
-        private static double bilinear(double[] x, double[] y, double[,] z, double xval, double yval)
+        private static float bilinear(float[] x, float[] y, float[,] z, float xval, float yval)
         {
-            double zval = 0.0;
+            float zval = 0.0f;
             int xlength = x.Length - 1;
             int ylength = y.Length - 1;
 
@@ -163,10 +163,10 @@ namespace UMapx.Analysis
         /// <param name="y"></param>
         /// <param name="xval"></param>
         /// <returns></returns>
-        private static double lagra(double[] x, double[] y, double xval)
+        private static float lagra(float[] x, float[] y, float xval)
         {
-            double yval = 0.0;
-            double Products = y[0];
+            float yval = 0.0f;
+            float Products = y[0];
             int length = x.Length;
             int i, j;
 
@@ -191,11 +191,11 @@ namespace UMapx.Analysis
         /// <param name="y"></param>
         /// <param name="xval"></param>
         /// <returns></returns>
-        private static double newto(double[] x, double[] y, double xval)
+        private static float newto(float[] x, float[] y, float xval)
         {
-            double yval;
+            float yval;
             int length = x.Length;
-            double[] tarray = new double[length];
+            float[] tarray = new float[length];
             int i, j;
 
             for (i = 0; i < length; i++)
@@ -223,14 +223,14 @@ namespace UMapx.Analysis
         /// <param name="y"></param>
         /// <param name="xval"></param>
         /// <returns></returns>
-        private static double baryc(double[] x, double[] y, double xval)
+        private static float baryc(float[] x, float[] y, float xval)
         {
-            double product;
-            double deltaX;
-            double bc1 = 0;
-            double bc2 = 0;
+            float product;
+            float deltaX;
+            float bc1 = 0;
+            float bc2 = 0;
             int length = x.Length;
-            double[] weights = new double[length];
+            float[] weights = new float[length];
             int i, j;
 
             for (i = 0; i < length; i++)
@@ -241,7 +241,7 @@ namespace UMapx.Analysis
                     if (i != j)
                     {
                         product *= (x[i] - x[j]);
-                        weights[i] = 1.0 / product;
+                        weights[i] = 1.0f / product;
                     }
                 }
             }

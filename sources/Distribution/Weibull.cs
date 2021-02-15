@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Weibull : IDistribution
     {
         #region Private data
-        private double l = 1;
-        private double k = 1;
+        private float l = 1;
+        private float k = 1;
         #endregion
 
         #region Weibull components
@@ -28,14 +28,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="lambda">Scale factor (0, + inf)</param>
         /// <param name="k">Shape factor (0, + inf)</param>
-        public Weibull(double lambda, double k)
+        public Weibull(float lambda, float k)
         {
             Lambda = lambda;
         }
         /// <summary>
         /// Gets or sets the value of the scale factor (0, + inf).
         /// </summary>
-        public double Lambda
+        public float Lambda
         {
             get
             {
@@ -52,7 +52,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the form factor (0, + inf).
         /// </summary>
-        public double K
+        public float K
         {
             get
             {
@@ -60,85 +60,85 @@ namespace UMapx.Distribution
             }
             set
             {
-                this.k = Maths.Max(0.0000001, value);
+                this.k = Maths.Max(0.0000001f, value);
             }
         }
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
-                return l * Special.Gamma(1.0 + 1.0 / k);
+                return l * Special.Gamma(1.0f + 1.0f / k);
             }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
-                return l * l * (Special.Gamma(1.0 + 2.0 / k) - Special.Gamma(1.0 + 1.0 / k));
+                return l * l * (Special.Gamma(1.0f + 2.0f / k) - Special.Gamma(1.0f + 1.0f / k));
             }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
-                return l * Maths.Pow(k - 1, 1.0 / k) / Maths.Pow(k, 1.0 / k);
+                return l * Maths.Pow(k - 1, 1.0f / k) / Maths.Pow(k, 1.0f / k);
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
-                return l * Maths.Pow(Maths.Log(2), 1.0 / k);
+                return l * Maths.Pow(Maths.Log(2), 1.0f / k);
             }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
-                return (Special.Gamma(1.0 + 3.0 / k) * Maths.Pow(l, 3) - 3 * Mean * Special.Gamma(1 + 2.0 / k) * Maths.Pow(l, 2) + 2 * Maths.Pow(Mean, 3)) / (Variance * Maths.Sqrt(Variance));
+                return (Special.Gamma(1.0f + 3.0f / k) * Maths.Pow(l, 3) - 3 * Mean * Special.Gamma(1 + 2.0f / k) * Maths.Pow(l, 2) + 2 * Maths.Pow(Mean, 3)) / (Variance * Maths.Sqrt(Variance));
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                return (Special.Gamma(1.0 + 4.0 / k) * Maths.Pow(l, 4) - 4 * Mean * Special.Gamma(1 + 3.0 / k) * Maths.Pow(l, 3) + 6 * Maths.Pow(Mean, 2) * Math.Pow(l, 2) * Special.Gamma(1.0 + 2.0 / k) - 3 * Maths.Pow(Mean, 4)) / (Variance * Variance);
+                return (Special.Gamma(1.0f + 4.0f / k) * Maths.Pow(l, 4) - 4 * Mean * Special.Gamma(1 + 3.0f / k) * Maths.Pow(l, 3) + 6 * Maths.Pow(Mean, 2) * Maths.Pow(l, 2) * Special.Gamma(1.0f + 2.0f / k) - 3 * Maths.Pow(Mean, 4)) / (Variance * Variance);
             }
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < 0)
             {
@@ -150,8 +150,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < 0)
             {
@@ -162,12 +162,12 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get
             {
-                return Maths.Gamma * (1.0 - 1.0 / k) + Maths.Pow(l / k, k) + Maths.Log(l / k);
+                return Maths.Gamma * (1.0f - 1.0f / k) + Maths.Pow(l / k, k) + Maths.Log(l / k);
             }
         }
         #endregion

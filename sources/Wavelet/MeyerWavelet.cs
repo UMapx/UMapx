@@ -1,4 +1,5 @@
 ﻿using System;
+using UMapx.Core;
 
 namespace UMapx.Wavelet
 {
@@ -6,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Meyer wavelet.
     /// </summary>
     [Serializable]
-    public class MeyerWavelet : IDoubleWavelet
+    public class MeyerWavelet : IFloatWavelet
     {
         #region Wavelet components
         /// <summary>
@@ -18,16 +19,16 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Scaling(double x)
+        public float Scaling(float x)
         {
             // 2015, Victor Vermehren Valenzuela and H. M. de Oliveira gave 
             // the explicit expressions of Meyer wavelet and scale functions:
             if (x == 0)
             {
-                return 2.0 / 3 + 4.0 / (3 * Math.PI);
+                return 2.0f / 3 + 4.0f / (3 * Maths.Pi);
             }
-            double phiupper = Math.Sin(2.0 * Math.PI / 3 * x) + 4.0 / 3 * x * Math.Cos(4 * Math.PI / 3 * x);
-            double phidown = Math.PI * x - 16 * Math.PI / 9 * Math.Pow(x, 3);
+            float phiupper = (float)Math.Sin(2.0 * Maths.Pi / 3 * x) + 4.0f / 3 * x * (float)Math.Cos(4 * Maths.Pi / 3 * x);
+            float phidown = Maths.Pi * x - 16 * Maths.Pi / 9 * (float)Math.Pow(x, 3);
             return phiupper / phidown;
         }
         /// <summary>
@@ -35,19 +36,19 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Wavelet(double x)
+        public float Wavelet(float x)
         {
             // 2015, Victor Vermehren Valenzuela and H. M. de Oliveira gave 
             // the explicit expressions of Meyer wavelet and scale functions:
             //
             // Kernel value:
-            double t = x - 0.5;
+            float t = x - 0.5f;
             // Finding ψ1(t):
-            double psi1upper = 4.0 / (3 * Math.PI) * t * Math.Cos(2 * Math.PI / 3 * t) - 1.0 / Math.PI * Math.Sin(4 * Math.PI / 3 * t);
-            double psi1down = t - 16.0 / 9 * Math.Pow(t, 3);
+            float psi1upper = 4.0f / (3 * Maths.Pi) * t * (float)Math.Cos(2 * Maths.Pi / 3 * t) - 1.0f / Maths.Pi * (float)Math.Sin(4 * Maths.Pi / 3 * t);
+            float psi1down = t - 16.0f / 9 * (float)Math.Pow(t, 3);
             // Finding ψ2(t):
-            double psi2upper = 8.0 / (3 * Math.PI) * t * Math.Cos(8 * Math.PI / 3 * t) + 1.0 / Math.PI * Math.Sin(4 * Math.PI / 3 * t);
-            double psi2down = t - 64.0 / 9 * Math.Pow(t, 3);
+            float psi2upper = 8.0f / (3 * Maths.Pi) * t * (float)Math.Cos(8 * Maths.Pi / 3 * t) + 1.0f / Maths.Pi * (float)Math.Sin(4 * Maths.Pi / 3 * t);
+            float psi2down = t - 64.0f / 9 * (float)Math.Pow(t, 3);
             // Finding ψ(t) = ψ1(t) + ψ2(t):
             return psi1upper / psi1down + psi2upper / psi2down;
         }

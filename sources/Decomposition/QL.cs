@@ -16,8 +16,8 @@ namespace UMapx.Decomposition
     {
         #region Private data
         private QR qr;
-        private double[,] l;
-        private double[,] q;
+        private float[,] l;
+        private float[,] q;
         #endregion
 
         #region Initialize
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
         /// Initializes the QL decomposition of a square matrix.
         /// </summary>
         /// <param name="A">Square matrix</param>
-        public QL(double[,] A)
+        public QL(float[,] A)
         {
             qr = new QR(A.Flip(Direction.Horizontal));
             q = qr.Q.Flip(Direction.Horizontal);
@@ -37,7 +37,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the lower triangular matrix L.
         /// </summary>
-        public double[,] L
+        public float[,] L
         {
             get
             {
@@ -47,7 +47,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the orthogonal matrix Q.
         /// </summary>
-        public double[,] Q
+        public float[,] Q
         {
             get
             {

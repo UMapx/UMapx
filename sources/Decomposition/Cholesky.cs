@@ -15,7 +15,7 @@ namespace UMapx.Decomposition
     public class Cholesky
     {
         #region Private data
-        double[][] lower;
+        float[][] lower;
         #endregion
 
         #region Initialize
@@ -23,7 +23,7 @@ namespace UMapx.Decomposition
         /// Initializes Cholesky decomposition.
         /// </summary>
         /// <param name="A">Square symmetric positive definite matrix</param>
-        public Cholesky(double[,] A)
+        public Cholesky(float[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
@@ -37,14 +37,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the lower triangular matrix L.
         /// </summary>
-        public double[,] L
+        public float[,] L
         {
             get { return Jagged.FromJagged(lower); }
         }
         /// <summary>
         /// Gets the upper triangular matrix U.
         /// </summary>
-        public double[,] U
+        public float[,] U
         {
             get { return Matrice.Transponate(L); }
         }
@@ -55,13 +55,13 @@ namespace UMapx.Decomposition
         /// 
         /// </summary>
         /// <param name="a"></param>
-        private void chol(double[][] a)
+        private void chol(float[][] a)
         {
             // Cholesky decomposition
             int n = a.GetLength(0);
-            this.lower = new double[n][];
-            double[] v, w, z, d = new double[n];
-            double alpha;
+            this.lower = new float[n][];
+            float[] v, w, z, d = new float[n];
+            float alpha;
             int j, i, k;
 
             // get diagonal elements
@@ -73,7 +73,7 @@ namespace UMapx.Decomposition
             // do job
             for (j = 0; j < n; j++)
             {
-                v = lower[j] = new double[n];
+                v = lower[j] = new float[n];
                 z = a[j];
 
                 for (i = 0; i <= j; i++)
@@ -88,7 +88,7 @@ namespace UMapx.Decomposition
                             alpha += w[k] * w[k];
                         }
 
-                        w[i] = Math.Sqrt(d[i] - alpha);
+                        w[i] = (float)Math.Sqrt(d[i] - alpha);
                         lower[i] = w;
                     }
                     else

@@ -13,7 +13,7 @@ namespace UMapx.Imaging
     public class ExposureCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        private double average;
+        private float average;
         #endregion
 
         #region Filter components
@@ -22,7 +22,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="average">Average [0, 2500]</param>
         /// <param name="space">Color space</param>
-        public ExposureCorrection(double average, Space space)
+        public ExposureCorrection(float average, Space space)
         {
             Average = average; this.Space = space;
         }
@@ -36,7 +36,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the average [0, 2500].
         /// </summary>
-        public double Average
+        public float Average
         {
             get
             {

@@ -9,9 +9,9 @@ namespace UMapx.Colorspace
     public struct YDbDr : IColorSpace, ICloneable
     {
         #region Private data
-        private double y;
-        private double db;
-        private double dr;
+        private float y;
+        private float db;
+        private float dr;
         #endregion
 
         #region Structure components
@@ -21,16 +21,16 @@ namespace UMapx.Colorspace
         /// <param name="y">Y [0, 1]</param>
         /// <param name="db">Db [-1.333, 1.333]</param>
         /// <param name="dr">Dr [-1.333, 1.333]</param>
-        public YDbDr(double y, double db, double dr)
+        public YDbDr(float y, float db, float dr)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
-            this.db = (db > 1.333) ? 1.333 : ((db < -1.333) ? -1.333 : db);
-            this.dr = (dr > 1.333) ? 1.333 : ((dr < -1.333) ? -1.333 : dr);
+            this.db = (db > 1.333) ? 1.333f : ((db < -1.333) ? -1.333f : db);
+            this.dr = (dr > 1.333) ? 1.333f : ((dr < -1.333) ? -1.333f : dr);
         }
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Y
+        public float Y
         {
             get
             {
@@ -44,7 +44,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-1.333, 1.333].
         /// </summary>
-        public double Db
+        public float Db
         {
             get
             {
@@ -52,13 +52,13 @@ namespace UMapx.Colorspace
             }
             set
             {
-                db = (value > 1.333) ? 1 : ((value < -1.333) ? -1.333 : value);
+                db = (value > 1.333) ? 1 : ((value < -1.333) ? -1.333f : value);
             }
         }
         /// <summary>
         /// Defines a component of the color model [-1.333, 1.333].
         /// </summary>
-        public double Dr
+        public float Dr
         {
             get
             {
@@ -66,7 +66,7 @@ namespace UMapx.Colorspace
             }
             set
             {
-                dr = (value > 1.333) ? 1.333 : ((value < -1.333) ? -1.333 : value);
+                dr = (value > 1.333) ? 1.333f : ((value < -1.333) ? -1.333f : value);
             }
         }
         #endregion
@@ -157,13 +157,13 @@ namespace UMapx.Colorspace
         /// <returns>YDbDr structure</returns>
         public static YDbDr FromRGB(int red, int green, int blue)
         {
-            double r = red / 255.0f;
-            double g = green / 255.0f;
-            double b = blue / 255.0f;
+            float r = red / 255.0f;
+            float g = green / 255.0f;
+            float b = blue / 255.0f;
 
-            double Y = 0.299f * r + 0.587f * g + 0.114f * b;
-            double Cb = -0.450f * r - 0.883f * g + 1.333f * b;
-            double Cr = -1.333f * r - 1.116f * g - 0.217f * b;
+            float Y = 0.299f * r + 0.587f * g + 0.114f * b;
+            float Cb = -0.450f * r - 0.883f * g + 1.333f * b;
+            float Cr = -1.333f * r - 1.116f * g - 0.217f * b;
 
             return new YDbDr(Y, Cb, Cr);
         }

@@ -8,17 +8,17 @@ namespace UMapx.Analysis
     /// </summary>
     internal static class LeastSquaresOptions
     {
-        #region double components
+        #region float components
         /// <summary>
         /// Returns the polynomial value.
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="c">Approximation coefficients</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Polynomial(double x, double[] c)
+        /// <returns>float precision floating point number</returns>
+        public static float Polynomial(float x, float[] c)
         {
             int n = c.Length, i;
-            double p = 1, s = 0;
+            float p = 1, s = 0;
 
             for (i = 0; i < n; i++, p *= x)
             {
@@ -32,10 +32,10 @@ namespace UMapx.Analysis
         /// <param name="x">Argument</param>
         /// <param name="c">Approximation coefficients</param>
         /// <returns>Array</returns>
-        public static double[] Polynomial(double[] x, double[] c)
+        public static float[] Polynomial(float[] x, float[] c)
         {
             int n = x.Length, i;
-            double[] y = new double[n];
+            float[] y = new float[n];
 
             for (i = 0; i < n; i++)
             {
@@ -50,12 +50,12 @@ namespace UMapx.Analysis
         /// <param name="y">Function</param>
         /// <param name="iterations">Number of iterations</param>
         /// <returns>Array</returns>
-        public static double[] Coefficients(double[] x, double[] y, int iterations)
+        public static float[] Coefficients(float[] x, float[] y, int iterations)
         {
             int i, j;
             int n = x.Length;
             int m = iterations < 1 ? 1 : iterations;
-            double[,] matrix = new double[m, m + 1];
+            float[,] matrix = new float[m, m + 1];
 
             for (i = 0; i < m; i++)
             {
@@ -73,15 +73,15 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="pow">Power</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double SummaryPow(double[] v, double pow)
+        /// <returns>float precision floating point number</returns>
+        public static float SummaryPow(float[] v, float pow)
         {
-            double sum = 0;
+            float sum = 0;
             int length = v.Length;
 
             for (int i = 0; i < length; i++)
             {
-                sum += Math.Pow(v[i], pow);
+                sum += (float)Math.Pow(v[i], pow);
             }
             return sum;
         }
@@ -92,15 +92,15 @@ namespace UMapx.Analysis
         /// <param name="y">Array</param>
         /// <param name="powx">Power of x</param>
         /// <param name="powy">Power of y</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double SummaryPow(double[] x, double[] y, double powx, double powy)
+        /// <returns>float precision floating point number</returns>
+        public static float SummaryPow(float[] x, float[] y, float powx, float powy)
         {
-            double sum = 0;
+            float sum = 0;
             int length = x.Length;
 
             for (int i = 0; i < length; i++)
             {
-                sum += Math.Pow(x[i], powx) * Math.Pow(y[i], powy);
+                sum += (float)Math.Pow(x[i], powx) * (float)Math.Pow(y[i], powy);
             }
             return sum;
         }
@@ -109,11 +109,11 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="a">Approximation</param>
         /// <param name="b">Function</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Error(double[] a, double[] b)
+        /// <returns>float precision floating point number</returns>
+        public static float Error(float[] a, float[] b)
         {
-            double vara = Matrice.Var(a);
-            double varb = Matrice.Var(b);
+            float vara = Matrice.Var(a);
+            float varb = Matrice.Var(b);
 
             if (vara < varb)
             {
@@ -126,7 +126,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="p">Polynomial coefficients</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        public static string Equation(double[] p)
+        public static string Equation(float[] p)
         {
             string equation = "";
             int length = p.Length;
@@ -146,7 +146,7 @@ namespace UMapx.Analysis
         /// <param name="p">Polynomial coefficients</param>
         /// <param name="function">Function</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        public static string Equation(double[] p, string function)
+        public static string Equation(float[] p, string function)
         {
             string equation = "";
             int length = p.Length;
@@ -227,8 +227,8 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="pow">Power</param>
-        /// <returns>Double precision floating point number</returns>
-        public static Complex SummaryPow(Complex[] v, double pow)
+        /// <returns>float precision floating point number</returns>
+        public static Complex SummaryPow(Complex[] v, float pow)
         {
             Complex sum = 0;
             int length = v.Length;
@@ -246,8 +246,8 @@ namespace UMapx.Analysis
         /// <param name="y">Array</param>
         /// <param name="powx">Power of x</param>
         /// <param name="powy">Power of y</param>
-        /// <returns>Double precision floating point number</returns>
-        public static Complex SummaryPow(Complex[] x, Complex[] y, double powx, double powy)
+        /// <returns>float precision floating point number</returns>
+        public static Complex SummaryPow(Complex[] x, Complex[] y, float powx, float powy)
         {
             Complex sum = 0;
             int length = x.Length;
@@ -263,7 +263,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="a">Approximation</param>
         /// <param name="b">Function</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static Complex Error(Complex[] a, Complex[] b)
         {
             Complex vara = Matrice.Var(a);

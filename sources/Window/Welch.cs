@@ -23,22 +23,22 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>Double precision floating point number</returns>
-        public override double Function(double x, int frameSize)
+        /// <returns>float precision floating point number</returns>
+        public override float Function(float x, int frameSize)
         {
             // Welch function:
-            double t = (frameSize - 1) / 2.0;
-            double a = (x - t) / t;
+            float t = (frameSize - 1) / 2.0f;
+            float a = (x - t) / t;
             return 1 - a * a;
         }
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <returns>Array</returns>
-        public override double[] GetWindow(int frameSize)
+        public override float[] GetWindow(int frameSize)
         {
-            double t = (frameSize - 1);
-            double[] x = Matrice.Compute(0, t, 1);
+            float t = (frameSize - 1);
+            float[] x = Matrice.Compute(0, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

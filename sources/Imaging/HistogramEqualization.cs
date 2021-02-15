@@ -29,8 +29,8 @@ namespace UMapx.Imaging
             int[] H = Statistics.Histogram(bmData);
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int y, x, width = bmData.Width, height = bmData.Height;
-            double[] table = Statistics.Equalize(H);
-            double length = table.Length - 1;
+            float[] table = Statistics.Equalize(H);
+            float length = table.Length - 1;
 
             for (y = 0; y < height; y++)
             {
@@ -49,9 +49,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return;
         }
         #endregion

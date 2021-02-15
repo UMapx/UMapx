@@ -46,8 +46,8 @@ namespace UMapx.Analysis
         /// <param name="a">Lower limit</param>
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Compute(IDouble function, double a, double b, int n)
+        /// <returns>float precision floating point number</returns>
+        public float Compute(IFloat function, float a, float b, int n)
         {
             // chose method of integration
             switch (method)
@@ -75,8 +75,8 @@ namespace UMapx.Analysis
         /// <param name="a">Lower limit</param>
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Compute(double[] y, double a, double b, int n)
+        /// <returns>float precision floating point number</returns>
+        public float Compute(float[] y, float a, float b, int n)
         {
             // chose method of integration
             switch (method)
@@ -160,10 +160,10 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static double rect(IDouble f, double a, double b, int n)
+        private static float rect(IFloat f, float a, float b, int n)
         {
-            double sum = 0.0;
-            double h = (b - a) / n;
+            float sum = 0.0f;
+            float h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += h * f(a + i * h);
@@ -178,10 +178,10 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static double rect(double[] y, double a, double b, int n)
+        private static float rect(float[] y, float a, float b, int n)
         {
-            double sum = 0.0;
-            double h = (b - a) / n;
+            float sum = 0.0f;
+            float h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += h * y[i];
@@ -197,14 +197,14 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static double midp(IDouble f, double a, double b, int n)
+        private static float midp(IFloat f, float a, float b, int n)
         {
             // Midpoint
-            double sum = 0.0;
-            double h = (b - a) / n;
+            float sum = 0.0f;
+            float h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
-                sum += h * f(a + (i + 0.5) * h);
+                sum += h * f(a + (i + 0.5f) * h);
             }
             return sum;
         }
@@ -216,13 +216,13 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static double midp(double[] y, double a, double b, int n)
+        private static float midp(float[] y, float a, float b, int n)
         {
-            double sum = 0.0;
-            double h = (b - a) / (n - 1);
+            float sum = 0.0f;
+            float h = (b - a) / (n - 1);
             for (int i = 0; i < (n - 1); i++)
             {
-                sum += h * 0.5 * (y[i] + y[i + 1]);
+                sum += h * 0.5f * (y[i] + y[i + 1]);
             }
             return sum;
         }
@@ -235,13 +235,13 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static double trap(IDouble f, double a, double b, int n)
+        private static float trap(IFloat f, float a, float b, int n)
         {
-            double sum = 0.0;
-            double h = (b - a) / n;
+            float sum = 0.0f;
+            float h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
-                sum += 0.5 * h * (f(a + i * h) + f(a + (i + 1) * h));
+                sum += 0.5f * h * (f(a + i * h) + f(a + (i + 1) * h));
             }
             return sum;
         }
@@ -253,13 +253,13 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static double trap(double[] y, double a, double b, int n)
+        private static float trap(float[] y, float a, float b, int n)
         {
-            double sum = 0.0;
-            double h = (b - a) / (n - 1);
+            float sum = 0.0f;
+            float h = (b - a) / (n - 1);
             for (int i = 0; i < (n - 1); i++)
             {
-                sum += 0.5 * h * (y[i] + y[i + 1]);
+                sum += 0.5f * h * (y[i] + y[i + 1]);
             }
             return sum;
         }
@@ -272,11 +272,11 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static double simp(IDouble f, double a, double b, int n)
+        private static float simp(IFloat f, float a, float b, int n)
         {
-            if (n < 3) return double.NaN; //Need at least 3 points
-            double sum = 0.0;
-            double h = (b - a) / n;
+            if (n < 3) return float.NaN; //Need at least 3 points
+            float sum = 0.0f;
+            float h = (b - a) / n;
             if (n % 2 != 0)
             {
                 for (int i = 0; i < n - 1; i += 2)
@@ -302,12 +302,12 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static double simp(double[] y, double a, double b, int n)
+        private static float simp(float[] y, float a, float b, int n)
         {
-            double h = (b - a) / n;
+            float h = (b - a) / n;
             //Need at least 3 points
-            if (n < 3 || h == 0) return double.NaN;
-            double sum = 0.0;
+            if (n < 3 || h == 0) return float.NaN;
+            float sum = 0.0f;
             if (n % 2 != 0)
             {
                 for (int i = 0; i < n - 1; i += 2)
@@ -335,14 +335,14 @@ namespace UMapx.Analysis
         /// <param name="iterations"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static double romb(IDouble f, double a, double b, int iterations, double eps = 1e-8)
+        private static float romb(IFloat f, float a, float b, int iterations, float eps = 1e-8f)
         {
             int n = 2;
-            double h = b - a;
-            double sum = 0.0;
+            float h = b - a;
+            float sum = 0.0f;
             int j = 0;
-            double[,] R = new double[iterations, iterations];
-            R[1, 1] = h * (f(a) + f(b)) / 2.0;
+            float[,] R = new float[iterations, iterations];
+            R[1, 1] = h * (f(a) + f(b)) / 2.0f;
             h = h / 2;
             R[2, 1] = R[1, 1] / 2 + h * f(a + h);
             R[2, 2] = (4 * R[2, 1] - R[1, 1]) / 3;
@@ -350,17 +350,17 @@ namespace UMapx.Analysis
             {
                 n = 2 * n;
                 h = h / 2;
-                sum = 0.0;
+                sum = 0.0f;
                 for (int k = 1; k <= n; k += 2)
                 {
                     sum += f(a + k * h);
                 }
                 R[j, 1] = R[j - 1, 1] / 2 + h * sum;
-                double factor = 4.0;
+                float factor = 4.0f;
                 for (int k = 2; k <= j; k++)
                 {
                     R[j, k] = (factor * R[j, k - 1] - R[j - 1, k - 1]) / (factor - 1);
-                    factor = factor * 4.0;
+                    factor = factor * 4.0f;
                 }
                 if (Math.Abs(R[j, j] - R[j, j - 1]) < eps * Math.Abs(R[j, j]))
                 {
@@ -494,7 +494,7 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static Complex simp(IComplex f, Complex a, Complex b, int n)
         {
-            if (n < 3) return double.NaN; //Need at least 3 points
+            if (n < 3) return float.NaN; //Need at least 3 points
             Complex sum = 0.0;
             Complex h = (b - a) / n;
             if (n % 2 != 0)
@@ -526,7 +526,7 @@ namespace UMapx.Analysis
         {
             Complex h = (b - a) / n;
             //Need at least 3 points
-            if (n < 3 || h == 0) return double.NaN;
+            if (n < 3 || h == 0) return float.NaN;
             Complex sum = 0.0;
             if (n % 2 != 0)
             {
@@ -555,7 +555,7 @@ namespace UMapx.Analysis
         /// <param name="iterations"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex romb(IComplex f, Complex a, Complex b, int iterations, double eps = 1e-8)
+        private static Complex romb(IComplex f, Complex a, Complex b, int iterations, float eps = 1e-8f)
         {
             int n = 2;
             Complex h = b - a;
@@ -576,11 +576,11 @@ namespace UMapx.Analysis
                     sum += f(a + k * h);
                 }
                 R[j, 1] = R[j - 1, 1] / 2 + h * sum;
-                double factor = 4.0;
+                float factor = 4.0f;
                 for (int k = 2; k <= j; k++)
                 {
                     R[j, k] = (factor * R[j, k - 1] - R[j - 1, k - 1]) / (factor - 1);
-                    factor = factor * 4.0;
+                    factor = factor * 4.0f;
                 }
                 if (Maths.Abs(R[j, j] - R[j, j - 1]) < eps * Maths.Abs(R[j, j]))
                 {

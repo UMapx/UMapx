@@ -14,9 +14,9 @@ namespace UMapx.Distribution
     public class Triangular : IDistribution
     {
         #region Private data
-        private double a;
-        private double b;
-        private double c;
+        private float a;
+        private float b;
+        private float c;
         #endregion
 
         #region Triangular components
@@ -30,14 +30,14 @@ namespace UMapx.Distribution
         /// <param name="a">Parameter a ∈ (-inf, +inf)</param>
         /// <param name="b">Parameter b ∈ (-inf, +inf)</param>
         /// <param name="c">Parameter c ∈ (-inf, +inf)</param>
-        public Triangular(double a, double b, double c)
+        public Triangular(float a, float b, float c)
         {
             A = a; B = b; C = c;
         }
         /// <summary>
         /// Gets or sets the value of the parameter a ∈ (-inf, +inf).
         /// </summary>
-        public double A
+        public float A
         {
             get
             {
@@ -51,7 +51,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter b ∈ (-inf, +inf).
         /// </summary>
-        public double B
+        public float B
         {
             get
             {
@@ -65,7 +65,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter c ∈ (-inf, +inf).
         /// </summary>
-        public double C
+        public float C
         {
             get
             {
@@ -79,42 +79,42 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(a, b);
+                return new RangeFloat(a, b);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
-            get { return (a + b + c) / 3.0; }
+            get { return (a + b + c) / 3.0f; }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get { return (a * a + b * b + c * c - a * b - a * c - b * c) / 18; }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
-                double median;
+                float median;
                 if (c >= (a + b) / 2.0)
                 {
-                    median = a + Math.Sqrt((b - a) * (c - a)) / 1.4142135623730950488016887242097;
+                    median = a + (float)Math.Sqrt((b - a) * (c - a)) / Maths.Sqrt2;
                 }
                 else
                 {
-                    median = b - Math.Sqrt((b - a) * (b - c)) / 1.4142135623730950488016887242097;
+                    median = b - (float)Math.Sqrt((b - a) * (b - c)) / Maths.Sqrt2;
                 }
 
                 return median;
@@ -123,48 +123,48 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get { return c; }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
-                double k1 = (a + b - 2 * c) * (2 * a - b - c) * (a - 2 * b + c);
-                double k2 = 5 * (a * a + b * b + c * c - a * b - a * c - b * c);
-                return 1.4142135623730950488016887242097 * k1 / Math.Pow(k2, 1.5);
+                float k1 = (a + b - 2 * c) * (2 * a - b - c) * (a - 2 * b + c);
+                float k2 = 5 * (a * a + b * b + c * c - a * b - a * c - b * c);
+                return Maths.Sqrt2 * k1 / (float)Math.Pow(k2, 1.5);
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                return -0.6;
+                return -0.6f;
             }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get
             {
-                return 0.5 + Math.Log((b - a) / 2);
+                return 0.5f + (float)Math.Log((b - a) / 2);
             }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < a)
                 return 0;
@@ -181,8 +181,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < a)
                 return 0;

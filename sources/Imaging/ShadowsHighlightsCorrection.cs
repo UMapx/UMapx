@@ -15,8 +15,8 @@ namespace UMapx.Imaging
     public class ShadowsHighlightsCorrection : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        private double shadows;
-        private double lights;
+        private float shadows;
+        private float lights;
         #endregion
 
         #region Filter components
@@ -27,7 +27,7 @@ namespace UMapx.Imaging
         /// <param name="space">Color space</param>
         /// <param name="shadows">Shadows [0, 1]</param>
         /// <param name="highlights">Highlights [0, 1]</param>
-        public ShadowsHighlightsCorrection(int radius, Space space, double shadows = 0.4, double highlights = 0.4)
+        public ShadowsHighlightsCorrection(int radius, Space space, float shadows = 0.4f, float highlights = 0.4f)
         {
             gb = new BoxBlur(radius);
             Space = space; Shadows = shadows; Highlights = highlights;
@@ -40,7 +40,7 @@ namespace UMapx.Imaging
         /// <param name="space">Color space</param>
         /// <param name="shadows">Shadows [0, 1]</param>
         /// <param name="highlights">Highlights [0, 1]</param>
-        public ShadowsHighlightsCorrection(int width, int height, Space space, double shadows = 0.4, double highlights = 0.4)
+        public ShadowsHighlightsCorrection(int width, int height, Space space, float shadows = 0.4f, float highlights = 0.4f)
         {
             gb = new BoxBlur(width, height);
             Space = space; Shadows = shadows; Highlights = highlights;
@@ -52,7 +52,7 @@ namespace UMapx.Imaging
         /// <param name="space">Color space</param>
         /// <param name="shadows">Shadows [0, 1]</param>
         /// <param name="highlights">Highlights [0, 1]</param>
-        public ShadowsHighlightsCorrection(SizeInt size, Space space, double shadows = 0.4, double highlights = 0.4)
+        public ShadowsHighlightsCorrection(SizeInt size, Space space, float shadows = 0.4f, float highlights = 0.4f)
         {
             gb = new BoxBlur(size);
             Space = space; Shadows = shadows; Highlights = highlights;
@@ -60,7 +60,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the shadows value [0, 1].
         /// </summary>
-        public double Shadows
+        public float Shadows
         {
             get
             {
@@ -75,7 +75,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the highlights value [0, 1].
         /// </summary>
-        public double Highlights
+        public float Highlights
         {
             get
             {
@@ -92,8 +92,8 @@ namespace UMapx.Imaging
         /// </summary>
         protected override void Rebuild()
         {
-            double s = (Intensity.log05 / Math.Log(0.5 - value2gamma(shadows)));
-            double l = (Intensity.log05 / Math.Log(0.5 + value2gamma(lights)));
+            float s = (Intensity.log05 / (float)Math.Log(0.5 - value2gamma(shadows)));
+            float l = (Intensity.log05 / (float)Math.Log(0.5 + value2gamma(lights)));
             this.values = Intensity.LogStretch(s, l, 256);
         }
         #endregion
@@ -104,9 +104,9 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="v"></param>
         /// <returns></returns>
-        private double value2gamma(double v)
+        private float value2gamma(float v)
         {
-            return (v - Intensity.logEpsilon) / 2.0;
+            return (v - Intensity.logEpsilon) / 2.0f;
         }
         #endregion
     }

@@ -15,7 +15,7 @@ namespace UMapx.Transform
     {
         #region Private data
         private LaplacianPyramidTransform lap;
-        private double factor;
+        private float factor;
         #endregion
 
         #region Filter components
@@ -24,7 +24,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="lap">Laplacian pyramid</param>
         /// <param name="factor">Factor [-1, 1]</param>
-        public LaplacianPyramidFilter(LaplacianPyramidTransform lap, double factor = -1.0)
+        public LaplacianPyramidFilter(LaplacianPyramidTransform lap, float factor = -1.0f)
         {
             this.lap = lap;
             this.factor = factor;
@@ -46,7 +46,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Gets or sets the factor [-1, 1].
         /// </summary>
-        public double Factor
+        public float Factor
         {
             get
             {
@@ -64,21 +64,21 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(double[,] data)
+        public void Apply(float[,] data)
         {
             // forward pyramid transform
-            double[][,] pA = lap.Forward(data);
+            float[][,] pA = lap.Forward(data);
 
             int r = data.GetLength(0), c = data.GetLength(1);
             int nlev = pA.Length - 1, i, j;
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = Matrice.Mul(pA[i], 1.0 + this.factor);
+                pA[i] = Matrice.Mul(pA[i], 1.0f + this.factor);
             }
 
             // backward pyramid transform
-            double[,] dummy = lap.Backward(pA);
+            float[,] dummy = lap.Backward(pA);
 
             for (i = 0; i < r; i++)
             {
@@ -124,21 +124,21 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(double[] data)
+        public void Apply(float[] data)
         {
             // forward pyramid transform
-            double[][] pA = lap.Forward(data);
+            float[][] pA = lap.Forward(data);
 
             int r = data.GetLength(0);
             int nlev = pA.Length - 1, i;
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = Matrice.Mul(pA[i], 1.0 + this.factor);
+                pA[i] = Matrice.Mul(pA[i], 1.0f + this.factor);
             }
 
             // backward pyramid transform
-            double[] dummy = lap.Backward(pA);
+            float[] dummy = lap.Backward(pA);
 
             for (i = 0; i < r; i++)
             {

@@ -23,22 +23,22 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>Double precision floating point number</returns>
-        public override double Function(double x, int frameSize)
+        /// <returns>float precision floating point number</returns>
+        public override float Function(float x, int frameSize)
         {
             // Berlett-Hann function:
-            double a = Math.Abs(Math.Abs(x / (frameSize - 1)) - 0.5);
-            return 0.62 - 0.48 * a - 0.38 * Cosine.cosinefunc(2 * x, frameSize);
+            float a = Math.Abs(Math.Abs(x / (frameSize - 1)) - 0.5f);
+            return 0.62f - 0.48f * a - 0.38f * Cosine.cosinefunc(2 * x, frameSize);
         }
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <param name="frameSize">Window size</param>
         /// <returns>Array</returns>
-        public override double[] GetWindow(int frameSize)
+        public override float[] GetWindow(int frameSize)
         {
-            double t = frameSize - 1;
-            double[] x = Matrice.Compute(0, t, 1);
+            float t = frameSize - 1;
+            float[] x = Matrice.Compute(0, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

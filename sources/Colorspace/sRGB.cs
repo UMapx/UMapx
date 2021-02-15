@@ -9,9 +9,9 @@ namespace UMapx.Colorspace
     public struct sRGB : IColorSpace, ICloneable
     {
         #region private data
-        private double r;
-        private double g;
-        private double b;
+        private float r;
+        private float g;
+        private float b;
         #endregion
 
         #region Structure components
@@ -21,7 +21,7 @@ namespace UMapx.Colorspace
         /// <param name="red">Red [0, 1]</param>
         /// <param name="green">Green [0, 1]</param>
         /// <param name="blue">Blue [0, 1]</param>
-        public sRGB(double red, double green, double blue)
+        public sRGB(float red, float green, float blue)
         {
             this.r = (red > 1) ? 1 : ((red < 0) ? 0 : red);
             this.g = (green > 1) ? 1 : ((green < 0) ? 0 : green);
@@ -30,7 +30,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Red
+        public float Red
         {
             get
             {
@@ -44,7 +44,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Green
+        public float Green
         {
             get
             {
@@ -58,7 +58,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Blue
+        public float Blue
         {
             get
             {
@@ -157,9 +157,9 @@ namespace UMapx.Colorspace
         /// <returns>sRGB structure</returns>
         public static sRGB FromRGB(int red, int green, int blue)
         {
-            double r = red / 255.0f;
-            double g = green / 255.0f;
-            double b = blue / 255.0f;
+            float r = red / 255.0f;
+            float g = green / 255.0f;
+            float b = blue / 255.0f;
 
             return new sRGB(r, g, b);
         }
@@ -183,7 +183,7 @@ namespace UMapx.Colorspace
         {
             get
             {
-                return new RGB(r * 255.0, g * 255.0, b * 255.0);
+                return new RGB(r * 255.0f, g * 255.0f, b * 255.0f);
 
             }
         }

@@ -155,7 +155,7 @@ namespace UMapx.Imaging
 
 
             // lock destination bitmap data
-            BitmapData imageData = BitmapConverter.Lock8bpp(image);
+            BitmapData imageData = BitmapFormat.Lock8bpp(image);
             float scale = 255.0f / maxMapIntensity;
 
             // do the job
@@ -185,7 +185,7 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data)
         {
             // lock source image
-            BitmapData imageData = BitmapConverter.Lock8bpp(Data);
+            BitmapData imageData = BitmapFormat.Lock8bpp(Data);
 
             try
             {

@@ -15,8 +15,8 @@ namespace UMapx.Decomposition
     public class NMF
     {
         #region Private data
-        private double[,] w;  // W is m x r (weights)
-        private double[,] h;  // H is r x n (transformed data) (transposed)
+        private float[,] w;  // W is m x r (weights)
+        private float[,] h;  // H is r x n (transformed data) (transposed)
         private int n;   // number of input data vectors
         private int m;   // dimension of input vector
         private int r;   // dimension of output vector (reduced dimension)
@@ -29,7 +29,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Non-negative matrix</param>
         /// <param name="r">The dimension of new matrices</param>
         /// <param name="iterations">Number of iterations</param>
-        public NMF(double[,] A, int r, int iterations = 100)
+        public NMF(float[,] A, int r, int iterations = 100)
         {
             this.m = A.GetLength(0);
             this.n = A.GetLength(1);
@@ -48,14 +48,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the left matrix.
         /// </summary>
-        public double[,] W
+        public float[,] W
         {
             get { return w; }
         }
         /// <summary>
         /// Gets the right matrix.
         /// </summary>
-        public double[,] H
+        public float[,] H
         {
             get { return h; }
         }
@@ -67,23 +67,23 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A"></param>
         /// <param name="iterations"></param>
-        private void nnmf(double[,] A, int iterations)
+        private void nnmf(float[,] A, int iterations)
         {
             // chose W and H randomly, W with unit norm
             w = Matrice.Rand(m, r);
             h = Matrice.Rand(r, n);
-            var Z = new double[r, r];
+            var Z = new float[r, r];
 
             // a small epsilon is added to the
             //  denominator to avoid overflow.
-            double eps = 10e-9;
+            float eps = 10e-9f;
             int i, j, l, t;
-            double s, d;
+            float s, d;
 
             for (t = 0; t < iterations; t++)
             {
-                var newW = new double[m, r];
-                var newH = new double[r, n];
+                var newW = new float[m, r];
+                var newH = new float[r, n];
 
                 // Update H using the multiplicative
                 // H = H .* (W'*A) ./ (W'*W*H + eps) 
@@ -91,7 +91,7 @@ namespace UMapx.Decomposition
                 {
                     for (j = i; j < r; j++)
                     {
-                        s = 0.0;
+                        s = 0.0f;
                         for (l = 0; l < m; l++)
                             s += w[l, i] * w[l, j];
                         Z[i, j] = Z[j, i] = s;
@@ -99,11 +99,11 @@ namespace UMapx.Decomposition
 
                     for (j = 0; j < n; j++)
                     {
-                        d = 0.0;
+                        d = 0.0f;
                         for (l = 0; l < r; l++)
                             d += Z[i, l] * h[l, j];
 
-                        s = 0.0;
+                        s = 0.0f;
                         for (l = 0; l < m; l++)
                             s += w[l, i] * A[l, j];
 
@@ -117,7 +117,7 @@ namespace UMapx.Decomposition
                 {
                     for (i = j; i < r; i++)
                     {
-                        s = 0.0;
+                        s = 0.0f;
                         for (l = 0; l < m; l++)
                             s += newH[i, l] * newH[j, l];
                         Z[i, j] = Z[j, i] = s;
@@ -125,11 +125,11 @@ namespace UMapx.Decomposition
 
                     for (i = 0; i < m; i++)
                     {
-                        d = 0.0;
+                        d = 0.0f;
                         for (l = 0; l < r; l++)
                             d += w[i, l] * Z[j, l];
 
-                        s = 0.0;
+                        s = 0.0f;
                         for (l = 0; l < n; l++)
                             s += A[i, l] * newH[j, l];
 

@@ -10,10 +10,10 @@ namespace UMapx.Colorspace
     public struct CMYK : IColorSpace, ICloneable
     {
         #region Private data
-        private double c;
-        private double m;
-        private double y;
-        private double k;
+        private float c;
+        private float m;
+        private float y;
+        private float k;
         #endregion
 
         #region Structure components
@@ -24,7 +24,7 @@ namespace UMapx.Colorspace
         /// <param name="m">Magenta [0, 1]</param>
         /// <param name="y">Yellow [0, 1]</param>
         /// <param name="k">Keycolor [0, 1]</param>
-        public CMYK(double c, double m, double y, double k)
+        public CMYK(float c, float m, float y, float k)
         {
             this.c = (c > 1) ? 1 : ((c < 0) ? 0 : c);
             this.m = (m > 1) ? 1 : ((m < 0) ? 0 : m);
@@ -34,7 +34,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the model [0, 1].
         /// </summary>
-        public double Cyan
+        public float Cyan
         {
             get
             {
@@ -48,7 +48,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the model [0, 1].
         /// </summary>
-        public double Magenta
+        public float Magenta
         {
             get
             {
@@ -62,7 +62,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the model [0, 1].
         /// </summary>
-        public double Yellow
+        public float Yellow
         {
             get
             {
@@ -76,7 +76,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the model [0, 1].
         /// </summary>
-        public double Keycolor
+        public float Keycolor
         {
             get
             {
@@ -176,11 +176,11 @@ namespace UMapx.Colorspace
         /// <returns>CMYK structure</returns>
         public static CMYK FromRGB(int red, int green, int blue)
         {
-            double c = (255.0f - red) / 255.0f;
-            double m = (255.0f - green) / 255.0f;
-            double y = (255.0f - blue) / 255.0f;
+            float c = (255.0f - red) / 255.0f;
+            float m = (255.0f - green) / 255.0f;
+            float y = (255.0f - blue) / 255.0f;
 
-            double min = Maths.Min(c, m, y);
+            float min = Maths.Min(c, m, y);
 
             if (min == 1.0)
             {
@@ -188,7 +188,7 @@ namespace UMapx.Colorspace
             }
             else
             {
-                double k = 1.0f - min;
+                float k = 1.0f - min;
                 return new CMYK((c - min) / k, (m - min) / k, (y - min) / k, min);
             }
         }
@@ -212,7 +212,7 @@ namespace UMapx.Colorspace
         {
             get
             {
-                double k1 = (1.0f - k) * 255.0;
+                float k1 = (1.0f - k) * 255.0f;
 
                 int r = (int)((1.0f - c) * k1);
                 int g = (int)((1.0f - m) * k1);

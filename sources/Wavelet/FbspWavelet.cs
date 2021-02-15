@@ -10,9 +10,9 @@ namespace UMapx.Wavelet
     public class FbspWavelet : IComplexWavelet
     {
         #region Private data
-        private double m;
-        private double fb;
-        private double fc;
+        private float m;
+        private float fb;
+        private float fc;
         #endregion
 
         #region Wavelet compoents
@@ -22,14 +22,14 @@ namespace UMapx.Wavelet
         /// <param name="m">Order</param>
         /// <param name="fb">Bandwidth</param>
         /// <param name="fc">Center frequency</param>
-        public FbspWavelet(double m = 3, double fb = 1, double fc = 2)
+        public FbspWavelet(float m = 3, float fb = 1, float fc = 2)
         {
             M = m; Fb = fb; Fc = fc;
         }
         /// <summary>
         /// Gets or sets the value of the wavelet order.
         /// </summary>
-        public double M
+        public float M
         {
             get
             {
@@ -46,7 +46,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Gets or sets the value of the bandwidth parameter.
         /// </summary>
-        public double Fb
+        public float Fb
         {
             get
             {
@@ -60,7 +60,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Gets or sets the center frequency value of the wavelet.
         /// </summary>
-        public double Fc
+        public float Fc
         {
             get
             {
@@ -76,7 +76,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public Complex Scaling(double x)
+        public Complex Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -85,12 +85,12 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public Complex Wavelet(double x)
+        public Complex Wavelet(float x)
         {
-            double a = Math.Sqrt(fb);
-            double b = x / Math.Pow(fb, m);
-            double c = Special.Sinc(b, 1);
-            double d = Math.Pow(c, m);
+            float a = (float)Math.Sqrt(fb);
+            float b = x / (float)Math.Pow(fb, m);
+            float c = Special.Sinc(b, 1);
+            float d = (float)Math.Pow(c, m);
             Complex e = Maths.Exp(Maths.I * 2 * Maths.Pi * fc * x);
             return a * d * e;
         }

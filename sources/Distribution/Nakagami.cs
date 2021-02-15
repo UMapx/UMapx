@@ -14,11 +14,11 @@ namespace UMapx.Distribution
     public class Nakagami : IDistribution
     {
         #region Private data
-        private double mu;
-        private double omega;
-        private double constant; // 2 * μ ^ μ / (Γ(μ) * ω ^ μ))
-        private double nratio;   // -μ / ω
-        private double twoMu1;   // 2 * μ - 1.0
+        private float mu;
+        private float omega;
+        private float constant; // 2 * μ ^ μ / (Γ(μ) * ω ^ μ))
+        private float nratio;   // -μ / ω
+        private float twoMu1;   // 2 * μ - 1.0
         #endregion
 
         #region Nakagami components
@@ -27,14 +27,14 @@ namespace UMapx.Distribution
         /// </summary>
         public Nakagami()
         {
-            Initialize(0.5, 1);
+            Initialize(0.5f, 1);
         }
         /// <summary>
         /// Initializes the distribution of Nakagami.
         /// </summary>
         /// <param name="mu">Shape factor</param>
         /// <param name="omega">Spread rate</param>
-        public Nakagami(double mu, double omega)
+        public Nakagami(float mu, float omega)
         {
             Initialize(mu, omega);
         }
@@ -43,23 +43,23 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="mu"></param>
         /// <param name="omega"></param>
-        private void Initialize(double mu, double omega)
+        private void Initialize(float mu, float omega)
         {
             Mu = mu;
             Omega = omega;
 
-            double twoMuMu = 2.0 * Math.Pow(mu, mu);
-            double gammaMu = Special.Gamma(mu);
-            double spreadMu = Math.Pow(omega, mu);
+            float twoMuMu = 2.0f * (float)Math.Pow(mu, mu);
+            float gammaMu = Special.Gamma(mu);
+            float spreadMu = (float)Math.Pow(omega, mu);
             nratio = -mu / omega;
-            twoMu1 = 2.0 * mu - 1.0;
+            twoMu1 = 2.0f * mu - 1.0f;
 
             constant = twoMuMu / (gammaMu * spreadMu);
         }
         /// <summary>
         /// Gets or sets the value of the shape factor.
         /// </summary>
-        public double Mu
+        public float Mu
         {
             get
             {
@@ -76,7 +76,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the spread coefficient value.
         /// </summary>
-        public double Omega
+        public float Omega
         {
             get
             {
@@ -93,71 +93,71 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
-                return (Special.Gamma(mu + 0.5) / Special.Gamma(mu)) * Math.Sqrt(omega / mu);
+                return Special.Gamma(mu + 0.5f) / Special.Gamma(mu) * (float)Math.Sqrt(omega / mu);
             }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
-                double a = Math.Sqrt(2) / 2;
-                double b = ((2 * mu - 1) * omega) / mu;
-                return a * Math.Sqrt(b);
+                float a = Maths.Sqrt2 / 2;
+                float b = ((2 * mu - 1) * omega) / mu;
+                return a * (float)Math.Sqrt(b);
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
-                double a = Special.Gamma(mu + 0.5) / Special.Gamma(mu);
-                return omega * (1.0 - (1.0 / mu) * (a * a));
+                float a = Special.Gamma(mu + 0.5f) / Special.Gamma(mu);
+                return omega * (1.0f - (1.0f / mu) * (a * a));
             }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         ///  Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }
@@ -165,8 +165,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x <= 0)
             {
@@ -179,15 +179,15 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x <= 0)
             {
                 return 0;
             }
 
-            return constant * Math.Pow(x, twoMu1) * Math.Exp(nratio * x * x);
+            return constant * (float)Math.Pow(x, twoMu1) * (float)Math.Exp(nratio * x * x);
         }
         #endregion
     }

@@ -14,7 +14,7 @@ namespace UMapx.Imaging
     public class LocalThreshold : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        private double difference;
+        private float difference;
         #endregion
 
         #region Filter components
@@ -24,7 +24,7 @@ namespace UMapx.Imaging
         /// <param name="radius">Radius</param>
         /// <param name="space">Color space</param>
         /// <param name="difference">Difference [0, 1]</param>
-        public LocalThreshold(int radius, Space space, double difference = 0.15)
+        public LocalThreshold(int radius, Space space, float difference = 0.15f)
         {
             gb = new BoxBlur(radius);
             Difference = difference;
@@ -37,7 +37,7 @@ namespace UMapx.Imaging
         /// <param name="height">Filter height</param>
         /// <param name="space">Color space</param>
         /// <param name="difference">Difference [0, 1]</param>
-        public LocalThreshold(int width, int height, Space space, double difference = 0.15)
+        public LocalThreshold(int width, int height, Space space, float difference = 0.15f)
         {
             gb = new BoxBlur(width, height);
             Difference = difference;
@@ -49,7 +49,7 @@ namespace UMapx.Imaging
         /// <param name="size">Radius</param>
         /// <param name="space">Color space</param>
         /// <param name="difference">Difference [0, 1]</param>
-        public LocalThreshold(SizeInt size, Space space, double difference = 0.15)
+        public LocalThreshold(SizeInt size, Space space, float difference = 0.15f)
         {
             gb = new BoxBlur(size);
             Difference = difference;
@@ -58,7 +58,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the difference [0, 1].
         /// </summary>
-        public double Difference
+        public float Difference
         {
             get
             {
@@ -66,7 +66,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                difference = Maths.Double(value);
+                difference = Maths.Float(value);
                 this.rebuild = true;
             }
         }

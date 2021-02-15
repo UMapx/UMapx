@@ -16,8 +16,8 @@ namespace UMapx.Decomposition
     public class Lanczos
     {
         #region Private data
-        private double[,] q;
-        private double[,] t;
+        private float[,] q;
+        private float[,] t;
         #endregion
 
         #region Lanczos components
@@ -26,7 +26,7 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A">Symmetric matrix</param>
         /// <param name="full">Full reorthogonalization or not</param>
-        public Lanczos(double[,] A, bool full = false)
+        public Lanczos(float[,] A, bool full = false)
         {
             // exception
             if (!Matrice.IsSymmetric(A))
@@ -39,7 +39,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the orthogonal matrix.
         /// </summary>
-        public double[,] Q
+        public float[,] Q
         {
             get
             {
@@ -49,7 +49,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns a tridiagonal matrix.
         /// </summary>
-        public double[,] T
+        public float[,] T
         {
             get
             {
@@ -65,7 +65,7 @@ namespace UMapx.Decomposition
         /// <param name="a"></param>
         /// <param name="n"></param>
         /// <param name="full"></param>
-        private void lanczos(double[,] a, int n, bool full)
+        private void lanczos(float[,] a, int n, bool full)
         {
             // This function uses the Lanczos algorithm with full
             // re-orthogonalization to compute k x k symmetric tridiagonal
@@ -74,11 +74,11 @@ namespace UMapx.Decomposition
 
             // params
             int i, j, y, k = n - 1;
-            double[] v = Matrice.Rand(n), z;
-            double[] u = v.Div(Matrice.Norm(v));
+            float[] v = Matrice.Rand(n), z;
+            float[] u = v.Div(Matrice.Norm(v));
             this.q = Matrice.Eye(n, n).SetCol(u, 0);
-            this.t = new double[n, n];
-            double beta, alpha;
+            this.t = new float[n, n];
+            float beta, alpha;
 
             // do job
             for (i = 0; i < n; i++)

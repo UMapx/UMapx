@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class BetaPrime : IDistribution
     {
         #region Private data
-        private double alpha = 1; // shape (α)
-        private double beta = 1;  // shape (β)
+        private float alpha = 1; // shape (α)
+        private float beta = 1;  // shape (β)
         #endregion
 
         #region Beta-prime components
@@ -24,14 +24,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="alpha">Parameter α (0, +inf)</param>
         /// <param name="beta">Parameter β (0, +inf)</param>
-        public BetaPrime(double alpha, double beta)
+        public BetaPrime(float alpha, float beta)
         {
             Alpha = alpha; Beta = beta;
         }
         /// <summary>
         /// Gets or sets the value of the parameter α ∈ (0, +inf).
         /// </summary>
-        public double Alpha
+        public float Alpha
         {
             get
             {
@@ -48,7 +48,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter β ∈ (0, +inf).
         /// </summary>
-        public double Beta
+        public float Beta
         {
             get
             {
@@ -65,17 +65,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -84,20 +84,20 @@ namespace UMapx.Distribution
                     return alpha / (beta - 1);
                 }
 
-                return Double.PositiveInfinity;
+                return float.PositiveInfinity;
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -106,48 +106,48 @@ namespace UMapx.Distribution
                     return (alpha - 1) / (beta + 1);
                 }
 
-                return 0.0;
+                return 0.0f;
             }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
                 if (beta > 2.0)
                 {
-                    double num = alpha * (alpha + beta - 1);
-                    double den = (beta - 2) * Math.Pow(beta - 1, 2);
+                    float num = alpha * (alpha + beta - 1);
+                    float den = (beta - 2) * (float)Math.Pow(beta - 1, 2);
                     return num / den;
                 }
                 else if (beta > 1.0)
                 {
-                    return Double.PositiveInfinity;
+                    return float.PositiveInfinity;
                 }
 
-                return double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }
@@ -155,8 +155,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x <= 0)
             {
@@ -168,16 +168,16 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x <= 0)
             {
                 return 0;
             }
 
-            double num = Math.Pow(x, alpha - 1) * Math.Pow(1 + x, -alpha - beta);
-            double den = Special.Beta(alpha, beta);
+            float num = (float)Math.Pow(x, alpha - 1) * (float)Math.Pow(1 + x, -alpha - beta);
+            float den = Special.Beta(alpha, beta);
             return num / den;
         }
         #endregion

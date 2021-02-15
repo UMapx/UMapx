@@ -104,11 +104,11 @@ namespace UMapx.Imaging
         /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
         }
         #endregion
     }

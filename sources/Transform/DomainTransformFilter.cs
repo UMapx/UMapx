@@ -15,10 +15,10 @@ namespace UMapx.Transform
     public class DomainTransformFilter : IFilter
     {
         #region Private data
-        double sigma_s;
-        double sigma_r;
+        float sigma_s;
+        float sigma_r;
         int iterations;
-        double factor;
+        float factor;
         #endregion
 
         #region Filter components
@@ -29,7 +29,7 @@ namespace UMapx.Transform
         /// <param name="sigma_r">σr</param>
         /// <param name="iterations">Number of iterations</param>
         /// <param name="factor">Factor [-1, 1]</param>
-        public DomainTransformFilter(double sigma_s, double sigma_r, int iterations = 3, double factor = -1.0)
+        public DomainTransformFilter(float sigma_s, float sigma_r, int iterations = 3, float factor = -1.0f)
         {
             SigmaS = sigma_s;
             SigmaR = sigma_r;
@@ -39,7 +39,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Gets or sets the value of σs.
         /// </summary>
-        public double SigmaS
+        public float SigmaS
         {
             get
             {
@@ -53,7 +53,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Gets or sets the value of σr.
         /// </summary>
-        public double SigmaR
+        public float SigmaR
         {
             get
             {
@@ -81,7 +81,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Gets or sets the factor [-1, 1].
         /// </summary>
-        public double Factor
+        public float Factor
         {
             get
             {
@@ -99,7 +99,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(double[] data)
+        public void Apply(float[] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -109,12 +109,12 @@ namespace UMapx.Transform
                 int i;
 
                 // guided filter
-                double[] copy = (double[])data.Clone();
+                float[] copy = (float[])data.Clone();
                 DomainTransformFilter.domainfilter(copy, this.sigma_s, this.sigma_r, this.iterations);
 
                 // process
                 for (i = 0; i < l0; i++)
-                    data[i] = (1.0 + this.factor) * (data[i] - copy[i]) + copy[i];
+                    data[i] = (1.0f + this.factor) * (data[i] - copy[i]) + copy[i];
             }
 
             return;
@@ -123,7 +123,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(double[,] data)
+        public void Apply(float[,] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -134,13 +134,13 @@ namespace UMapx.Transform
                 int i, j;
 
                 // guided filter
-                double[,] copy = (double[,])data.Clone();
+                float[,] copy = (float[,])data.Clone();
                 DomainTransformFilter.domainfilter(copy, this.sigma_s, this.sigma_r, this.iterations);
 
                 // process
                 for (i = 0; i < l0; i++)
                     for (j = 0; j < l1; j++)
-                        data[i, j] = (1.0 + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
+                        data[i, j] = (1.0f + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
             }
 
             return;
@@ -218,21 +218,21 @@ namespace UMapx.Transform
         /// <param name="sigma_s">High sigma</param>
         /// <param name="sigma_r">Low sigma</param>
         /// <param name="iterations">Number of iterations</param>
-        internal static void domainfilter(double[,] I, double sigma_s, double sigma_r, int iterations = 3)
+        internal static void domainfilter(float[,] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
             int h = I.GetLength(0);
             int w = I.GetLength(1);
-            double sigma_H_i;
+            float sigma_H_i;
             int i, j;
 
             // get differences
-            double[,] dIcdx = Matrice.Diff(I, 1, Direction.Horizontal);
-            double[,] dIcdy = Matrice.Diff(I, 1, Direction.Vertical);
+            float[,] dIcdx = Matrice.Diff(I, 1, Direction.Horizontal);
+            float[,] dIcdy = Matrice.Diff(I, 1, Direction.Vertical);
 
             // shift patterns
-            double[,] dIdx = new double[h, w];
-            double[,] dIdy = new double[h, w];
+            float[,] dIdx = new float[h, w];
+            float[,] dIdy = new float[h, w];
 
             for (i = 0; i < h; i++)
                 for (j = 1; j < w; j++)
@@ -255,7 +255,7 @@ namespace UMapx.Transform
             // iterations
             for (i = 0; i < iterations; i++)
             {
-                sigma_H_i = sigma_s * Math.Sqrt(3) * Math.Pow(2, (iterations - (i + 1))) / Math.Sqrt(Math.Pow(4, iterations) - 1);
+                sigma_H_i = sigma_s * Maths.Sqrt(3) * Maths.Pow(2, (iterations - (i + 1))) / Maths.Sqrt(Maths.Pow(4, iterations) - 1);
 
                 // 2D filter
                 tdrf_h(I, dIdx, sigma_H_i);
@@ -271,12 +271,12 @@ namespace UMapx.Transform
         /// <param name="sigma_s">High sigma</param>
         /// <param name="sigma_r">Low sigma</param>
         /// <param name="iterations">Number of iterations</param>
-        internal static void domainfilter(Complex[,] I, double sigma_s, double sigma_r, int iterations = 3)
+        internal static void domainfilter(Complex[,] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
             int h = I.GetLength(0);
             int w = I.GetLength(1);
-            double sigma_H_i;
+            float sigma_H_i;
             int i, j;
 
             // get differences
@@ -308,7 +308,7 @@ namespace UMapx.Transform
             // iterations
             for (i = 0; i < iterations; i++)
             {
-                sigma_H_i = sigma_s * Math.Sqrt(3) * Math.Pow(2, (iterations - (i + 1))) / Math.Sqrt(Math.Pow(4, iterations) - 1);
+                sigma_H_i = sigma_s * Maths.Sqrt(3) * Maths.Pow(2, (iterations - (i + 1))) / Maths.Sqrt(Maths.Pow(4, iterations) - 1);
 
                 // 2D filter
                 tdrf_h(I, dIdx, sigma_H_i);
@@ -324,18 +324,18 @@ namespace UMapx.Transform
         /// <param name="sigma_s">High sigma</param>
         /// <param name="sigma_r">Low sigma</param>
         /// <param name="iterations">Number of iterations</param>
-        internal static void domainfilter(double[] I, double sigma_s, double sigma_r, int iterations = 3)
+        internal static void domainfilter(float[] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
             int h = I.GetLength(0);
-            double sigma_H_i;
+            float sigma_H_i;
             int i;
 
             // get differences
-            double[] dIcdy = Matrice.Diff(I, 1);
+            float[] dIcdy = Matrice.Diff(I, 1);
 
             // shift patterns
-            double[] dIdy = new double[h];
+            float[] dIdy = new float[h];
 
             for (i = 1; i < h; i++)
                 dIdy[i] = Math.Abs(dIcdy[i - 1]);
@@ -349,7 +349,7 @@ namespace UMapx.Transform
             // iterations
             for (i = 0; i < iterations; i++)
             {
-                sigma_H_i = sigma_s * Math.Sqrt(3) * Math.Pow(2, (iterations - (i + 1))) / Math.Sqrt(Math.Pow(4, iterations) - 1);
+                sigma_H_i = sigma_s * Maths.Sqrt(3) * Maths.Pow(2, (iterations - (i + 1))) / Maths.Sqrt(Maths.Pow(4, iterations) - 1);
 
                 // 1D filter
                 tdrf(I, dIdy, sigma_H_i);
@@ -364,11 +364,11 @@ namespace UMapx.Transform
         /// <param name="sigma_s">High sigma</param>
         /// <param name="sigma_r">Low sigma</param>
         /// <param name="iterations">Number of iterations</param>
-        internal static void domainfilter(Complex[] I, double sigma_s, double sigma_r, int iterations = 3)
+        internal static void domainfilter(Complex[] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
             int h = I.GetLength(0);
-            double sigma_H_i;
+            float sigma_H_i;
             int i;
 
             // get differences
@@ -389,7 +389,7 @@ namespace UMapx.Transform
             // iterations
             for (i = 0; i < iterations; i++)
             {
-                sigma_H_i = sigma_s * Math.Sqrt(3) * Math.Pow(2, (iterations - (i + 1))) / Math.Sqrt(Math.Pow(4, iterations) - 1);
+                sigma_H_i = sigma_s * Maths.Sqrt(3) * Maths.Pow(2, (iterations - (i + 1))) / Maths.Sqrt(Maths.Pow(4, iterations) - 1);
 
                 // 1D filter
                 tdrf(I, dIdy, sigma_H_i);
@@ -404,11 +404,11 @@ namespace UMapx.Transform
         /// <param name="F">Input signal</param>
         /// <param name="D">Difference</param>
         /// <param name="sigma">Sigma</param>
-        internal static void tdrf_h(double[,] F, double[,] D, double sigma)
+        internal static void tdrf_h(float[,] F, float[,] D, float sigma)
         {
             // params
-            double a = Math.Exp(-Math.Sqrt(2) / sigma);
-            double[,] V = Matrice.Pow(a, D);
+            float a = (float)Math.Exp(-Math.Sqrt(2) / sigma);
+            float[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -431,11 +431,11 @@ namespace UMapx.Transform
         /// <param name="F">Input signal</param>
         /// <param name="D">Difference</param>
         /// <param name="sigma">Sigma</param>
-        internal static void tdrf_v(double[,] F, double[,] D, double sigma)
+        internal static void tdrf_v(float[,] F, float[,] D, float sigma)
         {
             // params
-            double a = Math.Exp(-Math.Sqrt(2) / sigma);
-            double[,] V = Matrice.Pow(a, D);
+            float a = Maths.Exp(-Maths.Sqrt2 / sigma);
+            float[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -458,10 +458,10 @@ namespace UMapx.Transform
         /// <param name="F">Input signal</param>
         /// <param name="D">Difference</param>
         /// <param name="sigma">Sigma</param>
-        internal static void tdrf_h(Complex[,] F, Complex[,] D, double sigma)
+        internal static void tdrf_h(Complex[,] F, Complex[,] D, float sigma)
         {
             // params
-            double a = Math.Exp(-Math.Sqrt(2) / sigma);
+            float a = Maths.Exp(-Maths.Sqrt2 / sigma);
             Complex[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
@@ -485,10 +485,10 @@ namespace UMapx.Transform
         /// <param name="F">Input signal</param>
         /// <param name="D">Difference</param>
         /// <param name="sigma">Sigma</param>
-        internal static void tdrf_v(Complex[,] F, Complex[,] D, double sigma)
+        internal static void tdrf_v(Complex[,] F, Complex[,] D, float sigma)
         {
             // params
-            double a = Math.Exp(-Math.Sqrt(2) / sigma);
+            float a = Maths.Exp(-Maths.Sqrt2 / sigma);
             Complex[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
@@ -513,11 +513,11 @@ namespace UMapx.Transform
         /// <param name="F">Input signal</param>
         /// <param name="D">Difference</param>
         /// <param name="sigma">Sigma</param>
-        internal static void tdrf(double[] F, double[] D, double sigma)
+        internal static void tdrf(float[] F, float[] D, float sigma)
         {
             // params
-            double a = Math.Exp(-Math.Sqrt(2) / sigma);
-            double[] V = Matrice.Pow(a, D);
+            float a = Maths.Exp(-Maths.Sqrt2 / sigma);
+            float[] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int i;
 
@@ -537,10 +537,10 @@ namespace UMapx.Transform
         /// <param name="F">Input signal</param>
         /// <param name="D">Difference</param>
         /// <param name="sigma">Sigma</param>
-        internal static void tdrf(Complex[] F, Complex[] D, double sigma)
+        internal static void tdrf(Complex[] F, Complex[] D, float sigma)
         {
             // params
-            double a = Math.Exp(-Math.Sqrt(2) / sigma);
+            float a = Maths.Exp(-Maths.Sqrt2 / sigma);
             Complex[] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int i;

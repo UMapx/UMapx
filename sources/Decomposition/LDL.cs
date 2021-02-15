@@ -18,8 +18,8 @@ namespace UMapx.Decomposition
         #region Private data
         private Cholesky choldecomp;
         private Diagonal diagdecomp;
-        private double[,] lower;
-        private double[] diag;
+        private float[,] lower;
+        private float[] diag;
         #endregion
 
         #region Initialize
@@ -27,7 +27,7 @@ namespace UMapx.Decomposition
         /// Initializes LDL decomposition.
         /// </summary>
         /// <param name="A">Square symmetric positive definite matrix</param>
-        public LDL(double[,] A)
+        public LDL(float[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
@@ -51,21 +51,21 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the lower triangular matrix L.
         /// </summary>
-        public double[,] L
+        public float[,] L
         {
             get { return lower; }
         }
         /// <summary>
         /// Gets the upper triangular matrix U.
         /// </summary>
-        public double[,] U
+        public float[,] U
         {
             get { return Matrice.Transponate(lower); }
         }
         /// <summary>
         /// Gets the diagonal matrix.
         /// </summary>
-        public double[] D
+        public float[] D
         {
             get { return diag; }
         }

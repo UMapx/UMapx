@@ -14,7 +14,7 @@ namespace UMapx.Analysis
     {
         #region Private data
         private Nonlinear.Method method;
-        private double eps;
+        private float eps;
         #endregion
 
         #region Class components
@@ -23,7 +23,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="eps">Epsilon [0, 1]</param>
         /// <param name="method">Method for solving a nonlinear equation</param>
-        public Nonlinear(double eps = 1e-8, Nonlinear.Method method = Method.Secant)
+        public Nonlinear(float eps = 1e-8f, Nonlinear.Method method = Method.Secant)
         {
             this.method = method;
             this.Eps = eps;
@@ -45,7 +45,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Gets or sets the error value [0, 1].
         /// </summary>
-        public double Eps
+        public float Eps
         {
             get
             {
@@ -53,7 +53,7 @@ namespace UMapx.Analysis
             }
             set
             {
-                this.eps = Maths.Double(value);
+                this.eps = Maths.Float(value);
             }
         }
         /// <summary>
@@ -62,8 +62,8 @@ namespace UMapx.Analysis
         /// <param name="function">Continuous function delegate</param>
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Compute(IDouble function, double a, double b)
+        /// <returns>float precision floating point number</returns>
+        public float Compute(IFloat function, float a, float b)
         {
             // chose method of nonlinear
             switch (method)
@@ -85,7 +85,7 @@ namespace UMapx.Analysis
         /// <param name="function">Continuous function delegate</param>
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public Complex Compute(IComplex function, Complex a, Complex b)
         {
             // chose method of nonlinear
@@ -111,16 +111,16 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static double bisec(IDouble f, double a, double b, double eps = 1e-8)
+        private static float bisec(IFloat f, float a, float b, float eps = 1e-8f)
         {
-            double x1 = a; double x2 = b;
-            double fb = f(b);
-            double midpt;
+            float x1 = a; float x2 = b;
+            float fb = f(b);
+            float midpt;
             int n = 0;
 
             while (Math.Abs(x2 - x1) > eps && n < short.MaxValue)
             {
-                midpt = 0.5 * (x1 + x2);
+                midpt = 0.5f * (x1 + x2);
 
                 if (fb * f(midpt) > 0)
                     x2 = midpt;
@@ -138,12 +138,12 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static double secan(IDouble f, double a, double b, double eps = 1e-8)
+        private static float secan(IFloat f, float a, float b, float eps = 1e-8f)
         {
-            double x1 = a;
-            double x2 = b;
-            double fb = f(b);
-            double mpoint;
+            float x1 = a;
+            float x2 = b;
+            float fb = f(b);
+            float mpoint;
             int n = 0;
 
             while (Math.Abs(f(x2)) > eps && n < short.MaxValue)
@@ -164,16 +164,16 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static double falpo(IDouble f, double a, double b, double eps = 1e-8)
+        private static float falpo(IFloat f, float a, float b, float eps = 1e-8f)
         {
-            double x1 = a;
-            double x2 = b;
-            double fb = f(b);
+            float x1 = a;
+            float x2 = b;
+            float fb = f(b);
             int n = 0;
 
             while (Math.Abs(x2 - x1) > eps && n < short.MaxValue)
             {
-                double xpoint = x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
+                float xpoint = x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
                 if (fb * f(xpoint) > 0)
                     x2 = xpoint;
                 else
@@ -192,11 +192,11 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static double chord(IDouble f, double a, double b, double eps = 1e-8)
+        private static float chord(IFloat f, float a, float b, float eps = 1e-8f)
         {
             int n = 0;
-            double x0 = (b - a) / 2.0;
-            double x;
+            float x0 = (b - a) / 2.0f;
+            float x;
 
             while (Math.Abs(f(x0) / b) > eps && n < short.MaxValue)
             {
@@ -214,7 +214,7 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex chord(IComplex f, Complex a, Complex b, double eps = 1e-8)
+        private static Complex chord(IComplex f, Complex a, Complex b, float eps = 1e-8f)
         {
             int n = 0;
             Complex x0 = (b - a) / 2.0;
@@ -236,7 +236,7 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex secan(IComplex f, Complex a, Complex b, double eps = 1e-8)
+        private static Complex secan(IComplex f, Complex a, Complex b, float eps = 1e-8f)
         {
             Complex x1 = a;
             Complex x2 = b;
@@ -262,7 +262,7 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex falpo(IComplex f, Complex a, Complex b, double eps = 1e-8)
+        private static Complex falpo(IComplex f, Complex a, Complex b, float eps = 1e-8f)
         {
             Complex x1 = a;
             Complex x2 = b;
@@ -273,7 +273,7 @@ namespace UMapx.Analysis
             {
                 Complex xpoint = x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
                 Complex fxpoint = f(xpoint);
-                double s = fb.Real * fxpoint.Real;
+                float s = fb.Real * fxpoint.Real;
 
                 // sign
                 if (s > 0)

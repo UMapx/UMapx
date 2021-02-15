@@ -48,7 +48,7 @@ namespace UMapx.Visualization
         #region Private data
         private int figure_width, figure_height;
         private int canvas_width, canvas_height;
-        private double xmin = -5, xmax = 5, ymin = -5, ymax = 5;
+        private float xmin = -5, xmax = 5, ymin = -5, ymax = 5;
         private int xscale = 10, yscale = 10;
         #endregion
 
@@ -72,11 +72,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets X range [min, max].
         /// </summary>
-        public RangeDouble RangeX
+        public RangeFloat RangeX
         {
             get
             {
-                return new RangeDouble(xmin, xmax);
+                return new RangeFloat(xmin, xmax);
             }
             set
             {
@@ -89,11 +89,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets Y range [min, max].
         /// </summary>
-        public RangeDouble RangeY
+        public RangeFloat RangeY
         {
             get
             {
-                return new RangeDouble(ymin, ymax);
+                return new RangeFloat(ymin, ymax);
             }
             set
             {
@@ -123,7 +123,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets the scale factor for the canvas [0.5, 0.8]. 
         /// </summary>
-        public double Scaling { get; set; } = 0.7;
+        public float Scaling { get; set; } = 0.7f;
         /// <summary>
         /// Gets or sets shapes.
         /// </summary>
@@ -174,8 +174,8 @@ namespace UMapx.Visualization
             }
             else if (AutoRange)
             {
-                xmin = ymin = double.MaxValue;
-                xmax = ymax = double.MinValue;
+                xmin = ymin = float.MaxValue;
+                xmax = ymax = float.MinValue;
 
                 foreach (var pane in PlotPanes)
                 {
@@ -209,8 +209,8 @@ namespace UMapx.Visualization
 
             #region Numeric marks
             // points:
-            double[] X = Points.GetPoints(xmin, xmax, xscale);
-            double[] Y = Points.GetPoints(ymin, ymax, yscale);
+            float[] X = Points.GetPoints(xmin, xmax, xscale);
+            float[] Y = Points.GetPoints(ymin, ymax, yscale);
 
             using SolidBrush br = new SolidBrush(Style.ColorMarks);
             using Pen pen1 = new Pen(Style.ColorGrid, Style.DepthShapes);
@@ -222,7 +222,7 @@ namespace UMapx.Visualization
             SizeF numsize;
 
             xlength = X.Length;
-            double numX;
+            float numX;
 
             for (i = 0; i < xlength; i++)
             {
@@ -233,7 +233,7 @@ namespace UMapx.Visualization
             }
 
             ylength = Y.Length;
-            double numY;
+            float numY;
 
             for (i = 0; i < ylength; i++)
             {
@@ -422,7 +422,7 @@ namespace UMapx.Visualization
         /// <param name="depth">Depth</param>
         /// <param name="color">Color</param>
         /// <param name="type">Symbol type</param>
-        public void Plot(double[] x, double[] y, float depth, Color color, Symbol type)
+        public void Plot(float[] x, float[] y, float depth, Color color, Symbol type)
         {
             if (x.Length != y.Length)
                 throw new Exception("Vectors must be of the same length");
@@ -457,7 +457,7 @@ namespace UMapx.Visualization
         /// <param name="depth">Depth</param>
         /// <param name="color">Color</param>
         /// <param name="type">Symbol type</param>
-        public void Stem(double[] x, double[] y, float depth, Color color, Symbol type)
+        public void Stem(float[] x, float[] y, float depth, Color color, Symbol type)
         {
             if (x.Length != y.Length)
                 throw new Exception("Vectors must be of the same length");
@@ -492,7 +492,7 @@ namespace UMapx.Visualization
         /// <param name="depth">Depth</param>
         /// <param name="color">Color</param>
         /// <param name="type">Symbol type</param>
-        public void Scatter(double[] x, double[] y, float depth, Color color, Symbol type)
+        public void Scatter(float[] x, float[] y, float depth, Color color, Symbol type)
         {
             if (x.Length != y.Length)
                 throw new Exception("Vectors must be of the same length");
@@ -542,12 +542,12 @@ namespace UMapx.Visualization
         /// <param name="y"></param>
         /// <param name="depth"></param>
         /// <param name="color"></param>
-        private void PlotLine(Graphics graphics, double[] x, double[] y, float depth, Color color)
+        private void PlotLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
             int i, length = y.Length;
             Point[] points = new Point[x.Length];
             Pen pen = new Pen(color, depth);
-            double xi, yi;
+            float xi, yi;
 
             for (i = 0; i < length; i++)
             {
@@ -573,14 +573,14 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         /// <param name="radius"></param>
         /// <param name="fill"></param>
-        private void PlotCircle(Graphics graphics, double[] x, double[] y, float depth, Color color, float radius, bool fill)
+        private void PlotCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             int i, length = y.Length;
             Point[] points = new Point[x.Length];
             Point point = new Point();
             SolidBrush br = new SolidBrush(color);
             Pen pen = new Pen(color, depth);
-            double xi, yi;
+            float xi, yi;
 
             if (fill == true)
             {
@@ -629,14 +629,14 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         /// <param name="radius"></param>
         /// <param name="fill"></param>
-        private void PlotRectangle(Graphics graphics, double[] x, double[] y, float depth, Color color, float radius, bool fill)
+        private void PlotRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             int i, length = y.Length;
             Point[] points = new Point[x.Length];
             Point point = new Point();
             SolidBrush br = new SolidBrush(color);
             Pen pen = new Pen(color, depth);
-            double xi, yi;
+            float xi, yi;
 
             if (fill == true)
             {
@@ -686,14 +686,14 @@ namespace UMapx.Visualization
         /// <param name="y"></param>
         /// <param name="depth"></param>
         /// <param name="color"></param>
-        private void StemLine(Graphics graphics, double[] x, double[] y, float depth, Color color)
+        private void StemLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
             Point point = new Point();
             Pen pen = new Pen(color, depth);
             int i, length = y.Length;
-            double dy = (ymax - ymin) / canvas_height;
+            float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
-            double xi, yi;
+            float xi, yi;
 
             for (i = 0; i < length; i++)
             {
@@ -721,15 +721,15 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         /// <param name="radius"></param>
         /// <param name="fill"></param>
-        private void StemCircle(Graphics graphics, double[] x, double[] y, float depth, Color color, float radius, bool fill)
+        private void StemCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             Point point = new Point();
             SolidBrush br = new SolidBrush(color);
             Pen pen = new Pen(color, depth);
             int i, length = y.Length;
-            double dy = (ymax - ymin) / canvas_height;
+            float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
-            double xi, yi;
+            float xi, yi;
 
             if (fill == true)
             {
@@ -778,15 +778,15 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         /// <param name="radius"></param>
         /// <param name="fill"></param>
-        private void StemRectangle(Graphics graphics, double[] x, double[] y, float depth, Color color, float radius, bool fill = false)
+        private void StemRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill = false)
         {
             Point point = new Point();
             SolidBrush br = new SolidBrush(color);
             Pen pen = new Pen(color, depth);
             int i, length = y.Length;
-            double dy = (ymax - ymin) / canvas_height;
+            float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
-            double xi, yi;
+            float xi, yi;
 
             if (fill == true)
             {
@@ -836,7 +836,7 @@ namespace UMapx.Visualization
         /// <param name="y"></param>
         /// <param name="depth"></param>
         /// <param name="color"></param>
-        private void ScatterLine(Graphics graphics, double[] x, double[] y, float depth, Color color)
+        private void ScatterLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
             throw new NotSupportedException();
         }
@@ -850,15 +850,15 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         /// <param name="radius"></param>
         /// <param name="fill"></param>
-        private void ScatterCircle(Graphics graphics, double[] x, double[] y, float depth, Color color, float radius, bool fill)
+        private void ScatterCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             Point point = new Point();
             SolidBrush br = new SolidBrush(color);
             Pen pen = new Pen(color, depth);
             int i, length = y.Length;
-            double dy = (ymax - ymin) / canvas_height;
+            float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
-            double xi, yi;
+            float xi, yi;
 
             if (fill == true)
             {
@@ -905,15 +905,15 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         /// <param name="radius"></param>
         /// <param name="fill"></param>
-        private void ScatterRectangle(Graphics graphics, double[] x, double[] y, float depth, Color color, float radius, bool fill = false)
+        private void ScatterRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill = false)
         {
             Point point = new Point();
             SolidBrush br = new SolidBrush(color);
             Pen pen = new Pen(color, depth);
             int i, length = y.Length;
-            double dy = (ymax - ymin) / canvas_height;
+            float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
-            double xi, yi;
+            float xi, yi;
 
             if (fill == true)
             {
@@ -1013,7 +1013,7 @@ namespace UMapx.Visualization
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        private string GetNumString(double num)
+        private string GetNumString(float num)
         {
             string numerics = num.ToString("0.00");
             int l1 = numerics.Length - 1;

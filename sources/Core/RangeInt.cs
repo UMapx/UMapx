@@ -97,7 +97,7 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Checks if two RangeDouble objects are equal.
+        /// Checks if two RangeFloat objects are equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>
@@ -107,7 +107,7 @@ namespace UMapx.Core
             return (a.Max == b.Max && a.Min == b.Min);
         }
         /// <summary>
-        /// Checks if two RangeDouble objects are not equal.
+        /// Checks if two RangeFloat objects are not equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>

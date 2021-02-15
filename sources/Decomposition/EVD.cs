@@ -19,11 +19,11 @@ namespace UMapx.Decomposition
     {
         #region Private data
         private int n;
-        private double[] Re, Im;
-        private double[][] matrices;
-        private double[][] hessenberg;
-        private double[] orthogonal;
-        private double eps;
+        private float[] Re, Im;
+        private float[][] matrices;
+        private float[][] hessenberg;
+        private float[] orthogonal;
+        private float eps;
         #endregion
 
         #region Initialize
@@ -32,15 +32,15 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A">Square matrix</param>
         /// <param name="eps">Epsilon [0, 1]</param>
-        public EVD(double[,] A, double eps = 1e-16)
+        public EVD(float[,] A, float eps = 1e-16f)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
 
             this.n = A.GetLength(0);
-            this.Re = new double[n];
-            this.Im = new double[n];
-            this.eps = Maths.Double(eps);
+            this.Re = new float[n];
+            this.Im = new float[n];
+            this.eps = Maths.Float(eps);
 
             // for symmetric matrices eigen-value decomposition
             // without Hessenberg form.
@@ -57,7 +57,7 @@ namespace UMapx.Decomposition
             {
                 matrices = Jagged.Zero(n, n);
                 hessenberg = Jagged.ToJagged(A);
-                orthogonal = new double[n];
+                orthogonal = new float[n];
 
                 orthes(); // Reduce to Hessenberg form.
                 hqr2();   // Reduce Hessenberg to real Schur form.
@@ -69,7 +69,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets eigenvectors.
         /// </summary>
-        public double[,] V
+        public float[,] V
         {
             get { return Jagged.FromJagged(matrices); }
         }
@@ -93,11 +93,11 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the real diagonal eigenvalue matrix.
         /// </summary>
-        public double[,] R
+        public float[,] R
         {
             get
             {
-                double[,] D = new double[n, n];
+                float[,] D = new float[n, n];
                 int i, j;
 
                 for (i = 0; i < n; i++)
@@ -125,7 +125,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the Hessenberg form.
         /// </summary>
-        public double[,] H
+        public float[,] H
         {
             get { return Jagged.FromJagged(hessenberg); }
         }
@@ -146,7 +146,7 @@ namespace UMapx.Decomposition
                 Re[j] = matrices[n - 1][j];
             }
 
-            double scale, h, f, g, hh;
+            float scale, h, f, g, hh;
 
             // Householder reduction to tridiagonal form.
             for (i = n - 1; i > 0; i--)
@@ -177,7 +177,7 @@ namespace UMapx.Decomposition
                     }
 
                     f = Re[i - 1];
-                    g = (Double)System.Math.Sqrt(h);
+                    g = (float)System.Math.Sqrt(h);
                     if (f > 0) g = -g;
 
                     Im[i] = scale * g;
@@ -264,11 +264,11 @@ namespace UMapx.Decomposition
         /// </summary>
         private void tql2()
         {
-            double f = 0;
-            double tst1 = 0;
+            float f = 0;
+            float tst1 = 0;
             int i, l, j, k, iter, m;
-            double g, p, r, dl1, h;
-            double c, c2, c3, el1, s, s2;
+            float g, p, r, dl1, h;
+            float c, c2, c3, el1, s, s2;
 
             // Symmetric tridiagonal QL algorithm.
             // This is derived from the Algol procedures tql2, by Bowdler, Martin, Reinsch, and Wilkinson, 
@@ -400,7 +400,7 @@ namespace UMapx.Decomposition
             int low = 0;
             int high = n - 1;
             int m, i, j;
-            double scale, h, g, f;
+            float scale, h, g, f;
 
             for (m = low + 1; m <= high - 1; m++)
             {
@@ -420,7 +420,7 @@ namespace UMapx.Decomposition
                         h += orthogonal[i] * orthogonal[i];
                     }
 
-                    g = (Double)System.Math.Sqrt(h);
+                    g = (float)System.Math.Sqrt(h);
                     if (orthogonal[m] > 0) g = -g;
 
                     h = h - orthogonal[m] * g;
@@ -473,7 +473,7 @@ namespace UMapx.Decomposition
                         for (i = m; i <= high; i++)
                             g += orthogonal[i] * matrices[i][j];
 
-                        // Double division avoids possible underflow.
+                        // float division avoids possible underflow.
                         g = (g / orthogonal[m]) / hessenberg[m][m - 1];
                         for (i = m; i <= high; i++)
                             matrices[i][j] += g * orthogonal[i];
@@ -493,22 +493,22 @@ namespace UMapx.Decomposition
             int n = nn - 1;
             int low = 0;
             int high = nn - 1;
-            //double eps = 2 * double.Epsilon;
-            double exshift = 0;
-            double p = 0;
-            double q = 0;
-            double r = 0;
-            double s = 0;
-            double z = 0;
-            double t;
-            double w;
-            double x;
-            double y;
+            //float eps = 2 * float.Epsilon;
+            float exshift = 0;
+            float p = 0;
+            float q = 0;
+            float r = 0;
+            float s = 0;
+            float z = 0;
+            float t;
+            float w;
+            float x;
+            float y;
             int i, j, k, m;
             bool notlast;
 
             // Store roots isolated by balanc and compute matrix norm
-            double norm = 0;
+            float norm = 0;
             for (i = 0; i < nn; i++)
             {
                 if (i < low | i > high)
@@ -534,7 +534,7 @@ namespace UMapx.Decomposition
                     if (s == 0)
                         s = norm;
 
-                    if (double.IsNaN(s))
+                    if (float.IsNaN(s))
                         break;
 
                     if (System.Math.Abs(hessenberg[l][l - 1]) < eps * s)
@@ -559,7 +559,7 @@ namespace UMapx.Decomposition
                     w = hessenberg[n][n - 1] * hessenberg[n - 1][n];
                     p = (hessenberg[n - 1][n - 1] - hessenberg[n][n]) / 2;
                     q = p * p + w;
-                    z = (double)System.Math.Sqrt(System.Math.Abs(q));
+                    z = (float)System.Math.Sqrt(System.Math.Abs(q));
                     hessenberg[n][n] = hessenberg[n][n] + exshift;
                     hessenberg[n - 1][n - 1] = hessenberg[n - 1][n - 1] + exshift;
                     x = hessenberg[n][n];
@@ -578,7 +578,7 @@ namespace UMapx.Decomposition
                         s = System.Math.Abs(x) + System.Math.Abs(z);
                         p = x / s;
                         q = z / s;
-                        r = (Double)System.Math.Sqrt(p * p + q * q);
+                        r = (float)System.Math.Sqrt(p * p + q * q);
                         p = p / r;
                         q = q / r;
 
@@ -640,8 +640,8 @@ namespace UMapx.Decomposition
                             hessenberg[i][i] -= x;
 
                         s = System.Math.Abs(hessenberg[n][n - 1]) + System.Math.Abs(hessenberg[n - 1][n - 2]);
-                        x = y = (double)0.75 * s;
-                        w = (double)(-0.4375) * s * s;
+                        x = y = (float)0.75 * s;
+                        w = (float)(-0.4375) * s * s;
                     }
 
                     // MATLAB's new ad hoc shift
@@ -651,13 +651,13 @@ namespace UMapx.Decomposition
                         s = s * s + w;
                         if (s > 0)
                         {
-                            s = (double)System.Math.Sqrt(s);
+                            s = (float)System.Math.Sqrt(s);
                             if (y < x) s = -s;
                             s = x - w / ((y - x) / 2 + s);
                             for (i = low; i <= n; i++)
                                 hessenberg[i][i] -= s;
                             exshift += s;
-                            x = y = w = (Double)0.964;
+                            x = y = w = (float)0.964;
                         }
                     }
 
@@ -691,7 +691,7 @@ namespace UMapx.Decomposition
                             hessenberg[i][i - 3] = 0;
                     }
 
-                    // Double QR step involving rows l:n and columns m:n
+                    // float QR step involving rows l:n and columns m:n
                     for (k = m; k <= n - 1; k++)
                     {
                         notlast = (k != n - 1);
@@ -711,7 +711,7 @@ namespace UMapx.Decomposition
 
                         if (x == 0) break;
 
-                        s = (Double)System.Math.Sqrt(p * p + q * q + r * r);
+                        s = (float)System.Math.Sqrt(p * p + q * q + r * r);
                         if (p < 0) s = -s;
 
                         if (s != 0)
@@ -849,7 +849,7 @@ namespace UMapx.Decomposition
                     hessenberg[n][n] = 1;
                     for (i = n - 2; i >= 0; i--)
                     {
-                        double ra, sa, vr, vi;
+                        float ra, sa, vr, vi;
                         ra = 0;
                         sa = 0;
                         for (j = l; j <= n; j++)
@@ -936,11 +936,11 @@ namespace UMapx.Decomposition
         /// <param name="yi"></param>
         /// <param name="cdivr"></param>
         /// <param name="cdivi"></param>
-        private static void cdiv(double xr, double xi, double yr, double yi, ref double cdivr, ref double cdivi)
+        private static void cdiv(float xr, float xi, float yr, float yi, ref float cdivr, ref float cdivi)
         {
             // Complex scalar division.
-            double r;
-            double d;
+            float r;
+            float d;
 
             if (System.Math.Abs(yr) > System.Math.Abs(yi))
             {

@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Bernoulli : IDistribution
     {
         #region Private data
-        private double p = 0.2;
-        private double q = 0.8;
+        private float p = 0.2f;
+        private float q = 0.8f;
         #endregion
 
         #region Bernoully components
@@ -27,14 +27,14 @@ namespace UMapx.Distribution
         /// Initializes a Bernoulli distribution.
         /// </summary>
         /// <param name="p">Probability of success [0, 1]</param>
-        public Bernoulli(double p)
+        public Bernoulli(float p)
         {
             P = p;
         }
         /// <summary>
         /// Gets or sets the probability of success [0, 1].
         /// </summary>
-        public double P
+        public float P
         {
             get
             {
@@ -52,17 +52,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, 1);
+                return new RangeFloat(0, 1);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -72,7 +72,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
@@ -82,7 +82,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -94,13 +94,13 @@ namespace UMapx.Distribution
                 {
                     return 1;
                 }
-                return 0.5;
+                return 0.5f;
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
@@ -112,13 +112,13 @@ namespace UMapx.Distribution
                 {
                     return 1;
                 }
-                return 0.5;
+                return 0.5f;
             }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
@@ -128,7 +128,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
@@ -139,8 +139,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x == 0)
             {
@@ -152,8 +152,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < 0)
             {
@@ -168,8 +168,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get
             {

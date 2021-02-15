@@ -13,7 +13,7 @@ namespace UMapx.Imaging
     public class TemperatureCorrection : PhotoFilter, IBitmapFilter
     {
         #region Private data
-        private double temperature;
+        private float temperature;
         #endregion
 
         #region Filter components
@@ -22,7 +22,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="temperature">Temperature [1E3K, 1E4K]</param>
         /// <param name="strength">Strenght [0, 1]</param>
-        public TemperatureCorrection(double temperature, double strength = 0.5)
+        public TemperatureCorrection(float temperature, float strength = 0.5f)
         {
             Temperature = temperature; Strength = strength;
         }
@@ -31,12 +31,12 @@ namespace UMapx.Imaging
         /// </summary>
         public TemperatureCorrection()
         {
-            Temperature = 1000; Strength = 0.5;
+            Temperature = 1000; Strength = 0.5f;
         }
         /// <summary>
         /// Gets or sets the temperature [1E3K, 1E4K].
         /// </summary>
-        public double Temperature
+        public float Temperature
         {
             get
             {

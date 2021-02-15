@@ -15,15 +15,15 @@ namespace UMapx.Core
         /// <summary>
         /// 
         /// </summary>
-        private const double LogMax = 7.09782712893383996732E2;
+        private const float LogMax = 7.09782712893383996732E2f;
         /// <summary>
         /// 
         /// </summary>
-        private const double LogMin = -7.451332191019412076235E2;
+        private const float LogMin = -7.451332191019412076235E2f;
         /// <summary>
         /// 
         /// </summary>
-        private const double sqrtPI = 1.7724538509055160272981674833411;
+        private const float sqrtPI = 1.7724538509055160272981674833411f;
         #endregion
 
         #region Integral functions
@@ -31,22 +31,22 @@ namespace UMapx.Core
         /// Returns the value of the integral cosine.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Ci(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Ci(float x)
         {
             // special cases:
             if (x == 0)
-                return double.NegativeInfinity;
+                return float.NegativeInfinity;
             if (x < 0)
-                return double.NaN;
+                return float.NaN;
             if (x > 35)
-                return 0.0;
+                return 0.0f;
 
             // properties:
-            double s = 0;
-            double f = 1.0;
-            double z = x * x;
-            double t, m = 1, eps = 1e-16;
+            float s = 0;
+            float f = 1.0f;
+            float z = x * x;
+            float t, m = 1, eps = 1e-16f;
             int k, i, iterations = 120;
             int p = 1;
 
@@ -69,26 +69,26 @@ namespace UMapx.Core
             }
 
             // construction:
-            return Maths.Gamma + Math.Log(x) + s;
+            return Maths.Gamma + (float)Math.Log(x) + s;
         }
         /// <summary>
         /// Returns the value of the integral sine.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Si(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Si(float x)
         {
             // special cases:
             if (x > 35)
-                return 1.6;
+                return 1.6f;
             if (x < -35)
-                return -1.6;
+                return -1.6f;
 
             // properties:
-            double s = x;
-            double f = 1.0;
-            double z = x * x;
-            double t, m = x, eps = 1e-16;
+            float s = x;
+            float f = 1.0f;
+            float z = x * x;
+            float t, m = x, eps = 1e-16f;
             int k, i, j = 1, iterations = 120;
             int p = 1;
 
@@ -117,14 +117,14 @@ namespace UMapx.Core
         /// Returns the value of an integral exponential function.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Ei(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Ei(float x)
         {
             // Properties:
-            double s = 0.0;
-            double f = 1.0;
-            double m = 1.0;
-            double t, eps = 1e-8;
+            float s = 0.0f;
+            float f = 1.0f;
+            float m = 1.0f;
+            float t, eps = 1e-8f;
             int i, iterations = 120;
 
             // Taylor series:
@@ -142,28 +142,28 @@ namespace UMapx.Core
             }
 
             // construction:
-            double r = Maths.Gamma + s;
+            float r = Maths.Gamma + s;
 
             // ranges:
             if (x < 0)
             {
-                return r + Math.Log(-x);
+                return r + (float)Math.Log(-x);
             }
-            return r + Math.Log(x);
+            return r + (float)Math.Log(x);
         }
         /// <summary>
         /// Returns the value of the integral logarithm.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Li(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Li(float x)
         {
             // calculating Li(x) from Ei(x) 
             // integral function.
 
             if (x < 0)
             {
-                return double.NaN;
+                return float.NaN;
             }
             return Ei(Maths.Log(x));
         }
@@ -174,18 +174,18 @@ namespace UMapx.Core
         /// Returns the value of the Fresnel integral C (x).
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Fresnelc(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Fresnelc(float x)
         {
             // special case:
             if (Math.Abs(x) > 6)
-                return double.NaN;
+                return float.NaN;
 
             // properties:
-            double s = x;
-            double f = 1.0;
-            double t, m = x, eps = 1e-16;
-            double z = x * x * x * x;
+            float s = x;
+            float f = 1.0f;
+            float t, m = x, eps = 1e-16f;
+            float z = x * x * x * x;
             int k, i, j, iterations = 120;
             int p = 1;
 
@@ -215,18 +215,18 @@ namespace UMapx.Core
         /// Returns the value of the Fresnel integral S(x).
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Fresnels(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Fresnels(float x)
         {
             // special case:
             if (Math.Abs(x) > 6)
-                return double.NaN;
+                return float.NaN;
 
             // properties:
-            double s = x * x * x / 3;
-            double f = 1.0;
-            double t, m = 3.0 * s, eps = 1e-16;
-            double z = x * x * x * x;
+            float s = x * x * x / 3;
+            float f = 1.0f;
+            float t, m = 3.0f * s, eps = 1e-16f;
+            float z = x * x * x * x;
             int k, i, j = 1, iterations = 120;
             int p = 1;
 
@@ -260,24 +260,24 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Number</param>
         /// <param name="a">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double H(double x, int a)
+        /// <returns>float precision floating point number</returns>
+        public static float H(float x, int a)
         {
             // Struve function calculation method.
             // special cases:
             if (a < 0)
-                return 0.0;
+                return 0.0f;
 
             // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
-            double x0 = 3.0 / 2.0, x1 = x0 + a;
-            double g0 = 1.0 / Special.Gamma(x0);
-            double g1 = 1.0 / Special.Gamma(x1);
+            float x0 = 3.0f / 2.0f, x1 = x0 + a;
+            float g0 = 1.0f / Special.Gamma(x0);
+            float g1 = 1.0f / Special.Gamma(x1);
 
             // construction:
-            double b = x / 2.0;
-            double s = 0, p = 1;
-            double u = Math.Pow(b, a + 1);
-            double t, eps = 1e-16;
+            float b = x / 2.0f;
+            float s = 0, p = 1;
+            float u = (float)Math.Pow(b, a + 1);
+            float t, eps = 1e-16f;
             int i, iterations = 120;
 
             // Taylor series:
@@ -311,24 +311,24 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Number</param>
         /// <param name="v">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double L(double x, int v)
+        /// <returns>float precision floating point number</returns>
+        public static float L(float x, int v)
         {
             // Modified Struve function calculation method.
             // special cases:
             if (v < 0)
-                return 0.0;
+                return 0.0f;
 
             // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
-            double x0 = 3.0 / 2.0, x1 = x0 + v;
-            double g0 = 1.0 / Special.Gamma(x0);
-            double g1 = 1.0 / Special.Gamma(x1);
+            float x0 = 3.0f / 2.0f, x1 = x0 + v;
+            float g0 = 1.0f / Special.Gamma(x0);
+            float g1 = 1.0f / Special.Gamma(x1);
 
             // construction:
-            double b = x / 2.0;
-            double s = 0;
-            double u = Math.Pow(b, v);
-            double t, eps = 1e-16;
+            float b = x / 2.0f;
+            float s = 0;
+            float u = (float)Math.Pow(b, v);
+            float t, eps = 1e-16f;
             int i, iterations = 120;
 
             // Taylor series:
@@ -364,8 +364,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <param name="b">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Beta(double a, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float Beta(float a, float b)
         {
             return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
         }
@@ -374,8 +374,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Integer number</param>
         /// <param name="n">Integer number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Beta(int m, int n)
+        /// <returns>float precision floating point number</returns>
+        public static float Beta(int m, int n)
         {
             return Special.Factorial(m - 1) * Special.Factorial(n - 1) / Special.Factorial(m + n - 1);
         }
@@ -385,10 +385,10 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="b">Number</param>
         /// <param name="x">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Beta(double a, double b, double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Beta(float a, float b, float x)
         {
-            double aa, bb, t, xx, xc, w, y;
+            float aa, bb, t, xx, xc, w, y;
             bool flag;
 
             if (a <= 0.0)
@@ -400,11 +400,11 @@ namespace UMapx.Core
             {
                 if (x == 0.0)
                 {
-                    return 0.0;
+                    return 0.0f;
                 }
                 if (x == 1.0)
                 {
-                    return 1.0;
+                    return 1.0f;
                 }
                 throw new ArgumentOutOfRangeException("Invalid argument value, beacause the value must belong to the interval [0, 1]");
             }
@@ -416,7 +416,7 @@ namespace UMapx.Core
                 return t;
             }
 
-            w = 1.0 - x;
+            w = 1.0f - x;
 
             if (x > (a / (a + b)))
             {
@@ -437,45 +437,45 @@ namespace UMapx.Core
             if (flag && (bb * xx) <= 1.0 && xx <= 0.95)
             {
                 t = Special.Series(aa, bb, xx);
-                if (t <= double.Epsilon) t = 1.0 - double.Epsilon;
-                else t = 1.0 - t;
+                if (t <= float.Epsilon) t = 1.0f - float.Epsilon;
+                else t = 1.0f - t;
                 return t;
             }
 
-            y = xx * (aa + bb - 2.0) - (aa - 1.0);
+            y = xx * (aa + bb - 2.0f) - (aa - 1.0f);
             if (y < 0.0)
                 w = Special.Incbcf(aa, bb, xx);
             else
                 w = Special.Incbd(aa, bb, xx) / xc;
 
-            y = aa * System.Math.Log(xx);
-            t = bb * System.Math.Log(xc);
-            if ((aa + bb) < GammaMax && System.Math.Abs(y) < LogMax && System.Math.Abs(t) < LogMax)
+            y = aa * (float)Math.Log(xx);
+            t = bb * (float)Math.Log(xc);
+            if ((aa + bb) < GammaMax && Math.Abs(y) < LogMax && Math.Abs(t) < LogMax)
             {
-                t = System.Math.Pow(xc, bb);
-                t *= System.Math.Pow(xx, aa);
+                t = (float)Math.Pow(xc, bb);
+                t *= (float)Math.Pow(xx, aa);
                 t /= aa;
                 t *= w;
                 t *= Special.Gamma(aa + bb) / (Special.Gamma(aa) * Special.Gamma(bb));
                 if (flag)
                 {
-                    if (t <= double.Epsilon) t = 1.0 - double.Epsilon;
-                    else t = 1.0 - t;
+                    if (t <= float.Epsilon) t = 1.0f - float.Epsilon;
+                    else t = 1.0f - t;
                 }
                 return t;
             }
 
             y += t + Special.GammaLog(aa + bb) - Special.GammaLog(aa) - Special.GammaLog(bb);
-            y += System.Math.Log(w / aa);
+            y += (float)Math.Log(w / aa);
             if (y < LogMin)
-                t = 0.0;
+                t = 0.0f;
             else
-                t = System.Math.Exp(y);
+                t = (float)Math.Exp(y);
 
             if (flag)
             {
-                if (t <= double.Epsilon) t = 1.0 - double.Epsilon;
-                else t = 1.0 - t;
+                if (t <= float.Epsilon) t = 1.0f - float.Epsilon;
+                else t = 1.0f - t;
             }
             return t;
         }
@@ -484,8 +484,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <param name="b">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double BetaDerivative(double a, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float BetaDerivative(float a, float b)
         {
             return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
         }
@@ -495,8 +495,8 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="b">Number</param>
         /// <param name="x">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double BetaIncomplete(double a, double b, double x)
+        /// <returns>float precision floating point number</returns>
+        public static float BetaIncomplete(float a, float b, float x)
         {
             return Special.Beta(a, b, x) / Special.Beta(a, b);
         }
@@ -508,32 +508,32 @@ namespace UMapx.Core
         /// <param name="b"></param>
         /// <param name="x"></param>
         /// <returns></returns>
-        private static double Incbcf(double a, double b, double x)
+        private static float Incbcf(float a, float b, float x)
         {
-            double xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
-            double k1, k2, k3, k4, k5, k6, k7, k8;
-            double r, t, ans, thresh;
+            float xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
+            float k1, k2, k3, k4, k5, k6, k7, k8;
+            float r, t, ans, thresh;
             int n;
-            double big = 4.503599627370496e15;
-            double biginv = 2.22044604925031308085e-16;
+            float big = 4.503599627370496e15f;
+            float biginv = 2.22044604925031308085e-16f;
 
             k1 = a;
             k2 = a + b;
             k3 = a;
-            k4 = a + 1.0;
-            k5 = 1.0;
-            k6 = b - 1.0;
+            k4 = a + 1.0f;
+            k5 = 1.0f;
+            k6 = b - 1.0f;
             k7 = k4;
-            k8 = a + 2.0;
+            k8 = a + 2.0f;
 
-            pkm2 = 0.0;
-            qkm2 = 1.0;
-            pkm1 = 1.0;
-            qkm1 = 1.0;
-            ans = 1.0;
-            r = 1.0;
+            pkm2 = 0.0f;
+            qkm2 = 1.0f;
+            pkm1 = 1.0f;
+            qkm1 = 1.0f;
+            ans = 1.0f;
+            r = 1.0f;
             n = 0;
-            thresh = 3.0 * double.Epsilon;
+            thresh = 3.0f * float.Epsilon;
 
             do
             {
@@ -560,27 +560,27 @@ namespace UMapx.Core
                     ans = r;
                 }
                 else
-                    t = 1.0;
+                    t = 1.0f;
 
                 if (t < thresh) return ans;
 
-                k1 += 1.0;
-                k2 += 1.0;
-                k3 += 2.0;
-                k4 += 2.0;
-                k5 += 1.0;
-                k6 -= 1.0;
-                k7 += 2.0;
-                k8 += 2.0;
+                k1 += 1.0f;
+                k2 += 1.0f;
+                k3 += 2.0f;
+                k4 += 2.0f;
+                k5 += 1.0f;
+                k6 -= 1.0f;
+                k7 += 2.0f;
+                k8 += 2.0f;
 
-                if ((System.Math.Abs(qk) + System.Math.Abs(pk)) > big)
+                if ((Math.Abs(qk) + Math.Abs(pk)) > big)
                 {
                     pkm2 *= biginv;
                     pkm1 *= biginv;
                     qkm2 *= biginv;
                     qkm1 *= biginv;
                 }
-                if ((System.Math.Abs(qk) < biginv) || (System.Math.Abs(pk) < biginv))
+                if ((Math.Abs(qk) < biginv) || (Math.Abs(pk) < biginv))
                 {
                     pkm2 *= big;
                     pkm1 *= big;
@@ -598,34 +598,34 @@ namespace UMapx.Core
         /// <param name="b"></param>
         /// <param name="x"></param>
         /// <returns></returns>
-        private static double Incbd(double a, double b, double x)
+        private static float Incbd(float a, float b, float x)
         {
-            double xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
-            double k1, k2, k3, k4, k5, k6, k7, k8;
-            double r, t, ans, z, thresh;
+            float xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
+            float k1, k2, k3, k4, k5, k6, k7, k8;
+            float r, t, ans, z, thresh;
             int n;
-            double big = 4.503599627370496e15;
-            double biginv = 2.22044604925031308085e-16;
+            float big = 4.503599627370496e15f;
+            float biginv = 2.22044604925031308085e-16f;
 
             k1 = a;
-            k2 = b - 1.0;
+            k2 = b - 1.0f;
             k3 = a;
-            k4 = a + 1.0;
-            k5 = 1.0;
+            k4 = a + 1.0f;
+            k5 = 1.0f;
             k6 = a + b;
-            k7 = a + 1.0;
+            k7 = a + 1.0f;
             ;
-            k8 = a + 2.0;
+            k8 = a + 2.0f;
 
-            pkm2 = 0.0;
-            qkm2 = 1.0;
-            pkm1 = 1.0;
-            qkm1 = 1.0;
-            z = x / (1.0 - x);
-            ans = 1.0;
-            r = 1.0;
+            pkm2 = 0.0f;
+            qkm2 = 1.0f;
+            pkm1 = 1.0f;
+            qkm1 = 1.0f;
+            z = x / (1.0f - x);
+            ans = 1.0f;
+            r = 1.0f;
             n = 0;
-            thresh = 3.0 * double.Epsilon;
+            thresh = 3.0f * float.Epsilon;
             do
             {
                 xk = -(z * k1 * k2) / (k3 * k4);
@@ -651,18 +651,18 @@ namespace UMapx.Core
                     ans = r;
                 }
                 else
-                    t = 1.0;
+                    t = 1.0f;
 
                 if (t < thresh) return ans;
 
-                k1 += 1.0;
-                k2 -= 1.0;
-                k3 += 2.0;
-                k4 += 2.0;
-                k5 += 1.0;
-                k6 += 1.0;
-                k7 += 2.0;
-                k8 += 2.0;
+                k1 += 1.0f;
+                k2 -= 1.0f;
+                k3 += 2.0f;
+                k4 += 2.0f;
+                k5 += 1.0f;
+                k6 += 1.0f;
+                k7 += 2.0f;
+                k8 += 2.0f;
 
                 if ((System.Math.Abs(qk) + System.Math.Abs(pk)) > big)
                 {
@@ -689,40 +689,40 @@ namespace UMapx.Core
         /// <param name="b"></param>
         /// <param name="x"></param>
         /// <returns></returns>
-        private static double Series(double a, double b, double x)
+        private static float Series(float a, float b, float x)
         {
-            double s, t, u, v, n, t1, z, ai;
+            float s, t, u, v, n, t1, z, ai;
 
-            ai = 1.0 / a;
-            u = (1.0 - b) * x;
-            v = u / (a + 1.0);
+            ai = 1.0f / a;
+            u = (1.0f - b) * x;
+            v = u / (a + 1.0f);
             t1 = v;
             t = u;
-            n = 2.0;
-            s = 0.0;
-            z = double.Epsilon * ai;
+            n = 2.0f;
+            s = 0.0f;
+            z = float.Epsilon * ai;
             while (System.Math.Abs(v) > z)
             {
                 u = (n - b) * x / n;
                 t *= u;
                 v = t / (a + n);
                 s += v;
-                n += 1.0;
+                n += 1.0f;
             }
             s += t1;
             s += ai;
 
-            u = a * System.Math.Log(x);
-            if ((a + b) < GammaMax && System.Math.Abs(u) < LogMax)
+            u = a * (float)Math.Log(x);
+            if ((a + b) < GammaMax && (float)Math.Abs(u) < LogMax)
             {
                 t = Gamma(a + b) / (Gamma(a) * Gamma(b));
-                s = s * t * System.Math.Pow(x, a);
+                s = s * t * (float)Math.Pow(x, a);
             }
             else
             {
-                t = GammaLog(a + b) - GammaLog(a) - GammaLog(b) + u + System.Math.Log(s);
-                if (t < LogMin) s = 0.0;
-                else s = System.Math.Exp(t);
+                t = GammaLog(a + b) - GammaLog(a) - GammaLog(b) + u + (float)Math.Log(s);
+                if (t < LogMin) s = 0.0f;
+                else s = (float)Math.Exp(t);
             }
             return s;
         }
@@ -733,58 +733,58 @@ namespace UMapx.Core
         /// <summary>
         /// 
         /// </summary>
-        private const double GammaMax = 171.624376956302725;
+        private const float GammaMax = 171.624376956302725f;
         /// <summary>
         /// 
         /// </summary>
-        private static double[] Px = {
-                         1.60119522476751861407E-4,
-                         1.19135147006586384913E-3,
-                         1.04213797561761569935E-2,
-                         4.76367800457137231464E-2,
-                         2.07448227648435975150E-1,
-                         4.94214826801497100753E-1,
-                         9.99999999999999996796E-1
+        private static float[] Px = {
+                         1.60119522476751861407E-4f,
+                         1.19135147006586384913E-3f,
+                         1.04213797561761569935E-2f,
+                         4.76367800457137231464E-2f,
+                         2.07448227648435975150E-1f,
+                         4.94214826801497100753E-1f,
+                         9.99999999999999996796E-1f
                      };
         /// <summary>
         /// 
         /// </summary>
-        private static double[] Qx = {
-                         -2.31581873324120129819E-5,
-                         5.39605580493303397842E-4,
-                         -4.45641913851797240494E-3,
-                         1.18139785222060435552E-2,
-                         3.58236398605498653373E-2,
-                         -2.34591795718243348568E-1,
-                         7.14304917030273074085E-2,
-                         1.00000000000000000320E0
+        private static float[] Qx = {
+                         -2.31581873324120129819E-5f,
+                         5.39605580493303397842E-4f,
+                         -4.45641913851797240494E-3f,
+                         1.18139785222060435552E-2f,
+                         3.58236398605498653373E-2f,
+                         -2.34591795718243348568E-1f,
+                         7.14304917030273074085E-2f,
+                         1.00000000000000000320E0f
                      };
         /// <summary>
         /// Returns the value of the Euler Gamma function: Г(z).
         /// </summary>
         /// <param name="z">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Gamma(double z)
+        /// <returns>float precision floating point number</returns>
+        public static float Gamma(float z)
         {
-            double p, g;
-            double q = Math.Abs(z);
+            float p, g;
+            float q = Math.Abs(z);
 
             if (q > 33.0)
             {
                 if (z < 0.0)
                 {
-                    p = Math.Floor(q);
-                    if (p == q) return double.NaN;
+                    p = (float)Math.Floor(q);
+                    if (p == q) return float.NaN;
                     g = q - p;
                     if (g > 0.5)
                     {
-                        p += 1.0;
+                        p += 1.0f;
                         g = q - p;
                     }
-                    g = q * Math.Sin(Math.PI * g);
-                    if (g == 0.0) return double.NaN;
+                    g = q * (float)Math.Sin(Math.PI * g);
+                    if (g == 0.0) return float.NaN;
                     g = Math.Abs(g);
-                    g = Math.PI / (g * Special.Stirling(q));
+                    g = Maths.Phi / (g * Special.Stirling(q));
 
                     return -g;
                 }
@@ -794,10 +794,10 @@ namespace UMapx.Core
                 }
             }
 
-            g = 1.0;
-            while (z >= 3.0)
+            g = 1.0f;
+            while (z >= 3.0f)
             {
-                z -= 1.0;
+                z -= 1.0f;
                 g *= z;
             }
 
@@ -805,33 +805,33 @@ namespace UMapx.Core
             {
                 if (z == 0.0)
                 {
-                    return double.NaN;
+                    return float.NaN;
                 }
                 else if (z > -1.0E-9)
                 {
-                    return (g / ((1.0 + 0.5772156649015329 * z) * z));
+                    return (g / ((1.0f + 0.5772156649015329f * z) * z));
                 }
                 g /= z;
-                z += 1.0;
+                z += 1.0f;
             }
 
             while (z < 2.0)
             {
                 if (z == 0.0)
                 {
-                    return double.NaN;
+                    return float.NaN;
                 }
                 else if (z < 1.0E-9)
                 {
-                    return (g / ((1.0 + 0.5772156649015329 * z) * z));
+                    return g / ((1.0f + 0.5772156649015329f * z) * z);
                 }
                 g /= z;
-                z += 1.0;
+                z += 1.0f;
             }
 
             if ((z == 2.0) || (z == 3.0)) return g;
 
-            z -= 2.0;
+            z -= 2.0f;
             p = Special.Polynomials(z, Px, 6);
             q = Special.Polynomials(z, Qx, 7);
             return g * p / q;
@@ -841,49 +841,49 @@ namespace UMapx.Core
         /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
         /// </summary>
         /// <param name="z">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double GammaLog(double z)
+        /// <returns>float precision floating point number</returns>
+        public static float GammaLog(float z)
         {
             if (z < 0)
             {
                 if (z > -6)
                 {
-                    return Math.Log(Gamma(z));
+                    return (float)Math.Log(Gamma(z));
                 }
-                return double.NaN;
+                return float.NaN;
             }
             else if (z > 0)
             {
                 return Special.GammaLogLanczos(z);
             }
-            return double.NaN;
+            return float.NaN;
         }
         /// <summary>
         /// Returns the value of the Digamma function: ψ(z).
         /// </summary>
         /// <param name="z">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double DiGamma(double z)
+        /// <returns>float precision floating point number</returns>
+        public static float DiGamma(float z)
         {
             if (z == 0)
-                return Double.NegativeInfinity;
+                return float.NegativeInfinity;
 
-            double s = 0;
-            double w = 0;
-            double y = 0;
-            double yy = 0;
-            double nz = 0;
+            float s = 0;
+            float w = 0;
+            float y = 0;
+            float yy = 0;
+            float nz = 0;
 
             bool negative = false;
 
             if (z <= 0.0)
             {
                 negative = true;
-                double q = z;
-                double p = (int)System.Math.Floor(q);
+                float q = z;
+                float p = (int)Math.Floor(q);
 
                 if (p == q)
-                    return double.NaN;
+                    return float.NaN;
 
                 nz = q - p;
 
@@ -891,59 +891,59 @@ namespace UMapx.Core
                 {
                     if (nz > 0.5)
                     {
-                        p = p + 1.0;
+                        p = p + 1.0f;
                         nz = q - p;
                     }
-                    nz = Math.PI / Math.Tan(System.Math.PI * nz);
+                    nz = (float)Math.PI / (float)Math.Tan(Math.PI * nz);
                 }
                 else
                 {
-                    nz = 0.0;
+                    nz = 0.0f;
                 }
 
-                z = 1.0 - z;
+                z = 1.0f - z;
             }
 
             if (z <= 10.0 & z == Math.Floor(z))
             {
-                y = 0.0;
+                y = 0.0f;
                 int n = (int)Math.Floor(z);
                 for (int i = 1; i <= n - 1; i++)
                 {
                     w = i;
-                    y = y + 1.0 / w;
+                    y = y + 1.0f / w;
                 }
-                y = y - 0.57721566490153286061;
+                y = y - 0.57721566490153286061f;
             }
             else
             {
                 s = z;
-                w = 0.0;
+                w = 0.0f;
 
                 while (s < 10.0)
                 {
-                    w = w + 1.0 / s;
-                    s = s + 1.0;
+                    w = w + 1.0f / s;
+                    s = s + 1.0f;
                 }
 
                 if (s < 1.0E17)
                 {
-                    yy = 1.0 / (s * s);
+                    yy = 1.0f / (s * s);
 
-                    double polv = 8.33333333333333333333E-2;
-                    polv = polv * yy - 2.10927960927960927961E-2;
-                    polv = polv * yy + 7.57575757575757575758E-3;
-                    polv = polv * yy - 4.16666666666666666667E-3;
-                    polv = polv * yy + 3.96825396825396825397E-3;
-                    polv = polv * yy - 8.33333333333333333333E-3;
-                    polv = polv * yy + 8.33333333333333333333E-2;
+                    float polv = 8.33333333333333333333E-2f;
+                    polv = polv * yy - 2.10927960927960927961E-2f;
+                    polv = polv * yy + 7.57575757575757575758E-3f;
+                    polv = polv * yy - 4.16666666666666666667E-3f;
+                    polv = polv * yy + 3.96825396825396825397E-3f;
+                    polv = polv * yy - 8.33333333333333333333E-3f;
+                    polv = polv * yy + 8.33333333333333333333E-2f;
                     y = yy * polv;
                 }
                 else
                 {
-                    y = 0.0;
+                    y = 0.0f;
                 }
-                y = Math.Log(s) - 0.5 / s - y - w;
+                y = (float)Math.Log(s) - 0.5f / s - y - w;
             }
 
             if (negative == true)
@@ -957,23 +957,23 @@ namespace UMapx.Core
         /// Returns the value of the Trigamma function: ψ1(z).
         /// </summary>
         /// <param name="z">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double TriGamma(double z)
+        /// <returns>float precision floating point number</returns>
+        public static float TriGamma(float z)
         {
-            double a = 0.0001;
-            double b = 5.0;
-            double b2 = 0.1666666667;
-            double b4 = -0.03333333333;
-            double b6 = 0.02380952381;
-            double b8 = -0.03333333333;
-            double value;
-            double y;
-            double yy;
+            float a = 0.0001f;
+            float b = 5.0f;
+            float b2 = 0.1666666667f;
+            float b4 = -0.03333333333f;
+            float b6 = 0.02380952381f;
+            float b8 = -0.03333333333f;
+            float value;
+            float y;
+            float yy;
 
             // Check the input.
             if (z <= 0.0)
             {
-                return double.NaN;
+                return float.NaN;
             }
 
             yy = z;
@@ -981,24 +981,24 @@ namespace UMapx.Core
             // Use small value approximation if X <= A.
             if (z <= a)
             {
-                value = 1.0 / z / z;
+                value = 1.0f / z / z;
                 return value;
             }
 
             // Increase argument to ( X + I ) >= B.
-            value = 0.0;
+            value = 0.0f;
 
             while (yy < b)
             {
-                value = value + 1.0 / yy / yy;
-                yy = yy + 1.0;
+                value = value + 1.0f / yy / yy;
+                yy = yy + 1.0f;
             }
 
             // Apply asymptotic formula if argument is B or greater.
-            y = 1.0 / yy / yy;
+            y = 1.0f / yy / yy;
 
-            value = value + 0.5 *
-                y + (1.0
+            value = value + 0.5f *
+                y + (1.0f
               + y * (b2
               + y * (b4
               + y * (b6
@@ -1011,20 +1011,20 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Number</param>
         /// <param name="p">Power</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Gamma(double z, uint p)
+        /// <returns>float precision floating point number</returns>
+        public static float Gamma(float z, uint p)
         {
             if (p == 1)
             {
                 return Special.Gamma(z);
             }
 
-            double prod = Math.Pow(Math.PI, (1 / 4.0) * p * (p - 1));
+            float prod = (float)Math.Pow(Math.PI, (1 / 4.0f) * p * (p - 1));
             int i;
 
             for (i = 0; i < p; i++)
             {
-                prod *= Special.Gamma(z - 0.5 * i);
+                prod *= Special.Gamma(z - 0.5f * i);
             }
 
             return prod;
@@ -1034,45 +1034,45 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="s">Number</param>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double GammaQ(double s, double x)
+        /// <returns>float precision floating point number</returns>
+        public static float GammaQ(float s, float x)
         {
-            const double big = 4.503599627370496e15;
-            const double biginv = 2.22044604925031308085e-16;
-            double ans, ax, c, yc, r, t, y, z;
-            double pk, pkm1, pkm2, qk, qkm1, qkm2;
+            const float big = 4.503599627370496e15f;
+            const float biginv = 2.22044604925031308085e-16f;
+            float ans, ax, c, yc, r, t, y, z;
+            float pk, pkm1, pkm2, qk, qkm1, qkm2;
 
             if (x <= 0 || s <= 0)
-                return 1.0;
+                return 1.0f;
 
             if (x < 1.0 || x < s)
-                return 1.0 - GammaP(s, x);
+                return 1.0f - GammaP(s, x);
 
-            if (Double.IsPositiveInfinity(x))
+            if (float.IsPositiveInfinity(x))
                 return 0;
 
-            ax = s * Math.Log(x) - x - GammaLog(s);
+            ax = s * (float)Math.Log(x) - x - GammaLog(s);
 
             if (ax < -LogMax)
-                return 0.0;
+                return 0.0f;
 
-            ax = Math.Exp(ax);
+            ax = (float)Math.Exp(ax);
 
             // continued fraction
-            y = 1.0 - s;
-            z = x + y + 1.0;
-            c = 0.0;
-            pkm2 = 1.0;
+            y = 1.0f - s;
+            z = x + y + 1.0f;
+            c = 0.0f;
+            pkm2 = 1.0f;
             qkm2 = x;
-            pkm1 = x + 1.0;
+            pkm1 = x + 1.0f;
             qkm1 = z * x;
             ans = pkm1 / qkm1;
 
             do
             {
-                c += 1.0;
-                y += 1.0;
-                z += 2.0;
+                c += 1.0f;
+                y += 1.0f;
+                z += 2.0f;
                 yc = y * c;
                 pk = pkm1 * z - pkm2 * yc;
                 qk = qkm1 * z - qkm2 * yc;
@@ -1083,7 +1083,7 @@ namespace UMapx.Core
                     ans = r;
                 }
                 else
-                    t = 1.0;
+                    t = 1.0f;
 
                 pkm2 = pkm1;
                 pkm1 = pk;
@@ -1096,7 +1096,7 @@ namespace UMapx.Core
                     qkm2 *= biginv;
                     qkm1 *= biginv;
                 }
-            } while (t > double.Epsilon);
+            } while (t > float.Epsilon);
 
             return ans * ax;
         }
@@ -1105,35 +1105,35 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="s">Number</param>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double GammaP(double s, double x)
+        /// <returns>float precision floating point number</returns>
+        public static float GammaP(float s, float x)
         {
             if (s <= 0)
-                return 1.0;
+                return 1.0f;
 
             if (x <= 0)
-                return 0.0;
+                return 0.0f;
 
             if (x > 1.0 && x > s)
-                return 1.0 - GammaQ(s, x);
+                return 1.0f - GammaQ(s, x);
 
-            double ax = s * Math.Log(x) - x - GammaLog(s);
+            float ax = s * (float)Math.Log(x) - x - GammaLog(s);
 
             if (ax < -LogMax)
-                return 0.0;
+                return 0.0f;
 
-            ax = Math.Exp(ax);
+            ax = (float)Math.Exp(ax);
 
-            double r = s;
-            double c = 1.0;
-            double ans = 1.0;
+            float r = s;
+            float c = 1.0f;
+            float ans = 1.0f;
 
             do
             {
-                r += 1.0;
+                r += 1.0f;
                 c *= x / r;
                 ans += c;
-            } while (c / ans > double.Epsilon);
+            } while (c / ans > float.Epsilon);
 
             return ans * ax / s;
         }
@@ -1142,32 +1142,32 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="s">Number</param>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double GammaIncomplete(double s, double x)
+        /// <returns>float precision floating point number</returns>
+        public static float GammaIncomplete(float s, float x)
         {
-            double ans, ax, c, r;
+            float ans, ax, c, r;
 
-            if (x <= 0 || s <= 0) return 0.0;
+            if (x <= 0 || s <= 0) return 0.0f;
 
-            if (x > 1.0 && x > s) return 1.0 - GammaIncomplete(s, x, true);
+            if (x > 1.0 && x > s) return 1.0f - GammaIncomplete(s, x, true);
 
             /* Compute  x**a * exp(-x) / gamma(a)  */
-            ax = s * Math.Log(x) - x - GammaLog(s);
-            if (ax < -LogMax) return (0.0);
+            ax = s * (float)Math.Log(x) - x - GammaLog(s);
+            if (ax < -LogMax) return (0.0f);
 
-            ax = Math.Exp(ax);
+            ax = (float)Math.Exp(ax);
 
             /* power series */
             r = s;
-            c = 1.0;
-            ans = 1.0;
+            c = 1.0f;
+            ans = 1.0f;
 
             do
             {
-                r += 1.0;
+                r += 1.0f;
                 c *= x / r;
                 ans += c;
-            } while (c / ans > double.Epsilon);
+            } while (c / ans > float.Epsilon);
 
             return (ans * ax / s);
 
@@ -1178,42 +1178,42 @@ namespace UMapx.Core
         /// <param name="s">Number</param>
         /// <param name="x">Number</param>
         /// <param name="complemented">Additional function or not</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double GammaIncomplete(double s, double x, bool complemented)
+        /// <returns>float precision floating point number</returns>
+        public static float GammaIncomplete(float s, float x, bool complemented)
         {
             // not complemented
             if (!complemented)
                 return GammaIncomplete(s, x);
 
-            double big = 4.503599627370496e15;
-            double biginv = 2.22044604925031308085e-16;
-            double ans, ax, c, yc, r, t, y, z;
-            double pk, pkm1, pkm2, qk, qkm1, qkm2;
+            float big = 4.503599627370496e15f;
+            float biginv = 2.22044604925031308085e-16f;
+            float ans, ax, c, yc, r, t, y, z;
+            float pk, pkm1, pkm2, qk, qkm1, qkm2;
 
-            if (x <= 0 || s <= 0) return 1.0;
+            if (x <= 0 || s <= 0) return 1.0f;
 
-            if (x < 1.0 || x < s) return 1.0 - GammaIncomplete(s, x);
+            if (x < 1.0 || x < s) return 1.0f - GammaIncomplete(s, x);
 
-            ax = s * Math.Log(x) - x - GammaLog(s);
-            if (ax < -LogMax) return 0.0;
+            ax = s * (float)Math.Log(x) - x - GammaLog(s);
+            if (ax < -LogMax) return 0.0f;
 
-            ax = Math.Exp(ax);
+            ax = (float)Math.Exp(ax);
 
             /* continued fraction */
-            y = 1.0 - s;
-            z = x + y + 1.0;
-            c = 0.0;
-            pkm2 = 1.0;
+            y = 1.0f - s;
+            z = x + y + 1.0f;
+            c = 0.0f;
+            pkm2 = 1.0f;
             qkm2 = x;
-            pkm1 = x + 1.0;
+            pkm1 = x + 1.0f;
             qkm1 = z * x;
             ans = pkm1 / qkm1;
 
             do
             {
-                c += 1.0;
-                y += 1.0;
-                z += 2.0;
+                c += 1.0f;
+                y += 1.0f;
+                z += 2.0f;
                 yc = y * c;
                 pk = pkm1 * z - pkm2 * yc;
                 qk = qkm1 * z - qkm2 * yc;
@@ -1224,7 +1224,7 @@ namespace UMapx.Core
                     ans = r;
                 }
                 else
-                    t = 1.0;
+                    t = 1.0f;
 
                 pkm2 = pkm1;
                 pkm1 = pk;
@@ -1237,7 +1237,7 @@ namespace UMapx.Core
                     qkm2 *= biginv;
                     qkm1 *= biginv;
                 }
-            } while (t > double.Epsilon);
+            } while (t > float.Epsilon);
 
             return ans * ax;
         }
@@ -1250,9 +1250,9 @@ namespace UMapx.Core
         /// <param name="coef"></param>
         /// <param name="N"></param>
         /// <returns></returns>
-        private static double Polynomials(double x, double[] coef, int N)
+        private static float Polynomials(float x, float[] coef, int N)
         {
-            double sum = coef[0];
+            float sum = coef[0];
 
             for (int i = 1; i <= N; i++)
             {
@@ -1266,34 +1266,34 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private static double Stirling(double x)
+        private static float Stirling(float x)
         {
-            double[] STIR =
+            float[] STIR =
             {
-                7.87311395793093628397E-4,
-               -2.29549961613378126380E-4,
-               -2.68132617805781232825E-3,
-                3.47222221605458667310E-3,
-                8.33333333333482257126E-2,
+                7.87311395793093628397E-4f,
+               -2.29549961613378126380E-4f,
+               -2.68132617805781232825E-3f,
+                3.47222221605458667310E-3f,
+                8.33333333333482257126E-2f,
             };
-            double MAXSTIR = 143.01608;
+            float MAXSTIR = 143.01608f;
 
-            double w = 1.0 / x;
-            double y = Math.Exp(x);
+            float w = 1.0f / x;
+            float y = (float)Math.Exp(x);
 
-            w = 1.0 + w * Polynomials(w, STIR, 4);
+            w = 1.0f + w * Polynomials(w, STIR, 4);
 
             if (x > MAXSTIR)
             {
                 /* Avoid overflow in Math.Pow() */
-                double v = Math.Pow(x, 0.5 * x - 0.25);
+                float v = (float)Math.Pow(x, 0.5 * x - 0.25);
                 y = v * (v / y);
             }
             else
             {
-                y = Math.Pow(x, x - 0.5) / y;
+                y = (float)Math.Pow(x, x - 0.5) / y;
             }
-            y = 2.50662827463100050242E0 * y * w;
+            y = 2.50662827463100050242E0f * y * w;
             return y;
         }
         /// <summary>
@@ -1301,22 +1301,22 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z"></param>
         /// <returns></returns>
-        private static double GammaLogLanczos(double z)
+        private static float GammaLogLanczos(float z)
         {
-            double[] coef = new double[6] { 76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179E-2, -0.5395239384953E-5 };
-            double LogSqrtTwoPi = 0.91893853320467274178;
-            double denom = z + 1;
-            double y = z + 5.5;
-            double series = 1.000000000190015;
+            float[] coef = new float[6] { 76.18009172947146f, -86.50532032941677f, 24.01409824083091f, -1.231739572450155f, 0.1208650973866179E-2f, -0.5395239384953E-5f };
+            float LogSqrtTwoPi = 0.91893853320467274178f;
+            float denom = z + 1;
+            float y = z + 5.5f;
+            float series = 1.000000000190015f;
             int i;
 
             for (i = 0; i < 6; ++i)
             {
                 series += coef[i] / denom;
-                denom += 1.0;
+                denom += 1.0f;
             }
-            return (LogSqrtTwoPi + (z + 0.5) * Math.Log(y) -
-            y + Math.Log(series / z));
+            return (LogSqrtTwoPi + (z + 0.5f) * (float)Math.Log(y) -
+            y + (float)Math.Log(series / z));
         }
         #endregion
         #endregion
@@ -1326,8 +1326,8 @@ namespace UMapx.Core
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erf(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Erf(float x)
         {
             return Erf(x, false);
         }
@@ -1336,19 +1336,19 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <param name="inverse">Reverse function or not</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erf(double x, bool inverse)
+        /// <returns>float precision floating point number</returns>
+        public static float Erf(float x, bool inverse)
         {
             // exception
             if (x == 0.0)
-                return 0.0;
+                return 0.0f;
 
             // params
             int s = inverse ? 1 : -1;
-            double y = s * x * x;
-            double z = 2 / Math.Sqrt(Math.PI);
-            double a = 1, b = x, c;
-            double eps = 1e-16;
+            float y = s * x * x;
+            float z = 2 / (float)Math.Sqrt(Math.PI);
+            float a = 1, b = x, c;
+            float eps = 1e-16f;
             int i, iterations = 120, k = 3;
 
             // Taylor series:
@@ -1370,7 +1370,7 @@ namespace UMapx.Core
             }
 
             // erf(x)
-            double erf = z * b;
+            float erf = z * b;
             if (!inverse)
             {
                 if (Math.Abs(erf) > 1.0)
@@ -1383,22 +1383,22 @@ namespace UMapx.Core
         /// Returns the value of the imaginary error function.
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erfi(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Erfi(float x)
         {
             // special cases:
             if (x > 26.658987628)
-                return double.PositiveInfinity;
+                return float.PositiveInfinity;
             if (x < -26.658987628)
-                return double.NegativeInfinity;
+                return float.NegativeInfinity;
 
             // properties:
-            double s = x;
-            double m = x, t;
-            double z = x * x;
+            float s = x;
+            float m = x, t;
+            float z = x * x;
             int k, iterations = 930;
-            double eps = 1e-16;
-            double p = 2.0 / Special.sqrtPI;
+            float eps = 1e-16f;
+            float p = 2.0f / Special.sqrtPI;
 
             // Taylor series:
             for (int i = 1; i < iterations; i++)
@@ -1423,8 +1423,8 @@ namespace UMapx.Core
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <param name="a">The lower boundary of the normalization</param>
         /// <param name="b">The upper limit of the normalization</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erf(double x, double a, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float Erf(float x, float a, float b)
         {
             return Erf((x - a) / b);
         }
@@ -1433,8 +1433,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <param name="range">A pair of fractional numbers</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erf(double x, RangeDouble range)
+        /// <returns>float precision floating point number</returns>
+        public static float Erf(float x, RangeFloat range)
         {
             return Erf(x, range.Min, range.Max);
         }
@@ -1443,10 +1443,10 @@ namespace UMapx.Core
         /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erfc(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Erfc(float x)
         {
-            return 1.0 - Erf(x);
+            return 1.0f - Erf(x);
         }
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
@@ -1454,20 +1454,20 @@ namespace UMapx.Core
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <param name="a">The lower boundary of the normalization</param>
         /// <param name="b">The upper limit of the normalization</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erfc(double x, double a, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float Erfc(float x, float a, float b)
         {
-            return 1.0 - Erf(x, a, b);
+            return 1.0f - Erf(x, a, b);
         }
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <param name="range">A pair of fractional numbers</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erfc(double x, RangeDouble range)
+        /// <returns>float precision floating point number</returns>
+        public static float Erfc(float x, RangeFloat range)
         {
-            return 1.0 - Erf(x, range.Min, range.Max);
+            return 1.0f - Erf(x, range.Min, range.Max);
         }
         #endregion
 
@@ -1477,14 +1477,14 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="inverse">Inverse function or not</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Q(double x, bool inverse = false)
+        /// <returns>float precision floating point number</returns>
+        public static float Q(float x, bool inverse = false)
         {
             if (inverse)
             {
-                return Math.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+                return (float)Math.Sqrt(2) * Special.Erf(1 - 2 * x, true);
             }
-            return 0.5 * Special.Erfc(x / Math.Sqrt(2));
+            return 0.5f * Special.Erfc(x / Maths.Sqrt2);
         }
         #endregion
 
@@ -1493,69 +1493,69 @@ namespace UMapx.Core
         /// Returns the value of the Bessel function of the first kind at a = 0.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        private static double J0(double x)
+        /// <returns>float precision floating point number</returns>
+        private static float J0(float x)
         {
-            double ax;
+            float ax;
 
             if ((ax = System.Math.Abs(x)) < 8.0)
             {
-                double y = x * x;
-                double ans1 = 57568490574.0 + y * (-13362590354.0 + y * (651619640.7
-                    + y * (-11214424.18 + y * (77392.33017 + y * (-184.9052456)))));
-                double ans2 = 57568490411.0 + y * (1029532985.0 + y * (9494680.718
-                    + y * (59272.64853 + y * (267.8532712 + y * 1.0))));
+                float y = x * x;
+                float ans1 = 57568490574.0f + y * (-13362590354.0f + y * (651619640.7f
+                    + y * (-11214424.18f + y * (77392.33017f + y * (-184.9052456f)))));
+                float ans2 = 57568490411.0f + y * (1029532985.0f + y * (9494680.718f
+                    + y * (59272.64853f + y * (267.8532712f + y * 1.0f))));
 
                 return ans1 / ans2;
             }
             else
             {
-                double z = 8.0 / ax;
-                double y = z * z;
-                double xx = ax - 0.785398164;
-                double ans1 = 1.0 + y * (-0.1098628627e-2 + y * (0.2734510407e-4
-                    + y * (-0.2073370639e-5 + y * 0.2093887211e-6)));
-                double ans2 = -0.1562499995e-1 + y * (0.1430488765e-3
-                    + y * (-0.6911147651e-5 + y * (0.7621095161e-6
-                    - y * 0.934935152e-7)));
+                float z = 8.0f / ax;
+                float y = z * z;
+                float xx = ax - 0.785398164f;
+                float ans1 = 1.0f + y * (-0.1098628627e-2f + y * (0.2734510407e-4f
+                    + y * (-0.2073370639e-5f + y * 0.2093887211e-6f)));
+                float ans2 = -0.1562499995e-1f + y * (0.1430488765e-3f
+                    + y * (-0.6911147651e-5f + y * (0.7621095161e-6f
+                    - y * 0.934935152e-7f)));
 
-                return System.Math.Sqrt(0.636619772 / ax) *
-                    (System.Math.Cos(xx) * ans1 - z * System.Math.Sin(xx) * ans2);
+                return (float)Math.Sqrt(0.636619772f / ax) *
+                    ((float)Math.Cos(xx) * ans1 - z * (float)Math.Sin(xx) * ans2);
             }
         }
         /// <summary>
         /// Returns the value of the Bessel function of the first kind at a = 1.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        private static double J1(double x)
+        /// <returns>float precision floating point number</returns>
+        private static float J1(float x)
         {
-            double ax;
-            double y;
-            double ans1, ans2;
+            float ax;
+            float y;
+            float ans1, ans2;
 
             if ((ax = System.Math.Abs(x)) < 8.0)
             {
                 y = x * x;
-                ans1 = x * (72362614232.0 + y * (-7895059235.0 + y * (242396853.1
-                    + y * (-2972611.439 + y * (15704.48260 + y * (-30.16036606))))));
-                ans2 = 144725228442.0 + y * (2300535178.0 + y * (18583304.74
-                    + y * (99447.43394 + y * (376.9991397 + y * 1.0))));
+                ans1 = x * (72362614232.0f + y * (-7895059235.0f + y * (242396853.1f
+                    + y * (-2972611.439f + y * (15704.48260f + y * (-30.16036606f))))));
+                ans2 = 144725228442.0f + y * (2300535178.0f + y * (18583304.74f
+                    + y * (99447.43394f + y * (376.9991397f + y * 1.0f))));
                 return ans1 / ans2;
             }
             else
             {
-                double z = 8.0 / ax;
-                double xx = ax - 2.356194491;
+                float z = 8.0f / ax;
+                float xx = ax - 2.356194491f;
                 y = z * z;
 
-                ans1 = 1.0 + y * (0.183105e-2 + y * (-0.3516396496e-4
-                    + y * (0.2457520174e-5 + y * (-0.240337019e-6))));
-                ans2 = 0.04687499995 + y * (-0.2002690873e-3
-                    + y * (0.8449199096e-5 + y * (-0.88228987e-6
-                    + y * 0.105787412e-6)));
-                double ans = System.Math.Sqrt(0.636619772 / ax) *
-                    (System.Math.Cos(xx) * ans1 - z * System.Math.Sin(xx) * ans2);
+                ans1 = 1.0f + y * (0.183105e-2f + y * (-0.3516396496e-4f
+                    + y * (0.2457520174e-5f + y * (-0.240337019e-6f))));
+                ans2 = 0.04687499995f + y * (-0.2002690873e-3f
+                    + y * (0.8449199096e-5f + y * (-0.88228987e-6f
+                    + y * 0.105787412e-6f)));
+                float ans = (float)Math.Sqrt(0.636619772 / ax) *
+                    ((float)Math.Cos(xx) * ans1 - z * (float)Math.Sin(xx) * ans2);
                 if (x < 0.0) ans = -ans;
                 return ans;
             }
@@ -1565,25 +1565,25 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Number</param>
         /// <param name="a">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double J(double x, int a)
+        /// <returns>float precision floating point number</returns>
+        public static float J(float x, int a)
         {
             if (a < 0 || x == 0) return 0;
             if (a == 0) return J0(x);
             if (a == 1) return J1(x);
 
             int j, m;
-            double ax, bj, bjm, bjp, sum, tox, ans;
+            float ax, bj, bjm, bjp, sum, tox, ans;
             bool jsum;
-            double ACC = 40.0;
-            double BIGNO = 1.0e+10;
-            double BIGNI = 1.0e-10;
+            float ACC = 40.0f;
+            float BIGNO = 1.0e+10f;
+            float BIGNI = 1.0e-10f;
 
             ax = System.Math.Abs(x);
-            if (ax == 0.0) return 0.0;
-            else if (ax > (double)a)
+            if (ax == 0.0) return 0.0f;
+            else if (ax > (float)a)
             {
-                tox = 2.0 / ax;
+                tox = 2.0f / ax;
                 bjm = J0(ax);
                 bj = J1(ax);
                 for (j = 1; j < a; j++)
@@ -1596,11 +1596,11 @@ namespace UMapx.Core
             }
             else
             {
-                tox = 2.0 / ax;
+                tox = 2.0f / ax;
                 m = 2 * ((a + (int)System.Math.Sqrt(ACC * a)) / 2);
                 jsum = false;
-                bjp = ans = sum = 0.0;
-                bj = 1.0;
+                bjp = ans = sum = 0.0f;
+                bj = 1.0f;
                 for (j = m; j > 0; j--)
                 {
                     bjm = j * tox * bj - bjp;
@@ -1617,7 +1617,7 @@ namespace UMapx.Core
                     jsum = !jsum;
                     if (j == a) ans = bjp;
                 }
-                sum = 2.0 * sum - bj;
+                sum = 2.0f * sum - bj;
                 ans /= sum;
             }
 
@@ -1627,65 +1627,65 @@ namespace UMapx.Core
         /// Returns the value of the Bessel function of the second kind at a = 0.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        private static double Y0(double x)
+        /// <returns>float precision floating point number</returns>
+        private static float Y0(float x)
         {
             if (x < 8.0)
             {
-                double y = x * x;
+                float y = x * x;
 
-                double ans1 = -2957821389.0 + y * (7062834065.0 + y * (-512359803.6
-                    + y * (10879881.29 + y * (-86327.92757 + y * 228.4622733))));
-                double ans2 = 40076544269.0 + y * (745249964.8 + y * (7189466.438
-                    + y * (47447.26470 + y * (226.1030244 + y * 1.0))));
+                float ans1 = -2957821389.0f + y * (7062834065.0f + y * (-512359803.6f
+                    + y * (10879881.29f + y * (-86327.92757f + y * 228.4622733f))));
+                float ans2 = 40076544269.0f + y * (745249964.8f + y * (7189466.438f
+                    + y * (47447.26470f + y * (226.1030244f + y * 1.0f))));
 
-                return (ans1 / ans2) + 0.636619772 * J0(x) * System.Math.Log(x);
+                return (ans1 / ans2) + 0.636619772f * J0(x) * (float)Math.Log(x);
             }
             else
             {
-                double z = 8.0 / x;
-                double y = z * z;
-                double xx = x - 0.785398164;
+                float z = 8.0f / x;
+                float y = z * z;
+                float xx = x - 0.785398164f;
 
-                double ans1 = 1.0 + y * (-0.1098628627e-2 + y * (0.2734510407e-4
-                    + y * (-0.2073370639e-5 + y * 0.2093887211e-6)));
-                double ans2 = -0.1562499995e-1 + y * (0.1430488765e-3
-                    + y * (-0.6911147651e-5 + y * (0.7621095161e-6
-                    + y * (-0.934945152e-7))));
-                return System.Math.Sqrt(0.636619772 / x) *
-                    (System.Math.Sin(xx) * ans1 + z * System.Math.Cos(xx) * ans2);
+                float ans1 = 1.0f + y * (-0.1098628627e-2f + y * (0.2734510407e-4f
+                    + y * (-0.2073370639e-5f + y * 0.2093887211e-6f)));
+                float ans2 = -0.1562499995e-1f + y * (0.1430488765e-3f
+                    + y * (-0.6911147651e-5f + y * (0.7621095161e-6f
+                    + y * (-0.934945152e-7f))));
+                return (float)Math.Sqrt(0.636619772f / x) *
+                    ((float)Math.Sin(xx) * ans1 + z * (float)Math.Cos(xx) * ans2);
             }
         }
         /// <summary>
         /// Returns the value of the Bessel function of the second kind at a = 1.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        private static double Y1(double x)
+        /// <returns>float precision floating point number</returns>
+        private static float Y1(float x)
         {
             if (x < 8.0)
             {
-                double y = x * x;
-                double ans1 = x * (-0.4900604943e13 + y * (0.1275274390e13
-                    + y * (-0.5153438139e11 + y * (0.7349264551e9
-                    + y * (-0.4237922726e7 + y * 0.8511937935e4)))));
-                double ans2 = 0.2499580570e14 + y * (0.4244419664e12
-                    + y * (0.3733650367e10 + y * (0.2245904002e8
-                    + y * (0.1020426050e6 + y * (0.3549632885e3 + y)))));
-                return (ans1 / ans2) + 0.636619772 * (J1(x) * System.Math.Log(x) - 1.0 / x);
+                float y = x * x;
+                float ans1 = x * (-0.4900604943e13f + y * (0.1275274390e13f
+                    + y * (-0.5153438139e11f + y * (0.7349264551e9f
+                    + y * (-0.4237922726e7f + y * 0.8511937935e4f)))));
+                float ans2 = 0.2499580570e14f + y * (0.4244419664e12f
+                    + y * (0.3733650367e10f + y * (0.2245904002e8f
+                    + y * (0.1020426050e6f + y * (0.3549632885e3f + y)))));
+                return (ans1 / ans2) + 0.636619772f * (J1(x) * (float)Math.Log(x) - 1.0f / x);
             }
             else
             {
-                double z = 8.0 / x;
-                double y = z * z;
-                double xx = x - 2.356194491;
-                double ans1 = 1.0 + y * (0.183105e-2 + y * (-0.3516396496e-4
-                    + y * (0.2457520174e-5 + y * (-0.240337019e-6))));
-                double ans2 = 0.04687499995 + y * (-0.2002690873e-3
-                    + y * (0.8449199096e-5 + y * (-0.88228987e-6
-                    + y * 0.105787412e-6)));
-                return System.Math.Sqrt(0.636619772 / x) *
-                    (System.Math.Sin(xx) * ans1 + z * System.Math.Cos(xx) * ans2);
+                float z = 8.0f / x;
+                float y = z * z;
+                float xx = x - 2.356194491f;
+                float ans1 = 1.0f + y * (0.183105e-2f + y * (-0.3516396496e-4f
+                    + y * (0.2457520174e-5f + y * (-0.240337019e-6f))));
+                float ans2 = 0.04687499995f + y * (-0.2002690873e-3f
+                    + y * (0.8449199096e-5f + y * (-0.88228987e-6f
+                    + y * 0.105787412e-6f)));
+                return (float)Math.Sqrt(0.636619772f / x) *
+                    ((float)Math.Sin(xx) * ans1 + z * (float)Math.Cos(xx) * ans2);
             }
         }
         /// <summary>
@@ -1693,15 +1693,15 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Number</param>
         /// <param name="a">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Y(double x, int a)
+        /// <returns>float precision floating point number</returns>
+        public static float Y(float x, int a)
         {
             if (a < 0 || x == 0) return 0;
             if (a == 0) return Y0(x);
             if (a == 1) return Y1(x);
 
-            double by, bym, byp, tox;
-            tox = 2.0 / x;
+            float by, bym, byp, tox;
+            tox = 2.0f / x;
             by = Y1(x);
             bym = Y0(x);
             for (int j = 1; j < a; j++)
@@ -1716,26 +1716,26 @@ namespace UMapx.Core
         /// Returns the value of the modified Bessel function of the first kind at a = 0.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        private static double I0(double x)
+        /// <returns>float precision floating point number</returns>
+        private static float I0(float x)
         {
-            double ans;
-            double ax = Math.Abs(x);
+            float ans;
+            float ax = Math.Abs(x);
 
             if (ax < 3.75)
             {
-                double y = x / 3.75;
+                float y = x / 3.75f;
                 y = y * y;
-                ans = 1.0 + y * (3.5156229 + y * (3.0899424 + y * (1.2067492
-                   + y * (0.2659732 + y * (0.360768e-1 + y * 0.45813e-2)))));
+                ans = 1.0f + y * (3.5156229f + y * (3.0899424f + y * (1.2067492f
+                   + y * (0.2659732f + y * (0.360768e-1f + y * 0.45813e-2f)))));
             }
             else
             {
-                double y = 3.75 / ax;
-                ans = (Math.Exp(ax) / Math.Sqrt(ax)) * (0.39894228 + y * (0.1328592e-1
-                   + y * (0.225319e-2 + y * (-0.157565e-2 + y * (0.916281e-2
-                   + y * (-0.2057706e-1 + y * (0.2635537e-1 + y * (-0.1647633e-1
-                   + y * 0.392377e-2))))))));
+                float y = 3.75f / ax;
+                ans = (float)Math.Exp(ax) / (float)Math.Sqrt(ax) * (0.39894228f + y * (0.1328592e-1f
+                   + y * (0.225319e-2f + y * (-0.157565e-2f + y * (0.916281e-2f
+                   + y * (-0.2057706e-1f + y * (0.2635537e-1f + y * (-0.1647633e-1f
+                   + y * 0.392377e-2f))))))));
             }
 
             return ans;
@@ -1744,26 +1744,26 @@ namespace UMapx.Core
         /// Returns the value of the modified Bessel function of the first kind at a = 1.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        private static double I1(double x)
+        /// <returns>float precision floating point number</returns>
+        private static float I1(float x)
         {
-            double ans;
+            float ans;
 
-            double ax = Math.Abs(x);
+            float ax = Math.Abs(x);
 
             if (ax < 3.75)
             {
-                double y = x / 3.75;
+                float y = x / 3.75f;
                 y = y * y;
-                ans = ax * (0.5 + y * (0.87890594 + y * (0.51498869 + y * (0.15084934
-                   + y * (0.2658733e-1 + y * (0.301532e-2 + y * 0.32411e-3))))));
+                ans = ax * (0.5f + y * (0.87890594f + y * (0.51498869f + y * (0.15084934f
+                   + y * (0.2658733e-1f + y * (0.301532e-2f + y * 0.32411e-3f))))));
             }
             else
             {
-                double y = 3.75 / ax;
-                ans = 0.2282967e-1 + y * (-0.2895312e-1 + y * (0.1787654e-1 - y * 0.420059e-2));
-                ans = 0.39894228 + y * (-0.3988024e-1 + y * (-0.362018e-2 + y * (0.163801e-2 + y * (-0.1031555e-1 + y * ans))));
-                ans *= Math.Exp(ax) / Math.Sqrt(ax);
+                float y = 3.75f / ax;
+                ans = 0.2282967e-1f + y * (-0.2895312e-1f + y * (0.1787654e-1f - y * 0.420059e-2f));
+                ans = 0.39894228f + y * (-0.3988024e-1f + y * (-0.362018e-2f + y * (0.163801e-2f + y * (-0.1031555e-1f + y * ans))));
+                ans *= (float)Math.Exp(ax) / (float)Math.Sqrt(ax);
             }
             return x < 0.0 ? -ans : ans;
         }
@@ -1772,23 +1772,23 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Number</param>
         /// <param name="a">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double I(double x, int a)
+        /// <returns>float precision floating point number</returns>
+        public static float I(float x, int a)
         {
             if (a < 0 || x == 0) return 0;
             if (a == 0) return I0(x);
             if (a == 1) return I1(x);
 
-            double ACC = 40.0;
-            double BIGNO = 1.0e+10;
-            double BIGNI = 1.0e-10;
-            double tox = 2.0 / Math.Abs(x);
-            double bip = 0, ans = 0.0;
-            double bi = 1.0;
+            float ACC = 40.0f;
+            float BIGNO = 1.0e+10f;
+            float BIGNI = 1.0e-10f;
+            float tox = 2.0f / Math.Abs(x);
+            float bip = 0, ans = 0.0f;
+            float bi = 1.0f;
 
             for (int j = 2 * (a + (int)Math.Sqrt(ACC * a)); j > 0; j--)
             {
-                double bim = bip + j * tox * bi;
+                float bim = bip + j * tox * bi;
                 bip = bi;
                 bi = bim;
 
@@ -1810,24 +1810,24 @@ namespace UMapx.Core
         /// Returns the value of the modified Bessel function of the second kind at a = 0.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        private static double K0(double x)
+        /// <returns>float precision floating point number</returns>
+        private static float K0(float x)
         {
-            double y, ans;
+            float y, ans;
 
             if (x <= 2.0)
             {
-                y = x * x / 4.0;
-                ans = (-Math.Log(x / 2.0) * I0(x)) + (-0.57721566 + y * (0.42278420
-                   + y * (0.23069756 + y * (0.3488590e-1 + y * (0.262698e-2
-                   + y * (0.10750e-3 + y * 0.74e-5))))));
+                y = x * x / 4.0f;
+                ans = (-(float)Math.Log(x / 2.0) * I0(x)) + (-0.57721566f + y * (0.42278420f
+                   + y * (0.23069756f + y * (0.3488590e-1f + y * (0.262698e-2f
+                   + y * (0.10750e-3f + y * 0.74e-5f))))));
             }
             else
             {
-                y = 2.0 / x;
-                ans = (Math.Exp(-x) / Math.Sqrt(x)) * (1.25331414 + y * (-0.7832358e-1
-                   + y * (0.2189568e-1 + y * (-0.1062446e-1 + y * (0.587872e-2
-                   + y * (-0.251540e-2 + y * 0.53208e-3))))));
+                y = 2.0f / x;
+                ans = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (-0.7832358e-1f
+                   + y * (0.2189568e-1f + y * (-0.1062446e-1f + y * (0.587872e-2f
+                   + y * (-0.251540e-2f + y * 0.53208e-3f))))));
             }
             return ans;
         }
@@ -1835,24 +1835,24 @@ namespace UMapx.Core
         /// Returns the value of the modified Bessel function of the second kind at a = 1.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        private static double K1(double x)
+        /// <returns>float precision floating point number</returns>
+        private static float K1(float x)
         {
-            double y, ans;
+            float y, ans;
 
             if (x <= 2.0)
             {
-                y = x * x / 4.0;
-                ans = (Math.Log(x / 2.0) * I1(x)) + (1.0 / x) * (1.0 + y * (0.15443144
-                   + y * (-0.67278579 + y * (-0.18156897 + y * (-0.1919402e-1
-                   + y * (-0.110404e-2 + y * (-0.4686e-4)))))));
+                y = x * x / 4.0f;
+                ans = ((float)Math.Log(x / 2.0) * I1(x)) + (1.0f / x) * (1.0f + y * (0.15443144f
+                   + y * (-0.67278579f + y * (-0.18156897f + y * (-0.1919402e-1f
+                   + y * (-0.110404e-2f + y * (-0.4686e-4f)))))));
             }
             else
             {
-                y = 2.0 / x;
-                ans = (Math.Exp(-x) / Math.Sqrt(x)) * (1.25331414 + y * (0.23498619
-                   + y * (-0.3655620e-1 + y * (0.1504268e-1 + y * (-0.780353e-2
-                   + y * (0.325614e-2 + y * (-0.68245e-3)))))));
+                y = 2.0f / x;
+                ans = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (0.23498619f
+                   + y * (-0.3655620e-1f + y * (0.1504268e-1f + y * (-0.780353e-2f
+                   + y * (0.325614e-2f + y * (-0.68245e-3f)))))));
             }
             return ans;
         }
@@ -1861,16 +1861,16 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Number</param>
         /// <param name="a">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double K(double x, int a)
+        /// <returns>float precision floating point number</returns>
+        public static float K(float x, int a)
         {
             if (a < 0 || x == 0) return 0;
             if (a == 0) return (K0(x));
             if (a == 1) return (K1(x));
 
             int j;
-            double bk, bkm, bkp, tox;
-            tox = 2.0 / x;
+            float bk, bkm, bkp, tox;
+            tox = 2.0f / x;
             bkm = K0(x);
             bk = K1(x);
             for (j = 1; j < a; j++)
@@ -1889,16 +1889,16 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="h">First argument</param>
         /// <param name="a">Second argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Owen(double h, double a)
+        /// <returns>float precision floating point number</returns>
+        public static float Owen(float h, float a)
         {
-            double absa;
-            double absh;
-            double ah;
-            double cut = 0.67;
-            double normah;
-            double normh;
-            double value;
+            float absa;
+            float absh;
+            float ah;
+            float cut = 0.67f;
+            float normah;
+            float normh;
+            float value;
 
             absh = Math.Abs(h);
             absa = Math.Abs(a);
@@ -1910,15 +1910,15 @@ namespace UMapx.Core
             }
             else if (absh <= cut)
             {
-                value = 0.25 - (-0.5 + Special.Q(-absh)) * (-0.5 + Special.Q(-ah))
-                  - Special.owenhaah(ah, 1.0 / absa, absh);
+                value = 0.25f - (-0.5f + Special.Q(-absh)) * (-0.5f + Special.Q(-ah))
+                  - Special.owenhaah(ah, 1.0f / absa, absh);
             }
             else
             {
                 normh = Special.Q(absh);
                 normah = Special.Q(ah);
-                value = 0.5 * (normh + normah) - normh * normah
-                - Special.owenhaah(ah, 1.0 / absa, absh);
+                value = 0.5f * (normh + normah) - normh * normah
+                - Special.owenhaah(ah, 1.0f / absa, absh);
             }
 
             if (a < 0.0)
@@ -1935,17 +1935,17 @@ namespace UMapx.Core
         /// <param name="h">First argument</param>
         /// <param name="a">Second argument</param>
         /// <param name="ah">h * a</param>
-        /// <returns>Double precision floating point number</returns>
-        private static double owenhaah(double h, double a, double ah)
+        /// <returns>float precision floating point number</returns>
+        private static float owenhaah(float h, float a, float ah)
         {
-            double ai;
-            double aj;
-            double AS;
-            double dhs;
-            double dj;
-            double gj;
+            float ai;
+            float aj;
+            float AS;
+            float dhs;
+            float dj;
+            float gj;
 
-            double hs;
+            float hs;
             int i;
             int iaint;
             int icode;
@@ -1955,19 +1955,19 @@ namespace UMapx.Core
             int jj;
             int m;
             int maxii;
-            double normh;
+            float normh;
 
-            double r;
-            const double rrtpi = 0.39894228040143267794;
-            const double rtwopi = 0.15915494309189533577;
+            float r;
+            const float rrtpi = 0.39894228040143267794f;
+            const float rtwopi = 0.15915494309189533577f;
 
-            double y;
-            double yi;
-            double z;
-            double zi;
+            float y;
+            float yi;
+            float z;
+            float zi;
 
-            double value = 0;
-            double vi;
+            float value = 0;
+            float vi;
 
 
             /*
@@ -2006,19 +2006,19 @@ namespace UMapx.Core
 
             if (meth[icode - 1] == 1)
             {
-                hs = -0.5 * h * h;
-                dhs = Math.Exp(hs);
+                hs = -0.5f * h * h;
+                dhs = (float)Math.Exp(hs);
                 AS = a * a;
                 j = 1;
                 jj = 1;
                 aj = rtwopi * a;
-                value = rtwopi * Math.Atan(a);
-                dj = dhs - 1.0;
+                value = rtwopi * (float)Math.Atan(a);
+                dj = dhs - 1.0f;
                 gj = hs * dhs;
 
                 for (; ; )
                 {
-                    value = value + dj * aj / (double)(jj);
+                    value = value + dj * aj / (float)(jj);
 
                     if (m <= j)
                     {
@@ -2028,7 +2028,7 @@ namespace UMapx.Core
                     jj = jj + 2;
                     aj = aj * AS;
                     dj = gj - dj;
-                    gj = gj * hs / (double)(j);
+                    gj = gj * hs / (float)(j);
                 }
             }
 
@@ -2041,12 +2041,12 @@ namespace UMapx.Core
             {
                 maxii = m + m + 1;
                 ii = 1;
-                value = 0.0;
+                value = 0.0f;
                 hs = h * h;
                 AS = -a * a;
-                vi = rrtpi * a * Math.Exp(-0.5 * ah * ah);
-                z = 0.5 * (-0.5 + Special.Q(-ah)) / h;
-                y = 1.0 / hs;
+                vi = rrtpi * a * (float)Math.Exp(-0.5 * ah * ah);
+                z = 0.5f * (-0.5f + Special.Q(-ah)) / h;
+                y = 1.0f / hs;
 
                 for (; ; )
                 {
@@ -2054,10 +2054,10 @@ namespace UMapx.Core
 
                     if (maxii <= ii)
                     {
-                        value = value * rrtpi * Math.Exp(-0.5 * hs);
+                        value = value * rrtpi * (float)Math.Exp(-0.5 * hs);
                         return value;
                     }
-                    z = y * (vi - (double)(ii) * z);
+                    z = y * (vi - (float)(ii) * z);
                     vi = AS * vi;
                     ii = ii + 2;
                 }
@@ -2071,12 +2071,12 @@ namespace UMapx.Core
             {
                 i = 1;
                 ii = 1;
-                value = 0.0;
+                value = 0.0f;
                 hs = h * h;
                 AS = a * a;
-                vi = rrtpi * a * Math.Exp(-0.5 * ah * ah);
-                zi = 0.5 * (-0.5 + Special.Q(-ah)) / h;
-                y = 1.0 / hs;
+                vi = rrtpi * a * (float)Math.Exp(-0.5 * ah * ah);
+                zi = 0.5f * (-0.5f + Special.Q(-ah)) / h;
+                y = 1.0f / hs;
 
                 for (; ; )
                 {
@@ -2084,10 +2084,10 @@ namespace UMapx.Core
 
                     if (m < i)
                     {
-                        value = value * rrtpi * Math.Exp(-0.5 * hs);
+                        value = value * rrtpi * (float)Math.Exp(-0.5 * hs);
                         return value;
                     }
-                    zi = y * ((double)(ii) * zi - vi);
+                    zi = y * ((float)(ii) * zi - vi);
                     vi = AS * vi;
                     i = i + 1;
                     ii = ii + 2;
@@ -2103,9 +2103,9 @@ namespace UMapx.Core
                 ii = 1;
                 hs = h * h;
                 AS = -a * a;
-                value = 0.0;
-                ai = rtwopi * a * Math.Exp(-0.5 * hs * (1.0 - AS));
-                yi = 1.0;
+                value = 0.0f;
+                ai = rtwopi * a * (float)Math.Exp(-0.5 * hs * (1.0 - AS));
+                yi = 1.0f;
 
                 for (; ; )
                 {
@@ -2115,7 +2115,7 @@ namespace UMapx.Core
                         return value;
 
                     ii = ii + 2;
-                    yi = (1.0 - hs * yi) / (double)(ii);
+                    yi = (1.0f - hs * yi) / (float)(ii);
                     ai = ai * AS;
                 }
             }
@@ -2125,13 +2125,13 @@ namespace UMapx.Core
             */
             else if (meth[icode - 1] == 5)
             {
-                value = 0.0;
+                value = 0.0f;
                 AS = a * a;
-                hs = -0.5 * h * h;
+                hs = -0.5f * h * h;
                 for (i = 1; i <= m; i++)
                 {
-                    r = 1.0 + AS * pts[i - 1];
-                    value = value + wts[i - 1] * Math.Exp(hs * r) / r;
+                    r = 1.0f + AS * pts[i - 1];
+                    value = value + wts[i - 1] * (float)Math.Exp(hs * r) / r;
                 }
                 value = a * value;
             }
@@ -2141,12 +2141,12 @@ namespace UMapx.Core
             else if (meth[icode - 1] == 6)
             {
                 normh = Special.Q(h);
-                value = 0.5 * normh * (1.0 - normh);
-                y = 1.0 - a;
-                r = Math.Atan(y / (1.0 + a));
+                value = 0.5f * normh * (1.0f - normh);
+                y = 1.0f - a;
+                r = (float)Math.Atan(y / (1.0f + a));
 
                 if (r != 0.0)
-                    value = value - rtwopi * r * Math.Exp(-0.5 * y * h * h / r);
+                    value = value - rtwopi * r * (float)Math.Exp(-0.5 * y * h * h / r);
             }
 
             return value;
@@ -2154,35 +2154,35 @@ namespace UMapx.Core
         /// <summary>
         /// 
         /// </summary>
-        private static readonly double[] arange =
+        private static readonly float[] arange =
         {
-            0.025, 0.09, 0.15, 0.36, 0.5, 0.9, 0.99999
+            0.025f, 0.09f, 0.15f, 0.36f, 0.5f, 0.9f, 0.99999f
         };
         /// <summary>
         /// 
         /// </summary>
-        private static readonly double[] coefT =
+        private static readonly float[] coefT =
         {
-                                          0.99999999999999987510,
-            -0.99999999999988796462,      0.99999999998290743652,
-            -0.99999999896282500134,      0.99999996660459362918,
-            -0.99999933986272476760,      0.99999125611136965852,
-            -0.99991777624463387686,      0.99942835555870132569,
-            -0.99697311720723000295,      0.98751448037275303682,
-            -0.95915857980572882813,      0.89246305511006708555,
-            -0.76893425990463999675,      0.58893528468484693250,
-            -0.38380345160440256652,      0.20317601701045299653,
-            -0.82813631607004984866E-01,  0.24167984735759576523E-01,
-            -0.44676566663971825242E-02,  0.39141169402373836468E-03
+                                          0.99999999999999987510f,
+            -0.99999999999988796462f,      0.99999999998290743652f,
+            -0.99999999896282500134f,      0.99999996660459362918f,
+            -0.99999933986272476760f,      0.99999125611136965852f,
+            -0.99991777624463387686f,      0.99942835555870132569f,
+            -0.99697311720723000295f,      0.98751448037275303682f,
+            -0.95915857980572882813f,      0.89246305511006708555f,
+            -0.76893425990463999675f,      0.58893528468484693250f,
+            -0.38380345160440256652f,      0.20317601701045299653f,
+            -0.82813631607004984866E-01f,  0.24167984735759576523E-01f,
+            -0.44676566663971825242E-02f,  0.39141169402373836468E-03f
         };
         /// <summary>
         /// 
         /// </summary>
-        private static readonly double[] hrange =
+        private static readonly float[] hrange =
         {
-            0.02, 0.06, 0.09, 0.125, 0.26,
-            0.4,  0.6,  1.6,  1.7,   2.33,
-            2.4,  3.36, 3.4,  4.8
+            0.02f, 0.06f, 0.09f, 0.125f, 0.26f,
+            0.4f,  0.6f,  1.6f,  1.7f,   2.33f,
+            2.4f,  3.36f, 3.4f,  4.8f
         };
         /// <summary>
         /// 
@@ -2201,15 +2201,15 @@ namespace UMapx.Core
         /// <summary>
         /// 
         /// </summary>
-        private static readonly double[] pts =
+        private static readonly float[] pts =
         {
-                                         0.35082039676451715489E-02,
-            0.31279042338030753740E-01,  0.85266826283219451090E-01,
-            0.16245071730812277011,      0.25851196049125434828,
-            0.36807553840697533536,      0.48501092905604697475,
-            0.60277514152618576821,      0.71477884217753226516,
-            0.81475510988760098605,      0.89711029755948965867,
-            0.95723808085944261843,      0.99178832974629703586
+                                         0.35082039676451715489E-02f,
+            0.31279042338030753740E-01f,  0.85266826283219451090E-01f,
+            0.16245071730812277011f,      0.25851196049125434828f,
+            0.36807553840697533536f,      0.48501092905604697475f,
+            0.60277514152618576821f,      0.71477884217753226516f,
+            0.81475510988760098605f,      0.89711029755948965867f,
+            0.95723808085944261843f,      0.99178832974629703586f
         };
         /// <summary>
         /// 
@@ -2228,15 +2228,15 @@ namespace UMapx.Core
         /// <summary>
         /// 
         /// </summary>
-        private static readonly double[] wts =
+        private static readonly float[] wts =
         {
-                                         0.18831438115323502887E-01,
-            0.18567086243977649478E-01,  0.18042093461223385584E-01,
-            0.17263829606398753364E-01,  0.16243219975989856730E-01,
-            0.14994592034116704829E-01,  0.13535474469662088392E-01,
-            0.11886351605820165233E-01,  0.10070377242777431897E-01,
-            0.81130545742299586629E-02,  0.60419009528470238773E-02,
-            0.38862217010742057883E-02,  0.16793031084546090448E-02
+                                         0.18831438115323502887E-01f,
+            0.18567086243977649478E-01f,  0.18042093461223385584E-01f,
+            0.17263829606398753364E-01f,  0.16243219975989856730E-01f,
+            0.14994592034116704829E-01f,  0.13535474469662088392E-01f,
+            0.11886351605820165233E-01f,  0.10070377242777431897E-01f,
+            0.81130545742299586629E-02f,  0.60419009528470238773E-02f,
+            0.38862217010742057883E-02f,  0.16793031084546090448E-02f
         };
         #endregion
         #endregion
@@ -2246,17 +2246,17 @@ namespace UMapx.Core
         /// Returns the value of the inverse Guderman function.
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Agd(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Agd(float x)
         {
-            return 0.5 * Math.Log((1.0 + Math.Sin(x)) / (1.0 - Math.Sin(x)));
+            return 0.5f * (float)Math.Log((1.0 + Math.Sin(x)) / (1.0 - Math.Sin(x)));
         }
         /// <summary>
         /// Returns the value of the Guderman function.
         /// </summary>
         /// <param name="x">Angle in radians</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Gd(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Gd(float x)
         {
             return 2 * Maths.Atg(Maths.Exp(x)) - 1.57079632679f;
         }
@@ -2264,10 +2264,10 @@ namespace UMapx.Core
         /// Returns the value of the function Cas(x).
         /// </summary>
         /// <param name="theta">Theta</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Cas(double theta)
+        /// <returns>float precision floating point number</returns>
+        public static float Cas(float theta)
         {
-            return 1.414f * Math.Sin(theta + 0.78539);
+            return 1.414f * (float)Math.Sin(theta + 0.78539);
         }
         #endregion
 
@@ -2276,25 +2276,25 @@ namespace UMapx.Core
         /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
         /// </summary>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Sinc(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Sinc(float x)
         {
-            return Special.Sinc(x, Math.PI);
+            return Special.Sinc(x, Maths.Pi);
         }
         /// <summary>
         /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
         /// </summary>
         /// <param name="x">Number</param>
         /// <param name="a">Parameter</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Sinc(double x, double a)
+        /// <returns>float precision floating point number</returns>
+        public static float Sinc(float x, float a)
         {
             if (x == 0)
             {
                 return 1;
             }
-            double ax = a * x;
-            return Math.Sin(ax) / (ax);
+            float ax = a * x;
+            return (float)Math.Sin(ax) / (ax);
         }
         #endregion
 
@@ -2304,8 +2304,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Number</param>
         /// <param name="k">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Binomial(double n, double k)
+        /// <returns>float precision floating point number</returns>
+        public static float Binomial(float n, float k)
         {
             if (k < 0)
             {
@@ -2318,8 +2318,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Number</param>
         /// <param name="k">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double LogBinomial(double n, double k)
+        /// <returns>float precision floating point number</returns>
+        public static float LogBinomial(float n, float k)
         {
             return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
         }
@@ -2330,17 +2330,17 @@ namespace UMapx.Core
         /// Returns the natural logarithm of the factorial of a number log(n!).
         /// </summary>
         /// <param name="n">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double LogFactorial(double n)
+        /// <returns>float precision floating point number</returns>
+        public static float LogFactorial(float n)
         {
-            return Special.GammaLog(n + 1.0);
+            return Special.GammaLog(n + 1.0f);
         }
         /// <summary>
         /// Returns the factorial of a number.
         /// </summary>
         /// <param name="n">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Factorial(double n)
+        /// <returns>float precision floating point number</returns>
+        public static float Factorial(float n)
         {
             // check it:
             if (Maths.IsInteger(n) && n >= 0)
@@ -2348,9 +2348,9 @@ namespace UMapx.Core
                 // get it from memory
                 if (n <= 170)
                 {
-                    return Special.A000142[(int)n];
+                    return (float)Special.A000142[(int)n];
                 }
-                return double.NaN;
+                return float.NaN;
             }
             return Special.Gamma(n + 1);
         }
@@ -2359,8 +2359,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Number</param>
         /// <param name="k">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double FactorialDown(double n, double k)
+        /// <returns>float precision floating point number</returns>
+        public static float FactorialDown(float n, float k)
         {
             return Special.Factorial(n) / Special.Factorial(n - k);
         }
@@ -2369,12 +2369,12 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Number</param>
         /// <param name="k">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double FactorialUp(double n, double k)
+        /// <returns>float precision floating point number</returns>
+        public static float FactorialUp(float n, float k)
         {
             if (n == 0)
             {
-                return 1.0;
+                return 1.0f;
             }
             return Special.Gamma(n + k) / Special.Gamma(n);
         }
@@ -2388,10 +2388,10 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int Fibonacci(int n)
         {
-            double r = 2.2360679774997896964;
-            double phi = (1.0 + r) / 2.0;
-            double psi = (1.0 - r) / 2.0;
-            double num = Math.Pow(phi, n) - Math.Pow(psi, n);
+            float r = 2.2360679774997896964f;
+            float phi = (1.0f + r) / 2.0f;
+            float psi = (1.0f - r) / 2.0f;
+            float num = (float)Math.Pow(phi, n) - (float)Math.Pow(psi, n);
             return (int)(num / r);
         }
         /// <summary>
@@ -2401,10 +2401,10 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int Lucas(int n)
         {
-            double r = 2.2360679774997896964;
-            double phi = (1.0 + r) / 2.0;
-            double psi = (1.0 - r) / 2.0;
-            double num = Math.Pow(phi, n) + Math.Pow(psi, n);
+            float r = 2.2360679774997896964f;
+            float phi = (1.0f + r) / 2.0f;
+            float psi = (1.0f - r) / 2.0f;
+            float num = (float)Math.Pow(phi, n) + (float)Math.Pow(psi, n);
             return (int)(num);
         }
         #endregion
@@ -2414,16 +2414,16 @@ namespace UMapx.Core
         /// Returns the Bernoulli number.
         /// </summary>
         /// <param name="n">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Bernoulli(int n)
+        /// <returns>float precision floating point number</returns>
+        public static float Bernoulli(int n)
         {
             // special cases:
             if (n < 0)
-                return double.NaN;
+                return float.NaN;
             else if (n == 0)
                 return 1;
             else if (n == 1)
-                return -0.5;
+                return -0.5f;
 
             // for even number:
             else if (Maths.Mod(n, 2) == 0)
@@ -2431,9 +2431,9 @@ namespace UMapx.Core
                 // get it from memory
                 if (n <= 258)
                 {
-                    return Special.A027641[n / 2 - 1];
+                    return (float)Special.A027641[n / 2 - 1];
                 }
-                return double.NaN;
+                return float.NaN;
             }
             // for odd number:
             return 0;
@@ -2443,11 +2443,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Order</param>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Bernoulli(int n, double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Bernoulli(int n, float x)
         {
             // properties:
-            double p = 1, s = 0;
+            float p = 1, s = 0;
 
             // series:
             for (int k = 0; k <= n; k++)
@@ -2465,12 +2465,12 @@ namespace UMapx.Core
         /// Returns the Euler number.
         /// </summary>
         /// <param name="n">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Euler(int n)
+        /// <returns>float precision floating point number</returns>
+        public static float Euler(int n)
         {
             // special cases:
             if (n < 0)
-                return double.NaN;
+                return float.NaN;
             else if (n == 0)
                 return 1;
 
@@ -2480,9 +2480,9 @@ namespace UMapx.Core
                 // get it from memory
                 if (n <= 186)
                 {
-                    return Special.A122045[n / 2 - 1];
+                    return (float)Special.A122045[n / 2 - 1];
                 }
-                return double.NaN;
+                return float.NaN;
             }
             // for odd number:
             return 0;
@@ -2492,13 +2492,13 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Order</param>
         /// <param name="x">Number</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Euler(int n, double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Euler(int n, float x)
         {
             // properties:
-            double p = 1, s = 0;
-            double v = x - 0.5;
-            double u = Math.Pow(v, n);
+            float p = 1, s = 0;
+            float v = x - 0.5f;
+            float u = (float)Math.Pow(v, n);
 
             // series:
             for (int k = 0; k <= n; k++)
@@ -2516,23 +2516,23 @@ namespace UMapx.Core
         /// Returns the harmonic number.
         /// </summary>
         /// <param name="n">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Harm(int n)
+        /// <returns>float precision floating point number</returns>
+        public static float Harm(int n)
         {
-            return Special.DiGamma(n) + 1.0 / n + Maths.Gamma;
+            return Special.DiGamma(n) + 1.0f / n + Maths.Gamma;
         }
         /// <summary>
         /// Returns the harmonic number.
         /// </summary>
         /// <param name="n">Order</param>
         /// <param name="m">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Harm(int n, double m)
+        /// <returns>float precision floating point number</returns>
+        public static float Harm(int n, float m)
         {
-            double sum = 0;
+            float sum = 0;
             for (int i = 0; i < n; i++)
             {
-                sum += Math.Pow(i + 1, -m);
+                sum += (float)Math.Pow(i + 1, -m);
             }
 
             return sum;
@@ -2545,21 +2545,21 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="n">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double ChebyshevT(double x, int n)
+        /// <returns>float precision floating point number</returns>
+        public static float ChebyshevT(float x, int n)
         {
-            return Math.Cos(n * Math.Acos(x));
+            return (float)Math.Cos(n * Math.Acos(x));
         }
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the second kind.
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="n">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double ChebyshevU(double x, int n)
+        /// <returns>float precision floating point number</returns>
+        public static float ChebyshevU(float x, int n)
         {
-            double z = Math.Acos(x);
-            return Math.Sin((n + 1) * z) / Math.Sin(z);
+            float z = (float)Math.Acos(x);
+            return (float)Math.Sin((n + 1) * z) / (float)Math.Sin(z);
         }
         #endregion
 
@@ -2570,8 +2570,8 @@ namespace UMapx.Core
         /// <param name="x">Argument</param>
         /// <param name="a">Power</param>
         /// <param name="n">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Abel(double x, double a, int n)
+        /// <returns>float precision floating point number</returns>
+        public static float Abel(float x, float a, int n)
         {
             if (n == 0)
                 return 1;
@@ -2580,7 +2580,7 @@ namespace UMapx.Core
 
             // Generalized formula
             // Abel polynomials recurrence relation for any n ≥ 1:
-            return x * Math.Pow(x - a * n, n - 1);
+            return x * (float)Math.Pow(x - a * n, n - 1);
         }
         #endregion
 
@@ -2591,8 +2591,8 @@ namespace UMapx.Core
         /// <param name="x">Argument</param>
         /// <param name="a">Power</param>
         /// <param name="k">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Laguerre(double x, double a, int k)
+        /// <returns>float precision floating point number</returns>
+        public static float Laguerre(float x, float a, int k)
         {
             if (k == 0)
                 return 1;
@@ -2601,8 +2601,8 @@ namespace UMapx.Core
 
             // Generalized formula
             // Laguerre polynomials recurrence relation for any k ≥ 1:
-            double psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
-            double ksi = k + 1;
+            float psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
+            float ksi = k + 1;
             return psi / ksi;
         }
         #endregion
@@ -2613,8 +2613,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="m">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Legendre(double x, int m)
+        /// <returns>float precision floating point number</returns>
+        public static float Legendre(float x, int m)
         {
             if (m == 0)
                 return 1;
@@ -2624,8 +2624,8 @@ namespace UMapx.Core
             // legendre function
             // More info: https://pdfs.semanticscholar.org/be30/38b3aafed73d33fe78a701ee096471d16fa1.pdf
             // Laguerre polynomials recurrence relation for any k ≥ 1:
-            double ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
-            double psi = m + 1;
+            float ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
+            float psi = m + 1;
             return ksi / psi;
         }
         #endregion
@@ -2636,8 +2636,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="m">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Hermite(double x, int m)
+        /// <returns>float precision floating point number</returns>
+        public static float Hermite(float x, int m)
         {
             if (m == 0)
                 return 1;
@@ -2645,7 +2645,7 @@ namespace UMapx.Core
                 return x;
 
             // recursion formula for Hermite polynomials
-            double ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
+            float ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
             return 2 * ksi;
         }
         #endregion
@@ -2657,8 +2657,8 @@ namespace UMapx.Core
         /// <param name="x">Argument</param>
         /// <param name="a">Power</param>
         /// <param name="n">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Gegenbauer(double x, double a, int n)
+        /// <returns>float precision floating point number</returns>
+        public static float Gegenbauer(float x, float a, int n)
         {
             if (n == 0)
                 return 1;
@@ -2667,7 +2667,7 @@ namespace UMapx.Core
 
             // Generalized formula
             // Laguerre polynomials recurrence relation for any k ≥ 1:
-            double psi = 2.0 * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
+            float psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
             return psi / n;
         }
         #endregion
@@ -2678,10 +2678,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Number</param>
         /// <param name="t">Parameter</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Mahler(double x, double t)
+        /// <returns>float precision floating point number</returns>
+        public static float Mahler(float x, float t)
         {
-            return Math.Exp(x * (1 + t - Math.Pow(Math.E, t)));
+            return (float)Math.Exp(x * (1 + t - Math.Pow(Math.E, t)));
         }
         #endregion
 
@@ -2693,13 +2693,13 @@ namespace UMapx.Core
         /// <param name="a">Upper asymptote</param>
         /// <param name="b">Growth parameter</param>
         /// <param name="c">Growth rate</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Gompertz(double t, double a, double b, double c)
+        /// <returns>float precision floating point number</returns>
+        public static float Gompertz(float t, float a, float b, float c)
         {
-            double x = -c * t;
-            double y = -b * Maths.E;
-            double z = a * Maths.E;
-            return Math.Pow(z, Math.Pow(y, x));
+            float x = -c * t;
+            float y = -b * Maths.E;
+            float z = a * Maths.E;
+            return (float)Math.Pow(z, Math.Pow(y, x));
         }
         #endregion
 
@@ -2709,10 +2709,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="k">Smoothing factor</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Heaviside(double x, double k)
+        /// <returns>float precision floating point number</returns>
+        public static float Heaviside(float x, float k)
         {
-            return 0.5 + 0.5 * Math.Tanh(k * x);
+            return 0.5f + 0.5f * (float)Math.Tanh(k * x);
         }
         #endregion
 
@@ -2727,10 +2727,10 @@ namespace UMapx.Core
         /// <param name="v">Affect</param>
         /// <param name="q">Central moment</param>
         /// <param name="c">Offset</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Logistic(double x, double a, double k, double b, double v, double q, double c)
+        /// <returns>float precision floating point number</returns>
+        public static float Logistic(float x, float a, float k, float b, float v, float q, float c)
         {
-            return a + (k - a) / Math.Pow(c + q * Math.Exp(-b * x), 1.0 / v);
+            return a + (k - a) / (float)Math.Pow(c + q * (float)Math.Exp(-b * x), 1.0 / v);
         }
         /// <summary>
         /// Returns the value of a logistic function.
@@ -2739,19 +2739,19 @@ namespace UMapx.Core
         /// <param name="a">Lower asymptote</param>
         /// <param name="k">Upper asymptote</param>
         /// <param name="b">Growth rate</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Logistic(double x, double a, double k, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float Logistic(float x, float a, float k, float b)
         {
-            return Logistic(x, a, k, b, 0.5, 0.5, 1);
+            return Logistic(x, a, k, b, 0.5f, 0.5f, 1);
         }
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Logistic(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Logistic(float x)
         {
-            return Logistic(x, 0, 1, 3, 0.5, 0.5, 1);
+            return Logistic(x, 0, 1, 3, 0.5f, 0.5f, 1);
         }
         #endregion
 
@@ -2761,13 +2761,13 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="a">Coefficient</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Dirac(double x, double a)
+        /// <returns>float precision floating point number</returns>
+        public static float Dirac(float x, float a)
         {
-            double s = Math.Sqrt(Math.PI);
-            double b = 1.0 / Math.Abs(a) / s;
-            double c = Math.Pow(x / a, 2);
-            double e = Math.Exp(-c);
+            float s = (float)Math.Sqrt(Math.PI);
+            float b = 1.0f / Math.Abs(a) / s;
+            float c = (float)Math.Pow(x / a, 2);
+            float e = (float)Math.Exp(-c);
             return b * e;
         }
         #endregion
@@ -2778,22 +2778,22 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="positive">D- или D+</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Dawson(double x, bool positive)
+        /// <returns>float precision floating point number</returns>
+        public static float Dawson(float x, bool positive)
         {
             if (positive)
             {
                 // D+ function:
-                double p = Special.sqrtPI / 2.0;
-                double v = Maths.Exp(-x * x);
-                double erfi = Special.Erfi(x);
+                float p = Special.sqrtPI / 2.0f;
+                float v = Maths.Exp(-x * x);
+                float erfi = Special.Erfi(x);
                 return p * v * erfi;
             }
             // D- function:
-            double y = x * x;
-            double g = sqrtPI / 2.0;
-            double e = Special.Erf(x);
-            double d = Math.Exp(y);
+            float y = x * x;
+            float g = sqrtPI / 2.0f;
+            float e = Special.Erf(x);
+            float d = (float)Math.Exp(y);
             return g * d * e;
         }
         #endregion
@@ -2811,11 +2811,11 @@ namespace UMapx.Core
         /// <param name="b">Parameter</param>
         /// <param name="c">Parameter</param>
         /// <param name="z">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Hypergeom(double a, double b, double c, double z)
+        /// <returns>float precision floating point number</returns>
+        public static float Hypergeom(float a, float b, float c, float z)
         {
             // catch exception:
-            if (double.IsNaN(a) || double.IsNaN(b) || double.IsNaN(c))
+            if (float.IsNaN(a) || float.IsNaN(b) || float.IsNaN(c))
                 throw new Exception("For this function, all input parameters must be correctly defined");
 
             // for all z = 0:
@@ -2823,10 +2823,10 @@ namespace UMapx.Core
                 return 1;
 
             // Properties:
-            double s = 1.0;
-            double m = 1.0;
-            double pa = 1, pb = 1, pc = 1;
-            double t, eps = 1e-32;
+            float s = 1.0f;
+            float m = 1.0f;
+            float pa = 1, pb = 1, pc = 1;
+            float t, eps = 1e-32f;
             int i, j, iterations = 140;
 
             // Taylor series:
@@ -2856,7 +2856,7 @@ namespace UMapx.Core
         /// <remarks>
         /// The hypergeometric function can be used in several variations:
         /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
-        /// Instead of the “~” sign, use the double.NaN value.
+        /// Instead of the “~” sign, use the float.NaN value.
         /// More information can be found on the website:
         /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
         /// </remarks>
@@ -2864,32 +2864,32 @@ namespace UMapx.Core
         /// <param name="a">Parameter</param>
         /// <param name="b">Parameter</param>
         /// <param name="z">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Hypergeom(double a, double b, double z)
+        /// <returns>float precision floating point number</returns>
+        public static float Hypergeom(float a, float b, float z)
         {
             // for all z = 0:
             if (z == 0)
                 return 1;
 
             // Properties:
-            double s = 1.0;
-            double m = 1.0;
-            double pa = 1, pb = 1;
-            double t, eps = 1e-32;
+            float s = 1.0f;
+            float m = 1.0f;
+            float pa = 1, pb = 1;
+            float t, eps = 1e-32f;
             int i, j, iterations = 140;
 
-            if (double.IsNaN(a) && double.IsNaN(b) ||
+            if (float.IsNaN(a) && float.IsNaN(b) ||
                 a == b)
             {
                 // s = e^z:
-                s = Math.Exp(z);
+                s = (float)Math.Exp(z);
             }
-            else if (double.IsNaN(b))
+            else if (float.IsNaN(b))
             {
                 // special case for complex
                 // values:
                 if (Math.Abs(z) > 1.0)
-                    return double.NaN;
+                    return float.NaN;
 
                 // F(a,~,z):
                 for (i = 1; i < iterations; i++)
@@ -2908,7 +2908,7 @@ namespace UMapx.Core
                     else { s += t; }
                 }
             }
-            else if (double.IsNaN(a))
+            else if (float.IsNaN(a))
             {
                 // F(~,b,z):
                 for (i = 1; i < iterations; i++)
@@ -2959,18 +2959,18 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument (0, +inf)</param>
         /// <param name="n">Order [0, +inf)</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Gerf(double x, int n)
+        /// <returns>float precision floating point number</returns>
+        public static float Gerf(float x, int n)
         {
             // Generalized error functions:
             if (n < 0)
-                return double.NaN; // singular values
+                return float.NaN; // singular values
 
             else if (n == 0)
-                return x / Math.E / sqrtPI; // E0(x)
+                return x / (float)Math.E / sqrtPI; // E0(x)
 
             else if (n == 1)
-                return (1 - Math.Exp(-x)) / sqrtPI; // E1(x)
+                return (1 - (float)Math.Exp(-x)) / sqrtPI; // E1(x)
 
             else if (n == 2)
                 return Erf(x); // E2(x) = erf(x)
@@ -2978,19 +2978,19 @@ namespace UMapx.Core
             // En(x) for all x > 0
             if (x > 0)
             {
-                double p = 1.0 / n;
-                double w = 1.0 / sqrtPI;
-                double v = Gamma(p) - GammaIncomplete(p, Math.Pow(x, n), true);
+                float p = 1.0f / n;
+                float w = 1.0f / sqrtPI;
+                float v = Gamma(p) - GammaIncomplete(p, (float)Math.Pow(x, n), true);
                 return w * Gamma(n) * (v);
             }
-            return double.NaN;
+            return float.NaN;
         }
         /// <summary>
         /// Returns the value of the generalized error function.
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Gerf(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Gerf(float x)
         {
             return Gerf(x, 2);
         }
@@ -3002,11 +3002,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="t">Argument [0, 1]</param>
         /// <param name="n">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Rademacher(double t, int n)
+        /// <returns>float precision floating point number</returns>
+        public static float Rademacher(float t, int n)
         {
-            double p = Math.Pow(2, n);
-            double v = p * Math.PI * t;
+            float p = (float)Math.Pow(2, n);
+            float v = p * Maths.Pi * t;
             return Math.Sign(Math.Sin(v));
         }
         #endregion
@@ -3018,31 +3018,31 @@ namespace UMapx.Core
         /// <param name="y">Firset parameter</param>
         /// <param name="v">Second parameter</param>
         /// <param name="t">Time parameter</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erlang(double y, int v, double t)
+        /// <returns>float precision floating point number</returns>
+        public static float Erlang(float y, int v, float t)
         {
-            double e = Special.Erlang(y, v);
-            double a = v * e;
-            double b = v - y + y * e;
-            double c = (v - y) * t;
-            return a / b * Math.Exp(-c);
+            float e = Special.Erlang(y, v);
+            float a = v * e;
+            float b = v - y + y * e;
+            float c = (v - y) * t;
+            return a / b * (float)Math.Exp(-c);
         }
         /// <summary>
         /// Returns the value of the Erlang B-function.
         /// </summary>
         /// <param name="y">Firset parameter</param>
         /// <param name="v">Second parameter</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Erlang(double y, int v)
+        /// <returns>float precision floating point number</returns>
+        public static float Erlang(float y, int v)
         {
             // special cases:
             if (v == 0)
                 return 1;
             if (v < 0)
-                return double.NaN;
+                return float.NaN;
 
             // set:
-            double t = 1, b = 1; int i;
+            float t = 1, b = 1; int i;
 
             //series:
             for (i = 1; i < v; i++)
@@ -3052,7 +3052,7 @@ namespace UMapx.Core
             }
 
             // last step and result:
-            double a = (t * y / i);
+            float a = (t * y / i);
             return a / (a + b);
         }
         #endregion
@@ -3063,8 +3063,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument [-1/e,+inf)</param>
         /// <param name="branch">Function branch</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double LambertW(double x, bool branch = true)
+        /// <returns>float precision floating point number</returns>
+        public static float LambertW(float x, bool branch = true)
         {
             // *****************************************************************
             // Halley's method for calculating Lambert W-function.
@@ -3072,14 +3072,14 @@ namespace UMapx.Core
             // Halley's method is a method for finding a zero of a real-valued 
             // function with a continuous and easily computed second derivative.
 
-            double eps = 1e-8, e, f;
-            double w = branch ? 1 : -2;
-            double v = double.PositiveInfinity * w;
+            float eps = 1e-8f, e, f;
+            float w = branch ? 1 : -2;
+            float v = float.PositiveInfinity * w;
 
             while (Math.Abs(w - v) / Math.Abs(w) > eps)
             {
                 v = w;
-                e = Math.Exp(w);
+                e = (float)Math.Exp(w);
                 f = w * e - x;  // Iterate to make this quantity zero
                 w = w - f / ((e * (w + 1) - (w + 2) * f / (2 * w + 2)));
             }
@@ -3090,12 +3090,12 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument [1,+inf)</param>
         /// <param name="branch">Function branch</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Ssqrt(double x, bool branch = true)
+        /// <returns>float precision floating point number</returns>
+        public static float Ssqrt(float x, bool branch = true)
         {
             // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
             // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
-            double log = Math.Log(x);
+            float log = (float)Math.Log(x);
             return log / LambertW(log, branch);
         }
         #endregion
@@ -3105,14 +3105,14 @@ namespace UMapx.Core
         /// Returns the value of the Minkowski function.
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Minkowski(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Minkowski(float x)
         {
             // Minkowski function:
             long p = (long)x, q = 1, r = p + 1, s = 1, m, n;
-            double d = 1, y = p;
+            float d = 1, y = p;
 
-            if (x < (double)p || (p < 0) ^ (r <= 0))
+            if (x < (float)p || (p < 0) ^ (r <= 0))
             {
                 return x;
             }
@@ -3124,7 +3124,7 @@ namespace UMapx.Core
                 m = p + r; if ((m < 0) ^ (p < 0)) break;
                 n = q + s; if (n < 0) break;
 
-                if (x < (double)m / n)
+                if (x < (float)m / n)
                 {
                     r = m; s = n;
                 }

@@ -10,9 +10,9 @@ namespace UMapx.Colorspace
     public struct HSB : IColorSpace, ICloneable
     {
         #region Private data
-        private double h;
-        private double s;
-        private double b;
+        private float h;
+        private float s;
+        private float b;
         #endregion
 
         #region Structure components
@@ -22,7 +22,7 @@ namespace UMapx.Colorspace
         /// <param name="h">Hue [0, 359]</param>
         /// <param name="s">Saturation [0, 1]</param>
         /// <param name="b">Brightness [0, 1]</param>
-        public HSB(double h, double s, double b)
+        public HSB(float h, float s, float b)
         {
             this.h = (h > 359) ? 359 : ((h < 0) ? 0 : h);
             this.s = (s > 1) ? 1 : ((s < 0) ? 0 : s);
@@ -31,7 +31,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 359].
         /// </summary>
-        public double Hue
+        public float Hue
         {
             get
             {
@@ -45,7 +45,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Saturation
+        public float Saturation
         {
             get
             {
@@ -59,7 +59,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Brightness
+        public float Brightness
         {
             get
             {
@@ -158,15 +158,15 @@ namespace UMapx.Colorspace
         /// <returns>HSB structure</returns>
         public static HSB FromRGB(int red, int green, int blue)
         {
-            double r = red / 255.0f;
-            double g = green / 255.0f;
-            double b = blue / 255.0f;
+            float r = red / 255.0f;
+            float g = green / 255.0f;
+            float b = blue / 255.0f;
 
-            double max = Maths.Max(r, g, b);
-            double min = Maths.Min(r, g, b);
+            float max = Maths.Max(r, g, b);
+            float min = Maths.Min(r, g, b);
 
-            double h = 0;
-            double l = max - min;
+            float h = 0;
+            float l = max - min;
 
             if (max == r && g >= b)
             {
@@ -186,7 +186,7 @@ namespace UMapx.Colorspace
                 h = (int)(60 * (r - g) / l + 240);
             }
 
-            double s = (max == 0.0f) ? 0.0f : (1 - (min / max));
+            float s = (max == 0.0f) ? 0.0f : (1 - (min / max));
             return new HSB(h, s, max);
         }
         /// <summary>
@@ -209,9 +209,9 @@ namespace UMapx.Colorspace
         {
             get
             {
-                double red = 0;
-                double green = 0;
-                double blue = 0;
+                float red = 0;
+                float green = 0;
+                float blue = 0;
 
                 if (b <= 0)
                 {
@@ -224,13 +224,13 @@ namespace UMapx.Colorspace
                 }
                 else
                 {
-                    double Hi = h / 60.0f;
+                    float Hi = h / 60.0f;
                     int HiMod6 = (int)(Math.Floor(Hi));
-                    double Sector = Hi - HiMod6;
+                    float Sector = Hi - HiMod6;
 
-                    double Vmin = b * (1 - s);
-                    double Vdec = b * (1 - (s * Sector));
-                    double Vinc = b * (1 - (s * (1 - Sector)));
+                    float Vmin = b * (1 - s);
+                    float Vdec = b * (1 - (s * Sector));
+                    float Vinc = b * (1 - (s * (1 - Sector)));
 
                     switch (HiMod6)
                     {

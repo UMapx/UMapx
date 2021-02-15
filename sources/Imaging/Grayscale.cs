@@ -12,9 +12,9 @@ namespace UMapx.Imaging
     public class Grayscale : IBitmapFilter
     {
         #region Private data
-        private double cr;
-        private double cg;
-        private double cb;
+        private float cr;
+        private float cg;
+        private float cb;
         #endregion
 
         #region Filter components
@@ -24,7 +24,7 @@ namespace UMapx.Imaging
         /// <param name="cr">Red</param>
         /// <param name="cg">Green</param>
         /// <param name="cb">Blue</param>
-        public Grayscale(double cr, double cg, double cb)
+        public Grayscale(float cr, float cg, float cb)
         {
             Cr = cr;
             Cg = cg;
@@ -42,7 +42,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the red channel value.
         /// </summary>
-        public double Cr
+        public float Cr
         {
             get
             {
@@ -56,7 +56,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the green channel value.
         /// </summary>
-        public double Cg
+        public float Cg
         {
             get
             {
@@ -70,7 +70,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the blue channel value.
         /// </summary>
-        public double Cb
+        public float Cb
         {
             get
             {
@@ -105,9 +105,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
         }
         #endregion
 

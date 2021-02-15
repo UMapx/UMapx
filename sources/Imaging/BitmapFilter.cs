@@ -88,9 +88,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return;
         }
         #endregion
@@ -102,13 +102,13 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyRGB(BitmapData bmData)
         {
-            double[][,] rgb = BitmapConverter.ToRGB(bmData, true);
+            float[][,] rgb = BitmapMatrix.ToRGB(bmData, true);
 
             this.filter.Apply(rgb[0]);
             this.filter.Apply(rgb[1]);
             this.filter.Apply(rgb[2]);
 
-            BitmapConverter.FromRGB(rgb, bmData);
+            BitmapMatrix.FromRGB(rgb, bmData);
             return;
         }
         /// <summary>
@@ -117,9 +117,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyHSB(BitmapData bmData)
         {
-            double[][,] hsb = BitmapConverter.ToHSB(bmData, true);
+            float[][,] hsb = BitmapMatrix.ToHSB(bmData, true);
             this.filter.Apply(hsb[2]);
-            BitmapConverter.FromHSB(hsb, bmData);
+            BitmapMatrix.FromHSB(hsb, bmData);
             return;
         }
         /// <summary>
@@ -128,9 +128,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyHSL(BitmapData bmData)
         {
-            double[][,] hsl = BitmapConverter.ToHSL(bmData, true);
+            float[][,] hsl = BitmapMatrix.ToHSL(bmData, true);
             this.filter.Apply(hsl[2]);
-            BitmapConverter.FromHSL(hsl, bmData);
+            BitmapMatrix.FromHSL(hsl, bmData);
             return;
         }
         /// <summary>
@@ -139,9 +139,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyYCbCr(BitmapData bmData)
         {
-            double[][,] ycbcr = BitmapConverter.ToYCbCr(bmData, true);
+            float[][,] ycbcr = BitmapMatrix.ToYCbCr(bmData, true);
             this.filter.Apply(ycbcr[0]);
-            BitmapConverter.FromYCbCr(ycbcr, bmData);
+            BitmapMatrix.FromYCbCr(ycbcr, bmData);
             return;
         }
         /// <summary>
@@ -150,9 +150,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyGrayscale(BitmapData bmData)
         {
-            double[,] y = BitmapConverter.ToGrayscale(bmData);
+            float[,] y = BitmapMatrix.ToGrayscale(bmData);
             this.filter.Apply(y);
-            BitmapConverter.FromGrayscale(y, bmData);
+            BitmapMatrix.FromGrayscale(y, bmData);
             return;
         }
         #endregion

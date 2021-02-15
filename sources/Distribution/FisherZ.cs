@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class FisherZ : IDistribution
     {
         #region Private data
-        private double d1;
-        private double d2;
+        private float d1;
+        private float d2;
         #endregion
 
         #region FisherZ distribution
@@ -24,14 +24,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="d1">Degree of freedom d1 > 0</param>
         /// <param name="d2">Degree of freedom d2 > 0</param>
-        public FisherZ(double d1, double d2)
+        public FisherZ(float d1, float d2)
         {
             D1 = d1; D2 = d2;
         }
         /// <summary>
         /// Gets or sets the degree of freedom d1 > 0.
         /// </summary>
-        public double D1
+        public float D1
         {
             get
             {
@@ -48,7 +48,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the degree of freedom d2 > 0.
         /// </summary>
-        public double D2
+        public float D2
         {
             get
             {
@@ -65,21 +65,21 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -89,44 +89,44 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
-            get { return new RangeDouble(Double.NegativeInfinity, Double.PositiveInfinity); }
+            get { return new RangeFloat(float.NegativeInfinity, float.PositiveInfinity); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             throw new NotSupportedException();
         }
@@ -134,28 +134,28 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             // helpers:
 
-            double d12 = d1 / 2.0;
-            double d22 = d2 / 2.0;
+            float d12 = d1 / 2.0f;
+            float d22 = d2 / 2.0f;
 
             // first equation:
 
-            double a = Math.Pow(d1, d12);
-            double b = Math.Pow(d2, d22);
-            double c = 2 * a * b;
-            double d = Special.Beta(d12, d22);
-            double e = c / d;
+            float a = (float)Math.Pow(d1, d12);
+            float b = (float)Math.Pow(d2, d22);
+            float c = 2 * a * b;
+            float d = Special.Beta(d12, d22);
+            float e = c / d;
 
             // second equation:
 
-            double f = Math.Exp(d1 * x);
-            double g = d1 * Math.Exp(2 * x) + d2;
-            double h = d12 + d22;
-            double j = f / Math.Pow(g, h);
+            float f = (float)Math.Exp(d1 * x);
+            float g = d1 * (float)Math.Exp(2 * x) + d2;
+            float h = d12 + d22;
+            float j = f / (float)Math.Pow(g, h);
 
             // result of F(x, d1, d2):
             return e * j;

@@ -49,7 +49,7 @@ namespace UMapx.Imaging
                         var luma = RGB.PAL(p[k + 2], p[k + 1], p[k]);
                         var diff = p[k + 2] - luma;
 
-                        p[k] = p[k + 1] = p[k + 2] = Maths.Byte(127.5 + diff);
+                        p[k] = p[k + 1] = p[k + 2] = Maths.Byte(127.5f + diff);
                     }
                 });
             }
@@ -66,7 +66,7 @@ namespace UMapx.Imaging
                         var luma = RGB.PAL(p[k + 2], p[k + 1], p[k]);
                         var diff = p[k + 1] - luma;
 
-                        p[k] = p[k + 1] = p[k + 2] = Maths.Byte(127.5 + diff);
+                        p[k] = p[k + 1] = p[k + 2] = Maths.Byte(127.5f + diff);
                     }
                 });
             }
@@ -83,7 +83,7 @@ namespace UMapx.Imaging
                         var luma = RGB.PAL(p[k + 2], p[k + 1], p[k]);
                         var diff = p[k] - luma;
 
-                        p[k] = p[k + 1] = p[k + 2] = Maths.Byte(127.5 + diff);
+                        p[k] = p[k + 1] = p[k + 2] = Maths.Byte(127.5f + diff);
                     }
                 });
             }
@@ -135,9 +135,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
         }
         #endregion
     }

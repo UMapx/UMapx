@@ -14,7 +14,7 @@ namespace UMapx.Imaging
     public class YUVPhotoFilter : IBitmapFilter
     {
         #region Private data
-        private double s;
+        private float s;
         private Color color;
         #endregion
 
@@ -24,7 +24,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="color">Color</param>
         /// <param name="strength">Strenght [0, 1]</param>
-        public YUVPhotoFilter(Color color, double strength = 0.5)
+        public YUVPhotoFilter(Color color, float strength = 0.5f)
         {
             Color = color; Strength = strength;
         }
@@ -33,7 +33,7 @@ namespace UMapx.Imaging
         /// </summary>
         public YUVPhotoFilter()
         {
-            Color = Color.White; Strength = 0.5;
+            Color = Color.White; Strength = 0.5f;
         }
         /// <summary>
         /// Gets or sets the filter color.
@@ -52,7 +52,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the filter strength [0, 1].
         /// </summary>
-        public double Strength
+        public float Strength
         {
             get
             {
@@ -60,7 +60,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.s = Maths.Double(value);
+                this.s = Maths.Float(value);
             }
         }
         /// <summary>
@@ -71,7 +71,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double z = 1 - s;
+            float z = 1 - s;
 
             Parallel.For(0, height, y =>
             {
@@ -108,9 +108,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
         }
         /// <summary>
         /// Checks if the color is a shade of gray.

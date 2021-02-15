@@ -13,8 +13,8 @@ namespace UMapx.Imaging
     public class Texturer : IBitmapFilter
     {
         #region Private data
-        private double[,] texture = null;
-        private double depth = 0.5;
+        private float[,] texture = null;
+        private float depth = 0.5f;
         #endregion
 
         #region Filter components
@@ -22,7 +22,7 @@ namespace UMapx.Imaging
         /// Initializes the texturing filter.
         /// </summary>
         /// <param name="texture">Matrix</param>
-        public Texturer(double[,] texture)
+        public Texturer(float[,] texture)
         {
             Texture = texture;
         }
@@ -31,14 +31,14 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="texture">Matrix</param>
         /// <param name="depth">Depth [0, 1]</param>
-        public Texturer(double[,] texture, double depth = 1.0)
+        public Texturer(float[,] texture, float depth = 1.0f)
         {
             Texture = texture; Depth = depth;
         }
         /// <summary>
         /// Gets or sets the texture matrix.
         /// </summary>
-        public double[,] Texture
+        public float[,] Texture
         {
             get { return texture; }
             set { texture = value; }
@@ -46,10 +46,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the depth value [0, 1].
         /// </summary>
-        public double Depth
+        public float Depth
         {
             get { return this.depth; }
-            set { this.depth = Maths.Double(value); }
+            set { this.depth = Maths.Float(value); }
         }
         /// <summary>
         /// Apply filter.
@@ -60,14 +60,14 @@ namespace UMapx.Imaging
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             int widthToProcess = Math.Min(width, texture.GetLength(1));
             int heightToProcess = Math.Min(height, texture.GetLength(0));
-            double z = 1.0 - this.depth;
+            float z = 1.0f - this.depth;
             byte* p = (byte*)bmData.Scan0.ToPointer();
 
             Parallel.For(0, heightToProcess, y =>
             {
                 int x, ystride, k;
                 byte red, green, blue;
-                double t;
+                float t;
 
                 ystride = y * stride;
 
@@ -92,9 +92,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
         }
         #endregion
 
@@ -112,7 +112,7 @@ namespace UMapx.Imaging
         public static Texturer Wood(int m, int l, double rings = 12)
         {
             PerlinNoise noise = new PerlinNoise(8, 0.5, 1.0 / 32, 0.05); r = rand.Next(5000);
-            double[,] texture = new double[m, l];
+            float[,] texture = new float[m, l];
             int w2 = l / 2, h2 = m / 2;
 
             Parallel.For(0, m, y =>
@@ -122,8 +122,8 @@ namespace UMapx.Imaging
 
                 for (x = 0; x < l; x++)
                 {
-                    xv = (double)(x - w2) / l;
-                    yv = (double)(y - h2) / m;
+                    xv = (float)(x - w2) / l;
+                    yv = (float)(y - h2) / m;
 
                     texture[y, x] = Math.Min(1.0f, (float)Math.Abs(Math.Sin((Math.Sqrt(xv * xv + yv * yv) + noise.Function2D(x + r, y + r)) * Math.PI * 2 * rings)));
                 }
@@ -141,7 +141,7 @@ namespace UMapx.Imaging
         public static Texturer Textile(int m, int l)
         {
             PerlinNoise noise = new PerlinNoise(3, 0.65, 1.0 / 8, 1.0); r = rand.Next(5000);
-            double[,] texture = new double[m, l];
+            float[,] texture = new float[m, l];
 
             Parallel.For(0, m, y =>
             {
@@ -149,8 +149,8 @@ namespace UMapx.Imaging
                 for (x = 0; x < l; x++)
                 {
                     texture[y, x] = Math.Max(0.0f, Math.Min(1.0f, (
-                                (double)Math.Sin(x + noise.Function2D(x + r, y + r)) +
-                                (double)Math.Sin(y + noise.Function2D(x + r, y + r))) * 0.25f + 0.5f));
+                                (float)Math.Sin(x + noise.Function2D(x + r, y + r)) +
+                                (float)Math.Sin(y + noise.Function2D(x + r, y + r))) * 0.25f + 0.5f));
                 }
             }
             );
@@ -165,12 +165,12 @@ namespace UMapx.Imaging
         /// <param name="yPeriod">Y-period</param>
         /// <param name="xPeriod">X-period</param>
         /// <returns>Matrix</returns>
-        public static Texturer Marble(int m, int l, double yPeriod = 10.0, double xPeriod = 5.0)
+        public static Texturer Marble(int m, int l, float yPeriod = 10.0f, float xPeriod = 5.0f)
         {
             PerlinNoise noise = new PerlinNoise(2, 0.65, 1.0 / 32, 1.0); r = rand.Next(5000);
-            double[,] texture = new double[m, l];
-            double xFact = xPeriod / l;
-            double yFact = yPeriod / m;
+            float[,] texture = new float[m, l];
+            float xFact = xPeriod / l;
+            float yFact = yPeriod / m;
 
             Parallel.For(0, m, y =>
             {
@@ -194,7 +194,7 @@ namespace UMapx.Imaging
         public static Texturer Labyrinth(int m, int l)
         {
             PerlinNoise noise = new PerlinNoise(1, 0.65, 1.0 / 16, 1.0); r = rand.Next(5000);
-            double[,] texture = new double[m, l];
+            float[,] texture = new float[m, l];
 
             Parallel.For(0, m, y =>
             {
@@ -219,7 +219,7 @@ namespace UMapx.Imaging
         public static Texturer Clouds(int m, int l)
         {
             PerlinNoise noise = new PerlinNoise(8, 0.5, 1.0 / 32, 1.0); r = rand.Next(5000);
-            double[,] texture = new double[m, l];
+            float[,] texture = new float[m, l];
 
             Parallel.For(0, m, y =>
             {
@@ -227,7 +227,7 @@ namespace UMapx.Imaging
 
                 for (x = 0; x < l; x++)
                 {
-                    texture[y, x] = Math.Max(0.0f, Math.Min(1.0f, (double)noise.Function2D(x + r, y + r) * 0.5f + 0.5f));
+                    texture[y, x] = Math.Max(0.0f, Math.Min(1.0f, (float)noise.Function2D(x + r, y + r) * 0.5f + 0.5f));
 
                 }
             }

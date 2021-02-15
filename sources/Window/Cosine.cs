@@ -25,20 +25,20 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>Double precision floating point number</returns>
-        public override double Function(double x, int frameSize)
+        /// <returns>float precision floating point number</returns>
+        public override float Function(float x, int frameSize)
         {
-            return Math.Cos(Math.PI * x / (frameSize - 1));
+            return (float)Math.Cos(Maths.Pi * x / (frameSize - 1));
         }
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <param name="frameSize">Window size</param>
         /// <returns>Array</returns>
-        public override double[] GetWindow(int frameSize)
+        public override float[] GetWindow(int frameSize)
         {
-            double t = (frameSize - 1) / 2.0;
-            double[] x = Matrice.Compute(-t, t, 1);
+            float t = (frameSize - 1) / 2.0f;
+            float[] x = Matrice.Compute(-t, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion
@@ -50,9 +50,9 @@ namespace UMapx.Window
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
         /// <returns>Factor</returns>
-        internal static double cosinefunc(double x, int frameSize)
+        internal static float cosinefunc(float x, int frameSize)
         {
-            return Math.Cos(Math.PI * x / (frameSize - 1));
+            return (float)Math.Cos(Maths.Pi * x / (frameSize - 1));
         }
         #endregion
     }

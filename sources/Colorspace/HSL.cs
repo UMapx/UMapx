@@ -10,9 +10,9 @@ namespace UMapx.Colorspace
     public struct HSL : IColorSpace, ICloneable
     {
         #region Private data
-        private double h;
-        private double s;
-        private double l;
+        private float h;
+        private float s;
+        private float l;
         #endregion
 
         #region Structure components
@@ -22,7 +22,7 @@ namespace UMapx.Colorspace
         /// <param name="h">Hue [0, 360]</param>
         /// <param name="s">Saturation [0, 1]</param>
         /// <param name="l">Lightness [0, 1]</param>
-        public HSL(double h, double s, double l)
+        public HSL(float h, float s, float l)
         {
             this.h = (h > 360) ? 360 : ((h < 0) ? 0 : h);
             this.s = (s > 1) ? 1 : ((s < 0) ? 0 : s);
@@ -31,7 +31,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 360].
         /// </summary>
-        public double Hue
+        public float Hue
         {
             get
             {
@@ -45,7 +45,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Saturation
+        public float Saturation
         {
             get
             {
@@ -59,7 +59,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Lightness
+        public float Lightness
         {
             get
             {
@@ -158,15 +158,15 @@ namespace UMapx.Colorspace
         /// <returns>HSL structure</returns>
         public static HSL FromRGB(int red, int green, int blue)
         {
-            double s = 0.0f, l = 0.0f;
+            float s = 0.0f, l = 0.0f;
             int h = 0;
 
-            double r = red / 255.0f;
-            double g = green / 255.0f;
-            double b = blue / 255.0f;
+            float r = red / 255.0f;
+            float g = green / 255.0f;
+            float b = blue / 255.0f;
 
-            double max = Maths.Max(r, g, b);
-            double min = Maths.Min(r, g, b);
+            float max = Maths.Max(r, g, b);
+            float min = Maths.Min(r, g, b);
 
             if (max == min)
             {
@@ -228,16 +228,16 @@ namespace UMapx.Colorspace
             {
                 if (s == 0)
                 {
-                    double rgb = l * 255;
+                    float rgb = l * 255;
                     return new RGB(rgb, rgb, rgb);
                 }
                 else
                 {
-                    double q = (l < 0.5f) ? (l * (1.0f + s)) : (l + s - (l * s));
-                    double p = (2.0f * l) - q;
+                    float q = (l < 0.5f) ? (l * (1.0f + s)) : (l + s - (l * s));
+                    float p = (2.0f * l) - q;
 
-                    double Hk = h / 360.0f;
-                    double[] T = new double[3];
+                    float Hk = h / 360.0f;
+                    float[] T = new float[3];
 
                     T[0] = Hk + 0.3333f;	// Tr
                     T[1] = Hk;				// Tb
@@ -263,9 +263,9 @@ namespace UMapx.Colorspace
                         else T[i] = p;
                     }
 
-                    double red = T[0] * 255;
-                    double green = T[1] * 255;
-                    double blue = T[2] * 255;
+                    float red = T[0] * 255;
+                    float green = T[1] * 255;
+                    float blue = T[2] * 255;
 
                     return new RGB(red, green, blue);
                 }

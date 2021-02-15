@@ -9,9 +9,9 @@ namespace UMapx.Colorspace
     public struct YUV : IColorSpace, ICloneable
     {
         #region Private data
-        private double y;
-        private double u;
-        private double v;
+        private float y;
+        private float u;
+        private float v;
         #endregion
 
         #region Structure components
@@ -21,7 +21,7 @@ namespace UMapx.Colorspace
         /// <param name="y">Y [0, 1]</param>
         /// <param name="u">U [-0.436, 0.436]</param>
         /// <param name="v">V [-0.614, 0.614]</param>
-        public YUV(double y, double u, double v)
+        public YUV(float y, float u, float v)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
             this.u = (u > 0.436f) ? 0.436f : ((u < -0.436f) ? -0.436f : u);
@@ -30,7 +30,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Y
+        public float Y
         {
             get
             {
@@ -44,7 +44,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-0.436, 0.436].
         /// </summary>
-        public double U
+        public float U
         {
             get
             {
@@ -58,7 +58,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-0.614, 0.614].
         /// </summary>
-        public double V
+        public float V
         {
             get
             {
@@ -157,13 +157,13 @@ namespace UMapx.Colorspace
         /// <returns>YUV structure</returns>
         public static YUV FromRGB(int red, int green, int blue)
         {
-            double r = red / 255.0f;
-            double g = green / 255.0f;
-            double b = blue / 255.0f;
+            float r = red / 255.0f;
+            float g = green / 255.0f;
+            float b = blue / 255.0f;
 
-            double Y = 0.299f * r + 0.587f * g + 0.114f * b;
-            double U = -0.147f * r - 0.288f * g + 0.436f * b;
-            double V = 0.615f * r - 0.514f * g - 0.100f * b;
+            float Y = 0.299f * r + 0.587f * g + 0.114f * b;
+            float U = -0.147f * r - 0.288f * g + 0.436f * b;
+            float V = 0.615f * r - 0.514f * g - 0.100f * b;
 
             return new YUV(Y, U, V);
         }

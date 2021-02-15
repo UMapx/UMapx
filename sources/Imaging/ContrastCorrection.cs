@@ -13,7 +13,7 @@ namespace UMapx.Imaging
     public class ContrastCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        private double contrast;
+        private float contrast;
         #endregion
 
         #region Filter components
@@ -22,7 +22,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="value">Contrast [-1, 1]</param>
         /// <param name="space">Color space</param>
-        public ContrastCorrection(double value, Space space)
+        public ContrastCorrection(float value, Space space)
         {
             Contrast = value; this.Space = space;
         }
@@ -31,12 +31,12 @@ namespace UMapx.Imaging
         /// </summary>
         public ContrastCorrection()
         {
-            Contrast = 0.5;
+            Contrast = 0.5f;
         }
         /// <summary>
         /// Gets or sets the contrast value.
         /// </summary>
-        public double Contrast
+        public float Contrast
         {
             get
             {

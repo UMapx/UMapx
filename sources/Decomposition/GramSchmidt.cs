@@ -16,9 +16,9 @@ namespace UMapx.Decomposition
     public class GramSchmidt
     {
         #region Private data
-        private double[,] q;
-        private double[] v1, v2;
-        private double[] u;
+        private float[,] q;
+        private float[] v1, v2;
+        private float[] u;
         private int n;
         #endregion
 
@@ -27,7 +27,7 @@ namespace UMapx.Decomposition
         /// Initializes the Gram-Schmidt orthogonalization process.
         /// </summary>
         /// <param name="A">Square matrix</param>
-        public GramSchmidt(double[,] A)
+        public GramSchmidt(float[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
@@ -35,7 +35,7 @@ namespace UMapx.Decomposition
             // UMapx.NET
             // gram-schmidt result matrix:
             n = A.GetLength(0);
-            q = new double[n, n];
+            q = new float[n, n];
             int i, j;
 
             for (j = 0; j < n; j++)
@@ -60,7 +60,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the orthogonal matrix Q.
         /// </summary>
-        public double[,] Q
+        public float[,] Q
         {
             get { return q; }
         }
@@ -74,12 +74,12 @@ namespace UMapx.Decomposition
         /// <param name="e">Array</param>
         /// <param name="a">Array</param>
         /// <returns>Array</returns>
-        public static double[] Proj(double[] e, double[] a)
+        public static float[] Proj(float[] e, float[] a)
         {
             int length = e.Length;
-            double[] proj = new double[length];
+            float[] proj = new float[length];
             int i;
-            double ea = 0, ee = 0;
+            float ea = 0, ee = 0;
 
             for (i = 0; i < length; i++)
             {
@@ -87,7 +87,7 @@ namespace UMapx.Decomposition
                 ee += e[i] * e[i];
             }
 
-            double div = ea / ee;
+            float div = ea / ee;
 
             for (i = 0; i < length; i++)
             {

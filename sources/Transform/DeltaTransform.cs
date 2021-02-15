@@ -35,11 +35,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
-            double[] B = (double[])A.Clone();
+            float[] B = (float[])A.Clone();
             int length = B.Length;
-            double last = 0;
+            float last = 0;
 
             for (int i = 0; i < length; i++)
             {
@@ -55,11 +55,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
-            double[] A = (double[])B.Clone();
+            float[] A = (float[])B.Clone();
             int length = A.Length;
-            double last = 0;
+            float last = 0;
 
             for (int i = 0; i < length; i++)
             {
@@ -75,9 +75,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
-            double[,] B = (double[,])A.Clone();
+            float[,] B = (float[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -85,7 +85,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -104,7 +104,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -124,7 +124,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -144,7 +144,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -168,9 +168,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
-            double[,] A = (double[,])B.Clone();
+            float[,] A = (float[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -178,7 +178,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -195,7 +195,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -215,7 +215,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    double[] col = new double[N];
+                    float[] col = new float[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -233,7 +233,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    double[] row = new double[M];
+                    float[] row = new float[M];
                     int j;
 
                     for (j = 0; j < M; j++)

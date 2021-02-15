@@ -20,7 +20,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="waveletDecomposition">Discrete wavelet decomposition</param>
         /// <param name="factor">Factor [-1, 1]</param>
-        public WaveletFilter(WaveletDecomposition waveletDecomposition, double factor = -1.0)
+        public WaveletFilter(WaveletDecomposition waveletDecomposition, float factor = -1.0f)
         {
             WaveletDecomposition = waveletDecomposition;
             Factor = factor;
@@ -32,7 +32,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Gets or sets the factor value [-1, 1].
         /// </summary>
-        public double Factor { get; set; }
+        public float Factor { get; set; }
         #endregion
 
         #region Public apply voids
@@ -41,7 +41,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="data">Matrix</param>
 
-        public void Apply(double[,] data)
+        public void Apply(float[,] data)
         {
             var B = WaveletDecomposition.Forward(data);
             int n, m;
@@ -72,7 +72,7 @@ namespace UMapx.Wavelet
             }
 
             var output = WaveletDecomposition.Backward(B);
-            double factor = 1 + Factor;
+            float factor = 1 + Factor;
             n = data.GetLength(0);
             m = data.GetLength(1);
 
@@ -89,7 +89,7 @@ namespace UMapx.Wavelet
         /// Implements a wavelet filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(double[] data)
+        public void Apply(float[] data)
         {
             var B = WaveletDecomposition.Forward(data);
             int n;
@@ -115,7 +115,7 @@ namespace UMapx.Wavelet
             }
 
             var output = WaveletDecomposition.Backward(B);
-            double factor = 1 + Factor;
+            float factor = 1 + Factor;
             n = data.GetLength(0);
 
             for (int y = 0; y < n; y++)
@@ -160,7 +160,7 @@ namespace UMapx.Wavelet
             }
 
             var output = WaveletDecomposition.Backward(B);
-            double factor = 1 + Factor;
+            float factor = 1 + Factor;
             n = data.GetLength(0);
             m = data.GetLength(1);
 
@@ -204,7 +204,7 @@ namespace UMapx.Wavelet
             }
 
             var output = WaveletDecomposition.Backward(B);
-            double factor = 1 + Factor;
+            float factor = 1 + Factor;
             n = data.GetLength(0);
 
             for (int y = 0; y < n; y++)

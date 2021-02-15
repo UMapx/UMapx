@@ -14,7 +14,7 @@ namespace UMapx.Distribution
     public class Wigner : IDistribution
     {
         #region Private data
-        private double r;
+        private float r;
         #endregion;
 
         #region Wigner components
@@ -22,14 +22,14 @@ namespace UMapx.Distribution
         /// Initializes the Wiener semicircular distribution.
         /// </summary>
         /// <param name="r">Radius</param>
-        public Wigner(double r)
+        public Wigner(float r)
         {
             R = r;
         }
         /// <summary>
         /// Gets or sets the radius value.
         /// </summary>
-        public double R
+        public float R
         {
             get
             {
@@ -46,17 +46,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(-r, r);
+                return new RangeFloat(-r, r);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -66,17 +66,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
-                return r * r / 4.0;
+                return r * r / 4.0f;
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
@@ -86,7 +86,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -96,7 +96,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
@@ -106,7 +106,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
@@ -117,46 +117,46 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (Math.Abs(x) > r)
             {
-                return double.NaN;
+                return float.NaN;
             }
 
-            double r2 = r * r, x2 = x * x;
-            double a = Math.Sqrt(r2 - x2);
-            double b = 2 / (Math.PI * r2);
+            float r2 = r * r, x2 = x * x;
+            float a = (float)Math.Sqrt(r2 - x2);
+            float b = 2 / (float)(Math.PI * r2);
             return b * a;
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (Math.Abs(x) > r)
             {
-                return double.NaN;
+                return float.NaN;
             }
 
-            double r2 = r * r, x2 = x * x;
-            double a = Math.Sqrt(r2 - x2);
-            double b = x / (Math.PI * r2);
-            double c = Math.Asin(x / r) / Maths.Pi;
-            return 0.5 + b * a + c;
+            float r2 = r * r, x2 = x * x;
+            float a = (float)Math.Sqrt(r2 - x2);
+            float b = x / (Maths.Pi * r2);
+            float c = (float)Math.Asin(x / r) / Maths.Pi;
+            return 0.5f + b * a + c;
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get
             {
-                return Maths.Log(Maths.Pi * r) - 1.0 / 2;
+                return Maths.Log(Maths.Pi * r) - 1.0f / 2;
             }
         }
         #endregion

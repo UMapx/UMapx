@@ -22,7 +22,7 @@ namespace UMapx.Imaging
         private Erosion er = new Erosion();
         private Dilatation di = new Dilatation();
         private Space space;
-        private double contrast;
+        private float contrast;
         private bool smoothing;
         #endregion
 
@@ -34,7 +34,7 @@ namespace UMapx.Imaging
         /// <param name="space">Color space</param>
         /// <param name="contrast">Contrast [0, 1]</param>
         /// <param name="smoothing">Smoothing</param>
-        public LocalHistogramStretch(int radius, Space space, double contrast = 0.5, bool smoothing = true)
+        public LocalHistogramStretch(int radius, Space space, float contrast = 0.5f, bool smoothing = true)
         {
             Size = new SizeInt(radius, radius);
             Space = space;
@@ -49,7 +49,7 @@ namespace UMapx.Imaging
         /// <param name="space">Color space</param>
         /// <param name="contrast">Contrast [0, 1]</param>
         /// <param name="smoothing">Smoothing</param>
-        public LocalHistogramStretch(int width, int height, Space space, double contrast = 0.5, bool smoothing = true)
+        public LocalHistogramStretch(int width, int height, Space space, float contrast = 0.5f, bool smoothing = true)
         {
             Size = new SizeInt(width, height);
             Space = space;
@@ -63,7 +63,7 @@ namespace UMapx.Imaging
         /// <param name="space">Color space</param>
         /// <param name="contrast">Contrast [0, 1]</param>
         /// <param name="smoothing">Smoothing</param>
-        public LocalHistogramStretch(SizeInt size, Space space, double contrast = 0.5, bool smoothing = true)
+        public LocalHistogramStretch(SizeInt size, Space space, float contrast = 0.5f, bool smoothing = true)
         {
             Size = size;
             Space = space;
@@ -106,7 +106,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the contrast value [0, 1].
         /// </summary>
-        public double Contrast
+        public float Contrast
         {
             get
             {
@@ -114,7 +114,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.contrast = Maths.Double(value);
+                this.contrast = Maths.Float(value);
             }
         }
         /// <summary>
@@ -137,21 +137,21 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
-            Bitmap Max = (Bitmap)BitmapConverter.Bitmap(bmData).Clone();
+            Bitmap Max = (Bitmap)BitmapFormat.Bitmap(bmData).Clone();
             Bitmap Min = (Bitmap)Max.Clone();
 
             di.Apply(Max); er.Apply(Min);
 
-            BitmapData bmMax = BitmapConverter.Lock32bpp(Max);
-            BitmapData bmMin = BitmapConverter.Lock32bpp(Min);
+            BitmapData bmMax = BitmapFormat.Lock32bpp(Max);
+            BitmapData bmMin = BitmapFormat.Lock32bpp(Min);
 
             if (smoothing)
                 gb.Apply(bmMax); gb.Apply(bmMin);
 
             Apply(bmData, bmMax, bmMin);
 
-            BitmapConverter.Unlock(Max, bmMax);
-            BitmapConverter.Unlock(Min, bmMin);
+            BitmapFormat.Unlock(Max, bmMax);
+            BitmapFormat.Unlock(Min, bmMin);
 
             Max.Dispose(); Min.Dispose();
             return;
@@ -167,18 +167,18 @@ namespace UMapx.Imaging
 
             di.Apply(Max); er.Apply(Min);
 
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmMax = BitmapConverter.Lock32bpp(Max);
-            BitmapData bmMin = BitmapConverter.Lock32bpp(Min);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmMax = BitmapFormat.Lock32bpp(Max);
+            BitmapData bmMin = BitmapFormat.Lock32bpp(Min);
 
             if (smoothing)
                 gb.Apply(bmMax); gb.Apply(bmMin);
 
             Apply(bmData, bmMax, bmMin);
 
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Max, bmMax);
-            BitmapConverter.Unlock(Min, bmMin);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Max, bmMax);
+            BitmapFormat.Unlock(Min, bmMin);
 
             Max.Dispose(); Min.Dispose();
             return;
@@ -228,13 +228,13 @@ namespace UMapx.Imaging
             byte* pMin = (byte*)bmMin.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
 
-            double required = 1.0 - this.contrast;
+            float required = 1.0f - this.contrast;
 
             Parallel.For(0, height, j =>
             {
                 int i, k, k1, k2, q, v, jstride = j * stride;
-                double mag, max, min;
-                double num1, num2, num3;
+                float mag, max, min;
+                float num1, num2, num3;
 
                 for (i = 0; i < width; i++)
                 {
@@ -245,17 +245,17 @@ namespace UMapx.Imaging
                     {
                         v = k + q;
 
-                        mag = p[v] / 255.0;
-                        max = pMax[v] / 255.0;
-                        min = pMin[v] / 255.0;
+                        mag = p[v] / 255.0f;
+                        max = pMax[v] / 255.0f;
+                        min = pMin[v] / 255.0f;
 
                         num1 = max - min;
 
                         if (num1 < required)
                         {
                             num2 = min + (required - num1) * min / (num1 - 1f);
-                            min = Maths.Double(num2);
-                            max = Maths.Double(num2 + required);
+                            min = Maths.Float(num2);
+                            max = Maths.Float(num2 + required);
                         }
 
                         num1 = max - min;
@@ -284,14 +284,14 @@ namespace UMapx.Imaging
             byte* pMin = (byte*)bmMin.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
 
-            double required = 1.0 - this.contrast;
+            float required = 1.0f - this.contrast;
 
             Parallel.For(0, height, j =>
             {
                 HSB imag; HSB imax; HSB imin; RGB rgb;
                 int i, k, k1, k2, jstride = j * stride;
-                double mag, max, min;
-                double num1, num2, num3;
+                float mag, max, min;
+                float num1, num2, num3;
 
                 for (i = 0; i < width; i++)
                 {
@@ -310,8 +310,8 @@ namespace UMapx.Imaging
                     if (num1 < required)
                     {
                         num2 = min + (required - num1) * min / (num1 - 1f);
-                        min = Maths.Double(num2);
-                        max = Maths.Double(num2 + required);
+                        min = Maths.Float(num2);
+                        max = Maths.Float(num2 + required);
                     }
 
                     num1 = max - min;
@@ -340,14 +340,14 @@ namespace UMapx.Imaging
             byte* pMin = (byte*)bmMin.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
 
-            double required = 1.0 - this.contrast;
+            float required = 1.0f - this.contrast;
 
             Parallel.For(0, height, j =>
             {
                 HSL imag; HSL imax; HSL imin; RGB rgb;
                 int i, k, k1, k2, jstride = j * stride;
-                double mag, max, min;
-                double num1, num2, num3;
+                float mag, max, min;
+                float num1, num2, num3;
 
                 for (i = 0; i < width; i++)
                 {
@@ -366,8 +366,8 @@ namespace UMapx.Imaging
                     if (num1 < required)
                     {
                         num2 = min + (required - num1) * min / (num1 - 1f);
-                        min = Maths.Double(num2);
-                        max = Maths.Double(num2 + required);
+                        min = Maths.Float(num2);
+                        max = Maths.Float(num2 + required);
                     }
 
                     num1 = max - min;
@@ -396,14 +396,14 @@ namespace UMapx.Imaging
             byte* pMin = (byte*)bmMin.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
 
-            double required = 1.0 - this.contrast;
+            float required = 1.0f - this.contrast;
 
             Parallel.For(0, height, j =>
             {
                 YCbCr imag; YCbCr imax; YCbCr imin; RGB rgb;
                 int i, k, k1, k2, jstride = j * stride;
-                double mag, max, min;
-                double num1, num2, num3;
+                float mag, max, min;
+                float num1, num2, num3;
 
                 for (i = 0; i < width; i++)
                 {
@@ -422,8 +422,8 @@ namespace UMapx.Imaging
                     if (num1 < required)
                     {
                         num2 = min + (required - num1) * min / (num1 - 1f);
-                        min = Maths.Double(num2);
-                        max = Maths.Double(num2 + required);
+                        min = Maths.Float(num2);
+                        max = Maths.Float(num2 + required);
                     }
 
                     num1 = max - min;
@@ -452,13 +452,13 @@ namespace UMapx.Imaging
             byte* pMin = (byte*)bmMin.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
 
-            double required = 1.0 - this.contrast;
+            float required = 1.0f - this.contrast;
 
             Parallel.For(0, height, j =>
             {
                 int i, k, k1, k2, v, jstride = j * stride;
-                double mag, max, min;
-                double num1, num2, num3;
+                float mag, max, min;
+                float num1, num2, num3;
 
                 for (i = 0; i < width; i++)
                 {
@@ -467,17 +467,17 @@ namespace UMapx.Imaging
                     // Local function:
                     v = k;
 
-                    mag = RGB.Average(p[v], p[v + 1], p[v + 2]) / 255.0;
-                    max = RGB.Average(pMax[v], pMax[v + 1], pMax[v + 2]) / 255.0;
-                    min = RGB.Average(pMin[v], pMin[v + 1], pMin[v + 2]) / 255.0;
+                    mag = RGB.Average(p[v], p[v + 1], p[v + 2]) / 255.0f;
+                    max = RGB.Average(pMax[v], pMax[v + 1], pMax[v + 2]) / 255.0f;
+                    min = RGB.Average(pMin[v], pMin[v + 1], pMin[v + 2]) / 255.0f;
 
                     num1 = max - min;
 
                     if (num1 < required)
                     {
                         num2 = min + (required - num1) * min / (num1 - 1f);
-                        min = Maths.Double(num2);
-                        max = Maths.Double(num2 + required);
+                        min = Maths.Float(num2);
+                        max = Maths.Float(num2 + required);
                     }
 
                     num1 = max - min;

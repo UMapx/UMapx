@@ -12,8 +12,8 @@ namespace UMapx.Imaging
     public class TransparencyCorrection : Rebuilder, IBitmapFilter
     {
         #region Private data
-        private double[] values;
-        private double transparency;
+        private float[] values;
+        private float transparency;
         #endregion
 
         #region Filter components
@@ -21,7 +21,7 @@ namespace UMapx.Imaging
         /// Initializes the transparency correction filter.
         /// </summary>
         /// <param name="transparency">Transparency [-1, 1]</param>
-        public TransparencyCorrection(double transparency)
+        public TransparencyCorrection(float transparency)
         {
             Transparency = transparency;
         }
@@ -35,7 +35,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the transparency value [-1, 1].
         /// </summary>
-        public double Transparency
+        public float Transparency
         {
             get
             {
@@ -68,7 +68,7 @@ namespace UMapx.Imaging
 
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int y, x, height = bmData.Height, width = bmData.Width;
-            double length = values.Length - 1;
+            float length = values.Length - 1;
 
             for (y = 0; y < height; y++)
             {
@@ -85,9 +85,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return;
         }
         #endregion

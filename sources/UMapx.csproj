@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
-    <Version>5.0.0.2</Version>
+    <Version>5.0.1.1</Version>
     <PackageId>UMapx</PackageId>
     <Company>Valery Asiryan</Company>
     <Authors>Valery Asiryan</Authors>
@@ -19,8 +19,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>umapxnet.png</PackageIcon>
-    <AssemblyVersion>5.0.0.2</AssemblyVersion>
-    <FileVersion>5.0.0.2</FileVersion>
+    <AssemblyVersion>5.0.1.1</AssemblyVersion>
+    <FileVersion>5.0.1.1</FileVersion>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>umapxnet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -41,33 +41,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Audio\ComplexFilters\**" />
-    <Compile Remove="Audio\Features\**" />
-    <Compile Remove="Audio\Filters\**" />
-    <Compile Remove="Audio\Gui\**" />
-    <Compile Remove="Audio\Signals\**" />
-    <Compile Remove="Audio\Windows\**" />
-    <EmbeddedResource Remove="Audio\ComplexFilters\**" />
-    <EmbeddedResource Remove="Audio\Features\**" />
-    <EmbeddedResource Remove="Audio\Filters\**" />
-    <EmbeddedResource Remove="Audio\Gui\**" />
-    <EmbeddedResource Remove="Audio\Signals\**" />
-    <EmbeddedResource Remove="Audio\Windows\**" />
-    <None Remove="Audio\ComplexFilters\**" />
-    <None Remove="Audio\Features\**" />
-    <None Remove="Audio\Filters\**" />
-    <None Remove="Audio\Gui\**" />
-    <None Remove="Audio\Signals\**" />
-    <None Remove="Audio\Windows\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Transform\BoxFilterOptions.cs" />
-    <Compile Remove="Vision\Motion\BlobCountingObjectsProcessing.cs" />
-    <Compile Remove="Vision\Motion\CustomFrameDifferenceDetector.cs" />
-    <Compile Remove="Vision\Motion\GridMotionAreaProcessing.cs" />
-    <Compile Remove="Vision\Motion\MotionBorderHighlighting.cs" />
-    <Compile Remove="Vision\Motion\SimpleBackgroundModelingDetector.cs" />
+    <None Remove="Analysis\**" />
+    <None Remove="Colorspace\**" />
+    <None Remove="Decomposition\**" />
+    <None Remove="Distribution\**" />
+    <None Remove="Imaging\**" />
+    <None Remove="Response\**" />
+    <None Remove="Transform\**" />
+    <None Remove="Visualization\**" />
+    <None Remove="Wavelet\**" />
+    <None Remove="Window\**" />
   </ItemGroup>
 
   <ItemGroup>

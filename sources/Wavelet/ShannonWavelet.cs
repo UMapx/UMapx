@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Shannon wavelet.
     /// </summary>
     [Serializable]
-    public class ShannonWavelet : IDoubleWavelet
+    public class ShannonWavelet : IFloatWavelet
     {
         #region Wavelet components
         /// <summary>
@@ -19,7 +19,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Scaling(double x)
+        public float Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -28,10 +28,10 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Wavelet(double x)
+        public float Wavelet(float x)
         {
-            double t = x / 2;
-            return Special.Sinc(t) * Math.Cos(3 * Math.PI * t);
+            float t = x / 2;
+            return Special.Sinc(t) * (float)Math.Cos(3 * Math.PI * t);
         }
         #endregion
     }

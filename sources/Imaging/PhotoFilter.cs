@@ -14,9 +14,9 @@ namespace UMapx.Imaging
     public class PhotoFilter : IBitmapFilter
     {
         #region Private data
-        private double s;
+        private float s;
         private Color color;
-        private IDoubleMesh blendf;
+        private IFloatMesh blendf;
         #endregion
 
         #region Filter components
@@ -26,7 +26,7 @@ namespace UMapx.Imaging
         /// <param name="blendf">Blend function</param>
         /// <param name="color">Color</param>
         /// <param name="strength">Strenght [0, 1]</param>
-        public PhotoFilter(IDoubleMesh blendf, Color color, double strength = 0.5)
+        public PhotoFilter(IFloatMesh blendf, Color color, float strength = 0.5f)
         {
             BlendFunction = blendf;
             Color = color;
@@ -37,7 +37,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="color">Color</param>
         /// <param name="strength">Strenght [0, 1]</param>
-        public PhotoFilter(Color color, double strength = 0.5)
+        public PhotoFilter(Color color, float strength = 0.5f)
         {
             BlendFunction = BlendMode.Pegtop;
             Color = color;
@@ -50,12 +50,12 @@ namespace UMapx.Imaging
         {
             BlendFunction = BlendMode.Pegtop;
             Color = Color.White;
-            Strength = 0.5;
+            Strength = 0.5f;
         }
         /// <summary>
         /// Gets or sets the blend function.
         /// </summary>
-        public IDoubleMesh BlendFunction
+        public IFloatMesh BlendFunction
         {
             get
             {
@@ -83,7 +83,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets filter strenght [0, 1].
         /// </summary>
-        public double Strength
+        public float Strength
         {
             get
             {
@@ -91,7 +91,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.s = Maths.Double(value);
+                this.s = Maths.Float(value);
             }
         }
         /// <summary>
@@ -105,18 +105,18 @@ namespace UMapx.Imaging
             int stride = bmData.Stride;
 
             // filter color
-            double rf = color.R / 255.0;
-            double gf = color.G / 255.0;
-            double bf = color.B / 255.0;
+            float rf = color.R / 255.0f;
+            float gf = color.G / 255.0f;
+            float bf = color.B / 255.0f;
 
             // do job
             Parallel.For(0, height, y =>
             {
                 // bitmap color
-                double lm;
-                double rb;
-                double gb;
-                double bb;
+                float lm;
+                float rb;
+                float gb;
+                float bb;
 
                 int x, ystride, k;
 
@@ -127,17 +127,17 @@ namespace UMapx.Imaging
                     k = ystride + x * 4;
 
                     // luma
-                    lm = RGB.Average(p[k + 2], p[k + 1], p[k]) / 255.0;
+                    lm = RGB.Average(p[k + 2], p[k + 1], p[k]) / 255.0f;
 
                     // blending
-                    rb = this.blendf(lm, rf) * 255.0;
-                    gb = this.blendf(lm, gf) * 255.0;
-                    bb = this.blendf(lm, bf) * 255.0;
+                    rb = this.blendf(lm, rf) * 255.0f;
+                    gb = this.blendf(lm, gf) * 255.0f;
+                    bb = this.blendf(lm, bf) * 255.0f;
 
                     // recording
-                    p[k + 2] = Maths.Byte(rb * s + p[k + 2] * (1.0 - s));
-                    p[k + 1] = Maths.Byte(gb * s + p[k + 1] * (1.0 - s));
-                    p[k] = Maths.Byte(bb * s + p[k] * (1.0 - s));
+                    p[k + 2] = Maths.Byte(rb * s + p[k + 2] * (1.0f - s));
+                    p[k + 1] = Maths.Byte(gb * s + p[k + 1] * (1.0f - s));
+                    p[k    ] = Maths.Byte(bb * s + p[k    ] * (1.0f - s));
                 }
             });
 
@@ -149,9 +149,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
         }
         #endregion
 

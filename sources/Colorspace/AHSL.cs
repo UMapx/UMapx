@@ -10,9 +10,9 @@ namespace UMapx.Colorspace
     public struct AHSL : IColorSpace, ICloneable
     {
         #region Private data
-        private double h;
-        private double s;
-        private double l;
+        private float h;
+        private float s;
+        private float l;
         #endregion
 
         #region Structure components
@@ -22,7 +22,7 @@ namespace UMapx.Colorspace
         /// <param name="h">Hue [0, 360]</param>
         /// <param name="s">Saturation [0, 255]</param>
         /// <param name="l">Lightness [-100, 100]</param>
-        public AHSL(double h, double s, double l)
+        public AHSL(float h, float s, float l)
         {
             this.h = (h > 359) ? 359 : ((h < 0) ? 0 : h);
             this.s = (s > 255) ? 255 : ((s < 0) ? 0 : s);
@@ -31,7 +31,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 359].
         /// </summary>
-        public double Hue
+        public float Hue
         {
             get
             {
@@ -45,7 +45,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 255].
         /// </summary>
-        public double Saturation
+        public float Saturation
         {
             get
             {
@@ -59,7 +59,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-100, 100].
         /// </summary>
-        public double Lightness
+        public float Lightness
         {
             get
             {
@@ -158,10 +158,10 @@ namespace UMapx.Colorspace
         /// <returns>HSL structure</returns>
         public static AHSL FromRGB(int red, int green, int blue)
         {
-            double s = 0, l = 0, h = 0;
+            float s = 0, l = 0, h = 0;
 
-            double max = Maths.Max(red, green, blue);
-            double min = Maths.Min(red, green, blue);
+            float max = Maths.Max(red, green, blue);
+            float min = Maths.Min(red, green, blue);
 
             if (max == min)
             {
@@ -184,24 +184,24 @@ namespace UMapx.Colorspace
                 h = (int)(60 * (red - green) / (max - min) + 240);
             }
 
-            double gray = (red + green + blue) / 3.0;
-            double r0 = 0, g0 = 0, b0 = 0;
+            float gray = (red + green + blue) / 3.0f;
+            float r0 = 0, g0 = 0, b0 = 0;
 
-            if ((h >= 0) && (h <= 60)) { r0 = 255.0; g0 = 4.25 * h; }
-            else if ((h > 60) && (h <= 120)) { g0 = 255.0; r0 = 255 - 4.25 * (h - 60); }
-            else if ((h > 120) && (h <= 180)) { g0 = 255.0; b0 = 4.25 * (h - 120); }
-            else if ((h > 180) && (h <= 240)) { b0 = 255.0; g0 = 255 - 4.25 * (h - 180); }
-            else if ((h > 240) && (h <= 300)) { b0 = 255.0; r0 = 4.25 * (h - 240); }
-            else if ((h > 300) && (h <= 360)) { r0 = 255.0; b0 = 255 - 4.25 * (h - 300); }
+            if ((h >= 0) && (h <= 60)) { r0 = 255.0f; g0 = 4.25f * h; }
+            else if ((h > 60) && (h <= 120)) { g0 = 255.0f; r0 = 255 - 4.25f * (h - 60); }
+            else if ((h > 120) && (h <= 180)) { g0 = 255.0f; b0 = 4.25f * (h - 120); }
+            else if ((h > 180) && (h <= 240)) { b0 = 255.0f; g0 = 255 - 4.25f * (h - 180); }
+            else if ((h > 240) && (h <= 300)) { b0 = 255.0f; r0 = 4.25f * (h - 240); }
+            else if ((h > 300) && (h <= 360)) { r0 = 255.0f; b0 = 255 - 4.25f * (h - 300); }
 
-            double gray0 = (r0 + g0 + b0) / 3.0;
+            float gray0 = (r0 + g0 + b0) / 3.0f;
 
             if (gray == gray0) { l = 0; }
-            else if (gray > gray0) { l = 100 * (gray - gray0) / (255.0 - gray0); }
+            else if (gray > gray0) { l = 100 * (gray - gray0) / (255.0f - gray0); }
             else if (gray < gray0) { l = 100 * (gray - gray0) / gray0; }
 
-            if (l > 0) { r0 = r0 + l * (255 - r0) / 100.0; }
-            else if (l < 0) { r0 = r0 + l * r0 / 100.0; }
+            if (l > 0) { r0 = r0 + l * (255 - r0) / 100.0f; }
+            else if (l < 0) { r0 = r0 + l * r0 / 100.0f; }
 
             if (red == gray) { s = 0; }
             else { s = 255 * Math.Abs(red - gray) / (Math.Abs(r0 - gray)); }
@@ -228,14 +228,14 @@ namespace UMapx.Colorspace
         {
             get
             {
-                double r = 0, g = 0, b = 0;
+                float r = 0, g = 0, b = 0;
 
-                if ((h >= 0) && (h <= 60)) { r = 255.0; g = 4.25 * h; }
-                else if ((h > 60) && (h <= 120)) { g = 255.0; r = 255 - 4.25 * (h - 60); }
-                else if ((h > 120) && (h <= 180)) { g = 255.0; b = 4.25 * (h - 120); }
-                else if ((h > 180) && (h <= 240)) { b = 255.0; g = 255 - 4.25 * (h - 180); }
-                else if ((h > 240) && (h <= 300)) { b = 255.0; r = 4.25 * (h - 240); }
-                else if ((h > 300) && (h <= 360)) { r = 255.0; b = 255 - 4.25 * (h - 300); }
+                if ((h >= 0) && (h <= 60)) { r = 255.0f; g = 4.25f * h; }
+                else if ((h > 60) && (h <= 120)) { g = 255.0f; r = 255 - 4.25f * (h - 60); }
+                else if ((h > 120) && (h <= 180)) { g = 255.0f; b = 4.25f * (h - 120); }
+                else if ((h > 180) && (h <= 240)) { b = 255.0f; g = 255 - 4.25f * (h - 180); }
+                else if ((h > 240) && (h <= 300)) { b = 255.0f; r = 4.25f * (h - 240); }
+                else if ((h > 300) && (h <= 360)) { r = 255.0f; b = 255 - 4.25f * (h - 300); }
 
                 if (l > 0)
                 {
@@ -245,15 +245,15 @@ namespace UMapx.Colorspace
                 }
                 else
                 {
-                    r = r + l * r / 100.0;
-                    g = g + l * g / 100.0;
-                    b = b + l * b / 100.0;
+                    r = r + l * r / 100.0f;
+                    g = g + l * g / 100.0f;
+                    b = b + l * b / 100.0f;
                 }
 
-                double gray = (r + g + b) / 3.0;
-                r = gray + s * (r - gray) / 255.0;
-                g = gray + s * (g - gray) / 255.0;
-                b = gray + s * (b - gray) / 255.0;
+                float gray = (r + g + b) / 3.0f;
+                r = gray + s * (r - gray) / 255.0f;
+                g = gray + s * (g - gray) / 255.0f;
+                b = gray + s * (b - gray) / 255.0f;
 
                 return new RGB(r, g, b);
             }

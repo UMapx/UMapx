@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Student : IDistribution
     {
         #region Private data
-        private double lambda;
-        private double degrees;
+        private float lambda;
+        private float degrees;
         #endregion
 
         #region Student components
@@ -23,17 +23,17 @@ namespace UMapx.Distribution
         /// Initializes the Student's distribution.
         /// </summary>
         /// <param name="n">Degrees of freedom n ∈ (0, +inf)</param>
-        public Student(double n)
+        public Student(float n)
         {
             this.N = n;
-            double num = Special.GammaLog((n + 1) / 2.0);
-            double den = 0.5 * Math.Log(n * Maths.Pi) + Special.GammaLog(n / 2.0);
+            float num = Special.GammaLog((n + 1) / 2.0f);
+            float den = 0.5f * (float)Math.Log(n * Maths.Pi) + Special.GammaLog(n / 2.0f);
             this.lambda = num - den;
         }
         /// <summary>
         /// Gets or sets degrees of freedom n ∈ (0, +inf).
         /// </summary>
-        public double N
+        public float N
         {
             get
             {
@@ -50,24 +50,24 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(double.NegativeInfinity, double.PositiveInfinity);
+                return new RangeFloat(float.NegativeInfinity, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get { return 0; }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
@@ -77,21 +77,21 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
                 if (degrees > 2)
                     return degrees / (degrees - 2);
                 else if (degrees > 1)
-                    return Double.PositiveInfinity;
-                return Double.NaN;
+                    return float.PositiveInfinity;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -101,7 +101,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
@@ -109,67 +109,67 @@ namespace UMapx.Distribution
                 {
                     return 0;
                 }
-                return double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
                 if (degrees > 4)
                 {
-                    return 6.0 / (degrees - 4);
+                    return 6.0f / (degrees - 4);
                 }
-                return double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get
             {
-                double a = Special.DiGamma((1 + degrees) / 2.0);
-                double b = Special.DiGamma(degrees / 2.0);
-                double c = (degrees + 1) / 2.0 * (a - b);
-                double d = Math.Sqrt(degrees) * Special.Beta(degrees / 2.0, 0.5);
+                float a = Special.DiGamma((1 + degrees) / 2.0f);
+                float b = Special.DiGamma(degrees / 2.0f);
+                float c = (degrees + 1) / 2.0f * (a - b);
+                float d = (float)Math.Sqrt(degrees) * Special.Beta(degrees / 2.0f, 0.5f);
 
-                return c + Math.Log(d);
+                return c + (float)Math.Log(d);
             }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
-            double v = degrees;
-            double sqrt = Math.Sqrt(x * x + v);
-            double u = (x + sqrt) / (2 * sqrt);
-            return Special.BetaIncomplete(v / 2.0, v / 2.0, u);
+            float v = degrees;
+            float sqrt = (float)Math.Sqrt(x * x + v);
+            float u = (x + sqrt) / (2 * sqrt);
+            return Special.BetaIncomplete(v / 2.0f, v / 2.0f, u);
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
-            return Math.Exp(LogFunction(x));
+            return (float)Math.Exp(LogFunction(x));
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private double LogFunction(double x)
+        private float LogFunction(float x)
         {
-            return lambda - ((degrees + 1) / 2.0) * Math.Log((x * x) / degrees);
+            return lambda - ((degrees + 1) / 2.0f) * (float)Math.Log((x * x) / degrees);
         }
         #endregion
     }

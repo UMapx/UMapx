@@ -9,8 +9,8 @@ namespace UMapx.Distribution
     public class Bayes
     {
         #region Private data
-        private double[] Pp;
-        private double Pa;
+        private float[] Pp;
+        private float Pa;
         private int N;
         #endregion
 
@@ -20,14 +20,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="stat">Array of statistical probabilities</param>
         /// <param name="prior">An array of a priori probabilities (before experiment)</param>
-        public Bayes(double[] stat, double[] prior)
+        public Bayes(float[] stat, float[] prior)
         {
             if (stat.Length != prior.Length)
                 throw new Exception("Arrays must be of the same dimensions.");
 
 
             this.N = prior.Length;
-            this.Pp = new double[N];
+            this.Pp = new float[N];
             this.Pa = 0;
             int i;
 
@@ -44,7 +44,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the total probability.
         /// </summary>
-        public double General
+        public float General
         {
             get
             {
@@ -54,7 +54,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns an array of values of posterior probabilities (after the experiment).
         /// </summary>
-        public double[] Probabilities
+        public float[] Probabilities
         {
             get
             {

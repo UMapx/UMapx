@@ -16,8 +16,8 @@ namespace UMapx.Imaging
     public class Operation : IBitmapFilter2
     {
         #region Private data
-        private double a;
-        private double b;
+        private float a;
+        private float b;
         #endregion
 
         #region Filter components
@@ -26,14 +26,14 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First image coefficient</param>
         /// <param name="b">Second image coefficient</param>
-        public Operation(double a, double b)
+        public Operation(float a, float b)
         {
             A = a; B = b;
         }
         /// <summary>
         /// Gets or sets the first image coefficient.
         /// </summary>
-        public double A
+        public float A
         {
             get
             {
@@ -47,7 +47,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the second image coefficient.
         /// </summary>
-        public double B
+        public float B
         {
             get
             {
@@ -87,11 +87,11 @@ namespace UMapx.Imaging
         /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
         }
         #endregion
 
@@ -123,7 +123,7 @@ namespace UMapx.Imaging
         {
             get
             {
-                return new Operation(0.5, 0.5);
+                return new Operation(0.5f, 0.5f);
             }
         }
         #endregion

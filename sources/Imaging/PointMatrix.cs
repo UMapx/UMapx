@@ -220,18 +220,18 @@ namespace UMapx.Imaging
         public static PointInt[,] Water(int width, int height, int value)
         {
             PointInt[,] water = new PointInt[width, height];
-            double pix = 2.0 * Math.PI / 127.5;
+            float pix = 2.0f * Maths.Pi / 127.5f;
 
             Parallel.For(0, width, x =>
             {
                 int y;
-                double x0, y0;
+                float x0, y0;
 
-                y0 = value * Math.Cos(pix * x);
+                y0 = value * Maths.Cos(pix * x);
 
                 for (y = 0; y < height; y++)
                 {
-                    x0 = value * Math.Sin(pix * y);
+                    x0 = value * Maths.Sin(pix * y);
 
                     water[x, y].X = (int)Maths.Mod(x + x0, width);
                     water[x, y].Y = (int)Maths.Mod(y + y0, height);

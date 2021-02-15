@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class LogLogistic : IDistribution
     {
         #region Private data
-        private double a = 1;
-        private double b = 1;
+        private float a = 1;
+        private float b = 1;
         #endregion
 
         #region LogLogistic components
@@ -28,14 +28,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="a">Parameter a</param>
         /// <param name="b">Parameter b</param>
-        public LogLogistic(double a, double b)
+        public LogLogistic(float a, float b)
         {
             A = a; B = b;
         }
         /// <summary>
         /// Gets or sets the value of parameter a.
         /// </summary>
-        public double A
+        public float A
         {
             get
             {
@@ -52,7 +52,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of parameter b.
         /// </summary>
-        public double B
+        public float B
         {
             get
             {
@@ -69,37 +69,37 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
                 if (b > 1)
                 {
-                    return a * Math.Pow((b - 1) / (b + 1), 1 / b);
+                    return a * (float)Math.Pow((b - 1) / (b + 1), 1 / b);
                 }
                 return 0;
             }
@@ -107,21 +107,21 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
@@ -129,25 +129,25 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
-            return (b / a) * Math.Pow(x / a, b - 1) / (1.0 + Math.Pow(Math.Pow(x / a, b), 2));
+            return (b / a) * (float)Math.Pow(x / a, b - 1) / (1.0f + (float)Math.Pow(Math.Pow(x / a, b), 2));
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
-            return 1.0 / (1 + Math.Pow(x / a, -b));
+            return 1.0f / (1 + (float)Math.Pow(x / a, -b));
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }

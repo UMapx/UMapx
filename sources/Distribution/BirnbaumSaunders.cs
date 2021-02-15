@@ -14,9 +14,9 @@ namespace UMapx.Distribution
     public class BirnbaumSaunders : IDistribution
     {
         #region Private data
-        private double mu = 0;
-        private double beta = 1;
-        private double gamma = 1;
+        private float mu = 0;
+        private float beta = 1;
+        private float gamma = 1;
         #endregion
 
         #region Birnbaum-Saunders components
@@ -26,14 +26,14 @@ namespace UMapx.Distribution
         /// <param name="mu">Shear rate μ ∈ (0, +inf)</param>
         /// <param name="beta">Scale factor β ∈ (0, +inf).</param>
         /// <param name="gamma">Shape factor γ ∈ (0, +inf)</param>
-        public BirnbaumSaunders(double mu, double beta, double gamma)
+        public BirnbaumSaunders(float mu, float beta, float gamma)
         {
             Mu = mu; Beta = beta; Gamma = gamma;
         }
         /// <summary>
         /// Gets or sets the shift factor μ ∈ (0, +inf).
         /// </summary>
-        public double Mu
+        public float Mu
         {
             get
             {
@@ -50,7 +50,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the scale factor β ∈ (0, +inf).
         /// </summary>
-        public double Beta
+        public float Beta
         {
             get
             {
@@ -67,7 +67,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the form factor γ ∈ (0, +inf).
         /// </summary>
-        public double Gamma
+        public float Gamma
         {
             get
             {
@@ -84,62 +84,62 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(this.mu, double.PositiveInfinity);
+                return new RangeFloat(this.mu, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
-                return 1 + 0.5 * gamma * gamma;
+                return 1 + 0.5f * gamma * gamma;
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get { return gamma * gamma * (1 + (5 * gamma * gamma) / 4); }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }
@@ -147,33 +147,33 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
-            double a = Math.Sqrt(x);
-            double b = Math.Sqrt(1.0 / x);
-            double z = (a - b) / gamma;
+            float a = (float)Math.Sqrt(x);
+            float b = (float)Math.Sqrt(1.0 / x);
+            float z = (a - b) / gamma;
 
             // Normal cumulative distribution function
-            return Special.Erfc(-z / 1.4142135623731) * 0.5;
+            return Special.Erfc(-z / 1.4142135623731f) * 0.5f;
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
-            double c = x - mu;
+            float c = x - mu;
 
-            double a = Math.Sqrt(c / beta);
-            double b = Math.Sqrt(beta / c);
+            float a = (float)Math.Sqrt(c / beta);
+            float b = (float)Math.Sqrt(beta / c);
 
-            double alpha = (a + b) / (2 * gamma * c);
-            double z = (a - b) / gamma;
+            float alpha = (a + b) / (2 * gamma * c);
+            float z = (a - b) / gamma;
 
             // Normal cumulative distribution function
-            return alpha * Special.Erfc(-z / 1.4142135623731) * 0.5;
+            return alpha * Special.Erfc(-z / 1.4142135623731f) * 0.5f;
         }
         #endregion
     }

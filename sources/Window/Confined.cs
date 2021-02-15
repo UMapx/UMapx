@@ -10,7 +10,7 @@ namespace UMapx.Window
     public class Confined : WindowBase
     {
         #region Private data
-        private double sigma = 1;
+        private float sigma = 1;
         #endregion
 
         #region Window components
@@ -19,7 +19,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="frameSize">Window size</param>
         /// <param name="sigma">Standard deviation (0.14 * N)</param>
-        public Confined(int frameSize, double sigma = 1)
+        public Confined(int frameSize, float sigma = 1)
         {
             this.Sigma = sigma;
             this.FrameSize = frameSize;
@@ -30,13 +30,13 @@ namespace UMapx.Window
         /// <param name="frameSize">Window size</param>
         public Confined(int frameSize)
         {
-            this.Sigma = 0.14 * frameSize;
+            this.Sigma = 0.14f * frameSize;
             this.FrameSize = frameSize;
         }
         /// <summary>
         /// Gets or sets the standard deviation (>0).
         /// </summary>
-        public double Sigma
+        public float Sigma
         {
             get
             {
@@ -55,33 +55,33 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>Double precision floating point number</returns>
-        public override double Function(double x, int frameSize)
+        /// <returns>float precision floating point number</returns>
+        public override float Function(float x, int frameSize)
         {
-            double a = G(-0.5) * (G(x + frameSize) + G(x - frameSize));
-            double b = G(-0.5 + frameSize) + G(-0.5 - frameSize);
+            float a = G(-0.5f) * (G(x + frameSize) + G(x - frameSize));
+            float b = G(-0.5f + frameSize) + G(-0.5f - frameSize);
             return G(x) - a / b;
         }
         /// <summary>
         /// Функция G(x).
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        private double G(double x)
+        /// <returns>float precision floating point number</returns>
+        private float G(float x)
         {
-            double a = (frameSize - 1) / 2;
-            double t = (x - a) / (2 * sigma);
-            return Math.Exp(-t * t);
+            float a = (frameSize - 1) / 2;
+            float t = (x - a) / (2 * sigma);
+            return (float)Math.Exp(-t * t);
         }
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <returns>Array</returns>
-        public override double[] GetWindow(int frameSize)
+        public override float[] GetWindow(int frameSize)
         {
             // window function on a discrete time:
-            double t = frameSize - 1;
-            double[] x = Matrice.Compute(0, t, 1);
+            float t = frameSize - 1;
+            float[] x = Matrice.Compute(0, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

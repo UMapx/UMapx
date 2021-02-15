@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     public class Threshold : Correction, IBitmapFilter
     {
         #region Private data
-        private double threshold;
+        private float threshold;
         #endregion
 
         #region Filter components
@@ -18,7 +18,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="threshold">Threshold [0, 1]</param>
         /// <param name="space">Color space</param>
-        public Threshold(double threshold, Space space)
+        public Threshold(float threshold, Space space)
         {
             this.Value = threshold;
             this.Space = space;
@@ -28,12 +28,12 @@ namespace UMapx.Imaging
         /// </summary>
         public Threshold()
         {
-            Value = 0.5;
+            Value = 0.5f;
         }
         /// <summary>
         /// Gets or sets the threshold value [0, 1].
         /// </summary>
-        public double Value
+        public float Value
         {
             get
             {

@@ -19,7 +19,7 @@ namespace UMapx.Window
         private FastFourierTransform FFT;
         private IWindow window;
         private Direction direction;
-        private double[] coefs;
+        private float[] coefs;
         #endregion
 
         #region Initialize
@@ -37,7 +37,7 @@ namespace UMapx.Window
             Window = function;
 
             // sampling window function:
-            this.coefs = function.GetWindow().Add(1e-64);
+            this.coefs = function.GetWindow().Add(1e-64f);
         }
         /// <summary>
         /// Normalized transform or not.
@@ -335,7 +335,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             throw new NotSupportedException();
         }
@@ -344,7 +344,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             throw new NotSupportedException();
         }
@@ -353,7 +353,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             throw new NotSupportedException();
         }
@@ -362,7 +362,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             throw new NotSupportedException();
         }

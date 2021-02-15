@@ -17,8 +17,8 @@ namespace UMapx.Decomposition
     {
         #region Private data
         private QR qr;
-        private double[,] r;
-        private double[,] q;
+        private float[,] r;
+        private float[,] q;
         #endregion
 
         #region Initialize
@@ -26,7 +26,7 @@ namespace UMapx.Decomposition
         /// Initializes RQ decomposition.
         /// </summary>
         /// <param name="A">Matrix</param>
-        public RQ(double[,] A)
+        public RQ(float[,] A)
         {
             qr = new QR(A.Flip(Direction.Vertical).Transponate());
 
@@ -42,7 +42,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the lower triangular matrix R.
         /// </summary>
-        public double[,] R
+        public float[,] R
         {
             get
             {
@@ -52,7 +52,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the orthogonal matrix Q.
         /// </summary>
-        public double[,] Q
+        public float[,] Q
         {
             get
             {

@@ -46,8 +46,8 @@ namespace UMapx.Analysis
         /// <param name="x">Argument value</param>
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Compute(IDouble function, double x, double h, int order)
+        /// <returns>float precision floating point number</returns>
+        public float Compute(IFloat function, float x, float h, int order)
         {
             // exception
             if (order > this.points)
@@ -57,8 +57,8 @@ namespace UMapx.Analysis
 
             // Create the interpolation points
             int length = this.points + 1;
-            double[,] coefficients = Differentation.GetCoefficients(length);
-            double sum = 0.0;
+            float[,] coefficients = Differentation.GetCoefficients(length);
+            float sum = 0.0f;
 
             // do job
             for (int i = 0, center = 0; i < length; i++)
@@ -68,7 +68,7 @@ namespace UMapx.Analysis
             }
 
             // result
-            return sum / Math.Pow(h, order);
+            return sum / (float)Math.Pow(h, order);
         }
         /// <summary>
         /// Returns the value of a derived function.
@@ -77,8 +77,8 @@ namespace UMapx.Analysis
         /// <param name="index">Index of argument</param>
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Compute(double[] y, int index, double h, int order)
+        /// <returns>float precision floating point number</returns>
+        public float Compute(float[] y, int index, float h, int order)
         {
             // exception
             if (order > this.points)
@@ -88,8 +88,8 @@ namespace UMapx.Analysis
 
             // Create the interpolation points
             int length = this.points + 1;
-            double[,] coefficients = Differentation.GetCoefficients(length);
-            double sum = 0.0;
+            float[,] coefficients = Differentation.GetCoefficients(length);
+            float sum = 0.0f;
 
             // do job
             for (int i = 0, center = 0; i < length; i++)
@@ -99,7 +99,7 @@ namespace UMapx.Analysis
             }
 
             // result
-            return sum / Math.Pow(h, order);
+            return sum / (float)Math.Pow(h, order);
         }
         /// <summary>
         /// Returns the value of a derived function.
@@ -119,7 +119,7 @@ namespace UMapx.Analysis
 
             // Create the interpolation points
             int length = this.points + 1;
-            double[,] coefficients = Differentation.GetCoefficients(length);
+            float[,] coefficients = Differentation.GetCoefficients(length);
             Complex sum = 0.0;
 
             // do job
@@ -140,7 +140,7 @@ namespace UMapx.Analysis
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
         /// <returns>Complex number</returns>
-        public Complex Compute(Complex[] y, int index, double h, int order)
+        public Complex Compute(Complex[] y, int index, float h, int order)
         {
             // exception
             if (order > this.points)
@@ -150,7 +150,7 @@ namespace UMapx.Analysis
 
             // Create the interpolation points
             int length = this.points + 1;
-            double[,] coefficients = Differentation.GetCoefficients(length);
+            float[,] coefficients = Differentation.GetCoefficients(length);
             Complex sum = 0.0;
 
             // do job
@@ -171,18 +171,18 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="points">Number of points</param>
         /// <returns>Matrix</returns>
-        public static double[,] GetCoefficients(int points)
+        public static float[,] GetCoefficients(int points)
         {
             // Compute difference coefficient table
-            double fac = Special.Factorial(points);
-            double[,] deltas = new double[points, points];
-            double h, delta;
+            float fac = Special.Factorial(points);
+            float[,] deltas = new float[points, points];
+            float h, delta;
             int j, k;
 
             // do job
             for (j = 0; j < points; j++)
             {
-                h = 1.0;
+                h = 1.0f;
                 delta = j;
 
                 for (k = 0; k < points; k++)

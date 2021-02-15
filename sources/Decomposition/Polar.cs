@@ -16,8 +16,8 @@ namespace UMapx.Decomposition
     {
         #region Private data
         private SVD svd;
-        double[,] u;
-        double[,] p;
+        float[,] u;
+        float[,] p;
         #endregion
 
         #region Initialize
@@ -26,11 +26,11 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <param name="iterations">Number of iterations</param>
-        public Polar(double[,] A, int iterations = 10)
+        public Polar(float[,] A, int iterations = 10)
         {
             svd = new SVD(A, iterations);
-            double[,] U = svd.U, V = svd.V, H = V.Transponate();
-            double[] S = svd.S;
+            float[,] U = svd.U, V = svd.V, H = V.Transponate();
+            float[] S = svd.S;
 
             u = U.Dot(H); p = V.Dot(S).Dot(H);
         }
@@ -40,7 +40,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the unitary matrix.
         /// </summary>
-        public double[,] U
+        public float[,] U
         {
             get
             {
@@ -50,7 +50,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets a positive definite matrix.
         /// </summary>
-        public double[,] P
+        public float[,] P
         {
             get
             {

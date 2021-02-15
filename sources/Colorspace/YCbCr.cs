@@ -9,9 +9,9 @@ namespace UMapx.Colorspace
     public struct YCbCr : IColorSpace, ICloneable
     {
         #region Private data
-        private double y;
-        private double cb;
-        private double cr;
+        private float y;
+        private float cb;
+        private float cr;
         #endregion
 
         #region Structure components
@@ -21,7 +21,7 @@ namespace UMapx.Colorspace
         /// <param name="y">Y [0, 1]</param>
         /// <param name="cb">Cb [-1, 1]</param>
         /// <param name="cr">Cr [-1, 1]</param>
-        public YCbCr(double y, double cb, double cr)
+        public YCbCr(float y, float cb, float cr)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
             this.cb = (cb > 1) ? 1 : ((cb < -1) ? -1 : cb);
@@ -30,7 +30,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [0, 1].
         /// </summary>
-        public double Y
+        public float Y
         {
             get
             {
@@ -44,7 +44,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-1, 1].
         /// </summary>
-        public double Cb
+        public float Cb
         {
             get
             {
@@ -58,7 +58,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines a component of the color model [-1, 1].
         /// </summary>
-        public double Cr
+        public float Cr
         {
             get
             {
@@ -157,13 +157,13 @@ namespace UMapx.Colorspace
         /// <returns>YCbCr structure</returns>
         public static YCbCr FromRGB(int red, int green, int blue)
         {
-            double r = red / 255.0;
-            double g = green / 255.0;
-            double b = blue / 255.0;
+            float r = red / 255.0f;
+            float g = green / 255.0f;
+            float b = blue / 255.0f;
 
-            double Y = 0.299 * r + 0.587 * g + 0.114 * b;
-            double Cb = -0.172 * r - 0.339 * g + 0.511 * b + 0.5;
-            double Cr = 0.511 * r - 0.428 * g - 0.083 * b + 0.5;
+            float Y = 0.299f * r + 0.587f * g + 0.114f * b;
+            float Cb = -0.172f * r - 0.339f * g + 0.511f * b + 0.5f;
+            float Cr = 0.511f * r - 0.428f * g - 0.083f * b + 0.5f;
 
             return new YCbCr(Y, Cb, Cr);
         }

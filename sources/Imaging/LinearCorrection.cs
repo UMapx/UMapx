@@ -10,8 +10,8 @@ namespace UMapx.Imaging
     public class LinearCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        private RangeDouble range;
-        private double delta;
+        private RangeFloat range;
+        private float delta;
         #endregion
 
         #region Filter components
@@ -21,7 +21,7 @@ namespace UMapx.Imaging
         /// <param name="range">Range values</param>
         /// <param name="delta">Delta [-1, 1]</param>
         /// <param name="space">Color space</param>
-        public LinearCorrection(RangeDouble range, double delta, Space space)
+        public LinearCorrection(RangeFloat range, float delta, Space space)
         {
             Range = range; Delta = delta; this.Space = space;
         }
@@ -30,21 +30,21 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="delta">Delta [-100, 100]</param>
         /// <param name="space">Color space</param>
-        public LinearCorrection(double delta, Space space)
+        public LinearCorrection(float delta, Space space)
         {
-            Range = new RangeDouble(0, 1); Delta = delta; this.Space = space;
+            Range = new RangeFloat(0, 1); Delta = delta; this.Space = space;
         }
         /// <summary>
         /// Initializes the linear correction filter.
         /// </summary>
         public LinearCorrection()
         {
-            Range = new RangeDouble(0, 1); Delta = 0.5; this.Space = space;
+            Range = new RangeFloat(0, 1); Delta = 0.5f; this.Space = space;
         }
         /// <summary>
         /// Gets or sets range values.
         /// </summary>
-        public RangeDouble Range
+        public RangeFloat Range
         {
             get
             {
@@ -59,7 +59,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the delta value [-1, 1].
         /// </summary>
-        public double Delta
+        public float Delta
         {
             get
             {
@@ -76,7 +76,7 @@ namespace UMapx.Imaging
         /// </summary>
         protected override void Rebuild()
         {
-            this.values = Intensity.Linear(range, delta / 2.0, 256);
+            this.values = Intensity.Linear(range, delta / 2.0f, 256);
         }
         #endregion
     }

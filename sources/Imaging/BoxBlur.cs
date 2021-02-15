@@ -85,9 +85,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
         }
         #endregion
 
@@ -108,9 +108,9 @@ namespace UMapx.Imaging
 
             Parallel.For(0, width, x =>
             {
-                double r = 0;
-                double g = 0;
-                double b = 0;
+                float r = 0;
+                float g = 0;
+                float b = 0;
                 int p, w, q, y;
                 int xx = x * 4;
 
@@ -190,9 +190,9 @@ namespace UMapx.Imaging
 
             Parallel.For(0, height, y =>
             {
-                double r = 0;
-                double g = 0;
-                double b = 0;
+                float r = 0;
+                float g = 0;
+                float b = 0;
                 int p, q, w, x;
                 int yy = y * stride;
 

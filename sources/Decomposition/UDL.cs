@@ -14,8 +14,8 @@ namespace UMapx.Decomposition
     public class UDL
     {
         #region Private data
-        private double[,] upper;
-        private double[] diag;
+        private float[,] upper;
+        private float[] diag;
         #endregion
 
         #region UDL components
@@ -23,7 +23,7 @@ namespace UMapx.Decomposition
         /// Initializes UDL decomposition.
         /// </summary>
         /// <param name="A">Square symmetric matrix</param>
-        public UDL(double[,] A)
+        public UDL(float[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
@@ -33,7 +33,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the top triangular matrix.
         /// </summary>
-        public double[,] U
+        public float[,] U
         {
             get
             {
@@ -43,7 +43,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the diagonal matrix.
         /// </summary>
-        public double[] D
+        public float[] D
         {
             get
             {
@@ -53,7 +53,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the lower triangular matrix.
         /// </summary>
-        public double[,] L
+        public float[,] L
         {
             get
             {
@@ -67,14 +67,14 @@ namespace UMapx.Decomposition
         /// 
         /// </summary>
         /// <param name="a"></param>
-        private void udldecomp(double[,] a)
+        private void udldecomp(float[,] a)
         {
             int i, j, k;
             int n = a.GetLength(0);
-            this.upper = new double[n, n];
-            this.diag = new double[n];
-            double[][] p = Jagged.ToJagged(a);
-            double alpha, beta, gamma;
+            this.upper = new float[n, n];
+            this.diag = new float[n];
+            float[][] p = Jagged.ToJagged(a);
+            float alpha, beta, gamma;
 
             // Mathematics in science and engineering, v.128,
             // Factorization methods for discrete sequential estimation, Gerald J. Bierman.
@@ -84,7 +84,7 @@ namespace UMapx.Decomposition
             {
                 gamma = p[j][j];
                 diag[j] = gamma;
-                alpha = 1.0 / gamma;
+                alpha = 1.0f / gamma;
 
                 for (k = 0; k < j; k++)
                 {
@@ -102,7 +102,7 @@ namespace UMapx.Decomposition
             // diagonal eyes:
             for (i = 0; i < n; i++)
             {
-                upper[i, i] = 1.0;
+                upper[i, i] = 1.0f;
             }
             return;
         }

@@ -30,10 +30,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public double[][][] Forward(params double[][] A)
+        public float[][][] Forward(params float[][] A)
         {
             int count = A.Length;
-            double[][][] B = new double[count][][];
+            float[][][] B = new float[count][][];
 
             for (int i = 0; i < count; i++)
             {
@@ -47,10 +47,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Jagged matrix</param>
         /// <returns>Jagged matrix</returns>
-        public double[][][,] Forward(params double[][,] A)
+        public float[][][,] Forward(params float[][,] A)
         {
             int count = A.Length;
-            double[][][,] B = new double[count][][,];
+            float[][][,] B = new float[count][][,];
 
             for (int i = 0; i < count; i++)
             {
@@ -98,10 +98,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public double[][] Backward(params double[][][] B)
+        public float[][] Backward(params float[][][] B)
         {
             int count = B.Length;
-            double[][] A = new double[count][];
+            float[][] A = new float[count][];
 
             for (int i = 0; i < count; i++)
             {
@@ -115,10 +115,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Jagged matrix</param>
         /// <returns>Jagged matrix</returns>
-        public double[][,] Backward(params double[][][,] B)
+        public float[][,] Backward(params float[][][,] B)
         {
             int count = B.Length;
-            double[][,] A = new double[count][,];
+            float[][,] A = new float[count][,];
 
             for (int i = 0; i < count; i++)
             {

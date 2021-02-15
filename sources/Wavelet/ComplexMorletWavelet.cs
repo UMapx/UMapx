@@ -10,8 +10,8 @@ namespace UMapx.Wavelet
     public class ComplexMorletWavelet : IComplexWavelet
     {
         #region Private data
-        private double fb;
-        private double fc;
+        private float fb;
+        private float fc;
         #endregion
 
         #region Wavelet components
@@ -20,14 +20,14 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="fb">Bandwidth</param>
         /// <param name="fc">Center frequency</param>
-        public ComplexMorletWavelet(double fb = 0.5, double fc = 1)
+        public ComplexMorletWavelet(float fb = 0.5f, float fc = 1)
         {
             Fb = fb; Fc = fc;
         }
         /// <summary>
         /// Gets or sets the bandwidth.
         /// </summary>
-        public double Fb
+        public float Fb
         {
             get
             {
@@ -41,7 +41,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Gets or sets the center frequency.
         /// </summary>
-        public double Fc
+        public float Fc
         {
             get
             {
@@ -57,7 +57,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public Complex Scaling(double x)
+        public Complex Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -66,7 +66,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public Complex Wavelet(double x)
+        public Complex Wavelet(float x)
         {
             return Math.Pow(Maths.Pi * fb, -0.5) * Maths.Exp(2 * Maths.Pi * Maths.I * fc * x) * Math.Exp(-(x * x) / fb);
         }

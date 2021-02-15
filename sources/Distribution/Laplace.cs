@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Laplace : IDistribution
     {
         #region Private data
-        private double a = 1;
-        private double b = 0;
+        private float a = 1;
+        private float b = 0;
         #endregion
 
         #region Laplace components
@@ -28,7 +28,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="alfa">Scale factor (0, + inf)</param>
         /// <param name="beta">Shift coefficient</param>
-        public Laplace(double alfa, double beta)
+        public Laplace(float alfa, float beta)
         {
             Alfa = alfa;
             Beta = beta;
@@ -36,7 +36,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the scale factor (0, + inf).
         /// </summary>
-        public double Alfa
+        public float Alfa
         {
             get
             {
@@ -53,7 +53,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the shift coefficient.
         /// </summary>
-        public double Beta
+        public float Beta
         {
             get
             {
@@ -67,17 +67,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(double.NegativeInfinity, double.PositiveInfinity);
+                return new RangeFloat(float.NegativeInfinity, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -87,17 +87,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
-                return 2.0 / a / a;
+                return 2.0f / a / a;
             }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -107,7 +107,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
@@ -117,7 +117,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
@@ -127,7 +127,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
@@ -138,29 +138,29 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
-            return a / 2.0 * Maths.Exp(-a * Maths.Abs(x - b));
+            return a / 2.0f * Maths.Exp(-a * Maths.Abs(x - b));
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x <= b)
             {
-                return 0.5 * Maths.Exp(a * (x - b));
+                return 0.5f * Maths.Exp(a * (x - b));
             }
-            return 1 - 0.5 * Maths.Exp(-a * (x - b));
+            return 1 - 0.5f * Maths.Exp(-a * (x - b));
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get
             {

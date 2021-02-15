@@ -17,7 +17,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Standard deviation.
         /// </summary>
-        private double sigma;
+        private float sigma;
         /// <summary>
         /// Normalized transform or not.
         /// </summary>
@@ -35,7 +35,7 @@ namespace UMapx.Transform
         /// <param name="sigma">Standard deviation (0, 1)</param>
         /// <param name="normalized">Normalized transform or not</param>
         /// <param name="direction">Processing direction</param>
-        public LaplaceTransform(double sigma = 0.0005, bool normalized = true, Direction direction = Direction.Vertical)
+        public LaplaceTransform(float sigma = 0.0005f, bool normalized = true, Direction direction = Direction.Vertical)
         {
             Sigma = sigma; this.normalized = normalized; this.direction = direction;
         }
@@ -45,7 +45,7 @@ namespace UMapx.Transform
         /// If σ = 0, then the Laplace transform takes the form of a Fourier transform.
         /// </remarks>
         /// </summary>
-        public double Sigma
+        public float Sigma
         {
             get
             {
@@ -97,10 +97,10 @@ namespace UMapx.Transform
         /// <param name="sigma">Standard deviation (0, 1)</param>
         /// <param name="backward">Return backward transformation matrix or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Matrix(int n, double sigma, bool backward = false)
+        public static Complex[,] Matrix(int n, float sigma, bool backward = false)
         {
             Complex[,] H = new Complex[n, n];
-            double factor;
+            float factor;
             int i, j;
 
             // inverse matrix or not?
@@ -234,7 +234,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             throw new NotSupportedException();
         }
@@ -243,7 +243,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             throw new NotSupportedException();
         }
@@ -252,7 +252,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             throw new NotSupportedException();
         }
@@ -261,7 +261,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             throw new NotSupportedException();
         }

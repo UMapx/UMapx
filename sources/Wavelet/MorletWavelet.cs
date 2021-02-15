@@ -6,7 +6,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Morlet wavelet.
     /// </summary>
     [Serializable]
-    public class MorletWavelet : IDoubleWavelet
+    public class MorletWavelet : IFloatWavelet
     {
         #region Wavelet components
         /// <summary>
@@ -20,7 +20,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Scaling(double x)
+        public float Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -29,10 +29,10 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Wavelet(double x)
+        public float Wavelet(float x)
         {
-            double x2 = x * x;
-            return Math.Exp(-x2 / 2) * Math.Cos(5 * x);
+            float x2 = x * x;
+            return (float)Math.Exp(-x2 / 2) * (float)Math.Cos(5 * x);
         }
         #endregion
     }

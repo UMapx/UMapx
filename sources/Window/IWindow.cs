@@ -14,32 +14,32 @@
         /// Returns the value of a window function.
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        double Function(double x);
+        /// <returns>float precision floating point number</returns>
+        float Function(float x);
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <returns>Array</returns>
-        double[] GetWindow();
+        float[] GetWindow();
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <param name="frameSize">Window size</param>
         /// <returns>Array</returns>
-        double[] GetWindow(int frameSize);
+        float[] GetWindow(int frameSize);
         /// <summary>
         /// Returns an array of window function values.
         /// </summary>
         /// <param name="x">Array</param>
         /// <param name="frameSize">Window size</param>
         /// <returns>Array</returns>
-        double[] Function(double[] x, int frameSize);
+        float[] Function(float[] x, int frameSize);
         /// <summary>
         /// Returns an array of window function values.
         /// </summary>
         /// <param name="x">Array</param>
         /// <returns>Array</returns>
-        double[] Function(double[] x);
+        float[] Function(float[] x);
         #endregion
     }
 }

@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Poisson wavelet.
     /// </summary>
     [Serializable]
-    public class PoissonWavelet : IDoubleWavelet
+    public class PoissonWavelet : IFloatWavelet
     {
         #region Private data
         private int n;
@@ -44,7 +44,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Scaling(double x)
+        public float Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -53,13 +53,13 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Wavelet(double x)
+        public float Wavelet(float x)
         {
             if (x < 0)
             {
                 return 0;
             }
-            return (x - n) / Special.Factorial(n) * Math.Pow(x, n - 1) * Math.Exp(-x);
+            return (x - n) / Special.Factorial(n) * (float)Math.Pow(x, n - 1) * (float)Math.Exp(-x);
         }
         #endregion
     }

@@ -11,9 +11,9 @@ namespace UMapx.Colorspace
     public struct Unknown : IColorSpace, ICloneable
     {
         #region Private data
-        private double x;
-        private double y;
-        private double z;
+        private float x;
+        private float y;
+        private float z;
         #endregion
 
         #region Structure components
@@ -23,7 +23,7 @@ namespace UMapx.Colorspace
         /// <param name="x">Component X</param>
         /// <param name="y">Component Y</param>
         /// <param name="z">Component Z</param>
-        public Unknown(double x, double y, double z)
+        public Unknown(float x, float y, float z)
         {
             this.x = x;
             this.y = y;
@@ -32,7 +32,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines the component of the color model.
         /// </summary>
-        public double X
+        public float X
         {
             get
             {
@@ -46,7 +46,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines the component of the color model.
         /// </summary>
-        public double Y
+        public float Y
         {
             get
             {
@@ -60,7 +60,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines the component of the color model.
         /// </summary>
-        public double Z
+        public float Z
         {
             get
             {

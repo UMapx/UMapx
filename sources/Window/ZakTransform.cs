@@ -39,7 +39,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             // Fast shaping orthogonalization algorithm
             // WH functions using a discrete Zak transform.
@@ -47,7 +47,7 @@ namespace UMapx.Window
             // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
 
             int N = A.Length;
-            double[] vort = new double[N];
+            float[] vort = new float[N];
             int L = N / M, L2 = L * 2, i, j;
             Complex[,] G = new Complex[L2, N];
             Complex[,] Z;
@@ -69,8 +69,8 @@ namespace UMapx.Window
                 Z = DFT.Forward(G);
             }
 
-            double w = 2 / Math.Sqrt(M);
-            double even, odd, phi;
+            float w = 2 / (float)Math.Sqrt(M);
+            float even, odd, phi;
             Complex z1, z2;
 
             for (i = 0; i < L; i++)
@@ -80,9 +80,9 @@ namespace UMapx.Window
                     z1 = Z[i, j];
                     z2 = Z[L + i, j];
 
-                    even = Math.Pow(z1.Abs, 2);
-                    odd = Math.Pow(z2.Abs, 2);
-                    phi = w / Math.Sqrt(even + odd);
+                    even = (float)Math.Pow(z1.Abs, 2);
+                    odd = (float)Math.Pow(z2.Abs, 2);
+                    phi = w / (float)Math.Sqrt(even + odd);
 
                     Z[i, j] = z1 * phi;
                     Z[L + i, j] = z2 * phi;
@@ -137,8 +137,8 @@ namespace UMapx.Window
                 Z = DFT.Forward(G);
             }
 
-            double w = 2 / Math.Sqrt(M);
-            double even, odd, phi;
+            float w = 2 / (float)Math.Sqrt(M);
+            float even, odd, phi;
             Complex z1, z2;
 
             for (i = 0; i < L; i++)
@@ -148,9 +148,9 @@ namespace UMapx.Window
                     z1 = Z[i, j];
                     z2 = Z[L + i, j];
 
-                    even = Math.Pow(z1.Abs, 2);
-                    odd = Math.Pow(z2.Abs, 2);
-                    phi = w / Math.Sqrt(even + odd);
+                    even = (float)Math.Pow(z1.Abs, 2);
+                    odd = (float)Math.Pow(z2.Abs, 2);
+                    phi = w / (float)Math.Sqrt(even + odd);
 
                     Z[i, j] = z1 * phi;
                     Z[L + i, j] = z2 * phi;
@@ -175,7 +175,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             throw new NotSupportedException();
         }
@@ -193,7 +193,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             throw new NotSupportedException();
         }
@@ -211,7 +211,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             throw new NotSupportedException();
         }

@@ -46,17 +46,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -66,17 +66,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
-                return k - 2.0 / 3;
+                return k - 2.0f / 3;
             }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -84,13 +84,13 @@ namespace UMapx.Distribution
                 {
                     return k - 2;
                 }
-                return double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
@@ -100,33 +100,33 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
-                return Math.Sqrt(8.0 / k);
+                return (float)Math.Sqrt(8.0 / k);
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                return 12.0 / k;
+                return 12.0f / k;
             }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get
             {
-                double k2 = k / 2.0;
-                double s1 = Math.Log(2.0 * Special.Gamma(k2));
-                double s2 = (1.0 - k2) * Special.DiGamma(k2);
+                float k2 = k / 2.0f;
+                float s1 = (float)Math.Log(2.0 * Special.Gamma(k2));
+                float s2 = (1.0f - k2) * Special.DiGamma(k2);
                 return k2 + s1 + s2;
             }
         }
@@ -134,27 +134,27 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x <= 0)
             {
                 return 0;
             }
-            return Special.GammaP(k / 2.0, x / 2.0);
+            return Special.GammaP(k / 2.0f, x / 2.0f);
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x <= 0)
             {
                 return 1;
             }
-            return Special.GammaQ(k / 2.0, x / 2.0);
+            return Special.GammaQ(k / 2.0f, x / 2.0f);
         }
         #endregion
     }

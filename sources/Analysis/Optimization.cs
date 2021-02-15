@@ -13,7 +13,7 @@ namespace UMapx.Analysis
     public class Optimization
     {
         #region Private data
-        private double eps;
+        private float eps;
         #endregion
 
         #region Class components
@@ -21,14 +21,14 @@ namespace UMapx.Analysis
         /// Initializes a class that implements an extremum search.
         /// </summary>
         /// <param name="eps">Epsilon [0, 1]</param>
-        public Optimization(double eps = 1e-8)
+        public Optimization(float eps = 1e-8f)
         {
             this.Eps = eps;
         }
         /// <summary>
         /// Gets or sets the error value [0, 1].
         /// </summary>
-        public double Eps
+        public float Eps
         {
             get
             {
@@ -36,7 +36,7 @@ namespace UMapx.Analysis
             }
             set
             {
-                this.eps = Maths.Double(value);
+                this.eps = Maths.Float(value);
             }
         }
         /// <summary>
@@ -46,8 +46,8 @@ namespace UMapx.Analysis
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
         /// <param name="max">Search maximum or minimum</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Compute(IDouble function, double a, double b, bool max = false)
+        /// <returns>float precision floating point number</returns>
+        public float Compute(IFloat function, float a, float b, bool max = false)
         {
             // max or min
             return (max) ? goldenMax(function, a, b, this.eps) : goldenMin(function, a, b, this.eps);
@@ -63,9 +63,9 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static double goldenMin(IDouble f, double a, double b, double eps = 1e-8)
+        private static float goldenMin(IFloat f, float a, float b, float eps = 1e-8f)
         {
-            double x1, x2;
+            float x1, x2;
 
             for (int i = 0; i < short.MaxValue; i++)
             {
@@ -89,9 +89,9 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static double goldenMax(IDouble f, double a, double b, double eps = 1e-8)
+        private static float goldenMax(IFloat f, float a, float b, float eps = 1e-8f)
         {
-            double x1, x2;
+            float x1, x2;
 
             for (int i = 0; i < short.MaxValue; i++)
             {

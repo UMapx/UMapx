@@ -17,7 +17,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool IsEquals(this double[,] m, double[,] n)
+        public static bool IsEquals(this float[,] m, float[,] n)
         {
             int r = m.GetLength(0);
             int c = m.GetLength(1);
@@ -66,7 +66,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool IsVector(this double[,] m)
+        public static bool IsVector(this float[,] m)
         {
             if (m.GetLength(0) == 1 || m.GetLength(1) == 1)
             {
@@ -79,7 +79,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool IsSquare(this double[,] m)
+        public static bool IsSquare(this float[,] m)
         {
             if (m.GetLength(0) == m.GetLength(1))
             {
@@ -92,7 +92,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool IsPositive(this double[,] m)
+        public static bool IsPositive(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             int i, j;
@@ -112,7 +112,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool IsSymmetric(this double[,] m)
+        public static bool IsSymmetric(this float[,] m)
         {
             if (Matrice.IsSquare(m))
             {
@@ -129,7 +129,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool IsSkewSymmetric(this double[,] m)
+        public static bool IsSkewSymmetric(this float[,] m)
         {
             if (Matrice.IsSquare(m))
             {
@@ -146,7 +146,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool IsDiagonal(this double[,] m)
+        public static bool IsDiagonal(this float[,] m)
         {
             int i, j;
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -260,24 +260,24 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Square matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Invert(this double[,] m)
+        public static float[,] Invert(this float[,] m)
         {
             if (m.GetLength(0) != m.GetLength(1))
             {
                 return m;
             }
 
-            return LinealgOptions.FromJagged(LinealgOptions.Invert(LinealgOptions.ToJagged(m)));
+            return Jagged.FromJagged(LinealgOptions.Invert(Jagged.ToJagged(m)));
         }
         /// <summary>
         /// Implements the transpose of the matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Transponate(this double[,] m)
+        public static float[,] Transponate(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r1, r0];
+            float[,] H = new float[r1, r0];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -302,7 +302,7 @@ namespace UMapx.Core
                 return m;
             }
 
-            return LinealgOptions.FromJagged(LinealgOptions.Invert(LinealgOptions.ToJagged(m)));
+            return Jagged.FromJagged(LinealgOptions.Invert(Jagged.ToJagged(m)));
         }
         /// <summary>
         /// Implements the transpose of the matrix.
@@ -374,15 +374,15 @@ namespace UMapx.Core
         /// Returns the trace value of a square matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Trace(this double[,] m)
+        /// <returns>float precision floating point number</returns>
+        public static float Trace(this float[,] m)
         {
             if (!Matrice.IsSquare(m))
                 throw new Exception("The matrix must be square");
 
             int d = m.GetLength(0);
             int i;
-            double kernel = 0;
+            float kernel = 0;
 
             for (i = 0; i < d; i++)
             {
@@ -394,8 +394,8 @@ namespace UMapx.Core
         /// Returns the value of the matrix determinant.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Det(this double[,] m)
+        /// <returns>float precision floating point number</returns>
+        public static float Det(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
 
@@ -405,9 +405,9 @@ namespace UMapx.Core
             unsafe
             {
                 // copy array
-                double[,] n = (double[,])m.Clone();
+                float[,] n = (float[,])m.Clone();
 
-                fixed (double* pm = &n[0, 0])
+                fixed (float* pm = &n[0, 0])
                     return LinealgOptions.Determinant(pm, mr);
             }
         }
@@ -417,28 +417,28 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="p">Parameter p</param>
         /// <returns>Matrix</returns>
-        public static double Norm(this double[,] m, double p)
+        public static float Norm(this float[,] m, float p)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double norm = 0;
+            float norm = 0;
             int i, j;
 
             for (i = 0; i < ml; i++)
             {
                 for (j = 0; j < mr; j++)
                 {
-                    norm += Math.Pow(Math.Abs(m[i, j]), p);
+                    norm += (float)Math.Pow(Math.Abs(m[i, j]), p);
                 }
             }
 
-            return Maths.Sqrt(norm, p);
+            return (float)Maths.Sqrt(norm, p);
         }
         /// <summary>
         /// Returns the norm of the matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double Norm(this double[,] m)
+        public static float Norm(this float[,] m)
         {
             return Matrice.Norm(m, 2);
         }
@@ -449,17 +449,17 @@ namespace UMapx.Core
         /// <param name="digits">Digits</param>
         /// <param name="mode">Midpoint rounding</param>
         /// <returns>Matrix</returns>
-        public static double[,] Round(this double[,] m, int digits, MidpointRounding mode)
+        public static float[,] Round(this float[,] m, int digits, MidpointRounding mode)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[,] H = new double[ml, mr];
+            float[,] H = new float[ml, mr];
             int i, j;
 
             for (i = 0; i < ml; i++)
             {
                 for (j = 0; j < mr; j++)
                 {
-                    H[i, j] = Math.Round(m[i, j], digits, mode);
+                    H[i, j] = (float)Math.Round(m[i, j], digits, mode);
                 }
             }
 
@@ -470,14 +470,14 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Square matrix</param>
         /// <returns>Square matrix</returns>
-        public static double[,] Permutation(this double[,] m)
+        public static float[,] Permutation(this float[,] m)
         {
             if (!Matrice.IsSquare(m))
                 throw new Exception("The matrix must be square");
 
             int i, j, r, n = m.GetLength(0);
-            double[] temp; double diagonal;
-            double[][] perm = Jagged.ToJagged(Matrice.Eye(n, n));
+            float[] temp; float diagonal;
+            float[][] perm = Jagged.ToJagged(Matrice.Eye(n, n));
 
             for (i = 0; i < n; i++)
             {
@@ -524,7 +524,7 @@ namespace UMapx.Core
         /// Returns the value of the matrix determinant.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static Complex Det(this Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -547,28 +547,28 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="p">Parameter p</param>
         /// <returns>Matrix</returns>
-        public static double Norm(this Complex[,] m, double p)
+        public static float Norm(this Complex[,] m, float p)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double norm = 0;
+            float norm = 0;
             int i, j;
 
             for (i = 0; i < ml; i++)
             {
                 for (j = 0; j < mr; j++)
                 {
-                    norm += Math.Pow(m[i, j].Abs, p);
+                    norm += (float)Math.Pow(m[i, j].Abs, p);
                 }
             }
 
-            return Maths.Sqrt(norm, p);
+            return (float)Maths.Sqrt(norm, p);
         }
         /// <summary>
         /// Returns the norm of the matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double Norm(this Complex[,] m)
+        public static float Norm(this Complex[,] m)
         {
             return Matrice.Norm(m, 2);
         }
@@ -591,7 +591,7 @@ namespace UMapx.Core
                 for (j = 0; j < mr; j++)
                 {
                     c = m[i, j];
-                    H[i, j] = new Complex(Math.Round(c.Real, digits, mode), Math.Round(c.Imag, digits, mode));
+                    H[i, j] = new Complex((float)Math.Round(c.Real, digits, mode), (float)Math.Round(c.Imag, digits, mode));
                 }
             }
 
@@ -606,12 +606,12 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Kronecker(this double[,] m, double[,] n)
+        public static float[,] Kronecker(this float[,] m, float[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             int nl = n.GetLength(0), nr = n.GetLength(1);
 
-            double[,] H = new double[ml * nl, mr * nr];
+            float[,] H = new float[ml * nl, mr * nr];
             int i, j, k, l;
 
             for (i = 0; i < ml; i++)
@@ -666,7 +666,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Kronecker(this Complex[,] m, double[,] n)
+        public static Complex[,] Kronecker(this Complex[,] m, float[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             int nl = n.GetLength(0), nr = n.GetLength(1);
@@ -696,7 +696,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Kronecker(this double[,] m, Complex[,] n)
+        public static Complex[,] Kronecker(this float[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             int nl = n.GetLength(0), nr = n.GetLength(1);
@@ -729,10 +729,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Add(this double[,] m, double[,] n)
+        public static float[,] Add(this float[,] m, float[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[,] H = new double[ml, mr];
+            float[,] H = new float[ml, mr];
             int i, j;
 
             for (i = 0; i < ml; i++)
@@ -771,7 +771,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Add(this Complex[,] m, double[,] n)
+        public static Complex[,] Add(this Complex[,] m, float[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             int nl = n.GetLength(0), nr = n.GetLength(1);
@@ -793,7 +793,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Add(this double[,] m, Complex[,] n)
+        public static Complex[,] Add(this float[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             Complex[,] H = new Complex[ml, mr];
@@ -815,10 +815,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static double[,] Add(this double[,] m, double a)
+        public static float[,] Add(this float[,] m, float a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -859,7 +859,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Add(this Complex[,] m, double a)
+        public static Complex[,] Add(this Complex[,] m, float a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -881,7 +881,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Add(this double[,] m, Complex a)
+        public static Complex[,] Add(this float[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -904,10 +904,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static double[,] Add(double a, double[,] m)
+        public static float[,] Add(float a, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -948,7 +948,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Add(Complex a, double[,] m)
+        public static Complex[,] Add(Complex a, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -970,7 +970,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Add(double a, Complex[,] m)
+        public static Complex[,] Add(float a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -993,10 +993,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Sub(this double[,] m, double[,] n)
+        public static float[,] Sub(this float[,] m, float[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[,] H = new double[ml, mr];
+            float[,] H = new float[ml, mr];
             int i, j;
 
             for (i = 0; i < ml; i++)
@@ -1035,7 +1035,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Sub(this Complex[,] m, double[,] n)
+        public static Complex[,] Sub(this Complex[,] m, float[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             Complex[,] H = new Complex[ml, mr];
@@ -1056,7 +1056,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Sub(this double[,] m, Complex[,] n)
+        public static Complex[,] Sub(this float[,] m, Complex[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             Complex[,] H = new Complex[ml, mr];
@@ -1078,10 +1078,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static double[,] Sub(this double[,] m, double a)
+        public static float[,] Sub(this float[,] m, float a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -1122,7 +1122,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Sub(this Complex[,] m, double a)
+        public static Complex[,] Sub(this Complex[,] m, float a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1144,7 +1144,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Sub(this double[,] m, Complex a)
+        public static Complex[,] Sub(this float[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1167,10 +1167,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static double[,] Sub(double a, double[,] m)
+        public static float[,] Sub(float a, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -1211,7 +1211,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Sub(Complex a, double[,] m)
+        public static Complex[,] Sub(Complex a, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1233,7 +1233,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Sub(double a, Complex[,] m)
+        public static Complex[,] Sub(float a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1258,11 +1258,11 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Mul(this double[,] m, double[,] n)
+        public static float[,] Mul(this float[,] m, float[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
             int i, j;
-            double[,] H = new double[mr, ml];
+            float[,] H = new float[mr, ml];
 
             for (i = 0; i < mr; i++)
             {
@@ -1300,7 +1300,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Mul(this Complex[,] m, double[,] n)
+        public static Complex[,] Mul(this Complex[,] m, float[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
             int i, j;
@@ -1321,7 +1321,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Mul(this double[,] m, Complex[,] n)
+        public static Complex[,] Mul(this float[,] m, Complex[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
             int i, j;
@@ -1343,10 +1343,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static double[,] Mul(this double[,] m, double a)
+        public static float[,] Mul(this float[,] m, float a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -1387,7 +1387,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Mul(this Complex[,] m, double a)
+        public static Complex[,] Mul(this Complex[,] m, float a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1409,7 +1409,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Mul(this double[,] m, Complex a)
+        public static Complex[,] Mul(this float[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1432,10 +1432,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static double[,] Mul(double a, double[,] m)
+        public static float[,] Mul(float a, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -1476,7 +1476,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Mul(Complex a, double[,] m)
+        public static Complex[,] Mul(Complex a, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1498,7 +1498,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Mul(double a, Complex[,] m)
+        public static Complex[,] Mul(float a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1523,11 +1523,11 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Div(this double[,] m, double[,] n)
+        public static float[,] Div(this float[,] m, float[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
             int i, j;
-            double[,] H = new double[mr, ml];
+            float[,] H = new float[mr, ml];
 
             for (i = 0; i < mr; i++)
             {
@@ -1565,7 +1565,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Div(this Complex[,] m, double[,] n)
+        public static Complex[,] Div(this Complex[,] m, float[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
             int i, j;
@@ -1586,7 +1586,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Div(this double[,] m, Complex[,] n)
+        public static Complex[,] Div(this float[,] m, Complex[,] n)
         {
             int ml = m.GetLength(1), mr = m.GetLength(0);
             int i, j;
@@ -1608,10 +1608,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static double[,] Div(this double[,] m, double a)
+        public static float[,] Div(this float[,] m, float a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -1652,7 +1652,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Div(this Complex[,] m, double a)
+        public static Complex[,] Div(this Complex[,] m, float a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1674,7 +1674,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Div(this double[,] m, Complex a)
+        public static Complex[,] Div(this float[,] m, Complex a)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1697,10 +1697,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static double[,] Div(double a, double[,] m)
+        public static float[,] Div(float a, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -1741,7 +1741,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Div(Complex a, double[,] m)
+        public static Complex[,] Div(Complex a, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1763,7 +1763,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="a">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Div(double a, Complex[,] m)
+        public static Complex[,] Div(float a, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1788,7 +1788,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="pow">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Pow(this Complex[,] m, double pow)
+        public static Complex[,] Pow(this Complex[,] m, float pow)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1810,7 +1810,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="pow">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Pow(this double[,] m, Complex pow)
+        public static Complex[,] Pow(this float[,] m, Complex pow)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -1832,17 +1832,17 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="pow">Number</param>
         /// <returns>Matrix</returns>
-        public static double[,] Pow(this double[,] m, double pow)
+        public static float[,] Pow(this float[,] m, float pow)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Maths.Pow(m[i, j], pow);
+                    H[i, j] = (float)Maths.Pow(m[i, j], pow);
                 }
             }
 
@@ -1855,18 +1855,18 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Pow(double a, double[,] m)
+        public static float[,] Pow(float a, float[,] m)
         {
             int r0 = m.GetLength(0);
             int r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Math.Pow(a, m[i, j]);
+                    H[i, j] = (float)Math.Pow(a, m[i, j]);
                 }
             }
 
@@ -1878,7 +1878,7 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Pow(Complex a, double[,] m)
+        public static Complex[,] Pow(Complex a, float[,] m)
         {
             int r0 = m.GetLength(0);
             int r1 = m.GetLength(1);
@@ -1901,7 +1901,7 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Pow(double a, Complex[,] m)
+        public static Complex[,] Pow(float a, Complex[,] m)
         {
             int r0 = m.GetLength(0);
             int r1 = m.GetLength(1);
@@ -1913,95 +1913,6 @@ namespace UMapx.Core
                 for (j = 0; j < r1; j++)
                 {
                     H[i, j] = Maths.Pow(a, m[i, j]);
-                }
-            }
-
-            return H;
-        }
-        #endregion
-
-        #region Matrix log and exp
-        /// <summary>
-        /// Logarithms all elements of the matrix at the base.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
-        /// <returns>Matrix</returns>
-        public static double[,] Log(this double[,] m, double a)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Log(m[i, j], a);
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Takes an exponent from all matrix values.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
-        public static double[,] Exp(this double[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Exp(m[i, j]);
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Logarithms all elements of the matrix at the base.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
-        /// <returns>Matrix</returns>
-        public static Complex[,] Log(this Complex[,] m, double a)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Log(m[i, j], a);
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Takes an exponent from all matrix values.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
-        public static Complex[,] Exp(this Complex[,] m)
-        {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex[,] H = new Complex[r0, r1];
-            int i, j;
-
-            for (i = 0; i < r0; i++)
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    H[i, j] = Maths.Exp(m[i, j]);
                 }
             }
 
@@ -2015,10 +1926,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Negate(this double[,] m)
+        public static float[,] Negate(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -2057,7 +1968,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] ToComplex(this double[,] m)
+        public static Complex[,] ToComplex(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] H = new Complex[r0, r1];
@@ -2078,10 +1989,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] ToByte(this double[,] m)
+        public static float[,] ToByte(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -2098,13 +2009,13 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] ToDouble(this double[,] m)
+        public static float[,] Tofloat(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
-            double max = Matrice.Max(Matrice.Max(m));
-            double min = Matrice.Min(Matrice.Min(m));
-            double range = max - min;
+            float[,] H = new float[r0, r1];
+            float max = Matrice.Max(Matrice.Max(m));
+            float min = Matrice.Min(Matrice.Min(m));
+            float range = max - min;
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -2121,17 +2032,17 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Abs(this double[,] m)
+        public static float[,] Abs(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Maths.Abs(m[i, j]);
+                    H[i, j] = (float)Maths.Abs(m[i, j]);
                 }
             }
 
@@ -2142,10 +2053,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Abs(this Complex[,] m)
+        public static float[,] Abs(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -2163,10 +2074,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Angle(this Complex[,] m)
+        public static float[,] Angle(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -2184,10 +2095,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Real(this Complex[,] m)
+        public static float[,] Real(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -2205,10 +2116,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Imag(this Complex[,] m)
+        public static float[,] Imag(this Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] H = new double[r0, r1];
+            float[,] H = new float[r0, r1];
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -2228,11 +2139,11 @@ namespace UMapx.Core
         /// Sorts the matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        public static void Sort(this double[,] m)
+        public static void Sort(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             int i, j, k;
-            double temp;
+            float temp;
 
             for (k = 0; k < mr; k++)
             {
@@ -2256,10 +2167,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Sum(this double[,] m)
+        public static float[] Sum(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[] kernel = new double[mr];
+            float[] kernel = new float[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
@@ -2298,10 +2209,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Mul(this double[,] m)
+        public static float[] Mul(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[] kernel = new double[mr];
+            float[] kernel = new float[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
@@ -2344,10 +2255,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Div(this double[,] m)
+        public static float[] Div(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[] kernel = new double[mr];
+            float[] kernel = new float[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
@@ -2390,15 +2301,15 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Max(this double[,] m)
+        public static float[] Max(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[] v = new double[mr];
+            float[] v = new float[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
             {
-                v[i] = double.MinValue;
+                v[i] = float.MinValue;
             }
 
             for (i = 0; i < mr; i++)
@@ -2418,15 +2329,15 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Min(this double[,] m)
+        public static float[] Min(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[] v = new double[mr];
+            float[] v = new float[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
             {
-                v[i] = double.MaxValue;
+                v[i] = float.MaxValue;
             }
 
             for (i = 0; i < mr; i++)
@@ -2447,11 +2358,11 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="threshold">Threshold</param>
         /// <returns>Array</returns>
-        public static double[] Morph(this double[,] m, int threshold)
+        public static float[] Morph(this float[,] m, int threshold)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[] v = new double[ml];
-            double[] u = new double[mr];
+            float[] v = new float[ml];
+            float[] u = new float[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
@@ -2471,7 +2382,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Mean(this double[,] m)
+        public static float[] Mean(this float[,] m)
         {
             return Matrice.Div(Matrice.Sum(m), m.GetLength(0));
         }
@@ -2489,18 +2400,18 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Var(this double[,] m)
+        public static float[] Var(this float[,] m)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
-            double[] u = Matrice.Mean(m);
-            double[] v = new double[mr];
+            float[] u = Matrice.Mean(m);
+            float[] v = new float[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
             {
                 for (j = 0; j < ml; j++)
                 {
-                    v[i] += Math.Pow(m[j, i] - u[i], 2);
+                    v[i] += (float)Math.Pow(m[j, i] - u[i], 2);
                 }
             }
             return Matrice.Div(v, ml - 1);
@@ -2532,17 +2443,17 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Var(this double[,] m, double[,] n)
+        public static float[] Var(this float[,] m, float[,] n)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
-            double[] v = new double[mr];
+            float[] v = new float[mr];
             int i, j;
 
             for (i = 0; i < mr; i++)
             {
                 for (j = 0; j < ml; j++)
                 {
-                    v[i] += Math.Pow(m[j, i] - n[j, i], 2);
+                    v[i] += (float)Math.Pow(m[j, i] - n[j, i], 2);
                 }
             }
             return Matrice.Div(v, ml - 1);
@@ -2573,9 +2484,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] StnDev(this double[,] m)
+        public static float[] StnDev(this float[,] m)
         {
-            return Matrice.Pow(Matrice.Var(m), 0.5);
+            return Matrice.Pow(Matrice.Var(m), 0.5f);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrix.
@@ -2584,7 +2495,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex[] StnDev(this Complex[,] m)
         {
-            return Matrice.Pow(Matrice.Var(m), 0.5);
+            return Matrice.Pow(Matrice.Var(m), 0.5f);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrices.
@@ -2592,9 +2503,9 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] StnDev(this double[,] m, double[,] n)
+        public static float[] StnDev(this float[,] m, float[,] n)
         {
-            return Matrice.Pow(Matrice.Var(m, n), 0.5);
+            return Matrice.Pow(Matrice.Var(m, n), 0.5f);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrices.
@@ -2604,18 +2515,18 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex[] StnDev(this Complex[,] m, Complex[,] n)
         {
-            return Matrice.Pow(Matrice.Var(m, n), 0.5);
+            return Matrice.Pow(Matrice.Var(m, n), 0.5f);
         }
         /// <summary>
         /// Returns the covariance matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Cov(this double[,] m)
+        public static float[,] Cov(this float[,] m)
         {
-            double[] v = Matrice.Mean(m);
+            float[] v = Matrice.Mean(m);
             int width = m.GetLength(1), height = m.GetLength(0);
-            double[,] H = (double[,])m.Clone();
+            float[,] H = (float[,])m.Clone();
             int i, j;
 
             for (i = 0; i < height; i++)
@@ -2655,10 +2566,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Entropy(this double[,] m)
+        public static float[] Entropy(this float[,] m)
         {
             int width = m.GetLength(1), height = m.GetLength(0);
-            double[] v = new double[width];
+            float[] v = new float[width];
             int i, j;
 
             for (i = 0; i < width; i++)
@@ -2667,7 +2578,7 @@ namespace UMapx.Core
                 {
                     if (m[j, i] > 0)
                     {
-                        v[i] += -m[j, i] * Maths.Log2(m[j, i]);
+                        v[i] += -m[j, i] * (float)Maths.Log2(m[j, i]);
                     }
                 }
             }
@@ -2684,9 +2595,9 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static double[,] Dot(this double[,] m, double[,] n)
+        public static float[,] Dot(this float[,] m, float[,] n)
         {
-            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
+            return Jagged.FromJagged(LinealgOptions.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n)));
         }
         /// <summary>
         /// Implements a scalar product of matrices.
@@ -2696,7 +2607,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex[,] Dot(this Complex[,] m, Complex[,] n)
         {
-            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
+            return Jagged.FromJagged(LinealgOptions.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n)));
         }
         /// <summary>
         /// Implements a scalar product of matrices.
@@ -2704,9 +2615,9 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Dot(this Complex[,] m, double[,] n)
+        public static Complex[,] Dot(this Complex[,] m, float[,] n)
         {
-            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
+            return Jagged.FromJagged(LinealgOptions.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n)));
         }
         /// <summary>
         /// Implements a scalar product of matrices.
@@ -2714,9 +2625,9 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Dot(this double[,] m, Complex[,] n)
+        public static Complex[,] Dot(this float[,] m, Complex[,] n)
         {
-            return LinealgOptions.FromJagged(LinealgOptions.Mul(LinealgOptions.ToJagged(m), LinealgOptions.ToJagged(n)));
+            return Jagged.FromJagged(LinealgOptions.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n)));
         }
         #endregion
 
@@ -2728,7 +2639,7 @@ namespace UMapx.Core
         /// <param name="n">Matrix</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Matrix</returns>
-        public static double[,] Conv(this double[,] m, double[,] n, bool normalize = true)
+        public static float[,] Conv(this float[,] m, float[,] n, bool normalize = true)
         {
             return LinealgOptions.Conv(m, n, normalize);
         }
@@ -2750,7 +2661,7 @@ namespace UMapx.Core
         /// <param name="n">Matrix</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Conv(this Complex[,] m, double[,] n, bool normalize = true)
+        public static Complex[,] Conv(this Complex[,] m, float[,] n, bool normalize = true)
         {
             return LinealgOptions.Conv(m, n, normalize);
         }
@@ -2761,7 +2672,7 @@ namespace UMapx.Core
         /// <param name="n">Matrix</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Conv(this double[,] m, Complex[,] n, bool normalize = true)
+        public static Complex[,] Conv(this float[,] m, Complex[,] n, bool normalize = true)
         {
             return LinealgOptions.Conv(m, n, normalize);
         }
@@ -2776,7 +2687,7 @@ namespace UMapx.Core
         /// <param name="direction">Processing direction</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Matrix</returns>
-        public static double[,] Conv(this double[,] m, double[] n, Direction direction, bool normalize = true)
+        public static float[,] Conv(this float[,] m, float[] n, Direction direction, bool normalize = true)
         {
             // direction of processing
             if (direction == Direction.Horizontal)
@@ -2799,7 +2710,7 @@ namespace UMapx.Core
         /// <param name="direction">Processing direction</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Conv(this double[,] m, Complex[] n, Direction direction, bool normalize = true)
+        public static Complex[,] Conv(this float[,] m, Complex[] n, Direction direction, bool normalize = true)
         {
             // direction of processing
             if (direction == Direction.Horizontal)
@@ -2822,7 +2733,7 @@ namespace UMapx.Core
         /// <param name="direction">Processing direction</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Conv(this Complex[,] m, double[] n, Direction direction, bool normalize = true)
+        public static Complex[,] Conv(this Complex[,] m, float[] n, Direction direction, bool normalize = true)
         {
             // direction of processing
             if (direction == Direction.Horizontal)
@@ -2869,7 +2780,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="r0">Height radius</param>
         /// <param name="r1">Width radius</param>
-        public static double[,] Min(this double[,] m, int r0, int r1)
+        public static float[,] Min(this float[,] m, int r0, int r1)
         {
             return LinealgOptions.MinVertical(LinealgOptions.MinHorizontal(m, r1), r0);
         }
@@ -2879,7 +2790,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="r0">Height radius</param>
         /// <param name="r1">Width radius</param>
-        public static double[,] Max(this double[,] m, int r0, int r1)
+        public static float[,] Max(this float[,] m, int r0, int r1)
         {
             return LinealgOptions.MaxVertical(LinealgOptions.MaxHorizontal(m, r1), r0);
         }
@@ -2890,7 +2801,7 @@ namespace UMapx.Core
         /// <param name="r0">Height radius</param>
         /// <param name="r1">Width radius</param>
         /// <param name="threshold">Threshold</param>
-        public static double[,] Morph(this double[,] m, int r0, int r1, int threshold)
+        public static float[,] Morph(this float[,] m, int r0, int r1, int threshold)
         {
             return LinealgOptions.MorphVertical(LinealgOptions.MorphHorizontal(m, r1, threshold), r0, threshold);
         }
@@ -2903,7 +2814,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="r0">Height radius</param>
         /// <param name="r1">Width radius</param>
-        public static double[,] Mean(this double[,] m, int r0, int r1)
+        public static float[,] Mean(this float[,] m, int r0, int r1)
         {
             // both processing
             return LinealgOptions.MeanVertical(LinealgOptions.MeanHorizontal(m, r1), r0);
@@ -2929,7 +2840,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Boolean</returns>
-        public static bool IsEquals(this double[] a, double[] b)
+        public static bool IsEquals(this float[] a, float[] b)
         {
             int n = a.Length;
 
@@ -2968,7 +2879,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Boolean</returns>
-        public static bool IsPositive(this double[] v)
+        public static bool IsPositive(this float[] v)
         {
             int N = v.Length;
 
@@ -2987,10 +2898,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Boolean</returns>
-        public static bool IsCollinear(this double[] a, double[] b)
+        public static bool IsCollinear(this float[] a, float[] b)
         {
             int N = a.Length, i, j;
-            double k;
+            float k;
 
             for (i = 0; i < N; ++i)
             {
@@ -3037,7 +2948,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Boolean</returns>
-        public static bool IsCollinear(this Complex[] a, double[] b)
+        public static bool IsCollinear(this Complex[] a, float[] b)
         {
             int N = a.Length, i, j;
             Complex k;
@@ -3062,7 +2973,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Boolean</returns>
-        public static bool IsCollinear(this double[] a, Complex[] b)
+        public static bool IsCollinear(this float[] a, Complex[] b)
         {
             int N = a.Length, i, j;
             Complex k;
@@ -3089,24 +3000,24 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="p">Parameter p</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Norm(this double[] a, double p)
+        /// <returns>float precision floating point number</returns>
+        public static float Norm(this float[] a, float p)
         {
             int length = a.Length, i;
-            double norm = 0;
+            float norm = 0;
 
             for (i = 0; i < length; i++)
             {
-                norm += Math.Pow(Math.Abs(a[i]), p);
+                norm += (float)Math.Pow(Math.Abs(a[i]), p);
             }
-            return Maths.Sqrt(norm, p);
+            return (float)Maths.Sqrt(norm, p);
         }
         /// <summary>
         /// Returns the norm of the vector.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Norm(this double[] a)
+        /// <returns>float precision floating point number</returns>
+        public static float Norm(this float[] a)
         {
             return Norm(a, 2);
         }
@@ -3115,24 +3026,24 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="p">Parameter p</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Norm(this Complex[] a, double p)
+        /// <returns>float precision floating point number</returns>
+        public static float Norm(this Complex[] a, float p)
         {
             int length = a.Length, i;
-            double norm = 0;
+            float norm = 0;
 
             for (i = 0; i < length; i++)
             {
-                norm += Maths.Pow(Maths.Abs(a[i]), p);
+                norm += (float)Maths.Pow(Maths.Abs(a[i]), p);
             }
-            return Maths.Sqrt(norm, p);
+            return (float)Maths.Sqrt(norm, p);
         }
         /// <summary>
         /// Returns the norm of the vector.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Norm(this Complex[] a)
+        /// <returns>float precision floating point number</returns>
+        public static float Norm(this Complex[] a)
         {
             return Norm(a, 2);
         }
@@ -3143,15 +3054,15 @@ namespace UMapx.Core
         /// <param name="digits">Digits</param>
         /// <param name="mode">Midpoint rounding</param>
         /// <returns>Array</returns>
-        public static double[] Round(this double[] m, int digits, MidpointRounding mode)
+        public static float[] Round(this float[] m, int digits, MidpointRounding mode)
         {
             int ml = m.GetLength(0);
-            double[] H = new double[ml];
+            float[] H = new float[ml];
             int i;
 
             for (i = 0; i < ml; i++)
             {
-                H[i] = Math.Round(H[i], digits, mode);
+                H[i] = (float)Math.Round(H[i], digits, mode);
             }
 
             return H;
@@ -3173,7 +3084,7 @@ namespace UMapx.Core
             for (i = 0; i < ml; i++)
             {
                 c = m[i];
-                H[i] = new Complex(Math.Round(c.Real, digits, mode), Math.Round(c.Imag, digits, mode));
+                H[i] = new Complex((float)Math.Round(c.Real, digits, mode), (float)Math.Round(c.Imag, digits, mode));
             }
 
             return H;
@@ -3186,8 +3097,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Angle(this double[] a, double[] b)
+        /// <returns>float precision floating point number</returns>
+        public static float Angle(this float[] a, float[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
@@ -3196,8 +3107,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static Complex Angle(this Complex[] a, double[] b)
+        /// <returns>float precision floating point number</returns>
+        public static Complex Angle(this Complex[] a, float[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
@@ -3206,8 +3117,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static Complex Angle(this double[] a, Complex[] b)
+        /// <returns>float precision floating point number</returns>
+        public static Complex Angle(this float[] a, Complex[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
@@ -3216,7 +3127,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static Complex Angle(this Complex[] a, Complex[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
@@ -3227,8 +3138,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Proj(this double[] a, double[] b)
+        /// <returns>float precision floating point number</returns>
+        public static float Proj(this float[] a, float[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
@@ -3237,8 +3148,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static Complex Proj(this Complex[] a, double[] b)
+        /// <returns>float precision floating point number</returns>
+        public static Complex Proj(this Complex[] a, float[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
@@ -3247,8 +3158,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static Complex Proj(this double[] a, Complex[] b)
+        /// <returns>float precision floating point number</returns>
+        public static Complex Proj(this float[] a, Complex[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
@@ -3257,7 +3168,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static Complex Proj(this Complex[] a, Complex[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
@@ -3268,11 +3179,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Cosines(this double[] v)
+        public static float[] Cosines(this float[] v)
         {
             int length = v.Length, i;
-            double abs = Matrice.Norm(v);
-            double[] cos = new double[length];
+            float abs = Matrice.Norm(v);
+            float[] cos = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3306,10 +3217,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static double[] Add(this double[] a, double[] b)
+        public static float[] Add(this float[] a, float[] b)
         {
             int length = a.Length, i;
-            double[] c = new double[length];
+            float[] c = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3340,7 +3251,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Add(this Complex[] a, double[] b)
+        public static Complex[] Add(this Complex[] a, float[] b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3357,7 +3268,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Add(this double[] a, Complex[] b)
+        public static Complex[] Add(this float[] a, Complex[] b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3375,10 +3286,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static double[] Add(this double[] a, double b)
+        public static float[] Add(this float[] a, float b)
         {
             int length = a.Length, i;
-            double[] c = new double[length];
+            float[] c = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3409,7 +3320,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Add(this Complex[] a, double b)
+        public static Complex[] Add(this Complex[] a, float b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3426,7 +3337,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Add(this double[] a, Complex b)
+        public static Complex[] Add(this float[] a, Complex b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3444,10 +3355,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static double[] Add(double b, double[] a)
+        public static float[] Add(float b, float[] a)
         {
             int length = a.Length, i;
-            double[] c = new double[length];
+            float[] c = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3478,7 +3389,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Add(double b, Complex[] a)
+        public static Complex[] Add(float b, Complex[] a)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3495,7 +3406,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Add(Complex b, double[] a)
+        public static Complex[] Add(Complex b, float[] a)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3530,10 +3441,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static double[] Sub(this double[] a, double[] b)
+        public static float[] Sub(this float[] a, float[] b)
         {
             int length = a.Length, i;
-            double[] c = new double[length];
+            float[] c = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3547,7 +3458,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Sub(this Complex[] a, double[] b)
+        public static Complex[] Sub(this Complex[] a, float[] b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3564,7 +3475,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Sub(this double[] a, Complex[] b)
+        public static Complex[] Sub(this float[] a, Complex[] b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3582,10 +3493,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static double[] Sub(this double[] a, double b)
+        public static float[] Sub(this float[] a, float b)
         {
             int length = a.Length, i;
-            double[] c = new double[length];
+            float[] c = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3616,7 +3527,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Sub(this Complex[] a, double b)
+        public static Complex[] Sub(this Complex[] a, float b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3633,7 +3544,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Sub(this double[] a, Complex b)
+        public static Complex[] Sub(this float[] a, Complex b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3651,10 +3562,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static double[] Sub(double b, double[] a)
+        public static float[] Sub(float b, float[] a)
         {
             int length = a.Length, i;
-            double[] c = new double[length];
+            float[] c = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3685,7 +3596,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Sub(Complex b, double[] a)
+        public static Complex[] Sub(Complex b, float[] a)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3702,7 +3613,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Sub(double b, Complex[] a)
+        public static Complex[] Sub(float b, Complex[] a)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3722,10 +3633,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static double[] Mul(this double[] a, double[] b)
+        public static float[] Mul(this float[] a, float[] b)
         {
             int length = a.Length, i;
-            double[] c = new double[length];
+            float[] c = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3739,7 +3650,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Mul(this Complex[] a, double[] b)
+        public static Complex[] Mul(this Complex[] a, float[] b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3756,7 +3667,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Mul(this double[] a, Complex[] b)
+        public static Complex[] Mul(this float[] a, Complex[] b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3791,10 +3702,10 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static double[] Mul(this double[] v, double a)
+        public static float[] Mul(this float[] v, float a)
         {
             int length = v.Length, i;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3808,7 +3719,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Mul(this double[] v, Complex a)
+        public static Complex[] Mul(this float[] v, Complex a)
         {
             int length = v.Length, i;
             Complex[] H = new Complex[length];
@@ -3825,7 +3736,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Mul(this Complex[] v, double a)
+        public static Complex[] Mul(this Complex[] v, float a)
         {
             int length = v.Length, i;
             Complex[] H = new Complex[length];
@@ -3860,10 +3771,10 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static double[] Mul(double a, double[] v)
+        public static float[] Mul(float a, float[] v)
         {
             int length = v.Length, i;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3894,7 +3805,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Mul(Complex a, double[] v)
+        public static Complex[] Mul(Complex a, float[] v)
         {
             int length = v.Length, i;
             Complex[] H = new Complex[length];
@@ -3911,7 +3822,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Mul(double a, Complex[] v)
+        public static Complex[] Mul(float a, Complex[] v)
         {
             int length = v.Length, i;
             Complex[] H = new Complex[length];
@@ -3931,10 +3842,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static double[] Div(this double[] a, double[] b)
+        public static float[] Div(this float[] a, float[] b)
         {
             int length = a.Length, i;
-            double[] c = new double[length];
+            float[] c = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -3965,7 +3876,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Div(this Complex[] a, double[] b)
+        public static Complex[] Div(this Complex[] a, float[] b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -3982,7 +3893,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Div(this double[] a, Complex[] b)
+        public static Complex[] Div(this float[] a, Complex[] b)
         {
             int length = a.Length, i;
             Complex[] c = new Complex[length];
@@ -4000,10 +3911,10 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static double[] Div(this double[] v, double a)
+        public static float[] Div(this float[] v, float a)
         {
             int length = v.Length, i;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -4017,7 +3928,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Div(this double[] v, Complex a)
+        public static Complex[] Div(this float[] v, Complex a)
         {
             int length = v.Length, i;
             Complex[] H = new Complex[length];
@@ -4034,7 +3945,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Div(this Complex[] v, double a)
+        public static Complex[] Div(this Complex[] v, float a)
         {
             int length = v.Length, i;
             Complex[] H = new Complex[length];
@@ -4069,10 +3980,10 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static double[] Div(double a, double[] v)
+        public static float[] Div(float a, float[] v)
         {
             int length = v.Length, i;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -4103,7 +4014,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Div(double a, Complex[] v)
+        public static Complex[] Div(float a, Complex[] v)
         {
             int length = v.Length, i;
             Complex[] H = new Complex[length];
@@ -4120,7 +4031,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="a">Number</param>
         /// <returns>Array</returns>
-        public static Complex[] Div(Complex a, double[] v)
+        public static Complex[] Div(Complex a, float[] v)
         {
             int length = v.Length, i;
             Complex[] H = new Complex[length];
@@ -4140,14 +4051,14 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="power">Power</param>
         /// <returns>Array</returns>
-        public static double[] Pow(this double[] v, double power)
+        public static float[] Pow(this float[] v, float power)
         {
             int length = v.Length;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (int i = 0; i < length; i++)
             {
-                H[i] = Math.Pow(v[i], power);
+                H[i] = (float)Math.Pow(v[i], power);
             }
             return H;
         }
@@ -4157,7 +4068,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="power">Power</param>
         /// <returns>Array</returns>
-        public static Complex[] Pow(this Complex[] v, double power)
+        public static Complex[] Pow(this Complex[] v, float power)
         {
             int length = v.Length;
             Complex[] H = new Complex[length];
@@ -4174,7 +4085,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="power">Power</param>
         /// <returns>Array</returns>
-        public static Complex[] Pow(this double[] v, Complex power)
+        public static Complex[] Pow(this float[] v, Complex power)
         {
             int length = v.Length;
             Complex[] H = new Complex[length];
@@ -4192,15 +4103,15 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Pow(double a, double[] v)
+        public static float[] Pow(float a, float[] v)
         {
             int n = v.GetLength(0);
-            double[] H = new double[n];
+            float[] H = new float[n];
             int i;
 
             for (i = 0; i < n; i++)
             {
-                H[i] = Math.Pow(a, v[i]);
+                H[i] = (float)Math.Pow(a, v[i]);
             }
 
             return H;
@@ -4211,7 +4122,7 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Pow(Complex a, double[] v)
+        public static Complex[] Pow(Complex a, float[] v)
         {
             int n = v.GetLength(0);
             Complex[] H = new Complex[n];
@@ -4230,7 +4141,7 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Pow(double a, Complex[] v)
+        public static Complex[] Pow(float a, Complex[] v)
         {
             int n = v.GetLength(0);
             Complex[] H = new Complex[n];
@@ -4241,75 +4152,6 @@ namespace UMapx.Core
                 H[i] = Maths.Pow(a, v[i]);
             }
 
-            return H;
-        }
-        #endregion
-
-        #region Vector exp/log
-        /// <summary>
-        /// Logarithms the elements of the vector base.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
-        /// <returns>Array</returns>
-        public static double[] Log(this double[] v, double a = Math.E)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Math.Log(v[i], a);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Logarithms the elements of the vector base.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
-        /// <returns>Array</returns>
-        public static Complex[] Log(this Complex[] v, double a = Math.E)
-        {
-            int length = v.Length;
-            Complex[] H = new Complex[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Maths.Log(v[i], a);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Takes an exponent from all vector values.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <returns>Array</returns>
-        public static double[] Exp(this double[] v)
-        {
-            int length = v.Length;
-            double[] H = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Math.Exp(v[i]);
-            }
-            return H;
-        }
-        /// <summary>
-        /// Takes an exponent from all vector values.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <returns>Array</returns>
-        public static Complex[] Exp(this Complex[] v)
-        {
-            int length = v.Length;
-            Complex[] H = new Complex[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                H[i] = Maths.Exp(v[i]);
-            }
             return H;
         }
         #endregion
@@ -4320,13 +4162,13 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] ToDouble(this double[] v)
+        public static float[] Tofloat(this float[] v)
         {
             int length = v.Length;
-            double max = Matrice.Max(v);
-            double min = Matrice.Min(v);
-            double range = max - min;
-            double[] u = new double[length];
+            float max = Matrice.Max(v);
+            float min = Matrice.Min(v);
+            float range = max - min;
+            float[] u = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -4339,10 +4181,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] ToByte(this double[] v)
+        public static float[] ToByte(this float[] v)
         {
             int length = v.Length;
-            double[] u = new double[length];
+            float[] u = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -4355,10 +4197,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Abs(this double[] v)
+        public static float[] Abs(this float[] v)
         {
             int length = v.Length;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -4371,10 +4213,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Negate(this double[] v)
+        public static float[] Negate(this float[] v)
         {
             int length = v.Length;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -4403,7 +4245,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] ToComplex(this double[] v)
+        public static Complex[] ToComplex(this float[] v)
         {
             int length = v.Length;
             Complex[] H = new Complex[length];
@@ -4419,10 +4261,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Abs(this Complex[] v)
+        public static float[] Abs(this Complex[] v)
         {
             int length = v.Length;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -4435,10 +4277,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Angle(this Complex[] v)
+        public static float[] Angle(this Complex[] v)
         {
             int length = v.Length;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -4451,10 +4293,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Real(this Complex[] v)
+        public static float[] Real(this Complex[] v)
         {
             int length = v.Length;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -4467,10 +4309,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Imag(this Complex[] v)
+        public static float[] Imag(this Complex[] v)
         {
             int length = v.Length;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -4501,12 +4343,12 @@ namespace UMapx.Core
         /// Returns the covariance value of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Cov(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Cov(this float[] v)
         {
             int xlength = v.Length;
-            double xv = Matrice.Mean(v);
-            double total = 0;
+            float xv = Matrice.Mean(v);
+            float total = 0;
             int i;
 
             for (i = 0; i < xlength; i++)
@@ -4537,10 +4379,10 @@ namespace UMapx.Core
         /// Returns the total value of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Sum(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Sum(this float[] v)
         {
-            double total = 0;
+            float total = 0;
             int length = v.Length;
 
             for (int i = 0; i < length; i++)
@@ -4571,10 +4413,10 @@ namespace UMapx.Core
         /// Returns the total product of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Mul(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Mul(this float[] v)
         {
-            double total = 1;
+            float total = 1;
             int length = v.Length;
 
             for (int i = 0; i < length; i++)
@@ -4588,7 +4430,7 @@ namespace UMapx.Core
         /// Returns the total product of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static Complex Mul(this Complex[] v)
         {
             Complex total = 1;
@@ -4605,10 +4447,10 @@ namespace UMapx.Core
         /// Returns the common quotient of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Div(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Div(this float[] v)
         {
-            double total = 1;
+            float total = 1;
             int length = v.Length;
 
             for (int i = 0; i < length; i++)
@@ -4622,7 +4464,7 @@ namespace UMapx.Core
         /// Returns the common quotient of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static Complex Div(this Complex[] v)
         {
             Complex total = 1;
@@ -4639,17 +4481,17 @@ namespace UMapx.Core
         /// Returns the entropy of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Entropy(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Entropy(this float[] v)
         {
-            double H = 0;
+            float H = 0;
             int length = v.Length, i;
 
             for (i = 0; i < length; i++)
             {
                 if (v[i] > 0)
                 {
-                    H += -v[i] * Maths.Log2(v[i]);
+                    H += -v[i] * (float)Maths.Log2(v[i]);
                 }
             }
             return H;
@@ -4658,8 +4500,8 @@ namespace UMapx.Core
         /// Returns the average value of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Mean(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Mean(this float[] v)
         {
             return Matrice.Sum(v) / v.Length;
         }
@@ -4676,16 +4518,16 @@ namespace UMapx.Core
         /// Returns the variance value.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Var(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Var(this float[] v)
         {
             int length = v.Length;
-            double mean = Matrice.Mean(v);
-            double sum = 0;
+            float mean = Matrice.Mean(v);
+            float sum = 0;
 
             for (int i = 0; i < length; i++)
             {
-                sum += Math.Pow(v[i] - mean, 2);
+                sum += (float)Math.Pow(v[i] - mean, 2);
             }
 
             return sum / (length - 1);
@@ -4713,15 +4555,15 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Array</param>
         /// <param name="y">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Var(this double[] x, double[] y)
+        /// <returns>float precision floating point number</returns>
+        public static float Var(this float[] x, float[] y)
         {
             int length = x.Length;
-            double sum = 0;
+            float sum = 0;
 
             for (int i = 0; i < length; i++)
             {
-                sum += Math.Pow(x[i] - y[i], 2);
+                sum += (float)Math.Pow(x[i] - y[i], 2);
             }
 
             return sum / (length - 1);
@@ -4748,10 +4590,10 @@ namespace UMapx.Core
         /// Returns the standard deviation.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double StnDev(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float StnDev(this float[] v)
         {
-            return Math.Sqrt(Matrice.Var(v));
+            return (float)Math.Sqrt(Matrice.Var(v));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -4767,10 +4609,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Array</param>
         /// <param name="y">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double StnDev(this double[] x, double[] y)
+        /// <returns>float precision floating point number</returns>
+        public static float StnDev(this float[] x, float[] y)
         {
-            return Math.Sqrt(Matrice.Var(x, y));
+            return (float)Math.Sqrt(Matrice.Var(x, y));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -4786,12 +4628,12 @@ namespace UMapx.Core
         /// Returns the value of the vector mode.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Mode(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Mode(this float[] v)
         {
             int count = 0;
             int length = v.Length;
-            double frequent = 0;
+            float frequent = 0;
             int i, j, k;
 
             for (i = 0; i < length; i++)
@@ -4841,11 +4683,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Pair of numbers</returns>
-        public static RangeDouble Extremum(this double[] v)
+        public static RangeFloat Extremum(this float[] v)
         {
-            double max = double.MinValue, min = double.MaxValue;
+            float max = float.MinValue, min = float.MaxValue;
             int length = v.Length;
-            double c;
+            float c;
 
             for (int i = 0; i < length; i++)
             {
@@ -4856,18 +4698,18 @@ namespace UMapx.Core
                 if (c < min)
                     min = c;
             }
-            return new RangeDouble(min, max);
+            return new RangeFloat(min, max);
         }
         /// <summary>
         /// Gets the value of the minimum element of the vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Min(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Min(this float[] v)
         {
             int index = 0, length = v.Length;
-            double minimum = double.MaxValue;
-            double c;
+            float minimum = float.MaxValue;
+            float c;
 
             for (int i = 0; i < length; i++)
             {
@@ -4885,12 +4727,12 @@ namespace UMapx.Core
         /// Gets the value of the maximum element of the vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Max(this double[] v)
+        /// <returns>float precision floating point number</returns>
+        public static float Max(this float[] v)
         {
             int index = 0, length = v.Length;
-            double maximum = double.MinValue;
-            double c;
+            float maximum = float.MinValue;
+            float c;
 
             for (int i = 0; i < length; i++)
             {
@@ -4909,10 +4751,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="threshold">Threshold</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Morph(this double[] v, int threshold)
+        /// <returns>float precision floating point number</returns>
+        public static float Morph(this float[] v, int threshold)
         {
-            double[] u = (double[])v.Clone();
+            float[] u = (float[])v.Clone();
             Array.Sort(u);
             return u[threshold];
         }
@@ -4920,10 +4762,10 @@ namespace UMapx.Core
         /// Sorts the vector.
         /// </summary>
         /// <param name="v">Array</param>
-        public static void Sort(this double[] v)
+        public static void Sort(this float[] v)
         {
             int i, j, length = v.Length;
-            double temp;
+            float temp;
             for (i = 0; i < length; i++)
             {
                 for (j = i + 1; j < length; j++)
@@ -4944,10 +4786,10 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="r">Start</param>
         /// <param name="l">End</param>
-        public static void Sort(this double[] v, int r, int l)
+        public static void Sort(this float[] v, int r, int l)
         {
-            double temp;
-            double x = v[r + (l - r) / 2];
+            float temp;
+            float x = v[r + (l - r) / 2];
             int i = r;
             int j = l;
 
@@ -4981,11 +4823,11 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="inverse">Use inverse to diagonal matrix or not</param>
         /// <returns>Array</returns>
-        public static double[,] Dot(this double[,] m, double[] v, bool inverse = false)
+        public static float[,] Dot(this float[,] m, float[] v, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] temp = new double[r0, r1];
-            double alpha;
+            float[,] temp = new float[r0, r1];
+            float alpha;
             int i, j;
 
             if (!inverse)
@@ -5067,7 +4909,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="inverse">Use inverse to diagonal matrix or not</param>
         /// <returns>Array</returns>
-        public static Complex[,] Dot(this Complex[,] m, double[] v, bool inverse = false)
+        public static Complex[,] Dot(this Complex[,] m, float[] v, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] temp = new Complex[r0, r1];
@@ -5110,7 +4952,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="inverse">Use inverse to diagonal matrix or not</param>
         /// <returns>Array</returns>
-        public static Complex[,] Dot(this double[,] m, Complex[] v, bool inverse = false)
+        public static Complex[,] Dot(this float[,] m, Complex[] v, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] temp = new Complex[r0, r1];
@@ -5154,11 +4996,11 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="inverse">Use inverse to diagonal matrix or not</param>
         /// <returns>Array</returns>
-        public static double[,] Dot(this double[] v, double[,] m, bool inverse = false)
+        public static float[,] Dot(this float[] v, float[,] m, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[,] temp = new double[r0, r1];
-            double alpha;
+            float[,] temp = new float[r0, r1];
+            float alpha;
             int i, j;
 
             if (!inverse)
@@ -5240,7 +5082,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="inverse">Use inverse to diagonal matrix or not</param>
         /// <returns>Array</returns>
-        public static Complex[,] Dot(this Complex[] v, double[,] m, bool inverse = false)
+        public static Complex[,] Dot(this Complex[] v, float[,] m, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] temp = new Complex[r0, r1];
@@ -5283,7 +5125,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="inverse">Use inverse to diagonal matrix or not</param>
         /// <returns>Array</returns>
-        public static Complex[,] Dot(this double[] v, Complex[,] m, bool inverse = false)
+        public static Complex[,] Dot(this float[] v, Complex[,] m, bool inverse = false)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[,] temp = new Complex[r0, r1];
@@ -5329,11 +5171,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Dot(this double[] a, double[] b)
+        /// <returns>float precision floating point number</returns>
+        public static float Dot(this float[] a, float[] b)
         {
             int length = a.Length, i;
-            double sum = 0;
+            float sum = 0;
 
             for (i = 0; i < length; i++)
             {
@@ -5346,7 +5188,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static Complex Dot(this Complex[] a, Complex[] b)
         {
             int length = a.Length, i;
@@ -5363,8 +5205,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static Complex Dot(this Complex[] a, double[] b)
+        /// <returns>float precision floating point number</returns>
+        public static Complex Dot(this Complex[] a, float[] b)
         {
             int length = a.Length, i;
             Complex sum = 0;
@@ -5380,8 +5222,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>Double precision floating point number</returns>
-        public static Complex Dot(this double[] a, Complex[] b)
+        /// <returns>float precision floating point number</returns>
+        public static Complex Dot(this float[] a, Complex[] b)
         {
             int length = a.Length, i;
             Complex sum = 0;
@@ -5398,10 +5240,10 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Dot(this double[] v, double[,] m)
+        public static float[] Dot(this float[] v, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            double[] temp = new double[r0];
+            float[] temp = new float[r0];
 
             Parallel.For(0, r0, i =>
             {
@@ -5421,7 +5263,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static Complex[] Dot(this double[] v, Complex[,] m)
+        public static Complex[] Dot(this float[] v, Complex[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[] temp = new Complex[r0];
@@ -5467,7 +5309,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="m">Matrix</param>
         /// <returns>Array</returns>
-        public static Complex[] Dot(this Complex[] v, double[,] m)
+        public static Complex[] Dot(this Complex[] v, float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex[] temp = new Complex[r0];
@@ -5494,11 +5336,11 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static double[,] Dotp(this double[] a, double[] b)
+        public static float[,] Dotp(this float[] a, float[] b)
         {
             int l0 = a.Length, l1 = b.Length;
-            double[,] H = new double[l0, l1];
-            double c;
+            float[,] H = new float[l0, l1];
+            float c;
             int i, j;
 
             for (j = 0; j < l0; j++)
@@ -5542,7 +5384,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[,] Dotp(this Complex[] a, double[] b)
+        public static Complex[,] Dotp(this Complex[] a, float[] b)
         {
             int l0 = a.Length, l1 = b.Length;
             Complex[,] H = new Complex[l0, l1];
@@ -5566,7 +5408,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[,] Dotp(this double[] a, Complex[] b)
+        public static Complex[,] Dotp(this float[] a, Complex[] b)
         {
             int l0 = a.Length, l1 = b.Length;
             Complex[,] H = new Complex[l0, l1];
@@ -5593,14 +5435,14 @@ namespace UMapx.Core
         /// <param name="u">Array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Array</returns>
-        public static double[] Conv(this double[] v, double[] u, bool normalize = true)
+        public static float[] Conv(this float[] v, float[] u, bool normalize = true)
         {
             int n = v.Length;
             int r = u.Length;
             int r2 = r / 2;
             int i, j, k, c;
-            double sum, div;
-            double[] uv = new double[n];
+            float sum, div;
+            float[] uv = new float[n];
 
             if (normalize)
             {
@@ -5717,7 +5559,7 @@ namespace UMapx.Core
         /// <param name="u">Array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Array</returns>
-        public static Complex[] Conv(this Complex[] v, double[] u, bool normalize = true)
+        public static Complex[] Conv(this Complex[] v, float[] u, bool normalize = true)
         {
             int n = v.Length;
             int r = u.Length;
@@ -5779,7 +5621,7 @@ namespace UMapx.Core
         /// <param name="u">Array</param>
         /// <param name="normalize">Normalized convolution or not</param>
         /// <returns>Array</returns>
-        public static Complex[] Conv(this double[] v, Complex[] u, bool normalize = true)
+        public static Complex[] Conv(this float[] v, Complex[] u, bool normalize = true)
         {
             int n = v.Length;
             int r = u.Length;
@@ -5842,17 +5684,17 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="r">Radius</param>
-        public static double[] Max(this double[] v, int r)
+        public static float[] Max(this float[] v, int r)
         {
             int l = v.Length;
-            double[] B = new double[l];
+            float[] B = new float[l];
             int r2 = r / 2;
             int i, j, k, c;
-            double max;
+            float max;
 
             for (i = 0; i < l; i++)
             {
-                max = double.MinValue;
+                max = float.MinValue;
                 k = i - r2;
 
                 for (j = 0; j < r; j++)
@@ -5876,17 +5718,17 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="r">Radius</param>
-        public static double[] Min(this double[] v, int r)
+        public static float[] Min(this float[] v, int r)
         {
             int l = v.Length;
-            double[] B = new double[l];
+            float[] B = new float[l];
             int r2 = r / 2;
             int i, j, k, c;
-            double min;
+            float min;
 
             for (i = 0; i < l; i++)
             {
-                min = double.MaxValue;
+                min = float.MaxValue;
                 k = i - r2;
 
                 for (j = 0; j < r; j++)
@@ -5912,11 +5754,11 @@ namespace UMapx.Core
         /// <param name="r">Radius</param>
         /// <param name="threshold">Threshold</param>
         /// <returns>Array</returns>
-        public static double[] Morph(this double[] v, int r, int threshold)
+        public static float[] Morph(this float[] v, int r, int threshold)
         {
             int n = v.Length;
-            double[] u = new double[r];
-            double[] uv = new double[n];
+            float[] u = new float[r];
+            float[] uv = new float[n];
             int r2 = r / 2;
             int i, j, k, c, p;
 
@@ -5949,16 +5791,16 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="r">Radius</param>
-        public static double[] Mean(this double[] v, int r)
+        public static float[] Mean(this float[] v, int r)
         {
             int l = v.Length;
             if (l == 1)
                 return v;
 
-            double[] output = new double[l];
+            float[] output = new float[l];
             int r2 = r >> 1;
             int dl = l - r2;
-            double s = 0;
+            float s = 0;
             int i;
 
             for (i = 0; i < r; i++)
@@ -6038,10 +5880,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="r">Column number</param>
         /// <returns>Array</returns>
-        public static double[] GetCol(this double[,] m, int r)
+        public static float[] GetCol(this float[,] m, int r)
         {
             int w = m.GetLength(0);
-            double[] U = new double[w];
+            float[] U = new float[w];
             for (int i = 0; i < w; i++)
             {
                 U[i] = m[i, r];
@@ -6055,10 +5897,10 @@ namespace UMapx.Core
         /// <param name="n">Array</param>
         /// <param name="r">Column number</param>
         /// <returns>Matrix</returns>
-        public static double[,] SetCol(this double[,] m, double[] n, int r)
+        public static float[,] SetCol(this float[,] m, float[] n, int r)
         {
             int w = m.GetLength(0);
-            double[,] U = (double[,])m.Clone();
+            float[,] U = (float[,])m.Clone();
             for (int i = 0; i < w; i++)
             {
                 U[i, r] = n[i];
@@ -6071,10 +5913,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="r">Row number</param>
         /// <returns>Array</returns>
-        public static double[] GetRow(this double[,] m, int r)
+        public static float[] GetRow(this float[,] m, int r)
         {
             int w = m.GetLength(1);
-            double[] U = new double[w];
+            float[] U = new float[w];
             for (int i = 0; i < w; i++)
             {
                 U[i] = m[r, i];
@@ -6088,10 +5930,10 @@ namespace UMapx.Core
         /// <param name="n">Array</param>
         /// <param name="r">Row number</param>
         /// <returns>Matrix</returns>
-        public static double[,] SetRow(this double[,] m, double[] n, int r)
+        public static float[,] SetRow(this float[,] m, float[] n, int r)
         {
             int w = m.GetLength(1);
-            double[,] U = (double[,])m.Clone();
+            float[,] U = (float[,])m.Clone();
             for (int i = 0; i < w; i++)
             {
                 U[r, i] = n[i];
@@ -6196,10 +6038,10 @@ namespace UMapx.Core
         /// <param name="m">The number of positions to which a shift in height occurs</param>
         /// <param name="l">The number of positions by which the shift occurs in width</param>
         /// <returns>Matrix</returns>
-        public static double[,] Shift(this double[,] a, int m, int l)
+        public static float[,] Shift(this float[,] a, int m, int l)
         {
             int l0 = a.GetLength(0), l1 = a.GetLength(1);
-            double[,] temp = new double[l0, l1];
+            float[,] temp = new float[l0, l1];
             int i, j;
 
             for (i = 0; i < l0; i++)
@@ -6235,10 +6077,10 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="l">Number of positions to shift</param>
         /// <returns>Array</returns>
-        public static double[] Shift(this double[] v, int l)
+        public static float[] Shift(this float[] v, int l)
         {
             int N = v.Length;
-            double[] temp = new double[N];
+            float[] temp = new float[N];
 
             for (int i = 0; i < N; i++)
             {
@@ -6256,10 +6098,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="direction">Processing direction</param>
         /// <returns>Matrix</returns>
-        public static double[,] Flip(this double[,] m, Direction direction)
+        public static float[,] Flip(this float[,] m, Direction direction)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            double[,] H = new double[ml, mr];
+            float[,] H = new float[ml, mr];
             int i, j;
 
             // horizontal flipping:
@@ -6351,10 +6193,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Flip(this double[] v)
+        public static float[] Flip(this float[] v)
         {
             int mr = v.Length;
-            double[] H = new double[mr];
+            float[] H = new float[mr];
 
             for (int j = 0; j < mr; j++)
             {
@@ -6389,10 +6231,10 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static double[] Merge(this double[] a, double[] b)
+        public static float[] Merge(this float[] a, float[] b)
         {
             int na = a.Length, nb = b.Length, i;
-            double[] v = new double[na + nb];
+            float[] v = new float[na + nb];
 
             for (i = 0; i < na; i++)
                 v[i] = a[i];
@@ -6427,7 +6269,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Merge(this Complex[] a, double[] b)
+        public static Complex[] Merge(this Complex[] a, float[] b)
         {
             int na = a.Length, nb = b.Length, i;
             Complex[] v = new Complex[na + nb];
@@ -6446,7 +6288,7 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Merge(this double[] a, Complex[] b)
+        public static Complex[] Merge(this float[] a, Complex[] b)
         {
             int na = a.Length, nb = b.Length, i;
             Complex[] v = new Complex[na + nb];
@@ -6469,10 +6311,10 @@ namespace UMapx.Core
         /// <param name="start">Starting position</param>
         /// <param name="length">Vector length</param>
         /// <returns>Array</returns>
-        public static double[] Cut(this double[] a, int start, int length)
+        public static float[] Cut(this float[] a, int start, int length)
         {
             int na = a.Length, i;
-            double[] v = new double[length];
+            float[] v = new float[length];
 
             for (i = 0; i < length; i++)
                 v[i] = a[Maths.Mod(start + i, na)];
@@ -6505,10 +6347,10 @@ namespace UMapx.Core
         /// <param name="height">Height</param>
         /// <param name="width">Width</param>
         /// <returns>Matrix</returns>
-        public static double[,] Cut(this double[,] m, int y, int x, int height, int width)
+        public static float[,] Cut(this float[,] m, int y, int x, int height, int width)
         {
             // params
-            double[,] B = new double[height, width];
+            float[,] B = new float[height, width];
             int i, j;
 
             // do job
@@ -6557,11 +6399,11 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="height">Height</param>
         /// <returns>Matrix</returns>
-        public static double[,] Reshape(this double[] a, int height)
+        public static float[,] Reshape(this float[] a, int height)
         {
             int n = a.Length;
-            int width = (int)Math.Ceiling(n / (double)height);
-            double[,] H = new double[height, width];
+            int width = (int)Math.Ceiling(n / (float)height);
+            float[,] H = new float[height, width];
             int i, j, k;
 
             // reshaping:
@@ -6590,7 +6432,7 @@ namespace UMapx.Core
         public static Complex[,] Reshape(this Complex[] a, int height)
         {
             int n = a.Length;
-            int width = (int)Math.Ceiling(n / (double)height);
+            int width = (int)Math.Ceiling(n / (float)height);
             Complex[,] H = new Complex[height, width];
             int i, j, k;
 
@@ -6617,10 +6459,10 @@ namespace UMapx.Core
         /// <param name="a">Matrix</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Reshape(this double[,] a, int length)
+        public static float[] Reshape(this float[,] a, int length)
         {
             int height = a.GetLength(0), width = a.GetLength(1);
-            double[] v = new double[length];
+            float[] v = new float[length];
 
             int i, j, k;
 
@@ -6679,10 +6521,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Matrix</returns>
-        public static double[,] Diag(this double[] v)
+        public static float[,] Diag(this float[] v)
         {
             int n = v.Length, i;
-            double[,] diag = new double[n, n];
+            float[,] diag = new float[n, n];
 
             for (i = 0; i < n; i++)
             {
@@ -6711,10 +6553,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Matrix</param>
         /// <returns>Array</returns>
-        public static double[] Diag(this double[,] a)
+        public static float[] Diag(this float[,] a)
         {
             int height = a.GetLength(0), width = a.GetLength(1);
-            double[] v = new double[height];
+            float[] v = new float[height];
             int i;
 
             // reshaping:
@@ -6760,10 +6602,10 @@ namespace UMapx.Core
         /// <param name="i">First row or column</param>
         /// <param name="j">Second row or column</param>
         /// <param name="direction">Processing direction</param>
-        public static void Swap(this double[,] a, int i, int j, Direction direction = Direction.Horizontal)
+        public static void Swap(this float[,] a, int i, int j, Direction direction = Direction.Horizontal)
         {
             // properties:
-            double temp;
+            float temp;
             int col = a.GetLength(0);
             int row = a.GetLength(1);
             int z;
@@ -6869,10 +6711,10 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="i">First element position</param>
         /// <param name="j">Second element position</param>
-        public static void Swap(this double[] v, int i, int j)
+        public static void Swap(this float[] v, int i, int j)
         {
             // get elements:
-            double e1 = v[i], e2 = v[j];
+            float e1 = v[i], e2 = v[j];
             // swapping vector elements:
             v[j] = e1; v[i] = e2;
             return;
@@ -6902,10 +6744,10 @@ namespace UMapx.Core
         /// <param name="length">Length</param>
         /// <param name="direction">Processing direction</param>
         /// <returns>Matrix</returns>
-        public static double[,] Remove(this double[,] a, int i, int length, Direction direction = Direction.Horizontal)
+        public static float[,] Remove(this float[,] a, int i, int length, Direction direction = Direction.Horizontal)
         {
             // properties:
-            double[,] H;
+            float[,] H;
             int col = a.GetLength(0);
             int row = a.GetLength(1);
             int z, y;
@@ -6913,7 +6755,7 @@ namespace UMapx.Core
             // by colums:
             if (direction == Direction.Vertical)
             {
-                H = new double[col, length];
+                H = new float[col, length];
 
                 for (int j = 0; j < col; j++)
                 {
@@ -6926,7 +6768,7 @@ namespace UMapx.Core
             // by rows:
             else if (direction == Direction.Horizontal)
             {
-                H = new double[length, row];
+                H = new float[length, row];
 
                 for (int j = 0; j < row; j++)
                 {
@@ -6939,7 +6781,7 @@ namespace UMapx.Core
             // by columns and rows:
             else
             {
-                H = new double[length, length];
+                H = new float[length, length];
                 int w, t;
 
                 for (z = 0, y = i; z < length; z++, y++)
@@ -7019,10 +6861,10 @@ namespace UMapx.Core
         /// <param name="i">Number of element</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Remove(this double[] v, int i, int length)
+        public static float[] Remove(this float[] v, int i, int length)
         {
             int n = v.Length;
-            double[] w = new double[length];
+            float[] w = new float[length];
 
             for (int z = 0, y = i; z < length; z++, y++)
             {
@@ -7057,7 +6899,7 @@ namespace UMapx.Core
         /// <param name="m">Square matrix</param>
         /// <param name="n">Row and column number</param>
         /// <returns>Square matrix</returns>
-        public static double[,] Minor(this double[,] m, int n)
+        public static float[,] Minor(this float[,] m, int n)
         {
             // matrix sizes:
             int height = m.GetLength(0), width = m.GetLength(1);
@@ -7067,7 +6909,7 @@ namespace UMapx.Core
             if (n >= height || n < 0) throw new Exception("Row and column number specified is invalid");
 
             // new matrix:
-            double[,] H = new double[height - 1, width - 1];
+            float[,] H = new float[height - 1, width - 1];
             int i, j, x = 0, y = 0;
 
             // dub:
@@ -7140,7 +6982,7 @@ namespace UMapx.Core
         /// <param name="direction">Processing direction</param>
         /// <param name="reverse">Reverse processing or not</param>
         /// <returns>Matrix</returns>
-        public static double[,] Diff(double[,] a, int n, Direction direction, bool reverse = false)
+        public static float[,] Diff(float[,] a, int n, Direction direction, bool reverse = false)
         {
             // start
             int i, r, c;
@@ -7196,17 +7038,17 @@ namespace UMapx.Core
         /// <param name="a">Matrix</param>
         /// <param name="reverse">Reverse processing or not</param>
         /// <returns>Matrix</returns>
-        private static double[,] DiffVertical(double[,] a, bool reverse = false)
+        private static float[,] DiffVertical(float[,] a, bool reverse = false)
         {
             // vertical direction 
             // of processing
             int r = a.GetLength(0) - 1;
             int m = a.GetLength(1);
             if (r == 0)
-                return new double[0, m];
+                return new float[0, m];
 
             // new array
-            double[,] y = new double[r, m];
+            float[,] y = new float[r, m];
             int i, k;
 
             // do job
@@ -7231,17 +7073,17 @@ namespace UMapx.Core
         /// <param name="a">Matrix</param>
         /// <param name="reverse">Reverse processing or not</param>
         /// <returns>Matrix</returns>
-        private static double[,] DiffHorizontal(double[,] a, bool reverse = false)
+        private static float[,] DiffHorizontal(float[,] a, bool reverse = false)
         {
             // horizontal direction 
             // of processing
             int c = a.GetLength(1) - 1;
             int m = a.GetLength(0);
             if (c == 0)
-                return new double[m, 0];
+                return new float[m, 0];
 
             // new array
-            double[,] y = new double[m, c];
+            float[,] y = new float[m, c];
             int i, k;
 
             // do job
@@ -7395,11 +7237,11 @@ namespace UMapx.Core
         /// <param name="n">Order</param>
         /// <param name="reverse">Reverse processing or not</param>
         /// <returns>Array</returns>
-        public static double[] Diff(this double[] v, int n, bool reverse = false)
+        public static float[] Diff(this float[] v, int n, bool reverse = false)
         {
             // start
-            double[] z;
-            double[] y = v;
+            float[] z;
+            float[] y = v;
             int i, j, length;
 
             // do job
@@ -7409,9 +7251,9 @@ namespace UMapx.Core
                 length = z.Length - 1;
 
                 if (length == 0)
-                    return new double[0];
+                    return new float[0];
 
-                y = new double[length];
+                y = new float[length];
 
                 if (reverse)
                 {
@@ -7475,12 +7317,12 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Extend(this double[] v, int length)
+        public static float[] Extend(this float[] v, int length)
         {
             int r0 = v.GetLength(0);
             int rr = (length - r0) / 2;
             int dr = length - rr;
-            double[] b = new double[length];
+            float[] b = new float[length];
             int i;
 
             for (i = 0; i < rr; i++)
@@ -7501,7 +7343,7 @@ namespace UMapx.Core
         /// <param name="height">Height</param>
         /// <param name="width">Width</param>
         /// <returns>Matrix</returns>
-        public static double[,] Extend(this double[,] m, int height, int width)
+        public static float[,] Extend(this float[,] m, int height, int width)
         {
             int r = m.GetLength(0);
             int c = m.GetLength(1);
@@ -7519,13 +7361,13 @@ namespace UMapx.Core
         /// <param name="m"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        private static double[,] ExtendVertical(double[,] m, int length)
+        private static float[,] ExtendVertical(float[,] m, int length)
         {
             // params
             int r0 = m.GetLength(0);
             int c0 = m.GetLength(1);
             int rr = (length - r0) / 2;
-            double[,] B = new double[length, c0];
+            float[,] B = new float[length, c0];
             int i, j;
 
             // do job
@@ -7546,13 +7388,13 @@ namespace UMapx.Core
         /// <param name="m"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        private static double[,] ExtendHorizontal(double[,] m, int length)
+        private static float[,] ExtendHorizontal(float[,] m, int length)
         {
             // params
             int r0 = m.GetLength(0);
             int c0 = m.GetLength(1);
             int cc = (length - c0) / 2;
-            double[,] B = new double[r0, length];
+            float[,] B = new float[r0, length];
             int i, j;
 
             // do job
@@ -7678,7 +7520,7 @@ namespace UMapx.Core
         /// <param name="max">Maximum</param>
         /// <param name="step">Step</param>
         /// <returns>Array</returns>
-        public static double[] Compute(double min, double max, double step)
+        public static float[] Compute(float min, float max, float step)
         {
             // ******************************
             // MATLAB vector computing void
@@ -7686,16 +7528,16 @@ namespace UMapx.Core
             // ******************************
 
             // shifts and variables:
-            double dy = max - min + step, i;
-            int dx = (int)Maths.Fix(dy / step), j;
+            float dy = max - min + step, i;
+            int dx = (int)Maths.Round(dy / step), j;
 
             // C# has a significant bug, which you can check with:
             // min = 0.5, max = 1, step = 0.001,
             // maxz = max, j = 63.
 
             // output vector and eps:
-            double[] x = new double[dx];
-            double eps = max / 1e8, maxz;
+            float[] x = new float[dx];
+            float eps = max / 1e8f, maxz;
 
             // compute:
             if (min > max)
@@ -7736,10 +7578,10 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Array</returns>
-        public static double[] Compute(this double[] v, IDouble function)
+        public static float[] Compute(this float[] v, IFloat function)
         {
             int length = v.Length;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -7771,10 +7613,10 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static double[,] Compute(this double[] x, double[] y, IDoubleMesh function)
+        public static float[,] Compute(this float[] x, float[] y, IFloatMesh function)
         {
             int xlength = x.Length, ylength = y.Length;
-            double[,] z = new double[xlength, ylength];
+            float[,] z = new float[xlength, ylength];
             int i, j;
 
             for (i = 0; i < xlength; i++)
@@ -7793,7 +7635,7 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Compute(this double[] x, Complex[] y, IComplexMesh function)
+        public static Complex[,] Compute(this float[] x, Complex[] y, IComplexMesh function)
         {
             int xlength = x.Length, ylength = y.Length;
             Complex[,] z = new Complex[xlength, ylength];
@@ -7815,7 +7657,7 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Compute(this Complex[] x, double[] y, IComplexMesh function)
+        public static Complex[,] Compute(this Complex[] x, float[] y, IComplexMesh function)
         {
             int xlength = x.Length, ylength = y.Length;
             Complex[,] z = new Complex[xlength, ylength];
@@ -7858,11 +7700,11 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static double[,] Compute(this double[,] m, IDouble function)
+        public static float[,] Compute(this float[,] m, IFloat function)
         {
             int i, j;
             int ml = m.GetLength(1), mr = m.GetLength(0);
-            double[,] H = new double[mr, ml];
+            float[,] H = new float[mr, ml];
 
             for (i = 0; i < mr; i++)
             {
@@ -7902,9 +7744,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Dimension</param>
         /// <returns>Array</returns>
-        public static double[] One(int n)
+        public static float[] One(int n)
         {
-            double[] v = new double[n];
+            float[] v = new float[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -7918,9 +7760,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Dimension</param>
         /// <returns>Array</returns>
-        public static double[] Zero(int n)
+        public static float[] Zero(int n)
         {
-            return new double[n];
+            return new float[n];
         }
         #endregion
 
@@ -7930,22 +7772,22 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static double[] Householder(this double[] v)
+        public static float[] Householder(this float[] v)
         {
             int length = v.Length;
 
             // length checking:
             if (length > 0)
             {
-                double norm = v.Norm();
-                double[] u = new double[length];
+                float norm = v.Norm();
+                float[] u = new float[length];
 
                 // householder vector:
                 if (norm != 0)
                 {
                     u[0] = v[0] / norm;
                     u[0] = u[0] + Maths.Sign(u[0]);
-                    u[0] = u[0] / Math.Sqrt(Math.Abs(u[0]));
+                    u[0] = u[0] / (float)Math.Sqrt(Math.Abs(u[0]));
 
                     for (int i = 1; i < length; i++)
                     {
@@ -7956,7 +7798,7 @@ namespace UMapx.Core
                 else
                 {
                     u = v;
-                    u[0] = Maths.Sqrt2;
+                    u[0] = (float)Maths.Sqrt2;
                 }
                 return u;
             }
@@ -7967,10 +7809,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Matrix</returns>
-        public static double[,] Companion(this double[] v)
+        public static float[,] Companion(this float[] v)
         {
             int n = v.Length, i;
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
 
             // last column:
             for (i = 0; i < n; i++)
@@ -7990,17 +7832,17 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Matrix</returns>
-        public static double[,] Vander(this double[] v)
+        public static float[,] Vander(this float[] v)
         {
             int n = v.Length;
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = Math.Pow(v[i], j);
+                    H[i, j] = (float)Math.Pow(v[i], j);
                 }
             }
 
@@ -8011,10 +7853,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Matrix</returns>
-        public static double[,] Hankeli(this double[] v)
+        public static float[,] Hankeli(this float[] v)
         {
             int n = v.Length;
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -8032,10 +7874,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Matrix</returns>
-        public static double[,] Hankel(this double[] v)
+        public static float[,] Hankel(this float[] v)
         {
             int n = v.Length / 2;
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -8053,10 +7895,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Matrix</returns>
-        public static double[,] Toeplitz(this double[] v)
+        public static float[,] Toeplitz(this float[] v)
         {
             int n = v.Length / 2;
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -8075,11 +7917,11 @@ namespace UMapx.Core
         /// <param name="x">Array</param>
         /// <param name="y">Array</param>
         /// <returns>Matrix</returns>
-        public static double[,] Cauchy(this double[] x, double[] y)
+        public static float[,] Cauchy(this float[] x, float[] y)
         {
             int m = x.Length, l = y.Length;
-            double[,] H = new double[m, l];
-            double kern;
+            float[,] H = new float[m, l];
+            float kern;
             int i, j;
 
             for (i = 0; i < m; i++)
@@ -8087,7 +7929,7 @@ namespace UMapx.Core
                 for (j = 0; j < l; j++)
                 {
                     kern = x[i] - y[j];
-                    H[i, j] = (kern != 0) ? 1.0 / kern : 0;
+                    H[i, j] = (kern != 0) ? 1.0f / kern : 0;
                 }
             }
 
@@ -8098,10 +7940,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Matrix</returns>
-        public static double[,] Circulant(this double[] v)
+        public static float[,] Circulant(this float[] v)
         {
             int n = v.Length;
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -8118,10 +7960,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Matrix</returns>
-        public static double[,] Symmetric(this double[] v)
+        public static float[,] Symmetric(this float[] v)
         {
             int n = v.Length;
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -8321,9 +8163,9 @@ namespace UMapx.Core
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
         /// <returns>Matrix</returns>
-        public static double[,] Zero(int m, int l)
+        public static float[,] Zero(int m, int l)
         {
-            return new double[m, l];
+            return new float[m, l];
         }
         /// <summary>
         /// Implements the construction of a eye matrix.
@@ -8331,9 +8173,9 @@ namespace UMapx.Core
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
         /// <returns>Matrix</returns>
-        public static double[,] Eye(int m, int l)
+        public static float[,] Eye(int m, int l)
         {
-            double[,] H = new double[m, l];
+            float[,] H = new float[m, l];
             int i, j;
 
             for (i = 0; i < m; i++)
@@ -8352,9 +8194,9 @@ namespace UMapx.Core
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
         /// <returns>Matrix</returns>
-        public static double[,] One(int m, int l)
+        public static float[,] One(int m, int l)
         {
-            double[,] H = new double[m, l];
+            float[,] H = new float[m, l];
             int i, j;
 
             for (i = 0; i < m; i++)
@@ -8371,9 +8213,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Exchange(int n)
+        public static float[,] Exchange(int n)
         {
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -8391,17 +8233,17 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Lehmer(int n)
+        public static float[,] Lehmer(int n)
         {
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
-            double x, y;
+            float x, y;
 
             for (i = 1; i <= n; i++)
             {
                 for (j = 1; j <= n; j++)
                 {
-                    x = (double)i; y = (double)j;
+                    x = (float)i; y = (float)j;
                     H[i - 1, j - 1] = (j >= i) ? x / y : y / x;
                 }
             }
@@ -8413,9 +8255,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Redheffer(int n)
+        public static float[,] Redheffer(int n)
         {
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 1; i <= n; i++)
@@ -8448,16 +8290,16 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Hilbert(int n)
+        public static float[,] Hilbert(int n)
         {
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 1; i <= n; i++)
             {
                 for (j = 1; j <= n; j++)
                 {
-                    H[i - 1, j - 1] = 1.0 / (i + j - 1);
+                    H[i - 1, j - 1] = 1.0f / (i + j - 1);
                 }
             }
             return H;
@@ -8467,9 +8309,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Circulant(int n)
+        public static float[,] Circulant(int n)
         {
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -8486,9 +8328,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Symmetric(int n)
+        public static float[,] Symmetric(int n)
         {
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -8509,9 +8351,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] GCD(int n)
+        public static float[,] GCD(int n)
         {
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -8529,11 +8371,11 @@ namespace UMapx.Core
         /// <param name="n">Dimension</param>
         /// <param name="second">Second kind or not</param>
         /// <returns>Matrix</returns>
-        public static double[,] Stirling(int n, bool second = false)
+        public static float[,] Stirling(int n, bool second = false)
         {
             // Stirling's matrix 
             // of the second kind
-            double[,] S = new double[n, n];
+            float[,] S = new float[n, n];
             int i, j;
 
             // S(n, 0) = 0
@@ -8579,12 +8421,12 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Size (odd number)</param>
         /// <returns>Matrix</returns>
-        public static double[,] Magic(int n)
+        public static float[,] Magic(int n)
         {
             if (Maths.Mod(n, 2) != 1)
                 throw new Exception("Dimension of the matrix must be an odd number");
 
-            double[,] m = new double[n, n];
+            float[,] m = new float[n, n];
             int i, j;
 
             // MATLAB construction
@@ -8612,13 +8454,13 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Dimension</param>
         /// <returns>Array</returns>
-        public static double[] Rand(int n)
+        public static float[] Rand(int n)
         {
-            double[] v = new double[n];
+            float[] v = new float[n];
 
             for (int i = 0; i < n; i++)
             {
-                v[i] = rnd.NextDouble();
+                v[i] = (float)rnd.NextDouble();
             }
 
             return v;
@@ -8634,7 +8476,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                v[i] = new Complex(rnd.NextDouble(), rnd.NextDouble());
+                v[i] = new Complex((float)rnd.NextDouble(), (float)rnd.NextDouble());
             }
 
             return v;
@@ -8645,16 +8487,16 @@ namespace UMapx.Core
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
         /// <returns>Matrix</returns>
-        public static double[,] Rand(int m, int l)
+        public static float[,] Rand(int m, int l)
         {
-            double[,] H = new double[m, l];
+            float[,] H = new float[m, l];
             int i, j;
 
             for (i = 0; i < m; i++)
             {
                 for (j = 0; j < l; j++)
                 {
-                    H[i, j] = rnd.NextDouble();
+                    H[i, j] = (float)rnd.NextDouble();
                 }
             }
 
@@ -8675,7 +8517,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < l; j++)
                 {
-                    H[i, j] = new Complex(rnd.NextDouble(), rnd.NextDouble());
+                    H[i, j] = new Complex((float)rnd.NextDouble(), (float)rnd.NextDouble());
                 }
             }
 
@@ -8689,7 +8531,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Dimension</param>
         /// <returns>Array</returns>
-        public static double[] Randi(int n)
+        public static float[] Randi(int n)
         {
             return Randi(n, 1, n + 1);
         }
@@ -8709,9 +8551,9 @@ namespace UMapx.Core
         /// <param name="a">Lower bound</param>
         /// <param name="b">Upper bound</param>
         /// <returns>Array</returns>
-        public static double[] Randi(int n, int a, int b)
+        public static float[] Randi(int n, int a, int b)
         {
-            double[] v = new double[n];
+            float[] v = new float[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -8745,7 +8587,7 @@ namespace UMapx.Core
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
         /// <returns>Matrix</returns>
-        public static double[,] Randi(int m, int l)
+        public static float[,] Randi(int m, int l)
         {
             return Randi(m, l, 1, l + 1);
         }
@@ -8757,9 +8599,9 @@ namespace UMapx.Core
         /// <param name="a">Lower bound</param>
         /// <param name="b">Upper bound</param>
         /// <returns>Matrix</returns>
-        public static double[,] Randi(int m, int l, int a, int b)
+        public static float[,] Randi(int m, int l, int a, int b)
         {
-            double[,] H = new double[m, l];
+            float[,] H = new float[m, l];
             int i, j;
 
             for (i = 0; i < m; i++)
@@ -8810,7 +8652,7 @@ namespace UMapx.Core
 
         #region Parse methods
         /// <summary>
-        /// Parses the original string into a matrix of double numbers.
+        /// Parses the original string into a matrix of float numbers.
         /// <remarks>
         /// Example: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
         /// </remarks>
@@ -8818,18 +8660,18 @@ namespace UMapx.Core
         /// <param name="a">Matrix</param>
         /// <param name="s">Input string</param>
         /// <returns>Matrix</returns>
-        public static double[,] Parse(this double[,] a, string s)
+        public static float[,] Parse(this float[,] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
             string[] nums = rows[0].Split('|');
             int r = rows.Length, n = nums.Length, k;
-            double[,] H = new double[r, n];
+            float[,] H = new float[r, n];
             int i, j;
 
             // first row
             for (j = 0; j < n; j++)
             {
-                H[0, j] = double.Parse(nums[j]);
+                H[0, j] = float.Parse(nums[j]);
             }
 
             // other rows
@@ -8840,20 +8682,20 @@ namespace UMapx.Core
 
                 for (j = 0; j < k; j++)
                 {
-                    H[i, j] = double.Parse(nums[j]);
+                    H[i, j] = float.Parse(nums[j]);
                 }
             }
             return H;
         }
         /// <summary>
-        /// Tries to parse the original row into a matrix of double numbers.
+        /// Tries to parse the original row into a matrix of float numbers.
         /// </summary>
         /// <param name="s">Input string</param>
         /// <param name="result">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool TryParse(string s, out double[,] result)
+        public static bool TryParse(string s, out float[,] result)
         {
-            double[,] zero = null;
+            float[,] zero = null;
             try
             {
                 result = Matrice.Parse(zero, s);
@@ -8924,7 +8766,7 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Parses the original string into a vector of double numbers.
+        /// Parses the original string into a vector of float numbers.
         /// <remarks>
         /// Example: "[1, 2, 3, 4]";
         /// </remarks>
@@ -8932,7 +8774,7 @@ namespace UMapx.Core
         /// <param name="a">Matrix</param>
         /// <param name="s">Input string</param>
         /// <returns>Matrix</returns>
-        public static double[] Parse(this double[] a, string s)
+        public static float[] Parse(this float[] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
             int r = rows.Length;
@@ -8942,12 +8784,12 @@ namespace UMapx.Core
             {
                 string[] nums = rows[0].Split('|');
                 int n = nums.Length, i;
-                double[] H = new double[n];
+                float[] H = new float[n];
 
                 // collecting rows:
                 for (i = 0; i < n; i++)
                 {
-                    H[i] = double.Parse(nums[i]);
+                    H[i] = float.Parse(nums[i]);
                 }
                 return H;
             }
@@ -8957,14 +8799,14 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Tries to parse the original row into a matrix of double numbers.
+        /// Tries to parse the original row into a matrix of float numbers.
         /// </summary>
         /// <param name="s">Input string</param>
         /// <param name="result">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool TryParse(string s, out double[] result)
+        public static bool TryParse(string s, out float[] result)
         {
-            double[] zero = null;
+            float[] zero = null;
             try
             {
                 result = Matrice.Parse(zero, s);
@@ -9039,7 +8881,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="A">Extended matrix</param>
         /// <returns>Array</returns>
-        public static double[] Solve(this double[,] A)
+        public static float[] Solve(this float[,] A)
         {
             int height = A.GetLength(0);
             int width = A.GetLength(1);
@@ -9047,11 +8889,11 @@ namespace UMapx.Core
             if (height + 1 != width)
                 throw new Exception("Input matrix has invalid sizes");
 
-            double[][] B = Jagged.ToJagged(A);
+            float[][] B = Jagged.ToJagged(A);
             int i, j, k, l;
-            double[] x = new double[height];
-            double[] v, w;
-            double temp;
+            float[] x = new float[height];
+            float[] v, w;
+            float temp;
 
             for (i = 0; i < height; i++)
             {
@@ -9112,7 +8954,7 @@ namespace UMapx.Core
         /// <param name="A">Square matrix</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static double[] Solve(this double[,] A, double[] b)
+        public static float[] Solve(this float[,] A, float[] b)
         {
             int height = A.GetLength(0);
             int width = A.GetLength(1);
@@ -9122,11 +8964,11 @@ namespace UMapx.Core
             if (height != b.Length)
                 throw new Exception("Vector length should be equal to the height of the matrix");
 
-            double[][] B = Jagged.ToJagged(A);
+            float[][] B = Jagged.ToJagged(A);
             int i, j, k, l;
-            double[] x = (double[])b.Clone();
-            double[] v, w;
-            double temp;
+            float[] x = (float[])b.Clone();
+            float[] v, w;
+            float temp;
 
 
             for (i = 0; i < height; i++)

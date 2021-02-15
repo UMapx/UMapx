@@ -12,11 +12,11 @@ namespace UMapx.Core
         /// <summary>
         /// The real part of the complex number.
         /// </summary>
-        public double Real;
+        public float Real;
         /// <summary>
         /// The imaginary part of a complex number.
         /// </summary>
-        public double Imag;
+        public float Imag;
         #endregion
 
         #region Structure components
@@ -25,7 +25,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="re">Real part of the complex number</param>
         /// <param name="im">Imaginary part of a complex number</param>
-        public Complex(double re, double im)
+        public Complex(float re, float im)
         {
             this.Real = re;
             this.Imag = im;
@@ -33,21 +33,21 @@ namespace UMapx.Core
         /// <summary>
         /// Gets the value of the module.
         /// </summary>
-        public double Abs
+        public float Abs
         {
             get
             {
-                return Math.Sqrt(Real * Real + Imag * Imag);
+                return (float)Math.Sqrt(Real * Real + Imag * Imag);
             }
         }
         /// <summary>
         /// Gets the value of the phase.
         /// </summary>
-        public double Angle
+        public float Angle
         {
             get
             {
-                return Math.Atan2(Imag, Real);
+                return (float)Math.Atan2(Imag, Real);
             }
         }
         /// <summary>
@@ -125,7 +125,7 @@ namespace UMapx.Core
         /// <returns>Text as a sequence of Unicode characters</returns>
         public string ToString(string format)
         {
-            return StringOptions.Disp(new double[] { this.Real, this.Imag }, format, StringOptions.C);
+            return StringOptions.Disp(new float[] { this.Real, this.Imag }, format, StringOptions.C);
         }
         #endregion
 
@@ -169,7 +169,7 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Number</param>
         /// <returns>Complex number</returns>
-        public static Complex operator +(Complex a, double b)
+        public static Complex operator +(Complex a, float b)
         {
             return new Complex(a.Real + b, a.Imag);
         }
@@ -179,7 +179,7 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex operator +(double a, Complex b)
+        public static Complex operator +(float a, Complex b)
         {
             return new Complex(b.Real + a, b.Imag);
         }
@@ -201,7 +201,7 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Number</param>
         /// <returns>Complex number</returns>
-        public static Complex operator -(Complex a, double b)
+        public static Complex operator -(Complex a, float b)
         {
             return new Complex(a.Real - b, a.Imag);
         }
@@ -211,7 +211,7 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex operator -(double a, Complex b)
+        public static Complex operator -(float a, Complex b)
         {
             return new Complex(a - b.Real, b.Imag);
         }
@@ -234,8 +234,8 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex operator *(Complex a, Complex b)
         {
-            double aRe = a.Real, aIm = a.Imag;
-            double bRe = b.Real, bIm = b.Imag;
+            float aRe = a.Real, aIm = a.Imag;
+            float bRe = b.Real, bIm = b.Imag;
 
             return new Complex(aRe * bRe - aIm * bIm, aRe * bIm + aIm * bRe);
         }
@@ -245,7 +245,7 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Number</param>
         /// <returns>Complex number</returns>
-        public static Complex operator *(double a, Complex b)
+        public static Complex operator *(float a, Complex b)
         {
             return new Complex(b.Real * a, b.Imag * a);
         }
@@ -255,7 +255,7 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex operator *(Complex a, double b)
+        public static Complex operator *(Complex a, float b)
         {
             return new Complex(a.Real * b, a.Imag * b);
         }
@@ -269,10 +269,10 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex operator /(Complex a, Complex b)
         {
-            double aRe = a.Real, aIm = a.Imag;
-            double bRe = b.Real, bIm = b.Imag;
-            double abs = bRe * bRe + bIm * bIm;
-            double inv = 1 / abs;
+            float aRe = a.Real, aIm = a.Imag;
+            float bRe = b.Real, bIm = b.Imag;
+            float abs = bRe * bRe + bIm * bIm;
+            float inv = 1 / abs;
 
             return new Complex((aRe * bRe + aIm * bIm) * inv, (aIm * bRe - aRe * bIm) * inv);
         }
@@ -282,7 +282,7 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Number</param>
         /// <returns>Complex number</returns>
-        public static Complex operator /(Complex a, double b)
+        public static Complex operator /(Complex a, float b)
         {
             return new Complex(a.Real / b, a.Imag / b);
         }
@@ -292,7 +292,7 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex operator /(double a, Complex b)
+        public static Complex operator /(float a, Complex b)
         {
             if (b.Imag == 0)
             {
@@ -314,7 +314,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static implicit operator Complex(double value)
         {
-            return new Complex(value, 0);
+            return new Complex((float)value, 0);
         }
         /// <summary>
         /// Defines an explicit conversion of a number to complex number.
@@ -404,7 +404,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static implicit operator Complex(decimal value)
         {
-            return new Complex((double)value, 0);
+            return new Complex((float)value, 0);
         }
         #endregion
 

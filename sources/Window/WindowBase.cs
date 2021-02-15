@@ -40,8 +40,8 @@ namespace UMapx.Window
         /// Returns the value of a window function.
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             return this.Function(x, this.frameSize);
         }
@@ -49,7 +49,7 @@ namespace UMapx.Window
         /// Returns the window function.
         /// </summary>
         /// <returns>Array</returns>
-        public double[] GetWindow()
+        public float[] GetWindow()
         {
             return this.GetWindow(this.frameSize);
         }
@@ -59,10 +59,10 @@ namespace UMapx.Window
         /// <param name="x">Array</param>
         /// <param name="frameSize">Window size</param>
         /// <returns>Array</returns>
-        public double[] Function(double[] x, int frameSize)
+        public float[] Function(float[] x, int frameSize)
         {
             int length = x.Length;
-            double[] H = new double[length];
+            float[] H = new float[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -76,7 +76,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Array</param>
         /// <returns>Array</returns>
-        public double[] Function(double[] x)
+        public float[] Function(float[] x)
         {
             return this.Function(x, this.frameSize);
         }
@@ -85,14 +85,14 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>Double precision floating point number</returns>
-        public abstract double Function(double x, int frameSize);
+        /// <returns>float precision floating point number</returns>
+        public abstract float Function(float x, int frameSize);
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <param name="frameSize">Window size</param>
         /// <returns>Array</returns>
-        public abstract double[] GetWindow(int frameSize);
+        public abstract float[] GetWindow(int frameSize);
         #endregion
     }
 }

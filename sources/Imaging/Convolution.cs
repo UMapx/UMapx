@@ -13,8 +13,8 @@ namespace UMapx.Imaging
     public class Convolution : IBitmapFilter2
     {
         #region Private data
-        private double[][] kernel;
-        private double offset;
+        private float[][] kernel;
+        private float offset;
         private int radius0;
         private int radius1;
         private int l0;
@@ -29,7 +29,7 @@ namespace UMapx.Imaging
         /// <param name="m">Matrix</param>
         /// <param name="offset">Offset</param>
         /// <param name="bilateral">Bilateral processing or not</param>
-        public Convolution(double[,] m, double offset = 0, bool bilateral = false)
+        public Convolution(float[,] m, float offset = 0, bool bilateral = false)
         {
             Matrix = m; Offset = offset; Bilateral = bilateral;
         }
@@ -43,7 +43,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the convolution matrix.
         /// </summary>
-        public double[,] Matrix
+        public float[,] Matrix
         {
             get
             {
@@ -57,7 +57,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the offset value.
         /// </summary>
-        public double Offset
+        public float Offset
         {
             get
             {
@@ -86,7 +86,7 @@ namespace UMapx.Imaging
         /// 
         /// </summary>
         /// <param name="m">Matrix</param>
-        private void Data(double[,] m)
+        private void Data(float[,] m)
         {
             this.l0 = m.GetLength(0);
             this.l1 = m.GetLength(1);
@@ -114,7 +114,7 @@ namespace UMapx.Imaging
             {
                 Parallel.For(0, height, y =>
                 {
-                    double red, green, blue, div, k;
+                    float red, green, blue, div, k;
                     int x, i, j, ir, jr, yr, xr;
                     int ystride, v;
                     byte* p;
@@ -180,8 +180,8 @@ namespace UMapx.Imaging
             {
                 Parallel.For(0, height, y =>
                 {
-                    double red1, green1, blue1, div1, k1;
-                    double red2, green2, blue2, div2, k2;
+                    float red1, green1, blue1, div1, k1;
+                    float red2, green2, blue2, div2, k2;
                     int x, i, j, ir, jr, yr, xr;
                     int ystride, v;
                     byte* p;
@@ -263,11 +263,11 @@ namespace UMapx.Imaging
         /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
             return;
         }
         /// <summary>
@@ -277,11 +277,11 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
             return;
         }
@@ -294,9 +294,9 @@ namespace UMapx.Imaging
         /// <param name="Gx">Gradient X</param>
         /// <param name="Gy">Gradient Y</param>
         /// <returns>Double precision floating point number</returns>
-        public static double G(double Gx, double Gy)
+        public static float G(float Gx, float Gy)
         {
-            return Math.Sqrt(Gx * Gx + Gy * Gy);
+            return (float)Math.Sqrt(Gx * Gx + Gy * Gy);
         }
         /// <summary>
         /// Gets the angle of the gradient operator.
@@ -304,13 +304,12 @@ namespace UMapx.Imaging
         /// <param name="Gx">Gradient X</param>
         /// <param name="Gy">Gradient Y</param>
         /// <returns>Double precision floating point number</returns>
-        public static double Tetta(double Gx, double Gy)
+        public static float Tetta(float Gx, float Gy)
         {
-            return Math.Atan(Gx / Gy);
+            return (float)Math.Atan(Gx / Gy);
         }
         #endregion
 
-        #region Public static methods
         #region Radius matrix
         /// <summary>
         /// mplements the construction of the inverted Gausssian filter.
@@ -319,15 +318,15 @@ namespace UMapx.Imaging
         /// <param name="l">Width</param>
         /// <param name="sigma">Standard deviation (!=0)</param>
         /// <returns>Matrix</returns>
-        public static Convolution LoGaussian(int m, int l, double sigma)
+        public static Convolution LoGaussian(int m, int l, float sigma)
         {
             int r1 = m / 2;
             int r2 = l / 2;
-            double[,] H = new double[m, l];
-            double sigma2 = sigma * sigma;
-            double f0 = -1.0 / (Math.PI * sigma2 * sigma2);
-            double f1 = 2.0 * sigma2;
-            double kernel;
+            float[,] H = new float[m, l];
+            float sigma2 = sigma * sigma;
+            float f0 = -1.0f / (Maths.Pi * sigma2 * sigma2);
+            float f1 = 2.0f * sigma2;
+            float kernel;
             int i, j, x, y;
 
             for (y = -r1, i = 0; i < m; y++, i++)
@@ -335,7 +334,7 @@ namespace UMapx.Imaging
                 for (x = -r2, j = 0; j < l; x++, j++)
                 {
                     kernel = (x * x + y * y) / f1;
-                    H[i, j] = f0 * (1.0 - kernel) * Math.Exp(-kernel);
+                    H[i, j] = f0 * (1.0f - kernel) * Maths.Exp(-kernel);
                 }
             }
             return new Convolution(H);
@@ -347,11 +346,11 @@ namespace UMapx.Imaging
         /// <param name="l">Width</param>
         /// <param name="sigma">Standard deviation (!=0)</param>
         /// <returns>Matrix</returns>
-        public static Convolution Gaussian(int m, int l, double sigma)
+        public static Convolution Gaussian(int m, int l, float sigma)
         {
             int r1 = m / 2;
             int r2 = l / 2;
-            double[,] H = new double[m, l];
+            float[,] H = new float[m, l];
             int i, j, x, y;
 
             for (y = -r1, i = 0; i < m; y++, i++)
@@ -370,9 +369,9 @@ namespace UMapx.Imaging
         /// <param name="l">Width</param>
         /// <param name="sigma">Standard deviation (!=0)</param>
         /// <returns>Matrix</returns>
-        public static Convolution Unsharp(int m, int l, double sigma)
+        public static Convolution Unsharp(int m, int l, float sigma)
         {
-            double[,] G = new double[m, l];
+            float[,] G = new float[m, l];
             int i, j, x, y;
             int r1 = m / 2;
             int r2 = l / 2;
@@ -385,10 +384,10 @@ namespace UMapx.Imaging
                 }
             }
 
-            double[,] invG = new double[m, l];
-            double max = G[0, 0];
-            double summary = 0;
-            double v, iv;
+            float[,] invG = new float[m, l];
+            float max = G[0, 0];
+            float summary = 0;
+            float v, iv;
 
             for (i = 0; i < m; i++)
             {
@@ -411,11 +410,11 @@ namespace UMapx.Imaging
         /// <param name="l">Width</param>
         /// <param name="boost">Boost</param>
         /// <returns>Matrix</returns>
-        public static Convolution HighPass(int m, int l, double boost)
+        public static Convolution HighPass(int m, int l, float boost)
         {
             int r1 = m / 2;
             int r2 = l / 2;
-            double[,] H = new double[m, l];
+            float[,] H = new float[m, l];
             int i, j;
 
             for (i = 0; i < m; i++)
@@ -445,7 +444,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Emboss(int n)
         {
-            double[,] H = new double[n, n];
+            float[,] H = new float[n, n];
             int r = n - 1, r2 = r / 2;
 
             H[0, 0] = -2; H[0, r2] = -1; //         0;
@@ -463,7 +462,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Roberts()
         {
-            return new Convolution(new double[2, 2] { { 1, 0 }, { 0, -1 } });
+            return new Convolution(new float[2, 2] { { 1, 0 }, { 0, -1 } });
         }
         /// <summary>
         /// Implements the construction of the Prewitt operator [3 x 3].
@@ -471,7 +470,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Prewitt()
         {
-            return new Convolution(new double[3, 3] { { -1, -1, -1 }, { 0, 0, 0 }, { 1, 1, 1 } });
+            return new Convolution(new float[3, 3] { { -1, -1, -1 }, { 0, 0, 0 }, { 1, 1, 1 } });
         }
         /// <summary>
         /// Implements the construction of the Sobel operator [3 x 3].
@@ -479,7 +478,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Sobel()
         {
-            return new Convolution(new double[3, 3] { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } });
+            return new Convolution(new float[3, 3] { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } });
         }
         /// <summary>
         /// Implements the construction of the Scharr operator [3 x 3].
@@ -487,7 +486,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Scharr()
         {
-            return new Convolution(new double[3, 3] { { 3, 10, 3 }, { 0, 0, 0 }, { -3, -10, -3 } });
+            return new Convolution(new float[3, 3] { { 3, 10, 3 }, { 0, 0, 0 }, { -3, -10, -3 } });
         }
         /// <summary>
         /// Implements the construction of the Laplacian operator [3 x 3].
@@ -495,7 +494,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Laplacian()
         {
-            return new Convolution(new double[3, 3] { { 0, 1, 0 }, { 1, -4, 1 }, { 0, 1, 0 } });
+            return new Convolution(new float[3, 3] { { 0, 1, 0 }, { 1, -4, 1 }, { 0, 1, 0 } });
         }
         /// <summary>
         /// Implements the construction of the diagonal Laplacian operator [3 x 3].
@@ -503,7 +502,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LaplacianDiagonal()
         {
-            return new Convolution(new double[3, 3] { { 1, 1, 1 }, { 1, -8, 1 }, { 1, 1, 1 } });
+            return new Convolution(new float[3, 3] { { 1, 1, 1 }, { 1, -8, 1 }, { 1, 1, 1 } });
         }
         /// <summary>
         /// Implements the construction of the inverted Laplacian operator [3 x 3].
@@ -511,7 +510,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LaplacianInvert()
         {
-            return new Convolution(new double[3, 3] { { -1, 0, -1 }, { 0, 4, 0 }, { -1, 0, -1 } });
+            return new Convolution(new float[3, 3] { { -1, 0, -1 }, { 0, 4, 0 }, { -1, 0, -1 } });
         }
         #endregion
 
@@ -523,7 +522,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Kirsh(Gradient direction)
         {
-            double[,] H = new double[3, 3];
+            float[,] H = new float[3, 3];
 
             if (direction == Gradient.North)
             {
@@ -583,7 +582,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Roberts(Gradient direction)
         {
-            double[,] H = new double[2, 2];
+            float[,] H = new float[2, 2];
 
             if (direction == Gradient.North)
             {
@@ -608,7 +607,6 @@ namespace UMapx.Imaging
 
             return new Convolution(H);
         }
-        #endregion
         #endregion
     }
 }

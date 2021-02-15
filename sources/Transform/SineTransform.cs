@@ -51,18 +51,18 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static double[,] Matrix(int n)
+        public static float[,] Matrix(int n)
         {
             int j, i;
-            double[,] H = new double[n, n];
-            double n1 = n + 1;
-            double scale = Maths.Sqrt(2.0 / n1);
+            float[,] H = new float[n, n];
+            float n1 = n + 1;
+            float scale = Maths.Sqrt(2.0f / n1);
 
             for (i = 0; i < n; i++)
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = Math.Sin(Maths.Pi * (j + 1) * (i + 1) / n1) * scale;
+                    H[i, j] = Maths.Sin(Maths.Pi * (j + 1) * (i + 1) / n1) * scale;
                 }
             }
 
@@ -76,10 +76,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             int N = A.Length;
-            double[,] U = SineTransform.Matrix(N);
+            float[,] U = SineTransform.Matrix(N);
             return Matrice.Dot(A, U);
         }
         /// <summary>
@@ -87,10 +87,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             int N = B.Length;
-            double[,] U = SineTransform.Matrix(N);
+            float[,] U = SineTransform.Matrix(N);
             return Matrice.Dot(B, U.Transponate());
         }
         /// <summary>
@@ -98,11 +98,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            double[,] U = SineTransform.Matrix(N);
-            double[,] V = SineTransform.Matrix(M);
+            float[,] U = SineTransform.Matrix(N);
+            float[,] V = SineTransform.Matrix(M);
 
             if (direction == Direction.Both)
             {
@@ -119,11 +119,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            double[,] U = SineTransform.Matrix(N);
-            double[,] V = SineTransform.Matrix(M);
+            float[,] U = SineTransform.Matrix(N);
+            float[,] V = SineTransform.Matrix(M);
 
             if (direction == Direction.Both)
             {
@@ -143,7 +143,7 @@ namespace UMapx.Transform
         public Complex[] Forward(Complex[] A)
         {
             int N = A.Length;
-            double[,] U = SineTransform.Matrix(N);
+            float[,] U = SineTransform.Matrix(N);
             return Matrice.Dot(A, U);
         }
         /// <summary>
@@ -154,7 +154,7 @@ namespace UMapx.Transform
         public Complex[] Backward(Complex[] B)
         {
             int N = B.Length;
-            double[,] U = SineTransform.Matrix(N);
+            float[,] U = SineTransform.Matrix(N);
             return Matrice.Dot(B, U.Transponate());
         }
         /// <summary>
@@ -165,8 +165,8 @@ namespace UMapx.Transform
         public Complex[,] Forward(Complex[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            double[,] U = SineTransform.Matrix(N);
-            double[,] V = SineTransform.Matrix(M);
+            float[,] U = SineTransform.Matrix(N);
+            float[,] V = SineTransform.Matrix(M);
 
             if (direction == Direction.Both)
             {
@@ -186,8 +186,8 @@ namespace UMapx.Transform
         public Complex[,] Backward(Complex[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            double[,] U = SineTransform.Matrix(N);
-            double[,] V = SineTransform.Matrix(M);
+            float[,] U = SineTransform.Matrix(N);
+            float[,] V = SineTransform.Matrix(M);
 
             if (direction == Direction.Both)
             {

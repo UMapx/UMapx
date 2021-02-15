@@ -35,7 +35,7 @@ namespace UMapx.Colorspace
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
-        public RGB(double red, double green, double blue)
+        public RGB(float red, float green, float blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
             this.g = (byte)((green > 255) ? 255 : ((green < 0) ? 0 : green));
@@ -278,7 +278,7 @@ namespace UMapx.Colorspace
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static int Average(int red, int green, int blue)
         {
             return (red + green + blue) / 3;
@@ -289,16 +289,16 @@ namespace UMapx.Colorspace
         /// <param name="red">Red</param>
         /// <param name="green">Green</param>
         /// <param name="blue">Blue</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Average(double red, double green, double blue)
+        /// <returns>float precision floating point number</returns>
+        public static float Average(float red, float green, float blue)
         {
-            return (red + green + blue) / 3.0;
+            return (red + green + blue) / 3.0f;
         }
         /// <summary>
         /// Calculates the average brightness value.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static int Average(RGB rgb)
         {
             return Average(rgb.Red, rgb.Green, rgb.Blue);
@@ -307,8 +307,8 @@ namespace UMapx.Colorspace
         /// Calculates the average brightness value.
         /// </summary>
         /// <param name="rgb">sRGB structure</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Average(sRGB rgb)
+        /// <returns>float precision floating point number</returns>
+        public static float Average(sRGB rgb)
         {
             return Average(rgb.Red, rgb.Green, rgb.Blue);
         }
@@ -321,7 +321,7 @@ namespace UMapx.Colorspace
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static int PAL(int red, int green, int blue)
         {
             return (int)(0.299 * red + 0.587 * green + 0.114 * blue);
@@ -332,17 +332,17 @@ namespace UMapx.Colorspace
         /// <param name="red">Red</param>
         /// <param name="green">Green</param>
         /// <param name="blue">Blue</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double PAL(double red, double green, double blue)
+        /// <returns>float precision floating point number</returns>
+        public static float PAL(float red, float green, float blue)
         {
-            return 0.299 * red + 0.587 * green + 0.114 * blue;
+            return 0.299f * red + 0.587f * green + 0.114f * blue;
         }
         /// <summary>
         /// Calculates the brightness value in the standard (PAL/NTC).
         /// </summary>
         /// <param name="rgb">RGB structure</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double PAL(RGB rgb)
+        /// <returns>float precision floating point number</returns>
+        public static float PAL(RGB rgb)
         {
             return PAL(rgb.Red, rgb.Green, rgb.Blue);
         }
@@ -350,8 +350,8 @@ namespace UMapx.Colorspace
         /// Calculates the brightness value in the standard (PAL/NTC).
         /// </summary>
         /// <param name="rgb">RGB structure</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double PAL(sRGB rgb)
+        /// <returns>float precision floating point number</returns>
+        public static float PAL(sRGB rgb)
         {
             return PAL(rgb.Red, rgb.Green, rgb.Blue);
         }
@@ -364,7 +364,7 @@ namespace UMapx.Colorspace
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static int HDTV(int red, int green, int blue)
         {
             return (int)(0.2126 * red + 0.7152 * green + 0.0722 * blue);
@@ -375,16 +375,16 @@ namespace UMapx.Colorspace
         /// <param name="red">Red</param>
         /// <param name="green">Green</param>
         /// <param name="blue">Blue</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double HDTV(double red, double green, double blue)
+        /// <returns>float precision floating point number</returns>
+        public static float HDTV(float red, float green, float blue)
         {
-            return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+            return 0.2126f * red + 0.7152f * green + 0.0722f * blue;
         }
         /// <summary>
         /// Calculates the brightness value in the standard HDTV.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static int HDTV(RGB rgb)
         {
             return HDTV(rgb.Red, rgb.Green, rgb.Blue);
@@ -393,8 +393,8 @@ namespace UMapx.Colorspace
         /// Calculates the brightness value in the standard HDTV.
         /// </summary>
         /// <param name="rgb">sRGB structure</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double HDTV(sRGB rgb)
+        /// <returns>float precision floating point number</returns>
+        public static float HDTV(sRGB rgb)
         {
             return HDTV(rgb.Red, rgb.Green, rgb.Blue);
         }
@@ -407,7 +407,7 @@ namespace UMapx.Colorspace
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static int RYY(int red, int green, int blue)
         {
             return (int)(0.5 * red + 0.419 * green + 0.081 * blue);
@@ -418,16 +418,16 @@ namespace UMapx.Colorspace
         /// <param name="red">Red</param>
         /// <param name="green">Green</param>
         /// <param name="blue">Blue</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double RYY(double red, double green, double blue)
+        /// <returns>float precision floating point number</returns>
+        public static float RYY(float red, float green, float blue)
         {
-            return 0.5 * red + 0.419 * green + 0.081 * blue;
+            return 0.5f * red + 0.419f * green + 0.081f * blue;
         }
         /// <summary>
         /// Calculates the brightness value in the standard RYY.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>float precision floating point number</returns>
         public static int RYY(RGB rgb)
         {
             return RYY(rgb.Red, rgb.Green, rgb.Blue);
@@ -436,8 +436,8 @@ namespace UMapx.Colorspace
         /// Calculates the brightness value in the standard RYY.
         /// </summary>
         /// <param name="rgb">sRGB structure</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double RYY(sRGB rgb)
+        /// <returns>float precision floating point number</returns>
+        public static float RYY(sRGB rgb)
         {
             return RYY(rgb.Red, rgb.Green, rgb.Blue);
         }
@@ -449,14 +449,14 @@ namespace UMapx.Colorspace
         /// </summary>
         /// <param name="temperature">Temperature [1000K, 10000K]</param>
         /// <returns>RGB structure</returns>
-        public static RGB Temp2RGB(double temperature)
+        public static RGB Temp2RGB(float temperature)
         {
             // Approximation of Planckian locus in RGB model
             // Designed by Valery Asiryan, 2018
 
-            double r = 0, g, b = 0;          // color channels,
-            double x = temperature / 1000.0; // normalize temerature,
-            double y = x * x, z = y * x;     // variables.
+            float r = 0, g, b = 0;           // color channels,
+            float x = temperature / 1000.0f; // normalize temerature,
+            float y = x * x, z = y * x;      // variables.
 
             // Approximate red channel:
             if (x < 5)
@@ -465,12 +465,12 @@ namespace UMapx.Colorspace
             }
             else if (x <= 7)
             {
-                r = -1575 + 718.5 * x - 70.5 * y;
+                r = -1575f + 718.5f * x - 70.5f * y;
             }
             // ************************************************************************
 
             // Approximate green channel:
-            g = -50.1667 + 99.9846 * x - 7.7844 * y - 0.1175 * z;
+            g = -50.1667f + 99.9846f * x - 7.7844f * y - 0.1175f * z;
             // ************************************************************************
 
             // Aproximate blue channel:
@@ -498,9 +498,9 @@ namespace UMapx.Colorspace
         /// <param name="blue">Blue [0, 255]</param>
         /// <param name="s">Saturation</param>
         /// <returns>RGB structure</returns>
-        public static RGB Saturation(int red, int green, int blue, double s)
+        public static RGB Saturation(int red, int green, int blue, float s)
         {
-            double max = Maths.Max(red, green, blue);
+            float max = Maths.Max(red, green, blue);
 
             // Result color:
             return new RGB(
@@ -516,9 +516,9 @@ namespace UMapx.Colorspace
         /// <param name="blue">Blue</param>
         /// <param name="s">Saturation</param>
         /// <returns>RGB structure</returns>
-        public static sRGB Saturation(double red, double green, double blue, double s)
+        public static sRGB Saturation(float red, float green, float blue, float s)
         {
-            double max = Maths.Max(red, green, blue);
+            float max = Maths.Max(red, green, blue);
 
             // Result color:
             return new sRGB(
@@ -532,7 +532,7 @@ namespace UMapx.Colorspace
         /// <param name="rgb">RGB structure</param>
         /// <param name="s">Saturation</param>
         /// <returns>RGB structure</returns>
-        public static RGB Saturation(RGB rgb, double s)
+        public static RGB Saturation(RGB rgb, float s)
         {
             return Saturation(rgb.Red, rgb.Green, rgb.Blue, s);
         }
@@ -542,7 +542,7 @@ namespace UMapx.Colorspace
         /// <param name="rgb">sRGB structure</param>
         /// <param name="s">Saturation</param>
         /// <returns>RGB structure</returns>
-        public static sRGB Saturation(sRGB rgb, double s)
+        public static sRGB Saturation(sRGB rgb, float s)
         {
             return Saturation(rgb.Red, rgb.Green, rgb.Blue, s);
         }
@@ -568,14 +568,14 @@ namespace UMapx.Colorspace
         /// <param name="hue">Hue [0, 360]</param>
         /// <param name="length">Length</param>
         /// <returns>Color scheme</returns>
-        public static RGB[] SchemeFromHue(double hue, uint length)
+        public static RGB[] SchemeFromHue(float hue, uint length)
         {
             RGB[] scheme = new RGB[length];
-            hue %= 360.0;
+            hue %= 360.0f;
 
             for (int i = 0; i < scheme.Length; i++)
             {
-                scheme[i] = (new HSL(hue, 1.0, i / (scheme.Length - 1.0))).ToRGB;
+                scheme[i] = (new HSL(hue, 1.0f, i / (scheme.Length - 1.0f))).ToRGB;
             }
 
             return scheme;

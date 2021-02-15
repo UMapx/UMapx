@@ -23,36 +23,36 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>Double precision floating point number</returns>
-        public override double Function(double x, int frameSize)
+        /// <returns>float precision floating point number</returns>
+        public override float Function(float x, int frameSize)
         {
             // coefficients:
-            double y = Math.Abs(x);
-            double c = frameSize / 2.0;
-            double a = x / c;
-            double b = y / c;
+            float y = Math.Abs(x);
+            float c = frameSize / 2.0f;
+            float a = x / c;
+            float b = y / c;
 
             // props:
             if ((y >= 0) &&
                 (y <= frameSize / 4))
             {
-                return 1.0 - 6.0 * a * a * (1.0 - b);
+                return 1.0f - 6.0f * a * a * (1.0f - b);
             }
             else if (y >= frameSize / 4 &&
                 y <= frameSize / 2)
             {
-                return 2 * Math.Pow(1 - b, 3);
+                return 2 * (float)Math.Pow(1 - b, 3);
             }
-            return 0.0;
+            return 0.0f;
         }
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <returns>Array</returns>
-        public override double[] GetWindow(int frameSize)
+        public override float[] GetWindow(int frameSize)
         {
-            double t = (frameSize - 1) / 2.0;
-            double[] x = Matrice.Compute(-t, t, 1);
+            float t = (frameSize - 1) / 2.0f;
+            float[] x = Matrice.Compute(-t, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

@@ -85,7 +85,7 @@ namespace UMapx.Imaging
                     hsb = HSB.FromRGB(p[k + 2], p[k + 1], p[k + 0]);
 
                     // Getting hue and saturation parameters:
-                    double hue = hsb.Hue, saturation = hsb.Saturation;
+                    float hue = hsb.Hue, saturation = hsb.Saturation;
 
                     // Applying filter:
                     if (min < max)
@@ -115,9 +115,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
         }
         #endregion
     }

@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Burr : IDistribution
     {
         #region Private data
-        private double c;
-        private double k;
+        private float c;
+        private float k;
         #endregion
 
         #region Burr distribution
@@ -24,14 +24,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="c">Form parameter c > 0</param>
         /// <param name="k">Scale parameter k > 0</param>
-        public Burr(double c, double k)
+        public Burr(float c, float k)
         {
             C = c; K = k;
         }
         /// <summary>
         /// Gets or sets the value of the scale parameter c > 0.
         /// </summary>
-        public double C
+        public float C
         {
             get
             {
@@ -48,7 +48,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the scale parameter k > 0.
         /// </summary>
-        public double K
+        public float K
         {
             get
             {
@@ -65,95 +65,95 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
-            get { return k * Special.Beta(k - 1.0 / c, 1.0 + 1.0 / c); }
+            get { return k * Special.Beta(k - 1.0f / c, 1.0f + 1.0f / c); }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
-                return Math.Pow((c - 1) / (k * c + 1), 1.0 / c);
+                return (float)Math.Pow((c - 1) / (k * c + 1), 1.0 / c);
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
-                return Math.Pow(Math.Pow(2, 1.0 / k) - 1.0, 1.0 / c);
+                return (float)Math.Pow(Math.Pow(2, 1.0 / k) - 1.0, 1.0 / c);
             }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
-            get { return new RangeDouble(double.Epsilon, Double.PositiveInfinity); }
+            get { return new RangeFloat(float.Epsilon, float.PositiveInfinity); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x <= 0)
             {
-                return double.NaN;
+                return float.NaN;
             }
 
-            return 1.0 - Math.Pow(1.0 + Math.Pow(x, c), -k);
+            return 1.0f - (float)Math.Pow(1.0 + Math.Pow(x, c), -k);
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x <= 0)
             {
-                return double.NaN;
+                return float.NaN;
             }
 
-            double a = c * k;
-            double b = Math.Pow(x, c - 1);
-            double d = 1 + Math.Pow(x, c);
-            return a * b / Math.Pow(d, k + 1);
+            float a = c * k;
+            float b = (float)Math.Pow(x, c - 1);
+            float d = 1 + (float)Math.Pow(x, c);
+            return a * b / (float)Math.Pow(d, k + 1);
         }
         #endregion
     }

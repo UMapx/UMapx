@@ -12,13 +12,13 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Returns white color.
         /// </summary>
-        public static readonly XYZ White = new XYZ(0.9505, 1.0, 1.0890);
+        public static readonly XYZ White = new XYZ(0.9505f, 1.0f, 1.0890f);
         #endregion
 
         #region Private data
-        private double x;
-        private double y;
-        private double z;
+        private float x;
+        private float y;
+        private float z;
         #endregion
 
         #region Structure components
@@ -28,16 +28,16 @@ namespace UMapx.Colorspace
         /// <param name="x">Component X [0, 1]</param>
         /// <param name="y">Component Y [0, 1]</param>
         /// <param name="z">Component Z [0, 1]</param>
-        public XYZ(double x, double y, double z)
+        public XYZ(float x, float y, float z)
         {
-            this.x = (x > 1.0) ? 1.0 : ((x < 0) ? 0 : x);
-            this.y = (y > 1.0) ? 1.0 : ((y < 0) ? 0 : y);
-            this.z = (z > 1.0) ? 1.0 : ((z < 0) ? 0 : z);
+            this.x = (x > 1.0) ? 1.0f : ((x < 0) ? 0 : x);
+            this.y = (y > 1.0) ? 1.0f : ((y < 0) ? 0 : y);
+            this.z = (z > 1.0) ? 1.0f : ((z < 0) ? 0 : z);
         }
         /// <summary>
         /// Defines a component of the model [0, 1].
         /// </summary>
-        public double X
+        public float X
         {
             get
             {
@@ -45,13 +45,13 @@ namespace UMapx.Colorspace
             }
             set
             {
-                this.x = (value > 1.0) ? 1.0 : ((value < 0) ? 0 : value);
+                this.x = (value > 1.0) ? 1.0f : ((value < 0) ? 0 : value);
             }
         }
         /// <summary>
         /// Defines a component of the model [0, 1].
         /// </summary>
-        public double Y
+        public float Y
         {
             get
             {
@@ -59,13 +59,13 @@ namespace UMapx.Colorspace
             }
             set
             {
-                this.y = (value > 1.0) ? 1.0 : ((value < 0) ? 0 : value);
+                this.y = (value > 1.0) ? 1.0f : ((value < 0) ? 0 : value);
             }
         }
         /// <summary>
         /// Defines a component of the model [0, 1].
         /// </summary>
-        public double Z
+        public float Z
         {
             get
             {
@@ -73,7 +73,7 @@ namespace UMapx.Colorspace
             }
             set
             {
-                this.z = (value > 1.0) ? 1.0 : ((value < 0) ? 0 : value);
+                this.z = (value > 1.0) ? 1.0f : ((value < 0) ? 0 : value);
             }
         }
         #endregion
@@ -162,13 +162,13 @@ namespace UMapx.Colorspace
         /// <param name="y">Component Y</param>
         /// <param name="z">Component Z</param>
         /// <returns>CIE Lab structure</returns>
-        public static LAB ToLAB(double x, double y, double z)
+        public static LAB ToLAB(float x, float y, float z)
         {
             LAB lab = new LAB();
 
-            lab.L = 116.0 * Fxyz(y / XYZ.White.Y) - 16;
-            lab.A = 500.0 * (Fxyz(x / XYZ.White.X) - Fxyz(y / XYZ.White.Y));
-            lab.B = 200.0 * (Fxyz(y / XYZ.White.Y) - Fxyz(z / XYZ.White.Z));
+            lab.L = 116.0f * Fxyz(y / XYZ.White.Y) - 16;
+            lab.A = 500.0f * (Fxyz(x / XYZ.White.X) - Fxyz(y / XYZ.White.Y));
+            lab.B = 200.0f * (Fxyz(y / XYZ.White.Y) - Fxyz(z / XYZ.White.Z));
 
             return lab;
         }
@@ -191,20 +191,20 @@ namespace UMapx.Colorspace
         public static XYZ FromRGB(int red, int green, int blue)
         {
             // normalize red, green, blue values
-            double rLinear = (double)red / 255.0;
-            double gLinear = (double)green / 255.0;
-            double bLinear = (double)blue / 255.0;
+            float rLinear = (float)red / 255.0f;
+            float gLinear = (float)green / 255.0f;
+            float bLinear = (float)blue / 255.0f;
 
             // convert to a sRGB form
-            double r = (rLinear > 0.04045) ? Math.Pow((rLinear + 0.055) / (1 + 0.055), 2.2) : (rLinear / 12.92);
-            double g = (gLinear > 0.04045) ? Math.Pow((gLinear + 0.055) / (1 + 0.055), 2.2) : (gLinear / 12.92);
-            double b = (bLinear > 0.04045) ? Math.Pow((bLinear + 0.055) / (1 + 0.055), 2.2) : (bLinear / 12.92);
+            float r = (rLinear > 0.04045) ? (float)Math.Pow((rLinear + 0.055) / (1 + 0.055), 2.2) : (float)(rLinear / 12.92);
+            float g = (gLinear > 0.04045) ? (float)Math.Pow((gLinear + 0.055) / (1 + 0.055), 2.2) : (float)(gLinear / 12.92);
+            float b = (bLinear > 0.04045) ? (float)Math.Pow((bLinear + 0.055) / (1 + 0.055), 2.2) : (float)(bLinear / 12.92);
 
             // converts
             return new XYZ(
-                (r * 0.4124 + g * 0.3576 + b * 0.1805),
-                (r * 0.2126 + g * 0.7152 + b * 0.0722),
-                (r * 0.0193 + g * 0.1192 + b * 0.9505)
+                (float)(r * 0.4124 + g * 0.3576 + b * 0.1805),
+                (float)(r * 0.2126 + g * 0.7152 + b * 0.0722),
+                (float)(r * 0.0193 + g * 0.1192 + b * 0.9505)
                 );
         }
         /// <summary>
@@ -224,9 +224,9 @@ namespace UMapx.Colorspace
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        private static double Fxyz(double t)
+        private static float Fxyz(float t)
         {
-            return ((t > 0.008856) ? Math.Pow(t, (1.0 / 3.0)) : (7.787 * t + 16.0 / 116.0));
+            return ((t > 0.008856) ? (float)Math.Pow(t, (1.0 / 3.0)) : (float)(7.787 * t + 16.0 / 116.0));
         }
         #endregion
 
@@ -239,15 +239,15 @@ namespace UMapx.Colorspace
         {
             get
             {
-                double[] linear = new double[3];
-                linear[0] = x * 3.2410 - y * 1.5374 - z * 0.4986; // red
-                linear[1] = -x * 0.9692 + y * 1.8760 - z * 0.0416; // green
-                linear[2] = x * 0.0556 - y * 0.2040 + z * 1.0570; // blue
-                double pow = 1.0 / 2.4;
+                float[] linear = new float[3];
+                linear[0] = x * 3.2410f - y * 1.5374f - z * 0.4986f; // red
+                linear[1] = -x * 0.9692f + y * 1.8760f - z * 0.0416f; // green
+                linear[2] = x * 0.0556f - y * 0.2040f + z * 1.0570f; // blue
+                float pow = 1.0f / 2.4f;
 
                 for (int i = 0; i < 3; i++)
                 {
-                    linear[i] = (linear[i] <= 0.0031308) ? 12.92 * linear[i] : (1 + 0.055) * Math.Pow(linear[i], pow) - 0.055;
+                    linear[i] = (linear[i] <= 0.0031308) ? 12.92f * linear[i] : (1 + 0.055f) * (float)Math.Pow(linear[i], pow) - 0.055f;
                 }
 
                 return new RGB(

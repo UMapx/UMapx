@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Logistic : IDistribution
     {
         #region Private data
-        private double mu = 5;
-        private double s = 2;
+        private float mu = 5;
+        private float s = 2;
         #endregion
 
         #region Logistic components
@@ -24,7 +24,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="mu">Parameter μ</param>
         /// <param name="s">Parameter s (0, +inf]</param>
-        public Logistic(double mu, double s)
+        public Logistic(float mu, float s)
         {
             Mu = mu; S = s;
         }
@@ -35,7 +35,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter μ.
         /// </summary>
-        public double Mu
+        public float Mu
         {
             get
             {
@@ -49,7 +49,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter s (0, +inf].
         /// </summary>
-        public double S
+        public float S
         {
             get
             {
@@ -66,17 +66,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(double.NegativeInfinity, double.PositiveInfinity);
+                return new RangeFloat(float.NegativeInfinity, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -86,14 +86,14 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
-            get { return (s * s * Math.PI * Math.PI) / 3.0; }
+            get { return (s * s * Maths.Pi * Maths.Pi) / 3.0f; }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
@@ -103,14 +103,14 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get { return mu; }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
@@ -120,44 +120,44 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                return 1.2;
+                return 1.2f;
             }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get
             {
-                return Math.Log(s) + 2;
+                return (float)Math.Log(s) + 2;
             }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
-            double z = (x - mu) / s;
-            return 1.0 / (1 + Math.Exp(-z));
+            float z = (x - mu) / s;
+            return 1.0f / (1 + (float)Math.Exp(-z));
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
-            double z = (x - mu) / s;
-            double num = Math.Exp(-z);
-            double a = (1 + num);
-            double den = s * a * a;
+            float z = (x - mu) / s;
+            float num = (float)Math.Exp(-z);
+            float a = (1 + num);
+            float den = s * a * a;
 
             return num / den;
         }

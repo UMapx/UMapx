@@ -17,13 +17,13 @@ namespace UMapx.Imaging
         /// <param name="nbase">Logarithm base</param>
         /// <param name="a">Factor [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double SingleScaleRetinex(double x, double xlow, double nbase, double a, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float SingleScaleRetinex(float x, float xlow, float nbase, float a, float b)
         {
             // Singe scale retinex modified algorithm
             // by Valery Asiryan
             // 
-            return Math.Exp(a * Math.Log(x / xlow, nbase) + b) - 0.5f;
+            return (float)Math.Exp(a * Math.Log(x / xlow, nbase) + b) - 0.5f;
         }
         /// <summary>
         /// Returns the correction mask.
@@ -33,19 +33,19 @@ namespace UMapx.Imaging
         /// <param name="b">Offset (0, 1]</param>
         /// <param name="length">Length</param>
         /// <returns>Matrix</returns>
-        public static double[,] SingleScaleRetinex(double nbase, double a, double b, int length)
+        public static float[,] SingleScaleRetinex(float nbase, float a, float b, int length)
         {
-            double[,] table = new double[length, length];
-            double w, v;
+            float[,] table = new float[length, length];
+            float w, v;
             int x, y;
 
             for (x = 0; x < length; x++)
             {
-                w = x / (double)length;
+                w = x / (float)length;
 
                 for (y = 0; y < length; y++)
                 {
-                    v = y / (double)length;
+                    v = y / (float)length;
 
                     table[x, y] = Intensity.SingleScaleRetinex(w, v, nbase, a, b);
                 }
@@ -60,8 +60,8 @@ namespace UMapx.Imaging
         /// <param name="xlow">Filter brightness</param>
         /// <param name="a">Factor (0, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double LocalContrastInversion(double x, double xlow, double a, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float LocalContrastInversion(float x, float xlow, float a, float b)
         {
             return a * x / (xlow + b);
         }
@@ -72,19 +72,19 @@ namespace UMapx.Imaging
         /// <param name="b">Offset (0, 1]</param>
         /// <param name="length">Length</param>
         /// <returns>Matrix</returns>
-        public static double[,] LocalContrastInversion(double a, double b, int length)
+        public static float[,] LocalContrastInversion(float a, float b, int length)
         {
-            double[,] table = new double[length, length];
-            double w, v;
+            float[,] table = new float[length, length];
+            float w, v;
             int x, y;
 
             for (x = 0; x < length; x++)
             {
-                w = x / (double)length;
+                w = x / (float)length;
 
                 for (y = 0; y < length; y++)
                 {
-                    v = y / (double)length;
+                    v = y / (float)length;
 
                     table[x, y] = Intensity.LocalContrastInversion(w, v, a, b);
                 }
@@ -98,8 +98,8 @@ namespace UMapx.Imaging
         /// <param name="x">Brightness</param>
         /// <param name="xlow">Filter brightness</param>
         /// <param name="a">Factor [-1, 1]</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double LocalContrastEnhancement(double x, double xlow, double a)
+        /// <returns>float precision floating point number</returns>
+        public static float LocalContrastEnhancement(float x, float xlow, float a)
         {
             return x + a * (x - xlow);
 
@@ -111,19 +111,19 @@ namespace UMapx.Imaging
         /// <param name="a">Factor [-1, 1]</param>
         /// <param name="length">Length</param>
         /// <returns>Matrix</returns>
-        public static double[,] LocalContrastEnhancement(double a, int length)
+        public static float[,] LocalContrastEnhancement(float a, int length)
         {
-            double[,] table = new double[length, length];
-            double w, v;
+            float[,] table = new float[length, length];
+            float w, v;
             int x, y;
 
             for (x = 0; x < length; x++)
             {
-                w = x / (double)length;
+                w = x / (float)length;
 
                 for (y = 0; y < length; y++)
                 {
-                    v = y / (double)length;
+                    v = y / (float)length;
 
                     table[x, y] = Intensity.LocalContrastEnhancement(w, v, a);
                 }
@@ -138,10 +138,10 @@ namespace UMapx.Imaging
         /// <param name="mu">Filter brightness</param>
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double HomomorphicEnhancement(double x, double mu, double a, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float HomomorphicEnhancement(float x, float mu, float a, float b)
         {
-            return Math.Exp(Math.Log(x) - a * Math.Log(mu + b));
+            return (float)Math.Exp(Math.Log(x) - a * Math.Log(mu + b));
         }
         /// <summary>
         /// Returns the correction mask.
@@ -150,19 +150,19 @@ namespace UMapx.Imaging
         /// <param name="b">Offset (0, 1]</param>
         /// <param name="length">Length</param>
         /// <returns>Matrix</returns>
-        public static double[,] HomomorphicEnhancement(double a, double b, int length)
+        public static float[,] HomomorphicEnhancement(float a, float b, int length)
         {
-            double[,] table = new double[length, length];
-            double w, v;
+            float[,] table = new float[length, length];
+            float w, v;
             int x, y;
 
             for (x = 0; x < length; x++)
             {
-                w = x / (double)length;
+                w = x / (float)length;
 
                 for (y = 0; y < length; y++)
                 {
-                    v = y / (double)length;
+                    v = y / (float)length;
 
                     table[x, y] = Intensity.HomomorphicEnhancement(w, v, a, b);
                 }
@@ -177,8 +177,8 @@ namespace UMapx.Imaging
         /// <param name="mu">Filter brightness</param>
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset [-1, 1]</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double KsiContrastEnchancement(double x, double mu, double a, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float KsiContrastEnchancement(float x, float mu, float a, float b)
         {
             // x ∈ [0, 1], μ ∈ [0, 1] - mean of x.
             // σ - variance, ξ - coefficient.
@@ -188,8 +188,8 @@ namespace UMapx.Imaging
             // result value:
             // x' = x + α * ξ + β, where α, β ∈ [-1, 1].
 
-            double sigma = x - mu;
-            double ksi = sigma / mu;
+            float sigma = x - mu;
+            float ksi = sigma / mu;
             return x + a * ksi + b;
         }
         /// <summary>
@@ -199,19 +199,19 @@ namespace UMapx.Imaging
         /// <param name="b">Offset [-1, 1]</param>
         /// <param name="length">Length</param>
         /// <returns>Matrix</returns>
-        public static double[,] KsiContrastEnchancement(double a, double b, int length)
+        public static float[,] KsiContrastEnchancement(float a, float b, int length)
         {
-            double[,] table = new double[length, length];
-            double w, v;
+            float[,] table = new float[length, length];
+            float w, v;
             int x, y;
 
             for (x = 0; x < length; x++)
             {
-                w = x / (double)length;
+                w = x / (float)length;
 
                 for (y = 0; y < length; y++)
                 {
-                    v = y / (double)length;
+                    v = y / (float)length;
 
                     table[x, y] = Intensity.KsiContrastEnchancement(w, v, a, b);
                 }
@@ -225,14 +225,14 @@ namespace UMapx.Imaging
         /// <param name="x">Brightness</param>
         /// <param name="mu">Filter brightness</param>
         /// <param name="d">Degree of difference [0, 1]</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double SAUCE(double x, double mu, double d)
+        /// <returns>float precision floating point number</returns>
+        public static float SAUCE(float x, float mu, float d)
         {
             // Ravimal Bandara algorithm
             // implementation:
 
-            double a = (mu - d / 2.0);
-            double b = (mu + d / 2.0);
+            float a = (mu - d / 2.0f);
+            float b = (mu + d / 2.0f);
 
             if (x < a)
             {
@@ -250,19 +250,19 @@ namespace UMapx.Imaging
         /// <param name="a">Factor [-1, 1]</param>
         /// <param name="length">Length</param>
         /// <returns>Matrix</returns>
-        public static double[,] SAUCE(double a, int length)
+        public static float[,] SAUCE(float a, int length)
         {
-            double[,] table = new double[length, length];
-            double w, v;
+            float[,] table = new float[length, length];
+            float w, v;
             int x, y;
 
             for (x = 0; x < length; x++)
             {
-                w = x / (double)length;
+                w = x / (float)length;
 
                 for (y = 0; y < length; y++)
                 {
-                    v = y / (double)length;
+                    v = y / (float)length;
 
                     table[x, y] = Intensity.SAUCE(w, v, a);
                 }
@@ -276,14 +276,14 @@ namespace UMapx.Imaging
         /// <param name="x">Brightness</param>
         /// <param name="xlow">Filter brightness</param>
         /// <param name="difference">Difference [0, 1]</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Bradley(double x, double xlow, double difference = 0.15)
+        /// <returns>float precision floating point number</returns>
+        public static float Bradley(float x, float xlow, float difference = 0.15f)
         {
             // Bradley local threshold void.
             // Derek Bradley, Gerhard Roth (2005). Adaptive Thresholding Using the Integral Image.
             // Retrieved from http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
 
-            double z = 1.0 - difference;
+            float z = 1.0f - difference;
             return (x < xlow * z) ? 0 : 1;
         }
         /// <summary>
@@ -292,19 +292,19 @@ namespace UMapx.Imaging
         /// <param name="difference">Difference [0, 1]</param>
         /// <param name="length">Length</param>
         /// <returns>Matrix</returns>
-        public static double[,] Bradley(double difference, int length)
+        public static float[,] Bradley(float difference, int length)
         {
-            double[,] table = new double[length, length];
-            double w, v;
+            float[,] table = new float[length, length];
+            float w, v;
             int x, y;
 
             for (x = 0; x < length; x++)
             {
-                w = x / (double)length;
+                w = x / (float)length;
 
                 for (y = 0; y < length; y++)
                 {
-                    v = y / (double)length;
+                    v = y / (float)length;
 
                     table[x, y] = Intensity.Bradley(w, v, difference);
                 }
@@ -318,11 +318,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Logarithm of 0.5.
         /// </summary>
-        public const double log05 = -0.693147180559945;
+        public const float log05 = -0.693147180559945f;
         /// <summary>
         /// Logarithmic epsilon.
         /// </summary>
-        public const double logEpsilon = 1e-9;
+        public const float logEpsilon = 1e-9f;
         /// <summary>
         /// Implements the logarithmic stretch algorithm.
         /// </summary>
@@ -330,10 +330,10 @@ namespace UMapx.Imaging
         /// <param name="mu">Filter brightness</param>
         /// <param name="s">Shadows</param>
         /// <param name="l">Highlights</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double LogStretch(double x, double mu, double s, double l)
+        /// <returns>float precision floating point number</returns>
+        public static float LogStretch(float x, float mu, float s, float l)
         {
-            return Intensity.LogPow(x, Maths.Range(Intensity.log05 / Math.Log(mu), s, l));
+            return Intensity.LogPow(x, Maths.Range(Intensity.log05 / (float)Math.Log(mu), s, l));
         }
         /// <summary>
         /// Returns the correction mask.
@@ -342,19 +342,19 @@ namespace UMapx.Imaging
         /// <param name="l">Highlights</param>
         /// <param name="length">Length</param>
         /// <returns>Matrix</returns>
-        public static double[,] LogStretch(double s, double l, int length)
+        public static float[,] LogStretch(float s, float l, int length)
         {
-            double[,] table = new double[length, length];
-            double w, v;
+            float[,] table = new float[length, length];
+            float w, v;
             int x, y;
 
             for (x = 0; x < length; x++)
             {
-                w = x / (double)length;
+                w = x / (float)length;
 
                 for (y = 0; y < length; y++)
                 {
-                    v = y / (double)length;
+                    v = y / (float)length;
 
                     table[x, y] = Intensity.LogStretch(w, v, s, l);
                 }
@@ -367,10 +367,10 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">Number</param>
         /// <param name="power">Power</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double LogPow(double a, double power)
+        /// <returns>float precision floating point number</returns>
+        public static float LogPow(float a, float power)
         {
-            return Math.Exp(Math.Log(a) * power);
+            return (float)Math.Exp(Math.Log(a) * power);
         }
         #endregion
 
@@ -381,13 +381,13 @@ namespace UMapx.Imaging
         /// <param name="g">Gamma</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Gamma(double g, int length)
+        public static float[] Gamma(float g, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Gamma(x / (double)length, g);
+                table[x] = Gamma(x / (float)length, g);
             }
             return table;
         }
@@ -396,10 +396,10 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="g">Gamma</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Gamma(double x, double g)
+        /// <returns>float precision floating point number</returns>
+        public static float Gamma(float x, float g)
         {
-            return Math.Pow(x, g);
+            return (float)Math.Pow(x, g);
         }
         /// <summary>
         /// Returns the correction mask.
@@ -407,13 +407,13 @@ namespace UMapx.Imaging
         /// <param name="b">Offset (-0.5, 0.5)</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Shift(double b, int length)
+        public static float[] Shift(float b, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Shift(x / (double)length, b);
+                table[x] = Shift(x / (float)length, b);
             }
             return table;
         }
@@ -422,10 +422,10 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="b">Offset (-0.5, 0.5)</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Shift(double x, double b)
+        /// <returns>float precision floating point number</returns>
+        public static float Shift(float x, float b)
         {
-            double v = log05 / Math.Log(0.5 - b);
+            float v = log05 / (float)Math.Log(0.5 - b);
             return LogPow(x, v);
         }
         /// <summary>
@@ -434,13 +434,13 @@ namespace UMapx.Imaging
         /// <param name="threshold">Threshold [0, 1]</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Bin(double threshold, int length)
+        public static float[] Bin(float threshold, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Bin(x / (double)length, threshold);
+                table[x] = Bin(x / (float)length, threshold);
             }
             return table;
         }
@@ -449,8 +449,8 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="threshold">Threshold [0, 1]</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Bin(double x, double threshold)
+        /// <returns>float precision floating point number</returns>
+        public static float Bin(float x, float threshold)
         {
             return (x > threshold) ? 1 : 0;
         }
@@ -460,13 +460,13 @@ namespace UMapx.Imaging
         /// <param name="average">Average</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Exposure(double average, int length)
+        public static float[] Exposure(float average, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Exposure(x / (double)length, average);
+                table[x] = Exposure(x / (float)length, average);
             }
             return table;
         }
@@ -475,11 +475,11 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="average">Average</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Exposure(double x, double average)
+        /// <returns>float precision floating point number</returns>
+        public static float Exposure(float x, float average)
         {
-            double T = 255.0 / average;
-            return 1 - Math.Exp(-T * x);
+            float T = 255.0f / average;
+            return 1 - (float)Math.Exp(-T * x);
         }
         /// <summary>
         /// Returns the correction mask.
@@ -487,13 +487,13 @@ namespace UMapx.Imaging
         /// <param name="delta">Delta</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Sin(double delta, int length)
+        public static float[] Sin(float delta, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Sin(x / (double)length, delta);
+                table[x] = Sin(x / (float)length, delta);
             }
             return table;
         }
@@ -502,10 +502,10 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="delta">Delta</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Sin(double x, double delta)
+        /// <returns>float precision floating point number</returns>
+        public static float Sin(float x, float delta)
         {
-            return 0.5 * Math.Sin((3.14 * x) - (3.14 / 2)) + 0.5 + delta;
+            return 0.5f * (float)Math.Sin((3.14 * x) - (3.14 / 2)) + 0.5f + delta;
         }
         /// <summary>
         /// Returns the correction mask.
@@ -513,13 +513,13 @@ namespace UMapx.Imaging
         /// <param name="delta">Delta</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Cos(double delta, int length)
+        public static float[] Cos(float delta, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Cos(x / (double)length, delta);
+                table[x] = Cos(x / (float)length, delta);
             }
             return table;
         }
@@ -528,10 +528,10 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="delta">Delta</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Cos(double x, double delta)
+        /// <returns>float precision floating point number</returns>
+        public static float Cos(float x, float delta)
         {
-            return 0.5 * Math.Cos((3.14 * x) - 3.14) + 0.5 + delta;
+            return 0.5f * (float)Math.Cos((3.14 * x) - 3.14) + 0.5f + delta;
         }
         /// <summary>
         /// Returns the correction mask.
@@ -540,13 +540,13 @@ namespace UMapx.Imaging
         /// <param name="delta">Delta</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Log(double a, double delta, int length)
+        public static float[] Log(float a, float delta, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Log(x / (double)length, a, delta);
+                table[x] = Log(x / (float)length, a, delta);
             }
             return table;
         }
@@ -556,10 +556,10 @@ namespace UMapx.Imaging
         /// <param name="x">Argument</param>
         /// <param name="a">Logarithm base</param>
         /// <param name="delta">Delta</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Log(double x, double a, double delta)
+        /// <returns>float precision floating point number</returns>
+        public static float Log(float x, float a, float delta)
         {
-            return Math.Log((1.0 + (x + delta) / 0.5), a);
+            return (float)Math.Log((1.0 + (x + delta) / 0.5), a);
         }
         /// <summary>
         /// Returns the correction mask for formula: Y = (X + V).
@@ -567,12 +567,12 @@ namespace UMapx.Imaging
         /// <param name="value">Value</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Add(double value, int length)
+        public static float[] Add(float value, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
             for (int x = 0; x < length; x++)
             {
-                table[x] = x / (double)length + value;
+                table[x] = x / (float)length + value;
             }
             return table;
         }
@@ -582,13 +582,13 @@ namespace UMapx.Imaging
         /// <param name="value">Value</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Contrast(double value, int length)
+        public static float[] Contrast(float value, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Contrast(x / (double)length, value);
+                table[x] = Contrast(x / (float)length, value);
             }
             return table;
         }
@@ -597,11 +597,11 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="value">Contrast</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Contrast(double x, double value)
+        /// <returns>float precision floating point number</returns>
+        public static float Contrast(float x, float value)
         {
             value = (1 + value);
-            double xc = x;
+            float xc = x;
             xc -= 0.5f;
             xc *= value;
             xc += 0.5f;
@@ -613,13 +613,13 @@ namespace UMapx.Imaging
         /// <param name="power">Value</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] LogContrast(double power, int length)
+        public static float[] LogContrast(float power, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = LogContrast(x / (double)length, power);
+                table[x] = LogContrast(x / (float)length, power);
             }
             return table;
         }
@@ -628,27 +628,27 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Brightness</param>
         /// <param name="power">Power</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double LogContrast(double x, double power)
+        /// <returns>float precision floating point number</returns>
+        public static float LogContrast(float x, float power)
         {
             if (x <= 0.5)
             {
-                return Intensity.LogPow(x * 2, power) * 0.5;
+                return (float)Intensity.LogPow(x * 2, power) * 0.5f;
             }
-            return 1.0 - Intensity.LogPow((1 - x) * 2, power) * 0.5;
+            return 1.0f - (float)Intensity.LogPow((1 - x) * 2, power) * 0.5f;
         }
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Invert(int length)
+        public static float[] Invert(int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Invert(x / (double)length);
+                table[x] = Invert(x / (float)length);
             }
             return table;
         }
@@ -656,10 +656,10 @@ namespace UMapx.Imaging
         /// Negates the value.
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Invert(double x)
+        /// <returns>float precision floating point number</returns>
+        public static float Invert(float x)
         {
-            return 1.0 - x;
+            return 1.0f - x;
         }
         /// <summary>
         /// Equalizes a value relative to the {min, max} range.
@@ -667,13 +667,13 @@ namespace UMapx.Imaging
         /// <param name="x">Argument</param>
         /// <param name="max">Maximum value</param>
         /// <param name="min">Minimum value</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Equalize(double x, double min, double max)
+        /// <returns>float precision floating point number</returns>
+        public static float Equalize(float x, float min, float max)
         {
-            double a = max - min;
-            double b = x - min;
-            double c = (a != 0) ? b / a : x;
-            return Maths.Double(c);
+            float a = max - min;
+            float b = x - min;
+            float c = (a != 0) ? b / a : x;
+            return Maths.Float(c);
         }
         /// <summary>
         /// Returns the correction mask.
@@ -682,13 +682,13 @@ namespace UMapx.Imaging
         /// <param name="min">Minimum value</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Equalize(double min, double max, int length)
+        public static float[] Equalize(float min, float max, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Intensity.Equalize(x / (double)length, min, max);
+                table[x] = Intensity.Equalize(x / (float)length, min, max);
             }
             return table;
         }
@@ -699,7 +699,7 @@ namespace UMapx.Imaging
         /// <param name="delta">Delta</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Linear(RangeDouble range, double delta, int length)
+        public static float[] Linear(RangeFloat range, float delta, int length)
         {
             return Intensity.Linear(range.Max, range.Min, delta, length);
         }
@@ -711,13 +711,13 @@ namespace UMapx.Imaging
         /// <param name="delta">Delta</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Linear(double xmax, double xmin, double delta, int length)
+        public static float[] Linear(float xmax, float xmin, float delta, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Intensity.Linear(x / (double)length, xmax, xmin, delta);
+                table[x] = Intensity.Linear(x / (float)length, xmax, xmin, delta);
             }
             return table;
         }
@@ -728,8 +728,8 @@ namespace UMapx.Imaging
         /// <param name="xmax">Maximum value</param>
         /// <param name="xmin">Minimum value</param>
         /// <param name="delta">Delta</param>
-        /// <returns>Double precision floating point number</returns>
-        public static double Linear(double x, double xmax, double xmin, double delta)
+        /// <returns>float precision floating point number</returns>
+        public static float Linear(float x, float xmax, float xmin, float delta)
         {
             return (x - xmin) / (xmax - xmin) + delta;
         }
@@ -742,11 +742,11 @@ namespace UMapx.Imaging
         /// <param name="ymax">Maximum value of the output range</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Levels(double xmin, double xmax, double ymin, double ymax, int length)
+        public static float[] Levels(float xmin, float xmax, float ymin, float ymax, int length)
         {
-            double[] table = new double[length];
-            double k = 0, b = 0;
-            double v;
+            float[] table = new float[length];
+            float k = 0, b = 0;
+            float v;
 
             if (xmax != xmin)
             {
@@ -756,7 +756,7 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                v = i / (double)length;
+                v = i / (float)length;
 
                 if (v >= xmax)
                 { v = ymax; }
@@ -776,7 +776,7 @@ namespace UMapx.Imaging
         /// <param name="output">Output values</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Levels(RangeDouble input, RangeDouble output, int length)
+        public static float[] Levels(RangeFloat input, RangeFloat output, int length)
         {
             return Intensity.Levels(input.Min, input.Max, output.Min, output.Max, length);
         }
@@ -786,23 +786,23 @@ namespace UMapx.Imaging
         /// <param name="levels">Number of levels</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>
-        public static double[] Quantize(int levels, int length)
+        public static float[] Quantize(int levels, int length)
         {
             if (levels > length)
                 throw new Exception("Number of levels cannot be greater than length");
 
             int interval = length / levels + 1;
-            double[] table = new double[length];
-            double min = double.MaxValue;
-            double max = double.MinValue;
-            double v;
+            float[] table = new float[length];
+            float min = float.MaxValue;
+            float max = float.MinValue;
+            float v;
             int q, i;
 
             // calculating
             for (i = 0; i < length; i++)
             {
                 q = (i / interval) * interval;
-                v = q / (length - 1.0);
+                v = q / (length - 1.0f);
 
                 if (v < min)
                     min = v;

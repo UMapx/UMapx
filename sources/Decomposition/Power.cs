@@ -14,7 +14,7 @@ namespace UMapx.Decomposition
     public class Power
     {
         #region Private data
-        private double[] v;
+        private float[] v;
         #endregion
 
         #region Power iteration components
@@ -23,7 +23,7 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <param name="iterations">Number of iterations</param>
-        public Power(double[,] A, int iterations = 10)
+        public Power(float[,] A, int iterations = 10)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
@@ -31,8 +31,8 @@ namespace UMapx.Decomposition
             // eigenvalue power algorithm:
             int n = A.GetLength(0);
             this.v = Matrice.Rand(n);
-            double[] w;
-            double beta;
+            float[] w;
+            float beta;
 
             // power iteration:
             for (int i = 0; i < iterations; i++)
@@ -48,7 +48,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns a vector of eigenvalues.
         /// </summary>
-        public double[] V
+        public float[] V
         {
             get
             {
@@ -58,7 +58,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the diagonalized matrix of eigenvalues.
         /// </summary>
-        public double[,] J
+        public float[,] J
         {
             get
             {

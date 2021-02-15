@@ -6,7 +6,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Mexican hat wavelet.
     /// </summary>
     [Serializable]
-    public class MexicanHatWavelet : IDoubleWavelet
+    public class MexicanHatWavelet : IFloatWavelet
     {
         #region Wavelet components
         /// <summary>
@@ -18,7 +18,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Scaling(double x)
+        public float Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -27,10 +27,10 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public double Wavelet(double x)
+        public float Wavelet(float x)
         {
-            double x2 = x * x;
-            return 2.0 / (Math.Sqrt(3) * Math.Pow(Math.PI, 0.25)) * (1 - x2) * Math.Exp(-x2 / 2);
+            float x2 = x * x;
+            return 2.0f / (float)(Math.Sqrt(3) * Math.Pow(Math.PI, 0.25)) * (1 - x2) * (float)Math.Exp(-x2 / 2);
         }
         #endregion
     }

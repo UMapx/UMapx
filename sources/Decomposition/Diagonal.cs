@@ -14,8 +14,8 @@ namespace UMapx.Decomposition
     public class Diagonal
     {
         #region Private data
-        private double[,] matrix;
-        private double[] diag;
+        private float[,] matrix;
+        private float[] diag;
         #endregion
 
         #region Initialize
@@ -23,13 +23,13 @@ namespace UMapx.Decomposition
         /// Initializes diagonal decomposition.
         /// </summary>
         /// <param name="A">Square matrix</param>
-        public Diagonal(double[,] A)
+        public Diagonal(float[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
 
             int n = A.GetLength(0), i;
-            this.diag = new double[n];
+            this.diag = new float[n];
 
             for (i = 0; i < n; i++)
                 diag[i] = A[i, i];
@@ -43,14 +43,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the square matrix.
         /// </summary>
-        public double[,] B
+        public float[,] B
         {
             get { return matrix; }
         }
         /// <summary>
         /// Gets the vector of diagonal elements.
         /// </summary>
-        public double[] D
+        public float[] D
         {
             get { return diag; }
         }

@@ -37,13 +37,13 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[][] Forward(double[] A)
+        public float[][] Forward(float[] A)
         {
             // params
             int length = A.Length;
             int nLevels = (int)Math.Min(Maths.Log2(length), WaveletTransform.Levels);
-            double[] B = WaveletTransform.Forward(A);
-            double[][] C = new double[nLevels + 1][];
+            float[] B = WaveletTransform.Forward(A);
+            float[][] C = new float[nLevels + 1][];
 
             // forward multi-scale wavelet decomposition
             for (int i = 0, k = 0; i <= nLevels; i++)
@@ -51,7 +51,7 @@ namespace UMapx.Wavelet
                 var bound = length >> (nLevels - i);
                 var count = bound - k;
 
-                C[i] = new double[count];
+                C[i] = new float[count];
 
                 for (int j = 0; j < count; j++)
                 {
@@ -68,11 +68,11 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[][] B)
+        public float[] Backward(float[][] B)
         {
             // params
             int nLevels = B.Length;
-            double[] A = new double[] { };
+            float[] A = new float[] { };
 
             // backward multi-scale wavelet decomposition
             for (int i = 0; i < nLevels; i++)
@@ -87,14 +87,14 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[][,] Forward(double[,] A)
+        public float[][,] Forward(float[,] A)
         {
             // params
             int N = A.GetLength(0);
             int M = A.GetLength(1);
             int nLevels = (int)Math.Min(Math.Min(Maths.Log2(N), WaveletTransform.Levels), M);
-            double[,] B = WaveletTransform.Forward(A);
-            double[][,] C = new double[nLevels + 1][,];
+            float[,] B = WaveletTransform.Forward(A);
+            float[][,] C = new float[nLevels + 1][,];
 
             // forward multi-scale wavelet decomposition
             for (int i = 0, k1 = 0, k2 = 0; i <= nLevels; i++)
@@ -104,7 +104,7 @@ namespace UMapx.Wavelet
                 var count1 = bound1 - k1;
                 var count2 = bound2 - k2;
 
-                C[i] = new double[count1, count2];
+                C[i] = new float[count1, count2];
 
                 for (int y = 0; y < count1; y++)
                 {
@@ -126,11 +126,11 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[][,] B)
+        public float[,] Backward(float[][,] B)
         {
             // params
             int nLevels = B.Length;
-            double[,] A = B[nLevels - 1];
+            float[,] A = B[nLevels - 1];
 
             // backward multi-scale wavelet decomposition
             for (int i = nLevels - 2; i >= 0; i--)

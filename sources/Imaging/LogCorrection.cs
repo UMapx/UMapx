@@ -9,8 +9,8 @@ namespace UMapx.Imaging
     public class LogCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        private double nbase = 3.14f;
-        private double delta = 0.5;
+        private float nbase = 3.14f;
+        private float delta = 0.5f;
         #endregion
 
         #region Filter components
@@ -20,7 +20,7 @@ namespace UMapx.Imaging
         /// <param name="nbase">Logarithm base</param>
         /// <param name="delta">Delta [-1, 1]</param>
         /// <param name="space">Color space</param>
-        public LogCorrection(double nbase, double delta, Space space)
+        public LogCorrection(float nbase, float delta, Space space)
         {
             Base = nbase; Delta = delta; this.Space = space;
         }
@@ -31,7 +31,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the base value of the logarithm.
         /// </summary>
-        public double Base
+        public float Base
         {
             get
             {
@@ -46,7 +46,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the delta value [-1, 1].
         /// </summary>
-        public double Delta
+        public float Delta
         {
             get
             {
@@ -63,7 +63,7 @@ namespace UMapx.Imaging
         /// </summary>
         protected override void Rebuild()
         {
-            this.values = Intensity.Log(nbase, delta / 2.0, 256);
+            this.values = Intensity.Log(nbase, delta / 2.0f, 256);
         }
         #endregion
     }

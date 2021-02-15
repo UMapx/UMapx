@@ -14,7 +14,7 @@ namespace UMapx.Distribution
     public class Rayleigh : IDistribution
     {
         #region Private data
-        private double sigma = 1;
+        private float sigma = 1;
         #endregion;
 
         #region Rayleigh components
@@ -26,14 +26,14 @@ namespace UMapx.Distribution
         /// Initializes the Rayleigh logarithmic distribution.
         /// </summary>
         /// <param name="sigma">Scale parameter</param>
-        public Rayleigh(double sigma)
+        public Rayleigh(float sigma)
         {
             Sigma = sigma;
         }
         /// <summary>
         /// Gets or sets the value of the scale parameter.
         /// </summary>
-        public double Sigma
+        public float Sigma
         {
             get
             {
@@ -50,37 +50,37 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
-                return Maths.Sqrt(Maths.Pi / 2.0) * sigma;
+                return Maths.Sqrt(Maths.Pi / 2.0f) * sigma;
             }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
-                return (2.0 - Maths.Pi / 2.0) * Maths.Pow(sigma);
+                return (2.0f - Maths.Pi / 2.0f) * Maths.Pow(sigma);
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
@@ -90,7 +90,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -100,17 +100,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
-                return 2 * Maths.Sqrt(Maths.Pi) * (Maths.Pi - 3) / Maths.Pow(4 - Maths.Pi, 1.5);
+                return 2 * Maths.Sqrt(Maths.Pi) * (Maths.Pi - 3) / Maths.Pow(4 - Maths.Pi, 1.5f);
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
@@ -121,8 +121,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < 0)
             {
@@ -134,8 +134,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < 0)
             {
@@ -146,8 +146,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get
             {

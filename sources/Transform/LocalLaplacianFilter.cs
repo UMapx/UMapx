@@ -17,11 +17,11 @@ namespace UMapx.Transform
         /// <summary>
         /// Sigma.
         /// </summary>
-        private double sigma;
+        private float sigma;
         /// <summary>
         /// Factor.
         /// </summary>
-        private double factor;
+        private float factor;
         /// <summary>
         /// Number of samples.
         /// </summary>
@@ -45,7 +45,7 @@ namespace UMapx.Transform
         /// <param name="n">Number of samples</param>
         /// <param name="levels">Number of levels</param>
         /// <param name="factor">Factor [-1, 1]</param>
-        public LocalLaplacianFilter(int radius = 2, double sigma = 0.05, int n = 10, int levels = 10, double factor = -1.0)
+        public LocalLaplacianFilter(int radius = 2, float sigma = 0.05f, int n = 10, int levels = 10, float factor = -1.0f)
         {
             this.Radius = radius;
             this.Sigma = sigma;
@@ -70,7 +70,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Gets or sets the value of σ-parameter.
         /// </summary>
-        public double Sigma
+        public float Sigma
         {
             get
             {
@@ -78,13 +78,13 @@ namespace UMapx.Transform
             }
             set
             {
-                this.sigma = Maths.Double(value);
+                this.sigma = Maths.Float(value);
             }
         }
         /// <summary>
         /// Gets or sets the factor.
         /// </summary>
-        public double Factor
+        public float Factor
         {
             get
             {
@@ -130,7 +130,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(double[,] data)
+        public void Apply(float[,] data)
         {
             llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
             return;
@@ -139,7 +139,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(double[] data)
+        public void Apply(float[] data)
         {
             llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
             return;
@@ -188,7 +188,7 @@ namespace UMapx.Transform
         /// <param name="n">Number of steps</param>
         /// <param name="levels">Levels</param>
         /// <returns>Output data</returns>
-        internal static void llfilter(double[,] input, int radius, double sigma, double factor, int n, int levels)
+        internal static void llfilter(float[,] input, int radius, float sigma, float factor, int n, int levels)
         {
             // exception
             if (factor == 0)
@@ -198,25 +198,25 @@ namespace UMapx.Transform
             int height = input.GetLength(0);
             int width = input.GetLength(1);
             int y, x, level, length = 256;
-            double step = 1.0 / n;
-            double min = 0.0, max = 1.0;
+            float step = 1.0f / n;
+            float min = 0.0f, max = 1.0f;
 
             // pyramids
             int n_levels = (int)Math.Min((Math.Log(Math.Min(height, width)) / Math.Log(2)), levels);
             LaplacianPyramidTransform lpt = new LaplacianPyramidTransform(n_levels, radius);
             GaussianPyramidTransform gpt = new GaussianPyramidTransform(n_levels, radius);
 
-            double[][,] input_gaussian_pyr = gpt.Forward(input);
-            double[][,] output_laplace_pyr = lpt.Forward(input_gaussian_pyr);
-            double[][,] temp_laplace_pyr;
-            double[,] I_temp, I_gaus, I_outp;
-            double[] T;
+            float[][,] input_gaussian_pyr = gpt.Forward(input);
+            float[][,] output_laplace_pyr = lpt.Forward(input_gaussian_pyr);
+            float[][,] temp_laplace_pyr;
+            float[,] I_temp, I_gaus, I_outp;
+            float[] T;
 
             // do job
-            for (double i = min; i <= max; i += step)
+            for (float i = min; i <= max; i += step)
             {
                 height = input.GetLength(0); width = input.GetLength(1);
-                I_temp = new double[height, width];
+                I_temp = new float[height, width];
                 T = Rem(sigma, factor, i, length);
 
                 // remapping function
@@ -277,7 +277,7 @@ namespace UMapx.Transform
         /// <param name="n">Number of steps</param>
         /// <param name="levels">Levels</param>
         /// <returns>Output data</returns>
-        internal static void llfilter(double[] input, int radius, double sigma, double factor, int n, int levels)
+        internal static void llfilter(float[] input, int radius, float sigma, float factor, int n, int levels)
         {
             // exception
             if (factor == 0)
@@ -286,25 +286,25 @@ namespace UMapx.Transform
             // data
             int height = input.GetLength(0);
             int y, level, length = 256;
-            double step = 1.0 / n;
-            double min = 0.0, max = 1.0;
+            float step = 1.0f / n;
+            float min = 0.0f, max = 1.0f;
 
             // pyramids
             int n_levels = (int)Math.Min((Math.Log(height) / Math.Log(2)), levels);
             LaplacianPyramidTransform lpt = new LaplacianPyramidTransform(n_levels, radius);
             GaussianPyramidTransform gpt = new GaussianPyramidTransform(n_levels, radius);
 
-            double[][] input_gaussian_pyr = gpt.Forward(input);
-            double[][] output_laplace_pyr = lpt.Forward(input_gaussian_pyr);
-            double[][] temp_laplace_pyr;
-            double[] I_temp, I_gaus, I_outp;
-            double[] T;
+            float[][] input_gaussian_pyr = gpt.Forward(input);
+            float[][] output_laplace_pyr = lpt.Forward(input_gaussian_pyr);
+            float[][] temp_laplace_pyr;
+            float[] I_temp, I_gaus, I_outp;
+            float[] T;
 
             // do job
-            for (double i = min; i <= max; i += step)
+            for (float i = min; i <= max; i += step)
             {
                 height = input.GetLength(0);
-                I_temp = new double[height];
+                I_temp = new float[height];
                 T = Rem(sigma, factor, i, length);
 
                 // remapping function
@@ -352,10 +352,10 @@ namespace UMapx.Transform
         /// <param name="i">Increment</param>
         /// <param name="step">Step</param>
         /// <returns>Function</returns>
-        internal static double Rec(double x, double i, double step)
+        internal static float Rec(float x, float i, float step)
         {
-            double y = Math.Abs(x - i);
-            return y < step ? (1.0 - y / step) : 0;
+            float y = Math.Abs(x - i);
+            return y < step ? (1.0f - y / step) : 0;
         }
         /// <summary>
         /// Reconstruct function.
@@ -364,13 +364,13 @@ namespace UMapx.Transform
         /// <param name="step">Step</param>
         /// <param name="length">Length of table</param>
         /// <returns>Table</returns>
-        internal static double[] Rec(double i, double step, int length)
+        internal static float[] Rec(float i, float step, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = LocalLaplacianFilter.Rec(x / (double)length, i, step);
+                table[x] = LocalLaplacianFilter.Rec(x / (float)length, i, step);
             }
             return table;
         }
@@ -382,11 +382,11 @@ namespace UMapx.Transform
         /// <param name="factor">Factor</param>
         /// <param name="i">Increment</param>
         /// <returns>Function</returns>
-        internal static double Rem(double x, double sigma, double factor, double i)
+        internal static float Rem(float x, float sigma, float factor, float i)
         {
-            double z = 2 * sigma * sigma;
-            double y = x - i;
-            return factor * y * Math.Exp(-y * y / z);
+            float z = 2 * sigma * sigma;
+            float y = x - i;
+            return factor * y * Maths.Exp(-y * y / z);
         }
         /// <summary>
         /// Remapping function.
@@ -396,13 +396,13 @@ namespace UMapx.Transform
         /// <param name="i">Increment</param>
         /// <param name="length">Length of table</param>
         /// <returns>Table</returns>
-        internal static double[] Rem(double sigma, double factor, double i, int length)
+        internal static float[] Rem(float sigma, float factor, float i, int length)
         {
-            double[] table = new double[length];
+            float[] table = new float[length];
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = LocalLaplacianFilter.Rem(x / (double)length, sigma, factor, i);
+                table[x] = LocalLaplacianFilter.Rem(x / (float)length, sigma, factor, i);
             }
             return table;
         }

@@ -17,9 +17,9 @@ namespace UMapx.Decomposition
         #region Private data
         private LU ludecomp;
         private Diagonal diagdecomp;
-        private double[,] lower;
-        private double[,] upper;
-        private double[] diag;
+        private float[,] lower;
+        private float[,] upper;
+        private float[] diag;
         #endregion
 
         #region Initialize
@@ -27,7 +27,7 @@ namespace UMapx.Decomposition
         /// Initializes LDU decomposition.
         /// </summary>
         /// <param name="A">Square matrix</param>
-        public LDU(double[,] A)
+        public LDU(float[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
@@ -49,21 +49,21 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the lower triangular matrix.
         /// </summary>
-        public double[,] L
+        public float[,] L
         {
             get { return lower; }
         }
         /// <summary>
         /// Gets the upper triangular matrix.
         /// </summary>
-        public double[,] U
+        public float[,] U
         {
             get { return upper; }
         }
         /// <summary>
         /// Gets the vector of diagonal elements.
         /// </summary>
-        public double[] D
+        public float[] D
         {
             get { return diag; }
         }

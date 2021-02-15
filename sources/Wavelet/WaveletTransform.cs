@@ -17,10 +17,10 @@ namespace UMapx.Wavelet
     public class WaveletTransform : IWaveletTransform, ITransform
     {
         #region Private data
-        private double[] lp;        // Low-Pass filter,
-        private double[] hp;        // High-Pass filer,
-        private double[] ilp;       // Inverse Low-Pass filter,
-        private double[] ihp;       // Inverse High-Pass filter,
+        private float[] lp;        // Low-Pass filter,
+        private float[] hp;        // High-Pass filer,
+        private float[] ilp;       // Inverse Low-Pass filter,
+        private float[] ihp;       // Inverse High-Pass filter,
         private bool normalized;    // Normalized transform or not,
         private int levels;         // Number of levels.
         #endregion
@@ -92,7 +92,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             // params
             int nLevels = (int)Math.Min(Maths.Log2(A.Length), this.levels);
@@ -110,7 +110,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             // params
             int nLevels = (int)Math.Min(Maths.Log2(B.Length), this.levels);
@@ -128,15 +128,15 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             // params
             int Bound1, Bound2, i, j;
             int DataLen1 = A.GetLength(0);
             int DataLen2 = A.GetLength(1);
-            double[,] output = (double[,])A.Clone();
-            double[] buff2 = new double[DataLen2];
-            double[] buff1 = new double[DataLen1];
+            float[,] output = (float[,])A.Clone();
+            float[] buff2 = new float[DataLen2];
+            float[] buff1 = new float[DataLen1];
             int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
 
             // do job
@@ -172,15 +172,15 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             // params
             int Bound1, Bound2, i, j;
             int DataLen1 = B.GetLength(0);
             int DataLen2 = B.GetLength(1);
-            double[,] output = (double[,])B.Clone();
-            double[] buff1 = new double[DataLen1];
-            double[] buff2 = new double[DataLen2];
+            float[,] output = (float[,])B.Clone();
+            float[] buff1 = new float[DataLen1];
+            float[] buff2 = new float[DataLen2];
             int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
 
             // do job
@@ -334,11 +334,11 @@ namespace UMapx.Wavelet
         /// <param name="input">Input signal</param>
         /// <param name="level">Current level of transform</param>
         /// <returns>Output data</returns>
-        private double[] dwt(double[] input, int level)
+        private float[] dwt(float[] input, int level)
         {
             // params
             int length = input.Length;
-            double[] output = new double[length];
+            float[] output = new float[length];
             int Bound = length >> level;
 
             // odd element
@@ -352,8 +352,8 @@ namespace UMapx.Wavelet
             int lpStart = -((lpLen >> 1) - 1);
             int hpStart = -((hpLen >> 1) - 1);
             Array.Copy(input, Bound, output, Bound, length - Bound);
-            double a = 0;
-            double b = 0;
+            float a = 0;
+            float b = 0;
             int h = Bound >> 1;
             int c, i, j, r, k;
 
@@ -405,20 +405,20 @@ namespace UMapx.Wavelet
         /// <param name="input">Input signal</param>
         /// <param name="level">Current level of transform</param>
         /// <returns>Output data</returns>
-        private double[] idwt(double[] input, int level)
+        private float[] idwt(float[] input, int level)
         {
             // params
             int length = input.Length;
-            double[] output = (double[])input.Clone();
+            float[] output = (float[])input.Clone();
             int Bound = length >> level;
             int h = Bound << 1;
             int lpLen = this.ilp.Length;
             int hpLen = this.ihp.Length;
             int lpStart = -((lpLen >> 1) - 1);
             int hpStart = -((hpLen >> 1) - 1);
-            double[] Low = new double[h];
-            double[] Hig = new double[h];
-            double s = 0;
+            float[] Low = new float[h];
+            float[] Hig = new float[h];
+            float s = 0;
             int c, i, j, k;
 
             // redim

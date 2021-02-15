@@ -13,8 +13,8 @@ namespace UMapx.Imaging
     public class LocalContrastInversion : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        private double a;
-        private double b;
+        private float a;
+        private float b;
         #endregion
 
         #region Filter components
@@ -25,7 +25,7 @@ namespace UMapx.Imaging
         /// <param name="space">Color space</param>
         /// <param name="a">Contrast (0, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
-        public LocalContrastInversion(int radius, Space space, double a = 0.75, double b = 0.05)
+        public LocalContrastInversion(int radius, Space space, float a = 0.75f, float b = 0.05f)
         {
             this.gb = new BoxBlur(radius);
             Space = space;
@@ -40,7 +40,7 @@ namespace UMapx.Imaging
         /// <param name="space">Color space</param>
         /// <param name="a">Contrast (0, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
-        public LocalContrastInversion(int width, int height, Space space, double a = 0.75, double b = 0.05)
+        public LocalContrastInversion(int width, int height, Space space, float a = 0.75f, float b = 0.05f)
         {
             this.gb = new BoxBlur(width, height);
             Space = space;
@@ -54,7 +54,7 @@ namespace UMapx.Imaging
         /// <param name="space">Color space</param>
         /// <param name="a">Contrast (0, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
-        public LocalContrastInversion(SizeInt size, Space space, double a = 0.75, double b = 0.05)
+        public LocalContrastInversion(SizeInt size, Space space, float a = 0.75f, float b = 0.05f)
         {
             this.gb = new BoxBlur(size);
             Space = space;
@@ -64,7 +64,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the contrast value (0, 1].
         /// </summary>
-        public double A
+        public float A
         {
             get
             {
@@ -79,7 +79,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the offset value (0, 1].
         /// </summary>
-        public double B
+        public float B
         {
             get
             {

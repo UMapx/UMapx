@@ -17,9 +17,9 @@ namespace UMapx.Decomposition
         #region Private data
         private int n, m;
         private int iterations;
-        private double[][] Ur;
-        private double[][] Vr;
-        private double[] Sr;
+        private float[][] Ur;
+        private float[][] Vr;
+        private float[] Sr;
         private bool reversed;
         #endregion
 
@@ -29,7 +29,7 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <param name="iterations">Number of iterations</param>
-        public SVD(double[,] A, int iterations = 10)
+        public SVD(float[,] A, int iterations = 10)
         {
             // set:
             this.iterations = iterations;
@@ -56,7 +56,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the left vectors.
         /// </summary>
-        public double[,] U
+        public float[,] U
         {
             get
             {
@@ -66,14 +66,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets singular values.
         /// </summary>
-        public double[] S
+        public float[] S
         {
             get { return Sr; }
         }
         /// <summary>
         /// Gets the right vectors.
         /// </summary>
-        public double[,] V
+        public float[,] V
         {
             get
             {
@@ -83,7 +83,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the pseudoinverse matrix.
         /// </summary>
-        public double[,] P
+        public float[,] P
         {
             get
             {
@@ -99,19 +99,19 @@ namespace UMapx.Decomposition
         /// 
         /// </summary>
         /// <param name="A"></param>
-        private void svdcmp(double[,] A)
+        private void svdcmp(float[,] A)
         {
             this.Ur = Jagged.ToJagged(A);
-            this.Sr = new double[m];
+            this.Sr = new float[m];
             this.Vr = Jagged.Zero(m, m);
-            double[] rv1 = new double[m];
+            float[] rv1 = new float[m];
 
             int flag, i, its, j, jj, k, l = 0, nm = 0;
-            double anorm, c, f, g, h, e, scale, x, y, z;
+            float anorm, c, f, g, h, e, scale, x, y, z;
 
 
             // householder reduction to bidiagonal form
-            g = scale = anorm = 0.0;
+            g = scale = anorm = 0.0f;
 
             for (i = 0; i < m; i++)
             {
@@ -135,7 +135,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][i];
-                        g = -Sign(Math.Sqrt(e), f);
+                        g = -Sign((float)Math.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][i] = f - g;
 
@@ -143,7 +143,7 @@ namespace UMapx.Decomposition
                         {
                             for (j = l; j < m; j++)
                             {
-                                for (e = 0.0, k = i; k < n; k++)
+                                for (e = 0.0f, k = i; k < n; k++)
                                 {
                                     e += Ur[k][i] * Ur[k][j];
                                 }
@@ -165,7 +165,7 @@ namespace UMapx.Decomposition
                 }
 
                 Sr[i] = scale * g;
-                g = e = scale = 0.0;
+                g = e = scale = 0.0f;
 
                 if ((i < n) && (i != m - 1))
                 {
@@ -183,7 +183,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][l];
-                        g = -Sign(Math.Sqrt(e), f);
+                        g = -Sign((float)Math.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][l] = f - g;
 
@@ -196,7 +196,7 @@ namespace UMapx.Decomposition
                         {
                             for (j = l; j < n; j++)
                             {
-                                for (e = 0.0, k = l; k < m; k++)
+                                for (e = 0.0f, k = l; k < m; k++)
                                 {
                                     e += Ur[j][k] * Ur[i][k];
                                 }
@@ -260,13 +260,13 @@ namespace UMapx.Decomposition
                 {
                     for (j = l; j < m; j++)
                     {
-                        Ur[i][j] = 0.0;
+                        Ur[i][j] = 0.0f;
                     }
                 }
 
                 if (g != 0)
                 {
-                    g = 1.0 / g;
+                    g = 1.0f / g;
 
                     if (i != m - 1)
                     {
@@ -326,8 +326,8 @@ namespace UMapx.Decomposition
 
                     if (flag != 0)
                     {
-                        c = 0.0;
-                        e = 1.0;
+                        c = 0.0f;
+                        e = 1.0f;
                         for (i = l; i <= k; i++)
                         {
                             f = e * rv1[i];
@@ -337,7 +337,7 @@ namespace UMapx.Decomposition
                                 g = Sr[i];
                                 h = Maths.Hypotenuse(f, g);
                                 Sr[i] = h;
-                                h = 1.0 / h;
+                                h = 1.0f / h;
                                 c = g * h;
                                 e = -f * h;
 
@@ -382,12 +382,12 @@ namespace UMapx.Decomposition
                     y = Sr[nm];
                     g = rv1[nm];
                     h = rv1[k];
-                    f = ((y - z) * (y + z) + (g - h) * (g + h)) / (2.0 * h * y);
-                    g = Maths.Hypotenuse(f, 1.0);
+                    f = ((y - z) * (y + z) + (g - h) * (g + h)) / (2.0f * h * y);
+                    g = Maths.Hypotenuse(f, 1.0f);
                     f = ((x - z) * (x + z) + h * ((y / (f + Sign(g, f))) - h)) / x;
 
                     // next QR transformation
-                    c = e = 1.0;
+                    c = e = 1.0f;
 
                     for (j = l; j <= nm; j++)
                     {
@@ -418,7 +418,7 @@ namespace UMapx.Decomposition
 
                         if (z != 0)
                         {
-                            z = 1.0 / z;
+                            z = 1.0f / z;
                             c = f * z;
                             e = h * z;
                         }
@@ -435,7 +435,7 @@ namespace UMapx.Decomposition
                         }
                     }
 
-                    rv1[l] = 0.0;
+                    rv1[l] = 0.0f;
                     rv1[k] = f;
                     Sr[k] = x;
                 }
@@ -447,7 +447,7 @@ namespace UMapx.Decomposition
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        private static double Sign(double a, double b)
+        private static float Sign(float a, float b)
         {
             return (b >= 0.0) ? System.Math.Abs(a) : -System.Math.Abs(a);
         }

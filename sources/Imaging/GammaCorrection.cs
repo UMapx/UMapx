@@ -13,7 +13,7 @@ namespace UMapx.Imaging
     public class GammaCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        private double g;
+        private float g;
         #endregion
 
         #region Filter components
@@ -22,7 +22,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="g">Gamma [0, 20]</param>
         /// <param name="space">Color space</param>
-        public GammaCorrection(double g, Space space)
+        public GammaCorrection(float g, Space space)
         {
             Gamma = g; Space = space;
         }
@@ -31,12 +31,12 @@ namespace UMapx.Imaging
         /// </summary>
         public GammaCorrection()
         {
-            Gamma = 2.2;
+            Gamma = 2.2f;
         }
         /// <summary>
         /// Gets or sets the gamma value [0, 20].
         /// </summary>
-        public double Gamma
+        public float Gamma
         {
             get
             {

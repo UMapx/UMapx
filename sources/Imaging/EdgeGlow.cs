@@ -64,15 +64,15 @@ namespace UMapx.Imaging
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // Creating resources:
-            Bitmap Src0 = (Bitmap)BitmapConverter.Bitmap(bmSrc).Clone();
-            BitmapData bmSrc0 = BitmapConverter.Lock32bpp(Src0);
+            Bitmap Src0 = (Bitmap)BitmapFormat.Bitmap(bmSrc).Clone();
+            BitmapData bmSrc0 = BitmapFormat.Lock32bpp(Src0);
 
             // Filter applying:
             erosion.Apply(bmSrc, bmSrc0);
             subtraction.Apply(bmData, bmSrc);
 
             // Delete resources:
-            BitmapConverter.Unlock(Src0, bmSrc0);
+            BitmapFormat.Unlock(Src0, bmSrc0);
             Src0.Dispose();
         }
         /// <summary>
@@ -82,11 +82,11 @@ namespace UMapx.Imaging
         /// <param name="Src">Bitmap</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
         }
         /// <summary>
         /// Apply filter.
@@ -95,11 +95,11 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data)
         {
             Bitmap Src = (Bitmap)Data.Clone();
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapConverter.Lock32bpp(Src);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
-            BitmapConverter.Unlock(Data, bmData);
-            BitmapConverter.Unlock(Src, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
         }
         #endregion

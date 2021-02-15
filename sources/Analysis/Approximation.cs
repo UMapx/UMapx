@@ -70,7 +70,7 @@ namespace UMapx.Analysis
         /// <param name="x">Array of argument values</param>
         /// <param name="y">Array of function values</param>
         /// <returns>Array</returns>
-        public double[] Compute(double[] x, double[] y)
+        public float[] Compute(float[] x, float[] y)
         {
             // chose method of approximation
             switch (method)
@@ -95,7 +95,7 @@ namespace UMapx.Analysis
         /// <param name="y">Array of function values</param>
         /// <param name="cf">Approximation coefficients</param>
         /// <returns>Array</returns>
-        public double[] Compute(double[] x, double[] y, out double[] cf)
+        public float[] Compute(float[] x, float[] y, out float[] cf)
         {
             // chose method of approximation
             switch (method)
@@ -121,7 +121,7 @@ namespace UMapx.Analysis
         /// <param name="cf">Approximation coefficients</param>
         /// <param name="similarity">Similarity</param>
         /// <returns>Array</returns>
-        public double[] Compute(double[] x, double[] y, out double[] cf, out double similarity)
+        public float[] Compute(float[] x, float[] y, out float[] cf, out float similarity)
         {
             // chose method of approximation
             switch (method)
@@ -148,7 +148,7 @@ namespace UMapx.Analysis
         /// <param name="similarity">Similarity</param>
         /// <param name="equation">Equation</param>
         /// <returns>Array</returns>
-        public double[] Compute(double[] x, double[] y, out double[] cf, out double similarity, out string equation)
+        public float[] Compute(float[] x, float[] y, out float[] cf, out float similarity, out string equation)
         {
             // chose method of approximation
             switch (method)
@@ -282,12 +282,12 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static double[] poly(double[] x, double[] y, int power, out double[] cf, out double error, out string equation)
+        private static float[] poly(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
             cf = LeastSquaresOptions.Coefficients(x, y, m);
-            double[] ya = LeastSquaresOptions.Polynomial(x, cf);
+            float[] ya = LeastSquaresOptions.Polynomial(x, cf);
             error = LeastSquaresOptions.Error(ya, y);
             equation = LeastSquaresOptions.Equation(cf);
             return ya;
@@ -322,13 +322,13 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static double[] logc(double[] x, double[] y, int power, out double[] cf, out double error, out string equation)
+        private static float[] logc(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
             int n = x.Length, i;
             int m = (power < 1) ? 2 : power + 1;
-            double[] xa = new double[n];
-            double[] ya = new double[n];
+            float[] xa = new float[n];
+            float[] ya = new float[n];
 
             // log-scale:
             for (i = 0; i < n; i++)
@@ -384,27 +384,27 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static double[] expn(double[] x, double[] y, int power, out double[] cf, out double error, out string equation)
+        private static float[] expn(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
             int n = x.Length, i;
-            double[] ya = new double[n];
+            float[] ya = new float[n];
 
             // log-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Log(y[i], Math.E);
+                ya[i] = Maths.Log(y[i], Maths.E);
             }
 
             // approximation:
             cf = LeastSquaresOptions.Coefficients(x, ya, m);
-            double[] p = LeastSquaresOptions.Polynomial(x, cf);
+            float[] p = LeastSquaresOptions.Polynomial(x, cf);
 
             // exponential-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Pow(Math.E, p[i]);
+                ya[i] = Maths.Pow(Maths.E, p[i]);
             }
 
             error = LeastSquaresOptions.Error(ya, y);
@@ -431,7 +431,7 @@ namespace UMapx.Analysis
             // log-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Log(y[i], Math.E);
+                ya[i] = Maths.Log(y[i], Maths.E);
             }
 
             // approximation:
@@ -441,7 +441,7 @@ namespace UMapx.Analysis
             // exponential-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Pow(Math.E, p[i]);
+                ya[i] = Maths.Pow(Maths.E, p[i]);
             }
 
             error = LeastSquaresOptions.Error(ya, y);
@@ -458,13 +458,13 @@ namespace UMapx.Analysis
         /// <param name="error"></param>
         /// <param name="equation"></param>
         /// <returns></returns>
-        private static double[] powr(double[] x, double[] y, int power, out double[] cf, out double error, out string equation)
+        private static float[] powr(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
             int n = x.Length, i;
-            double[] xa = new double[n];
-            double[] ya = new double[n];
+            float[] xa = new float[n];
+            float[] ya = new float[n];
 
             // log-scale:
             for (i = 0; i < n; i++)
@@ -475,7 +475,7 @@ namespace UMapx.Analysis
 
             // approximation:
             cf = LeastSquaresOptions.Coefficients(xa, ya, m);
-            double[] p = LeastSquaresOptions.Polynomial(xa, cf);
+            float[] p = LeastSquaresOptions.Polynomial(xa, cf);
 
             // exponential-scale:
             for (i = 0; i < n; i++)

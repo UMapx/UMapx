@@ -95,7 +95,7 @@ namespace UMapx.Window
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Matrix(double[] g0, int M)
+        public static Complex[,] Matrix(float[] g0, int M)
         {
             int N = g0.Length, L = N / M;
 
@@ -104,11 +104,11 @@ namespace UMapx.Window
 
             Complex[,] G = new Complex[N, N];
             Complex c = 2 * Maths.Pi * Maths.I;
-            double a = M / 2.0;
+            float a = M / 2.0f;
 
             Parallel.For(0, N, n =>
             {
-                double phase = n - a / 2.0;
+                float phase = n - a / 2.0f;
                 int k, l, u, i, j;
                 Complex exp, psi;
 
@@ -158,7 +158,7 @@ namespace UMapx.Window
         /// <param name="M">Number of frequency shifts</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Matrix(double[] g0, int M, bool orthogonalize = true)
+        public static Complex[,] Matrix(float[] g0, int M, bool orthogonalize = true)
         {
             if (orthogonalize)
             {
@@ -175,17 +175,17 @@ namespace UMapx.Window
         /// <param name="window">Windows function</param>
         /// <param name="length">Number of samples</param>
         /// <returns>Array</returns>
-        public static double[] GetPacket(IWindow window, int length)
+        public static float[] GetPacket(IWindow window, int length)
         {
             // exeption by length
             if (window.FrameSize > length)
                 return WeylHeisenbergTransform.nSymmetry(window, length);
 
             // params for approximation
-            double[] w = WeylHeisenbergTransform.nSymmetry(window, (int)window.FrameSize);
+            float[] w = WeylHeisenbergTransform.nSymmetry(window, (int)window.FrameSize);
             int n = w.Length;
-            double min = Math.Min(w[0], w[n - 1]);
-            double[] g = new double[length];
+            float min = Math.Min(w[0], w[n - 1]);
+            float[] g = new float[length];
             int i, j = (length - n) / 2;
             int k = Math.Min(length - 2 * j, n);
             int z = j + k;
@@ -208,11 +208,11 @@ namespace UMapx.Window
         /// <param name="window">Windows function</param>
         /// <param name="length">Number of samples</param>
         /// <returns>Array</returns>
-        private static double[] nSymmetry(IWindow window, int length)
+        private static float[] nSymmetry(IWindow window, int length)
         {
             // creaing window function
-            double[] g = window.GetWindow(length + 1);
-            double[] w = new double[length];
+            float[] g = window.GetWindow(length + 1);
+            float[] w = new float[length];
 
             // N-1 symmetric
             for (int i = 0; i < length; i++)
@@ -304,7 +304,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             throw new NotSupportedException();
         }
@@ -313,7 +313,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             throw new NotSupportedException();
         }
@@ -322,7 +322,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             throw new NotSupportedException();
         }
@@ -331,7 +331,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             throw new NotSupportedException();
         }

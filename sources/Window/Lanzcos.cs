@@ -23,20 +23,20 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>Double precision floating point number</returns>
-        public override double Function(double x, int frameSize)
+        /// <returns>float precision floating point number</returns>
+        public override float Function(float x, int frameSize)
         {
             // Lanczos function:
-            return Special.Sinc(2 * x / (frameSize - 1) - 1, Math.PI);
+            return Special.Sinc(2 * x / (frameSize - 1) - 1, Maths.Pi);
         }
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <returns>Array</returns>
-        public override double[] GetWindow(int frameSize)
+        public override float[] GetWindow(int frameSize)
         {
-            double t = (frameSize - 1);
-            double[] x = Matrice.Compute(0, t, 1);
+            float t = (frameSize - 1);
+            float[] x = Matrice.Compute(0, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

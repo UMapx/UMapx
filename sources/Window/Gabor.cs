@@ -10,7 +10,7 @@ namespace UMapx.Window
     public class Gabor : WindowBase
     {
         #region Private data
-        private double sigma = 1;
+        private float sigma = 1;
         #endregion
 
         #region Window components
@@ -19,7 +19,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="frameSize">Window size</param>
         /// <param name="sigma">Scale parameter</param>
-        public Gabor(int frameSize, double sigma = 1)
+        public Gabor(int frameSize, float sigma = 1)
         {
             this.FrameSize = frameSize;
             this.Sigma = sigma;
@@ -27,7 +27,7 @@ namespace UMapx.Window
         /// <summary>
         /// Gets or sets the standard deviation (>0).
         /// </summary>
-        public double Sigma
+        public float Sigma
         {
             get
             {
@@ -46,23 +46,23 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>Double precision floating point number</returns>
-        public override double Function(double x, int frameSize)
+        /// <returns>float precision floating point number</returns>
+        public override float Function(float x, int frameSize)
         {
             // Gabor window function
-            double y = x / frameSize;
-            double z = Math.Pow(2 * Math.PI * y / sigma, 2);
-            return Math.Exp(-z);
+            float y = x / frameSize;
+            float z = (float)Math.Pow(2 * Math.PI * y / sigma, 2);
+            return (float)Math.Exp(-z);
         }
         /// <summary>
         /// Returns the window function.
         /// </summary>
         /// <param name="frameSize">Window size</param>
         /// <returns>Array</returns>
-        public override double[] GetWindow(int frameSize)
+        public override float[] GetWindow(int frameSize)
         {
-            double t = (frameSize - 1) / 2.0;
-            double[] x = Matrice.Compute(-t, t, 1);
+            float t = (frameSize - 1) / 2.0f;
+            float[] x = Matrice.Compute(-t, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

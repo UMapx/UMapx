@@ -66,13 +66,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public double[] Forward(double[] A)
+        public float[] Forward(float[] A)
         {
             Complex[] B = Matrice.ToComplex(A);
             B = FFT.Forward(B);
 
             int length = A.Length, i;
-            double[] Hk = new double[length];
+            float[] Hk = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -86,13 +86,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[] B)
+        public float[] Backward(float[] B)
         {
             Complex[] A = Matrice.ToComplex(B);
             A = FFT.Backward(A);
 
             int length = B.Length, i;
-            double[] Hk = new double[length];
+            float[] Hk = new float[length];
 
             for (i = 0; i < length; i++)
             {
@@ -106,13 +106,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Forward(double[,] A)
+        public float[,] Forward(float[,] A)
         {
             Complex[,] B = Matrice.ToComplex(A);
             B = FFT.Forward(B);
 
             int width = A.GetLength(1), height = A.GetLength(0);
-            double[,] Hk = new double[height, width];
+            float[,] Hk = new float[height, width];
             int i, j;
 
             for (i = 0; i < height; i++)
@@ -130,13 +130,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[,] B)
+        public float[,] Backward(float[,] B)
         {
             Complex[,] A = Matrice.ToComplex(B);
             A = FFT.Backward(A);
 
             int width = B.GetLength(1), height = B.GetLength(0);
-            double[,] Hk = new double[height, width];
+            float[,] Hk = new float[height, width];
             int i, j;
 
             for (i = 0; i < height; i++)

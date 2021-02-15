@@ -16,8 +16,8 @@ namespace UMapx.Decomposition
     public class Arnoldi
     {
         #region Private data
-        private double[,] q;
-        private double[,] h;
+        private float[,] q;
+        private float[,] h;
         #endregion
 
         #region Arnoldi components
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
         /// Initializes Arnoldi transformation.
         /// </summary>
         /// <param name="A">Square matrix</param>
-        public Arnoldi(double[,] A)
+        public Arnoldi(float[,] A)
         {
             // matrix properties
             int n = A.GetLength(0);
@@ -40,7 +40,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the orthogonal matrix.
         /// </summary>
-        public double[,] Q
+        public float[,] Q
         {
             get
             {
@@ -50,7 +50,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the upper triangular Hessenberg matrix.
         /// </summary>
-        public double[,] H
+        public float[,] H
         {
             get
             {
@@ -66,14 +66,14 @@ namespace UMapx.Decomposition
         /// <param name="a"></param>
         /// <param name="n"></param>
         /// <param name="m"></param>
-        private void arnoldi(double[,] a, int n, int m)
+        private void arnoldi(float[,] a, int n, int m)
         {
             // vectors and matrices:
-            this.q = new double[n, m];
-            this.h = new double[n, m];
-            double[,] p = new double[n, m + 1];
-            double[] v, w;
-            double alpha = 0, beta = 0;
+            this.q = new float[n, m];
+            this.h = new float[n, m];
+            float[,] p = new float[n, m + 1];
+            float[] v, w;
+            float alpha = 0, beta = 0;
             int i, j, k;
 
             // random 0-vector and norm:

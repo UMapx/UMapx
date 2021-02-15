@@ -86,14 +86,14 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Matrix</param>
         /// <returns>Pyramid</returns>
-        public double[][,] Forward(double[,] data)
+        public float[][,] Forward(float[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
             int nlev = (int)Math.Min((Math.Log(Math.Min(r, c))
                 / Math.Log(2)), levels);
 
-            double[][,] pyr = new double[nlev][,];
-            double[,] dummy = (double[,])data.Clone();
+            float[][,] pyr = new float[nlev][,];
+            float[,] dummy = (float[,])data.Clone();
 
             for (int i = 0; i < nlev; i++)
             {
@@ -108,13 +108,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Pyramid</returns>
-        public double[][] Forward(double[] data)
+        public float[][] Forward(float[] data)
         {
             int r = data.Length;
             int nlev = (int)Math.Min((Math.Log(r) / Math.Log(2)), levels);
 
-            double[][] pyr = new double[nlev][];
-            double[] dummy = (double[])data.Clone();
+            float[][] pyr = new float[nlev][];
+            float[] dummy = (float[])data.Clone();
 
             for (int i = 0; i < nlev; i++)
             {
@@ -129,7 +129,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="pyramid">Pyramid</param>
         /// <returns>Matrix</returns>
-        public double[,] Backward(double[][,] pyramid)
+        public float[,] Backward(float[][,] pyramid)
         {
             throw new NotSupportedException();
         }
@@ -138,7 +138,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="pyramid">Pyramid</param>
         /// <returns>Array</returns>
-        public double[] Backward(double[][] pyramid)
+        public float[] Backward(float[][] pyramid)
         {
             throw new NotSupportedException();
         }
@@ -205,20 +205,6 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Static methods
-        /// <summary>
-        /// Gaussian filter.
-        /// </summary>
-        /// <returns>Array</returns>
-        public static double[] Filter
-        {
-            get
-            {
-                return new double[] { .0625, .25, .375, .25, .0625 };
-            }
-        }
-        #endregion
-
         #region Private voids
         /// <summary>
         /// 
@@ -226,12 +212,12 @@ namespace UMapx.Transform
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static double[,] upsample(double[,] u, int radius)
+        internal static float[,] upsample(float[,] u, int radius)
         {
             int r = u.GetLength(0), c = u.GetLength(1);
             int n = r * 2, m = c * 2;
             int i, j, k, l;
-            double[,] v = new double[n, m];
+            float[,] v = new float[n, m];
 
             for (k = 0, i = 0; i < r; i++, k += 2)
             {
@@ -252,12 +238,12 @@ namespace UMapx.Transform
         /// <param name="u">Array</param>
         /// <param name="radius">Radius</param>
         /// <returns>Array</returns>
-        internal static double[] upsample(double[] u, int radius)
+        internal static float[] upsample(float[] u, int radius)
         {
             int r = u.GetLength(0);
             int n = r * 2;
             int i, k;
-            double[] v = new double[n];
+            float[] v = new float[n];
 
             for (k = 0, i = 0; i < r; i++, k += 2)
             {
@@ -273,13 +259,13 @@ namespace UMapx.Transform
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static double[,] downsample(double[,] u, int radius)
+        internal static float[,] downsample(float[,] u, int radius)
         {
             int r = u.GetLength(0);
             int c = u.GetLength(1);
             int n = (r + 1) / 2, m = (c + 1) / 2;
             int i, j, k, l;
-            double[,] v = new double[n, m];
+            float[,] v = new float[n, m];
 
             for (k = 0, i = 0; i < r; i += 2, k++)
             {
@@ -297,12 +283,12 @@ namespace UMapx.Transform
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static double[] downsample(double[] u, int radius)
+        internal static float[] downsample(float[] u, int radius)
         {
             int r = u.Length;
             int n = (r + 1) / 2;
             int i, k;
-            double[] v = new double[n];
+            float[] v = new float[n];
 
             for (k = 0, i = 0; i < r; i += 2, k++)
             {
@@ -317,11 +303,11 @@ namespace UMapx.Transform
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        internal static double[,] add(double[,] m, double[,] n)
+        internal static float[,] add(float[,] m, float[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             int mr = (int)Math.Min(m.GetLength(1), n.GetLength(1));
-            double[,] H = new double[ml, mr];
+            float[,] H = new float[ml, mr];
             int i, j;
 
             for (i = 0; i < ml; i++)
@@ -339,10 +325,10 @@ namespace UMapx.Transform
         /// <param name="m">Array</param>
         /// <param name="n">Array</param>
         /// <returns>Array</returns>
-        internal static double[] add(double[] m, double[] n)
+        internal static float[] add(float[] m, float[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
-            double[] v = new double[ml];
+            float[] v = new float[ml];
             int i;
 
             for (i = 0; i < ml; i++)
@@ -357,11 +343,11 @@ namespace UMapx.Transform
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        internal static double[,] sub(double[,] m, double[,] n)
+        internal static float[,] sub(float[,] m, float[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             int mr = (int)Math.Min(m.GetLength(1), n.GetLength(1));
-            double[,] H = new double[ml, mr];
+            float[,] H = new float[ml, mr];
             int i, j;
 
             for (i = 0; i < ml; i++)
@@ -379,10 +365,10 @@ namespace UMapx.Transform
         /// <param name="m">Array</param>
         /// <param name="n">Array</param>
         /// <returns>Array</returns>
-        internal static double[] sub(double[] m, double[] n)
+        internal static float[] sub(float[] m, float[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
-            double[] v = new double[ml];
+            float[] v = new float[ml];
             int i;
 
             for (i = 0; i < ml; i++)

@@ -53,7 +53,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(double[,] data)
+        public void Apply(float[,] data)
         {
             int height = data.GetLength(0);
             int width = data.GetLength(1);
@@ -87,7 +87,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(double[] data)
+        public void Apply(float[] data)
         {
             int length = data.Length;
             int hh = length >> 1;

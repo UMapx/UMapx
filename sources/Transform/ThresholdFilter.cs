@@ -13,7 +13,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Threshold value.
         /// </summary>
-        private double threshold = 0;
+        private float threshold = 0;
         /// <summary>
         /// Threshold type.
         /// </summary>
@@ -30,7 +30,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="threshold">Threshold value</param>
         /// <param name="type">Compress type</param>
-        public ThresholdFilter(double threshold, ThresholdType type = ThresholdType.Abs)
+        public ThresholdFilter(float threshold, ThresholdType type = ThresholdType.Abs)
         {
             this.threshold = threshold;
             this.type = type;
@@ -52,7 +52,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Gets or sets the threshold value.
         /// </summary>
-        public double Threshold
+        public float Threshold
         {
             get
             {
@@ -67,7 +67,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(double[] data)
+        public void Apply(float[] data)
         {
             int length = data.Length;
             int i;
@@ -158,7 +158,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(double[,] data)
+        public void Apply(float[,] data)
         {
             int width = data.GetLength(1);
             int height = data.GetLength(0);

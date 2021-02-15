@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Kumaraswamy : IDistribution
     {
         #region Private data
-        private double a;
-        private double b;
+        private float a;
+        private float b;
         #endregion
 
         #region Distribution
@@ -24,7 +24,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="a">Form parameter a > 0</param>
         /// <param name="b">Form parameter b > 0</param>
-        public Kumaraswamy(double a, double b)
+        public Kumaraswamy(float a, float b)
         {
             this.A = a;
             this.B = b;
@@ -32,7 +32,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets form parameter a > 0.
         /// </summary>
-        public double A
+        public float A
         {
             get
             {
@@ -49,7 +49,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets form parameter b > 0.
         /// </summary>
-        public double B
+        public float B
         {
             get
             {
@@ -66,12 +66,12 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
-                double num = b * Special.Gamma(1 + (1 / a)) * Special.Gamma(b);
-                double den = Special.Gamma(1 + (1 / a) + b);
+                float num = b * Special.Gamma(1 + (1 / a)) * Special.Gamma(b);
+                float den = Special.Gamma(1 + (1 / a) + b);
 
                 return num / den;
             }
@@ -79,77 +79,77 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
-                double alpha = momentGeneratingFunction(2, a, b);
-                double beta = Math.Pow(momentGeneratingFunction(1, a, b), 2);
+                float alpha = momentGeneratingFunction(2, a, b);
+                float beta = (float)Math.Pow(momentGeneratingFunction(1, a, b), 2);
                 return alpha - beta;
             }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
-                return Math.Pow(1 - Math.Pow(2, -1 / b), 1 / a);
+                return (float)Math.Pow(1 - Math.Pow(2, -1 / b), 1 / a);
             }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
 
                 if ((a >= 1) && (b >= 1) && (a != 1 && b != 1))
                 {
-                    double num = a - 1;
-                    double den = a * b - 1;
-                    return Math.Pow(num / den, 1 / a);
+                    float num = a - 1;
+                    float den = a * b - 1;
+                    return (float)Math.Pow(num / den, 1 / a);
                 }
 
-                return Double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
-            get { return double.NaN; }
+            get { return float.NaN; }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
-            get { return new RangeDouble(0, 1); }
+            get { return new RangeFloat(0, 1); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x > 1)
                 return 1;
@@ -157,15 +157,15 @@ namespace UMapx.Distribution
             if (x < 0)
                 return 0;
 
-            double xa = Math.Pow(x, a);
-            return 1 - Math.Pow(1 - xa, b);
+            float xa = (float)Math.Pow(x, a);
+            return 1 - (float)Math.Pow(1 - xa, b);
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x > 1)
                 return 0;
@@ -173,7 +173,7 @@ namespace UMapx.Distribution
             if (x < 0)
                 return 0;
 
-            return a * b * Math.Pow(x, a - 1) * Math.Pow(1 - Math.Pow(x, a), b - 1);
+            return a * b * (float)Math.Pow(x, a - 1) * (float)Math.Pow(1 - Math.Pow(x, a), b - 1);
         }
         /// <summary>
         /// 
@@ -182,9 +182,9 @@ namespace UMapx.Distribution
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        protected static double momentGeneratingFunction(int n, double a, double b)
+        protected static float momentGeneratingFunction(int n, float a, float b)
         {
-            return (b * Special.Beta(1.0 + ((double)n) / a, b));
+            return (b * Special.Beta(1.0f + ((float)n) / a, b));
         }
         #endregion
     }

@@ -17,7 +17,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Values.
         /// </summary>
-        protected double[] values;
+        protected float[] values;
         /// <summary>
         /// Color space.
         /// </summary>
@@ -34,7 +34,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="values">Mask array</param>
         /// <param name="space">Color space</param>
-        public Correction(double[] values, Space space)
+        public Correction(float[] values, Space space)
         {
             Values = values;
             Space = space;
@@ -44,13 +44,13 @@ namespace UMapx.Imaging
         /// </summary>
         public Correction()
         {
-            Values = new double[256];
+            Values = new float[256];
             Space = Imaging.Space.RGB;
         }
         /// <summary>
         /// Gets or sets the mask array.
         /// </summary>
-        public double[] Values
+        public float[] Values
         {
             get
             {
@@ -117,9 +117,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return;
         }
         #endregion
@@ -133,7 +133,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.Length - 1;
+            float length = values.Length - 1;
 
             Parallel.For(0, height, y =>
             {
@@ -166,7 +166,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.Length - 1;
+            float length = values.Length - 1;
 
             Parallel.For(0, height, y =>
             {
@@ -196,7 +196,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.Length - 1;
+            float length = values.Length - 1;
 
             Parallel.For(0, height, y =>
             {
@@ -226,7 +226,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.Length - 1;
+            float length = values.Length - 1;
 
             Parallel.For(0, height, y =>
             {
@@ -256,7 +256,7 @@ namespace UMapx.Imaging
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            double length = values.Length - 1;
+            float length = values.Length - 1;
 
             Parallel.For(0, height, y =>
             {

@@ -3,53 +3,53 @@
 namespace UMapx.Core
 {
     /// <summary>
-    /// Defines a pair of double numbers representing an ordered pair of width and height.
+    /// Defines a pair of float numbers representing an ordered pair of X and Y coordinates.
     /// </summary>
     [Serializable]
-    public struct SizeDouble : ICloneable
+    public struct PointFloat : ICloneable
     {
         #region Private data
-        private double width;
-        private double height;
+        private float y;
+        private float x;
         #endregion
 
         #region Structure components
         /// <summary>
-        /// Initializes a pair of double numbers representing an ordered pair of width and height.
+        /// Initializes a pair of float numbers representing an ordered pair of X and Y coordinates.
         /// </summary>
-        /// <param name="width">Width</param>
-        /// <param name="height">Height</param>
-        public SizeDouble(double width, double height)
+        /// <param name="x">Coordinate X</param>
+        /// <param name="y">Coordinate Y</param>
+        public PointFloat(float x, float y)
         {
-            this.height = height;
-            this.width = width;
+            this.x = x;
+            this.y = y;
         }
         /// <summary>
-        /// Gets or sets the height.
+        /// Gets or sets the coordinate X.
         /// </summary>
-        public double Height
+        public float X
         {
             get
             {
-                return this.height;
+                return this.x;
             }
             set
             {
-                this.height = value;
+                this.x = value;
             }
         }
         /// <summary>
-        /// Gets or sets the width.
+        /// Gets or sets the coordinate Y.
         /// </summary>
-        public double Width
+        public float Y
         {
             get
             {
-                return this.width;
+                return this.y;
             }
             set
             {
-                this.width = value;
+                this.y = value;
             }
         }
         #endregion
@@ -61,45 +61,45 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
-            return width.GetHashCode() ^ height.GetHashCode();
+            return x.GetHashCode() ^ y.GetHashCode();
         }
         /// <summary>
-        /// Converts a SizeDouble to its corresponding string representation.
+        /// Converts a PointDouble to its corresponding string representation.
         /// </summary>
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
-            return string.Format("({0}, {1})", width, height);
+            return string.Format("({0}, {1})", x, y);
         }
         /// <summary>
-        /// Gets a value indicating whether this instance is equal to the specified value of type SizeDouble.
+        /// Gets a value indicating whether this instance is equal to the specified value of type PointDouble.
         /// </summary>
         /// <param name="obj">Object</param>
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
-            return (obj is SizeDouble) ? (this == (SizeDouble)obj) : false;
+            return (obj is PointFloat) ? (this == (PointFloat)obj) : false;
         }
         #endregion
 
         #region Bools
         /// <summary>
-        /// Checks if two SizeDouble objects are equal.
+        /// Checks if two PointDouble objects are equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>
         /// <returns>Boolean</returns>
-        public static bool operator ==(SizeDouble a, SizeDouble b)
+        public static bool operator ==(PointFloat a, PointFloat b)
         {
-            return (a.Width == b.Width && a.Height == b.Height);
+            return (a.X == b.X && a.Y == b.Y);
         }
         /// <summary>
-        /// Checks if two SizeDouble objects are not equal.
+        /// Checks if two PointDouble objects are not equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>
         /// <returns>Boolean</returns>
-        public static bool operator !=(SizeDouble a, SizeDouble b)
+        public static bool operator !=(PointFloat a, PointFloat b)
         {
             return !(a == b);
         }
@@ -107,20 +107,20 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Creates a copy of SizeDouble.
+        /// Creates a copy of PointDouble.
         /// </summary>
         /// <returns>Pair of numbers</returns>
         object ICloneable.Clone()
         {
-            return new SizeDouble(width, height);
+            return new PointFloat(x, y);
         }
         /// <summary>
-        /// Creates a copy of SizeDouble.
+        /// Creates a copy of PointDouble.
         /// </summary>
         /// <returns>Pair of numbers</returns>
-        public SizeDouble Clone()
+        public PointFloat Clone()
         {
-            return new SizeDouble(width, height);
+            return new PointFloat(x, y);
         }
         #endregion
     }

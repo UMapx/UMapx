@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     public class SinCorrection : Correction, IBitmapFilter
     {
         #region Private data
-        private double delta;
+        private float delta;
         #endregion
 
         #region Filter components
@@ -18,7 +18,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="delta">Delta [-1, 1]</param>
         /// <param name="space">Color space</param>
-        public SinCorrection(double delta, Space space)
+        public SinCorrection(float delta, Space space)
         {
             Delta = delta; this.Space = space;
         }
@@ -32,7 +32,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the delta value [-1, 1].
         /// </summary>
-        public double Delta
+        public float Delta
         {
             get
             {
@@ -49,7 +49,7 @@ namespace UMapx.Imaging
         /// </summary>
         protected override void Rebuild()
         {
-            this.values = Intensity.Sin(delta / 2.0, 256);
+            this.values = Intensity.Sin(delta / 2.0f, 256);
         }
         #endregion
     }

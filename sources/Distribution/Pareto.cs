@@ -14,8 +14,8 @@ namespace UMapx.Distribution
     public class Pareto : IDistribution
     {
         #region Private data
-        private double xm = 1;
-        private double k = 1;
+        private float xm = 1;
+        private float k = 1;
         #endregion
 
         #region Pareto components
@@ -28,14 +28,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="xm">Scale factor θ (0, +inf)</param>
         /// <param name="k">Parameter k (0, +inf)</param>
-        public Pareto(double xm, double k)
+        public Pareto(float xm, float k)
         {
             Xm = xm; K = k;
         }
         /// <summary>
         /// Gets or sets the scale factor Xm (0, +inf).
         /// </summary>
-        public double Xm
+        public float Xm
         {
             get
             {
@@ -52,7 +52,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the scale factor k (0, +inf).
         /// </summary>
-        public double K
+        public float K
         {
             get
             {
@@ -69,17 +69,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
             get
             {
-                return new RangeDouble(0, double.PositiveInfinity);
+                return new RangeFloat(0, float.PositiveInfinity);
             }
         }
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
             get
             {
@@ -89,7 +89,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
             get
             {
@@ -97,13 +97,13 @@ namespace UMapx.Distribution
                 {
                     return Maths.Pow(xm / k - 1) * (k / (k - 2));
                 }
-                return double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -113,7 +113,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
             get
             {
@@ -123,26 +123,26 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
                 if (k > 3)
                 {
-                    return 2 * (1 + k) / (k - 3) * Math.Sqrt((k - 2) / k);
+                    return 2 * (1 + k) / (k - 3) * (float)Math.Sqrt((k - 2) / k);
                 }
-                return double.NaN;
+                return float.NaN;
             }
         }
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                double k2 = k * k;
-                double k3 = k2 * k;
+                float k2 = k * k;
+                float k3 = k2 * k;
                 return 6 * (k3 + k2 + 6 * k - 2) / (k * (k - 3) * (k - 4));
             }
         }
@@ -150,37 +150,37 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < xm)
             {
                 return 0;
             }
-            return k * Math.Pow(xm, k) / Math.Pow(x, k + 1);
+            return k * (float)Math.Pow(xm, k) / (float)Math.Pow(x, k + 1);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < xm)
             {
                 return 0;
             }
-            return 1.0 - Math.Pow(xm / x, k);
+            return 1.0f - (float)Math.Pow(xm / x, k);
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Double precision floating point number</returns>
-        public double Entropy
+        /// <returns>float precision floating point number</returns>
+        public float Entropy
         {
             get
             {
-                return k * xm + (1 - k) * Math.Log(xm) + Special.GammaLog(k); // + (1 - k) * Special.Ksi(k);
+                return k * xm + (1 - k) * (float)Math.Log(xm) + Special.GammaLog(k); // + (1 - k) * Special.Ksi(k);
             }
         }
         #endregion

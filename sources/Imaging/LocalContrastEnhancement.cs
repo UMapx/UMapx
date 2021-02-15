@@ -17,7 +17,7 @@ namespace UMapx.Imaging
     public class LocalContrastEnhancement : LocalCorrection, IBitmapFilter2
     {
         #region Private data
-        private double contrast;
+        private float contrast;
         #endregion
 
         #region Filter components
@@ -27,7 +27,7 @@ namespace UMapx.Imaging
         /// <param name="radius">Radius</param>
         /// <param name="space">Color space</param>
         /// <param name="contrast">Contrast [-1, 1]</param>
-        public LocalContrastEnhancement(int radius, Space space, double contrast = 0.75)
+        public LocalContrastEnhancement(int radius, Space space, float contrast = 0.75f)
         {
             gb = new BoxBlur(radius);
             Space = space; Contrast = contrast;
@@ -39,7 +39,7 @@ namespace UMapx.Imaging
         /// <param name="height">Filter height</param>
         /// <param name="space">Color space</param>
         /// <param name="contrast">Contrast [-1, 1]</param>
-        public LocalContrastEnhancement(int width, int height, Space space, double contrast = 0.75)
+        public LocalContrastEnhancement(int width, int height, Space space, float contrast = 0.75f)
         {
             gb = new BoxBlur(width, height);
             Space = space; Contrast = contrast;
@@ -50,7 +50,7 @@ namespace UMapx.Imaging
         /// <param name="size">Filter size</param>
         /// <param name="space">Color space</param>
         /// <param name="contrast">Contrast [-1, 1]</param>
-        public LocalContrastEnhancement(SizeInt size, Space space, double contrast = 0.75)
+        public LocalContrastEnhancement(SizeInt size, Space space, float contrast = 0.75f)
         {
             gb = new BoxBlur(size);
             Space = space; Contrast = contrast;
@@ -58,7 +58,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the contrast value [-1, 1].
         /// </summary>
-        public double Contrast
+        public float Contrast
         {
             get
             {

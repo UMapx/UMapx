@@ -13,9 +13,9 @@ namespace UMapx.Imaging
     public class YCbCrFilter : IBitmapFilter
     {
         #region Private data
-        private double y;
-        private double cb;
-        private double cr;
+        private float y;
+        private float cb;
+        private float cr;
         #endregion
 
         #region Filter components
@@ -25,7 +25,7 @@ namespace UMapx.Imaging
         /// <param name="y">Y [-1, 1]</param>
         /// <param name="cb">Cb [-1, 1]</param>
         /// <param name="cr">Cr [-1, 1]</param>
-        public YCbCrFilter(double y, double cb, double cr)
+        public YCbCrFilter(float y, float cb, float cr)
         {
             Y = y;
             Cb = cb;
@@ -41,7 +41,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Y [-1, 1].
         /// </summary>
-        public double Y
+        public float Y
         {
             get
             {
@@ -55,7 +55,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Cb [-1, 1].
         /// </summary>
-        public double Cb
+        public float Cb
         {
             get
             {
@@ -69,7 +69,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Cr [-1, 1].
         /// </summary>
-        public double Cr
+        public float Cr
         {
             get
             {
@@ -119,9 +119,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return;
         }
         #endregion

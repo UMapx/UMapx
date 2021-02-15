@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines the interface for continuous wavelets.
     /// </summary>
-    public interface IDoubleWavelet
+    public interface IFloatWavelet
     {
         #region Interface
         /// <summary>
@@ -11,13 +11,13 @@
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        double Scaling(double x);
+        float Scaling(float x);
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        double Wavelet(double x);
+        float Wavelet(float x);
         #endregion
     }
 }

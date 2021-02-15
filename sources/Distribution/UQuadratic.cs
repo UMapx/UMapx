@@ -14,10 +14,10 @@ namespace UMapx.Distribution
     public class UQuadratic : IDistribution
     {
         #region Private data
-        double a;
-        double b;
-        double alpha;
-        double beta;
+        float a;
+        float b;
+        float alpha;
+        float beta;
         #endregion
 
         #region UQuadratic components
@@ -26,16 +26,16 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="a">Parameter a ∈ (0, +inf)</param>
         /// <param name="b">Parameter b ∈ (a, +inf)</param>
-        public UQuadratic(double a, double b)
+        public UQuadratic(float a, float b)
         {
             A = a; B = b;
-            this.alpha = 12 / Math.Pow(b - a, 3);
+            this.alpha = 12 / (float)Math.Pow(b - a, 3);
             this.beta = (b + a) / 2;
         }
         /// <summary>
         /// Gets or sets the value of the parameter a ∈ (0, +inf).
         /// </summary>
-        public double A
+        public float A
         {
             get
             {
@@ -52,7 +52,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets or sets the value of the parameter b ∈ (a, +inf).
         /// </summary>
-        public double B
+        public float B
         {
             get
             {
@@ -69,7 +69,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
-        public double Mode
+        public float Mode
         {
             get
             {
@@ -79,28 +79,28 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public double Mean
+        public float Mean
         {
-            get { return (a + b) / 2.0d; }
+            get { return (a + b) / 2.0f; }
         }
         /// <summary>
         /// Gets the median value.
         /// </summary>
-        public double Median
+        public float Median
         {
-            get { return (a + b) / 2.0d; }
+            get { return (a + b) / 2.0f; }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        public double Variance
+        public float Variance
         {
-            get { return (3.0d / 20.0) * Math.Pow(b - a, 2.0); }
+            get { return (3.0f / 20.0f) * (float)Math.Pow(b - a, 2.0); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
-        public double Skewness
+        public float Skewness
         {
             get
             {
@@ -110,33 +110,33 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        public double Excess
+        public float Excess
         {
             get
             {
-                return 3.0 / 112.0 * Math.Pow(b - a, 4.0);
+                return 3.0f / 112.0f * (float)Math.Pow(b - a, 4.0);
             }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
-        public double Entropy
+        public float Entropy
         {
             get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the support interval of the argument.
         /// </summary>
-        public RangeDouble Support
+        public RangeFloat Support
         {
-            get { return new RangeDouble(a, b); }
+            get { return new RangeFloat(a, b); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Distribution(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Distribution(float x)
         {
             if (x < a)
                 return 0;
@@ -144,14 +144,14 @@ namespace UMapx.Distribution
             if (x > b)
                 return 1;
 
-            return (alpha / 3) * (Math.Pow(x - beta, 3) + Math.Pow(beta - a, 3));
+            return (alpha / 3) * (float)(Math.Pow(x - beta, 3) + (float)Math.Pow(beta - a, 3));
         }
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
-        public double Function(double x)
+        /// <returns>float precision floating point number</returns>
+        public float Function(float x)
         {
             if (x < a)
                 return 0;
@@ -159,7 +159,7 @@ namespace UMapx.Distribution
             if (x > b)
                 return 0;
 
-            return alpha * Math.Pow(x - beta, 2);
+            return alpha * (float)Math.Pow(x - beta, 2);
         }
         #endregion
     }

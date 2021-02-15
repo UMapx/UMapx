@@ -21,10 +21,10 @@ namespace UMapx.Imaging
         private int width;
         private int height;
         private int stride;
-        private double[][] matrix;
-        private double summary;
+        private float[][] matrix;
+        private float summary;
         private int levels;
-        private double[] table;
+        private float[] table;
         #endregion
 
         #region Class components
@@ -33,7 +33,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="levels">Number of levels</param>
         /// <param name="matrix">Matrix</param>
-        public ErrorDiffusionDithering(int levels, double[][] matrix)
+        public ErrorDiffusionDithering(int levels, float[][] matrix)
         {
             this.Levels = levels;
             this.Matrix = matrix;
@@ -56,7 +56,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the matrix.
         /// </summary>
-        public double[][] Matrix
+        public float[][] Matrix
         {
             get
             {
@@ -67,7 +67,7 @@ namespace UMapx.Imaging
                 this.matrix = value;
                 this.summary = 0;
                 int n = matrix.Length;
-                double[] row;
+                float[] row;
                 int i, j, k;
 
                 for (i = 0; i < n; i++)
@@ -134,9 +134,9 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return;
         }
         /// <summary>
@@ -158,12 +158,12 @@ namespace UMapx.Imaging
         /// <param name="ptr"></param>
         protected unsafe void Diffuse(int rError, int gError, int bError, byte* ptr)
         {
-            double edR;	// error diffusion
-            double edG;	// error diffusion
-            double edB;	// error diffusion
+            float edR;	// error diffusion
+            float edG;	// error diffusion
+            float edB;	// error diffusion
 
             // do error diffusion to right-standing neighbors
-            double[] row = matrix[0];
+            float[] row = matrix[0];
             int jI, jP, i, k, jC, n;
             int length = matrix.Length;
 
@@ -223,7 +223,7 @@ namespace UMapx.Imaging
         /// <param name="blue"></param>
         /// <param name="table"></param>
         /// <returns></returns>
-        private Color GetColor(int red, int green, int blue, double[] table)
+        private Color GetColor(int red, int green, int blue, float[] table)
         {
             byte r = Maths.Byte(table[red]);
             byte g = Maths.Byte(table[green]);
@@ -242,10 +242,10 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[3][] {
-                new double[2]   {          1, 1 },
-                new double[5]   { 0, 1, 1, 1, 0 },
-                new double[5]   { 0, 0, 1, 0, 0 } });
+                    new float[3][] {
+                new float[2]   {          1, 1 },
+                new float[5]   { 0, 1, 1, 1, 0 },
+                new float[5]   { 0, 0, 1, 0, 0 } });
             }
         }
         /// <summary>
@@ -257,9 +257,9 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[2][] {
-                    new double[2] { 8, 4 },
-                    new double[5] { 2, 4, 8, 4, 2 } });
+                    new float[2][] {
+                    new float[2] { 8, 4 },
+                    new float[5] { 2, 4, 8, 4, 2 } });
             }
         }
         /// <summary>
@@ -271,9 +271,9 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[2][] {
-                    new double[1] { 8 },
-                    new double[4] { 1, 1, 2, 4 } });
+                    new float[2][] {
+                    new float[1] { 8 },
+                    new float[4] { 1, 1, 2, 4 } });
             }
         }
         /// <summary>
@@ -285,9 +285,9 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[2][] {
-                new double[1] { 2 },
-                new double[2] { 1, 1 } });
+                    new float[2][] {
+                new float[1] { 2 },
+                new float[2] { 1, 1 } });
             }
         }
         /// <summary>
@@ -299,10 +299,10 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[3][] {
-                new double[2] { 5, 3 },
-                new double[5] { 2, 4, 5, 4, 2 },
-                new double[3] { 2, 3, 2 } });
+                    new float[3][] {
+                new float[2] { 5, 3 },
+                new float[5] { 2, 4, 5, 4, 2 },
+                new float[3] { 2, 3, 2 } });
             }
         }
         /// <summary>
@@ -314,9 +314,9 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[2][] {
-                new double[2] { 4, 3 },
-                new double[5] { 1, 2, 3, 2, 1 } });
+                    new float[2][] {
+                new float[2] { 4, 3 },
+                new float[5] { 1, 2, 3, 2, 1 } });
             }
         }
         /// <summary>
@@ -328,9 +328,9 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[2][] {
-                new double[1] {       7 },
-                new double[3] { 3, 5, 1 } });
+                    new float[2][] {
+                new float[1] {       7 },
+                new float[3] { 3, 5, 1 } });
             }
         }
         /// <summary>
@@ -342,10 +342,10 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[3][] {
-                new double[2] {          7, 5 },
-                new double[5] { 3, 5, 7, 5, 3 },
-                new double[5] { 1, 3, 5, 3, 1 } });
+                    new float[3][] {
+                new float[2] {          7, 5 },
+                new float[5] { 3, 5, 7, 5, 3 },
+                new float[5] { 1, 3, 5, 3, 1 } });
             }
         }
         /// <summary>
@@ -357,10 +357,10 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[3][] {
-                new double[4] { 12, 26, 30, 16 },
-                new double[3] { 12, 26, 12   },
-                new double[4] { 5, 12, 12, 5 } });
+                    new float[3][] {
+                new float[4] { 12, 26, 30, 16 },
+                new float[3] { 12, 26, 12   },
+                new float[4] { 5, 12, 12, 5 } });
             }
         }
         /// <summary>
@@ -372,9 +372,9 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[2][] {
-                new double[1] { 4 },
-                new double[3] { 1, 1, 2 } });
+                    new float[2][] {
+                new float[1] { 4 },
+                new float[3] { 1, 1, 2 } });
             }
         }
         /// <summary>
@@ -386,10 +386,10 @@ namespace UMapx.Imaging
             get
             {
                 return new ErrorDiffusionDithering(2,
-                    new double[3][] {
-                new double[2] { 8, 4 },
-                new double[5] { 2, 4, 8, 4, 2 },
-                new double[5] { 1, 2, 4, 2, 1 } });
+                    new float[3][] {
+                new float[2] { 8, 4 },
+                new float[5] { 2, 4, 8, 4, 2 },
+                new float[5] { 1, 2, 4, 2, 1 } });
             }
         }
         #endregion

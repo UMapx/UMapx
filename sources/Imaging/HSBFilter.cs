@@ -15,8 +15,8 @@ namespace UMapx.Imaging
     {
         #region Private data
         private int hue;
-        private double saturation;
-        private double brightness;
+        private float saturation;
+        private float brightness;
         #endregion
 
         #region Filter components
@@ -26,7 +26,7 @@ namespace UMapx.Imaging
         /// <param name="hue">Hue [-180, 180]</param>
         /// <param name="saturation">Saturation [-1, 1]</param>
         /// <param name="brightness">Brightness [-1, 1]</param>
-        public HSBFilter(int hue, double saturation, double brightness)
+        public HSBFilter(int hue, float saturation, float brightness)
         {
             Hue = hue;
             Saturation = saturation;
@@ -56,7 +56,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Saturation [-1, 1].
         /// </summary>
-        public double Saturation
+        public float Saturation
         {
             get
             {
@@ -70,7 +70,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Brightness [-1, 1].
         /// </summary>
-        public double Brightness
+        public float Brightness
         {
             get
             {
@@ -121,9 +121,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapConverter.Lock32bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
-            BitmapConverter.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Data, bmData);
             return;
         }
         #endregion

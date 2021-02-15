@@ -34,7 +34,7 @@ namespace UMapx.Colorspace
         /// <param name="red">Red [0, 255]</param>
         /// <param name="yellow">Green [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
-        public RYB(double red, double yellow, double blue)
+        public RYB(float red, float yellow, float blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
             this.y = (byte)((yellow > 255) ? 255 : ((yellow < 0) ? 0 : yellow));
@@ -175,31 +175,31 @@ namespace UMapx.Colorspace
             // http://www.deathbysoftware.com/colors/index.html
             //
 
-            double r = red, g = green, b = blue;
-            double w = Maths.Min(r, g, b);
+            float r = red, g = green, b = blue;
+            float w = Maths.Min(r, g, b);
 
             r -= w; g -= w; b -= w;
 
-            double mg = Maths.Max(r, g, b);
-            double y = Maths.Min(r, g);
+            float mg = Maths.Max(r, g, b);
+            float y = Maths.Min(r, g);
 
             r -= y;
             g -= y;
 
             //if (b != g)
             {
-                b /= 2.0;
-                g /= 2.0;
+                b /= 2.0f;
+                g /= 2.0f;
             }
 
             y += g;
             b += g;
 
-            double my = Maths.Max(r, y, b);
+            float my = Maths.Max(r, y, b);
 
             //if (my > 0)
             {
-                double n = mg / my;
+                float n = mg / my;
                 r *= n;
                 y *= n;
                 b *= n;
@@ -237,32 +237,32 @@ namespace UMapx.Colorspace
                 // http://www.deathbysoftware.com/colors/index.html
                 //
 
-                double rr = r;
-                double yy = y;
-                double bb = b;
+                float rr = r;
+                float yy = y;
+                float bb = b;
 
-                double w = Maths.Min(rr, yy, bb);
+                float w = Maths.Min(rr, yy, bb);
                 rr -= w;
                 yy -= w;
                 bb -= w;
 
-                double my = Maths.Max(rr, yy, bb);
+                float my = Maths.Max(rr, yy, bb);
 
                 // Get the green out of the yellow and blue
-                double gg = Maths.Min(yy, bb);
+                float gg = Maths.Min(yy, bb);
                 yy -= gg;
                 bb -= gg;
 
-                bb *= 2.0;
-                gg *= 2.0;
+                bb *= 2.0f;
+                gg *= 2.0f;
 
                 // Redistribute the remaining yellow.
                 rr += yy;
                 gg += yy;
 
                 // Normalize to values.
-                double mg = Maths.Max(rr, gg, bb);
-                double n = my / mg;
+                float mg = Maths.Max(rr, gg, bb);
+                float n = my / mg;
                 rr *= n;
                 gg *= n;
                 bb *= n;

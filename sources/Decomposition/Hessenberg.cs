@@ -15,8 +15,8 @@ namespace UMapx.Decomposition
     public class Hessenberg
     {
         #region Private data
-        private double[][] matrices;
-        private double[][] hessenberg;
+        private float[][] matrices;
+        private float[][] hessenberg;
         #endregion
 
         #region Initialize
@@ -24,7 +24,7 @@ namespace UMapx.Decomposition
         /// Initializes decomposition to a Hessenberg form.
         /// </summary>
         /// <param name="A">Square matrix</param>
-        public Hessenberg(double[,] A)
+        public Hessenberg(float[,] A)
         {
             if (!Matrice.IsSquare(A))
                 throw new Exception("The matrix must be square");
@@ -38,14 +38,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets the unitary matrix.
         /// </summary>
-        public double[,] P
+        public float[,] P
         {
             get { return Jagged.FromJagged(matrices); }
         }
         /// <summary>
         /// Gets the Hessenberg form.
         /// </summary>
-        public double[,] H
+        public float[,] H
         {
             get { return Jagged.FromJagged(hessenberg); }
         }
@@ -56,13 +56,13 @@ namespace UMapx.Decomposition
         /// 
         /// </summary>
         /// <param name="A"></param>
-        private void orthes(double[,] A)
+        private void orthes(float[,] A)
         {
             // Properties
             int n = A.GetLength(0);
             this.matrices = Jagged.Zero(n, n);
             this.hessenberg = Jagged.ToJagged(A);
-            double[] orthogonal = new double[n];
+            float[] orthogonal = new float[n];
 
             // Nonsymmetric reduction to Hessenberg form.
             // This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson, 
@@ -70,7 +70,7 @@ namespace UMapx.Decomposition
             int low = 0;
             int high = n - 1;
             int m, i, j;
-            double scale, h, g, f;
+            float scale, h, g, f;
 
             for (m = low + 1; m <= high - 1; m++)
             {
@@ -90,7 +90,7 @@ namespace UMapx.Decomposition
                         h += orthogonal[i] * orthogonal[i];
                     }
 
-                    g = (Double)System.Math.Sqrt(h);
+                    g = (float)System.Math.Sqrt(h);
                     if (orthogonal[m] > 0) g = -g;
 
                     h = h - orthogonal[m] * g;
@@ -143,7 +143,7 @@ namespace UMapx.Decomposition
                         for (i = m; i <= high; i++)
                             g += orthogonal[i] * matrices[i][j];
 
-                        // Double division avoids possible underflow.
+                        // float division avoids possible underflow.
                         g = (g / orthogonal[m]) / hessenberg[m][m - 1];
                         for (i = m; i <= high; i++)
                             matrices[i][j] += g * orthogonal[i];

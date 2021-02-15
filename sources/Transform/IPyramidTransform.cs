@@ -13,25 +13,25 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Matrix</param>
         /// <returns>Pyramid</returns>
-        double[][,] Forward(double[,] data);
+        float[][,] Forward(float[,] data);
         /// <summary>
         /// Backward pyramid transform.
         /// </summary>
         /// <param name="pyramid">Pyramid</param>
         /// <returns>Matrix</returns>
-        double[,] Backward(double[][,] pyramid);
+        float[,] Backward(float[][,] pyramid);
         /// <summary>
         /// Forward pyramid transform.
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Pyramid</returns>
-        double[][] Forward(double[] data);
+        float[][] Forward(float[] data);
         /// <summary>
         /// Backward pyramid transform.
         /// </summary>
         /// <param name="pyramid">Pyramid</param>
         /// <returns>Array</returns>
-        double[] Backward(double[][] pyramid);
+        float[] Backward(float[][] pyramid);
         /// <summary>
         /// Forward pyramid transform.
         /// </summary>

@@ -36,7 +36,7 @@ namespace UMapx.Core
         /// <param name="format">Format string</param>
         /// <param name="symbol">String array</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        public static string Disp(double[] v, string format, string[] symbol)
+        public static string Disp(float[] v, string format, string[] symbol)
         {
             int length = v.Length, i;
             int start = -1;
@@ -129,7 +129,7 @@ namespace UMapx.Core
                     else break;
                 }
 
-                return new Complex(double.Parse(re), 0);
+                return new Complex(float.Parse(re), 0);
             }
             else
             {
@@ -148,7 +148,7 @@ namespace UMapx.Core
                 {
                     int k1 = k + 1, k2 = k + 2; im += u[k1];
 
-                    if (u[k2] == 'i') return new Complex(double.Parse(re), double.Parse(im + '1'));
+                    if (u[k2] == 'i') return new Complex(float.Parse(re), float.Parse(im + '1'));
 
                     for (i = k2; i < length; i++)
                     {
@@ -158,11 +158,11 @@ namespace UMapx.Core
                         }
                         else break;
                     }
-                    return new Complex(double.Parse(re), double.Parse(im));
+                    return new Complex(float.Parse(re), float.Parse(im));
                 }
                 else
                 {
-                    return new Complex(0, double.Parse(re.Replace("i", "")));
+                    return new Complex(0, float.Parse(re.Replace("i", "")));
                 }
             }
         }
