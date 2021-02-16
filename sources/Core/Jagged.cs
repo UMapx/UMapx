@@ -5,7 +5,7 @@ namespace UMapx.Core
     /// <summary>
     /// Uses to work with jagged arrays.
     /// </summary>
-    internal static class Jagged
+    public static class Jagged
     {
         #region Conversions
         /// <summary>
@@ -13,7 +13,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Jagged array</returns>
-        public static float[][] ToJagged(float[,] m)
+        public static float[][] ToJagged(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             float[][] jagged = new float[ml][];
@@ -36,7 +36,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="jagged">Jagged array</param>
         /// <returns>Matrix</returns>
-        public static float[,] FromJagged(float[][] jagged)
+        public static float[,] FromJagged(this float[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
             float[,] m = new float[ml, mr];
@@ -56,7 +56,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Jagged array</returns>
-        public static Complex[][] ToJagged(Complex[,] m)
+        public static Complex[][] ToJagged(this Complex[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             Complex[][] jagged = new Complex[ml][];
@@ -79,7 +79,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="jagged">Jagged array</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] FromJagged(Complex[][] jagged)
+        public static Complex[,] FromJagged(this Complex[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
             Complex[,] m = new Complex[ml, mr];
@@ -385,7 +385,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[][] Tofloat(this float[][] m)
+        public static float[][] ToFloat(this float[][] m)
         {
             int r0 = m.GetLength(0), r1;
             float[][] H = new float[r0][];

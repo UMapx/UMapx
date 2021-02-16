@@ -8572,70 +8572,20 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Solve(this float[,] A)
         {
-            int height = A.GetLength(0);
-            int width = A.GetLength(1);
+            int N = A.GetLength(0);
+            float[,] Q = new float[N, N];
+            float[] b = new float[N];
 
-            if (height + 1 != width)
-                throw new Exception("Input matrix has invalid sizes");
-
-            float[][] B = Jagged.ToJagged(A);
-            int i, j, k, l;
-            float[] x = new float[height];
-            float[] v, w;
-            float temp;
-
-            for (i = 0; i < height; i++)
+            for (int i = 0; i < N; i++)
             {
-                w = B[i];
-                temp = w[i];
-
-                for (j = 0; j < width; j++)
+                for (int j = 0; j < N; j++)
                 {
-                    w[j] /= temp;
+                    Q[i, j] = A[i, j];
                 }
-
-                for (k = i + 1; k < height; k++)
-                {
-                    v = B[k];
-                    temp = v[i];
-
-                    for (j = i; j < width; j++)
-                    {
-                        v[j] = v[j] - w[j] * temp;
-                    }
-
-                    B[k] = v;
-                }
-
-                B[i] = w;
+                b[i] = A[i, N];
             }
 
-            for (i = 0; i < height; i++)
-            {
-                l = (height - 1) - i;
-                w = B[l];
-
-                for (k = 0; k < l; k++)
-                {
-                    v = B[k];
-                    temp = v[l];
-
-                    for (j = l; j < width; j++)
-                    {
-                        v[j] = v[j] - w[j] * temp;
-                    }
-
-                    B[k] = v;
-                }
-
-                B[l] = w;
-            }
-
-            for (k = 0; k < height; k++)
-            {
-                x[k] = B[k][height];
-            }
-            return x;
+            return Q.Solve(b);
         }
         /// <summary>
         /// Returns a vector corresponding to the solution of a system of linear algebraic equations: Ax = b.
@@ -8645,72 +8595,64 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Solve(this float[,] A, float[] b)
         {
-            int height = A.GetLength(0);
-            int width = A.GetLength(1);
-
-            if (height != width)
+            // Input data
+            if (!IsSquare(A))
                 throw new Exception("The matrix must be square");
-            if (height != b.Length)
+
+            int M = A.GetLength(0);
+            int N = b.GetLength(0);
+
+            if (N != M)
                 throw new Exception("Vector length should be equal to the height of the matrix");
 
-            float[][] B = Jagged.ToJagged(A);
-            int i, j, k, l;
-            float[] x = (float[])b.Clone();
-            float[] v, w;
-            float temp;
+            float[][] a = Jagged.ToJagged(A);
+            float[] q = (float[])b.Clone();
+            float eps = 1e-16f;
 
-
-            for (i = 0; i < height; i++)
+            // method of Gauss 
+            for (int p = 0; p < N; p++)
             {
-                w = B[i];
-                temp = w[i];
 
-                for (j = 0; j < width; j++)
+                int max = p;
+                for (int i = p + 1; i < N; i++)
                 {
-                    w[j] /= temp;
-                }
-                x[i] /= temp;
-
-                for (k = i + 1; k < height; k++)
-                {
-                    v = B[k];
-                    temp = v[i];
-
-                    for (j = i; j < width; j++)
+                    if (Math.Abs(a[i][p]) > Math.Abs(a[max][p]))
                     {
-                        v[j] = v[j] - w[j] * temp;
+                        max = i;
                     }
+                }
+                float[] temp = a[p]; a[p] = a[max]; a[max] = temp;
+                float t = q[p]; q[p] = q[max]; q[max] = t;
 
-                    x[k] -= x[i] * temp;
-                    B[k] = v;
+                if (Math.Abs(a[p][p]) <= eps)
+                {
+                    return b;
+                }
+
+                for (int i = p + 1; i < N; i++)
+                {
+                    float alpha = a[i][p] / a[p][p];
+                    q[i] -= alpha * q[p];
+                    for (int j = p; j < N; j++)
+                    {
+                        a[i][j] -= alpha * a[p][j];
+                    }
                 }
             }
 
-            for (i = 0; i < height; i++)
+            // Result
+            float[] x = new float[N];
+            for (int i = N - 1; i >= 0; i--)
             {
-                l = (height - 1) - i;
-                w = B[l];
-
-                for (k = 0; k < l; k++)
+                float sum = 0;
+                for (int j = i + 1; j < N; j++)
                 {
-                    v = B[k];
-                    temp = v[l];
-
-                    for (j = l; j < width; j++)
-                    {
-                        v[j] = v[j] - w[j] * temp;
-                    }
-
-                    x[k] -= x[l] * temp;
-                    B[k] = v;
+                    sum += a[i][j] * x[j];
                 }
-
-                B[l] = w;
+                x[i] = (q[i] - sum) / a[i][i];
             }
-
             return x;
         }
-
         /// <summary>
         /// Returns a vector corresponding to the solution of a system of linear algebraic equations: Ax = b.
         /// </summary>
@@ -8718,70 +8660,20 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex[] Solve(this Complex[,] A)
         {
-            int height = A.GetLength(0);
-            int width = A.GetLength(1);
+            int N = A.GetLength(0);
+            Complex[,] Q = new Complex[N, N];
+            Complex[] b = new Complex[N];
 
-            if (height + 1 != width)
-                throw new Exception("Input matrix has invalid sizes");
-
-            Complex[][] B = Jagged.ToJagged(A);
-            int i, j, k, l;
-            Complex[] x = new Complex[height];
-            Complex[] v, w;
-            Complex temp;
-
-            for (i = 0; i < height; i++)
+            for (int i = 0; i < N; i++)
             {
-                w = B[i];
-                temp = w[i];
-
-                for (j = 0; j < width; j++)
+                for (int j = 0; j < N; j++)
                 {
-                    w[j] /= temp;
+                    Q[i, j] = A[i, j];
                 }
-
-                for (k = i + 1; k < height; k++)
-                {
-                    v = B[k];
-                    temp = v[i];
-
-                    for (j = i; j < width; j++)
-                    {
-                        v[j] = v[j] - w[j] * temp;
-                    }
-
-                    B[k] = v;
-                }
-
-                B[i] = w;
+                b[i] = A[i, N];
             }
 
-            for (i = 0; i < height; i++)
-            {
-                l = (height - 1) - i;
-                w = B[l];
-
-                for (k = 0; k < l; k++)
-                {
-                    v = B[k];
-                    temp = v[l];
-
-                    for (j = l; j < width; j++)
-                    {
-                        v[j] = v[j] - w[j] * temp;
-                    }
-
-                    B[k] = v;
-                }
-
-                B[l] = w;
-            }
-
-            for (k = 0; k < height; k++)
-            {
-                x[k] = B[k][height];
-            }
-            return x;
+            return Q.Solve(b);
         }
         /// <summary>
         /// Returns a vector corresponding to the solution of a system of linear algebraic equations: Ax = b.
@@ -8791,68 +8683,62 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex[] Solve(this Complex[,] A, Complex[] b)
         {
-            int height = A.GetLength(0);
-            int width = A.GetLength(1);
-
-            if (height != width)
+            // Input data
+            if (!IsSquare(A))
                 throw new Exception("The matrix must be square");
-            if (height != b.Length)
+
+            int M = A.GetLength(0);
+            int N = b.GetLength(0);
+
+            if (N != M)
                 throw new Exception("Vector length should be equal to the height of the matrix");
 
-            Complex[][] B = Jagged.ToJagged(A);
-            int i, j, k, l;
-            Complex[] x = (Complex[])b.Clone();
-            Complex[] v, w;
-            Complex temp;
+            Complex[][] a = Jagged.ToJagged(A);
+            Complex[] q = (Complex[])b.Clone();
+            float eps = 1e-16f;
 
-            for (i = 0; i < height; i++)
+            // method of Gauss 
+            for (int p = 0; p < N; p++)
             {
-                w = B[i];
-                temp = w[i];
 
-                for (j = 0; j < width; j++)
+                int max = p;
+                for (int i = p + 1; i < N; i++)
                 {
-                    w[j] /= temp;
-                }
-                x[i] /= temp;
-
-                for (k = i + 1; k < height; k++)
-                {
-                    v = B[k];
-                    temp = v[i];
-
-                    for (j = i; j < width; j++)
+                    if (Maths.Abs(a[i][p]) > Maths.Abs(a[max][p]))
                     {
-                        v[j] = v[j] - w[j] * temp;
+                        max = i;
                     }
+                }
+                Complex[] temp = a[p]; a[p] = a[max]; a[max] = temp;
+                Complex t = q[p]; q[p] = q[max]; q[max] = t;
 
-                    x[k] -= x[i] * temp;
-                    B[k] = v;
+                if (Maths.Abs(a[p][p]) <= eps)
+                {
+                    return b;
+                }
+
+                for (int i = p + 1; i < N; i++)
+                {
+                    Complex alpha = a[i][p] / a[p][p];
+                    q[i] -= alpha * q[p];
+                    for (int j = p; j < N; j++)
+                    {
+                        a[i][j] -= alpha * a[p][j];
+                    }
                 }
             }
 
-            for (i = 0; i < height; i++)
+            // Result
+            Complex[] x = new Complex[N];
+            for (int i = N - 1; i >= 0; i--)
             {
-                l = (height - 1) - i;
-                w = B[l];
-
-                for (k = 0; k < l; k++)
+                Complex sum = 0;
+                for (int j = i + 1; j < N; j++)
                 {
-                    v = B[k];
-                    temp = v[l];
-
-                    for (j = l; j < width; j++)
-                    {
-                        v[j] = v[j] - w[j] * temp;
-                    }
-
-                    x[k] -= x[l] * temp;
-                    B[k] = v;
+                    sum += a[i][j] * x[j];
                 }
-
-                B[l] = w;
+                x[i] = (q[i] - sum) / a[i][i];
             }
-
             return x;
         }
         #endregion
