@@ -28,8 +28,8 @@
 # Supported types
 | Object | Type | Format | Bits |
 |-------------|-------------|-------------|-------------|
-| Array | float, Complex | `[], [,], [][]` | 32 |
-| Image | BitmapData | Format32bppArgb | 32 |
+| Array | `float`, `Complex` | `[], [,], [][]` | 32 |
+| Image | `BitmapData` | `Format32bppArgb` | 32 |
 | Video | Not specified | Not specified | Not specified |
 
 # Installation
