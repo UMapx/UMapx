@@ -403,12 +403,11 @@ namespace UMapx.Core
             int height = A.GetLength(0);
             int width = B[0].GetLength(0);
             int length = B.GetLength(0);
-            float[][] C = new float[height][];
+            float[][] C = Jagged.Zero(height, width);
 
             Parallel.For(0, height, i =>
             {
-                C[i] = new float[width];
-                LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
+                LinealgOptions.Whittle_Mul(A, B, C, length, width, i);
             });
 
             return C;
@@ -427,12 +426,11 @@ namespace UMapx.Core
             int height = A.GetLength(0);
             int width = B[0].GetLength(0);
             int length = B.GetLength(0);
-            Complex[][] C = new Complex[height][];
+            Complex[][] C = Jagged.Zero(height, width).ToComplex();
 
             Parallel.For(0, height, i =>
             {
-                C[i] = new Complex[width];
-                LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
+                LinealgOptions.Whittle_Mul(A, B, C, length, width, i);
             });
 
             return C;
@@ -451,12 +449,11 @@ namespace UMapx.Core
             int height = A.GetLength(0);
             int width = B[0].GetLength(0);
             int length = B.GetLength(0);
-            Complex[][] C = new Complex[height][];
+            Complex[][] C = Jagged.Zero(height, width).ToComplex();
 
             Parallel.For(0, height, i =>
             {
-                C[i] = new Complex[width];
-                LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
+                LinealgOptions.Whittle_Mul(A, B, C, length, width, i);
             });
 
             return C;
@@ -475,12 +472,11 @@ namespace UMapx.Core
             int height = A.GetLength(0);
             int width = B[0].GetLength(0);
             int length = B.GetLength(0);
-            Complex[][] C = new Complex[height][];
+            Complex[][] C = Jagged.Zero(height, width).ToComplex();
 
             Parallel.For(0, height, i =>
             {
-                C[i] = new Complex[width];
-                LinealgOptions.Whittle_Mul(A[i], B, C[i], length, width);
+                LinealgOptions.Whittle_Mul(A, B, C, length, width, i);
             });
 
             return C;
@@ -2040,20 +2036,23 @@ namespace UMapx.Core
         /// <summary>
         /// Implements matrix multiplication using modified Whittle optimization.
         /// </summary>
-        /// <param name="iRowA">Row of A</param>
+        /// <param name="A">Row of A</param>
         /// <param name="B">Matrix B</param>
-        /// <param name="iRowC">Row of C</param>
+        /// <param name="C">Row of C</param>
         /// <param name="length">Length</param>
         /// <param name="width">Width</param>
-        private static void Whittle_Mul(float[] iRowA, float[][] B, float[] iRowC, int length, int width)
+        /// <param name="i">Index</param>
+        private static void Whittle_Mul(float[][] A, float[][] B, float[][] C, int length, int width, int i)
         {
-            float[] kRowB;
-            float ikA;
+            float[] iRowA = A[i];
+            float[] iRowC = C[i];
             int k, j;
 
             for (k = 0; k < length; k++)
             {
-                kRowB = B[k]; ikA = iRowA[k];
+                float[] kRowB = B[k];
+                float ikA = iRowA[k];
+
                 for (j = 0; j < width; j++)
                 {
                     iRowC[j] += ikA * kRowB[j];
@@ -2064,74 +2063,83 @@ namespace UMapx.Core
         /// <summary>
         /// Implements matrix multiplication using modified Whittle optimization.
         /// </summary>
-        /// <param name="iRowA">Row of A</param>
+        /// <param name="A">Row of A</param>
         /// <param name="B">Matrix B</param>
-        /// <param name="iRowC">Row of C</param>
+        /// <param name="C">Row of C</param>
         /// <param name="length">Length</param>
         /// <param name="width">Width</param>
-        private static void Whittle_Mul(Complex[] iRowA, Complex[][] B, Complex[] iRowC, int length, int width)
+        /// <param name="i">Index</param>
+        private static void Whittle_Mul(Complex[][] A, Complex[][] B, Complex[][] C, int length, int width, int i)
         {
-            Complex[] kRowB;
-            Complex ikA;
+            Complex[] iRowA = A[i];
+            Complex[] iRowC = C[i];
             int k, j;
 
             for (k = 0; k < length; k++)
             {
-                kRowB = B[k]; ikA = iRowA[k];
+                Complex[] kRowB = B[k];
+                Complex ikA = iRowA[k];
 
                 for (j = 0; j < width; j++)
                 {
                     iRowC[j] += ikA * kRowB[j];
                 }
             }
+            return;
         }
         /// <summary>
         /// Implements matrix multiplication using modified Whittle optimization.
         /// </summary>
-        /// <param name="iRowA">Row of A</param>
+        /// <param name="A">Row of A</param>
         /// <param name="B">Matrix B</param>
-        /// <param name="iRowC">Row of C</param>
+        /// <param name="C">Row of C</param>
         /// <param name="length">Length</param>
         /// <param name="width">Width</param>
-        private static void Whittle_Mul(Complex[] iRowA, float[][] B, Complex[] iRowC, int length, int width)
+        /// <param name="i">Index</param>
+        private static void Whittle_Mul(Complex[][] A, float[][] B, Complex[][] C, int length, int width, int i)
         {
-            float[] kRowB;
-            Complex ikA;
+            Complex[] iRowA = A[i];
+            Complex[] iRowC = C[i];
             int k, j;
 
             for (k = 0; k < length; k++)
             {
-                kRowB = B[k]; ikA = iRowA[k];
+                float[] kRowB = B[k];
+                Complex ikA = iRowA[k];
 
                 for (j = 0; j < width; j++)
                 {
                     iRowC[j] += ikA * kRowB[j];
                 }
             }
+            return;
         }
         /// <summary>
         /// Implements matrix multiplication using modified Whittle optimization.
         /// </summary>
-        /// <param name="iRowA">Row of A</param>
+        /// <param name="A">Row of A</param>
         /// <param name="B">Matrix B</param>
-        /// <param name="iRowC">Row of C</param>
+        /// <param name="C">Row of C</param>
         /// <param name="length">Length</param>
         /// <param name="width">Width</param>
-        private static void Whittle_Mul(float[] iRowA, Complex[][] B, Complex[] iRowC, int length, int width)
+        /// <param name="i">Index</param>
+        private static void Whittle_Mul(float[][] A, Complex[][] B, Complex[][] C, int length, int width, int i)
         {
-            Complex[] kRowB;
-            float ikA;
+            float[] iRowA = A[i];
+            Complex[] iRowC = C[i];
             int k, j;
 
             for (k = 0; k < length; k++)
             {
-                kRowB = B[k]; ikA = iRowA[k];
+                Complex[] kRowB = B[k];
+                Complex ikA = iRowA[k];
 
                 for (j = 0; j < width; j++)
                 {
                     iRowC[j] += ikA * kRowB[j];
                 }
             }
+            return;
         }
         #endregion
     }
