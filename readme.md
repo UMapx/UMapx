@@ -25,6 +25,13 @@
 * **Image Processing Toolbox**. Contains efficient algorithms to processing, correcting and analyzing 32-bit images.
 * **Video Processing Toolbox**. Includes a set of tools to video streaming and processing.
 
+# Supported types
+| Object | Type | Bits |
+|-------------|-------------|-------------|
+| Array | float, Complex | 32 |
+| Image | Format32bppArgb | 32 |
+| Video | Not specified | Not specified |
+
 # Installation
 You can build **UMapx.NET** from sources or install to your own project using nuget package manager.
 | Version | Specification | OS | Platform | Download | Package |
