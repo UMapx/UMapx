@@ -26,11 +26,10 @@
 * **Video Processing Toolbox**. Includes a set of tools to video streaming and processing.
 
 # Supported types
-| Object | Type | Format | Bits |
-|-------------|-------------|-------------|-------------|
-| Array | `float`, `Complex` | `[], [,], [][]` | 32 |
-| Image | `BitmapData` | `Format32bppArgb` | 32 |
-| Video | Not specified | Not specified | Not specified |
+**UMapx.NET** supports only
+* 32 bit matrix and vector formats - `float`, `Complex`,
+* 32 bit image `BitmapData` format - `Format32bppArgb`,
+* 8, 24, 32 bit video `BitmapData` formats.
 
 # Installation
 You can build **UMapx.NET** from sources or install to your own project using nuget package manager.
