@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace UMapx.Core
 {
@@ -307,6 +308,15 @@ namespace UMapx.Core
         #endregion
 
         #region Conversion operators
+        /// <summary>
+        /// Defines an explicit conversion of a number to complex number.
+        /// </summary>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
+        public static implicit operator Complex32(Complex value)
+        {
+            return new Complex32((float)value.Real, (float)value.Imaginary);
+        }
         /// <summary>
         /// Defines an explicit conversion of a number to complex number.
         /// </summary>

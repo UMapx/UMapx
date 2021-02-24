@@ -6,7 +6,7 @@ namespace UMapx.Core
     /// <summary>
     /// Defines the class of optimizations of matrix operations.
     /// </summary>
-    internal class LinealgOptions
+    internal static class LinealgOptions
     {
         #region Private data
         /// <summary>
@@ -1604,6 +1604,18 @@ namespace UMapx.Core
 
         #region Morphology (separable)
         /// <summary>
+        /// Returns the matrix result of morphology.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="r0">Height radius</param>
+        /// <param name="r1">Width radius</param>
+        /// <param name="t0">Threshold by height</param>
+        /// <param name="t1">Threshold by width</param>
+        public static float[,] Morph(float[,] m, int r0, int r1, int t0, int t1)
+        {
+            return  MorphVertical(MorphHorizontal(m, r1, t1), r0, t0);
+        }
+        /// <summary>
         /// Implements local average of matrices (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
@@ -1639,7 +1651,7 @@ namespace UMapx.Core
                 {
                     var i = Array.IndexOf(s, A[y, x - v]);
                     s[i] = A[y, x + v];
-                    Array.Sort(s);
+                    FastSort(ref s, i);
 
                     H[y, x] = s[threshold];
                 }
@@ -1648,7 +1660,7 @@ namespace UMapx.Core
                 {
                     var i = Array.IndexOf(s, A[y, x - v]);
                     s[i] = A[y, x];
-                    Array.Sort(s);
+                    FastSort(ref s, i);
 
                     H[y, x] = s[threshold];
                 }
@@ -1692,7 +1704,7 @@ namespace UMapx.Core
                 {
                     var i = Array.IndexOf(s, A[y - v, x]);
                     s[i] = A[y + v, x];
-                    Array.Sort(s);
+                    FastSort(ref s, i);
 
                     H[y, x] = s[threshold];
                 }
@@ -1701,13 +1713,98 @@ namespace UMapx.Core
                 {
                     var i = Array.IndexOf(s, A[y - v, x]);
                     s[i] = A[y, x];
-                    Array.Sort(s);
+                    FastSort(ref s, i);
 
                     H[y, x] = s[threshold];
                 }
             });
 
             return H;
+        }
+        /// <summary>
+        /// Returns the vector result of morphology.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="r">Radius</param>
+        /// <param name="threshold">Threshold</param>
+        /// <returns>Array</returns>
+        public static float[] Morph(float[] v, int r, int threshold)
+        {
+            int l = v.Length;
+            if (l == 1)
+                return v;
+
+            float[] output = new float[l];
+            int h = r >= l ? l - 1 : r;
+            int w = r >> 1;
+            int dl = l - w;
+            float[] s = new float[h];
+            int x;
+
+            for (x = 0; x < h; x++)
+            {
+                s[x] = v[x];
+            }
+
+            Array.Sort(s);
+
+            for (x = 0; x < w; x++)
+            {
+                output[x] = s[threshold];
+            }
+
+            for (x = w; x < dl; x++)
+            {
+                var i = Array.IndexOf(s, v[x - w]);
+                s[i] = v[x + w];
+                FastSort(ref s, i);
+
+                output[x] = s[threshold];
+            }
+
+            for (x = dl; x < l; x++)
+            {
+                var i = Array.IndexOf(s, v[x - w]);
+                s[i] = v[x];
+                FastSort(ref s, i);
+
+                output[x] = s[threshold];
+            }
+
+            return output;
+        }
+        /// <summary>
+        /// O(N) sort algorithm.
+        /// </summary>
+        /// <param name="s">Array</param>
+        /// <param name="index">Index</param>
+        public static void FastSort(ref float[] s, int index)
+        {
+            int length = s.Length - 1;
+
+            for (int i = index; i < length; i++)
+            {
+                if (s[i] > s[i + 1])
+                {
+                    var t = s[i + 1];
+                    s[i + 1] = s[i];
+                    s[i    ] = t;
+                }
+                else
+                    break;
+            }
+
+            for (int i = index; i > 0; i--)
+            {
+                if (s[i] < s[i - 1])
+                {
+                    var t = s[i - 1];
+                    s[i - 1] = s[i];
+                    s[i    ] = t;
+                }
+                else
+                    break;
+            }
         }
         #endregion
 

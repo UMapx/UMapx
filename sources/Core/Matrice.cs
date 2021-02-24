@@ -2852,7 +2852,7 @@ namespace UMapx.Core
         /// <param name="r1">Width radius</param>
         public static float[,] Min(this float[,] m, int r0, int r1)
         {
-            return LinealgOptions.MorphVertical(LinealgOptions.MorphHorizontal(m, r1, 0), r0, 0);
+            return Morph(m, r0, r1, 0, 0);
         }
         /// <summary>
         /// Returns the matrix result of morphological maximum.
@@ -2862,7 +2862,7 @@ namespace UMapx.Core
         /// <param name="r1">Width radius</param>
         public static float[,] Max(this float[,] m, int r0, int r1)
         {
-            return LinealgOptions.MorphVertical(LinealgOptions.MorphHorizontal(m, r1, r1 - 1), r0, r0 - 1);
+            return Morph(m, r0, r1, r0 - 1, r1 - 1);
         }
         /// <summary>
         /// Returns the matrix result of morphology.
@@ -2870,10 +2870,13 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="r0">Height radius</param>
         /// <param name="r1">Width radius</param>
-        /// <param name="threshold">Threshold</param>
-        public static float[,] Morph(this float[,] m, int r0, int r1, int threshold)
+        /// <param name="t0">Threshold by height</param>
+        /// <param name="t1">Threshold by width</param>
+        public static float[,] Morph(this float[,] m, int r0, int r1, int t0, int t1)
         {
-            return LinealgOptions.MorphVertical(LinealgOptions.MorphHorizontal(m, r1, threshold), r0, threshold);
+            return 
+                LinealgOptions.Morph(
+                LinealgOptions.Morph(m, r0, r1, t0, t1), r0, r1, t0, t1);
         }
         #endregion
 
@@ -5728,52 +5731,13 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="r">Radius</param>
-        /// <param name="threshold">Threshold</param>
+        /// <param name="t">Threshold</param>
         /// <returns>Array</returns>
-        public static float[] Morph(this float[] v, int r, int threshold)
+        public static float[] Morph(this float[] v, int r, int t)
         {
-            int l = v.Length;
-            if (l == 1)
-                return v;
-
-            float[] output = new float[l];
-            int h = r >= l ? l - 1 : r;
-            int w = r >> 1;
-            int dl = l - w;
-            float[] s = new float[h];
-            int x;
-
-            for (x = 0; x < h; x++)
-            {
-                s[x] = v[x];
-            }
-
-            Array.Sort(s);
-
-            for (x = 0; x < w; x++)
-            {
-                output[x] = s[threshold];
-            }
-
-            for (x = w; x < dl; x++)
-            {
-                var i = Array.IndexOf(s, v[x - w]);
-                s[i] = v[x + w];
-                Array.Sort(s);
-
-                output[x] = s[threshold];
-            }
-
-            for (x = dl; x < l; x++)
-            {
-                var i = Array.IndexOf(s, v[x - w]);
-                s[i] = v[x];
-                Array.Sort(s);
-                
-                output[x] = s[threshold];
-            }
-
-            return output;
+            return 
+                LinealgOptions.Morph(
+                LinealgOptions.Morph(v, r, t), r, t);
         }
         #endregion
 
