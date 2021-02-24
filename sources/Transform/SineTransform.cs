@@ -140,7 +140,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
             float[,] U = SineTransform.Matrix(N);
@@ -151,7 +151,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
             float[,] U = SineTransform.Matrix(N);
@@ -162,7 +162,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
             float[,] U = SineTransform.Matrix(N);
@@ -183,7 +183,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
             float[,] U = SineTransform.Matrix(N);

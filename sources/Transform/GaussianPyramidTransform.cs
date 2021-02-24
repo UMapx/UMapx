@@ -147,14 +147,14 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Matrix</param>
         /// <returns>Pyramid</returns>
-        public Complex[][,] Forward(Complex[,] data)
+        public Complex32[][,] Forward(Complex32[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
             int nlev = (int)Math.Min((Math.Log(Math.Min(r, c))
                 / Math.Log(2)), levels);
 
-            Complex[][,] pyr = new Complex[nlev][,];
-            Complex[,] dummy = (Complex[,])data.Clone();
+            Complex32[][,] pyr = new Complex32[nlev][,];
+            Complex32[,] dummy = (Complex32[,])data.Clone();
 
             for (int i = 0; i < nlev; i++)
             {
@@ -169,13 +169,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Pyramid</returns>
-        public Complex[][] Forward(Complex[] data)
+        public Complex32[][] Forward(Complex32[] data)
         {
             int r = data.Length;
             int nlev = (int)Math.Min((Math.Log(r) / Math.Log(2)), levels);
 
-            Complex[][] pyr = new Complex[nlev][];
-            Complex[] dummy = (Complex[])data.Clone();
+            Complex32[][] pyr = new Complex32[nlev][];
+            Complex32[] dummy = (Complex32[])data.Clone();
 
             for (int i = 0; i < nlev; i++)
             {
@@ -190,7 +190,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="pyramid">Pyramid</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[][,] pyramid)
+        public Complex32[,] Backward(Complex32[][,] pyramid)
         {
             throw new NotSupportedException();
         }
@@ -199,7 +199,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="pyramid">Pyramid</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[][] pyramid)
+        public Complex32[] Backward(Complex32[][] pyramid)
         {
             throw new NotSupportedException();
         }
@@ -383,12 +383,12 @@ namespace UMapx.Transform
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static Complex[,] upsample(Complex[,] u, int radius)
+        internal static Complex32[,] upsample(Complex32[,] u, int radius)
         {
             int r = u.GetLength(0), c = u.GetLength(1);
             int n = r * 2, m = c * 2;
             int i, j, k, l;
-            Complex[,] v = new Complex[n, m];
+            Complex32[,] v = new Complex32[n, m];
 
             for (k = 0, i = 0; i < r; i++, k += 2)
             {
@@ -409,12 +409,12 @@ namespace UMapx.Transform
         /// <param name="u">Array</param>
         /// <param name="radius">Radius</param>
         /// <returns>Array</returns>
-        internal static Complex[] upsample(Complex[] u, int radius)
+        internal static Complex32[] upsample(Complex32[] u, int radius)
         {
             int r = u.GetLength(0);
             int n = r * 2;
             int i, k;
-            Complex[] v = new Complex[n];
+            Complex32[] v = new Complex32[n];
 
             for (k = 0, i = 0; i < r; i++, k += 2)
             {
@@ -430,13 +430,13 @@ namespace UMapx.Transform
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static Complex[,] downsample(Complex[,] u, int radius)
+        internal static Complex32[,] downsample(Complex32[,] u, int radius)
         {
             int r = u.GetLength(0);
             int c = u.GetLength(1);
             int n = (r + 1) / 2, m = (c + 1) / 2;
             int i, j, k, l;
-            Complex[,] v = new Complex[n, m];
+            Complex32[,] v = new Complex32[n, m];
 
             for (k = 0, i = 0; i < r; i += 2, k++)
             {
@@ -454,12 +454,12 @@ namespace UMapx.Transform
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static Complex[] downsample(Complex[] u, int radius)
+        internal static Complex32[] downsample(Complex32[] u, int radius)
         {
             int r = u.Length;
             int n = (r + 1) / 2;
             int i, k;
-            Complex[] v = new Complex[n];
+            Complex32[] v = new Complex32[n];
 
             for (k = 0, i = 0; i < r; i += 2, k++)
             {
@@ -474,11 +474,11 @@ namespace UMapx.Transform
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        internal static Complex[,] add(Complex[,] m, Complex[,] n)
+        internal static Complex32[,] add(Complex32[,] m, Complex32[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             int mr = (int)Math.Min(m.GetLength(1), n.GetLength(1));
-            Complex[,] H = new Complex[ml, mr];
+            Complex32[,] H = new Complex32[ml, mr];
             int i, j;
 
             for (i = 0; i < ml; i++)
@@ -496,10 +496,10 @@ namespace UMapx.Transform
         /// <param name="m">Array</param>
         /// <param name="n">Array</param>
         /// <returns>Array</returns>
-        internal static Complex[] add(Complex[] m, Complex[] n)
+        internal static Complex32[] add(Complex32[] m, Complex32[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
-            Complex[] v = new Complex[ml];
+            Complex32[] v = new Complex32[ml];
             int i;
 
             for (i = 0; i < ml; i++)
@@ -514,11 +514,11 @@ namespace UMapx.Transform
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        internal static Complex[,] sub(Complex[,] m, Complex[,] n)
+        internal static Complex32[,] sub(Complex32[,] m, Complex32[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             int mr = (int)Math.Min(m.GetLength(1), n.GetLength(1));
-            Complex[,] H = new Complex[ml, mr];
+            Complex32[,] H = new Complex32[ml, mr];
             int i, j;
 
             for (i = 0; i < ml; i++)
@@ -536,10 +536,10 @@ namespace UMapx.Transform
         /// <param name="m">Array</param>
         /// <param name="n">Array</param>
         /// <returns>Array</returns>
-        internal static Complex[] sub(Complex[] m, Complex[] n)
+        internal static Complex32[] sub(Complex32[] m, Complex32[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
-            Complex[] v = new Complex[ml];
+            Complex32[] v = new Complex32[ml];
             int i;
 
             for (i = 0; i < ml; i++)

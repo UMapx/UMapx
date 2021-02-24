@@ -85,7 +85,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             float[] g0 = WeylHeisenbergTransform.GetPacket(this.window, A.Length);
             ZakTransform zakTransform = new ZakTransform(m);
@@ -96,7 +96,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             float[] g0 = WeylHeisenbergTransform.GetPacket(this.window, B.Length);
             ZakTransform zakTransform = new ZakTransform(m);
@@ -107,9 +107,9 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
-            Complex[,] B = (Complex[,])A.Clone();
+            Complex32[,] B = (Complex32[,])A.Clone();
             int N = B.GetLength(0), M = B.GetLength(1);
 
             ZakTransform zakTransform = new ZakTransform(m);
@@ -120,7 +120,7 @@ namespace UMapx.Window
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -138,7 +138,7 @@ namespace UMapx.Window
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -158,7 +158,7 @@ namespace UMapx.Window
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -178,7 +178,7 @@ namespace UMapx.Window
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -202,9 +202,9 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
-            Complex[,] A = (Complex[,])B.Clone();
+            Complex32[,] A = (Complex32[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -216,7 +216,7 @@ namespace UMapx.Window
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -234,7 +234,7 @@ namespace UMapx.Window
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -254,7 +254,7 @@ namespace UMapx.Window
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -274,7 +274,7 @@ namespace UMapx.Window
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -339,7 +339,7 @@ namespace UMapx.Window
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts</param>
         /// <returns>Array</returns>
-        public static Complex[] WHT(Complex[] input, float[] g0, int M)
+        public static Complex32[] WHT(Complex32[] input, float[] g0, int M)
         {
             // The function implements a fast Weil-Heisenberg direct transformation algorithm,
             // stated in the following articles:
@@ -348,18 +348,18 @@ namespace UMapx.Window
             // The algorithm is computationally efficient for large M.
 
             int N = input.Length, L = N / M, M2 = M / 2, M4 = M2 / 2;
-            Complex[] output = new Complex[N];
-            Complex[] exp = FastWeylHeisenbergTransform.GetRotation(M);
+            Complex32[] output = new Complex32[N];
+            Complex32[] exp = FastWeylHeisenbergTransform.GetRotation(M);
 
-            Complex[,] s0 = new Complex[M, L];
-            Complex[,] a0 = new Complex[M, L];
-            Complex[,] b0 = new Complex[M, L];
-            Complex[,] A0 = new Complex[L, M];
-            Complex[,] B0 = new Complex[L, M];
-            Complex[,] A1 = new Complex[L, M2];
-            Complex[,] B1 = new Complex[L, M2];
-            Complex c1re, c2re;
-            Complex c1im, c2im;
+            Complex32[,] s0 = new Complex32[M, L];
+            Complex32[,] a0 = new Complex32[M, L];
+            Complex32[,] b0 = new Complex32[M, L];
+            Complex32[,] A0 = new Complex32[L, M];
+            Complex32[,] B0 = new Complex32[L, M];
+            Complex32[,] A1 = new Complex32[L, M2];
+            Complex32[,] B1 = new Complex32[L, M2];
+            Complex32 c1re, c2re;
+            Complex32 c1im, c2im;
             int k, i, j, u, n, m, l;
 
             for (m = 0; m < M; m++)
@@ -391,7 +391,7 @@ namespace UMapx.Window
                 }
             }
 
-            Complex x, y, z, w;
+            Complex32 x, y, z, w;
 
             for (l = 0; l < L; l++)
             {
@@ -445,7 +445,7 @@ namespace UMapx.Window
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts</param>
         /// <returns>Array</returns>
-        public static Complex[] IWHT(Complex[] input, float[] g0, int M)
+        public static Complex32[] IWHT(Complex32[] input, float[] g0, int M)
         {
             // The function implements a fast Weil-Heisenberg direct transformation algorithm,
             // stated in the following articles:
@@ -454,11 +454,11 @@ namespace UMapx.Window
             // The algorithm is computationally efficient for large M.
 
             int N = input.Length, L = N / M, M2 = M / 2, M4 = M2 / 2;
-            Complex[] output = new Complex[N];
-            Complex[,] A1 = new Complex[L, M];
-            Complex[,] B1 = new Complex[L, M];
-            Complex[] exp = FastWeylHeisenbergTransform.GetRotation(M);
-            Complex s;
+            Complex32[] output = new Complex32[N];
+            Complex32[,] A1 = new Complex32[L, M];
+            Complex32[,] B1 = new Complex32[L, M];
+            Complex32[] exp = FastWeylHeisenbergTransform.GetRotation(M);
+            Complex32 s;
             int n, k, l;
 
             for (k = 0; k < M; k++)
@@ -472,8 +472,8 @@ namespace UMapx.Window
                 }
             }
 
-            Complex[,] Za = new Complex[L, M2];
-            Complex[,] Zb = new Complex[L, M2];
+            Complex32[,] Za = new Complex32[L, M2];
+            Complex32[,] Zb = new Complex32[L, M2];
 
             for (k = 0; k < M2; k++)
             {
@@ -487,8 +487,8 @@ namespace UMapx.Window
             Za = Matrice.Conjugate(FFT.Backward(Za));
             Zb = Matrice.Conjugate(FFT.Backward(Zb));
 
-            Complex a0, a1, b0, b1;
-            Complex x, y, u, v;
+            Complex32 a0, a1, b0, b1;
+            Complex32 x, y, u, v;
 
             for (k = 0; k < M2; k++)
             {
@@ -530,10 +530,10 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="M">Number of frequency shifts</param>
         /// <returns>Array</returns>
-        private static Complex[] GetRotation(int M)
+        private static Complex32[] GetRotation(int M)
         {
             int M2 = M / 2;
-            Complex[] phase = new Complex[M2];
+            Complex32[] phase = new Complex32[M2];
             for (int k = 0; k < M2; k++)
             {
                 phase[k] = Maths.Exp(Maths.I * 2 * Math.PI / M * k);

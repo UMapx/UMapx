@@ -49,8 +49,8 @@ namespace UMapx.Window
             int N = A.Length;
             float[] vort = new float[N];
             int L = N / M, L2 = L * 2, i, j;
-            Complex[,] G = new Complex[L2, N];
-            Complex[,] Z;
+            Complex32[,] G = new Complex32[L2, N];
+            Complex32[,] Z;
 
             for (i = 0; i < L2; i++)
             {
@@ -71,7 +71,7 @@ namespace UMapx.Window
 
             float w = 2 / (float)Math.Sqrt(M);
             float even, odd, phi;
-            Complex z1, z2;
+            Complex32 z1, z2;
 
             for (i = 0; i < L; i++)
             {
@@ -89,7 +89,7 @@ namespace UMapx.Window
                 }
             }
 
-            Complex sum;
+            Complex32 sum;
             for (i = 0; i < N; i++)
             {
                 sum = 0;
@@ -107,7 +107,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             // Fast shaping orthogonalization algorithm
             // WH functions using a discrete Zak transform.
@@ -115,10 +115,10 @@ namespace UMapx.Window
             // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
 
             int N = A.Length;
-            Complex[] vort = new Complex[N];
+            Complex32[] vort = new Complex32[N];
             int L = N / M, L2 = L * 2, i, j;
-            Complex[,] G = new Complex[L2, N];
-            Complex[,] Z;
+            Complex32[,] G = new Complex32[L2, N];
+            Complex32[,] Z;
 
             for (i = 0; i < L2; i++)
             {
@@ -139,7 +139,7 @@ namespace UMapx.Window
 
             float w = 2 / (float)Math.Sqrt(M);
             float even, odd, phi;
-            Complex z1, z2;
+            Complex32 z1, z2;
 
             for (i = 0; i < L; i++)
             {
@@ -157,7 +157,7 @@ namespace UMapx.Window
                 }
             }
 
-            Complex sum;
+            Complex32 sum;
             for (i = 0; i < N; i++)
             {
                 sum = 0;
@@ -184,7 +184,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             throw new NotSupportedException();
         }
@@ -202,7 +202,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             throw new NotSupportedException();
         }
@@ -220,7 +220,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             throw new NotSupportedException();
         }

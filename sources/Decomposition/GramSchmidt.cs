@@ -103,12 +103,12 @@ namespace UMapx.Decomposition
         /// <param name="e">Array</param>
         /// <param name="a">Array</param>
         /// <returns>Array</returns>
-        public static Complex[] Proj(Complex[] e, Complex[] a)
+        public static Complex32[] Proj(Complex32[] e, Complex32[] a)
         {
             int length = e.Length;
-            Complex[] proj = new Complex[length];
+            Complex32[] proj = new Complex32[length];
             int i;
-            Complex ea = 0, ee = 0;
+            Complex32 ea = 0, ee = 0;
 
             for (i = 0; i < length; i++)
             {
@@ -116,7 +116,7 @@ namespace UMapx.Decomposition
                 ee += e[i] * (e[i].Conjugate);
             }
 
-            Complex div = ea / ee;
+            Complex32 div = ea / ee;
 
             for (i = 0; i < length; i++)
             {

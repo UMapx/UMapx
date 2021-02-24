@@ -71,13 +71,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
             if (!Maths.IsPower(N, 2))
                 throw new Exception("Dimension of the signal must be a power of 2");
 
-            Complex[] B = (Complex[])A.Clone();
+            Complex32[] B = (Complex32[])A.Clone();
             fft(B);
 
             if (normalized == true)
@@ -92,13 +92,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
             if (!Maths.IsPower(N, 2))
                 throw new Exception("Dimension of the signal must be a power of 2");
 
-            Complex[] A = (Complex[])B.Clone();
+            Complex32[] A = (Complex32[])B.Clone();
             ifft(A);
 
             if (normalized == true)
@@ -113,9 +113,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
-            Complex[,] B = (Complex[,])A.Clone();
+            Complex32[,] B = (Complex32[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -126,7 +126,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -145,7 +145,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -174,7 +174,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -203,7 +203,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -232,9 +232,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
-            Complex[,] A = (Complex[,])B.Clone();
+            Complex32[,] A = (Complex32[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -245,7 +245,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -262,7 +262,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -290,7 +290,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -317,7 +317,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -384,7 +384,7 @@ namespace UMapx.Transform
         private const int minBits = 1;
         private const int maxBits = 14;
         private static int[][] reversedBits = new int[maxBits][];
-        private static Complex[,][] complexRotation = new Complex[maxBits, 2][];
+        private static Complex32[,][] complexRotation = new Complex32[maxBits, 2][];
         #endregion
 
         #region Private voids
@@ -392,7 +392,7 @@ namespace UMapx.Transform
         /// Forward Fourier transform.
         /// </summary>
         /// <param name="data">Array</param>
-        private static void fft(Complex[] data)
+        private static void fft(Complex32[] data)
         {
             int n = data.Length;
             int m = Log2(n);
@@ -402,8 +402,8 @@ namespace UMapx.Transform
 
             // compute FFT
             int tn = 1, tm, k, i, even, odd;
-            Complex[] rotation;
-            Complex t, ce, co;
+            Complex32[] rotation;
+            Complex32 t, ce, co;
             float tr, ti;
 
             for (k = 1; k <= m; k++)
@@ -437,7 +437,7 @@ namespace UMapx.Transform
         /// Backward Fourier transform.
         /// </summary>
         /// <param name="data">Array</param>
-        private static void ifft(Complex[] data)
+        private static void ifft(Complex32[] data)
         {
             int n = data.Length;
             int m = Log2(n);
@@ -447,8 +447,8 @@ namespace UMapx.Transform
 
             // compute FFT
             int tn = 1, tm, k, i, even, odd;
-            Complex[] rotation;
-            Complex t, ce, co;
+            Complex32[] rotation;
+            Complex32 t, ce, co;
             float tr, ti;
 
             for (k = 1; k <= m; k++)
@@ -517,7 +517,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="numberOfBits">Number of bits</param>
         /// <returns>Array</returns>
-        private static Complex[] ForwardComplexRotation(int numberOfBits)
+        private static Complex32[] ForwardComplexRotation(int numberOfBits)
         {
             int directionIndex = 0;
 
@@ -531,11 +531,11 @@ namespace UMapx.Transform
                 float wR = Maths.Cos(angle);
                 float wI = Maths.Sin(angle);
                 float t;
-                Complex[] rotation = new Complex[n];
+                Complex32[] rotation = new Complex32[n];
 
                 for (i = 0; i < n; i++)
                 {
-                    rotation[i] = new Complex(uR, uI);
+                    rotation[i] = new Complex32(uR, uI);
                     t = uR * wI + uI * wR;
                     uR = uR * wR - uI * wI;
                     uI = t;
@@ -550,7 +550,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="numberOfBits">Number of bits</param>
         /// <returns>Array</returns>
-        private static Complex[] BackwardComplexRotation(int numberOfBits)
+        private static Complex32[] BackwardComplexRotation(int numberOfBits)
         {
             int directionIndex = 1;
 
@@ -564,11 +564,11 @@ namespace UMapx.Transform
                 float wR = Maths.Cos(angle);
                 float wI = Maths.Sin(angle);
                 float t;
-                Complex[] rotation = new Complex[n];
+                Complex32[] rotation = new Complex32[n];
 
                 for (i = 0; i < n; i++)
                 {
-                    rotation[i] = new Complex(uR, uI);
+                    rotation[i] = new Complex32(uR, uI);
                     t = uR * wI + uI * wR;
                     uR = uR * wR - uI * wI;
                     uI = t;
@@ -582,11 +582,11 @@ namespace UMapx.Transform
         /// Reorders data to use FFT.
         /// </summary>
         /// <param name="data">Array</param>
-        private static void ReorderData(Complex[] data)
+        private static void ReorderData(Complex32[] data)
         {
             int length = data.Length;
             int[] rBits = GetReversedBits(Log2(length));
-            Complex t;
+            Complex32 t;
             int i, s;
 
             for (i = 0; i < length; i++)

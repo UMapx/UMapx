@@ -45,7 +45,7 @@ namespace UMapx.Core
         /// <summary>   
         /// Imaginary one.
         /// </summary>
-        public static readonly Complex I = Complex.I;
+        public static readonly Complex32 I = Complex32.I;
         #endregion
 
         #region Types and ranges
@@ -239,7 +239,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Boolean</returns>
-        public static bool IsSingular(Complex a)
+        public static bool IsSingular(Complex32 a)
         {
             if (IsSingular(a.Real) || IsSingular(a.Imag))
             {
@@ -520,7 +520,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static float Abs(Complex a)
+        public static float Abs(Complex32 a)
         {
             return a.Abs;
         }
@@ -529,7 +529,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static float Angle(Complex a)
+        public static float Angle(Complex32 a)
         {
             return a.Angle;
         }
@@ -538,7 +538,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Log(Complex a)
+        public static Complex32 Log(Complex32 a)
         {
             return Log(a, E);
         }
@@ -547,7 +547,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Log10(Complex a)
+        public static Complex32 Log10(Complex32 a)
         {
             return Log(a, 10.0f);
         }
@@ -556,7 +556,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Log2(Complex a)
+        public static Complex32 Log2(Complex32 a)
         {
             return Log(a, 2.0f);
         }
@@ -566,16 +566,16 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Base</param>
         /// <returns>Complex number</returns>
-        public static Complex Log(Complex a, float b)
+        public static Complex32 Log(Complex32 a, float b)
         {
-            return new Complex((float)Math.Log(a.Abs), a.Angle) / Math.Log(b);
+            return new Complex32((float)Math.Log(a.Abs), a.Angle) / Math.Log(b);
         }
         /// <summary>
         /// Returns the exponent raised to a complex degree.
         /// </summary>
         /// <param name="a">Power</param>
         /// <returns>Complex number</returns>
-        public static Complex Exp(Complex a)
+        public static Complex32 Exp(Complex32 a)
         {
             return Pow(E, a);
         }
@@ -585,10 +585,10 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Power</param>
         /// <returns>Complex number</returns>
-        public static Complex Pow(float a, Complex b)
+        public static Complex32 Pow(float a, Complex32 b)
         {
             float r = (float)Math.Pow(a, b.Real);
-            return new Complex(r * (float)Math.Cos(b.Imag), r * (float)Math.Sin(b.Imag));
+            return new Complex32(r * (float)Math.Cos(b.Imag), r * (float)Math.Sin(b.Imag));
         }
         /// <summary>
         /// Returns the number raised to the power.
@@ -596,16 +596,16 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Power</param>
         /// <returns>Complex number</returns>
-        public static Complex Pow(Complex a, float b)
+        public static Complex32 Pow(Complex32 a, float b)
         {
-            return Math.Pow(a.Abs, b) * new Complex((float)Math.Cos(b * a.Angle), (float)Math.Sin(b * a.Angle));
+            return Math.Pow(a.Abs, b) * new Complex32((float)Math.Cos(b * a.Angle), (float)Math.Sin(b * a.Angle));
         }
         /// <summary>
         /// Returns the square root of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Sqrt(Complex a)
+        public static Complex32 Sqrt(Complex32 a)
         {
             return Maths.Sqrt(a, 2);
         }
@@ -615,7 +615,7 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Power</param>
         /// <returns>Complex number</returns>
-        public static Complex Sqrt(Complex a, float b)
+        public static Complex32 Sqrt(Complex32 a, float b)
         {
             return Maths.FromPolar((float)Math.Sqrt(a.Abs), a.Angle / b);
         }
@@ -625,16 +625,16 @@ namespace UMapx.Core
         /// <param name="abs">Module</param>
         /// <param name="angle">Angle</param>
         /// <returns>Complex number</returns>
-        public static Complex FromPolar(float abs, float angle)
+        public static Complex32 FromPolar(float abs, float angle)
         {
-            return new Complex(abs * (float)Math.Cos(angle), abs * (float)Math.Sin(angle));
+            return new Complex32(abs * (float)Math.Cos(angle), abs * (float)Math.Sin(angle));
         }
         /// <summary>
         /// Returns the rounded number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Round(Complex a)
+        public static Complex32 Round(Complex32 a)
         {
             return Maths.Round(a, 0);
         }
@@ -644,9 +644,9 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="dig">Digits</param>
         /// <returns>Complex number</returns>
-        public static Complex Round(Complex a, int dig)
+        public static Complex32 Round(Complex32 a, int dig)
         {
-            return new Complex((float)Math.Round(a.Real, dig), (float)Math.Round(a.Imag, dig));
+            return new Complex32((float)Math.Round(a.Real, dig), (float)Math.Round(a.Imag, dig));
         }
         #endregion
         #endregion
@@ -769,25 +769,25 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Cos(Complex a)
+        public static Complex32 Cos(Complex32 a)
         {
-            return new Complex((float)Math.Cos(a.Real) * (float)Math.Cosh(a.Imag), -((float)Math.Sin(a.Real) * (float)Math.Sinh(a.Imag)));
+            return new Complex32((float)Math.Cos(a.Real) * (float)Math.Cosh(a.Imag), -((float)Math.Sin(a.Real) * (float)Math.Sinh(a.Imag)));
         }
         /// <summary>
         /// Returns the sine of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Sin(Complex a)
+        public static Complex32 Sin(Complex32 a)
         {
-            return new Complex((float)Math.Sin(a.Real) * (float)Math.Cosh(a.Imag), (float)Math.Cos(a.Real) * (float)Math.Sinh(a.Imag));
+            return new Complex32((float)Math.Sin(a.Real) * (float)Math.Cosh(a.Imag), (float)Math.Cos(a.Real) * (float)Math.Sinh(a.Imag));
         }
         /// <summary>
         /// Returns the tangent of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Tg(Complex a)
+        public static Complex32 Tg(Complex32 a)
         {
             return Maths.Sin(a) / Maths.Cos(a);
         }
@@ -796,7 +796,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Ctg(Complex a)
+        public static Complex32 Ctg(Complex32 a)
         {
             return Maths.Cos(a) / Maths.Sin(a);
         }
@@ -805,7 +805,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Sec(Complex a)
+        public static Complex32 Sec(Complex32 a)
         {
             return 1.0 / Maths.Cos(a);
         }
@@ -814,7 +814,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Cosc(Complex a)
+        public static Complex32 Cosc(Complex32 a)
         {
             return 1.0 / Maths.Sin(a);
         }
@@ -823,7 +823,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Acos(Complex a)
+        public static Complex32 Acos(Complex32 a)
         {
             return -I * Maths.Log(a + I * Maths.Sqrt(1.0 - a * a));
         }
@@ -832,7 +832,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Asin(Complex a)
+        public static Complex32 Asin(Complex32 a)
         {
             return -I * Maths.Log(I * a + Maths.Sqrt(1.0 - a * a));
         }
@@ -841,7 +841,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Atg(Complex a)
+        public static Complex32 Atg(Complex32 a)
         {
             return I / 2.0 * (Maths.Log(1.0 - I * a) - Maths.Log(1.0 + I * a));
         }
@@ -850,7 +850,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Actg(Complex a)
+        public static Complex32 Actg(Complex32 a)
         {
             return I / 2.0 * (Maths.Log((a - I) / a) - Maths.Log((a + I) / a));
         }
@@ -859,7 +859,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Asec(Complex a)
+        public static Complex32 Asec(Complex32 a)
         {
             return Maths.Acos(1.0 / a);
         }
@@ -868,7 +868,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Acosc(Complex a)
+        public static Complex32 Acosc(Complex32 a)
         {
             return Maths.Asin(1.0 / a);
         }
@@ -1005,25 +1005,25 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Sh(Complex a)
+        public static Complex32 Sh(Complex32 a)
         {
-            return new Complex((float)Math.Sinh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Cosh(a.Real) * (float)Math.Sin(a.Imag));
+            return new Complex32((float)Math.Sinh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Cosh(a.Real) * (float)Math.Sin(a.Imag));
         }
         /// <summary>
         /// Returns the hyperbolic cosine of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Ch(Complex a)
+        public static Complex32 Ch(Complex32 a)
         {
-            return new Complex((float)Math.Cosh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Sinh(a.Real) * (float)Math.Sin(a.Imag));
+            return new Complex32((float)Math.Cosh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Sinh(a.Real) * (float)Math.Sin(a.Imag));
         }
         /// <summary>
         /// Returns the hyperbolic tangent of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Th(Complex a)
+        public static Complex32 Th(Complex32 a)
         {
             return Maths.Sh(a) / Maths.Ch(a);
         }
@@ -1032,7 +1032,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Angle in radians</param>
         /// <returns>Complex number</returns>
-        public static Complex Cth(Complex a)
+        public static Complex32 Cth(Complex32 a)
         {
             return Maths.Ch(a) / Maths.Sh(a);
         }
@@ -1041,7 +1041,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Sch(Complex a)
+        public static Complex32 Sch(Complex32 a)
         {
             return 1.0 / Maths.Ch(a);
         }
@@ -1050,7 +1050,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Csch(Complex a)
+        public static Complex32 Csch(Complex32 a)
         {
             return 1.0 / Maths.Sh(a);
         }
@@ -1059,7 +1059,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Ash(Complex a)
+        public static Complex32 Ash(Complex32 a)
         {
             return Maths.Log(a + Maths.Sqrt(a * a + 1.0));
         }
@@ -1068,7 +1068,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Ach(Complex a)
+        public static Complex32 Ach(Complex32 a)
         {
             return Maths.Log(a + Maths.Sqrt(a * a - 1.0));
         }
@@ -1077,7 +1077,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <returns>Complex number</returns>
-        public static Complex Ath(Complex a)
+        public static Complex32 Ath(Complex32 a)
         {
             return 1.0 / 2.0 * Maths.Log((1.0 + a) / (1.0 - a));
         }
@@ -1086,7 +1086,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Acth(Complex a)
+        public static Complex32 Acth(Complex32 a)
         {
             return 1.0 / 2.0 * Maths.Log((a + 1.0) / (a - 1.0));
         }
@@ -1095,7 +1095,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Asch(Complex a)
+        public static Complex32 Asch(Complex32 a)
         {
             return Maths.Log(1.0 / a + Maths.Sqrt(1.0 / a + 1.0) + Maths.Sqrt(1.0 / a - 1.0));
         }
@@ -1104,7 +1104,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex Acsch(Complex a)
+        public static Complex32 Acsch(Complex32 a)
         {
             return Maths.Log(1.0 / a + Maths.Sqrt(1.0 / a / a + 1.0));
         }
@@ -1875,9 +1875,9 @@ namespace UMapx.Core
         /// <param name="b">Coefficient "b"</param>
         /// <param name="c">Coefficient "c"</param>
         /// <returns>Array</returns>
-        public static Complex[] Cubic(float a, float b, float c)
+        public static Complex32[] Cubic(float a, float b, float c)
         {
-            Complex x1 = 0, x2 = 0, x3 = 0;
+            Complex32 x1 = 0, x2 = 0, x3 = 0;
             float Q = (a * a - 3.0f * b) / 9.0f;
             float R = (2.0f * a * a * a - 9.0f * a * b + 27.0f * c) / 54.0f;
             float S = Q * Q * Q - R * R;
@@ -1930,7 +1930,7 @@ namespace UMapx.Core
                 x1 = -2 * v0 - a3;
                 x2 = x3 = v0 - a3;
             }
-            return new Complex[] { x1, x2, x3 };
+            return new Complex32[] { x1, x2, x3 };
         }
         /// <summary>
         /// Implements a solution to a quadratic equation of the form: 
@@ -1940,13 +1940,13 @@ namespace UMapx.Core
         /// <param name="b">Coefficient "b"</param>
         /// <param name="c">Coefficient "c"</param>
         /// <returns>Array</returns>
-        public static Complex[] Quadratic(float a, float b, float c)
+        public static Complex32[] Quadratic(float a, float b, float c)
         {
             float dis = b * b - 4 * a * c;
             float abs = (float)Math.Sqrt(Math.Abs(dis));
-            Complex root = dis < 0 ? new Complex(0, abs) : new Complex(abs, 0);
-            Complex q = -0.5 * (b + Math.Sign(b) * root);
-            return new Complex[] { q / a, c / q };
+            Complex32 root = dis < 0 ? new Complex32(0, abs) : new Complex32(abs, 0);
+            Complex32 q = -0.5 * (b + Math.Sign(b) * root);
+            return new Complex32[] { q / a, c / q };
         }
         /// <summary>
         /// Implements the solution of a biquadratic equation of the form:
@@ -1956,10 +1956,10 @@ namespace UMapx.Core
         /// <param name="b">Coefficient "b"</param>
         /// <param name="c">Coefficient "c"</param>
         /// <returns>Array</returns>
-        public static Complex[] BiQuadratic(float a, float b, float c)
+        public static Complex32[] BiQuadratic(float a, float b, float c)
         {
             var s = Quadratic(a, b, c);
-            return new Complex[] {     Maths.Sqrt(s[0]),
+            return new Complex32[] {     Maths.Sqrt(s[0]),
                                       -Maths.Sqrt(s[0]),
                                        Maths.Sqrt(s[1]),
                                       -Maths.Sqrt(s[1]) };
@@ -2001,12 +2001,12 @@ namespace UMapx.Core
         /// <param name="a">Number</param>
         /// <param name="b">Number</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Rotation(Complex a, Complex b)
+        public static Complex32[,] Rotation(Complex32 a, Complex32 b)
         {
             // MATLAB version of
             // Givens rotations:
-            Complex c, s;
-            Complex absx = Maths.Abs(a);
+            Complex32 c, s;
+            Complex32 absx = Maths.Abs(a);
 
             if (absx == 0)
             {
@@ -2015,13 +2015,13 @@ namespace UMapx.Core
             }
             else
             {
-                Complex[] v = new Complex[] { a, b };
+                Complex32[] v = new Complex32[] { a, b };
                 float norm = v.Norm();
                 c = absx / norm;
                 s = a / absx * (b.Conjugate / norm);
             }
 
-            return new Complex[,] { { c, s }, { -s.Conjugate, c } };
+            return new Complex32[,] { { c, s }, { -s.Conjugate, c } };
         }
         #endregion
 

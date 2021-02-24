@@ -87,7 +87,7 @@ namespace UMapx.Analysis
         /// <param name="y">Array of values of the function</param>
         /// <param name="xl">The value of the argument to calculate</param>
         /// <returns>Complex number</returns>
-        public Complex Compute(Complex[] x, Complex[] y, Complex xl)
+        public Complex32 Compute(Complex32[] x, Complex32[] y, Complex32 xl)
         {
             // chose method of interpolation
             switch (method)
@@ -261,10 +261,10 @@ namespace UMapx.Analysis
         /// <param name="y"></param>
         /// <param name="xval"></param>
         /// <returns></returns>
-        private static Complex lagra(Complex[] x, Complex[] y, Complex xval)
+        private static Complex32 lagra(Complex32[] x, Complex32[] y, Complex32 xval)
         {
-            Complex yval = 0.0;
-            Complex Products = y[0];
+            Complex32 yval = 0.0;
+            Complex32 Products = y[0];
             int length = x.Length;
             int i, j;
 
@@ -289,11 +289,11 @@ namespace UMapx.Analysis
         /// <param name="y"></param>
         /// <param name="xval"></param>
         /// <returns></returns>
-        private static Complex newto(Complex[] x, Complex[] y, Complex xval)
+        private static Complex32 newto(Complex32[] x, Complex32[] y, Complex32 xval)
         {
-            Complex yval;
+            Complex32 yval;
             int length = x.Length;
-            Complex[] tarray = new Complex[length];
+            Complex32[] tarray = new Complex32[length];
             int i, j;
 
             for (i = 0; i < length; i++)
@@ -321,14 +321,14 @@ namespace UMapx.Analysis
         /// <param name="y"></param>
         /// <param name="xval"></param>
         /// <returns></returns>
-        private static Complex baryc(Complex[] x, Complex[] y, Complex xval)
+        private static Complex32 baryc(Complex32[] x, Complex32[] y, Complex32 xval)
         {
-            Complex product;
-            Complex deltaX;
-            Complex bc1 = 0;
-            Complex bc2 = 0;
+            Complex32 product;
+            Complex32 deltaX;
+            Complex32 bc1 = 0;
+            Complex32 bc2 = 0;
             int length = x.Length;
-            Complex[] weights = new Complex[length];
+            Complex32[] weights = new Complex32[length];
             int i, j;
 
             for (i = 0; i < length; i++)

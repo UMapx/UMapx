@@ -102,7 +102,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
         /// <returns>Complex number</returns>
-        public Complex Compute(IComplex function, Complex a, Complex b, int n)
+        public Complex32 Compute(IComplex function, Complex32 a, Complex32 b, int n)
         {
             // chose method of integration
             switch (method)
@@ -131,7 +131,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
         /// <returns>Complex number</returns>
-        public Complex Compute(Complex[] y, Complex a, Complex b, int n)
+        public Complex32 Compute(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
             // chose method of integration
             switch (method)
@@ -380,10 +380,10 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex rect(IComplex f, Complex a, Complex b, int n)
+        private static Complex32 rect(IComplex f, Complex32 a, Complex32 b, int n)
         {
-            Complex sum = 0.0;
-            Complex h = (b - a) / n;
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += h * f(a + i * h);
@@ -398,10 +398,10 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex rect(Complex[] y, Complex a, Complex b, int n)
+        private static Complex32 rect(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
-            Complex sum = 0.0;
-            Complex h = (b - a) / n;
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += h * y[i];
@@ -417,11 +417,11 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex midp(IComplex f, Complex a, Complex b, int n)
+        private static Complex32 midp(IComplex f, Complex32 a, Complex32 b, int n)
         {
             // Midpoint
-            Complex sum = 0.0;
-            Complex h = (b - a) / n;
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += h * f(a + (i + 0.5) * h);
@@ -436,10 +436,10 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex midp(Complex[] y, Complex a, Complex b, int n)
+        private static Complex32 midp(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
-            Complex sum = 0.0;
-            Complex h = (b - a) / (n - 1);
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / (n - 1);
             for (int i = 0; i < (n - 1); i++)
             {
                 sum += h * 0.5 * (y[i] + y[i + 1]);
@@ -455,10 +455,10 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex trap(IComplex f, Complex a, Complex b, int n)
+        private static Complex32 trap(IComplex f, Complex32 a, Complex32 b, int n)
         {
-            Complex sum = 0.0;
-            Complex h = (b - a) / n;
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += 0.5 * h * (f(a + i * h) + f(a + (i + 1) * h));
@@ -473,10 +473,10 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex trap(Complex[] y, Complex a, Complex b, int n)
+        private static Complex32 trap(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
-            Complex sum = 0.0;
-            Complex h = (b - a) / (n - 1);
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / (n - 1);
             for (int i = 0; i < (n - 1); i++)
             {
                 sum += 0.5 * h * (y[i] + y[i + 1]);
@@ -492,11 +492,11 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex simp(IComplex f, Complex a, Complex b, int n)
+        private static Complex32 simp(IComplex f, Complex32 a, Complex32 b, int n)
         {
             if (n < 3) return float.NaN; //Need at least 3 points
-            Complex sum = 0.0;
-            Complex h = (b - a) / n;
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / n;
             if (n % 2 != 0)
             {
                 for (int i = 0; i < n - 1; i += 2)
@@ -522,12 +522,12 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex simp(Complex[] y, Complex a, Complex b, int n)
+        private static Complex32 simp(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
-            Complex h = (b - a) / n;
+            Complex32 h = (b - a) / n;
             //Need at least 3 points
             if (n < 3 || h == 0) return float.NaN;
-            Complex sum = 0.0;
+            Complex32 sum = 0.0;
             if (n % 2 != 0)
             {
                 for (int i = 0; i < n - 1; i += 2)
@@ -555,13 +555,13 @@ namespace UMapx.Analysis
         /// <param name="iterations"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex romb(IComplex f, Complex a, Complex b, int iterations, float eps = 1e-8f)
+        private static Complex32 romb(IComplex f, Complex32 a, Complex32 b, int iterations, float eps = 1e-8f)
         {
             int n = 2;
-            Complex h = b - a;
-            Complex sum = 0.0;
+            Complex32 h = b - a;
+            Complex32 sum = 0.0;
             int j = 0;
-            Complex[,] R = new Complex[iterations, iterations];
+            Complex32[,] R = new Complex32[iterations, iterations];
             R[1, 1] = h * (f(a) + f(b)) / 2.0;
             h = h / 2;
             R[2, 1] = R[1, 1] / 2 + h * f(a + h);

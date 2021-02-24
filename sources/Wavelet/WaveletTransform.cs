@@ -211,7 +211,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             // params
             int nLevels = (int)Math.Min(Maths.Log2(A.Length), this.levels);
@@ -229,7 +229,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             // params
             int nLevels = (int)Math.Min(Maths.Log2(B.Length), this.levels);
@@ -247,15 +247,15 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             // params
             int Bound1, Bound2, i, j;
             int DataLen1 = A.GetLength(0);
             int DataLen2 = A.GetLength(1);
-            Complex[,] output = (Complex[,])A.Clone();
-            Complex[] buff2 = new Complex[DataLen2];
-            Complex[] buff1 = new Complex[DataLen1];
+            Complex32[,] output = (Complex32[,])A.Clone();
+            Complex32[] buff2 = new Complex32[DataLen2];
+            Complex32[] buff1 = new Complex32[DataLen1];
             int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
 
             // do job
@@ -291,15 +291,15 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             // params
             int Bound1, Bound2, i, j;
             int DataLen1 = B.GetLength(0);
             int DataLen2 = B.GetLength(1);
-            Complex[,] output = (Complex[,])B.Clone();
-            Complex[] buff1 = new Complex[DataLen1];
-            Complex[] buff2 = new Complex[DataLen2];
+            Complex32[,] output = (Complex32[,])B.Clone();
+            Complex32[] buff1 = new Complex32[DataLen1];
+            Complex32[] buff2 = new Complex32[DataLen2];
             int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
 
             // do job
@@ -468,11 +468,11 @@ namespace UMapx.Wavelet
         /// <param name="input">Input signal</param>
         /// <param name="level">Current level of transform</param>
         /// <returns>Output data</returns>
-        private Complex[] dwt(Complex[] input, int level)
+        private Complex32[] dwt(Complex32[] input, int level)
         {
             // params
             int length = input.Length;
-            Complex[] output = new Complex[length];
+            Complex32[] output = new Complex32[length];
             int Bound = length >> level;
 
             // odd element
@@ -486,8 +486,8 @@ namespace UMapx.Wavelet
             int lpStart = -((lpLen >> 1) - 1);
             int hpStart = -((hpLen >> 1) - 1);
             Array.Copy(input, Bound, output, Bound, length - Bound);
-            Complex a = 0;
-            Complex b = 0;
+            Complex32 a = 0;
+            Complex32 b = 0;
             int h = Bound >> 1;
             int c, i, j, r, k;
 
@@ -539,20 +539,20 @@ namespace UMapx.Wavelet
         /// <param name="input">Input signal</param>
         /// <param name="level">Current level of transform</param>
         /// <returns>Output data</returns>
-        private Complex[] idwt(Complex[] input, int level)
+        private Complex32[] idwt(Complex32[] input, int level)
         {
             // params
             int length = input.Length;
-            Complex[] output = (Complex[])input.Clone();
+            Complex32[] output = (Complex32[])input.Clone();
             int Bound = length >> level;
             int h = Bound << 1;
             int lpLen = this.ilp.Length;
             int hpLen = this.ihp.Length;
             int lpStart = -((lpLen >> 1) - 1);
             int hpStart = -((hpLen >> 1) - 1);
-            Complex[] Low = new Complex[h];
-            Complex[] Hig = new Complex[h];
-            Complex s = 0;
+            Complex32[] Low = new Complex32[h];
+            Complex32[] Hig = new Complex32[h];
+            Complex32 s = 0;
             int c, i, j, k;
 
             // redim

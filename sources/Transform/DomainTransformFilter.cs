@@ -149,7 +149,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(Complex[] data)
+        public void Apply(Complex32[] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -159,7 +159,7 @@ namespace UMapx.Transform
                 int i;
 
                 // guided filter
-                Complex[] copy = (Complex[])data.Clone();
+                Complex32[] copy = (Complex32[])data.Clone();
                 DomainTransformFilter.domainfilter(copy, this.sigma_s, this.sigma_r, this.iterations);
 
                 // process
@@ -173,7 +173,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(Complex[,] data)
+        public void Apply(Complex32[,] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -184,7 +184,7 @@ namespace UMapx.Transform
                 int i, j;
 
                 // guided filter
-                Complex[,] copy = (Complex[,])data.Clone();
+                Complex32[,] copy = (Complex32[,])data.Clone();
                 DomainTransformFilter.domainfilter(copy, this.sigma_s, this.sigma_r, this.iterations);
 
                 // process
@@ -271,7 +271,7 @@ namespace UMapx.Transform
         /// <param name="sigma_s">High sigma</param>
         /// <param name="sigma_r">Low sigma</param>
         /// <param name="iterations">Number of iterations</param>
-        internal static void domainfilter(Complex[,] I, float sigma_s, float sigma_r, int iterations = 3)
+        internal static void domainfilter(Complex32[,] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
             int h = I.GetLength(0);
@@ -280,12 +280,12 @@ namespace UMapx.Transform
             int i, j;
 
             // get differences
-            Complex[,] dIcdx = DomainTransformFilter.Diff(I, 1, Direction.Horizontal);
-            Complex[,] dIcdy = DomainTransformFilter.Diff(I, 1, Direction.Vertical);
+            Complex32[,] dIcdx = DomainTransformFilter.Diff(I, 1, Direction.Horizontal);
+            Complex32[,] dIcdy = DomainTransformFilter.Diff(I, 1, Direction.Vertical);
 
             // shift patterns
-            Complex[,] dIdx = new Complex[h, w];
-            Complex[,] dIdy = new Complex[h, w];
+            Complex32[,] dIdx = new Complex32[h, w];
+            Complex32[,] dIdy = new Complex32[h, w];
 
             for (i = 0; i < h; i++)
                 for (j = 1; j < w; j++)
@@ -364,7 +364,7 @@ namespace UMapx.Transform
         /// <param name="sigma_s">High sigma</param>
         /// <param name="sigma_r">Low sigma</param>
         /// <param name="iterations">Number of iterations</param>
-        internal static void domainfilter(Complex[] I, float sigma_s, float sigma_r, int iterations = 3)
+        internal static void domainfilter(Complex32[] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
             int h = I.GetLength(0);
@@ -372,10 +372,10 @@ namespace UMapx.Transform
             int i;
 
             // get differences
-            Complex[] dIcdy = DomainTransformFilter.Diff(I, 1);
+            Complex32[] dIcdy = DomainTransformFilter.Diff(I, 1);
 
             // shift patterns
-            Complex[] dIdy = new Complex[h];
+            Complex32[] dIdy = new Complex32[h];
 
             for (i = 1; i < h; i++)
                 dIdy[i] = Maths.Abs(dIcdy[i - 1]);
@@ -458,11 +458,11 @@ namespace UMapx.Transform
         /// <param name="F">Input signal</param>
         /// <param name="D">Difference</param>
         /// <param name="sigma">Sigma</param>
-        internal static void tdrf_h(Complex[,] F, Complex[,] D, float sigma)
+        internal static void tdrf_h(Complex32[,] F, Complex32[,] D, float sigma)
         {
             // params
             float a = Maths.Exp(-Maths.Sqrt2 / sigma);
-            Complex[,] V = Matrice.Pow(a, D);
+            Complex32[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -485,11 +485,11 @@ namespace UMapx.Transform
         /// <param name="F">Input signal</param>
         /// <param name="D">Difference</param>
         /// <param name="sigma">Sigma</param>
-        internal static void tdrf_v(Complex[,] F, Complex[,] D, float sigma)
+        internal static void tdrf_v(Complex32[,] F, Complex32[,] D, float sigma)
         {
             // params
             float a = Maths.Exp(-Maths.Sqrt2 / sigma);
-            Complex[,] V = Matrice.Pow(a, D);
+            Complex32[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -537,11 +537,11 @@ namespace UMapx.Transform
         /// <param name="F">Input signal</param>
         /// <param name="D">Difference</param>
         /// <param name="sigma">Sigma</param>
-        internal static void tdrf(Complex[] F, Complex[] D, float sigma)
+        internal static void tdrf(Complex32[] F, Complex32[] D, float sigma)
         {
             // params
             float a = Maths.Exp(-Maths.Sqrt2 / sigma);
-            Complex[] V = Matrice.Pow(a, D);
+            Complex32[] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int i;
 
@@ -694,7 +694,7 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         /// <param name="reverse">Reverse processing or not</param>
         /// <returns>Matrix</returns>
-        private static Complex[,] Diff(Complex[,] a, int n, Direction direction, bool reverse = false)
+        private static Complex32[,] Diff(Complex32[,] a, int n, Direction direction, bool reverse = false)
         {
             // start
             int i, r, c;
@@ -750,17 +750,17 @@ namespace UMapx.Transform
         /// <param name="a">Matrix</param>
         /// <param name="reverse">Reverse processing or not</param>
         /// <returns>Matrix</returns>
-        private static Complex[,] DiffVertical(Complex[,] a, bool reverse = false)
+        private static Complex32[,] DiffVertical(Complex32[,] a, bool reverse = false)
         {
             // vertical direction 
             // of processing
             int r = a.GetLength(0) - 1;
             int m = a.GetLength(1);
             if (r == 0)
-                return new Complex[0, m];
+                return new Complex32[0, m];
 
             // new array
-            Complex[,] y = new Complex[r, m];
+            Complex32[,] y = new Complex32[r, m];
             int i, k;
 
             // do job
@@ -785,17 +785,17 @@ namespace UMapx.Transform
         /// <param name="a">Matrix</param>
         /// <param name="reverse">Reverse processing or not</param>
         /// <returns>Matrix</returns>
-        private static Complex[,] DiffHorizontal(Complex[,] a, bool reverse = false)
+        private static Complex32[,] DiffHorizontal(Complex32[,] a, bool reverse = false)
         {
             // horizontal direction 
             // of processing
             int c = a.GetLength(1) - 1;
             int m = a.GetLength(0);
             if (c == 0)
-                return new Complex[m, 0];
+                return new Complex32[m, 0];
 
             // new array
-            Complex[,] y = new Complex[m, c];
+            Complex32[,] y = new Complex32[m, c];
             int i, k;
 
             // do job
@@ -860,11 +860,11 @@ namespace UMapx.Transform
         /// <param name="n">Order</param>
         /// <param name="reverse">Reverse processing or not</param>
         /// <returns>Array</returns>
-        private static Complex[] Diff(Complex[] v, int n, bool reverse = false)
+        private static Complex32[] Diff(Complex32[] v, int n, bool reverse = false)
         {
             // start
-            Complex[] z;
-            Complex[] y = v;
+            Complex32[] z;
+            Complex32[] y = v;
             int i, j, length;
 
             // do job
@@ -874,9 +874,9 @@ namespace UMapx.Transform
                 length = z.Length - 1;
 
                 if (length == 0)
-                    return new Complex[0];
+                    return new Complex32[0];
 
-                y = new Complex[length];
+                y = new Complex32[length];
 
                 if (reverse)
                 {

@@ -129,7 +129,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="data">Matrix</param>
 
-        public void Apply(Complex[,] data)
+        public void Apply(Complex32[,] data)
         {
             var B = WaveletDecomposition.Forward(data);
             int n, m;
@@ -178,7 +178,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="data">Array</param>
 
-        public void Apply(Complex[] data)
+        public void Apply(Complex32[] data)
         {
             var B = WaveletDecomposition.Forward(data);
             int n;

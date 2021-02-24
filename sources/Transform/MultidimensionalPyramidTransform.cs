@@ -64,10 +64,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public Complex[][][] Forward(params Complex[][] A)
+        public Complex32[][][] Forward(params Complex32[][] A)
         {
             int count = A.Length;
-            Complex[][][] B = new Complex[count][][];
+            Complex32[][][] B = new Complex32[count][][];
 
             for (int i = 0; i < count; i++)
             {
@@ -81,10 +81,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Jagged matrix</param>
         /// <returns>Jagged matrix</returns>
-        public Complex[][][,] Forward(params Complex[][,] A)
+        public Complex32[][][,] Forward(params Complex32[][,] A)
         {
             int count = A.Length;
-            Complex[][][,] B = new Complex[count][][,];
+            Complex32[][][,] B = new Complex32[count][][,];
 
             for (int i = 0; i < count; i++)
             {
@@ -132,10 +132,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public Complex[][] Backward(params Complex[][][] B)
+        public Complex32[][] Backward(params Complex32[][][] B)
         {
             int count = B.Length;
-            Complex[][] A = new Complex[count][];
+            Complex32[][] A = new Complex32[count][];
 
             for (int i = 0; i < count; i++)
             {
@@ -149,10 +149,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Jagged matrix</param>
         /// <returns>Jagged matrix</returns>
-        public Complex[][,] Backward(params Complex[][][,] B)
+        public Complex32[][,] Backward(params Complex32[][][,] B)
         {
             int count = B.Length;
-            Complex[][,] A = new Complex[count][,];
+            Complex32[][,] A = new Complex32[count][,];
 
             for (int i = 0; i < count; i++)
             {

@@ -47,7 +47,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="polynomial">Polynomial</param>
         /// <returns>Array</returns>
-        public Complex[] Compute(float[] polynomial)
+        public Complex32[] Compute(float[] polynomial)
         {
             // MATLAB roots method
             // represented by Valery Asiryan, 2018.
@@ -68,7 +68,7 @@ namespace UMapx.Analysis
             // return null array:
             if (index == -1)
             {
-                return new Complex[0];
+                return new Complex32[0];
             }
 
             // get scaling factor:
@@ -94,7 +94,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="roots">Roots</param>
         /// <returns>Array</returns>
-        public float[] Compute(Complex[] roots)
+        public float[] Compute(Complex32[] roots)
         {
             // MATLAB roots method
             // represented by Valery Asiryan, 2018.
@@ -102,8 +102,8 @@ namespace UMapx.Analysis
             int length = roots.Length, m = length + 1, j, i;
 
             // arrays:
-            Complex[] v = new Complex[length];
-            Complex[] p = new Complex[m];
+            Complex32[] v = new Complex32[length];
+            Complex32[] p = new Complex32[m];
 
             // point:
             p[0] = 1.0;

@@ -68,7 +68,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public float[] Forward(float[] A)
         {
-            Complex[] B = Matrice.ToComplex(A);
+            Complex32[] B = Matrice.ToComplex(A);
             B = FFT.Forward(B);
 
             int length = A.Length, i;
@@ -88,7 +88,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public float[] Backward(float[] B)
         {
-            Complex[] A = Matrice.ToComplex(B);
+            Complex32[] A = Matrice.ToComplex(B);
             A = FFT.Backward(A);
 
             int length = B.Length, i;
@@ -108,7 +108,7 @@ namespace UMapx.Transform
         /// <returns>Matrix</returns>
         public float[,] Forward(float[,] A)
         {
-            Complex[,] B = Matrice.ToComplex(A);
+            Complex32[,] B = Matrice.ToComplex(A);
             B = FFT.Forward(B);
 
             int width = A.GetLength(1), height = A.GetLength(0);
@@ -132,7 +132,7 @@ namespace UMapx.Transform
         /// <returns>Matrix</returns>
         public float[,] Backward(float[,] B)
         {
-            Complex[,] A = Matrice.ToComplex(B);
+            Complex32[,] A = Matrice.ToComplex(B);
             A = FFT.Backward(A);
 
             int width = B.GetLength(1), height = B.GetLength(0);
@@ -154,11 +154,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int length = A.Length, i;
-            Complex[] B = FFT.Forward(A);
-            Complex[] Hk = new Complex[length];
+            Complex32[] B = FFT.Forward(A);
+            Complex32[] Hk = new Complex32[length];
 
             for (i = 0; i < length; i++)
             {
@@ -172,11 +172,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int length = B.Length, i;
-            Complex[] A = FFT.Backward(B);
-            Complex[] Hk = new Complex[length];
+            Complex32[] A = FFT.Backward(B);
+            Complex32[] Hk = new Complex32[length];
 
             for (i = 0; i < length; i++)
             {
@@ -190,11 +190,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
-            Complex[,] B = FFT.Forward(A);
+            Complex32[,] B = FFT.Forward(A);
             int width = A.GetLength(1), height = A.GetLength(0);
-            Complex[,] Hk = new Complex[height, width];
+            Complex32[,] Hk = new Complex32[height, width];
             int i, j;
 
             for (i = 0; i < height; i++)
@@ -212,11 +212,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
-            Complex[,] A = FFT.Backward(B);
+            Complex32[,] A = FFT.Backward(B);
             int width = B.GetLength(1), height = B.GetLength(0);
-            Complex[,] Hk = new Complex[height, width];
+            Complex32[,] Hk = new Complex32[height, width];
             int i, j;
 
             for (i = 0; i < height; i++)

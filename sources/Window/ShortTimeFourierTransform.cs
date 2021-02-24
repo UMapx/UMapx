@@ -83,17 +83,17 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             // params
             int N = A.Length, i, j;
-            Complex[] B = new Complex[N];
+            Complex32[] B = new Complex32[N];
             int frame = coefs.Length;
 
             // Short-Time Fourier Transform
             for (i = 0; i < N; i += frame)
             {
-                Complex[] data = new Complex[frame];
+                Complex32[] data = new Complex32[frame];
 
                 for (j = 0; j < frame; j++)
                     data[j] = A[i + j] * coefs[Maths.Mod(i - frame / 2, frame)];
@@ -111,15 +111,15 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length, i, j;
-            Complex[] A = new Complex[N];
+            Complex32[] A = new Complex32[N];
             int frame = coefs.Length;
 
             for (i = 0; i < N; i += frame)
             {
-                Complex[] data = new Complex[frame];
+                Complex32[] data = new Complex32[frame];
 
                 for (j = 0; j < frame; j++)
                 {
@@ -141,10 +141,10 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             // Fourier transform:
-            Complex[,] B = (Complex[,])A.Clone();
+            Complex32[,] B = (Complex32[,])A.Clone();
             int N = A.GetLength(0);
             int M = A.GetLength(1);
 
@@ -153,7 +153,7 @@ namespace UMapx.Window
                 // 2-d horizontal short-time fourier transform:
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -172,7 +172,7 @@ namespace UMapx.Window
                 // 2-d vertical short-time fourier transform:
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -194,7 +194,7 @@ namespace UMapx.Window
                 // 2-d vertical short-time fourier transform:
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -215,7 +215,7 @@ namespace UMapx.Window
                 // 2-d horizontal short-time fourier transform:
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -239,9 +239,9 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
-            Complex[,] A = (Complex[,])B.Clone();
+            Complex32[,] A = (Complex32[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -250,7 +250,7 @@ namespace UMapx.Window
                 // 2-d vertical short-time fourier transform:
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -269,7 +269,7 @@ namespace UMapx.Window
                 // 2-d horizontal short-time fourier transform:
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -290,7 +290,7 @@ namespace UMapx.Window
                 // 2-d vertical short-time fourier transform:
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -311,7 +311,7 @@ namespace UMapx.Window
                 // 2-d horizontal short-time fourier transform:
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)

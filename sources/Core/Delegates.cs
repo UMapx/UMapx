@@ -11,7 +11,7 @@
     /// </summary>
     /// <param name="x">Argument</param>
     /// <returns>Complex number</returns>
-    public delegate Complex IComplex(Complex x);
+    public delegate Complex32 IComplex(Complex32 x);
     /// <summary>
     /// Defines the delegate of a continuous function that depends on two arguments.
     /// </summary>
@@ -25,5 +25,5 @@
     /// <param name="x">First argument</param>
     /// <param name="y">Second argument</param>
     /// <returns>Complex number</returns>
-    public delegate Complex IComplexMesh(Complex x, Complex y);
+    public delegate Complex32 IComplexMesh(Complex32 x, Complex32 y);
 }

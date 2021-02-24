@@ -77,14 +77,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns vector α.
         /// </summary>
-        public Complex[] Alpha
+        public Complex32[] Alpha
         {
             get
             {
-                Complex[] a = new Complex[n];
+                Complex32[] a = new Complex32[n];
 
                 for (int i = 0; i < n; i++)
-                    a[i] = new Complex(ar[i], ai[i]);
+                    a[i] = new Complex32(ar[i], ai[i]);
 
                 return a;
             }
@@ -99,14 +99,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns a vector of eigenvalues.
         /// </summary>
-        public Complex[] Eigenvalues
+        public Complex32[] Eigenvalues
         {
             get
             {
                 // c = (ar + j*ai) / beta
-                Complex[] c = new Complex[n];
+                Complex32[] c = new Complex32[n];
                 for (int i = 0; i < n; i++)
-                    c[i] = new Complex(ar[i], ai[i]) / beta[i];
+                    c[i] = new Complex32(ar[i], ai[i]) / beta[i];
 
                 return c;
             }

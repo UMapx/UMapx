@@ -256,11 +256,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
-            Complex[] B = (Complex[])A.Clone();
+            Complex32[] B = (Complex32[])A.Clone();
             int length = B.Length;
-            Complex last = 0;
+            Complex32 last = 0;
 
             for (int i = 0; i < length; i++)
             {
@@ -276,11 +276,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
-            Complex[] A = (Complex[])B.Clone();
+            Complex32[] A = (Complex32[])B.Clone();
             int length = A.Length;
-            Complex last = 0;
+            Complex32 last = 0;
 
             for (int i = 0; i < length; i++)
             {
@@ -296,9 +296,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
-            Complex[,] B = (Complex[,])A.Clone();
+            Complex32[,] B = (Complex32[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -306,7 +306,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -325,7 +325,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -345,7 +345,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -365,7 +365,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -389,9 +389,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
-            Complex[,] A = (Complex[,])B.Clone();
+            Complex32[,] A = (Complex32[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -399,7 +399,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -416,7 +416,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -436,7 +436,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -454,7 +454,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)

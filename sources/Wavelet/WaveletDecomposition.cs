@@ -155,13 +155,13 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[][] Forward(Complex[] A)
+        public Complex32[][] Forward(Complex32[] A)
         {
             // params
             int length = A.Length;
             int nLevels = (int)Math.Min(Maths.Log2(length), WaveletTransform.Levels);
-            Complex[] B = WaveletTransform.Forward(A);
-            Complex[][] C = new Complex[nLevels + 1][];
+            Complex32[] B = WaveletTransform.Forward(A);
+            Complex32[][] C = new Complex32[nLevels + 1][];
 
             // forward multi-scale wavelet decomposition
             for (int i = 0, k = 0; i <= nLevels; i++)
@@ -169,7 +169,7 @@ namespace UMapx.Wavelet
                 var bound = length >> (nLevels - i);
                 var count = bound - k;
 
-                C[i] = new Complex[count];
+                C[i] = new Complex32[count];
 
                 for (int j = 0; j < count; j++)
                 {
@@ -186,11 +186,11 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[][] B)
+        public Complex32[] Backward(Complex32[][] B)
         {
             // params
             int nLevels = B.Length;
-            Complex[] A = new Complex[] { };
+            Complex32[] A = new Complex32[] { };
 
             // backward multi-scale wavelet decomposition
             for (int i = 0; i < nLevels; i++)
@@ -205,14 +205,14 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[][,] Forward(Complex[,] A)
+        public Complex32[][,] Forward(Complex32[,] A)
         {
             // params
             int N = A.GetLength(0);
             int M = A.GetLength(1);
             int nLevels = (int)Math.Min(Math.Min(Maths.Log2(N), WaveletTransform.Levels), M);
-            Complex[,] B = WaveletTransform.Forward(A);
-            Complex[][,] C = new Complex[nLevels + 1][,];
+            Complex32[,] B = WaveletTransform.Forward(A);
+            Complex32[][,] C = new Complex32[nLevels + 1][,];
 
             // forward multi-scale wavelet decomposition
             for (int i = 0, k1 = 0, k2 = 0; i <= nLevels; i++)
@@ -222,7 +222,7 @@ namespace UMapx.Wavelet
                 var count1 = bound1 - k1;
                 var count2 = bound2 - k2;
 
-                C[i] = new Complex[count1, count2];
+                C[i] = new Complex32[count1, count2];
 
                 for (int y = 0; y < count1; y++)
                 {
@@ -244,11 +244,11 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[][,] B)
+        public Complex32[,] Backward(Complex32[][,] B)
         {
             // params
             int nLevels = B.Length;
-            Complex[,] A = B[nLevels - 1];
+            Complex32[,] A = B[nLevels - 1];
 
             // backward multi-scale wavelet decomposition
             for (int i = nLevels - 2; i >= 0; i--)

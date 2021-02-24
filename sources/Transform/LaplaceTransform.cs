@@ -97,9 +97,9 @@ namespace UMapx.Transform
         /// <param name="sigma">Standard deviation (0, 1)</param>
         /// <param name="backward">Return backward transformation matrix or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Matrix(int n, float sigma, bool backward = false)
+        public static Complex32[,] Matrix(int n, float sigma, bool backward = false)
         {
-            Complex[,] H = new Complex[n, n];
+            Complex32[,] H = new Complex32[n, n];
             float factor;
             int i, j;
 
@@ -138,11 +138,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            Complex[,] U = LaplaceTransform.Matrix(N, sigma);
-            Complex[] B = Matrice.Dot(A, U);
+            Complex32[,] U = LaplaceTransform.Matrix(N, sigma);
+            Complex32[] B = Matrice.Dot(A, U);
 
             if (normalized)
             {
@@ -156,11 +156,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            Complex[,] U = LaplaceTransform.Matrix(N, sigma, true);
-            Complex[] A = Matrice.Dot(B, U.Hermitian());
+            Complex32[,] U = LaplaceTransform.Matrix(N, sigma, true);
+            Complex32[] A = Matrice.Dot(B, U.Hermitian());
 
             if (normalized)
             {
@@ -174,12 +174,12 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            Complex[,] U = LaplaceTransform.Matrix(N, sigma);
-            Complex[,] V = LaplaceTransform.Matrix(M, sigma);
-            Complex[,] B;
+            Complex32[,] U = LaplaceTransform.Matrix(N, sigma);
+            Complex32[,] V = LaplaceTransform.Matrix(M, sigma);
+            Complex32[,] B;
 
             if (direction == Direction.Both)
             {
@@ -204,12 +204,12 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            Complex[,] U = LaplaceTransform.Matrix(N, sigma, true);
-            Complex[,] V = LaplaceTransform.Matrix(M, sigma, true);
-            Complex[,] A;
+            Complex32[,] U = LaplaceTransform.Matrix(N, sigma, true);
+            Complex32[,] V = LaplaceTransform.Matrix(M, sigma, true);
+            Complex32[,] A;
 
             if (direction == Direction.Both)
             {

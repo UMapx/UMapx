@@ -67,10 +67,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            Complex[] F = FFT.Forward(A);
+            Complex32[] F = FFT.Forward(A);
             HilbertTransform.hilbertf(F, N);
             F = FFT.Backward(F);
             return HilbertTransform.hilbertb(A, F, N);
@@ -80,14 +80,14 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length, i;
-            Complex[] A = new Complex[N];
+            Complex32[] A = new Complex32[N];
 
             for (i = 0; i < N; i++)
             {
-                A[i] = new Complex(B[i].Real, 0);
+                A[i] = new Complex32(B[i].Real, 0);
             }
 
             return A;
@@ -97,9 +97,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
-            Complex[,] B = (Complex[,])A.Clone();
+            Complex32[,] B = (Complex32[,])A.Clone();
             int N = A.GetLength(0);
             int M = A.GetLength(1);
 
@@ -111,7 +111,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -131,8 +131,8 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
-                    Complex[] num = new Complex[M];
+                    Complex32[] row = new Complex32[M];
+                    Complex32[] num = new Complex32[M];
 
                     int j;
 
@@ -157,7 +157,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -177,8 +177,8 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
-                    Complex[] num = new Complex[N];
+                    Complex32[] col = new Complex32[N];
+                    Complex32[] num = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -204,7 +204,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -224,8 +224,8 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
-                    Complex[] num = new Complex[N];
+                    Complex32[] col = new Complex32[N];
+                    Complex32[] num = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -249,7 +249,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -269,8 +269,8 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
-                    Complex[] num = new Complex[M];
+                    Complex32[] row = new Complex32[M];
+                    Complex32[] num = new Complex32[M];
 
                     int j;
 
@@ -296,9 +296,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
-            Complex[,] A = (Complex[,])B.Clone();
+            Complex32[,] A = (Complex32[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -306,7 +306,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -324,7 +324,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -344,7 +344,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex[] row = new Complex[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -364,7 +364,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex[] col = new Complex[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -426,14 +426,14 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="f">Spectrum</param>
         /// <param name="n">Length</param>
-        internal static void hilbertf(Complex[] f, int n)
+        internal static void hilbertf(Complex32[] f, int n)
         {
             int n2 = n / 2;
 
             for (int i = 0; i < n2; i++)
             {
                 f[i] *= 2.0;
-                f[i + n2] = Complex.Zero;
+                f[i + n2] = Complex32.Zero;
             }
             return;
         }
@@ -444,13 +444,13 @@ namespace UMapx.Transform
         /// <param name="f">Spectrum</param>
         /// <param name="n">Length</param>
         /// <returns>Array</returns>
-        internal static Complex[] hilbertb(Complex[] a, Complex[] f, int n)
+        internal static Complex32[] hilbertb(Complex32[] a, Complex32[] f, int n)
         {
-            Complex[] B = new Complex[n];
+            Complex32[] B = new Complex32[n];
 
             for (int i = 0; i < n; i++)
             {
-                B[i] = new Complex(a[i].Real, f[i].Imag);
+                B[i] = new Complex32(a[i].Real, f[i].Imag);
             }
 
             return B;

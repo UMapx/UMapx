@@ -19,7 +19,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public Complex Scaling(float x)
+        public Complex32 Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -28,7 +28,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Function</returns>
-        public Complex Wavelet(float x)
+        public Complex32 Wavelet(float x)
         {
             float x2 = x * x;
             float cf = 2.0f / Maths.Sqrt(5) * (float)Math.Pow(Math.PI, -0.25);

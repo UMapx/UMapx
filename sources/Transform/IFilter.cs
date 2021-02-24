@@ -22,12 +22,12 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        void Apply(Complex[] data);
+        void Apply(Complex32[] data);
         /// <summary>
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        void Apply(Complex[,] data);
+        void Apply(Complex32[,] data);
         #endregion
     }
 }

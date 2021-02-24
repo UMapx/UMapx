@@ -95,22 +95,22 @@ namespace UMapx.Window
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Matrix(float[] g0, int M)
+        public static Complex32[,] Matrix(float[] g0, int M)
         {
             int N = g0.Length, L = N / M;
 
             if (L <= 0)
                 throw new Exception("Number of frequency shifts not defined correctly");
 
-            Complex[,] G = new Complex[N, N];
-            Complex c = 2 * Maths.Pi * Maths.I;
+            Complex32[,] G = new Complex32[N, N];
+            Complex32 c = 2 * Maths.Pi * Maths.I;
             float a = M / 2.0f;
 
             Parallel.For(0, N, n =>
             {
                 float phase = n - a / 2.0f;
                 int k, l, u, i, j;
-                Complex exp, psi;
+                Complex32 exp, psi;
 
                 for (k = 0; k < M; k++)
                 {
@@ -122,7 +122,7 @@ namespace UMapx.Window
                         i = Maths.Mod(n - l * M, N);
                         j = Maths.Mod(n + M / 2 - l * M, N);
 
-                        psi = new Complex(
+                        psi = new Complex32(
                             (g0[i] * exp).Real,
                             (Maths.I * g0[j] * exp).Real);
 
@@ -144,7 +144,7 @@ namespace UMapx.Window
         /// <param name="M">Number of frequency shifts</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
+        public static Complex32[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
         {
             return WeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.GetPacket(window, N), M, orthogonalize);
         }
@@ -158,7 +158,7 @@ namespace UMapx.Window
         /// <param name="M">Number of frequency shifts</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
-        public static Complex[,] Matrix(float[] g0, int M, bool orthogonalize = true)
+        public static Complex32[,] Matrix(float[] g0, int M, bool orthogonalize = true)
         {
             if (orthogonalize)
             {
@@ -228,11 +228,11 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            Complex[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            Complex[] B = Matrice.Dot(A, U.Hermitian());
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
+            Complex32[] B = Matrice.Dot(A, U.Hermitian());
             return B;
         }
         /// <summary>
@@ -240,11 +240,11 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            Complex[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            Complex[] A = Matrice.Dot(B, U);
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
+            Complex32[] A = Matrice.Dot(B, U);
             return A;
         }
         /// <summary>
@@ -252,12 +252,12 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            Complex[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            Complex[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
-            Complex[,] B;
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
+            Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
+            Complex32[,] B;
 
             if (direction == Direction.Both)
             {
@@ -278,12 +278,12 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            Complex[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            Complex[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
-            Complex[,] A;
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
+            Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
+            Complex32[,] A;
 
             if (direction == Direction.Both)
             {

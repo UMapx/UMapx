@@ -148,7 +148,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(Complex[,] data)
+        public void Apply(Complex32[,] data)
         {
             throw new NotSupportedException();
         }
@@ -156,7 +156,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(Complex[] data)
+        public void Apply(Complex32[] data)
         {
             throw new NotSupportedException();
         }

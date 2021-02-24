@@ -62,7 +62,7 @@ namespace UMapx.Transform
         public float[] Forward(float[] A)
         {
             int N = A.Length, N2 = N * 2, i, k;
-            Complex[] B = new Complex[N2];
+            Complex32[] B = new Complex32[N2];
 
             for (i = 0; i < N; i++)
             {
@@ -72,7 +72,7 @@ namespace UMapx.Transform
             B = FFT.Forward(B);
 
             float[] C = new float[N];
-            Complex c = -Maths.I * Maths.Pi / N;
+            Complex32 c = -Maths.I * Maths.Pi / N;
 
             for (k = 0; k < N; k++)
             {
@@ -91,14 +91,14 @@ namespace UMapx.Transform
         public float[] Backward(float[] B)
         {
             int N = B.Length, N2 = N * 2, i, k;
-            Complex[] A = new Complex[N2];
+            Complex32[] A = new Complex32[N2];
             float Bk, temp, c = Maths.Pi / N;
 
             for (k = 0; k < N; k++)
             {
                 Bk = B[k];
                 temp = k * c;
-                A[k] = new Complex(Bk * (float)Math.Cos(temp), Bk * (float)Math.Sin(temp));
+                A[k] = new Complex32(Bk * (float)Math.Cos(temp), Bk * (float)Math.Sin(temp));
             }
 
             A = FFT.Backward(A);
@@ -299,7 +299,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Forward(Complex[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             throw new NotSupportedException();
         }
@@ -308,7 +308,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex[] Backward(Complex[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             throw new NotSupportedException();
         }
@@ -317,7 +317,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Forward(Complex[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             throw new NotSupportedException();
         }
@@ -326,7 +326,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex[,] Backward(Complex[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             throw new NotSupportedException();
         }

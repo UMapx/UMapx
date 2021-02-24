@@ -71,7 +71,7 @@ namespace UMapx.Analysis
         /// <param name="x">Array of values argument</param>
         /// <param name="y0">Value</param>
         /// <returns>Array of function values</returns>
-        public Complex[] Compute(IComplexMesh function, Complex[] x, Complex y0)
+        public Complex32[] Compute(IComplexMesh function, Complex32[] x, Complex32 y0)
         {
             // chose method of differentiation
             switch (method)
@@ -155,7 +155,7 @@ namespace UMapx.Analysis
         /// <param name="y0">Value</param>
         /// <param name="order">Order</param>
         /// <returns>Array of function values</returns>
-        public Complex[] Compute(IComplexMesh function, Complex[] x, Complex y0, int order = 2)
+        public Complex32[] Compute(IComplexMesh function, Complex32[] x, Complex32 y0, int order = 2)
         {
             int n = x.Length - 1;
 
@@ -165,10 +165,10 @@ namespace UMapx.Analysis
             {
                 // params
                 int i, j, k = order + 1;
-                Complex[] y = new Complex[n];
-                Complex[] r = new Complex[k];
+                Complex32[] y = new Complex32[n];
+                Complex32[] r = new Complex32[k];
                 float[] c = Differential.GetCoefficients(order);
-                Complex h, t, sum;
+                Complex32 h, t, sum;
 
                 // compute first points by order
                 for (i = 0; i < k; i++)
@@ -340,11 +340,11 @@ namespace UMapx.Analysis
         /// <param name="x"></param>
         /// <param name="y0"></param>
         /// <returns></returns>
-        private static Complex[] euler(IComplexMesh f, Complex[] x, Complex y0)
+        private static Complex32[] euler(IComplexMesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
-            Complex xnew, ynew = y0, h;
-            Complex[] result = new Complex[n];
+            Complex32 xnew, ynew = y0, h;
+            Complex32[] result = new Complex32[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -362,11 +362,11 @@ namespace UMapx.Analysis
         /// <param name="x"></param>
         /// <param name="y0"></param>
         /// <returns></returns>
-        private static Complex[] rungeKutta2(IComplexMesh f, Complex[] x, Complex y0)
+        private static Complex32[] rungeKutta2(IComplexMesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
-            Complex xnew, ynew = y0, h, k1, k2;
-            Complex[] result = new Complex[n];
+            Complex32 xnew, ynew = y0, h, k1, k2;
+            Complex32[] result = new Complex32[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -387,11 +387,11 @@ namespace UMapx.Analysis
         /// <param name="x"></param>
         /// <param name="y0"></param>
         /// <returns></returns>
-        private static Complex[] rungeKutta4(IComplexMesh f, Complex[] x, Complex y0)
+        private static Complex32[] rungeKutta4(IComplexMesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
-            Complex xnew, ynew = y0, h, k1, k2, k3, k4;
-            Complex[] result = new Complex[n];
+            Complex32 xnew, ynew = y0, h, k1, k2, k3, k4;
+            Complex32[] result = new Complex32[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -414,11 +414,11 @@ namespace UMapx.Analysis
         /// <param name="x"></param>
         /// <param name="y0"></param>
         /// <returns></returns>
-        private static Complex[] fehlberg(IComplexMesh f, Complex[] x, Complex y0)
+        private static Complex32[] fehlberg(IComplexMesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
-            Complex xnew, ynew = y0, h, k1, k2, k3, k4, k5, k6;
-            Complex[] result = new Complex[n];
+            Complex32 xnew, ynew = y0, h, k1, k2, k3, k4, k5, k6;
+            Complex32[] result = new Complex32[n];
 
             for (int i = 0; i < n; i++)
             {

@@ -110,7 +110,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="s">Input string</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        public static Complex Compar(string s)
+        public static Complex32 Compar(string s)
         {
             string u = s.Replace(" ", "");
             int i, k = 0;
@@ -129,11 +129,11 @@ namespace UMapx.Core
                     else break;
                 }
 
-                return new Complex(float.Parse(re), 0);
+                return new Complex32(float.Parse(re), 0);
             }
             else
             {
-                if (u == "i") return new Complex(0, 1);
+                if (u == "i") return new Complex32(0, 1);
 
                 for (i = 1; i < length; i++)
                 {
@@ -148,7 +148,7 @@ namespace UMapx.Core
                 {
                     int k1 = k + 1, k2 = k + 2; im += u[k1];
 
-                    if (u[k2] == 'i') return new Complex(float.Parse(re), float.Parse(im + '1'));
+                    if (u[k2] == 'i') return new Complex32(float.Parse(re), float.Parse(im + '1'));
 
                     for (i = k2; i < length; i++)
                     {
@@ -158,11 +158,11 @@ namespace UMapx.Core
                         }
                         else break;
                     }
-                    return new Complex(float.Parse(re), float.Parse(im));
+                    return new Complex32(float.Parse(re), float.Parse(im));
                 }
                 else
                 {
-                    return new Complex(0, float.Parse(re.Replace("i", "")));
+                    return new Complex32(0, float.Parse(re.Replace("i", "")));
                 }
             }
         }

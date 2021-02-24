@@ -86,7 +86,7 @@ namespace UMapx.Analysis
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
         /// <returns>float precision floating point number</returns>
-        public Complex Compute(IComplex function, Complex a, Complex b)
+        public Complex32 Compute(IComplex function, Complex32 a, Complex32 b)
         {
             // chose method of nonlinear
             switch (method)
@@ -214,11 +214,11 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex chord(IComplex f, Complex a, Complex b, float eps = 1e-8f)
+        private static Complex32 chord(IComplex f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
             int n = 0;
-            Complex x0 = (b - a) / 2.0;
-            Complex x;
+            Complex32 x0 = (b - a) / 2.0;
+            Complex32 x;
 
             while (Maths.Abs(f(x0) / b) > eps && n < short.MaxValue)
             {
@@ -236,12 +236,12 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex secan(IComplex f, Complex a, Complex b, float eps = 1e-8f)
+        private static Complex32 secan(IComplex f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
-            Complex x1 = a;
-            Complex x2 = b;
-            Complex fb = f(b);
-            Complex mpoint;
+            Complex32 x1 = a;
+            Complex32 x2 = b;
+            Complex32 fb = f(b);
+            Complex32 mpoint;
             int n = 0;
 
             while (Maths.Abs(f(x2)) > eps && n < short.MaxValue)
@@ -262,17 +262,17 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex falpo(IComplex f, Complex a, Complex b, float eps = 1e-8f)
+        private static Complex32 falpo(IComplex f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
-            Complex x1 = a;
-            Complex x2 = b;
-            Complex fb = f(b);
+            Complex32 x1 = a;
+            Complex32 x2 = b;
+            Complex32 fb = f(b);
             int n = 0;
 
             while (Maths.Abs(x2 - x1) > eps && n < short.MaxValue)
             {
-                Complex xpoint = x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
-                Complex fxpoint = f(xpoint);
+                Complex32 xpoint = x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
+                Complex32 fxpoint = f(xpoint);
                 float s = fb.Real * fxpoint.Real;
 
                 // sign

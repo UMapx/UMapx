@@ -169,10 +169,10 @@ namespace UMapx.Analysis
         /// <param name="x">Argument</param>
         /// <param name="c">Approximation coefficients</param>
         /// <returns>Complex number</returns>
-        public static Complex Polynomial(Complex x, Complex[] c)
+        public static Complex32 Polynomial(Complex32 x, Complex32[] c)
         {
             int n = c.Length, i;
-            Complex p = 1, s = 0;
+            Complex32 p = 1, s = 0;
 
             for (i = 0; i < n; i++, p *= x)
             {
@@ -186,10 +186,10 @@ namespace UMapx.Analysis
         /// <param name="x">Argument</param>
         /// <param name="c">Approximation coefficients</param>
         /// <returns>Array</returns>
-        public static Complex[] Polynomial(Complex[] x, Complex[] c)
+        public static Complex32[] Polynomial(Complex32[] x, Complex32[] c)
         {
             int n = x.Length, i;
-            Complex[] y = new Complex[n];
+            Complex32[] y = new Complex32[n];
 
             for (i = 0; i < n; i++)
             {
@@ -204,12 +204,12 @@ namespace UMapx.Analysis
         /// <param name="y">Function</param>
         /// <param name="iterations">Number of iterations</param>
         /// <returns>Array</returns>
-        public static Complex[] Coefficients(Complex[] x, Complex[] y, int iterations)
+        public static Complex32[] Coefficients(Complex32[] x, Complex32[] y, int iterations)
         {
             int i, j;
             int n = x.Length;
             int m = iterations < 1 ? 1 : iterations;
-            Complex[,] matrix = new Complex[m, m + 1];
+            Complex32[,] matrix = new Complex32[m, m + 1];
 
             for (i = 0; i < m; i++)
             {
@@ -228,9 +228,9 @@ namespace UMapx.Analysis
         /// <param name="v">Array</param>
         /// <param name="pow">Power</param>
         /// <returns>float precision floating point number</returns>
-        public static Complex SummaryPow(Complex[] v, float pow)
+        public static Complex32 SummaryPow(Complex32[] v, float pow)
         {
-            Complex sum = 0;
+            Complex32 sum = 0;
             int length = v.Length;
 
             for (int i = 0; i < length; i++)
@@ -247,9 +247,9 @@ namespace UMapx.Analysis
         /// <param name="powx">Power of x</param>
         /// <param name="powy">Power of y</param>
         /// <returns>float precision floating point number</returns>
-        public static Complex SummaryPow(Complex[] x, Complex[] y, float powx, float powy)
+        public static Complex32 SummaryPow(Complex32[] x, Complex32[] y, float powx, float powy)
         {
-            Complex sum = 0;
+            Complex32 sum = 0;
             int length = x.Length;
 
             for (int i = 0; i < length; i++)
@@ -264,10 +264,10 @@ namespace UMapx.Analysis
         /// <param name="a">Approximation</param>
         /// <param name="b">Function</param>
         /// <returns>float precision floating point number</returns>
-        public static Complex Error(Complex[] a, Complex[] b)
+        public static Complex32 Error(Complex32[] a, Complex32[] b)
         {
-            Complex vara = Matrice.Var(a);
-            Complex varb = Matrice.Var(b);
+            Complex32 vara = Matrice.Var(a);
+            Complex32 varb = Matrice.Var(b);
 
             if (vara.Abs < varb.Abs)
             {
@@ -280,7 +280,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="p">Polynomial coefficients</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        public static string Equation(Complex[] p)
+        public static string Equation(Complex32[] p)
         {
             string equation = "";
             int length = p.Length;
@@ -300,7 +300,7 @@ namespace UMapx.Analysis
         /// <param name="p">Polynomial coefficients</param>
         /// <param name="function">Function</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        public static string Equation(Complex[] p, string function)
+        public static string Equation(Complex32[] p, string function)
         {
             string equation = "";
             int length = p.Length;
