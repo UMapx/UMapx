@@ -25,11 +25,17 @@
 * **Image Processing Toolbox**. Contains efficient algorithms to processing, correcting and analyzing 32-bit images.
 * **Video Processing Toolbox**. Includes a set of tools to video streaming and processing.
 
+# Supported types
+**UMapx.NET** supports only
+* 32 bit types - `float`, `Complex` and etc (compatible with [NAudio](https://github.com/naudio/NAudio) and other signal processing libraries),
+* 32 bit image `BitmapData` format - `Format32bppArgb` (compatible with [AForge.NET](https://github.com/andrewkirillov/AForge.NET), [Accord.NET](https://github.com/accord-net/framework/) and etc),
+* 8, 24 bit video `BitmapData` formats - `Format8bppIndexed`, `Format24bppRgb` (32 bit format NOT recomended).
+
 # Installation
 You can build **UMapx.NET** from sources or install to your own project using nuget package manager.
 | Version | Specification | OS | Platform | Download | Package |
 |-------------|-------------|-------------|-------------|--------------|--------------|
-| 5.0.0.2 | .NET Standard 2.0 | Cross-platform | AnyCPU | [Release](https://github.com/asiryan/UMapx.NET/releases/) | [NuGet](https://www.nuget.org/packages/UMapx/) |
+| 5.0.1.1 | .NET Standard 2.0 | Cross-platform | AnyCPU | [Release](https://github.com/asiryan/UMapx.NET/releases/) | [NuGet](https://www.nuget.org/packages/UMapx/) |
 
 # Namespaces
 ```c#
