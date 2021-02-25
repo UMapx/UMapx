@@ -26,7 +26,7 @@ namespace UMapx.Imaging
         private bool smoothing;
         #endregion
 
-        #region Filter componetns
+        #region Filter components
         /// <summary>
         /// Initializes the local histogram stretch filter.
         /// </summary>

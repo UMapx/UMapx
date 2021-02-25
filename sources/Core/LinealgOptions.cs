@@ -1604,18 +1604,6 @@ namespace UMapx.Core
 
         #region Morphology (separable)
         /// <summary>
-        /// Returns the matrix result of morphology.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="r0">Height radius</param>
-        /// <param name="r1">Width radius</param>
-        /// <param name="t0">Threshold by height</param>
-        /// <param name="t1">Threshold by width</param>
-        public static float[,] Morph(float[,] m, int r0, int r1, int t0, int t1)
-        {
-            return  MorphVertical(MorphHorizontal(m, r1, t1), r0, t0);
-        }
-        /// <summary>
         /// Implements local average of matrices (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
@@ -1625,6 +1613,10 @@ namespace UMapx.Core
         public static float[,] MorphHorizontal(float[,] A, int r1, int threshold)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (width < 2 || r1 < 2)
+                return A;
+
             float[,] H = new float[height, width];
             int h = r1 >= width ? width - 1 : r1;
             int v = h >> 1;
@@ -1678,6 +1670,10 @@ namespace UMapx.Core
         public static float[,] MorphVertical(float[,] A, int r0, int threshold)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (height < 2 || r0 < 2)
+                return A;
+
             float[,] H = new float[height, width];
             int h = r0 >= height ? height - 1 : r0;
             int v = h >> 1;
@@ -1720,58 +1716,6 @@ namespace UMapx.Core
             });
 
             return H;
-        }
-        /// <summary>
-        /// Returns the vector result of morphology.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="r">Radius</param>
-        /// <param name="threshold">Threshold</param>
-        /// <returns>Array</returns>
-        public static float[] Morph(float[] v, int r, int threshold)
-        {
-            int l = v.Length;
-            if (l == 1)
-                return v;
-
-            float[] output = new float[l];
-            int h = r >= l ? l - 1 : r;
-            int w = r >> 1;
-            int dl = l - w;
-            float[] s = new float[h];
-            int x;
-
-            for (x = 0; x < h; x++)
-            {
-                s[x] = v[x];
-            }
-
-            Array.Sort(s);
-
-            for (x = 0; x < w; x++)
-            {
-                output[x] = s[threshold];
-            }
-
-            for (x = w; x < dl; x++)
-            {
-                var i = Array.IndexOf(s, v[x - w]);
-                s[i] = v[x + w];
-                FastSort(ref s, i);
-
-                output[x] = s[threshold];
-            }
-
-            for (x = dl; x < l; x++)
-            {
-                var i = Array.IndexOf(s, v[x - w]);
-                s[i] = v[x];
-                FastSort(ref s, i);
-
-                output[x] = s[threshold];
-            }
-
-            return output;
         }
         /// <summary>
         /// O(N) sort algorithm.
@@ -1818,6 +1762,10 @@ namespace UMapx.Core
         public static float[,] MeanHorizontal(float[,] A, int r1)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (width < 2 || r1 < 2)
+                return A;
+
             float[,] H = new float[height, width];
             int h = r1 >= width ? width - 1 : r1;
             int v = h >> 1;
@@ -1835,7 +1783,7 @@ namespace UMapx.Core
 
                 for (x = 0; x < v; x++)
                 {
-                    H[y,x] = s / h;
+                    H[y, x] = s / h;
                 }
 
                 for (x = v; x < dl; x++)
@@ -1862,6 +1810,10 @@ namespace UMapx.Core
         public static float[,] MeanVertical(float[,] A, int r0)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (height < 2 || r0 < 2)
+                return A;
+
             float[,] H = new float[height, width];
             int h = r0 >= height ? height - 1 : r0;
             int v = h >> 1;
@@ -1907,6 +1859,10 @@ namespace UMapx.Core
         public static Complex32[,] MeanHorizontal(Complex32[,] A, int r1)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (width < 2 || r1 < 2)
+                return A;
+
             Complex32[,] H = new Complex32[height, width];
             int h = r1 >= width ? width - 1 : r1;
             int v = h >> 1;
@@ -1951,6 +1907,10 @@ namespace UMapx.Core
         public static Complex32[,] MeanVertical(Complex32[,] A, int r0)
         {
             int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (height < 2 || r0 < 2)
+                return A;
+
             Complex32[,] H = new Complex32[height, width];
             int h = r0 >= height ? height - 1 : r0;
             int v = h >> 1;

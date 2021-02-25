@@ -10,7 +10,7 @@ namespace UMapx.Imaging
     /// Defines the box blur filter.
     /// </summary>
     [Serializable]
-    public class BoxBlur : IBitmapFilter
+    public class BoxBlur : IBitmapFilter2, IBitmapFilter
     {
         #region Private data
         private int rw;
@@ -62,22 +62,50 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        public void Apply(BitmapData bmData)
+        /// <param name="bmSrc">Bitmap data</param>
+        public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (rw >= 2 && rh >= 2)
             {
-                ApplyHorizontal(bmData);
-                ApplyVertical(bmData);
+                ApplyVertical(bmSrc, bmData);
+                ApplyHorizontal(bmData, bmSrc);
             }
             else if (rw >= 2 && rh < 2)
             {
-                ApplyHorizontal(bmData);
+                ApplyHorizontal(bmData, bmSrc);
             }
             else if (rw < 2 && rh >= 2)
             {
-                ApplyVertical(bmData);
+                ApplyVertical(bmData, bmSrc);
             }
             else return;
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
+        public void Apply(Bitmap Data, Bitmap Src)
+        {
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+            Apply(bmData, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
+            return;
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        public void Apply(BitmapData bmData)
+        {
+            Bitmap Src = (Bitmap)BitmapFormat.Bitmap(bmData).Clone();
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+            Apply(bmData, bmSrc);
+            BitmapFormat.Unlock(Src, bmSrc);
+            Src.Dispose();
+            return;
         }
         /// <summary>
         /// Apply filter.
@@ -88,6 +116,7 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
             BitmapFormat.Unlock(Data, bmData);
+            return;
         }
         #endregion
 
@@ -96,10 +125,12 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        private unsafe void ApplyVertical(BitmapData bmData)
+        /// <param name="bmSrc">Bitmap data</param>
+        private unsafe void ApplyVertical(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            byte* src = (byte*)bmSrc.Scan0.ToPointer();
             byte* dst = (byte*)bmData.Scan0.ToPointer();
             int h = rh >= height ? height - 1 : rh;
             int v = h >> 1;
@@ -116,9 +147,9 @@ namespace UMapx.Imaging
 
                 for (p = xx, y = 0; y < h; y++, p += stride)
                 {
-                    r += dst[p + 2];
-                    g += dst[p + 1];
-                    b += dst[p + 0];
+                    r += src[p + 2];
+                    g += src[p + 1];
+                    b += src[p + 0];
                 }
 
                 for (p = xx, y = 0; y < v; y++, p += stride)
@@ -130,7 +161,7 @@ namespace UMapx.Imaging
 
                 for (
                     y = v,
-                    p = xx,
+                    p = xx + (y - v) * stride,
                     q = xx + (y + 0) * stride,
                     w = xx + (y + v) * stride;
 
@@ -141,9 +172,9 @@ namespace UMapx.Imaging
                     q += stride,
                     w += stride)
                 {
-                    r = r - dst[p + 2] + dst[w + 2];
-                    g = g - dst[p + 1] + dst[w + 1];
-                    b = b - dst[p + 0] + dst[w + 0];
+                    r = r - src[p + 2] + src[w + 2];
+                    g = g - src[p + 1] + src[w + 1];
+                    b = b - src[p + 0] + dst[w + 0];
 
                     dst[q + 2] = Maths.Byte(r / h);
                     dst[q + 1] = Maths.Byte(g / h);
@@ -152,22 +183,22 @@ namespace UMapx.Imaging
 
                 for (
                     y = dl,
-                    w = xx + (y - v) * stride,
-                    p = xx + (y + 0) * stride;
+                    p = xx + (y - v) * stride,
+                    q = xx + (y + 0) * stride;
 
                     y < height;
 
                     y++,
-                    w += stride,
-                    p += stride)
+                    p += stride,
+                    q += stride)
                 {
-                    r = r - dst[w + 2] + dst[p + 2];
-                    g = g - dst[w + 1] + dst[p + 1];
-                    b = b - dst[w + 0] + dst[p + 0];
+                    r = r - src[p + 2] + src[q + 2];
+                    g = g - src[p + 1] + src[q + 1];
+                    b = b - src[p + 0] + src[q + 0];
 
-                    dst[p + 2] = Maths.Byte(r / h);
-                    dst[p + 1] = Maths.Byte(g / h);
-                    dst[p + 0] = Maths.Byte(b / h);
+                    dst[q + 2] = Maths.Byte(r / h);
+                    dst[q + 1] = Maths.Byte(g / h);
+                    dst[q + 0] = Maths.Byte(b / h);
                 }
 
             });
@@ -178,10 +209,12 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        private unsafe void ApplyHorizontal(BitmapData bmData)
+        /// <param name="bmSrc">Bitmap data</param>
+        private unsafe void ApplyHorizontal(BitmapData bmData, BitmapData bmSrc)
         {
             #region Data
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            byte* src = (byte*)bmSrc.Scan0.ToPointer();
             byte* dst = (byte*)bmData.Scan0.ToPointer();
             int h = rw >= width ? width - 1 : rw;
             int v = h >> 1;
@@ -198,9 +231,9 @@ namespace UMapx.Imaging
 
                 for (p = yy, x = 0; x < h; x++, p += 4)
                 {
-                    r += dst[p + 2];
-                    g += dst[p + 1];
-                    b += dst[p + 0];
+                    r += src[p + 2];
+                    g += src[p + 1];
+                    b += src[p + 0];
                 }
 
                 for (p = yy, x = 0; x < v; x++, p += 4)
@@ -212,7 +245,7 @@ namespace UMapx.Imaging
 
                 for (
                     x = v,
-                    p = yy,
+                    p = yy + (x - v) * 4,
                     q = yy + (x + 0) * 4,
                     w = yy + (x + v) * 4;
 
@@ -223,9 +256,9 @@ namespace UMapx.Imaging
                     q += 4,
                     w += 4)
                 {
-                    r = r - dst[p + 2] + dst[w + 2];
-                    g = g - dst[p + 1] + dst[w + 1];
-                    b = b - dst[p + 0] + dst[w + 0];
+                    r = r - src[p + 2] + src[w + 2];
+                    g = g - src[p + 1] + src[w + 1];
+                    b = b - src[p + 0] + src[w + 0];
 
                     dst[q + 2] = Maths.Byte(r / h);
                     dst[q + 1] = Maths.Byte(g / h);
@@ -234,22 +267,22 @@ namespace UMapx.Imaging
 
                 for (
                     x = dl,
-                    w = (x - v) * 4 + yy,
-                    p = (x + 0) * 4 + yy;
+                    p = (x - v) * 4 + yy,
+                    q = (x + 0) * 4 + yy;
 
                     x < width;
 
                     x++,
                     p += 4,
-                    w += 4)
+                    q += 4)
                 {
-                    r = r - dst[w + 2] + dst[p + 2];
-                    g = g - dst[w + 1] + dst[p + 1];
-                    b = b - dst[w + 0] + dst[p + 0];
+                    r = r - src[p + 2] + src[q + 2];
+                    g = g - src[p + 1] + src[q + 1];
+                    b = b - src[p + 0] + src[q + 0];
 
-                    dst[p + 2] = Maths.Byte(r / h);
-                    dst[p + 1] = Maths.Byte(g / h);
-                    dst[p + 0] = Maths.Byte(b / h);
+                    dst[q + 2] = Maths.Byte(r / h);
+                    dst[q + 1] = Maths.Byte(g / h);
+                    dst[q + 0] = Maths.Byte(b / h);
                 }
 
             });

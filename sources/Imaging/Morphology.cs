@@ -10,12 +10,13 @@ namespace UMapx.Imaging
     /// Defines the morphology filter.
     /// </summary>
     [Serializable]
-    public class Morphology : IBitmapFilter2
+    public class Morphology : IBitmapFilter2, IBitmapFilter
     {
         #region Private data
-        private int threshold;
         private int rw;
         private int rh;
+        private int tw;
+        private int th;
         #endregion
 
         #region Filter components
@@ -27,25 +28,26 @@ namespace UMapx.Imaging
         public Morphology(int radius = 3, int threshold = 0)
         {
             Size = new SizeInt(radius, radius);
-            Threshold = threshold;
+            Threshold = new SizeInt(threshold, threshold);
         }
         /// <summary>
         /// Initializes the morphology filter.
         /// </summary>
         /// <param name="width">Filter width</param>
         /// <param name="height">Filter height</param>
-        /// <param name="threshold">Threshold</param>
-        public Morphology(int width, int height, int threshold)
+        /// <param name="widthThreshold">Threshold by width</param>
+        /// <param name="heightThreshold">Threshold by height</param>
+        public Morphology(int width, int height, int widthThreshold, int heightThreshold)
         {
             Size = new SizeInt(width, height);
-            Threshold = threshold;
+            Threshold = new SizeInt(widthThreshold, heightThreshold);
         }
         /// <summary>
         /// Initializes the morphology filter.
         /// </summary>
         /// <param name="size">Filter size</param>
-        /// <param name="threshold">Threshold</param>
-        public Morphology(SizeInt size, int threshold = 0)
+        /// <param name="threshold">Thresholds</param>
+        public Morphology(SizeInt size, SizeInt threshold)
         {
             Size = size;
             Threshold = threshold;
@@ -66,17 +68,18 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Gets or sets the threshold.
+        /// Gets or sets thresholds.
         /// </summary>
-        public int Threshold
+        public SizeInt Threshold
         {
             get
             {
-                return this.threshold;
+                return new SizeInt(tw, th);
             }
             set
             {
-                this.threshold = value;
+                this.tw = value.Width;
+                this.th = value.Height;
             }
         }
         /// <summary>
@@ -88,8 +91,8 @@ namespace UMapx.Imaging
         {
             if (rw >= 2 && rh >= 2)
             {
-                ApplyHorizontal(bmSrc, bmData);
-                ApplyVertical(bmData, bmSrc);
+                ApplyVertical(bmSrc, bmData);
+                ApplyHorizontal(bmData, bmSrc);
             }
             else if (rw >= 2 && rh < 2)
             {
@@ -113,6 +116,20 @@ namespace UMapx.Imaging
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Data, bmData);
             BitmapFormat.Unlock(Src, bmSrc);
+            return;
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        public void Apply(BitmapData bmData)
+        {
+            Bitmap Src = (Bitmap)BitmapFormat.Bitmap(bmData).Clone();
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+            Apply(bmData, bmSrc);
+            BitmapFormat.Unlock(Src, bmSrc);
+            Src.Dispose();
+            return;
         }
         /// <summary>
         /// Apply filter.
@@ -120,13 +137,10 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            Bitmap Src = (Bitmap)Data.Clone();
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
+            Apply(bmData);
             BitmapFormat.Unlock(Data, bmData);
-            BitmapFormat.Unlock(Src, bmSrc);
-            Src.Dispose();
+            return;
         }
         #endregion
 
@@ -142,59 +156,95 @@ namespace UMapx.Imaging
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
             byte* dst = (byte*)bmData.Scan0.ToPointer();
-            int r = rh >> 1;
+            int h = rh >= height ? height - 1 : rh;
+            int v = h >> 1;
+            int dl = height - v;
+            int threshold = th;
             #endregion
 
-            Parallel.For(0, height, y =>
+            Parallel.For(0, width, x =>
             {
-                byte[] red, green, blue;
-                int x, i, ir, jr, yr, xr;
-                int ystride, v;
-                byte* p;
+                byte[] r = new byte[h];
+                byte[] g = new byte[h];
+                byte[] b = new byte[h];
+                int p, w, q, y, i;
+                int xx = x * 4;
 
-                yr = y - r;
-                ystride = y * stride;
-
-                for (x = 0; x < width; x++)
+                for (p = xx, y = 0; y < h; y++, p += stride)
                 {
-                    xr = x;
-                    v = ystride + x * 4;
-
-                    red = new byte[rh];
-                    green = new byte[rh];
-                    blue = new byte[rh];
-
-                    #region Convolution filtering
-                    for (i = 0; i < rh; i++)
-                    {
-                        ir = yr + i;
-                        if (ir < 0) continue; if (ir >= height) break;
-
-                        jr = xr + 0;
-
-                        if (jr < 0) continue; if (jr >= width) break;
-
-                        p = &src[ir * stride + jr * 4];
-                        red[i] = p[2];
-                        green[i] = p[1];
-                        blue[i] = p[0];
-                    }
-                    #endregion
-
-                    #region Morphology filtering
-                    Array.Sort(red);
-                    Array.Sort(green);
-                    Array.Sort(blue);
-                    #endregion
-
-                    #region Recording pixel
-                    dst[v + 2] = red[threshold];
-                    dst[v + 1] = green[threshold];
-                    dst[v] = blue[threshold];
-                    #endregion
+                    r[y] = src[p + 2];
+                    g[y] = src[p + 1];
+                    b[y] = src[p + 0];
                 }
-            }
-            );
+
+                Array.Sort(r);
+                Array.Sort(g);
+                Array.Sort(b);
+
+                for (p = xx, y = 0; y < v; y++, p += stride)
+                {
+                    dst[p + 2] = r[threshold];
+                    dst[p + 1] = g[threshold];
+                    dst[p + 0] = b[threshold];
+                }
+
+                for (
+                    y = v,
+                    p = xx + (y - v) * stride,
+                    q = xx + (y + 0) * stride,
+                    w = xx + (y + v) * stride;
+
+                    y < dl;
+
+                    y++,
+                    p += stride,
+                    q += stride,
+                    w += stride)
+                {
+                    i = Array.IndexOf(r, src[p + 2]);
+                    r[i] = src[w + 2];
+                    FastSort(ref r, i);
+                    dst[q + 2] = r[threshold];
+
+                    i = Array.IndexOf(g, src[p + 1]);
+                    g[i] = src[w + 1];
+                    FastSort(ref g, i);
+                    dst[q + 1] = g[threshold];
+
+                    i = Array.IndexOf(b, src[p + 0]);
+                    b[i] = src[w + 0];
+                    FastSort(ref b, i);
+                    dst[q + 0] = b[threshold];
+                }
+
+                for (
+                    y = dl,
+                    p = xx + (y - v) * stride,
+                    q = xx + (y + 0) * stride;
+
+                    y < height;
+
+                    y++,
+                    p += stride,
+                    q += stride)
+                {
+                    i = Array.IndexOf(r, src[p + 2]);
+                    r[i] = src[q + 2];
+                    FastSort(ref r, i);
+                    dst[q + 2] = r[threshold];
+
+                    i = Array.IndexOf(g, src[p + 1]);
+                    g[i] = src[q + 1];
+                    FastSort(ref g, i);
+                    dst[q + 1] = g[threshold];
+
+                    i = Array.IndexOf(b, src[p + 0]);
+                    b[i] = src[q + 0];
+                    FastSort(ref b, i);
+                    dst[q + 0] = b[threshold];
+                }
+
+            });
 
             return;
         }
@@ -209,89 +259,161 @@ namespace UMapx.Imaging
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
             byte* dst = (byte*)bmData.Scan0.ToPointer();
-            int r = rw >> 1;
+            int h = rw >= width ? width - 1 : rw;
+            int v = h >> 1;
+            int dl = width - v;
+            int threshold = tw;
             #endregion
 
             Parallel.For(0, height, y =>
             {
-                byte[] red, green, blue;
-                int x, j, ir, jr, yr, xr;
-                int ystride, v;
-                byte* p;
+                byte[] r = new byte[h];
+                byte[] g = new byte[h];
+                byte[] b = new byte[h];
+                int p, q, w, x, i;
+                int yy = y * stride;
 
-                yr = y;
-                ystride = y * stride;
-
-                for (x = 0; x < width; x++)
+                for (p = yy, x = 0; x < h; x++, p += 4)
                 {
-                    xr = x - r;
-                    v = ystride + x * 4;
-
-                    red = new byte[rw];
-                    green = new byte[rw];
-                    blue = new byte[rw];
-
-                    #region Convolution filtering
-                    ir = yr + 0;
-                    if (ir < 0) continue; if (ir >= height) break;
-
-                    for (j = 0; j < rw; j++)
-                    {
-                        jr = xr + j;
-
-                        if (jr < 0) continue; if (jr >= width) break;
-
-                        p = &src[ir * stride + jr * 4];
-                        red[j] = p[2];
-                        green[j] = p[1];
-                        blue[j] = p[0];
-                    }
-                    #endregion
-
-                    #region Morphology filtering
-                    Array.Sort(red);
-                    Array.Sort(green);
-                    Array.Sort(blue);
-                    #endregion
-
-                    #region Recording pixel
-                    dst[v + 2] = red[threshold];
-                    dst[v + 1] = green[threshold];
-                    dst[v] = blue[threshold];
-                    #endregion
+                    r[x] = src[p + 2];
+                    g[x] = src[p + 1];
+                    b[x] = src[p + 0];
                 }
-            }
-            );
 
-            return;
+                Array.Sort(r);
+                Array.Sort(g);
+                Array.Sort(b);
+
+                for (p = yy, x = 0; x < v; x++, p += 4)
+                {
+                    dst[p + 2] = r[threshold];
+                    dst[p + 1] = g[threshold];
+                    dst[p + 0] = b[threshold];
+                }
+
+                for (
+                    x = v,
+                    p = yy + (x - v) * 4,
+                    q = yy + (x + 0) * 4,
+                    w = yy + (x + v) * 4;
+
+                    x < dl;
+
+                    x++,
+                    p += 4,
+                    q += 4,
+                    w += 4)
+                {
+                    i = Array.IndexOf(r, src[p + 2]);
+                    r[i] = src[w + 2];
+                    FastSort(ref r, i);
+                    dst[q + 2] = r[threshold];
+
+                    i = Array.IndexOf(g, src[p + 1]);
+                    g[i] = src[w + 1];
+                    FastSort(ref g, i);
+                    dst[q + 1] = g[threshold];
+
+                    i = Array.IndexOf(b, src[p + 0]);
+                    b[i] = src[w + 0];
+                    FastSort(ref b, i);
+                    dst[q + 0] = b[threshold];
+                }
+
+                for (
+                    x = dl,
+                    p = (x - v) * 4 + yy,
+                    q = (x + 0) * 4 + yy;
+
+                    x < width;
+
+                    x++,
+                    p += 4,
+                    q += 4)
+                {
+                    i = Array.IndexOf(r, src[p + 2]);
+                    r[i] = src[q + 2];
+                    FastSort(ref r, i);
+                    dst[q + 2] = r[threshold];
+
+                    i = Array.IndexOf(g, src[p + 1]);
+                    g[i] = src[q + 1];
+                    FastSort(ref g, i);
+                    dst[q + 1] = g[threshold];
+
+                    i = Array.IndexOf(b, src[p + 0]);
+                    b[i] = src[q + 0];
+                    FastSort(ref b, i);
+                    dst[q + 0] = b[threshold];
+                }
+
+            });
+        }
+        /// <summary>
+        /// O(N) sort algorithm.
+        /// </summary>
+        /// <param name="s">Array</param>
+        /// <param name="index">Index</param>
+        private static void FastSort(ref byte[] s, int index)
+        {
+            int length = s.Length - 1;
+
+            for (int i = index; i < length; i++)
+            {
+                if (s[i] > s[i + 1])
+                {
+                    var t = s[i + 1];
+                    s[i + 1] = s[i];
+                    s[i] = t;
+                }
+                else
+                    break;
+            }
+
+            for (int i = index; i > 0; i--)
+            {
+                if (s[i] < s[i - 1])
+                {
+                    var t = s[i - 1];
+                    s[i - 1] = s[i];
+                    s[i] = t;
+                }
+                else
+                    break;
+            }
         }
         #endregion
 
-        #region Public static components
+        #region Public static
         /// <summary>
-        /// Initializes the median filter.
+        /// Returns erosion filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        public static Morphology Median(int radius)
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <returns>Morphology</returns>
+        public static Morphology Erosion(int width, int height)
         {
-            int threshold = radius / 2;
-            return new Morphology(radius, radius, threshold);
+            return new Morphology(width, height, 0, 0);
         }
         /// <summary>
-        /// Initializes the erosion filter.
+        /// Returns dilatation filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        public static Morphology Erosion(int radius)
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <returns>Morphology</returns>
+        public static Morphology Dilatation(int width, int height)
         {
-            return new Morphology(radius, radius, 0);
+            return new Morphology(width, height, width - 1, height - 1);
         }
         /// <summary>
-        /// Initializes the dilatation filter.
+        /// Returns median filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        public static Morphology Dilatation(int radius)
+        /// <param name="width">Filter width</param>
+        /// <param name="height">Filter height</param>
+        /// <returns>Morphology</returns>
+        public static Morphology Median(int width, int height)
         {
-            return new Morphology(radius, radius, radius - 1);
+            return new Morphology(width, height, width / 2, height / 2);
         }
         #endregion
     }

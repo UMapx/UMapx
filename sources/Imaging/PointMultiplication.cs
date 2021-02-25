@@ -10,7 +10,7 @@ namespace UMapx.Imaging
     /// Defines the point multiplication filter.
     /// </summary>
     [Serializable]
-    public class PointMultiplication : Rebuilder, IBitmapFilter2
+    public class PointMultiplication : Rebuilder, IBitmapFilter2, IBitmapFilter
     {
         #region Private data
         /// <summary>
@@ -118,16 +118,26 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        public void Apply(BitmapData bmData)
+        {
+            Bitmap Src = (Bitmap)BitmapFormat.Bitmap(bmData).Clone();
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+            Apply(bmData, bmSrc);
+            BitmapFormat.Unlock(Src, bmSrc);
+            Src.Dispose();
+            return;
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            Bitmap Src = (Bitmap)Data.Clone();
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
+            Apply(bmData);
             BitmapFormat.Unlock(Data, bmData);
-            BitmapFormat.Unlock(Src, bmSrc);
-            Src.Dispose();
+            return;
         }
         #endregion
     }

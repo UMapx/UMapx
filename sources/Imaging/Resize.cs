@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     /// Defines the resize filter.
     /// </summary>
     [Serializable]
-    public class Resize : IBitmapFilter2
+    public class Resize : IBitmapFilter2, IBitmapFilter
     {
         #region Private data
         int newWidth;
@@ -101,6 +101,30 @@ namespace UMapx.Imaging
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Data, bmData);
             BitmapFormat.Unlock(Src, bmSrc);
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        public void Apply(BitmapData bmData)
+        {
+            Bitmap Src = (Bitmap)BitmapFormat.Bitmap(bmData).Clone();
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+            Apply(bmData, bmSrc);
+            BitmapFormat.Unlock(Src, bmSrc);
+            Src.Dispose();
+            return;
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        public void Apply(Bitmap Data)
+        {
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            Apply(bmData);
+            BitmapFormat.Unlock(Data, bmData);
+            return;
         }
         #endregion
     }
