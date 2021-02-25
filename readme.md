@@ -27,7 +27,7 @@
 
 # Supported types
 **UMapx.NET** supports only
-* 32 bit types - `float`, `Complex` and etc (compatible with [NAudio](https://github.com/naudio/NAudio) and other signal processing libraries),
+* 32 bit types - `float`, `Complex32` and etc (compatible with [System.Numerics](https://docs.microsoft.com/ru-ru/dotnet/api/system.numerics?view=netframework-4.8), [NAudio](https://github.com/naudio/NAudio) and other signal processing libraries),
 * 32 bit image `BitmapData` format - `Format32bppArgb` (compatible with [AForge.NET](https://github.com/andrewkirillov/AForge.NET), [Accord.NET](https://github.com/accord-net/framework/) and etc),
 * 8, 24 bit video `BitmapData` formats - `Format8bppIndexed`, `Format24bppRgb` (32 bit format NOT recomended).
 
