@@ -23,7 +23,7 @@ namespace UMapx.Imaging
             // Singe scale retinex modified algorithm
             // by Valery Asiryan
             // 
-            return (float)Math.Exp(a * Math.Log(x / xlow, nbase) + b) - 0.5f;
+            return a * (float)Math.Log(x / xlow, nbase) + b;
         }
         /// <summary>
         /// Returns the correction mask.
