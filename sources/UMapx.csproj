@@ -30,6 +30,7 @@
     <Optimize>false</Optimize>
     <DocumentationFile>bin\Debug\UMapx.xml</DocumentationFile>
     <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

@@ -134,24 +134,6 @@ namespace UMapx.Imaging
             return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
         }
         /// <summary>
-        /// Blocks Bitmap in system memory.
-        /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Bitmap data</returns>
-        internal static BitmapData Lock24bpp(this Bitmap b)
-        {
-            return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-        }
-        /// <summary>
-        /// Blocks Bitmap in system memory.
-        /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Bitmap data</returns>
-        internal static BitmapData Lock8bpp(this Bitmap b)
-        {
-            return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
-        }
-        /// <summary>
         /// Unblocks Bitmap in system memory.
         /// </summary>
         /// <param name="b">Bitmap</param>

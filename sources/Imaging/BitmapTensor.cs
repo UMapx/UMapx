@@ -17,7 +17,7 @@ namespace UMapx.Imaging
         /// <returns>RGB tensor arrays</returns>
         public static byte[][] ToByteTensor(this Bitmap Data, bool rgb = false)
         {
-            BitmapData bmData = BitmapFormat.Lock24bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             byte[][] _ix = BitmapTensor.ToByteTensor(bmData, rgb);
             BitmapFormat.Unlock(Data, bmData);
             return _ix;
@@ -47,7 +47,7 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         int k, jstride = j * stride;
-                        k = jstride + i * 3;
+                        k = jstride + i * 4;
 
                         // transform
                         _ix0[z] = p[k + 2];
@@ -63,7 +63,7 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         int k, jstride = j * stride;
-                        k = jstride + i * 3;
+                        k = jstride + i * 4;
 
                         // transform
                         _ix0[z] = p[k + 0];
@@ -84,7 +84,7 @@ namespace UMapx.Imaging
         /// <returns>RGB tensor arrays</returns>
         public static float[][] ToFloatTensor(this Bitmap Data, bool rgb = false)
         {
-            BitmapData bmData = BitmapFormat.Lock24bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             float[][] _ix = BitmapTensor.ToFloatTensor(bmData, rgb);
             BitmapFormat.Unlock(Data, bmData);
             return _ix;
@@ -114,7 +114,7 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         int k, jstride = j * stride;
-                        k = jstride + i * 3;
+                        k = jstride + i * 4;
 
                         // transform
                         _ix0[z] = p[k + 2];
@@ -130,7 +130,7 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         int k, jstride = j * stride;
-                        k = jstride + i * 3;
+                        k = jstride + i * 4;
 
                         // transform
                         _ix0[z] = p[k + 0];
@@ -155,7 +155,7 @@ namespace UMapx.Imaging
         {
             // params
             Bitmap Data = new Bitmap(width, height);
-            BitmapData bmData = BitmapFormat.Lock24bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             int stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int shift = height * width;
@@ -169,7 +169,7 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         int k, jstride = j * stride;
-                        k = jstride + i * 3;
+                        k = jstride + i * 4;
 
                         // transform
                         p[k + 2] = tensor[0][z];
@@ -185,7 +185,7 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         int k, jstride = j * stride;
-                        k = jstride + i * 3;
+                        k = jstride + i * 4;
 
                         // transform
                         p[k + 0] = tensor[0][z];
@@ -211,7 +211,7 @@ namespace UMapx.Imaging
         {
             // params
             Bitmap Data = new Bitmap(width, height);
-            BitmapData bmData = BitmapFormat.Lock24bpp(Data);
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             int stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int shift = height * width;
@@ -225,7 +225,7 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         int k, jstride = j * stride;
-                        k = jstride + i * 3;
+                        k = jstride + i * 4;
 
                         // transform
                         p[k + 2] = (byte)tensor[0][z];
@@ -241,7 +241,7 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         int k, jstride = j * stride;
-                        k = jstride + i * 3;
+                        k = jstride + i * 4;
 
                         // transform
                         p[k + 0] = (byte)tensor[0][z];
