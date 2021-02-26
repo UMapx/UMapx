@@ -2013,16 +2013,13 @@ namespace UMapx.Core
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             float[,] H = new float[r0, r1];
-            float max = Matrice.Max(Matrice.Max(m));
-            float min = Matrice.Min(Matrice.Min(m));
-            float range = max - min;
             int i, j;
 
             for (i = 0; i < r0; i++)
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = (m[i, j] - min) / range;
+                    H[i, j] = Maths.Float(m[i, j]);
                 }
             }
             return H;

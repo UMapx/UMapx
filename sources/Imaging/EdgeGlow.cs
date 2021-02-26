@@ -74,6 +74,7 @@ namespace UMapx.Imaging
             // Delete resources:
             BitmapFormat.Unlock(Src0, bmSrc0);
             Src0.Dispose();
+            return;
         }
         /// <summary>
         /// Apply filter.
@@ -87,6 +88,7 @@ namespace UMapx.Imaging
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Data, bmData);
             BitmapFormat.Unlock(Src, bmSrc);
+            return;
         }
         /// <summary>
         /// Apply filter.
