@@ -92,17 +92,19 @@ namespace UMapx.Imaging
             int[] hist = Statistics.Histogram(bmData);
             int n = hist.Length;
             int z = n / 2;
-            int[] left = new int[z];
-            int[] right = new int[z];
+            int[] lef = new int[z];
+            int[] rig = new int[z];
 
             for (int i = 0; i < z; i++)
             {
-                left[i] = hist[i];
-                right[i] = hist[i + z];
+                lef[i] = hist[i];
+                rig[i] = hist[i + z];
             }
 
-            int index1 = Statistics.MaxIndex(left);
-            int index2 = Statistics.MaxIndex(right) + z;
+            _ = Statistics.Max(lef, out int index1);
+            _ = Statistics.Max(rig, out int index2);
+            index2 += z;
+
             int count = index2 - index1;
             int[] center = new int[count];
 
@@ -111,7 +113,8 @@ namespace UMapx.Imaging
                 center[i] = hist[i + index1];
             }
 
-            int threshold = Statistics.MinIndex(center) + index1;
+            _ = Statistics.Min(center, out int threshold);
+            threshold += index1;
 
             // creating mask
             Parallel.For(0, height, y =>

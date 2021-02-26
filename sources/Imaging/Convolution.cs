@@ -303,7 +303,7 @@ namespace UMapx.Imaging
         /// <param name="Gx">Gradient X</param>
         /// <param name="Gy">Gradient Y</param>
         /// <returns>Double precision floating point number</returns>
-        public static float G(float Gx, float Gy)
+        private static float G(float Gx, float Gy)
         {
             return (float)Math.Sqrt(Gx * Gx + Gy * Gy);
         }
@@ -313,7 +313,7 @@ namespace UMapx.Imaging
         /// <param name="Gx">Gradient X</param>
         /// <param name="Gy">Gradient Y</param>
         /// <returns>Double precision floating point number</returns>
-        public static float Tetta(float Gx, float Gy)
+        private static float Tetta(float Gx, float Gy)
         {
             return (float)Math.Atan(Gx / Gy);
         }
@@ -321,7 +321,7 @@ namespace UMapx.Imaging
 
         #region Radius matrix
         /// <summary>
-        /// mplements the construction of the inverted Gausssian filter.
+        /// Implements the construction of the inverted Gausssian filter.
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
@@ -349,7 +349,7 @@ namespace UMapx.Imaging
             return new Convolution(H);
         }
         /// <summary>
-        /// mplements the construction of the Gaussian blur filter.
+        /// Implements the construction of the Gaussian blur filter.
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
