@@ -76,7 +76,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < length; i++)
             {
-                Hk[i] = B[i].Real + B[i].Imag;
+                Hk[i] = B[i].Real - B[i].Imag;
             }
 
             return Hk;
@@ -96,7 +96,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < length; i++)
             {
-                Hk[i] = A[i].Real - A[i].Imag;
+                Hk[i] = A[i].Real + A[i].Imag;
             }
 
             return Hk;
@@ -119,7 +119,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < width; j++)
                 {
-                    Hk[i, j] = B[i, j].Real + B[i, j].Imag;
+                    Hk[i, j] = B[i, j].Real - B[i, j].Imag;
                 }
             }
 
@@ -143,7 +143,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < width; j++)
                 {
-                    Hk[i, j] = A[i, j].Real - A[i, j].Imag;
+                    Hk[i, j] = A[i, j].Real + A[i, j].Imag;
                 }
             }
 
@@ -162,7 +162,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < length; i++)
             {
-                Hk[i] = B[i].Real + B[i].Imag;
+                Hk[i] = B[i].Real - B[i].Imag;
             }
 
             return Hk;
@@ -180,7 +180,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < length; i++)
             {
-                Hk[i] = A[i].Real - A[i].Imag;
+                Hk[i] = A[i].Real + A[i].Imag;
             }
 
             return Hk;
@@ -201,7 +201,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < width; j++)
                 {
-                    Hk[i, j] = B[i, j].Real + B[i, j].Imag;
+                    Hk[i, j] = B[i, j].Real - B[i, j].Imag;
                 }
             }
 
@@ -223,7 +223,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < width; j++)
                 {
-                    Hk[i, j] = A[i, j].Real - A[i, j].Imag;
+                    Hk[i, j] = A[i, j].Real + A[i, j].Imag;
                 }
             }
 
