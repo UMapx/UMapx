@@ -144,5 +144,21 @@ namespace UMapx.Imaging
             return;
         }
         #endregion
+
+        #region Bitmap voids
+        /// <summary>
+        /// Returns new bitmap.
+        /// </summary>
+        /// <param name="size">Size</param>
+        /// <param name="color">Color</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap CreateBitmap(this Size size, Color color)
+        {
+            var bitmap = new Bitmap(size.Width, size.Height);
+            using var graphics = Graphics.FromImage(bitmap);
+            graphics.Clear(color);
+            return bitmap;
+        }
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using UMapx.Core;
@@ -6,7 +7,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses for editing and transforming images. 
+    /// Uses for editing and transforming images.
     /// </summary>
     public static class BitmapTransform
     {
@@ -82,14 +83,52 @@ namespace UMapx.Imaging
 
         #region Crop
         /// <summary>
-        /// Crops bitmap.
+        /// Returns cropped image.
         /// </summary>
-        /// <param name="b">Bitmap</param>
+        /// <param name="image">Bitmap</param>
         /// <param name="rectangle">Rectangle</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Crop(this Bitmap b, Rectangle rectangle)
+        public static Bitmap Crop(this Bitmap image, Rectangle rectangle)
         {
-            return b.Clone(rectangle, b.PixelFormat);
+            // image params
+            int width = image.Width;
+            int height = image.Height;
+
+            // check section params
+            int x = Range(rectangle.X, 0, width);
+            int y = Range(rectangle.Y, 0, height);
+            int w = Range(rectangle.Width, 0, width - x);
+            int h = Range(rectangle.Height, 0, height - y);
+
+            // fixes rectangle section
+            var rectangle_fixed = new Rectangle(x, y, w, h);
+
+            // crop image to rectangle section
+            var bitmap = new Bitmap(rectangle_fixed.Width, rectangle_fixed.Height);
+            var section = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            using var g = Graphics.FromImage(bitmap);
+            g.DrawImage(image, section, rectangle_fixed, GraphicsUnit.Pixel);
+
+            return bitmap;
+        }
+        /// <summary>
+        /// Fixes value in range.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="min">Min</param>
+        /// <param name="max">Max</param>
+        /// <returns>Value</returns>
+        private static int Range(int x, int min, int max)
+        {
+            if (x < min)
+            {
+                return min;
+            }
+            else if (x > max)
+            {
+                return max;
+            }
+            return x;
         }
         #endregion
 
@@ -177,53 +216,54 @@ namespace UMapx.Imaging
         /// <summary>
         /// Merges two bitmaps.
         /// </summary>s
-        /// <param name="b">Background bitmap</param>
-        /// <param name="fb">Foreground bitmap</param>
+        /// <param name="background">Background bitmap</param>
+        /// <param name="foreground">Foreground bitmap</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Merge(this Bitmap b, Bitmap fb)
+        public static Bitmap Merge(this Bitmap background, Bitmap foreground)
         {
-            var rectangle = new Rectangle(0, 0, fb.Width, fb.Height);
-            return Merge(b, fb, rectangle, 255);
+            var rectangle = new Rectangle(0, 0, foreground.Width, foreground.Height);
+            return Merge(background, foreground, rectangle, 255);
         }
         /// <summary>
         /// Merges two bitmaps.
         /// </summary>s
-        /// <param name="b">Background bitmap</param>
-        /// <param name="fb">Foreground bitmap</param>
+        /// <param name="background">Background bitmap</param>
+        /// <param name="foreground">Foreground bitmap</param>
         /// <param name="rectangle">Rectangle</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Merge(this Bitmap b, Bitmap fb, Rectangle rectangle)
+        public static Bitmap Merge(this Bitmap background, Bitmap foreground, Rectangle rectangle)
         {
-            return Merge(b, fb, rectangle, 255);
+            return Merge(background, foreground, rectangle, 255);
         }
         /// <summary>
         /// Merges two bitmaps.
         /// </summary>s
-        /// <param name="b">Background bitmap</param>
-        /// <param name="fb">Foreground bitmap</param>
+        /// <param name="background">Background bitmap</param>
+        /// <param name="foreground">Foreground bitmap</param>
         /// <param name="transparency">Transparency value [0, 255]</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Merge(this Bitmap b, Bitmap fb, int transparency)
+        public static Bitmap Merge(this Bitmap background, Bitmap foreground, int transparency)
         {
-            var rectangle = new Rectangle(0, 0, fb.Width, fb.Height);
-            return Merge(b, fb, rectangle, transparency);
+            var rectangle = new Rectangle(0, 0, foreground.Width, foreground.Height);
+            return Merge(background, foreground, rectangle, transparency);
         }
         /// <summary>
         /// Merges two bitmaps.
         /// </summary>s
-        /// <param name="b">Background bitmap</param>
-        /// <param name="fb">Foreground bitmap</param>
+        /// <param name="background">Background bitmap</param>
+        /// <param name="foreground">Foreground bitmap</param>
         /// <param name="rectangle">Rectangle</param>
         /// <param name="transparency">Transparency value [0, 255]</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Merge(this Bitmap b, Bitmap fb, Rectangle rectangle, int transparency)
+        public static Bitmap Merge(this Bitmap background, Bitmap foreground, Rectangle rectangle, int transparency)
         {
-            var bmp = (Bitmap)b.Clone();
-            fb = Resize(Transparency(fb, transparency), rectangle.Width, rectangle.Height);
-            Graphics graphics = Graphics.FromImage(b);
-            graphics.DrawImage(fb, rectangle);
+            using var fb_tr = Transparency(foreground, transparency);
+            using var fb_re = Resize(fb_tr, rectangle.Width, rectangle.Height);
+            var b_out = (Bitmap)background.Clone();
+            Graphics graphics = Graphics.FromImage(b_out);
+            graphics.DrawImage(fb_re, rectangle);
             graphics.Dispose();
-            return b;
+            return b_out;
         }
         #endregion
     }
