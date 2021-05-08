@@ -146,9 +146,18 @@ namespace UMapx.Imaging
 
                     for (int y = 0; y < dim_y; y++)
                     {
-                        for (int x = i; x < dim_x; x++)
+                        for (int x = 0; x < dim_x; x++)
                         {
-                            min3_dis[z][y, x] = Maths.Pow(im_l[z][y, x] - im_r[z][y, x - i], 2);
+                            var j = x - i;
+
+                            if (j < 0)
+                            {
+                                min3_dis[z][y, x] = Maths.Pow(im_l[z][y, x] - 0.0000000000f, 2);
+                            }
+                            else
+                            {
+                                min3_dis[z][y, x] = Maths.Pow(im_l[z][y, x] - im_r[z][y, j], 2);
+                            }
                         }
                     }
                 }
