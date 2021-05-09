@@ -58,7 +58,7 @@ namespace UMapx.Imaging
             var right = BitmapMatrix.ToGrayscale(bmSrc);
 
             // apply filter
-            var output = disparity_filter(left, right, Window, Disparity, Weight, Smoothing);
+            var output = disparity_estimator(left, right, Window, Disparity, Weight, Smoothing);
 
             // return result
             return BitmapMatrix.FromGrayscale(output);
@@ -91,7 +91,7 @@ namespace UMapx.Imaging
         /// <param name="weight"></param>
         /// <param name="apply_median"></param>
         /// <returns></returns>
-        private float[,] disparity_filter(float[,] left, float[,] right, int win, int max_dis, float weight, bool apply_median = false)
+        private float[,] disparity_estimator(float[,] left, float[,] right, int win, int max_dis, float weight, bool apply_median = false)
         {
             int x = left.GetLength(1);
             int y = left.GetLength(0);
@@ -107,11 +107,12 @@ namespace UMapx.Imaging
             var im_l = new float[][,] { left, left_x, left_y };
             var im_r = new float[][,] { right, right_x, right_y };
 
-            var disparity = make_dis(im_l, im_r, win, max_dis, weight, x, y, z);
+            var even_win = Maths.IsEven(win) ? win : win + 1;
+            var disparity = disparity_processor(im_l, im_r, even_win, max_dis, weight, x, y, z);
 
             if (apply_median)
             {
-                disparity = Matrice.Morph(disparity, win, win, win / 2, win / 2);
+                disparity = Matrice.Morph(disparity, even_win, even_win, even_win / 2, even_win / 2);
             }
 
             return disparity;
@@ -128,7 +129,7 @@ namespace UMapx.Imaging
         /// <param name="dim_y"></param>
         /// <param name="dim_z"></param>
         /// <returns></returns>
-        private float[,] make_dis(float[][,] im_l, float[][,] im_r, int win, int max_dis, float weight, int dim_x, int dim_y, int dim_z)
+        private float[,] disparity_processor(float[][,] im_l, float[][,] im_r, int win, int max_dis, float weight, int dim_x, int dim_y, int dim_z)
         {
             var disparity = new float[dim_y, dim_x];
             var min2_dis = new float[dim_y, dim_x].Add(float.MaxValue);
@@ -150,7 +151,7 @@ namespace UMapx.Imaging
 
                             if (j < 0)
                             {
-                                min3_dis[z][y, x] = Maths.Pow(im_l[z][y, x] - 0.0000000000f, 2);
+                                min3_dis[z][y, x] = Maths.Pow(im_l[z][y, x] - 0.0000000001f, 2);
                             }
                             else
                             {
