@@ -124,7 +124,7 @@ namespace UMapx.Analysis
             }
 
             // Real result:
-            return p.Real();
+            return p.ToReal();
         }
         #endregion
     }

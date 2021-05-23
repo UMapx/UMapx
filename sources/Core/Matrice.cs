@@ -134,7 +134,7 @@ namespace UMapx.Core
             if (Matrice.IsSquare(m))
             {
                 // ?A' = -A:
-                if (Matrice.IsEquals(m.Transponate(), m.Negate()))
+                if (Matrice.IsEquals(m.Transponate(), m.ToNegate()))
                 {
                     return true;
                 }
@@ -220,7 +220,7 @@ namespace UMapx.Core
             if (Matrice.IsSquare(m))
             {
                 // ?A' = -A
-                if (Matrice.IsEquals(m.Hermitian(), m.Negate()))
+                if (Matrice.IsEquals(m.Hermitian(), m.ToNegate()))
                 {
                     return true;
                 }
@@ -1926,7 +1926,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[,] Negate(this float[,] m)
+        public static float[,] ToNegate(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             float[,] H = new float[r0, r1];
@@ -1947,7 +1947,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Negate(this Complex32[,] m)
+        public static Complex32[,] ToNegate(this Complex32[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex32[,] H = new Complex32[r0, r1];
@@ -2029,7 +2029,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[,] Abs(this float[,] m)
+        public static float[,] ToAbs(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             float[,] H = new float[r0, r1];
@@ -2050,7 +2050,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[,] Abs(this Complex32[,] m)
+        public static float[,] ToAbs(this Complex32[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             float[,] H = new float[r0, r1];
@@ -2071,7 +2071,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[,] Angle(this Complex32[,] m)
+        public static float[,] ToAngle(this Complex32[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             float[,] H = new float[r0, r1];
@@ -2092,7 +2092,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[,] Real(this Complex32[,] m)
+        public static float[,] ToReal(this Complex32[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             float[,] H = new float[r0, r1];
@@ -2113,7 +2113,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[,] Imag(this Complex32[,] m)
+        public static float[,] ToImag(this Complex32[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             float[,] H = new float[r0, r1];
@@ -4259,7 +4259,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static float[] Abs(this float[] v)
+        public static float[] ToAbs(this float[] v)
         {
             int length = v.Length;
             float[] H = new float[length];
@@ -4275,7 +4275,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static float[] Negate(this float[] v)
+        public static float[] ToNegate(this float[] v)
         {
             int length = v.Length;
             float[] H = new float[length];
@@ -4291,7 +4291,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static Complex32[] Negate(this Complex32[] v)
+        public static Complex32[] ToNegate(this Complex32[] v)
         {
             int length = v.Length;
             Complex32[] H = new Complex32[length];
@@ -4323,7 +4323,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static float[] Abs(this Complex32[] v)
+        public static float[] ToAbs(this Complex32[] v)
         {
             int length = v.Length;
             float[] H = new float[length];
@@ -4339,7 +4339,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static float[] Angle(this Complex32[] v)
+        public static float[] ToAngle(this Complex32[] v)
         {
             int length = v.Length;
             float[] H = new float[length];
@@ -4355,7 +4355,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static float[] Real(this Complex32[] v)
+        public static float[] ToReal(this Complex32[] v)
         {
             int length = v.Length;
             float[] H = new float[length];
@@ -4371,7 +4371,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static float[] Imag(this Complex32[] v)
+        public static float[] ToImag(this Complex32[] v)
         {
             int length = v.Length;
             float[] H = new float[length];
@@ -4387,7 +4387,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
-        public static Complex32[] Conjugate(this Complex32[] v)
+        public static Complex32[] ToConjugate(this Complex32[] v)
         {
             int length = v.Length;
             Complex32[] H = new Complex32[length];
@@ -5860,6 +5860,173 @@ namespace UMapx.Core
         #endregion
 
         // MATLAB voids
+
+        #region Abs/Angle
+        /// <summary>
+        /// Returns vector module.
+        /// </summary>
+        /// <param name="vector">Vector</param>
+        /// <param name="squared">Squared or not</param>
+        /// <returns>Value</returns>
+        public static float Abs(this float[] vector, bool squared = false)
+        {
+            int length = vector.Length;
+            float v = 0;
+
+            for (int i = 0; i < length; i++)
+            {
+                v += vector[i] * vector[i];
+            }
+
+            if (squared)
+                return v;
+
+            return (float)Math.Sqrt(v);
+        }
+        /// <summary>
+        /// Returns matrix module.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="squared">Squared or not</param>
+        /// <returns>Vector</returns>
+        public static float[] Abs(this float[,] matrix, bool squared = false)
+        {
+            int r = matrix.GetLength(0);
+            int c = matrix.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = matrix[i, j];
+                }
+
+                v[i] = t.Abs(squared);
+            }
+
+            return v;
+        }
+        /// <summary>
+        /// Returns vector module.
+        /// </summary>
+        /// <param name="vector">Vector</param>
+        /// <param name="squared">Squared or not</param>
+        /// <returns>Value</returns>
+        public static Complex32 Abs(this Complex32[] vector, bool squared = false)
+        {
+            int length = vector.Length;
+            Complex32 v = 0;
+
+            for (int i = 0; i < length; i++)
+            {
+                v += vector[i] * vector[i];
+            }
+
+            if (squared)
+                return v;
+
+            return Maths.Sqrt(v);
+        }
+        /// <summary>
+        /// Returns matrix module.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="squared">Squared or not</param>
+        /// <returns>Vector</returns>
+        public static Complex32[] Abs(this Complex32[,] matrix, bool squared = false)
+        {
+            int r = matrix.GetLength(0);
+            int c = matrix.GetLength(1);
+            Complex32[] v = new Complex32[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                Complex32[] t = new Complex32[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = matrix[i, j];
+                }
+
+                v[i] = t.Abs(squared);
+            }
+
+            return v;
+        }
+
+        /// <summary>
+        /// Returns vector angle.
+        /// </summary>
+        /// <param name="vector">Vector</param>
+        /// <returns>Value</returns>
+        public static float Angle(this float[] vector)
+        {
+            return Angle(vector, vector);
+        }
+        /// <summary>
+        /// Returns matrix module.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Angle(this float[,] matrix)
+        {
+            int r = matrix.GetLength(0);
+            int c = matrix.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = matrix[i, j];
+                }
+
+                v[i] = t.Angle();
+            }
+
+            return v;
+        }
+        /// <summary>
+        /// Returns vector angle.
+        /// </summary>
+        /// <param name="vector">Vector</param>
+        /// <returns>Value</returns>
+        public static Complex32 Angle(this Complex32[] vector)
+        {
+            return Angle(vector, vector);
+        }
+        /// <summary>
+        /// Returns matrix module.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <returns>Vector</returns>
+        public static Complex32[] Angle(this Complex32[,] matrix)
+        {
+            int r = matrix.GetLength(0);
+            int c = matrix.GetLength(1);
+            Complex32[] v = new Complex32[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                Complex32[] t = new Complex32[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = matrix[i, j];
+                }
+
+                v[i] = t.Angle();
+            }
+
+            return v;
+        }
+
+        #endregion
 
         #region Get/set rows and columns
         /// <summary>

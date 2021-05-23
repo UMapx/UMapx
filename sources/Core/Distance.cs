@@ -391,5 +391,28 @@ namespace UMapx.Core
             return sum;
         }
         #endregion
+
+        #region Cosine distance
+
+        /// <summary>
+        /// Returns similarity function of two vectors.
+        /// </summary>
+        /// <param name="p">Vector</param>
+        /// <param name="b">Vector</param>
+        /// <returns>Value</returns>
+        public static float Cosine(this float[] p, float[] b)
+        {
+            int length = p.Length;
+            float A = Matrice.Abs(p, false);
+            float B = Matrice.Abs(b, false);
+            float s = 0;
+
+            for (int i = 0; i < length; i++)
+                s += p[i] * b[i];
+
+            return s / (A * B);
+        }
+
+        #endregion
     }
 }

@@ -56,7 +56,7 @@ namespace UMapx.Wavelet
                 if (!Maths.IsEven(m)) m--; // ?
 
                 // visu_shrink
-                var bb = Matrice.Reshape(b, b.Length).Abs();
+                var bb = Matrice.Reshape(b, b.Length).ToAbs();
                 Array.Sort(bb);
                 var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(Maths.Log2(n * m));
 
@@ -102,7 +102,7 @@ namespace UMapx.Wavelet
                 if (!Maths.IsEven(n)) n--; // ?
 
                 // visu_shrink
-                var bb = b.Abs();
+                var bb = b.ToAbs();
                 Array.Sort(bb);
                 var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(Maths.Log2(n));
 
@@ -144,7 +144,7 @@ namespace UMapx.Wavelet
                 if (!Maths.IsEven(m)) m--; // ?
 
                 // visu_shrink
-                var bb = Matrice.Reshape(b, b.Length).Abs();
+                var bb = Matrice.Reshape(b, b.Length).ToAbs();
                 Array.Sort(bb);
                 var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(Maths.Log2(n * m));
 
@@ -191,7 +191,7 @@ namespace UMapx.Wavelet
                 if (!Maths.IsEven(n)) n--; // ?
 
                 // visu_shrink
-                var bb = b.Abs();
+                var bb = b.ToAbs();
                 Array.Sort(bb);
                 var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(Maths.Log2(n));
 

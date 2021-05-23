@@ -54,6 +54,39 @@ namespace UMapx.Imaging
             graphics.Dispose();
             return bmp;
         }
+        /// <summary>
+        /// Returns rotated image.
+        /// </summary>
+        /// <param name="image">Bitmap</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="color">Background color</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap Rotate(this Bitmap image, float angle, Color color)
+        {
+            // create an empty Bitmap image
+            Bitmap bmp = new Bitmap(image.Width, image.Height);
+
+            // turn the Bitmap into a Graphics object
+            using var g = Graphics.FromImage(bmp);
+            g.Clear(color);
+
+            // now we set the rotation point to the center of our image
+            g.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
+
+            // now rotate the image
+            g.RotateTransform(angle);
+            g.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
+
+            // set the InterpolationMode to HighQualityBicubic so to ensure a high
+            // quality image once it is transformed to the specified size
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            // now draw our new image onto the graphics object
+            g.DrawImage(image, new Point(0, 0));
+
+            //return the image
+            return bmp;
+        }
         #endregion
 
         #region Flip
@@ -78,6 +111,17 @@ namespace UMapx.Imaging
             var clone = (Bitmap)b.Clone();
             clone.RotateFlip(RotateFlipType.RotateNoneFlipY);
             return clone;
+        }
+        /// <summary>
+        /// Returns flipped by XY image.
+        /// </summary>
+        /// <param name="image">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap FlipXY(this Bitmap image)
+        {
+            Bitmap bmp = new Bitmap(image);
+            bmp.RotateFlip(RotateFlipType.RotateNoneFlipXY);
+            return bmp;
         }
         #endregion
 
@@ -154,6 +198,46 @@ namespace UMapx.Imaging
         {
             return Resize(b, (int)(b.Width * value), (int)(b.Height * value));
         }
+        /// <summary>
+        /// Returns resized image.
+        /// </summary>
+        /// <param name="image">Bitmap</param>
+        /// <param name="size">Size</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap Resize(this Bitmap image, Size size)
+        {
+            return new Bitmap(image, size.Width, size.Height);
+        }
+        /// <summary>
+        /// Returns resized image.
+        /// </summary>
+        /// <param name="image">Bitmap</param>
+        /// <param name="size">Size</param>
+        /// <param name="color">Border color</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap Resize(this Bitmap image, Size size, Color color)
+        {
+            // size
+            int width = image.Width;
+            int height = image.Height;
+            int max = Math.Max(width, height);
+
+            //  borders
+            var rectangle = new Rectangle(
+                (max - width) / 2,
+                (max - height) / 2,
+                width,
+                height);
+
+            // drawing
+            Bitmap background = new Bitmap(max, max);
+
+            using var g = Graphics.FromImage(background);
+            g.Clear(color);
+            g.DrawImage(image, rectangle);
+
+            return Resize(background, size);
+        }
         #endregion
 
         #region Shift
@@ -219,21 +303,22 @@ namespace UMapx.Imaging
         /// <param name="background">Background bitmap</param>
         /// <param name="foreground">Foreground bitmap</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Merge(this Bitmap background, Bitmap foreground)
+        public static void Merge(this Bitmap background, Bitmap foreground)
         {
             var rectangle = new Rectangle(0, 0, foreground.Width, foreground.Height);
-            return Merge(background, foreground, rectangle, 255);
+            Merge(background, foreground, rectangle);
         }
         /// <summary>
         /// Merges two bitmaps.
-        /// </summary>s
-        /// <param name="background">Background bitmap</param>
-        /// <param name="foreground">Foreground bitmap</param>
+        /// </summary>
+        /// <param name="background">Background image</param>
+        /// <param name="foreground">Foreground image</param>
         /// <param name="rectangle">Rectangle</param>
-        /// <returns>Bitmap</returns>
-        public static Bitmap Merge(this Bitmap background, Bitmap foreground, Rectangle rectangle)
+        public static void Merge(this Bitmap background, Bitmap foreground, Rectangle rectangle)
         {
-            return Merge(background, foreground, rectangle, 255);
+            using var graphics = Graphics.FromImage(background);
+            graphics.DrawImage(foreground, rectangle);
+            return;
         }
         /// <summary>
         /// Merges two bitmaps.
@@ -242,10 +327,10 @@ namespace UMapx.Imaging
         /// <param name="foreground">Foreground bitmap</param>
         /// <param name="transparency">Transparency value [0, 255]</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Merge(this Bitmap background, Bitmap foreground, int transparency)
+        public static void Merge(this Bitmap background, Bitmap foreground, int transparency)
         {
             var rectangle = new Rectangle(0, 0, foreground.Width, foreground.Height);
-            return Merge(background, foreground, rectangle, transparency);
+            Merge(background, foreground, rectangle, transparency);
         }
         /// <summary>
         /// Merges two bitmaps.
@@ -255,15 +340,12 @@ namespace UMapx.Imaging
         /// <param name="rectangle">Rectangle</param>
         /// <param name="transparency">Transparency value [0, 255]</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Merge(this Bitmap background, Bitmap foreground, Rectangle rectangle, int transparency)
+        public static void Merge(this Bitmap background, Bitmap foreground, Rectangle rectangle, int transparency)
         {
             using var fb_tr = Transparency(foreground, transparency);
             using var fb_re = Resize(fb_tr, rectangle.Width, rectangle.Height);
-            var b_out = (Bitmap)background.Clone();
-            Graphics graphics = Graphics.FromImage(b_out);
+            using var graphics = Graphics.FromImage(background);
             graphics.DrawImage(fb_re, rectangle);
-            graphics.Dispose();
-            return b_out;
         }
         #endregion
     }
