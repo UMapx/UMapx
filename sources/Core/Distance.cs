@@ -14,7 +14,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Euclidean(float[] p, float[] q)
+        public static float Euclidean(this float[] p, float[] q)
         {
             float sum = 0;
             int n = p.Length;
@@ -26,6 +26,34 @@ namespace UMapx.Core
 
             return (float)Math.Sqrt(sum);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Euclidean(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Euclidean(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Chebyshev distance
@@ -35,7 +63,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Chebyshev(float[] p, float[] q)
+        public static float Chebyshev(this float[] p, float[] q)
         {
             int n = p.Length;
             float max = Math.Abs(p[0] - q[0]);
@@ -49,6 +77,34 @@ namespace UMapx.Core
 
             return max;
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Chebyshev(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Chebyshev(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Manhattan distance
@@ -58,7 +114,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Manhattan(float[] p, float[] q)
+        public static float Manhattan(this float[] p, float[] q)
         {
             float sum = 0;
             int n = p.Length;
@@ -70,6 +126,34 @@ namespace UMapx.Core
 
             return sum;
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Manhattan(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Manhattan(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Angular distance
@@ -79,7 +163,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Angular(float[] p, float[] q)
+        public static float Angular(this float[] p, float[] q)
         {
             int n = p.Length;
             float s = 0;
@@ -98,6 +182,34 @@ namespace UMapx.Core
 
             return (float)Math.Acos(similarity);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Angular(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Angular(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Bray-Curtis distance
@@ -107,7 +219,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float BrayCurtis(float[] p, float[] q)
+        public static float BrayCurtis(this float[] p, float[] q)
         {
             int n = p.Length;
             float x = 0;
@@ -121,6 +233,34 @@ namespace UMapx.Core
 
             return y / x;
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] BrayCurtis(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.BrayCurtis(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Canberra distance
@@ -130,7 +270,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Canberra(float[] p, float[] q)
+        public static float Canberra(this float[] p, float[] q)
         {
             int n = p.Length;
             float sum = 0;
@@ -141,6 +281,34 @@ namespace UMapx.Core
             }
             return sum;
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Canberra(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Canberra(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Dice distance
@@ -150,7 +318,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Dice(float[] p, float[] q)
+        public static float Dice(this float[] p, float[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -166,6 +334,34 @@ namespace UMapx.Core
 
             return (tf + ft) / (float)(2 * tt + ft + tf);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Dice(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Dice(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Hellinger distance
@@ -175,7 +371,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Hellinger(float[] p, float[] q)
+        public static float Hellinger(this float[] p, float[] q)
         {
             int n = p.Length;
             float sum = 0;
@@ -187,6 +383,34 @@ namespace UMapx.Core
 
             return sum / Maths.Sqrt2;
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Hellinger(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Hellinger(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Jaccard distance
@@ -196,7 +420,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Jaccard(float[] p, float[] q)
+        public static float Jaccard(this float[] p, float[] q)
         {
             int n = p.Length;
             int inter = 0;
@@ -214,6 +438,34 @@ namespace UMapx.Core
 
             return (union == 0) ? 0 : 1.0f - (inter / (float)union);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Jaccard(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Jaccard(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Kulczynski distance
@@ -223,7 +475,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Kulczynski(float[] p, float[] q)
+        public static float Kulczynski(this float[] p, float[] q)
         {
             // TODO: Rewrite the integer dissimilarities (Yule, Russel-Rao,...)
             // using generics
@@ -243,6 +495,34 @@ namespace UMapx.Core
             float den = ft + tf + n;
             return num / den;
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Kulczynski(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Kulczynski(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Minkowski distance
@@ -253,7 +533,7 @@ namespace UMapx.Core
         /// <param name="q">Array</param>
         /// <param name="order">Order</param>
         /// <returns>float precision floating point number</returns>
-        public static float Minkowski(float[] p, float[] q, float order)
+        public static float Minkowski(this float[] p, float[] q, float order)
         {
             int n = p.Length;
             float sum = 0;
@@ -264,6 +544,35 @@ namespace UMapx.Core
             }
             return (float)Math.Pow(sum, 1 / order);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <param name="order">Order</param>
+        /// <returns>Vector</returns>
+        public static float[] Minkowski(this float[,] p, float[,] q, float order)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Minkowski(u, order);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Russel-Rao distance
@@ -273,7 +582,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float RusselRao(float[] p, float[] q)
+        public static float RusselRao(this float[] p, float[] q)
         {
             int n = p.Length;
             int tt = 0;
@@ -285,6 +594,34 @@ namespace UMapx.Core
 
             return (n - tt) / (float)(n);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] RusselRao(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.RusselRao(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Sokal-Michener distance
@@ -294,7 +631,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float SokalMichener(float[] p, float[] q)
+        public static float SokalMichener(this float[] p, float[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -313,6 +650,34 @@ namespace UMapx.Core
             int r = 2 * (tf + ft);
             return r / (float)(ff + tt + r);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] SokalMichener(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.SokalMichener(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Sokal-Sneath distance
@@ -322,7 +687,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float SokalSneath(float[] p, float[] q)
+        public static float SokalSneath(this float[] p, float[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -339,6 +704,34 @@ namespace UMapx.Core
             int r = 2 * (tf + ft);
             return r / (float)(tt + r);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] SokalSneath(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.SokalSneath(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Yule distance
@@ -348,7 +741,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float Yule(float[] p, float[] q)
+        public static float Yule(this float[] p, float[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -367,6 +760,34 @@ namespace UMapx.Core
             float r = 2 * (tf + ft);
             return r / (tt + ff + r / 2);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Yule(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Yule(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Square-Euclidian distance
@@ -376,7 +797,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>float precision floating point number</returns>
-        public static float SquareEuclidian(float[] p, float[] q)
+        public static float SquareEuclidian(this float[] p, float[] q)
         {
             int n = p.Length;
             float sum = 0.0f;
@@ -390,10 +811,37 @@ namespace UMapx.Core
 
             return sum;
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] SquareEuclidian(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
+
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.SquareEuclidian(u);
+            }
+
+            return v;
+        }
         #endregion
 
         #region Cosine distance
-
         /// <summary>
         /// Returns similarity function of two vectors.
         /// </summary>
@@ -412,7 +860,34 @@ namespace UMapx.Core
 
             return s / (A * B);
         }
+        /// <summary>
+        /// Returns distance value. 
+        /// </summary>
+        /// <param name="p">Matrix</param>
+        /// <param name="q">Matrix</param>
+        /// <returns>Vector</returns>
+        public static float[] Cosine(this float[,] p, float[,] q)
+        {
+            int r = p.GetLength(0);
+            int c = p.GetLength(1);
+            float[] v = new float[r];
 
+            for (int i = 0; i < r; i++)
+            {
+                float[] t = new float[c];
+                float[] u = new float[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    t[j] = p[i, j];
+                    u[j] = q[i, j];
+                }
+
+                v[i] = t.Cosine(u);
+            }
+
+            return v;
+        }
         #endregion
     }
 }
