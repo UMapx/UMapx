@@ -32,7 +32,7 @@
 * 8, 24 bit video `BitmapData` formats - `Format8bppIndexed`, `Format24bppRgb` (32 bit format not recomended).
 
 # Installation
-You can build **UMapx.NET** from sources or install to your own project using nuget package manager.
+You can build **UMapx** from sources or install to your own project using nuget package manager.
 | Version | Specification | OS | Platform | Download | Package |
 |-------------|-------------|-------------|-------------|--------------|--------------|
 | 5.1.1.3 | .NET Standard 2.0 | Cross-platform | AnyCPU | [Release](https://github.com/asiryan/UMapx.NET/releases/) | [NuGet](https://www.nuget.org/packages/UMapx/) |
