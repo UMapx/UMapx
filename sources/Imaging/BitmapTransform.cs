@@ -139,10 +139,16 @@ namespace UMapx.Imaging
             int height = image.Height;
 
             // check section params
-            int x = Range(rectangle.X, 0, width);
-            int y = Range(rectangle.Y, 0, height);
-            int w = Range(rectangle.Width, 0, width - x);
-            int h = Range(rectangle.Height, 0, height - y);
+            int x = Maths.Range(rectangle.X, 0, width);
+            int y = Maths.Range(rectangle.Y, 0, height);
+            int w = Maths.Range(rectangle.Width, 0, width - x);
+            int h = Maths.Range(rectangle.Height, 0, height - y);
+
+            // exception
+            if (x == 0 &&
+                y == 0 &&
+                w == 0 &&
+                h == 0) return image;
 
             // fixes rectangle section
             var rectangle_fixed = new Rectangle(x, y, w, h);
@@ -154,25 +160,6 @@ namespace UMapx.Imaging
             g.DrawImage(image, section, rectangle_fixed, GraphicsUnit.Pixel);
 
             return bitmap;
-        }
-        /// <summary>
-        /// Fixes value in range.
-        /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="min">Min</param>
-        /// <param name="max">Max</param>
-        /// <returns>Value</returns>
-        private static int Range(int x, int min, int max)
-        {
-            if (x < min)
-            {
-                return min;
-            }
-            else if (x > max)
-            {
-                return max;
-            }
-            return x;
         }
         #endregion
 
@@ -318,7 +305,6 @@ namespace UMapx.Imaging
         {
             using var graphics = Graphics.FromImage(background);
             graphics.DrawImage(foreground, rectangle);
-            return;
         }
         /// <summary>
         /// Merges two bitmaps.

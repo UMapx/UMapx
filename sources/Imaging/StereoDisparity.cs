@@ -51,7 +51,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <param name="bmSrc">Bitmap data</param>
-        public Bitmap Apply(BitmapData bmData, BitmapData bmSrc)
+        public float[,] Apply(BitmapData bmData, BitmapData bmSrc)
         {
             // images to matrices
             var left = BitmapMatrix.ToGrayscale(bmData);
@@ -61,14 +61,14 @@ namespace UMapx.Imaging
             var output = disparity_estimator(left, right, Window, Disparity, Weight, Smoothing);
 
             // return result
-            return BitmapMatrix.FromGrayscale(output);
+            return output;
         }
         /// <summary>
         /// Apply filter.
         /// </summary>
         /// <param name="Data">Bitmap</param>
         /// <param name="Src">Bitmap</param>
-        public Bitmap Apply(Bitmap Data, Bitmap Src)
+        public float[,] Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);

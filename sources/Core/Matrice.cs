@@ -2645,6 +2645,30 @@ namespace UMapx.Core
             }
             return v;
         }
+        /// <summary>
+        /// Returns the normalized matrix.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Normalized(this float[,] m)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            float[,] u = new float[ml, mr];
+            var min = m.Min().Min();
+            var max = m.Max().Max();
+            var dm = max - min;
+            int i, j;
+
+            for (i = 0; i < ml; i++)
+            {
+                for (j = 0; j < mr; j++)
+                {
+                    u[i, j] = (m[i, j] - min) / dm;
+                }
+            }
+
+            return u;
+        }
         #endregion
 
         // Matrix special
@@ -4830,6 +4854,26 @@ namespace UMapx.Core
                 }
             }
             return H;
+        }
+        /// <summary>
+        /// Returns the normalized matrix.
+        /// </summary>
+        /// <param name="m">Vector</param>
+        /// <returns>Vector</returns>
+        public static float[] Normalized(this float[] m)
+        {
+            int ml = m.GetLength(0);
+            float[] u = new float[ml];
+            var min = m.Min();
+            var max = m.Max();
+            var dm = max - min;
+
+            for (int i = 0; i < ml; i++)
+            {
+                u[i] = (m[i] - min) / dm;
+            }
+
+            return u;
         }
         #endregion
 
