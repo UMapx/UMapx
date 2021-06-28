@@ -1,6 +1,5 @@
 <p align="center"><img width="25%" src="docs/umapxnet_big.png" /></p>
-
-**UMapx** is a cross-platform .NET library for digital signal processing.  
+<p align="center"> Cross-platform .NET library for digital signal processing </p>    
 
 # UMapx
 ### Contains ready-made math tools:
@@ -29,7 +28,7 @@
 **UMapx** supports only
 * 32 bit types - `float`, `Complex32` and etc (compatible with [System.Numerics](https://docs.microsoft.com/ru-ru/dotnet/api/system.numerics?view=netframework-4.8), [NAudio](https://github.com/naudio/NAudio) and other libraries),
 * 32 bit image `BitmapData` format - `Format32bppArgb` (compatible with [AForge.NET](https://github.com/andrewkirillov/AForge.NET), [Accord.NET](https://github.com/accord-net/framework/) and etc),
-* 8, 24 bit video `BitmapData` formats - `Format8bppIndexed`, `Format24bppRgb` (32 bit format not recomended).
+* 24 bit video `BitmapData` format - `Format24bppRgb` (32 bit format not recomended).
 
 # Installation
 You can build **UMapx** from sources or install to your own project using nuget package manager.
