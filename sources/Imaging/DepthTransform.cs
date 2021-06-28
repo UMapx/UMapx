@@ -184,7 +184,7 @@ namespace UMapx.Imaging
                 h == 0) return depth;
 
             // output
-            var output = new ushort[w, h];
+            var output = new ushort[h, w];
 
             for (int i = 0; i < w; i++)
             {

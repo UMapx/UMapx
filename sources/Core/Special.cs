@@ -2742,7 +2742,7 @@ namespace UMapx.Core
         /// <returns>float precision floating point number</returns>
         public static float Logistic(float x, float a, float k, float b)
         {
-            return Logistic(x, a, k, b, 0.5f, 0.5f, 1);
+            return Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
         }
         /// <summary>
         /// Returns the value of a logistic function.
@@ -2751,7 +2751,7 @@ namespace UMapx.Core
         /// <returns>float precision floating point number</returns>
         public static float Logistic(float x)
         {
-            return Logistic(x, 0, 1, 3, 0.5f, 0.5f, 1);
+            return Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
         }
         #endregion
 
