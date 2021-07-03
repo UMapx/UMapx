@@ -8,9 +8,12 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the motion detector.
+    /// <remarks>
+    /// Implements IDisposable interface.
+    /// </remarks>
     /// </summary>
     [Serializable]
-    public class MotionDetector
+    public class MotionDetector : IDisposable
     {
         #region Private data
         private Bitmap Frame;
@@ -22,14 +25,20 @@ namespace UMapx.Imaging
         /// Initializes motion detector.
         /// </summary>
         /// <param name="threshold">Threshold [0, 255]</param>
-        public MotionDetector(byte threshold = 15)
+        /// <param name="useFilter">Use bitmap filter or not</param>
+        public MotionDetector(byte threshold = 15, bool useFilter = false)
         {
             Threshold = threshold;
+            UseFilter = useFilter;
         }
         /// <summary>
         /// Gets or sets threshold.
         /// </summary>
         public byte Threshold { get; set; }
+        /// <summary>
+        /// Use filter or not.
+        /// </summary>
+        public bool UseFilter { get; set; }
         /// <summary>
         /// Reset motion detector.
         /// </summary>
@@ -68,11 +77,12 @@ namespace UMapx.Imaging
                 var temp = (Bitmap)Data.Clone();
 
                 // lock in memory
-                BitmapData bitmapData = BitmapFormat.Lock32bpp(Data);
-                BitmapData frameData = BitmapFormat.Lock32bpp(Frame);
+                var bitmapData = BitmapFormat.Lock32bpp(Data);
+                var frameData = BitmapFormat.Lock32bpp(Frame);
 
                 // calculate alarm
-                var alarm = ProcessFrame(bitmapData, frameData);
+                var alarm = UseFilter ? ProcessFrameWithFilter(bitmapData, frameData) :
+                    ProcessFrameWithoutFilter(bitmapData, frameData);
 
                 // unlock
                 Data.Unlock(bitmapData);
@@ -84,12 +94,62 @@ namespace UMapx.Imaging
                 return alarm;
             }
         }
+        #endregion
+
+        #region IDisposable
+        /// <summary>
+        /// Disposes motion detector.
+        /// </summary>
+        public void Dispose()
+        {
+            Reset();
+        }
+        #endregion
+
+        #region Private methods
         /// <summary>
         /// Process frame.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <param name="bmSrc">Bitmap data</param>
-        private unsafe double ProcessFrame(BitmapData bmData, BitmapData bmSrc)
+        private unsafe double ProcessFrameWithoutFilter(BitmapData bmData, BitmapData bmSrc)
+        {
+            byte* dst = (byte*)bmData.Scan0.ToPointer();
+            byte* src = (byte*)bmSrc.Scan0.ToPointer();
+            int width = bmData.Width, height = bmData.Height;
+
+            double variance = 0.0;
+
+            for (int x = 0; x < width; x++)
+            {
+                int y, k;
+
+                for (y = 0; y < height; y++, dst += 4, src += 4)
+                {
+                    var difference = 0.0f;
+
+                    for (k = 0; k < 3; k++)
+                    {
+                        difference += Math.Abs(dst[k] - src[k]) / 3.0f;
+                    }
+
+                    var summary = Maths.Byte(difference);
+
+                    if (summary > Threshold)
+                    {
+                        variance++;
+                    }
+                }
+            };
+
+            return variance / (width * height);
+        }
+        /// <summary>
+        /// Process frame.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
+        private unsafe double ProcessFrameWithFilter(BitmapData bmData, BitmapData bmSrc)
         {
             byte* dst = (byte*)bmData.Scan0.ToPointer();
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
@@ -110,7 +170,7 @@ namespace UMapx.Imaging
                     }
 
                     var summary = RGB.Average(dst[2], dst[1], dst[0]);
-                    
+
                     if (summary > Threshold)
                     {
                         variance++;

@@ -7,7 +7,7 @@ namespace UMapx.Visualization
     /// Defines the figure style.
     /// </summary>
     [Serializable]
-    public class Style
+    public class Style : IDisposable
     {
         #region Initialize
         /// <summary>
@@ -61,6 +61,17 @@ namespace UMapx.Visualization
         /// Gets or sets Y grid.
         /// </summary>
         public bool GridY { get; set; } = true;
+        #endregion
+
+        #region IDisposable
+        /// <summary>
+        /// Disposes style class.
+        /// </summary>
+        public void Dispose()
+        {
+            FontMarks.Dispose();
+            FontText.Dispose();
+        }
         #endregion
 
         #region Completed styles

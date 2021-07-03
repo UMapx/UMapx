@@ -7,7 +7,7 @@ namespace UMapx.Visualization
     /// Defines inference painter.
     /// </summary>
     [Serializable]
-    public class Painter
+    public class Painter : IDisposable
     {
         #region Class components
         /// <summary>
@@ -253,6 +253,18 @@ namespace UMapx.Visualization
             }
 
             return label;
+        }
+        #endregion
+
+        #region IDisposable
+        /// <summary>
+        /// Disposes painter class.
+        /// </summary>
+        public void Dispose()
+        {
+            BoxPen.Dispose();
+            PointPen.Dispose();
+            TextFont.Dispose();
         }
         #endregion
     }

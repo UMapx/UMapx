@@ -9,7 +9,7 @@ namespace UMapx.Visualization
     /// Defines the figure to plotting in a Cartesian coordinate system.
     /// </summary>
     [Serializable]
-    public class Figure
+    public class Figure : IDisposable
     {
         #region Panes
         /// <summary>
@@ -1031,6 +1031,16 @@ namespace UMapx.Visualization
             }
 
             return numerics;
+        }
+        #endregion
+
+        #region IDisposable
+        /// <summary>
+        /// Disposes figure class.
+        /// </summary>
+        public void Dispose()
+        {
+            ImagePane.Dispose();
         }
         #endregion
     }
