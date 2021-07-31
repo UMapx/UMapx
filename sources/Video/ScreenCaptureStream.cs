@@ -227,8 +227,10 @@
                 stopEvent = new ManualResetEvent( false );
 
                 // create and start new thread
-                thread = new Thread( new ThreadStart( WorkerThread ) );
-                thread.Name = Source; // mainly for debugging
+                thread = new Thread(new ThreadStart(WorkerThread))
+                {
+                    Name = Source // mainly for debugging
+                };
                 thread.Start( );
             }
         }
@@ -280,6 +282,7 @@
         /// <see cref="WaitForStop">waiting</see> for background thread's completion.</note></para>
         /// </remarks>
         /// 
+        [Obsolete]
         public void Stop( )
         {
             if ( this.IsRunning )
@@ -333,11 +336,8 @@
                     framesReceived++;
 
                     // provide new image to clients
-                    if ( NewFrame != null )
-                    {
-                        // notify client
-                        NewFrame( this, new NewFrameEventArgs( bitmap ) );
-                    }
+                    // notify client
+                    NewFrame?.Invoke(this, new NewFrameEventArgs(bitmap));
 
                     // wait for a while ?
                     if ( frameInterval > 0 )
@@ -359,10 +359,7 @@
                 catch ( Exception exception )
                 {
                     // provide information to clients
-                    if ( VideoSourceError != null )
-                    {
-                        VideoSourceError( this, new VideoSourceErrorEventArgs( exception.Message ) );
-                    }
+                    VideoSourceError?.Invoke(this, new VideoSourceErrorEventArgs(exception.Message));
                     // wait for a while before the next try
                     Thread.Sleep( 250 );
                 }
@@ -376,10 +373,7 @@
             graphics.Dispose( );
             bitmap.Dispose( );
 
-            if ( PlayingFinished != null )
-            {
-                PlayingFinished( this, ReasonToFinishPlaying.StoppedByUser );
-            }
+            PlayingFinished?.Invoke(this, ReasonToFinishPlaying.StoppedByUser);
         }
     }
 }

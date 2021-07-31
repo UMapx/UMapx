@@ -392,6 +392,7 @@ namespace UMapx.Video
         /// <see cref="WaitForStop">waiting</see> for background thread's completion.</note></para>
         /// </remarks>
         /// 
+        [Obsolete]
         public void Stop( )
 		{
 			if ( this.IsRunning )
