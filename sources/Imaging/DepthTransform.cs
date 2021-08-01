@@ -11,7 +11,6 @@ namespace UMapx.Imaging
     public static class DepthTransform
     {
         #region Public methods
-
         /// <summary>
         /// Converts Bitmap into unshort matrix.
         /// </summary>
@@ -38,7 +37,6 @@ namespace UMapx.Imaging
             depth.Unlock(bmData);
             return output;
         }
-        
         /// <summary>
         /// Converts ushort matrix into Bitmap.
         /// </summary>
@@ -66,7 +64,6 @@ namespace UMapx.Imaging
             bitmap.Unlock(bmData);
             return bitmap;
         }
-
         /// <summary>
         /// Converts the depth to the matrix.
         /// </summary>
@@ -88,7 +85,6 @@ namespace UMapx.Imaging
 
             return output;
         }
-
         /// <summary>
         /// Converts the ushort matrix to the float matrix.
         /// </summary>
@@ -110,7 +106,9 @@ namespace UMapx.Imaging
 
             return output;
         }
+        #endregion
 
+        #region Equalize
         /// <summary>
         /// Equalizes histogram of the depth.
         /// </summary>
@@ -158,7 +156,9 @@ namespace UMapx.Imaging
 
             return output;
         }
+        #endregion
 
+        #region Crop
         /// <summary>
         /// Crops the depth.
         /// </summary>
@@ -196,9 +196,11 @@ namespace UMapx.Imaging
 
             return output;
         }
+        #endregion
 
+        #region Resize
         /// <summary>
-        /// Returns resized matrix.
+        /// Resizes the depth.
         /// </summary>
         /// <param name="input">Matrix</param>
         /// <param name="h">Height</param>
@@ -270,6 +272,75 @@ namespace UMapx.Imaging
                     }
 
                     H[y, x] = (ushort)g;
+                }
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Canvas
+        /// <summary>
+        /// Rotates the depth by 90 degrees.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <returns>Matrix</returns>
+        public static ushort[,] Rotate90(this ushort[,] input)
+        {
+            int h = input.GetLength(0);
+            int w = input.GetLength(1);
+
+            ushort[,] H = new ushort[w, h];
+            
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++)
+                {
+                    H[j, i] = input[h - i - 1, w - j - 1];
+                }
+            }
+
+            return H; 
+        }
+        /// <summary>
+        /// Rotates the depth by 180 degrees.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <returns>Matrix</returns>
+        public static ushort[,] Rotate180(this ushort[,] input)
+        {
+            int h = input.GetLength(0);
+            int w = input.GetLength(1);
+
+            ushort[,] H = new ushort[h, w];
+
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++)
+                {
+                    H[i, j] = input[h - i - 1, w - j - 1];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Rotates the depth by 270 degrees.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <returns>Matrix</returns>
+        public static ushort[,] Rotate270(this ushort[,] input)
+        {
+            int h = input.GetLength(0);
+            int w = input.GetLength(1);
+
+            ushort[,] H = new ushort[w, h];
+
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++)
+                {
+                    H[j, i] = input[i, w - j - 1];
                 }
             }
 

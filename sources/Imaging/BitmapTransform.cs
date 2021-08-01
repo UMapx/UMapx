@@ -11,6 +11,42 @@ namespace UMapx.Imaging
     /// </summary>
     public static class BitmapTransform
     {
+        #region Canvas
+        /// <summary>
+        /// Rotates bitmap by 90 degrees.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap Rotate90(this Bitmap b)
+        {
+            var clone = (Bitmap)b.Clone();
+            clone.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            return clone;
+        }
+        /// <summary>
+        /// Rotates bitmap by 180 degrees.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap Rotate180(this Bitmap b)
+        {
+            var clone = (Bitmap)b.Clone();
+            clone.RotateFlip(RotateFlipType.Rotate180FlipNone);
+            return clone;
+        }
+        /// <summary>
+        /// Rotates bitmap by 270 degrees.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap Rotate270(this Bitmap b)
+        {
+            var clone = (Bitmap)b.Clone();
+            clone.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            return clone;
+        }
+        #endregion
+
         #region Rotate
         /// <summary>
         /// Rotates the bitmap by the specified angle. 
@@ -236,11 +272,10 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public static Bitmap ShiftX(this Bitmap b, int value)
         {
-            Bitmap bmp = (Bitmap)b.Clone();
-            Graphics graphics = Graphics.FromImage(bmp);
+            var bmp = (Bitmap)b.Clone();
+            using var graphics = Graphics.FromImage(bmp);
             graphics.DrawImage(b, value, 0, b.Width, b.Height);
             graphics.DrawImage(b, value - b.Width, 0, b.Width, b.Height);
-            graphics.Dispose();
             return bmp;
         }
         /// <summary>
@@ -251,11 +286,10 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public static Bitmap ShiftY(this Bitmap b, int value)
         {
-            Bitmap bmp = (Bitmap)b.Clone();
-            Graphics graphics = Graphics.FromImage(bmp);
+            var bmp = (Bitmap)b.Clone();
+            using var graphics = Graphics.FromImage(bmp);
             graphics.DrawImage(b, 0, value, b.Width, b.Height);
             graphics.DrawImage(b, 0, value - b.Height, b.Width, b.Height);
-            graphics.Dispose();
             return bmp;
         }
         #endregion

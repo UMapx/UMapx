@@ -15475,6 +15475,27 @@
             Uses for editing and transforming images.
             </summary>
         </member>
+        <member name="M:UMapx.Imaging.BitmapTransform.Rotate90(System.Drawing.Bitmap)">
+            <summary>
+            Rotates bitmap by 90 degrees.
+            </summary>
+            <param name="b">Bitmap</param>
+            <returns>Bitmap</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapTransform.Rotate180(System.Drawing.Bitmap)">
+            <summary>
+            Rotates bitmap by 180 degrees.
+            </summary>
+            <param name="b">Bitmap</param>
+            <returns>Bitmap</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapTransform.Rotate270(System.Drawing.Bitmap)">
+            <summary>
+            Rotates bitmap by 270 degrees.
+            </summary>
+            <param name="b">Bitmap</param>
+            <returns>Bitmap</returns>
+        </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,System.Single)">
             <summary>
             Rotates the bitmap by the specified angle. 
@@ -16688,11 +16709,32 @@
         </member>
         <member name="M:UMapx.Imaging.DepthTransform.Resize(System.UInt16[0:,0:],System.Int32,System.Int32)">
             <summary>
-            Returns resized matrix.
+            Resizes the depth.
             </summary>
             <param name="input">Matrix</param>
             <param name="h">Height</param>
             <param name="w">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Rotate90(System.UInt16[0:,0:])">
+            <summary>
+            Rotates the depth by 90 degrees.
+            </summary>
+            <param name="input">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Rotate180(System.UInt16[0:,0:])">
+            <summary>
+            Rotates the depth by 180 degrees.
+            </summary>
+            <param name="input">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Rotate270(System.UInt16[0:,0:])">
+            <summary>
+            Rotates the depth by 270 degrees.
+            </summary>
+            <param name="input">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Imaging.Dilatation">
