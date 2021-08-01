@@ -32,8 +32,8 @@ namespace UMapx.Video
         /// <param name="depth">Depth</param>
         public VideoImageDepthSource(Bitmap image, ushort[,] depth)
         {
-            _image = image;
-            _depth = depth;
+            _image = image ?? throw new ArgumentNullException();
+            _depth = depth ?? throw new ArgumentNullException();
             _videoResolution = 
                 _depthResolution = 
                 new VideoCapabilities(
@@ -53,12 +53,17 @@ namespace UMapx.Video
         {
             lock (_locker)
             {
+                // frame
                 var frame = BitmapTransform.Resize(
                     _image,
                     _videoResolution.FrameSize.Width,
                     _videoResolution.FrameSize.Height);
 
-                var depth = _depth;
+                // depth
+                var depth = DepthTransform.Resize(
+                    _depth,
+                    _depthResolution.FrameSize.Width,
+                    _depthResolution.FrameSize.Height);
 
                 OnNewFrame(frame);
                 OnNewDepth(depth);
@@ -72,12 +77,9 @@ namespace UMapx.Video
         /// <param name="frame">Frame</param>
         private void OnNewFrame(Bitmap frame)
         {
-            if (frame is object)
-            {
-                _framesReceived++;
-                _bytesReceived += frame.Width * frame.Height * (Image.GetPixelFormatSize(frame.PixelFormat) >> 3);
-                NewFrame?.Invoke(this, new NewFrameEventArgs(frame));
-            }
+            _framesReceived++;
+            _bytesReceived += frame.Width * frame.Height * (Image.GetPixelFormatSize(frame.PixelFormat) >> 3);
+            NewFrame?.Invoke(this, new NewFrameEventArgs(frame));
         }
 
         /// <summary>
@@ -86,10 +88,7 @@ namespace UMapx.Video
         /// <param name="depth">Depth</param>
         private void OnNewDepth(ushort[,] depth)
         {
-            if (depth is object)
-            {
-                NewDepth?.Invoke(this, new NewDepthEventArgs(depth));
-            }
+            NewDepth?.Invoke(this, new NewDepthEventArgs(depth));
         }
 
         #endregion

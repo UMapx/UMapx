@@ -29,7 +29,7 @@ namespace UMapx.Video
         /// <param name="image">Image</param>
         public VideoImageSource(Bitmap image)
         {
-            _image = image;
+            _image = image ?? throw new ArgumentNullException();
             _videoResolution = new VideoCapabilities(
                 new Size(640, 480),
                 30,
@@ -63,12 +63,9 @@ namespace UMapx.Video
         /// <param name="frame">Frame</param>
         private void OnNewFrame(Bitmap frame)
         {
-            if (frame is object)
-            {
-                _framesReceived++;
-                _bytesReceived += frame.Width * frame.Height * (Image.GetPixelFormatSize(frame.PixelFormat) >> 3);
-                NewFrame?.Invoke(this, new NewFrameEventArgs(frame));
-            }
+            _framesReceived++;
+            _bytesReceived += frame.Width * frame.Height * (Image.GetPixelFormatSize(frame.PixelFormat) >> 3);
+            NewFrame?.Invoke(this, new NewFrameEventArgs(frame));
         }
 
         #endregion

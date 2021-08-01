@@ -196,7 +196,85 @@ namespace UMapx.Imaging
 
             return output;
         }
-        
+
+        /// <summary>
+        /// Returns resized matrix.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <param name="h">Height</param>
+        /// <param name="w">Width</param>
+        /// <returns>Matrix</returns>
+        public static ushort[,] Resize(this ushort[,] input, int w, int h)
+        {
+            // get source size
+            int width = input.GetLength(1);
+            int height = input.GetLength(0);
+
+            float xFactor = (float)width / w;
+            float yFactor = (float)height / h;
+
+            // coordinates of source points and cooefficiens
+            float ox, oy, dx, dy, k1, k2;
+            int ox1, oy1, ox2, oy2;
+            float g;
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+
+            // output
+            ushort[,] H = new ushort[h, w];
+
+            // grayscale
+            for (int y = 0; y < h; y++)
+            {
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
+
+                for (int x = 0; x < w; x++)
+                {
+                    // X coordinates
+                    ox = x * xFactor - 0.5f;
+                    ox1 = (int)ox;
+                    dx = ox - ox1;
+
+                    // initial pixel value
+                    g = 0;
+
+                    for (int n = -1; n < 3; n++)
+                    {
+                        // get Y cooefficient
+                        k1 = Kernel.Bicubic((float)(dy - n));
+
+                        oy2 = oy1 + n;
+                        if (oy2 < 0)
+                            oy2 = 0;
+                        if (oy2 > ymax)
+                            oy2 = ymax;
+
+                        for (int m = -1; m < 3; m++)
+                        {
+                            // get X cooefficient
+                            k2 = k1 * Kernel.Bicubic((float)(m - dx));
+
+                            ox2 = ox1 + m;
+                            if (ox2 < 0)
+                                ox2 = 0;
+                            if (ox2 > xmax)
+                                ox2 = xmax;
+
+                            g += k2 * input[oy2, ox2];
+                        }
+                    }
+
+                    H[y, x] = (ushort)g;
+                }
+            }
+
+            return H;
+        }
         #endregion
     }
 }

@@ -774,7 +774,6 @@ namespace UMapx.Core
         public static Complex32[,] Add(this Complex32[,] m, float[,] n)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            int nl = n.GetLength(0), nr = n.GetLength(1);
             Complex32[,] H = new Complex32[ml, mr];
             int i, j;
 
@@ -2668,6 +2667,165 @@ namespace UMapx.Core
             }
 
             return u;
+        }
+        #endregion
+
+        #region Matrix transform
+        /// <summary>
+        /// Returns resized matrix.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <param name="h">Height</param>
+        /// <param name="w">Width</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Resize(this float[,] input, int h, int w)
+        {
+            // get source size
+            int width = input.GetLength(1);
+            int height = input.GetLength(0);
+
+            float xFactor = (float)width / w;
+            float yFactor = (float)height / h;
+
+            // coordinates of source points and cooefficiens
+            float ox, oy, dx, dy, k1, k2;
+            int ox1, oy1, ox2, oy2;
+            float g;
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+
+            // output
+            float[,] H = new float[h, w];
+
+            // grayscale
+            for (int y = 0; y < h; y++)
+            {
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
+
+                for (int x = 0; x < w; x++)
+                {
+                    // X coordinates
+                    ox = x * xFactor - 0.5f;
+                    ox1 = (int)ox;
+                    dx = ox - ox1;
+
+                    // initial pixel value
+                    g = 0;
+
+                    for (int n = -1; n < 3; n++)
+                    {
+                        // get Y cooefficient
+                        k1 = Kernel.Bicubic((float)(dy - n));
+
+                        oy2 = oy1 + n;
+                        if (oy2 < 0)
+                            oy2 = 0;
+                        if (oy2 > ymax)
+                            oy2 = ymax;
+
+                        for (int m = -1; m < 3; m++)
+                        {
+                            // get X cooefficient
+                            k2 = k1 * Kernel.Bicubic((float)(m - dx));
+
+                            ox2 = ox1 + m;
+                            if (ox2 < 0)
+                                ox2 = 0;
+                            if (ox2 > xmax)
+                                ox2 = xmax;
+
+                            g += k2 * input[oy2, ox2];
+                        }
+                    }
+
+                    H[y, x] = g;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Returns resized matrix.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <param name="h">Height</param>
+        /// <param name="w">Width</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Resize(this Complex32[,] input, int h, int w)
+        {
+            // get source size
+            int width = input.GetLength(1);
+            int height = input.GetLength(0);
+
+            float xFactor = (float)width / w;
+            float yFactor = (float)height / h;
+
+            // coordinates of source points and cooefficiens
+            float ox, oy, dx, dy, k1, k2;
+            int ox1, oy1, ox2, oy2;
+            Complex32 g;
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+
+            // output
+            Complex32[,] H = new Complex32[h, w];
+
+            // grayscale
+            for (int y = 0; y < h; y++)
+            {
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
+
+                for (int x = 0; x < w; x++)
+                {
+                    // X coordinates
+                    ox = x * xFactor - 0.5f;
+                    ox1 = (int)ox;
+                    dx = ox - ox1;
+
+                    // initial pixel value
+                    g = 0;
+
+                    for (int n = -1; n < 3; n++)
+                    {
+                        // get Y cooefficient
+                        k1 = Kernel.Bicubic((float)(dy - n));
+
+                        oy2 = oy1 + n;
+                        if (oy2 < 0)
+                            oy2 = 0;
+                        if (oy2 > ymax)
+                            oy2 = ymax;
+
+                        for (int m = -1; m < 3; m++)
+                        {
+                            // get X cooefficient
+                            k2 = k1 * Kernel.Bicubic((float)(m - dx));
+
+                            ox2 = ox1 + m;
+                            if (ox2 < 0)
+                                ox2 = 0;
+                            if (ox2 > xmax)
+                                ox2 = xmax;
+
+                            g += k2 * input[oy2, ox2];
+                        }
+                    }
+
+                    H[y, x] = g;
+                }
+            }
+
+            return H;
         }
         #endregion
 
@@ -4874,6 +5032,117 @@ namespace UMapx.Core
             }
 
             return u;
+        }
+        #endregion
+
+        #region Vector transform
+        /// <summary>
+        /// Returns resized vector.
+        /// </summary>
+        /// <param name="input">Array</param>
+        /// <param name="h">Length</param>
+        /// <returns>Array</returns>
+        public static float[] Resize(this float[] input, int h)
+        {
+            // get source size
+            int height = input.GetLength(0);
+
+            float yFactor = (float)height / h;
+
+            // coordinates of source points and cooefficiens
+            float oy, dy, k1;
+            int oy1, oy2;
+            float g;
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+
+            // output
+            float[] H = new float[h];
+
+            // grayscale
+            for (int y = 0; y < h; y++)
+            {
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
+
+                // initial pixel value
+                g = 0;
+
+                for (int n = -1; n < 3; n++)
+                {
+                    // get Y cooefficient
+                    k1 = Kernel.Bicubic((float)(dy - n));
+
+                    oy2 = oy1 + n;
+                    if (oy2 < 0)
+                        oy2 = 0;
+                    if (oy2 > ymax)
+                        oy2 = ymax;
+
+                    g += k1 * input[oy2];
+                }
+
+                H[y] = g;
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Returns resized vector.
+        /// </summary>
+        /// <param name="input">Array</param>
+        /// <param name="h">Length</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Resize(this Complex32[] input, int h)
+        {
+            // get source size
+            int height = input.GetLength(0);
+
+            float yFactor = (float)height / h;
+
+            // coordinates of source points and cooefficiens
+            float oy, dy, k1;
+            int oy1, oy2;
+            Complex32 g;
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+
+            // output
+            Complex32[] H = new Complex32[h];
+
+            // grayscale
+            for (int y = 0; y < h; y++)
+            {
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
+
+                // initial pixel value
+                g = 0;
+
+                for (int n = -1; n < 3; n++)
+                {
+                    // get Y cooefficient
+                    k1 = Kernel.Bicubic((float)(dy - n));
+
+                    oy2 = oy1 + n;
+                    if (oy2 < 0)
+                        oy2 = 0;
+                    if (oy2 > ymax)
+                        oy2 = ymax;
+
+                    g += k1 * input[oy2];
+                }
+
+                H[y] = g;
+            }
+
+            return H;
         }
         #endregion
 
@@ -7399,7 +7668,6 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Remove(this float[] v, int i, int length)
         {
-            int n = v.Length;
             float[] w = new float[length];
 
             for (int z = 0, y = i; z < length; z++, y++)
@@ -7417,7 +7685,6 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] Remove(this Complex32[] v, int i, int length)
         {
-            int n = v.Length;
             Complex32[] w = new Complex32[length];
 
             for (int z = 0, y = i; z < length; z++, y++)
@@ -8642,10 +8909,11 @@ namespace UMapx.Core
         #endregion
 
         #region Random matrices and vectors
+
         /// <summary>
         /// 
         /// </summary>
-        private static Random rnd = new Random();
+        private static readonly Random rnd = new Random();
 
         #region Rand and randc voids
         /// <summary>

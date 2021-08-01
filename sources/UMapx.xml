@@ -6633,6 +6633,24 @@
             <param name="m">Matrix</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Resize(System.Single[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
             Implements a scalar product of matrices.
@@ -7674,6 +7692,22 @@
             </summary>
             <param name="m">Vector</param>
             <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(System.Single[],System.Int32)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[],System.Int32)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[0:,0:],System.Single[],System.Boolean)">
             <summary>
@@ -16651,6 +16685,15 @@
             <param name="depth">Depth</param>
             <param name="rectangle">Rectangle</param>
             <returns></returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Resize(System.UInt16[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Imaging.Dilatation">
             <summary>
