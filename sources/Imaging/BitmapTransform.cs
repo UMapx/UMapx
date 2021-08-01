@@ -306,8 +306,10 @@ namespace UMapx.Imaging
             int width = b.Width, height = b.Height;
             Bitmap bmp = new Bitmap(width, height);
             Graphics graphics = Graphics.FromImage(bmp);
-            ColorMatrix cmx = new ColorMatrix();
-            cmx.Matrix33 = value / 255.0f;
+            ColorMatrix cmx = new ColorMatrix
+            {
+                Matrix33 = value / 255.0f
+            };
             ImageAttributes attributes = new ImageAttributes();
             attributes.SetColorMatrix(cmx);
             graphics.DrawImage(b, new Rectangle(0, 0, width, height), 0, 0, width, height, GraphicsUnit.Pixel, attributes);
