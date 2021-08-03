@@ -49,8 +49,8 @@ namespace UMapx.Video
             {
                 var frame = BitmapTransform.Resize(
                     _image,
-                    _videoResolution.FrameSize.Width,
-                    _videoResolution.FrameSize.Height);
+                    new Size(_videoResolution.FrameSize.Width,
+                    _videoResolution.FrameSize.Height));
 
                 OnNewFrame(frame);
                 frame?.Dispose();

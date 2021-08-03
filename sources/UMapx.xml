@@ -6633,24 +6633,6 @@
             <param name="m">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Resize(System.Single[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Returns resized matrix.
-            </summary>
-            <param name="input">Matrix</param>
-            <param name="h">Height</param>
-            <param name="w">Width</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Returns resized matrix.
-            </summary>
-            <param name="input">Matrix</param>
-            <param name="h">Height</param>
-            <param name="w">Width</param>
-            <returns>Matrix</returns>
-        </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
             Implements a scalar product of matrices.
@@ -7693,22 +7675,6 @@
             <param name="m">Vector</param>
             <returns>Vector</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Resize(System.Single[],System.Int32)">
-            <summary>
-            Returns resized vector.
-            </summary>
-            <param name="input">Array</param>
-            <param name="h">Length</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[],System.Int32)">
-            <summary>
-            Returns resized vector.
-            </summary>
-            <param name="input">Array</param>
-            <param name="h">Length</param>
-            <returns>Array</returns>
-        </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[0:,0:],System.Single[],System.Boolean)">
             <summary>
             Implements the scalar product of a matrix by a vector of the form: A * diag(v).
@@ -7779,6 +7745,38 @@
             <param name="m">Matrix</param>
             <param name="v">Array</param>
             <param name="inverse">Use inverse to diagonal matrix or not</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extrude(System.Single[],System.Single[])">
+            <summary>
+            Implements vector extruding.
+            </summary>
+            <param name="a">Array</param>
+            <param name="b">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extrude(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Implements vector extruding.
+            </summary>
+            <param name="a">Array</param>
+            <param name="b">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extrude(UMapx.Core.Complex32[],System.Single[])">
+            <summary>
+            Implements vector extruding.
+            </summary>
+            <param name="a">Array</param>
+            <param name="b">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Extrude(System.Single[],UMapx.Core.Complex32[])">
+            <summary>
+            Implements vector extruding.
+            </summary>
+            <param name="a">Array</param>
+            <param name="b">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[],System.Single[])">
@@ -7954,6 +7952,290 @@
             <param name="v">Array</param>
             <param name="r">Radius</param>
         </member>
+        <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],UMapx.Core.Rotation)">
+            <summary>
+            Rotates matrix by rotation value.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="rotation">Rotation</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate90(System.Single[0:,0:])">
+            <summary>
+            Rotates the matrix by 90 degrees.
+            </summary>
+            <param name="input">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate180(System.Single[0:,0:])">
+            <summary>
+            Rotates the depth by 180 degrees.
+            </summary>
+            <param name="input">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate270(System.Single[0:,0:])">
+            <summary>
+            Rotates the depth by 270 degrees.
+            </summary>
+            <param name="input">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],System.Single)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],System.Single,System.Single)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <param name="value">Value</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate(UMapx.Core.Complex32[0:,0:],UMapx.Core.Rotation)">
+            <summary>
+            Rotates matrix by rotation value.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="rotation">Rotation</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate90(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Rotates the matrix by 90 degrees.
+            </summary>
+            <param name="input">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate180(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Rotates the depth by 180 degrees.
+            </summary>
+            <param name="input">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate270(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Rotates the depth by 270 degrees.
+            </summary>
+            <param name="input">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate(UMapx.Core.Complex32[0:,0:],System.Single)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate(UMapx.Core.Complex32[0:,0:],System.Single,System.Single)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <param name="value">Value</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(System.Single[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(System.Single[],System.Int32)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[],System.Int32)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Shift(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Implements a shift of matrix elements.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="m">The number of positions to which a shift in height occurs</param>
+            <param name="l">The number of positions by which the shift occurs in width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Shift(System.Single[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Implements a shift of matrix elements.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="m">The number of positions to which a shift in height occurs</param>
+            <param name="l">The number of positions by which the shift occurs in width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Shift(UMapx.Core.Complex32[],System.Int32)">
+            <summary>
+            Implements a shift of vector elements.
+            </summary>
+            <param name="v">Array</param>
+            <param name="l">Number of positions to shift</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Shift(System.Single[],System.Int32)">
+            <summary>
+            Implements a shift of vector elements.
+            </summary>
+            <param name="v">Array</param>
+            <param name="l">Number of positions to shift</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Flip(System.Single[0:,0:],UMapx.Core.Direction)">
+            <summary>
+            Flips matrix elements.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="direction">Processing direction</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Flip(UMapx.Core.Complex32[0:,0:],UMapx.Core.Direction)">
+            <summary>
+            Flips matrix elements.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="direction">Processing direction</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Flip(System.Single[])">
+            <summary>
+            Flips vector elements.
+            </summary>
+            <param name="v">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Flip(UMapx.Core.Complex32[])">
+            <summary>
+            Flips vector elements.
+            </summary>
+            <param name="v">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Crop(System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Returns the specified part of the vector.
+            </summary>
+            <param name="a">Array</param>
+            <param name="start">Starting position</param>
+            <param name="length">Vector length</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Crop(UMapx.Core.Complex32[],System.Int32,System.Int32)">
+            <summary>
+            Returns the specified part of the vector.
+            </summary>
+            <param name="a">Array</param>
+            <param name="start">Starting position</param>
+            <param name="length">Vector length</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Crop(System.Single[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Crops the matrix to the specified size.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="y">Starting position in height</param>
+            <param name="x">Starting position in width</param>
+            <param name="height">Height</param>
+            <param name="width">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Crop(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Crops the matrix to the specified size.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="y">Starting position in height</param>
+            <param name="x">Starting position in width</param>
+            <param name="height">Height</param>
+            <param name="width">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Merges two depths.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Merges two depths.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+            <param name="y">Y</param>
+            <param name="x">X</param>
+            <param name="width">Width</param>
+            <param name="height">Height</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Merges two depths.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Merges two depths.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+            <param name="y">Y</param>
+            <param name="x">X</param>
+            <param name="width">Width</param>
+            <param name="height">Height</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Merges two depths.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],System.Single[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Merges two depths.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+            <param name="y">Y</param>
+            <param name="x">X</param>
+            <param name="width">Width</param>
+            <param name="height">Height</param>
+        </member>
         <member name="M:UMapx.Core.Matrice.Abs(System.Single[],System.Boolean)">
             <summary>
             Returns vector module.
@@ -8082,70 +8364,6 @@
             <param name="r">Row number</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Shift(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Implements block matrix rearrangement.
-            </summary>
-            <param name="a">Matrix</param>
-            <param name="m">The number of positions to which a shift in height occurs</param>
-            <param name="l">The number of positions by which the shift occurs in width</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Shift(System.Single[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Implements block matrix rearrangement.
-            </summary>
-            <param name="a">Matrix</param>
-            <param name="m">The number of positions to which a shift in height occurs</param>
-            <param name="l">The number of positions by which the shift occurs in width</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Shift(UMapx.Core.Complex32[],System.Int32)">
-            <summary>
-            Implements a shift of vector elements.
-            </summary>
-            <param name="v">Array</param>
-            <param name="l">Number of positions to shift</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Shift(System.Single[],System.Int32)">
-            <summary>
-            Implements a shift of vector elements.
-            </summary>
-            <param name="v">Array</param>
-            <param name="l">Number of positions to shift</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Flip(System.Single[0:,0:],UMapx.Core.Direction)">
-            <summary>
-            Flips matrix elements.
-            </summary>
-            <param name="m">Matrix</param>
-            <param name="direction">Processing direction</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Flip(UMapx.Core.Complex32[0:,0:],UMapx.Core.Direction)">
-            <summary>
-            Flips matrix elements.
-            </summary>
-            <param name="m">Matrix</param>
-            <param name="direction">Processing direction</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Flip(System.Single[])">
-            <summary>
-            Flips vector elements.
-            </summary>
-            <param name="v">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Flip(UMapx.Core.Complex32[])">
-            <summary>
-            Flips vector elements.
-            </summary>
-            <param name="v">Array</param>
-            <returns>Array</returns>
-        </member>
         <member name="M:UMapx.Core.Matrice.Diff(System.Single[0:,0:],System.Int32,UMapx.Core.Direction,System.Boolean)">
             <summary>
             Returns the difference of matrix elements.
@@ -8215,78 +8433,6 @@
             <param name="n">Order</param>
             <param name="reverse">Reverse processing or not</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Merge(System.Single[],System.Single[])">
-            <summary>
-            Implements vector merging.
-            </summary>
-            <param name="a">Array</param>
-            <param name="b">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
-            <summary>
-            Implements vector merging.
-            </summary>
-            <param name="a">Array</param>
-            <param name="b">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[],System.Single[])">
-            <summary>
-            Implements vector merging.
-            </summary>
-            <param name="a">Array</param>
-            <param name="b">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Merge(System.Single[],UMapx.Core.Complex32[])">
-            <summary>
-            Implements vector merging.
-            </summary>
-            <param name="a">Array</param>
-            <param name="b">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cut(System.Single[],System.Int32,System.Int32)">
-            <summary>
-            Returns the specified part of the vector.
-            </summary>
-            <param name="a">Array</param>
-            <param name="start">Starting position</param>
-            <param name="length">Vector length</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cut(UMapx.Core.Complex32[],System.Int32,System.Int32)">
-            <summary>
-            Returns the specified part of the vector.
-            </summary>
-            <param name="a">Array</param>
-            <param name="start">Starting position</param>
-            <param name="length">Vector length</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cut(System.Single[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Crops the matrix to the specified size.
-            </summary>
-            <param name="m">Matrix</param>
-            <param name="y">Starting position in height</param>
-            <param name="x">Starting position in width</param>
-            <param name="height">Height</param>
-            <param name="width">Width</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Cut(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Crops the matrix to the specified size.
-            </summary>
-            <param name="m">Matrix</param>
-            <param name="y">Starting position in height</param>
-            <param name="x">Starting position in width</param>
-            <param name="height">Height</param>
-            <param name="width">Width</param>
-            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Reshape(System.Single[],System.Int32)">
             <summary>
@@ -9543,6 +9689,31 @@
             Creates a copy of RangeInt.
             </summary>
             <returns>Pair of numbers</returns>
+        </member>
+        <member name="T:UMapx.Core.Rotation">
+            <summary>
+            Defines the rotation of processing.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Rotation.R0">
+            <summary>
+            0 degrees.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Rotation.R90">
+            <summary>
+            90 degrees. 
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Rotation.R180">
+            <summary>
+            180 degrees.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Rotation.R270">
+            <summary>
+            270 degrees.
+            </summary>
         </member>
         <member name="T:UMapx.Core.SizeFloat">
             <summary>
@@ -15364,43 +15535,20 @@
             Uses for editing and transforming images.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Rotate90(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,UMapx.Core.Rotation)">
             <summary>
-            Rotates bitmap by 90 degrees.
+            Rotates bitmap by rotation value.
             </summary>
             <param name="b">Bitmap</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Rotate180(System.Drawing.Bitmap)">
-            <summary>
-            Rotates bitmap by 180 degrees.
-            </summary>
-            <param name="b">Bitmap</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Rotate270(System.Drawing.Bitmap)">
-            <summary>
-            Rotates bitmap by 270 degrees.
-            </summary>
-            <param name="b">Bitmap</param>
-            <returns>Bitmap</returns>
+            <param name="rotation">Rotation</param>
+            <returns></returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,System.Single)">
             <summary>
             Rotates the bitmap by the specified angle. 
             </summary>
             <param name="b">Bitmap</param>
-            <param name="angle">Angle in degrees</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,System.Int32,System.Int32,System.Single)">
-            <summary>
-            Rotates the bitmap by the specified angle. 
-            </summary>
-            <param name="b">Bitmap</param>
-            <param name="x">X</param>
-            <param name="y">Y</param>
-            <param name="angle">Angle in degrees</param>
+            <param name="angle">Angle</param>
             <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,UMapx.Core.PointFloat,System.Single)">
@@ -15421,25 +15569,12 @@
             <param name="color">Background color</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.FlipX(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Flip(System.Drawing.Bitmap,UMapx.Core.Direction)">
             <summary>
-            Flips bitmap by X axis.
+            Flips bitmap by direction.
             </summary>
             <param name="b">Bitmap</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.FlipY(System.Drawing.Bitmap)">
-            <summary>
-            Flips bitmap by Y axis.
-            </summary>
-            <param name="b">Bitmap</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.FlipXY(System.Drawing.Bitmap)">
-            <summary>
-            Returns flipped by XY image.
-            </summary>
-            <param name="image">Bitmap</param>
+            <param name="direction">Direction</param>
             <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Crop(System.Drawing.Bitmap,System.Drawing.Rectangle)">
@@ -15448,23 +15583,6 @@
             </summary>
             <param name="image">Bitmap</param>
             <param name="rectangle">Rectangle</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Resize(System.Drawing.Bitmap,System.Int32,System.Int32)">
-            <summary>
-            Resizes bitmap.
-            </summary>
-            <param name="b">Bitmap</param>
-            <param name="width">Width</param>
-            <param name="height">Height</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Resize(System.Drawing.Bitmap,System.Single)">
-            <summary>
-            Resizes bitmap.
-            </summary>
-            <param name="b">Bitmap</param>
-            <param name="value">Scale value</param>
             <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Resize(System.Drawing.Bitmap,System.Drawing.Size)">
@@ -15484,30 +15602,6 @@
             <param name="color">Border color</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.ShiftX(System.Drawing.Bitmap,System.Int32)">
-            <summary>
-            Shifts bitmap by X axis.
-            </summary>
-            <param name="b">Bitmap</param>
-            <param name="value">Shift value</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.ShiftY(System.Drawing.Bitmap,System.Int32)">
-            <summary>
-            Shifts bitmap by Y axis.
-            </summary>
-            <param name="b">Bitmap</param>
-            <param name="value">Shift value</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Transparency(System.Drawing.Bitmap,System.Int32)">
-            <summary>
-            Sets the transparency of the bitmap. 
-            </summary>
-            <param name="b">Bitmap</param>
-            <param name="value">Transparency [0, 255]</param>
-            <returns>Bitmap</returns>
-        </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Merge(System.Drawing.Bitmap,System.Drawing.Bitmap)">
             <summary>
             Merges two bitmaps.
@@ -15524,23 +15618,12 @@
             <param name="foreground">Foreground image</param>
             <param name="rectangle">Rectangle</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Merge(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Int32)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Transparency(System.Drawing.Bitmap,System.Int32)">
             <summary>
-            Merges two bitmaps.
-            </summary>s
-            <param name="background">Background bitmap</param>
-            <param name="foreground">Foreground bitmap</param>
-            <param name="transparency">Transparency value [0, 255]</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Merge(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Drawing.Rectangle,System.Int32)">
-            <summary>
-            Merges two bitmaps.
-            </summary>s
-            <param name="background">Background bitmap</param>
-            <param name="foreground">Foreground bitmap</param>
-            <param name="rectangle">Rectangle</param>
-            <param name="transparency">Transparency value [0, 255]</param>
+            Sets the transparency of the bitmap. 
+            </summary>
+            <param name="b">Bitmap</param>
+            <param name="value">Transparency [0, 255]</param>
             <returns>Bitmap</returns>
         </member>
         <member name="T:UMapx.Imaging.BlendMode">
@@ -16586,28 +16669,12 @@
             Uses for editing and transforming depth maps.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.DepthTransform.Equalize(System.UInt16[0:,0:])">
+        <member name="M:UMapx.Imaging.DepthTransform.Rotate(System.UInt16[0:,0:],UMapx.Core.Rotation)">
             <summary>
-            Equalizes histogram of the depth.
+            Rotates depth by rotation value.
             </summary>
-            <param name="depth">Depth</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Imaging.DepthTransform.Crop(System.UInt16[0:,0:],System.Drawing.Rectangle)">
-            <summary>
-            Crops the depth.
-            </summary>
-            <param name="depth">Depth</param>
-            <param name="rectangle">Rectangle</param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Imaging.DepthTransform.Resize(System.UInt16[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Resizes the depth.
-            </summary>
-            <param name="input">Matrix</param>
-            <param name="h">Height</param>
-            <param name="w">Width</param>
+            <param name="depth">Matrix</param>
+            <param name="rotation">Rotation</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Imaging.DepthTransform.Rotate90(System.UInt16[0:,0:])">
@@ -16629,6 +16696,99 @@
             Rotates the depth by 270 degrees.
             </summary>
             <param name="input">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Rotate(System.UInt16[0:,0:],System.Single)">
+            <summary>
+            Rotates depth by angle.
+            </summary>
+            <param name="depth">Matrix</param>
+            <param name="angle">Angle</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Rotate(System.UInt16[0:,0:],System.Single,System.UInt16)">
+            <summary>
+            Rotates depth by angle.
+            </summary>
+            <param name="depth">Matrix</param>
+            <param name="angle">Angle</param>
+            <param name="color">Background color</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Flip(System.UInt16[0:,0:],UMapx.Core.Direction)">
+            <summary>
+            Flips depth by direction.
+            </summary>
+            <param name="depth">Matrix</param>
+            <param name="direction">Direction</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.FlipX(System.UInt16[0:,0:])">
+            <summary>
+            Flips depth by X axis.
+            </summary>
+            <param name="depth">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.FlipY(System.UInt16[0:,0:])">
+            <summary>
+            Flips depth by Y axis.
+            </summary>
+            <param name="depth">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.FlipXY(System.UInt16[0:,0:])">
+            <summary>
+            Flips depth by XY axis.
+            </summary>
+            <param name="depth">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Crop(System.UInt16[0:,0:],System.Drawing.Rectangle)">
+            <summary>
+            Crops the depth.
+            </summary>
+            <param name="depth">Depth</param>
+            <param name="rectangle">Rectangle</param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Resize(System.UInt16[0:,0:],System.Drawing.Size)">
+            <summary>
+            Resizes the depth.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="size">Size</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Shift(System.UInt16[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Implements a shift of depth elements.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="m">The number of positions to which a shift in height occurs</param>
+            <param name="l">The number of positions by which the shift occurs in width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Merge(System.UInt16[0:,0:],System.UInt16[0:,0:])">
+            <summary>
+            Merges two depths.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Merge(System.UInt16[0:,0:],System.UInt16[0:,0:],System.Drawing.Rectangle)">
+            <summary>
+            Merges two depths.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+            <param name="rectangle">Rectangle</param>
+        </member>
+        <member name="M:UMapx.Imaging.DepthTransform.Equalize(System.UInt16[0:,0:])">
+            <summary>
+            Equalizes histogram of the depth.
+            </summary>
+            <param name="depth">Depth</param>
             <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Imaging.Dilatation">

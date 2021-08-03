@@ -56,14 +56,14 @@ namespace UMapx.Video
                 // frame
                 var frame = BitmapTransform.Resize(
                     _image,
-                    _videoResolution.FrameSize.Width,
-                    _videoResolution.FrameSize.Height);
+                    new Size(_videoResolution.FrameSize.Width,
+                    _videoResolution.FrameSize.Height));
 
                 // depth
                 var depth = DepthTransform.Resize(
                     _depth,
-                    _depthResolution.FrameSize.Width,
-                    _depthResolution.FrameSize.Height);
+                    new Size(_depthResolution.FrameSize.Width,
+                    _depthResolution.FrameSize.Height));
 
                 OnNewFrame(frame);
                 OnNewDepth(depth);

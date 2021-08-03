@@ -2670,165 +2670,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Matrix transform
-        /// <summary>
-        /// Returns resized matrix.
-        /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <param name="h">Height</param>
-        /// <param name="w">Width</param>
-        /// <returns>Matrix</returns>
-        public static float[,] Resize(this float[,] input, int h, int w)
-        {
-            // get source size
-            int width = input.GetLength(1);
-            int height = input.GetLength(0);
-
-            float xFactor = (float)width / w;
-            float yFactor = (float)height / h;
-
-            // coordinates of source points and cooefficiens
-            float ox, oy, dx, dy, k1, k2;
-            int ox1, oy1, ox2, oy2;
-            float g;
-
-            // width and height decreased by 1
-            int ymax = height - 1;
-            int xmax = width - 1;
-
-            // output
-            float[,] H = new float[h, w];
-
-            // grayscale
-            for (int y = 0; y < h; y++)
-            {
-                // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
-                dy = oy - oy1;
-
-                for (int x = 0; x < w; x++)
-                {
-                    // X coordinates
-                    ox = x * xFactor - 0.5f;
-                    ox1 = (int)ox;
-                    dx = ox - ox1;
-
-                    // initial pixel value
-                    g = 0;
-
-                    for (int n = -1; n < 3; n++)
-                    {
-                        // get Y cooefficient
-                        k1 = Kernel.Bicubic((float)(dy - n));
-
-                        oy2 = oy1 + n;
-                        if (oy2 < 0)
-                            oy2 = 0;
-                        if (oy2 > ymax)
-                            oy2 = ymax;
-
-                        for (int m = -1; m < 3; m++)
-                        {
-                            // get X cooefficient
-                            k2 = k1 * Kernel.Bicubic((float)(m - dx));
-
-                            ox2 = ox1 + m;
-                            if (ox2 < 0)
-                                ox2 = 0;
-                            if (ox2 > xmax)
-                                ox2 = xmax;
-
-                            g += k2 * input[oy2, ox2];
-                        }
-                    }
-
-                    H[y, x] = g;
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Returns resized matrix.
-        /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <param name="h">Height</param>
-        /// <param name="w">Width</param>
-        /// <returns>Matrix</returns>
-        public static Complex32[,] Resize(this Complex32[,] input, int h, int w)
-        {
-            // get source size
-            int width = input.GetLength(1);
-            int height = input.GetLength(0);
-
-            float xFactor = (float)width / w;
-            float yFactor = (float)height / h;
-
-            // coordinates of source points and cooefficiens
-            float ox, oy, dx, dy, k1, k2;
-            int ox1, oy1, ox2, oy2;
-            Complex32 g;
-
-            // width and height decreased by 1
-            int ymax = height - 1;
-            int xmax = width - 1;
-
-            // output
-            Complex32[,] H = new Complex32[h, w];
-
-            // grayscale
-            for (int y = 0; y < h; y++)
-            {
-                // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
-                dy = oy - oy1;
-
-                for (int x = 0; x < w; x++)
-                {
-                    // X coordinates
-                    ox = x * xFactor - 0.5f;
-                    ox1 = (int)ox;
-                    dx = ox - ox1;
-
-                    // initial pixel value
-                    g = 0;
-
-                    for (int n = -1; n < 3; n++)
-                    {
-                        // get Y cooefficient
-                        k1 = Kernel.Bicubic((float)(dy - n));
-
-                        oy2 = oy1 + n;
-                        if (oy2 < 0)
-                            oy2 = 0;
-                        if (oy2 > ymax)
-                            oy2 = ymax;
-
-                        for (int m = -1; m < 3; m++)
-                        {
-                            // get X cooefficient
-                            k2 = k1 * Kernel.Bicubic((float)(m - dx));
-
-                            ox2 = ox1 + m;
-                            if (ox2 < 0)
-                                ox2 = 0;
-                            if (ox2 > xmax)
-                                ox2 = xmax;
-
-                            g += k2 * input[oy2, ox2];
-                        }
-                    }
-
-                    H[y, x] = g;
-                }
-            }
-
-            return H;
-        }
-        #endregion
-
         // Matrix special
 
         #region Matrix dot
@@ -5035,117 +4876,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Vector transform
-        /// <summary>
-        /// Returns resized vector.
-        /// </summary>
-        /// <param name="input">Array</param>
-        /// <param name="h">Length</param>
-        /// <returns>Array</returns>
-        public static float[] Resize(this float[] input, int h)
-        {
-            // get source size
-            int height = input.GetLength(0);
-
-            float yFactor = (float)height / h;
-
-            // coordinates of source points and cooefficiens
-            float oy, dy, k1;
-            int oy1, oy2;
-            float g;
-
-            // width and height decreased by 1
-            int ymax = height - 1;
-
-            // output
-            float[] H = new float[h];
-
-            // grayscale
-            for (int y = 0; y < h; y++)
-            {
-                // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
-                dy = oy - oy1;
-
-                // initial pixel value
-                g = 0;
-
-                for (int n = -1; n < 3; n++)
-                {
-                    // get Y cooefficient
-                    k1 = Kernel.Bicubic((float)(dy - n));
-
-                    oy2 = oy1 + n;
-                    if (oy2 < 0)
-                        oy2 = 0;
-                    if (oy2 > ymax)
-                        oy2 = ymax;
-
-                    g += k1 * input[oy2];
-                }
-
-                H[y] = g;
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Returns resized vector.
-        /// </summary>
-        /// <param name="input">Array</param>
-        /// <param name="h">Length</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Resize(this Complex32[] input, int h)
-        {
-            // get source size
-            int height = input.GetLength(0);
-
-            float yFactor = (float)height / h;
-
-            // coordinates of source points and cooefficiens
-            float oy, dy, k1;
-            int oy1, oy2;
-            Complex32 g;
-
-            // width and height decreased by 1
-            int ymax = height - 1;
-
-            // output
-            Complex32[] H = new Complex32[h];
-
-            // grayscale
-            for (int y = 0; y < h; y++)
-            {
-                // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
-                dy = oy - oy1;
-
-                // initial pixel value
-                g = 0;
-
-                for (int n = -1; n < 3; n++)
-                {
-                    // get Y cooefficient
-                    k1 = Kernel.Bicubic((float)(dy - n));
-
-                    oy2 = oy1 + n;
-                    if (oy2 < 0)
-                        oy2 = 0;
-                    if (oy2 > ymax)
-                        oy2 = ymax;
-
-                    g += k1 * input[oy2];
-                }
-
-                H[y] = g;
-            }
-
-            return H;
-        }
-        #endregion
-
         #region Vector as diagonal matrix
         /// <summary>
         /// Implements the scalar product of a matrix by a vector of the form: A * diag(v).
@@ -5491,6 +5221,85 @@ namespace UMapx.Core
             }
 
             return temp;
+        }
+        #endregion
+
+        #region Vector extrude
+        /// <summary>
+        /// Implements vector extruding.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
+        public static float[] Extrude(this float[] a, float[] b)
+        {
+            int na = a.Length, nb = b.Length, i;
+            float[] v = new float[na + nb];
+
+            for (i = 0; i < na; i++)
+                v[i] = a[i];
+
+            for (i = 0; i < nb; i++)
+                v[na + i] = b[i];
+
+            return v;
+        }
+        /// <summary>
+        /// Implements vector extruding.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Extrude(this Complex32[] a, Complex32[] b)
+        {
+            int na = a.Length, nb = b.Length, i;
+            Complex32[] v = new Complex32[na + nb];
+
+            for (i = 0; i < na; i++)
+                v[i] = a[i];
+
+            for (i = 0; i < nb; i++)
+                v[na + i] = b[i];
+
+            return v;
+        }
+        /// <summary>
+        /// Implements vector extruding.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Extrude(this Complex32[] a, float[] b)
+        {
+            int na = a.Length, nb = b.Length, i;
+            Complex32[] v = new Complex32[na + nb];
+
+            for (i = 0; i < na; i++)
+                v[i] = a[i];
+
+            for (i = 0; i < nb; i++)
+                v[na + i] = b[i];
+
+            return v;
+        }
+        /// <summary>
+        /// Implements vector extruding.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Extrude(this float[] a, Complex32[] b)
+        {
+            int na = a.Length, nb = b.Length, i;
+            Complex32[] v = new Complex32[na + nb];
+
+            for (i = 0; i < na; i++)
+                v[i] = a[i];
+
+            for (i = 0; i < nb; i++)
+                v[na + i] = b[i];
+
+            return v;
         }
         #endregion
 
@@ -6172,6 +5981,1095 @@ namespace UMapx.Core
         }
         #endregion
 
+        // Imaging voids
+
+        #region Rotate voids
+        /// <summary>
+        /// Rotates matrix by rotation value.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="rotation">Rotation</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Rotate(this float[,] matrix, Rotation rotation)
+        {
+            switch (rotation)
+            {
+                case Rotation.R0:
+                    return matrix;
+                case Rotation.R90:
+                    return Rotate90(matrix);
+                case Rotation.R180:
+                    return Rotate180(matrix);
+                case Rotation.R270:
+                    return Rotate270(matrix);
+                default:
+                    return matrix;
+            }
+        }
+
+        #region Private
+        /// <summary>
+        /// Rotates the matrix by 90 degrees.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <returns>Matrix</returns>
+        private static float[,] Rotate90(float[,] input)
+        {
+            int h = input.GetLength(0);
+            int w = input.GetLength(1);
+
+            float[,] H = new float[w, h];
+
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++)
+                {
+                    H[j, i] = input[h - i - 1, w - j - 1];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Rotates the depth by 180 degrees.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <returns>Matrix</returns>
+        private static float[,] Rotate180(float[,] input)
+        {
+            int h = input.GetLength(0);
+            int w = input.GetLength(1);
+
+            float[,] H = new float[h, w];
+
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++)
+                {
+                    H[i, j] = input[h - i - 1, w - j - 1];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Rotates the depth by 270 degrees.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <returns>Matrix</returns>
+        private static float[,] Rotate270(float[,] input)
+        {
+            int h = input.GetLength(0);
+            int w = input.GetLength(1);
+
+            float[,] H = new float[w, h];
+
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++)
+                {
+                    H[j, i] = input[i, w - j - 1];
+                }
+            }
+
+            return H;
+        }
+        #endregion
+
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Rotate(this float[,] matrix, float angle)
+        {
+            return Rotate(matrix, angle, 0);
+        }
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="value">Value</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Rotate(this float[,] matrix, float angle, float value)
+        {
+            // get source image size
+            int width = matrix.GetLength(1);
+            int height = matrix.GetLength(0);
+            float oldXradius = (float)(width - 1) / 2;
+            float oldYradius = (float)(height - 1) / 2;
+
+            // get destination image size
+            int newWidth = width;
+            int newHeight = height;
+            float newXradius = (float)(newWidth - 1) / 2;
+            float newYradius = (float)(newHeight - 1) / 2;
+
+            // angle's sine and cosine
+            float angleRad = -angle * Maths.Pi / 180.0f;
+            float angleCos = Maths.Cos(angleRad);
+            float angleSin = Maths.Sin(angleRad);
+
+            // destination pixel's coordinate relative to image center
+            float cx, cy;
+            // coordinates of source points and cooefficiens
+            float ox, oy, dx, dy, k1, k2;
+            int ox1, oy1, ox2, oy2;
+            // destination pixel values
+            float g;
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+            // output
+            float[,] H = new float[newHeight, newWidth];
+
+            // grayscale
+            cy = -newYradius;
+            for (int y = 0; y < newHeight; y++)
+            {
+                cx = -newXradius;
+
+                for (int x = 0; x < newWidth; x++)
+                {
+                    // coordinates of source point
+                    ox = angleCos * cx + angleSin * cy + oldXradius;
+                    oy = -angleSin * cx + angleCos * cy + oldYradius;
+
+                    ox1 = (int)ox;
+                    oy1 = (int)oy;
+
+                    // validate source pixel's coordinates
+                    if ((ox1 < 0) || (oy1 < 0) || (ox1 >= width) || (oy1 >= height))
+                    {
+                        // fill destination image with filler
+                        H[y, x] = value;
+                    }
+                    else
+                    {
+                        dx = ox - ox1;
+                        dy = oy - oy1;
+
+                        // initial pixel value
+                        g = 0;
+
+                        for (int n = -1; n < 3; n++)
+                        {
+                            // get Y cooefficient
+                            k1 = Kernel.Bicubic((float)(dy - n));
+
+                            oy2 = oy1 + n;
+                            if (oy2 < 0)
+                                oy2 = 0;
+                            if (oy2 > ymax)
+                                oy2 = ymax;
+
+                            for (int m = -1; m < 3; m++)
+                            {
+                                // get X cooefficient
+                                k2 = k1 * Kernel.Bicubic((float)(m - dx));
+
+                                ox2 = ox1 + m;
+                                if (ox2 < 0)
+                                    ox2 = 0;
+                                if (ox2 > xmax)
+                                    ox2 = xmax;
+
+                                g += k2 * matrix[oy2, ox2];
+                            }
+                        }
+                        H[y, x] = g;
+                    }
+                    cx++;
+                }
+                cy++;
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Rotates matrix by rotation value.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="rotation">Rotation</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Rotate(this Complex32[,] matrix, Rotation rotation)
+        {
+            switch (rotation)
+            {
+                case Rotation.R0:
+                    return matrix;
+                case Rotation.R90:
+                    return Rotate90(matrix);
+                case Rotation.R180:
+                    return Rotate180(matrix);
+                case Rotation.R270:
+                    return Rotate270(matrix);
+                default:
+                    return matrix;
+            }
+        }
+
+        #region Private
+        /// <summary>
+        /// Rotates the matrix by 90 degrees.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <returns>Matrix</returns>
+        private static Complex32[,] Rotate90(Complex32[,] input)
+        {
+            int h = input.GetLength(0);
+            int w = input.GetLength(1);
+
+            Complex32[,] H = new Complex32[w, h];
+
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++)
+                {
+                    H[j, i] = input[h - i - 1, w - j - 1];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Rotates the depth by 180 degrees.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <returns>Matrix</returns>
+        private static Complex32[,] Rotate180(Complex32[,] input)
+        {
+            int h = input.GetLength(0);
+            int w = input.GetLength(1);
+
+            Complex32[,] H = new Complex32[h, w];
+
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++)
+                {
+                    H[i, j] = input[h - i - 1, w - j - 1];
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Rotates the depth by 270 degrees.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <returns>Matrix</returns>
+        private static Complex32[,] Rotate270(Complex32[,] input)
+        {
+            int h = input.GetLength(0);
+            int w = input.GetLength(1);
+
+            Complex32[,] H = new Complex32[w, h];
+
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++)
+                {
+                    H[j, i] = input[i, w - j - 1];
+                }
+            }
+
+            return H;
+        }
+        #endregion
+
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Rotate(this Complex32[,] matrix, float angle)
+        {
+            return Rotate(matrix, angle, 0);
+        }
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="value">Value</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Rotate(this Complex32[,] matrix, float angle, float value)
+        {
+            // get source image size
+            int width = matrix.GetLength(1);
+            int height = matrix.GetLength(0);
+            float oldXradius = (float)(width - 1) / 2;
+            float oldYradius = (float)(height - 1) / 2;
+
+            // get destination image size
+            int newWidth = width;
+            int newHeight = height;
+            float newXradius = (float)(newWidth - 1) / 2;
+            float newYradius = (float)(newHeight - 1) / 2;
+
+            // angle's sine and cosine
+            float angleRad = -angle * Maths.Pi / 180.0f;
+            float angleCos = Maths.Cos(angleRad);
+            float angleSin = Maths.Sin(angleRad);
+
+            // destination pixel's coordinate relative to image center
+            float cx, cy;
+            // coordinates of source points and cooefficiens
+            float ox, oy, dx, dy, k1, k2;
+            int ox1, oy1, ox2, oy2;
+            // destination pixel values
+            Complex32 g;
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+            // output
+            Complex32[,] H = new Complex32[newHeight, newWidth];
+
+            // grayscale
+            cy = -newYradius;
+            for (int y = 0; y < newHeight; y++)
+            {
+                cx = -newXradius;
+
+                for (int x = 0; x < newWidth; x++)
+                {
+                    // coordinates of source point
+                    ox = angleCos * cx + angleSin * cy + oldXradius;
+                    oy = -angleSin * cx + angleCos * cy + oldYradius;
+
+                    ox1 = (int)ox;
+                    oy1 = (int)oy;
+
+                    // validate source pixel's coordinates
+                    if ((ox1 < 0) || (oy1 < 0) || (ox1 >= width) || (oy1 >= height))
+                    {
+                        // fill destination image with filler
+                        H[y, x] = value;
+                    }
+                    else
+                    {
+                        dx = ox - ox1;
+                        dy = oy - oy1;
+
+                        // initial pixel value
+                        g = 0;
+
+                        for (int n = -1; n < 3; n++)
+                        {
+                            // get Y cooefficient
+                            k1 = Kernel.Bicubic((float)(dy - n));
+
+                            oy2 = oy1 + n;
+                            if (oy2 < 0)
+                                oy2 = 0;
+                            if (oy2 > ymax)
+                                oy2 = ymax;
+
+                            for (int m = -1; m < 3; m++)
+                            {
+                                // get X cooefficient
+                                k2 = k1 * Kernel.Bicubic((float)(m - dx));
+
+                                ox2 = ox1 + m;
+                                if (ox2 < 0)
+                                    ox2 = 0;
+                                if (ox2 > xmax)
+                                    ox2 = xmax;
+
+                                g += k2 * matrix[oy2, ox2];
+                            }
+                        }
+                        H[y, x] = g;
+                    }
+                    cx++;
+                }
+                cy++;
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Resize voids
+        /// <summary>
+        /// Returns resized matrix.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <param name="h">Height</param>
+        /// <param name="w">Width</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Resize(this float[,] input, int h, int w)
+        {
+            // get source size
+            int width = input.GetLength(1);
+            int height = input.GetLength(0);
+
+            float xFactor = (float)width / w;
+            float yFactor = (float)height / h;
+
+            // coordinates of source points and cooefficiens
+            float ox, oy, dx, dy, k1, k2;
+            int ox1, oy1, ox2, oy2;
+            float g;
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+
+            // output
+            float[,] H = new float[h, w];
+
+            // grayscale
+            for (int y = 0; y < h; y++)
+            {
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
+
+                for (int x = 0; x < w; x++)
+                {
+                    // X coordinates
+                    ox = x * xFactor - 0.5f;
+                    ox1 = (int)ox;
+                    dx = ox - ox1;
+
+                    // initial pixel value
+                    g = 0;
+
+                    for (int n = -1; n < 3; n++)
+                    {
+                        // get Y cooefficient
+                        k1 = Kernel.Bicubic((float)(dy - n));
+
+                        oy2 = oy1 + n;
+                        if (oy2 < 0)
+                            oy2 = 0;
+                        if (oy2 > ymax)
+                            oy2 = ymax;
+
+                        for (int m = -1; m < 3; m++)
+                        {
+                            // get X cooefficient
+                            k2 = k1 * Kernel.Bicubic((float)(m - dx));
+
+                            ox2 = ox1 + m;
+                            if (ox2 < 0)
+                                ox2 = 0;
+                            if (ox2 > xmax)
+                                ox2 = xmax;
+
+                            g += k2 * input[oy2, ox2];
+                        }
+                    }
+
+                    H[y, x] = g;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Returns resized matrix.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <param name="h">Height</param>
+        /// <param name="w">Width</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Resize(this Complex32[,] input, int h, int w)
+        {
+            // get source size
+            int width = input.GetLength(1);
+            int height = input.GetLength(0);
+
+            float xFactor = (float)width / w;
+            float yFactor = (float)height / h;
+
+            // coordinates of source points and cooefficiens
+            float ox, oy, dx, dy, k1, k2;
+            int ox1, oy1, ox2, oy2;
+            Complex32 g;
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+
+            // output
+            Complex32[,] H = new Complex32[h, w];
+
+            // grayscale
+            for (int y = 0; y < h; y++)
+            {
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
+
+                for (int x = 0; x < w; x++)
+                {
+                    // X coordinates
+                    ox = x * xFactor - 0.5f;
+                    ox1 = (int)ox;
+                    dx = ox - ox1;
+
+                    // initial pixel value
+                    g = 0;
+
+                    for (int n = -1; n < 3; n++)
+                    {
+                        // get Y cooefficient
+                        k1 = Kernel.Bicubic((float)(dy - n));
+
+                        oy2 = oy1 + n;
+                        if (oy2 < 0)
+                            oy2 = 0;
+                        if (oy2 > ymax)
+                            oy2 = ymax;
+
+                        for (int m = -1; m < 3; m++)
+                        {
+                            // get X cooefficient
+                            k2 = k1 * Kernel.Bicubic((float)(m - dx));
+
+                            ox2 = ox1 + m;
+                            if (ox2 < 0)
+                                ox2 = 0;
+                            if (ox2 > xmax)
+                                ox2 = xmax;
+
+                            g += k2 * input[oy2, ox2];
+                        }
+                    }
+
+                    H[y, x] = g;
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Returns resized vector.
+        /// </summary>
+        /// <param name="input">Array</param>
+        /// <param name="h">Length</param>
+        /// <returns>Array</returns>
+        public static float[] Resize(this float[] input, int h)
+        {
+            // get source size
+            int height = input.GetLength(0);
+
+            float yFactor = (float)height / h;
+
+            // coordinates of source points and cooefficiens
+            float oy, dy, k1;
+            int oy1, oy2;
+            float g;
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+
+            // output
+            float[] H = new float[h];
+
+            // grayscale
+            for (int y = 0; y < h; y++)
+            {
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
+
+                // initial pixel value
+                g = 0;
+
+                for (int n = -1; n < 3; n++)
+                {
+                    // get Y cooefficient
+                    k1 = Kernel.Bicubic((float)(dy - n));
+
+                    oy2 = oy1 + n;
+                    if (oy2 < 0)
+                        oy2 = 0;
+                    if (oy2 > ymax)
+                        oy2 = ymax;
+
+                    g += k1 * input[oy2];
+                }
+
+                H[y] = g;
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Returns resized vector.
+        /// </summary>
+        /// <param name="input">Array</param>
+        /// <param name="h">Length</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Resize(this Complex32[] input, int h)
+        {
+            // get source size
+            int height = input.GetLength(0);
+
+            float yFactor = (float)height / h;
+
+            // coordinates of source points and cooefficiens
+            float oy, dy, k1;
+            int oy1, oy2;
+            Complex32 g;
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+
+            // output
+            Complex32[] H = new Complex32[h];
+
+            // grayscale
+            for (int y = 0; y < h; y++)
+            {
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
+
+                // initial pixel value
+                g = 0;
+
+                for (int n = -1; n < 3; n++)
+                {
+                    // get Y cooefficient
+                    k1 = Kernel.Bicubic((float)(dy - n));
+
+                    oy2 = oy1 + n;
+                    if (oy2 < 0)
+                        oy2 = 0;
+                    if (oy2 > ymax)
+                        oy2 = ymax;
+
+                    g += k1 * input[oy2];
+                }
+
+                H[y] = g;
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Shift voids
+        /// <summary>
+        /// Implements a shift of matrix elements.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="m">The number of positions to which a shift in height occurs</param>
+        /// <param name="l">The number of positions by which the shift occurs in width</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Shift(this Complex32[,] a, int m, int l)
+        {
+            int l0 = a.GetLength(0), l1 = a.GetLength(1);
+            Complex32[,] temp = new Complex32[l0, l1];
+            int i, j;
+
+            for (i = 0; i < l0; i++)
+            {
+                for (j = 0; j < l1; j++)
+                {
+                    temp[i, j] = a[Maths.Mod(i - m, l1), Maths.Mod(j - l, l0)];
+                }
+            }
+            return temp;
+        }
+        /// <summary>
+        /// Implements a shift of matrix elements.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="m">The number of positions to which a shift in height occurs</param>
+        /// <param name="l">The number of positions by which the shift occurs in width</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Shift(this float[,] a, int m, int l)
+        {
+            int l0 = a.GetLength(0), l1 = a.GetLength(1);
+            float[,] temp = new float[l0, l1];
+            int i, j;
+
+            for (i = 0; i < l0; i++)
+            {
+                for (j = 0; j < l1; j++)
+                {
+                    temp[i, j] = a[Maths.Mod(i - m, l1), Maths.Mod(j - l, l0)];
+                }
+            }
+            return temp;
+        }
+        /// <summary>
+        /// Implements a shift of vector elements.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="l">Number of positions to shift</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Shift(this Complex32[] v, int l)
+        {
+            int N = v.Length;
+            Complex32[] temp = new Complex32[N];
+
+            for (int i = 0; i < N; i++)
+            {
+                temp[i] = v[Maths.Mod(i - l, N)];
+            }
+
+            return temp;
+        }
+        /// <summary>
+        /// Implements a shift of vector elements.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="l">Number of positions to shift</param>
+        /// <returns>Array</returns>
+        public static float[] Shift(this float[] v, int l)
+        {
+            int N = v.Length;
+            float[] temp = new float[N];
+
+            for (int i = 0; i < N; i++)
+            {
+                temp[i] = v[Maths.Mod(i - l, N)];
+            }
+
+            return temp;
+        }
+        #endregion
+
+        #region Flip voids
+        /// <summary>
+        /// Flips matrix elements.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Flip(this float[,] m, Direction direction)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            float[,] H = new float[ml, mr];
+            int i, j;
+
+            // horizontal flipping:
+            if (direction == Direction.Horizontal)
+            {
+                for (i = 0; i < ml; i++)
+                {
+                    for (j = 0; j < mr; j++)
+                    {
+                        H[i, j] = m[i, mr - j - 1];
+                    }
+                }
+            }
+            // vertical flipping:
+            else if (direction == Direction.Vertical)
+            {
+                for (i = 0; i < ml; i++)
+                {
+                    for (j = 0; j < mr; j++)
+                    {
+                        H[i, j] = m[ml - i - 1, j];
+                    }
+                }
+            }
+            // both flipping:
+            else
+            {
+                for (i = 0; i < ml; i++)
+                {
+                    for (j = 0; j < mr; j++)
+                    {
+                        H[i, j] = m[ml - i - 1, mr - j - 1];
+                    }
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Flips matrix elements.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="direction">Processing direction</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Flip(this Complex32[,] m, Direction direction)
+        {
+            int ml = m.GetLength(0), mr = m.GetLength(1);
+            Complex32[,] H = new Complex32[ml, mr];
+            int i, j;
+
+            // horizontal flipping:
+            if (direction == Direction.Horizontal)
+            {
+                for (i = 0; i < ml; i++)
+                {
+                    for (j = 0; j < mr; j++)
+                    {
+                        H[i, j] = m[i, mr - j - 1];
+                    }
+                }
+            }
+            // vertical flipping:
+            else if (direction == Direction.Vertical)
+            {
+                for (i = 0; i < ml; i++)
+                {
+                    for (j = 0; j < mr; j++)
+                    {
+                        H[i, j] = m[ml - i - 1, j];
+                    }
+                }
+            }
+            // both flipping:
+            else
+            {
+                for (i = 0; i < ml; i++)
+                {
+                    for (j = 0; j < mr; j++)
+                    {
+                        H[i, j] = m[ml - i - 1, mr - j - 1];
+                    }
+                }
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Flips vector elements.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
+        public static float[] Flip(this float[] v)
+        {
+            int mr = v.Length;
+            float[] H = new float[mr];
+
+            for (int j = 0; j < mr; j++)
+            {
+                H[j] = v[mr - j - 1];
+            }
+
+            return H;
+        }
+        /// <summary>
+        /// Flips vector elements.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Flip(this Complex32[] v)
+        {
+            int mr = v.Length;
+            Complex32[] H = new Complex32[mr];
+
+            for (int j = 0; j < mr; j++)
+            {
+                H[j] = v[mr - j - 1];
+            }
+
+            return H;
+        }
+        #endregion
+
+        #region Crop voids
+        /// <summary>
+        /// Returns the specified part of the vector.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="start">Starting position</param>
+        /// <param name="length">Vector length</param>
+        /// <returns>Array</returns>
+        public static float[] Crop(this float[] a, int start, int length)
+        {
+            int na = a.Length, i;
+            float[] v = new float[length];
+
+            for (i = 0; i < length; i++)
+                v[i] = a[Maths.Mod(start + i, na)];
+
+            return v;
+        }
+        /// <summary>
+        /// Returns the specified part of the vector.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="start">Starting position</param>
+        /// <param name="length">Vector length</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Crop(this Complex32[] a, int start, int length)
+        {
+            int na = a.Length, i;
+            Complex32[] v = new Complex32[length];
+
+            for (i = 0; i < length; i++)
+                v[i] = a[Maths.Mod(start + i, na)];
+
+            return v;
+        }
+        /// <summary>
+        /// Crops the matrix to the specified size.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="y">Starting position in height</param>
+        /// <param name="x">Starting position in width</param>
+        /// <param name="height">Height</param>
+        /// <param name="width">Width</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Crop(this float[,] m, int y, int x, int height, int width)
+        {
+            // params
+            float[,] B = new float[height, width];
+            int i, j;
+
+            // do job
+            for (i = 0; i < height; i++)
+            {
+                for (j = 0; j < width; j++)
+                {
+                    B[i, j] = m[i + y, j + x];
+                }
+            }
+
+            return B;
+        }
+        /// <summary>
+        /// Crops the matrix to the specified size.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="y">Starting position in height</param>
+        /// <param name="x">Starting position in width</param>
+        /// <param name="height">Height</param>
+        /// <param name="width">Width</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Crop(this Complex32[,] m, int y, int x, int height, int width)
+        {
+            // params
+            Complex32[,] B = new Complex32[height, width];
+            int i, j;
+
+            // do job
+            for (i = 0; i < height; i++)
+            {
+                for (j = 0; j < width; j++)
+                {
+                    B[i, j] = m[i + y, j + x];
+                }
+            }
+
+            return B;
+        }
+        #endregion
+
+        #region Merge voids
+        /// <summary>
+        /// Merges two depths.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="b">Matrix</param>
+        public static void Merge(this float[,] a, float[,] b)
+        {
+            Merge(a, b, 0, 0, b.GetLength(0), b.GetLength(1));
+        }
+        /// <summary>
+        /// Merges two depths.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="b">Matrix</param>
+        /// <param name="y">Y</param>
+        /// <param name="x">X</param>
+        /// <param name="width">Width</param>
+        /// <param name="height">Height</param>
+        public static void Merge(this float[,] a, float[,] b, int y, int x, int height, int width)
+        {
+            float[,] c = Resize(b, height, width);
+
+            int h = Math.Min(height, a.GetLength(0) - y);
+            int w = Math.Min(width, a.GetLength(1) - x);
+
+            for (int i = y; i < h; i++)
+            {
+                for (int j = x; j < w; j++)
+                {
+                    a[i, j] = c[i - y, j - x];
+                }
+            }
+        }
+        /// <summary>
+        /// Merges two depths.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="b">Matrix</param>
+        public static void Merge(this Complex32[,] a, Complex32[,] b)
+        {
+            Merge(a, b, 0, 0, b.GetLength(0), b.GetLength(1));
+        }
+        /// <summary>
+        /// Merges two depths.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="b">Matrix</param>
+        /// <param name="y">Y</param>
+        /// <param name="x">X</param>
+        /// <param name="width">Width</param>
+        /// <param name="height">Height</param>
+        public static void Merge(this Complex32[,] a, Complex32[,] b, int y, int x, int height, int width)
+        {
+            Complex32[,] c = Resize(b, height, width);
+
+            int h = Math.Min(height, a.GetLength(0) - y);
+            int w = Math.Min(width, a.GetLength(1) - x);
+
+            for (int i = y; i < h; i++)
+            {
+                for (int j = x; j < w; j++)
+                {
+                    a[i, j] = c[i - y, j - x];
+                }
+            }
+        }
+        /// <summary>
+        /// Merges two depths.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="b">Matrix</param>
+        public static void Merge(this Complex32[,] a, float[,] b)
+        {
+            Merge(a, b, 0, 0, b.GetLength(0), b.GetLength(1));
+        }
+        /// <summary>
+        /// Merges two depths.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="b">Matrix</param>
+        /// <param name="y">Y</param>
+        /// <param name="x">X</param>
+        /// <param name="width">Width</param>
+        /// <param name="height">Height</param>
+        public static void Merge(this Complex32[,] a, float[,] b, int y, int x, int height, int width)
+        {
+            float[,] c = Resize(b, height, width);
+
+            int h = Math.Min(height, a.GetLength(0) - y);
+            int w = Math.Min(width, a.GetLength(1) - x);
+
+            for (int i = y; i < h; i++)
+            {
+                for (int j = x; j < w; j++)
+                {
+                    a[i, j] = c[i - y, j - x];
+                }
+            }
+        }
+
+        #endregion
+
         // MATLAB voids
 
         #region Abs/Angle
@@ -6473,222 +7371,6 @@ namespace UMapx.Core
                 U[r, i] = n[i];
             }
             return U;
-        }
-        #endregion
-
-        #region Shift voids
-        /// <summary>
-        /// Implements block matrix rearrangement.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="m">The number of positions to which a shift in height occurs</param>
-        /// <param name="l">The number of positions by which the shift occurs in width</param>
-        /// <returns>Matrix</returns>
-        public static Complex32[,] Shift(this Complex32[,] a, int m, int l)
-        {
-            int l0 = a.GetLength(0), l1 = a.GetLength(1);
-            Complex32[,] temp = new Complex32[l0, l1];
-            int i, j;
-
-            for (i = 0; i < l0; i++)
-            {
-                for (j = 0; j < l1; j++)
-                {
-                    temp[i, j] = a[Maths.Mod(i - m, l1), Maths.Mod(j - l, l0)];
-                }
-            }
-            return temp;
-        }
-        /// <summary>
-        /// Implements block matrix rearrangement.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="m">The number of positions to which a shift in height occurs</param>
-        /// <param name="l">The number of positions by which the shift occurs in width</param>
-        /// <returns>Matrix</returns>
-        public static float[,] Shift(this float[,] a, int m, int l)
-        {
-            int l0 = a.GetLength(0), l1 = a.GetLength(1);
-            float[,] temp = new float[l0, l1];
-            int i, j;
-
-            for (i = 0; i < l0; i++)
-            {
-                for (j = 0; j < l1; j++)
-                {
-                    temp[i, j] = a[Maths.Mod(i - m, l1), Maths.Mod(j - l, l0)];
-                }
-            }
-            return temp;
-        }
-        /// <summary>
-        /// Implements a shift of vector elements.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="l">Number of positions to shift</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Shift(this Complex32[] v, int l)
-        {
-            int N = v.Length;
-            Complex32[] temp = new Complex32[N];
-
-            for (int i = 0; i < N; i++)
-            {
-                temp[i] = v[Maths.Mod(i - l, N)];
-            }
-
-            return temp;
-        }
-        /// <summary>
-        /// Implements a shift of vector elements.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="l">Number of positions to shift</param>
-        /// <returns>Array</returns>
-        public static float[] Shift(this float[] v, int l)
-        {
-            int N = v.Length;
-            float[] temp = new float[N];
-
-            for (int i = 0; i < N; i++)
-            {
-                temp[i] = v[Maths.Mod(i - l, N)];
-            }
-
-            return temp;
-        }
-        #endregion
-
-        #region Flip voids
-        /// <summary>
-        /// Flips matrix elements.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="direction">Processing direction</param>
-        /// <returns>Matrix</returns>
-        public static float[,] Flip(this float[,] m, Direction direction)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            float[,] H = new float[ml, mr];
-            int i, j;
-
-            // horizontal flipping:
-            if (direction == Direction.Horizontal)
-            {
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++)
-                    {
-                        H[i, j] = m[i, mr - j - 1];
-                    }
-                }
-            }
-            // vertical flipping:
-            else if (direction == Direction.Vertical)
-            {
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++)
-                    {
-                        H[i, j] = m[ml - i - 1, j];
-                    }
-                }
-            }
-            // both flipping:
-            else
-            {
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++)
-                    {
-                        H[i, j] = m[ml - i - 1, mr - j - 1];
-                    }
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Flips matrix elements.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="direction">Processing direction</param>
-        /// <returns>Matrix</returns>
-        public static Complex32[,] Flip(this Complex32[,] m, Direction direction)
-        {
-            int ml = m.GetLength(0), mr = m.GetLength(1);
-            Complex32[,] H = new Complex32[ml, mr];
-            int i, j;
-
-            // horizontal flipping:
-            if (direction == Direction.Horizontal)
-            {
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++)
-                    {
-                        H[i, j] = m[i, mr - j - 1];
-                    }
-                }
-            }
-            // vertical flipping:
-            else if (direction == Direction.Vertical)
-            {
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++)
-                    {
-                        H[i, j] = m[ml - i - 1, j];
-                    }
-                }
-            }
-            // both flipping:
-            else
-            {
-                for (i = 0; i < ml; i++)
-                {
-                    for (j = 0; j < mr; j++)
-                    {
-                        H[i, j] = m[ml - i - 1, mr - j - 1];
-                    }
-                }
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Flips vector elements.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <returns>Array</returns>
-        public static float[] Flip(this float[] v)
-        {
-            int mr = v.Length;
-            float[] H = new float[mr];
-
-            for (int j = 0; j < mr; j++)
-            {
-                H[j] = v[mr - j - 1];
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Flips vector elements.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Flip(this Complex32[] v)
-        {
-            int mr = v.Length;
-            Complex32[] H = new Complex32[mr];
-
-            for (int j = 0; j < mr; j++)
-            {
-                H[j] = v[mr - j - 1];
-            }
-
-            return H;
         }
         #endregion
 
@@ -7026,174 +7708,6 @@ namespace UMapx.Core
             }
 
             return y;
-        }
-        #endregion
-
-        #region Merge voids
-        /// <summary>
-        /// Implements vector merging.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="b">Array</param>
-        /// <returns>Array</returns>
-        public static float[] Merge(this float[] a, float[] b)
-        {
-            int na = a.Length, nb = b.Length, i;
-            float[] v = new float[na + nb];
-
-            for (i = 0; i < na; i++)
-                v[i] = a[i];
-
-            for (i = 0; i < nb; i++)
-                v[na + i] = b[i];
-
-            return v;
-        }
-        /// <summary>
-        /// Implements vector merging.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="b">Array</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Merge(this Complex32[] a, Complex32[] b)
-        {
-            int na = a.Length, nb = b.Length, i;
-            Complex32[] v = new Complex32[na + nb];
-
-            for (i = 0; i < na; i++)
-                v[i] = a[i];
-
-            for (i = 0; i < nb; i++)
-                v[na + i] = b[i];
-
-            return v;
-        }
-        /// <summary>
-        /// Implements vector merging.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="b">Array</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Merge(this Complex32[] a, float[] b)
-        {
-            int na = a.Length, nb = b.Length, i;
-            Complex32[] v = new Complex32[na + nb];
-
-            for (i = 0; i < na; i++)
-                v[i] = a[i];
-
-            for (i = 0; i < nb; i++)
-                v[na + i] = b[i];
-
-            return v;
-        }
-        /// <summary>
-        /// Implements vector merging.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="b">Array</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Merge(this float[] a, Complex32[] b)
-        {
-            int na = a.Length, nb = b.Length, i;
-            Complex32[] v = new Complex32[na + nb];
-
-            for (i = 0; i < na; i++)
-                v[i] = a[i];
-
-            for (i = 0; i < nb; i++)
-                v[na + i] = b[i];
-
-            return v;
-        }
-        #endregion
-
-        #region Cut voids
-        /// <summary>
-        /// Returns the specified part of the vector.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="start">Starting position</param>
-        /// <param name="length">Vector length</param>
-        /// <returns>Array</returns>
-        public static float[] Cut(this float[] a, int start, int length)
-        {
-            int na = a.Length, i;
-            float[] v = new float[length];
-
-            for (i = 0; i < length; i++)
-                v[i] = a[Maths.Mod(start + i, na)];
-
-            return v;
-        }
-        /// <summary>
-        /// Returns the specified part of the vector.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="start">Starting position</param>
-        /// <param name="length">Vector length</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Cut(this Complex32[] a, int start, int length)
-        {
-            int na = a.Length, i;
-            Complex32[] v = new Complex32[length];
-
-            for (i = 0; i < length; i++)
-                v[i] = a[Maths.Mod(start + i, na)];
-
-            return v;
-        }
-        /// <summary>
-        /// Crops the matrix to the specified size.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="y">Starting position in height</param>
-        /// <param name="x">Starting position in width</param>
-        /// <param name="height">Height</param>
-        /// <param name="width">Width</param>
-        /// <returns>Matrix</returns>
-        public static float[,] Cut(this float[,] m, int y, int x, int height, int width)
-        {
-            // params
-            float[,] B = new float[height, width];
-            int i, j;
-
-            // do job
-            for (i = 0; i < height; i++)
-            {
-                for (j = 0; j < width; j++)
-                {
-                    B[i, j] = m[i + y, j + x];
-                }
-            }
-
-            return B;
-        }
-        /// <summary>
-        /// Crops the matrix to the specified size.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="y">Starting position in height</param>
-        /// <param name="x">Starting position in width</param>
-        /// <param name="height">Height</param>
-        /// <param name="width">Width</param>
-        /// <returns>Matrix</returns>
-        public static Complex32[,] Cut(this Complex32[,] m, int y, int x, int height, int width)
-        {
-            // params
-            Complex32[,] B = new Complex32[height, width];
-            int i, j;
-
-            // do job
-            for (i = 0; i < height; i++)
-            {
-                for (j = 0; j < width; j++)
-                {
-                    B[i, j] = m[i + y, j + x];
-                }
-            }
-
-            return B;
         }
         #endregion
 
