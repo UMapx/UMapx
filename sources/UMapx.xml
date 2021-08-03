@@ -8182,16 +8182,70 @@
             <param name="width">Width</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Merge(System.Single[],System.Single[])">
+            <summary>
+            Merges two vectors.
+            </summary>
+            <param name="a">Vector</param>
+            <param name="b">Vector</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(System.Single[],System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Merges two vectors.
+            </summary>
+            <param name="a">Vector</param>
+            <param name="b">Vector</param>
+            <param name="start">Start position</param>
+            <param name="length">Length</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[],System.Single[])">
+            <summary>
+            Merges two vectors.
+            </summary>
+            <param name="a">Vector</param>
+            <param name="b">Vector</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[],System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Merges two vectors.
+            </summary>
+            <param name="a">Vector</param>
+            <param name="b">Vector</param>
+            <param name="start">Start position</param>
+            <param name="length">Length</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Merges two vectors.
+            </summary>
+            <param name="a">Vector</param>
+            <param name="b">Vector</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32,System.Int32)">
+            <summary>
+            Merges two vectors.
+            </summary>
+            <param name="a">Vector</param>
+            <param name="b">Vector</param>
+            <param name="start">Start position</param>
+            <param name="length">Length</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Merge(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
-            Merges two depths.
+            Merges two matrices.
             </summary>
             <param name="a">Matrix</param>
             <param name="b">Matrix</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Merge(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Merges two depths.
+            Merges two matrices.
             </summary>
             <param name="a">Matrix</param>
             <param name="b">Matrix</param>
@@ -8199,35 +8253,18 @@
             <param name="x">X</param>
             <param name="width">Width</param>
             <param name="height">Height</param>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Merges two depths.
-            </summary>
-            <param name="a">Matrix</param>
-            <param name="b">Matrix</param>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Merges two depths.
-            </summary>
-            <param name="a">Matrix</param>
-            <param name="b">Matrix</param>
-            <param name="y">Y</param>
-            <param name="x">X</param>
-            <param name="width">Width</param>
-            <param name="height">Height</param>
+            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],System.Single[0:,0:])">
             <summary>
-            Merges two depths.
+            Merges two matrices.
             </summary>
             <param name="a">Matrix</param>
             <param name="b">Matrix</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],System.Single[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Merges two depths.
+            Merges two matrices.
             </summary>
             <param name="a">Matrix</param>
             <param name="b">Matrix</param>
@@ -8235,6 +8272,26 @@
             <param name="x">X</param>
             <param name="width">Width</param>
             <param name="height">Height</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Merges two matrices.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Merge(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Merges two matrices.
+            </summary>
+            <param name="a">Matrix</param>
+            <param name="b">Matrix</param>
+            <param name="y">Y</param>
+            <param name="x">X</param>
+            <param name="width">Width</param>
+            <param name="height">Height</param>
+            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Abs(System.Single[],System.Boolean)">
             <summary>
@@ -15532,7 +15589,7 @@
         </member>
         <member name="T:UMapx.Imaging.BitmapTransform">
             <summary>
-            Uses for editing and transforming images.
+            Uses for editing and transforming images using GDI+.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,UMapx.Core.Rotation)">
@@ -15600,6 +15657,31 @@
             <param name="image">Bitmap</param>
             <param name="size">Size</param>
             <param name="color">Border color</param>
+            <returns>Bitmap</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapTransform.Shift(System.Drawing.Bitmap,System.Int32,System.Int32)">
+            <summary>
+            Shifts the bitmap.
+            </summary>
+            <param name="b">Bitmap</param>
+            <param name="h">The number of positions to which a shift in height occurs</param>
+            <param name="w">The number of positions by which the shift occurs in width</param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapTransform.ShiftX(System.Drawing.Bitmap,System.Int32)">
+            <summary>
+            Shifts bitmap by X axis.
+            </summary>
+            <param name="b">Bitmap</param>
+            <param name="value">Shift value</param>
+            <returns>Bitmap</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapTransform.ShiftY(System.Drawing.Bitmap,System.Int32)">
+            <summary>
+            Shifts bitmap by Y axis.
+            </summary>
+            <param name="b">Bitmap</param>
+            <param name="value">Shift value</param>
             <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Merge(System.Drawing.Bitmap,System.Drawing.Bitmap)">
@@ -16762,11 +16844,11 @@
         </member>
         <member name="M:UMapx.Imaging.DepthTransform.Shift(System.UInt16[0:,0:],System.Int32,System.Int32)">
             <summary>
-            Implements a shift of depth elements.
+            Shifts the depth.
             </summary>
             <param name="a">Matrix</param>
-            <param name="m">The number of positions to which a shift in height occurs</param>
-            <param name="l">The number of positions by which the shift occurs in width</param>
+            <param name="h">The number of positions to which a shift in height occurs</param>
+            <param name="w">The number of positions by which the shift occurs in width</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Imaging.DepthTransform.Merge(System.UInt16[0:,0:],System.UInt16[0:,0:])">

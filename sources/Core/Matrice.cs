@@ -6969,16 +6969,110 @@ namespace UMapx.Core
 
         #region Merge voids
         /// <summary>
-        /// Merges two depths.
+        /// Merges two vectors.
+        /// </summary>
+        /// <param name="a">Vector</param>
+        /// <param name="b">Vector</param>
+        /// <returns>Vector</returns>
+        public static float[] Merge(this float[] a, float[] b)
+        {
+            return Merge(a, b, 0, b.GetLength(0));
+        }
+        /// <summary>
+        /// Merges two vectors.
+        /// </summary>
+        /// <param name="a">Vector</param>
+        /// <param name="b">Vector</param>
+        /// <param name="start">Start position</param>
+        /// <param name="length">Length</param>
+        /// <returns>Vector</returns>
+        public static float[] Merge(this float[] a, float[] b, int start, int length)
+        {
+            float[] c = Resize(b, length);
+            float[] d = (float[])a.Clone();
+            int h = Math.Min(length, a.GetLength(0) - start);
+
+            for (int i = start; i < h; i++)
+            {
+                d[i] = c[i - start];
+            }
+
+            return d;
+        }
+        /// <summary>
+        /// Merges two vectors.
+        /// </summary>
+        /// <param name="a">Vector</param>
+        /// <param name="b">Vector</param>
+        /// <returns>Vector</returns>
+        public static Complex32[] Merge(this Complex32[] a, float[] b)
+        {
+            return Merge(a, b, 0, b.GetLength(0));
+        }
+        /// <summary>
+        /// Merges two vectors.
+        /// </summary>
+        /// <param name="a">Vector</param>
+        /// <param name="b">Vector</param>
+        /// <param name="start">Start position</param>
+        /// <param name="length">Length</param>
+        /// <returns>Vector</returns>
+        public static Complex32[] Merge(this Complex32[] a, float[] b, int start, int length)
+        {
+            float[] c = Resize(b, length);
+            Complex32[] d = (Complex32[])a.Clone();
+            int h = Math.Min(length, a.GetLength(0) - start);
+
+            for (int i = start; i < h; i++)
+            {
+                d[i] = c[i - start];
+            }
+
+            return d;
+        }
+        /// <summary>
+        /// Merges two vectors.
+        /// </summary>
+        /// <param name="a">Vector</param>
+        /// <param name="b">Vector</param>
+        /// <returns>Vector</returns>
+        public static Complex32[] Merge(this Complex32[] a, Complex32[] b)
+        {
+            return Merge(a, b, 0, b.GetLength(0));
+        }
+        /// <summary>
+        /// Merges two vectors.
+        /// </summary>
+        /// <param name="a">Vector</param>
+        /// <param name="b">Vector</param>
+        /// <param name="start">Start position</param>
+        /// <param name="length">Length</param>
+        /// <returns>Vector</returns>
+        public static Complex32[] Merge(this Complex32[] a, Complex32[] b, int start, int length)
+        {
+            Complex32[] c = Resize(b, length);
+            Complex32[] d = (Complex32[])a.Clone();
+            int h = Math.Min(length, a.GetLength(0) - start);
+
+            for (int i = start; i < h; i++)
+            {
+                d[i] = c[i - start];
+            }
+
+            return d;
+        }
+
+        /// <summary>
+        /// Merges two matrices.
         /// </summary>
         /// <param name="a">Matrix</param>
         /// <param name="b">Matrix</param>
-        public static void Merge(this float[,] a, float[,] b)
+        public static float[,] Merge(this float[,] a, float[,] b)
         {
-            Merge(a, b, 0, 0, b.GetLength(0), b.GetLength(1));
+            return Merge(a, b, 0, 0, b.GetLength(0), b.GetLength(1));
         }
         /// <summary>
-        /// Merges two depths.
+        /// Merges two matrices.
         /// </summary>
         /// <param name="a">Matrix</param>
         /// <param name="b">Matrix</param>
@@ -6986,10 +7080,11 @@ namespace UMapx.Core
         /// <param name="x">X</param>
         /// <param name="width">Width</param>
         /// <param name="height">Height</param>
-        public static void Merge(this float[,] a, float[,] b, int y, int x, int height, int width)
+        /// <returns>Matrix</returns>
+        public static float[,] Merge(this float[,] a, float[,] b, int y, int x, int height, int width)
         {
             float[,] c = Resize(b, height, width);
-
+            float[,] d = (float[,])a.Clone();
             int h = Math.Min(height, a.GetLength(0) - y);
             int w = Math.Min(width, a.GetLength(1) - x);
 
@@ -6997,21 +7092,23 @@ namespace UMapx.Core
             {
                 for (int j = x; j < w; j++)
                 {
-                    a[i, j] = c[i - y, j - x];
+                    d[i, j] = c[i - y, j - x];
                 }
             }
+
+            return d;
         }
         /// <summary>
-        /// Merges two depths.
+        /// Merges two matrices.
         /// </summary>
         /// <param name="a">Matrix</param>
         /// <param name="b">Matrix</param>
-        public static void Merge(this Complex32[,] a, Complex32[,] b)
+        public static Complex32[,] Merge(this Complex32[,] a, float[,] b)
         {
-            Merge(a, b, 0, 0, b.GetLength(0), b.GetLength(1));
+            return Merge(a, b, 0, 0, b.GetLength(0), b.GetLength(1));
         }
         /// <summary>
-        /// Merges two depths.
+        /// Merges two matrices.
         /// </summary>
         /// <param name="a">Matrix</param>
         /// <param name="b">Matrix</param>
@@ -7019,10 +7116,47 @@ namespace UMapx.Core
         /// <param name="x">X</param>
         /// <param name="width">Width</param>
         /// <param name="height">Height</param>
-        public static void Merge(this Complex32[,] a, Complex32[,] b, int y, int x, int height, int width)
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Merge(this Complex32[,] a, float[,] b, int y, int x, int height, int width)
+        {
+            float[,] c = Resize(b, height, width);
+            Complex32[,] d = (Complex32[,])a.Clone();
+            int h = Math.Min(height, a.GetLength(0) - y);
+            int w = Math.Min(width, a.GetLength(1) - x);
+
+            for (int i = y; i < h; i++)
+            {
+                for (int j = x; j < w; j++)
+                {
+                    d[i, j] = c[i - y, j - x];
+                }
+            }
+
+            return d;
+        }
+        /// <summary>
+        /// Merges two matrices.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="b">Matrix</param>
+        public static Complex32[,] Merge(this Complex32[,] a, Complex32[,] b)
+        {
+            return Merge(a, b, 0, 0, b.GetLength(0), b.GetLength(1));
+        }
+        /// <summary>
+        /// Merges two matrices.
+        /// </summary>
+        /// <param name="a">Matrix</param>
+        /// <param name="b">Matrix</param>
+        /// <param name="y">Y</param>
+        /// <param name="x">X</param>
+        /// <param name="width">Width</param>
+        /// <param name="height">Height</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Merge(this Complex32[,] a, Complex32[,] b, int y, int x, int height, int width)
         {
             Complex32[,] c = Resize(b, height, width);
-
+            Complex32[,] d = (Complex32[,])a.Clone();
             int h = Math.Min(height, a.GetLength(0) - y);
             int w = Math.Min(width, a.GetLength(1) - x);
 
@@ -7030,44 +7164,12 @@ namespace UMapx.Core
             {
                 for (int j = x; j < w; j++)
                 {
-                    a[i, j] = c[i - y, j - x];
+                    d[i, j] = c[i - y, j - x];
                 }
             }
-        }
-        /// <summary>
-        /// Merges two depths.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="b">Matrix</param>
-        public static void Merge(this Complex32[,] a, float[,] b)
-        {
-            Merge(a, b, 0, 0, b.GetLength(0), b.GetLength(1));
-        }
-        /// <summary>
-        /// Merges two depths.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="b">Matrix</param>
-        /// <param name="y">Y</param>
-        /// <param name="x">X</param>
-        /// <param name="width">Width</param>
-        /// <param name="height">Height</param>
-        public static void Merge(this Complex32[,] a, float[,] b, int y, int x, int height, int width)
-        {
-            float[,] c = Resize(b, height, width);
 
-            int h = Math.Min(height, a.GetLength(0) - y);
-            int w = Math.Min(width, a.GetLength(1) - x);
-
-            for (int i = y; i < h; i++)
-            {
-                for (int j = x; j < w; j++)
-                {
-                    a[i, j] = c[i - y, j - x];
-                }
-            }
+            return d;
         }
-
         #endregion
 
         // MATLAB voids
