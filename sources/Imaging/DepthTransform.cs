@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
-using UMapx.Colorspace;
 using UMapx.Core;
 
 namespace UMapx.Imaging

@@ -6,9 +6,9 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses to work with depth formats.
+    /// Uses to work with depth matrices.
     /// </summary>
-    public static class DepthFormat
+    public static class DepthMatrix
     {
         #region Depth convert components
         /// <summary>
@@ -16,7 +16,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="depth">Image</param>
         /// <returns>Bitmap</returns>
-        public unsafe static ushort[,] FromBitmap(this Bitmap depth)
+        public unsafe static ushort[,] ToDepth(this Bitmap depth)
         {
             var bmData = depth.Lock32bpp();
             var width = bmData.Width;
@@ -42,7 +42,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="depth">Matrix</param>
         /// <returns>Bitmap</returns>
-        public unsafe static Bitmap ToBitmap(this ushort[,] depth)
+        public unsafe static Bitmap FromDepth(this ushort[,] depth)
         {
             var width = depth.GetLength(1);
             var height = depth.GetLength(0);

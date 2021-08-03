@@ -15359,117 +15359,6 @@
             <param name="m">Matrix</param>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="T:UMapx.Imaging.BitmapTensor">
-            <summary>
-            Uses to work with bitmap tensors.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.ToByteTensor(System.Drawing.Bitmap,System.Boolean)">
-            <summary>
-            Converts a Bitmap to an BGR tensor arrays.
-            </summary>
-            <param name="Data">Bitmap</param>
-            <param name="rgb">RGB or BGR</param>
-            <returns>RGB tensor arrays</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.ToByteTensor(System.Drawing.Imaging.BitmapData,System.Boolean)">
-            <summary>
-            Converts a Bitmap to an BGR tensor arrays.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="rgb">RGB or BGR</param>
-            <returns>RGB tensor arrays</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.ToFloatTensor(System.Drawing.Bitmap,System.Boolean)">
-            <summary>
-            Converts a Bitmap to an BGR tensor arrays.
-            </summary>
-            <param name="Data">Bitmap</param>
-            <param name="rgb">RGB or BGR</param>
-            <returns>RGB tensor arrays</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.ToFloatTensor(System.Drawing.Imaging.BitmapData,System.Boolean)">
-            <summary>
-            Converts a Bitmap to an BGR tensor arrays.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="rgb">RGB or BGR</param>
-            <returns>RGB tensor arrays</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.FromByteTensor(System.Byte[][],System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Converts a BGR tensor arrays to Bitmap.
-            </summary>
-            <param name="tensor">Tensor arrays</param>
-            <param name="width">Width</param>
-            <param name="height">Height</param>
-            <param name="rgb">RGB or BGR</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.FromFloatTensor(System.Single[][],System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Converts a BGR tensor arrays to Bitmap.
-            </summary>
-            <param name="tensor">Tensor arrays</param>
-            <param name="width">Width</param>
-            <param name="height">Height</param>
-            <param name="rgb">RGB or BGR</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.Merge(System.Byte[][],System.Boolean)">
-            <summary>
-            Merges image tensors to single tensor.
-            </summary>
-            <param name="image">RGB tensor arrays</param>
-            <param name="slice">Slice or not</param>
-            <returns>Byte array</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.Merge(System.Single[][],System.Boolean)">
-            <summary>
-            Merges image tensors to single tensor.
-            </summary>
-            <param name="image">RGB tensor arrays</param>
-            <param name="slice">Slice or not</param>
-            <returns>Float array</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.Average(System.Byte[][])">
-            <summary>
-            Averages image tensors to single tensor.
-            </summary>
-            <param name="image">RGB tensor arrays</param>
-            <returns>Byte array</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.Average(System.Single[][])">
-            <summary>
-            Averages image tensors to single tensor.
-            </summary>
-            <param name="image">RGB tensor arrays</param>
-            <returns>Byte array</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.Compute(System.Single[][],System.Single[],UMapx.Imaging.BitmapTensor.ITensorOperator)">
-            <summary>
-            Implements operator function.
-            </summary>
-            <param name="image">RGB tensor arrays</param>
-            <param name="b">Vector</param>
-            <param name="tensorOperator">Operator</param>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapTensor.Compute(System.Single[][],System.Single,UMapx.Imaging.BitmapTensor.ITensorOperator)">
-            <summary>
-            Implements operator function.
-            </summary>
-            <param name="image">RGB tensor arrays</param>
-            <param name="b">Value</param>
-            <param name="tensorOperator">Operator</param>
-        </member>
-        <member name="T:UMapx.Imaging.BitmapTensor.ITensorOperator">
-            <summary>
-            Tensor operator.
-            </summary>
-            <param name="a">Vector</param>
-            <param name="b">Value</param>
-            <returns></returns>
-        </member>
         <member name="T:UMapx.Imaging.BitmapTransform">
             <summary>
             Uses for editing and transforming images.
@@ -16659,33 +16548,33 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="T:UMapx.Imaging.DepthFormat">
+        <member name="T:UMapx.Imaging.DepthMatrix">
             <summary>
-            Uses to work with depth formats.
+            Uses to work with depth matrices.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.DepthFormat.FromBitmap(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.DepthMatrix.ToDepth(System.Drawing.Bitmap)">
             <summary>
             Converts Bitmap into unshort matrix.
             </summary>
             <param name="depth">Image</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.DepthFormat.ToBitmap(System.UInt16[0:,0:])">
+        <member name="M:UMapx.Imaging.DepthMatrix.FromDepth(System.UInt16[0:,0:])">
             <summary>
             Converts ushort matrix into Bitmap.
             </summary>
             <param name="depth">Matrix</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.DepthFormat.ToFloat(System.UInt16[0:,0:])">
+        <member name="M:UMapx.Imaging.DepthMatrix.ToFloat(System.UInt16[0:,0:])">
             <summary>
             Converts the depth to the matrix.
             </summary>
             <param name="depth">Depth</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Imaging.DepthFormat.FromFloat(System.Single[0:,0:])">
+        <member name="M:UMapx.Imaging.DepthMatrix.FromFloat(System.Single[0:,0:])">
             <summary>
             Converts the ushort matrix to the float matrix.
             </summary>
@@ -20765,6 +20654,122 @@
             <summary>
             Gets or sets the temperature [1E3K, 1E4K].
             </summary>
+        </member>
+        <member name="T:UMapx.Imaging.TensorMatrix">
+            <summary>
+            Uses to work with tensor matrices.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.TensorMatrix.ToByteTensor(System.Drawing.Bitmap,System.Boolean)">
+            <summary>
+            Converts a Bitmap to an BGR tensor arrays.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="rgb">RGB or BGR</param>
+            <returns>RGB tensor arrays</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorMatrix.ToByteTensor(System.Drawing.Imaging.BitmapData,System.Boolean)">
+            <summary>
+            Converts a Bitmap to an BGR tensor arrays.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="rgb">RGB or BGR</param>
+            <returns>RGB tensor arrays</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorMatrix.ToFloatTensor(System.Drawing.Bitmap,System.Boolean)">
+            <summary>
+            Converts a Bitmap to an BGR tensor arrays.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="rgb">RGB or BGR</param>
+            <returns>RGB tensor arrays</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorMatrix.ToFloatTensor(System.Drawing.Imaging.BitmapData,System.Boolean)">
+            <summary>
+            Converts a Bitmap to an BGR tensor arrays.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="rgb">RGB or BGR</param>
+            <returns>RGB tensor arrays</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorMatrix.FromByteTensor(System.Byte[][],System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Converts a BGR tensor arrays to Bitmap.
+            </summary>
+            <param name="tensor">Tensor arrays</param>
+            <param name="width">Width</param>
+            <param name="height">Height</param>
+            <param name="rgb">RGB or BGR</param>
+            <returns>Bitmap</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorMatrix.FromFloatTensor(System.Single[][],System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Converts a BGR tensor arrays to Bitmap.
+            </summary>
+            <param name="tensor">Tensor arrays</param>
+            <param name="width">Width</param>
+            <param name="height">Height</param>
+            <param name="rgb">RGB or BGR</param>
+            <returns>Bitmap</returns>
+        </member>
+        <member name="T:UMapx.Imaging.TensorTransform">
+            <summary>
+            Uses for editing and transforming tensors.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.TensorTransform.Merge(System.Byte[][],System.Boolean)">
+            <summary>
+            Merges image tensors to single tensor.
+            </summary>
+            <param name="image">RGB tensor arrays</param>
+            <param name="slice">Slice or not</param>
+            <returns>Byte array</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorTransform.Merge(System.Single[][],System.Boolean)">
+            <summary>
+            Merges image tensors to single tensor.
+            </summary>
+            <param name="image">RGB tensor arrays</param>
+            <param name="slice">Slice or not</param>
+            <returns>Float array</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorTransform.Average(System.Byte[][])">
+            <summary>
+            Averages image tensors to single tensor.
+            </summary>
+            <param name="image">RGB tensor arrays</param>
+            <returns>Byte array</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorTransform.Average(System.Single[][])">
+            <summary>
+            Averages image tensors to single tensor.
+            </summary>
+            <param name="image">RGB tensor arrays</param>
+            <returns>Byte array</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorTransform.Compute(System.Single[][],System.Single[],UMapx.Imaging.TensorTransform.ITensorOperator)">
+            <summary>
+            Implements operator function.
+            </summary>
+            <param name="image">RGB tensor arrays</param>
+            <param name="b">Vector</param>
+            <param name="tensorOperator">Operator</param>
+        </member>
+        <member name="M:UMapx.Imaging.TensorTransform.Compute(System.Single[][],System.Single,UMapx.Imaging.TensorTransform.ITensorOperator)">
+            <summary>
+            Implements operator function.
+            </summary>
+            <param name="image">RGB tensor arrays</param>
+            <param name="b">Value</param>
+            <param name="tensorOperator">Operator</param>
+        </member>
+        <member name="T:UMapx.Imaging.TensorTransform.ITensorOperator">
+            <summary>
+            Tensor operator.
+            </summary>
+            <param name="a">Vector</param>
+            <param name="b">Value</param>
+            <returns></returns>
         </member>
         <member name="T:UMapx.Imaging.Texturer">
             <summary>
