@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     /// Defines the resize filter.
     /// </summary>
     [Serializable]
-    public class Resize : IBitmapFilter2, IBitmapFilter
+    public class Resize : IBitmapFilter2
     {
         #region Private data
         int newWidth;
@@ -56,37 +56,86 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
-            // get source image:
-            int width = Maths.Range(newWidth, 0, bmData.Width);
-            int height = Maths.Range(newHeight, 0, bmData.Height);
-            int srcStride = bmSrc.Stride, dstStride = bmData.Stride;
-            double xFactor = (double)bmSrc.Width / newWidth;
-            double yFactor = (double)bmSrc.Height / newHeight;
+            // get source image size
+            int width = bmSrc.Width;
+            int height = bmSrc.Height;
 
-            // do the job:
-            byte* pSrc = (byte*)bmSrc.Scan0.ToPointer();
-            byte* pDst = (byte*)bmData.Scan0.ToPointer();
-            byte* dst, src, p;
+            int srcStride = bmSrc.Stride;
+            int dstOffset = bmData.Stride - 4 * newWidth;
+            float xFactor = (float)width / newWidth;
+            float yFactor = (float)height / newHeight;
 
-            // source pixel's coordinates
-            int x, y, i;
+            // do the job
+            byte* src = (byte*)bmSrc.Scan0.ToPointer();
+            byte* dst = (byte*)bmData.Scan0.ToPointer();
 
-            // for each line
-            for (y = 0; y < height; y++)
+            // coordinates of source points and cooefficiens
+            float ox, oy, dx, dy, k1, k2;
+            int ox1, oy1, ox2, oy2;
+            // destination pixel values
+            float r, g, b, a;
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+            // temporary pointer
+            byte* p;
+
+            // RGB
+            for (int y = 0; y < newHeight; y++)
             {
-                dst = pDst + dstStride * y;
-                src = pSrc + srcStride * ((int)(y * yFactor));
+                // Y coordinates
+                oy = y * yFactor - 0.5f;
+                oy1 = (int)oy;
+                dy = oy - oy1;
 
-                // for each pixel
-                for (x = 0; x < width; x++)
+                for (int x = 0; x < newWidth; x++, dst += 4)
                 {
-                    p = src + 4 * ((int)(x * xFactor));
+                    // X coordinates
+                    ox = x * xFactor - 0.5f;
+                    ox1 = (int)ox;
+                    dx = ox - ox1;
 
-                    for (i = 0; i < 4; i++, dst++, p++)
+                    // initial pixel value
+                    r = g = b = a = 0;
+
+                    for (int n = -1; n < 3; n++)
                     {
-                        *dst = *p;
+                        // get Y cooefficient
+                        k1 = Kernel.Bicubic(dy - n);
+
+                        oy2 = oy1 + n;
+                        if (oy2 < 0)
+                            oy2 = 0;
+                        if (oy2 > ymax)
+                            oy2 = ymax;
+
+                        for (int m = -1; m < 3; m++)
+                        {
+                            // get X cooefficient
+                            k2 = k1 * Kernel.Bicubic(m - dx);
+
+                            ox2 = ox1 + m;
+                            if (ox2 < 0)
+                                ox2 = 0;
+                            if (ox2 > xmax)
+                                ox2 = xmax;
+
+                            // get pixel of original image
+                            p = src + oy2 * srcStride + ox2 * 4;
+
+                            a += k2 * p[3];
+                            r += k2 * p[2];
+                            g += k2 * p[1];
+                            b += k2 * p[0];
+                        }
                     }
+
+                    dst[3] = Maths.Byte(a);
+                    dst[2] = Maths.Byte(r);
+                    dst[1] = Maths.Byte(g);
+                    dst[0] = Maths.Byte(b);
                 }
+                dst += dstOffset;
             }
         }
         /// <summary>
@@ -101,30 +150,6 @@ namespace UMapx.Imaging
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Data, bmData);
             BitmapFormat.Unlock(Src, bmSrc);
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        public void Apply(BitmapData bmData)
-        {
-            Bitmap Src = (Bitmap)BitmapFormat.Bitmap(bmData).Clone();
-            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(Src, bmSrc);
-            Src.Dispose();
-            return;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="Data">Bitmap</param>
-        public void Apply(Bitmap Data)
-        {
-            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            Apply(bmData);
-            BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
     }

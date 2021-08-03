@@ -19985,18 +19985,6 @@
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Resize.Apply(System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.Resize.Apply(System.Drawing.Bitmap)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="Data">Bitmap</param>
-        </member>
         <member name="T:UMapx.Imaging.RGBA">
             <summary>
             Defines the channel of RGBA model.
@@ -20072,7 +20060,13 @@
             Defines the rotation filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.#ctor(System.Double,System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.Rotate.#ctor(System.Single)">
+            <summary>
+            Initializes the rotation filter.
+            </summary>
+            <param name="angle">Angle</param>
+        </member>
+        <member name="M:UMapx.Imaging.Rotate.#ctor(System.Single,System.Drawing.Color)">
             <summary>
             Initializes the rotation filter.
             </summary>

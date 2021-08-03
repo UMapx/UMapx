@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using UMapx.Core;
 
 namespace UMapx.Imaging
 {
@@ -11,7 +12,7 @@ namespace UMapx.Imaging
     public class Rotate : IBitmapFilter2, IBitmapFilter
     {
         #region Private data
-        private double angle;
+        private float angle;
         private Color color;
         #endregion
 
@@ -20,15 +21,24 @@ namespace UMapx.Imaging
         /// Initializes the rotation filter.
         /// </summary>
         /// <param name="angle">Angle</param>
+        public Rotate(float angle)
+        {
+            Angle = angle;
+            Color = Color.Transparent;
+        }
+        /// <summary>
+        /// Initializes the rotation filter.
+        /// </summary>
+        /// <param name="angle">Angle</param>
         /// <param name="color">Background color</param>
-        public Rotate(double angle, Color color)
+        public Rotate(float angle, Color color)
         {
             Angle = angle; Color = color;
         }
         /// <summary>
         /// Gets or sets angle value.
         /// </summary>
-        public double Angle
+        public float Angle
         {
             get
             {
@@ -60,21 +70,25 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
-            // exception!
-            if (bmSrc.Width != bmData.Width || bmSrc.Height != bmData.Height)
-                throw new Exception("Input image sizes must be the same");
-
             // get source image size
-            int width = bmSrc.Width, height = bmSrc.Height, stride = bmSrc.Stride;
-            double xradius = (width - 1) / 2.0, yradius = (height - 1) / 2.0;
+            int width = bmSrc.Width;
+            int height = bmSrc.Height;
+            float oldXradius = (float)(width - 1) / 2;
+            float oldYradius = (float)(height - 1) / 2;
+
+            // get destination image size
+            int newWidth = bmData.Width;
+            int newHeight = bmData.Height;
+            float newXradius = (float)(newWidth - 1) / 2;
+            float newYradius = (float)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            double angleRad = -angle * Math.PI / 180;
-            double angleCos = Math.Cos(angleRad);
-            double angleSin = Math.Sin(angleRad);
+            float angleRad = -angle * Maths.Pi / 180.0f;
+            float angleCos = Maths.Cos(angleRad);
+            float angleSin = Maths.Sin(angleRad);
 
-            // destination pixel's coordinate relative to image center
-            double cx, cy = -yradius;
+            int srcStride = bmSrc.Stride;
+            int dstOffset = bmData.Stride - newWidth * 4;
 
             // fill values
             byte fillA = color.A;
@@ -83,24 +97,38 @@ namespace UMapx.Imaging
             byte fillB = color.B;
 
             // do the job
-            byte* dst = (byte*)bmData.Scan0.ToPointer();
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
+            byte* dst = (byte*)bmData.Scan0.ToPointer();
+
+            // destination pixel's coordinate relative to image center
+            float cx, cy;
+            // coordinates of source points and cooefficiens
+            float ox, oy, dx, dy, k1, k2;
+            int ox1, oy1, ox2, oy2;
+            // destination pixel values
+            float r, g, b, a;
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+            // temporary pointer
             byte* p;
 
-            // source pixel's coordinates
-            int ox, oy, y, x;
-
-            for (y = 0; y < height; y++)
+            // RGB
+            cy = -newYradius;
+            for (int y = 0; y < newHeight; y++)
             {
-                cx = -xradius;
-                for (x = 0; x < width; x++, dst += 4)
+                cx = -newXradius;
+                for (int x = 0; x < newWidth; x++, dst += 4)
                 {
-                    // coordinate of the nearest point
-                    ox = (int)(angleCos * cx + angleSin * cy + xradius);
-                    oy = (int)(-angleSin * cx + angleCos * cy + yradius);
+                    // coordinates of source point
+                    ox = angleCos * cx + angleSin * cy + oldXradius;
+                    oy = -angleSin * cx + angleCos * cy + oldYradius;
+
+                    ox1 = (int)ox;
+                    oy1 = (int)oy;
 
                     // validate source pixel's coordinates
-                    if ((ox < 0) || (oy < 0) || (ox >= width) || (oy >= height))
+                    if ((ox1 < 0) || (oy1 < 0) || (ox1 >= width) || (oy1 >= height))
                     {
                         // fill destination image with filler
                         dst[3] = fillA;
@@ -110,17 +138,53 @@ namespace UMapx.Imaging
                     }
                     else
                     {
-                        // fill destination image with pixel from source image
-                        p = src + oy * stride + ox * 4;
+                        dx = ox - ox1;
+                        dy = oy - oy1;
 
-                        dst[3] = p[3];
-                        dst[2] = p[2];
-                        dst[1] = p[1];
-                        dst[0] = p[0];
+                        // initial pixel value
+                        r = g = b = a = 0;
+
+                        for (int n = -1; n < 3; n++)
+                        {
+                            // get Y cooefficient
+                            k1 = Kernel.Bicubic(dy - n);
+
+                            oy2 = oy1 + n;
+                            if (oy2 < 0)
+                                oy2 = 0;
+                            if (oy2 > ymax)
+                                oy2 = ymax;
+
+                            for (int m = -1; m < 3; m++)
+                            {
+                                // get X cooefficient
+                                k2 = k1 * Kernel.Bicubic(m - dx);
+
+                                ox2 = ox1 + m;
+                                if (ox2 < 0)
+                                    ox2 = 0;
+                                if (ox2 > xmax)
+                                    ox2 = xmax;
+
+                                // get pixel of original image
+                                p = src + oy2 * srcStride + ox2 * 4;
+
+                                a += k2 * p[3];
+                                r += k2 * p[2];
+                                g += k2 * p[1];
+                                b += k2 * p[0];
+                            }
+                        }
+
+                        dst[3] = Maths.Byte(a);
+                        dst[2] = Maths.Byte(r);
+                        dst[1] = Maths.Byte(g);
+                        dst[0] = Maths.Byte(b);
                     }
                     cx++;
                 }
                 cy++;
+                dst += dstOffset;
             }
         }
         /// <summary>
