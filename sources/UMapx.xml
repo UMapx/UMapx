@@ -19240,9 +19240,13 @@
             <returns>Motion level</returns>
         </member>
         <member name="M:UMapx.Imaging.MotionDetector.Dispose">
-            <summary>
-            Disposes motion detector.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Imaging.MotionDetector.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Imaging.MotionDetector.Finalize">
+            <inheritdoc/>
         </member>
         <member name="M:UMapx.Imaging.MotionDetector.ProcessFrameWithoutFilter(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
             <summary>

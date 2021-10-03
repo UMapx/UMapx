@@ -97,12 +97,33 @@ namespace UMapx.Imaging
         #endregion
 
         #region IDisposable
-        /// <summary>
-        /// Disposes motion detector.
-        /// </summary>
+
+        private bool _disposed;
+
+        /// <inheritdoc/>
         public void Dispose()
         {
-            Reset();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    Reset();
+                }
+                _disposed = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        ~MotionDetector()
+        {
+            Dispose(false);
         }
         #endregion
 
