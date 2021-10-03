@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 using UMapx.Core;
 
 namespace UMapx.Imaging
@@ -134,6 +135,7 @@ namespace UMapx.Imaging
             var disparity = new float[dim_y, dim_x];
             var min2_dis = new float[dim_y, dim_x].Add(float.MaxValue);
 
+            //Parallel.For(0, max_dis, i =>
             for (int i = 0; i < max_dis; i++)
             {
                 var min3_dis = new float[dim_z][,];

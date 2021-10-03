@@ -257,15 +257,37 @@ namespace UMapx.Visualization
         #endregion
 
         #region IDisposable
-        /// <summary>
-        /// Disposes painter class.
-        /// </summary>
+
+        private bool _disposed;
+
+        /// <inheritdoc/>
         public void Dispose()
         {
-            BoxPen.Dispose();
-            PointPen.Dispose();
-            TextFont.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        /// <inheritdoc/>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    BoxPen?.Dispose();
+                    PointPen?.Dispose();
+                    TextFont?.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        ~Painter()
+        {
+            Dispose(false);
+        }
+
         #endregion
     }
 }

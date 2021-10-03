@@ -64,13 +64,34 @@ namespace UMapx.Visualization
         #endregion
 
         #region IDisposable
-        /// <summary>
-        /// Disposes style class.
-        /// </summary>
+
+        private bool _disposed;
+
+        /// <inheritdoc/>
         public void Dispose()
         {
-            FontMarks.Dispose();
-            FontText.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    FontMarks?.Dispose();
+                    FontText?.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        ~Style()
+        {
+            Dispose(false);
         }
         #endregion
 
@@ -82,18 +103,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Helvetica", 10, FontStyle.Regular);
-                style.FontText = new Font("Helvetica", 12, FontStyle.Regular);
-                style.ColorFrame = Color.FromArgb(204, 204, 204);
-                style.ColorBack = Color.White;
-                style.ColorGrid = Color.FromArgb(230, 230, 230);
-                style.ColorShapes = Color.Black;
-                style.ColorText = Color.Black;
-                style.ColorMarks = Color.Black;
-                style.DepthShapes = 1;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Helvetica", 10, FontStyle.Regular),
+                    FontText = new Font("Helvetica", 12, FontStyle.Regular),
+                    ColorFrame = Color.FromArgb(204, 204, 204),
+                    ColorBack = Color.White,
+                    ColorGrid = Color.FromArgb(230, 230, 230),
+                    ColorShapes = Color.Black,
+                    ColorText = Color.Black,
+                    ColorMarks = Color.Black,
+                    DepthShapes = 1,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }
@@ -104,18 +127,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Arial", 10, FontStyle.Regular);
-                style.FontText = new Font("Arial", 12, FontStyle.Regular);
-                style.ColorFrame = Color.White;
-                style.ColorBack = Color.White;
-                style.ColorGrid = Color.FromArgb(77, 201, 77);
-                style.ColorShapes = Color.FromArgb(77, 201, 77);
-                style.ColorText = Color.Black;
-                style.ColorMarks = Color.Black;
-                style.DepthShapes = 1.9f;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Arial", 10, FontStyle.Regular),
+                    FontText = new Font("Arial", 12, FontStyle.Regular),
+                    ColorFrame = Color.White,
+                    ColorBack = Color.White,
+                    ColorGrid = Color.FromArgb(77, 201, 77),
+                    ColorShapes = Color.FromArgb(77, 201, 77),
+                    ColorText = Color.Black,
+                    ColorMarks = Color.Black,
+                    DepthShapes = 1.9f,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }
@@ -126,18 +151,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Arial", 10, FontStyle.Regular);
-                style.FontText = new Font("Arial", 12, FontStyle.Regular);
-                style.ColorFrame = Color.White;
-                style.ColorBack = Color.White;
-                style.ColorGrid = Color.FromArgb(128, 128, 128);
-                style.ColorShapes = Color.FromArgb(128, 128, 128);
-                style.ColorText = Color.FromArgb(72, 0, 255);
-                style.ColorMarks = Color.FromArgb(72, 0, 255);
-                style.DepthShapes = 0.5f;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Arial", 10, FontStyle.Regular),
+                    FontText = new Font("Arial", 12, FontStyle.Regular),
+                    ColorFrame = Color.White,
+                    ColorBack = Color.White,
+                    ColorGrid = Color.FromArgb(128, 128, 128),
+                    ColorShapes = Color.FromArgb(128, 128, 128),
+                    ColorText = Color.FromArgb(72, 0, 255),
+                    ColorMarks = Color.FromArgb(72, 0, 255),
+                    DepthShapes = 0.5f,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }
@@ -148,18 +175,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Arial Cyr", 10, FontStyle.Regular);
-                style.FontText = new Font("Arial Cyr", 12, FontStyle.Regular);
-                style.ColorFrame = Color.White;
-                style.ColorBack = Color.FromArgb(219, 238, 244);
-                style.ColorGrid = Color.FromArgb(127, 137, 139);
-                style.ColorShapes = Color.FromArgb(127, 137, 139);
-                style.ColorText = Color.Black;
-                style.ColorMarks = Color.Black;
-                style.DepthShapes = 1.9f;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Arial Cyr", 10, FontStyle.Regular),
+                    FontText = new Font("Arial Cyr", 12, FontStyle.Regular),
+                    ColorFrame = Color.White,
+                    ColorBack = Color.FromArgb(219, 238, 244),
+                    ColorGrid = Color.FromArgb(127, 137, 139),
+                    ColorShapes = Color.FromArgb(127, 137, 139),
+                    ColorText = Color.Black,
+                    ColorMarks = Color.Black,
+                    DepthShapes = 1.9f,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }
@@ -170,18 +199,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular);
-                style.FontText = new Font("Trojan Pro", 12, FontStyle.Regular);
-                style.ColorFrame = Color.FromArgb(240, 240, 240);
-                style.ColorBack = Color.White;
-                style.ColorGrid = Color.FromArgb(180, 180, 180);
-                style.ColorShapes = Color.Black;
-                style.ColorText = Color.Black;
-                style.ColorMarks = Color.Black;
-                style.DepthShapes = 1.9f;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
+                    FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
+                    ColorFrame = Color.FromArgb(240, 240, 240),
+                    ColorBack = Color.White,
+                    ColorGrid = Color.FromArgb(180, 180, 180),
+                    ColorShapes = Color.Black,
+                    ColorText = Color.Black,
+                    ColorMarks = Color.Black,
+                    DepthShapes = 1.9f,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }
@@ -192,18 +223,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular);
-                style.FontText = new Font("Trojan Pro", 12, FontStyle.Regular);
-                style.ColorFrame = Color.Beige;
-                style.ColorBack = Color.Bisque;
-                style.ColorGrid = Color.LightGray;
-                style.ColorShapes = Color.Black;
-                style.ColorText = Color.Black;
-                style.ColorMarks = Color.Black;
-                style.DepthShapes = 1.9f;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
+                    FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
+                    ColorFrame = Color.Beige,
+                    ColorBack = Color.Bisque,
+                    ColorGrid = Color.LightGray,
+                    ColorShapes = Color.Black,
+                    ColorText = Color.Black,
+                    ColorMarks = Color.Black,
+                    DepthShapes = 1.9f,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }
@@ -214,18 +247,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular);
-                style.FontText = new Font("Trojan Pro", 12, FontStyle.Regular);
-                style.ColorFrame = Color.Lavender;
-                style.ColorBack = Color.LightCyan;
-                style.ColorGrid = Color.LightGray;
-                style.ColorShapes = Color.Black;
-                style.ColorText = Color.Black;
-                style.ColorMarks = Color.Black;
-                style.DepthShapes = 1.9f;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
+                    FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
+                    ColorFrame = Color.Lavender,
+                    ColorBack = Color.LightCyan,
+                    ColorGrid = Color.LightGray,
+                    ColorShapes = Color.Black,
+                    ColorText = Color.Black,
+                    ColorMarks = Color.Black,
+                    DepthShapes = 1.9f,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }
@@ -236,18 +271,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular);
-                style.FontText = new Font("Trojan Pro", 12, FontStyle.Regular);
-                style.ColorFrame = Color.MistyRose;
-                style.ColorBack = Color.White;
-                style.ColorGrid = Color.LightGray;
-                style.ColorShapes = Color.Black;
-                style.ColorText = Color.Black;
-                style.ColorMarks = Color.Black;
-                style.DepthShapes = 1.9f;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
+                    FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
+                    ColorFrame = Color.MistyRose,
+                    ColorBack = Color.White,
+                    ColorGrid = Color.LightGray,
+                    ColorShapes = Color.Black,
+                    ColorText = Color.Black,
+                    ColorMarks = Color.Black,
+                    DepthShapes = 1.9f,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }
@@ -258,18 +295,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular);
-                style.FontText = new Font("Trojan Pro", 12, FontStyle.Regular);
-                style.ColorFrame = Color.Coral;
-                style.ColorBack = Color.LightCoral;
-                style.ColorGrid = Color.LightGray;
-                style.ColorShapes = Color.Black;
-                style.ColorText = Color.Black;
-                style.ColorMarks = Color.Black;
-                style.DepthShapes = 1.9f;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
+                    FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
+                    ColorFrame = Color.Coral,
+                    ColorBack = Color.LightCoral,
+                    ColorGrid = Color.LightGray,
+                    ColorShapes = Color.Black,
+                    ColorText = Color.Black,
+                    ColorMarks = Color.Black,
+                    DepthShapes = 1.9f,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }
@@ -280,18 +319,20 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style();
-                style.FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular);
-                style.FontText = new Font("Trojan Pro", 12, FontStyle.Regular);
-                style.ColorFrame = Color.FromArgb(19, 19, 19);
-                style.ColorBack = Color.FromArgb(35, 35, 35);
-                style.ColorGrid = Color.FromArgb(75, 75, 70);
-                style.ColorShapes = Color.White;
-                style.ColorText = Color.White;
-                style.ColorMarks = Color.White;
-                style.DepthShapes = 1.9f;
-                style.GridX = true;
-                style.GridY = true;
+                Style style = new Style
+                {
+                    FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
+                    FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
+                    ColorFrame = Color.FromArgb(19, 19, 19),
+                    ColorBack = Color.FromArgb(35, 35, 35),
+                    ColorGrid = Color.FromArgb(75, 75, 70),
+                    ColorShapes = Color.White,
+                    ColorText = Color.White,
+                    ColorMarks = Color.White,
+                    DepthShapes = 1.9f,
+                    GridX = true,
+                    GridY = true
+                };
                 return style;
             }
         }

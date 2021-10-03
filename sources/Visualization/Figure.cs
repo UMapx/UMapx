@@ -527,9 +527,7 @@ namespace UMapx.Visualization
             PlotPanes.Clear();
             StemPanes.Clear();
             ScatterPanes.Clear();
-            ImagePane.Dispose();
-            ImagePane = null;
-            return;
+            ImagePane?.Dispose();
         }
         #endregion
 
@@ -964,8 +962,12 @@ namespace UMapx.Visualization
         /// <param name="dh"></param>
         private void Paint_Title(Graphics graphics, string title, int sizeX, int sizeY, int dw, int dh)
         {
-            StringFormat format = new StringFormat();
-            format.LineAlignment = StringAlignment.Center; format.Alignment = StringAlignment.Center;
+            StringFormat format = new StringFormat
+            {
+                LineAlignment = StringAlignment.Center,
+                Alignment = StringAlignment.Center
+            };
+
             graphics.DrawString(title, Style.FontText, new SolidBrush(Style.ColorText), new PointF(sizeX / 2, dh / 2), format);
             format.Dispose();
         }
@@ -980,8 +982,12 @@ namespace UMapx.Visualization
         /// <param name="dh"></param>
         private void Paint_LabelX(Graphics graphics, string xlabel, int sizeX, int sizeY, int dw, int dh)
         {
-            StringFormat format = new StringFormat();
-            format.LineAlignment = StringAlignment.Center; format.Alignment = StringAlignment.Center;
+            StringFormat format = new StringFormat
+            {
+                LineAlignment = StringAlignment.Center,
+                Alignment = StringAlignment.Center
+            };
+
             SizeF size = graphics.MeasureString(xlabel, Style.FontText);
             graphics.DrawString(xlabel, Style.FontText, new SolidBrush(Style.ColorText), new PointF(sizeX / 2, sizeY - dh / 2 + size.Height / 4), format);
             format.Dispose();
@@ -997,8 +1003,11 @@ namespace UMapx.Visualization
         /// <param name="dh"></param>
         private void Paint_LabelY(Graphics graphics, string ylabel, int sizeX, int sizeY, int dw, int dh)
         {
-            StringFormat format = new StringFormat(StringFormatFlags.DirectionVertical);
-            format.LineAlignment = StringAlignment.Center; format.Alignment = StringAlignment.Center;
+            StringFormat format = new StringFormat(StringFormatFlags.DirectionVertical)
+            {
+                LineAlignment = StringAlignment.Center,
+                Alignment = StringAlignment.Center
+            };
 
             graphics.TranslateTransform(sizeX / 2, sizeY / 2);
             graphics.RotateTransform(180);
@@ -1035,13 +1044,35 @@ namespace UMapx.Visualization
         #endregion
 
         #region IDisposable
-        /// <summary>
-        /// Disposes figure class.
-        /// </summary>
+
+        private bool _disposed;
+
+        /// <inheritdoc/>
         public void Dispose()
         {
-            ImagePane.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        /// <inheritdoc/>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    ImagePane?.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        ~Figure()
+        {
+            Dispose(false);
+        }
+
         #endregion
     }
 }

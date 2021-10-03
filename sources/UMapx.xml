@@ -26300,9 +26300,13 @@
             <returns></returns>
         </member>
         <member name="M:UMapx.Visualization.Figure.Dispose">
-            <summary>
-            Disposes figure class.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.Finalize">
+            <inheritdoc/>
         </member>
         <member name="T:UMapx.Visualization.GraphPane">
             <summary>
@@ -26446,9 +26450,13 @@
             <returns>String</returns>
         </member>
         <member name="M:UMapx.Visualization.Painter.Dispose">
-            <summary>
-            Disposes painter class.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Visualization.Painter.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Visualization.Painter.Finalize">
+            <inheritdoc/>
         </member>
         <member name="T:UMapx.Visualization.Points">
             <summary>
@@ -26586,9 +26594,13 @@
             </summary>
         </member>
         <member name="M:UMapx.Visualization.Style.Dispose">
-            <summary>
-            Disposes style class.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Visualization.Style.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Visualization.Style.Finalize">
+            <inheritdoc/>
         </member>
         <member name="P:UMapx.Visualization.Style.MATLAB">
             <summary>

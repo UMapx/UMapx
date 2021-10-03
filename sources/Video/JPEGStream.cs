@@ -339,9 +339,11 @@ namespace UMapx.Video
 				stopEvent = new ManualResetEvent( false );
 
                 // create and start new thread
-				thread = new Thread( new ThreadStart( WorkerThread ) );
-				thread.Name = source; // mainly for debugging
-				thread.Start( );
+                thread = new Thread(new ThreadStart(WorkerThread))
+                {
+                    Name = source // mainly for debugging
+                };
+                thread.Start( );
 			}
 		}
 
@@ -536,10 +538,7 @@ namespace UMapx.Video
                 catch ( Exception exception )
 				{
                     // provide information to clients
-                    if ( VideoSourceError != null )
-                    {
-                        VideoSourceError( this, new VideoSourceErrorEventArgs( exception.Message ) );
-                    }
+                    VideoSourceError?.Invoke(this, new VideoSourceErrorEventArgs(exception.Message));
                     // wait for a while before the next try
                     Thread.Sleep( 250 );
                 }
@@ -570,10 +569,7 @@ namespace UMapx.Video
 					break;
 			}
 
-            if ( PlayingFinished != null )
-            {
-                PlayingFinished( this, ReasonToFinishPlaying.StoppedByUser );
-            }
-		}
+            PlayingFinished?.Invoke(this, ReasonToFinishPlaying.StoppedByUser);
+        }
 	}
 }
