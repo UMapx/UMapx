@@ -17,10 +17,10 @@ namespace UMapx.Imaging
     public class FlatFieldCorrection : IBitmapFilter2, IBitmapFilter
     {
         #region Private data
-        private BoxBlur gb;     // box blur filter,
-        private float mR;      // mean of red channel,
-        private float mG;      // mean of green channel,
-        private float mB;      // mean of blue channel.
+        private readonly BoxBlur gb;     // box blur filter,
+        private float mR;                // mean of red channel,
+        private float mG;                // mean of green channel,
+        private float mB;                // mean of blue channel.
         #endregion
 
         #region Filter components
@@ -71,7 +71,7 @@ namespace UMapx.Imaging
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             gb.Apply(bmSrc);
-            flatfield(bmData, bmSrc);
+            FlatField(bmData, bmSrc);
             return;
         }
         /// <summary>
@@ -109,9 +109,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            Apply(bmData);
-            BitmapFormat.Unlock(Data, bmData);
+            var Src = (Bitmap)Data.Clone();
+            Apply(Data, Src);
+            Src.Dispose();
             return;
         }
         #endregion
@@ -122,12 +122,12 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <param name="bmSrc">Bitmap data</param>
-        private unsafe void flatfield(BitmapData bmData, BitmapData bmSrc)
+        private unsafe void FlatField(BitmapData bmData, BitmapData bmSrc)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             byte* pSrc = (byte*)bmSrc.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            this.globalmeans(bmSrc); // calculating medians.
+            this.GlobalMeans(bmSrc); // calculating medians.
 
             Parallel.For(0, height, y =>
             {
@@ -162,7 +162,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <returns>Array</returns>
-        private unsafe void globalmeans(BitmapData bmData)
+        private unsafe void GlobalMeans(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int y, x, width = bmData.Width, height = bmData.Height;

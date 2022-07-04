@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
-    <Version>5.2.3.5</Version>
+    <Version>5.2.4.5</Version>
     <PackageId>UMapx</PackageId>
     <Company>Valery Asiryan</Company>
     <Authors>Valery Asiryan</Authors>
     <Product>UMapx</Product>
-    <Copyright>Valery Asiryan, © 2015-2021</Copyright>
+    <Copyright>Valery Asiryan, © 2015-2022</Copyright>
     <Description>Cross-platform .NET library for digital signal processing. Fast and optimized.</Description>
     <PackageProjectUrl>https://github.com/asiryan/UMapx</PackageProjectUrl>
     <RepositoryUrl>https://github.com/asiryan/UMapx</RepositoryUrl>
@@ -19,8 +19,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>umapxnet.png</PackageIcon>
-    <AssemblyVersion>5.2.3.5</AssemblyVersion>
-    <FileVersion>5.2.3.5</FileVersion>
+    <AssemblyVersion>5.2.4.5</AssemblyVersion>
+    <FileVersion>5.2.4.5</FileVersion>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>umapxnet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>

@@ -18,9 +18,9 @@ namespace UMapx.Imaging
     public class LocalHistogramStretch : IBitmapFilter
     {
         #region Private data
-        private BoxBlur gb = new BoxBlur();
-        private Erosion er = new Erosion();
-        private Dilatation di = new Dilatation();
+        private readonly BoxBlur gb = new BoxBlur();
+        private readonly Erosion er = new Erosion();
+        private readonly Dilatation di = new Dilatation();
         private Space space;
         private float contrast;
         private bool smoothing;

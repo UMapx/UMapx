@@ -221,9 +221,9 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
         {
-            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            Apply(bmData);
-            BitmapFormat.Unlock(Data, bmData);
+            var Src = (Bitmap)Data.Clone();
+            Apply(Data, Src);
+            Src.Dispose();
             return;
         }
         #endregion
