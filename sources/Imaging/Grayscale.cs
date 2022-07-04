@@ -142,6 +142,36 @@ namespace UMapx.Imaging
                 return new Grayscale(0.299f, 0.587f, 0.114f);
             }
         }
+        /// <summary>
+        /// The image is grayscale or not.
+        /// </summary>
+        /// <param name="data">Bitmap</param>
+        public static bool IsGrayscale(Bitmap data)
+        {
+            var bmData = data.Lock32bpp();
+            var result = IsGrayscale(bmData);
+            data.Unlock(bmData);
+            return result;
+        }
+        /// <summary>
+        /// The image is grayscale or not.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        public unsafe static bool IsGrayscale(BitmapData bmData)
+        {
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+            int y, x, width = bmData.Width, height = bmData.Height;
+
+            for (x = 0; x < width; x++)
+            {
+                for (y = 0; y < height; y++, p += 4)
+                {
+                    if (p[2] != p[1] && p[2] != p[0]) return false;
+                }
+            }
+
+            return true;
+        }
         #endregion
     }
 }

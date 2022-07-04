@@ -137,7 +137,8 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
-            Bitmap Max = (Bitmap)BitmapFormat.Bitmap(bmData).Clone();
+            Bitmap current = BitmapFormat.Bitmap(bmData);
+            Bitmap Max = (Bitmap)current.Clone();
             Bitmap Min = (Bitmap)Max.Clone();
 
             di.Apply(Max); er.Apply(Min);
@@ -153,7 +154,7 @@ namespace UMapx.Imaging
             BitmapFormat.Unlock(Max, bmMax);
             BitmapFormat.Unlock(Min, bmMin);
 
-            Max.Dispose(); Min.Dispose();
+            Max.Dispose(); Min.Dispose(); current.Dispose();
             return;
         }
         /// <summary>

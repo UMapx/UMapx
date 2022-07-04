@@ -17564,6 +17564,18 @@
             Initializes the grayscale filter Y.
             </summary>
         </member>
+        <member name="M:UMapx.Imaging.Grayscale.IsGrayscale(System.Drawing.Bitmap)">
+            <summary>
+            The image is grayscale or not.
+            </summary>
+            <param name="data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.Grayscale.IsGrayscale(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            The image is grayscale or not.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
         <member name="T:UMapx.Imaging.Grid">
             <summary>
             Defines the grid filter.

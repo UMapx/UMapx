@@ -96,11 +96,13 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
-            Bitmap Src = (Bitmap)BitmapFormat.Bitmap(bmData).Clone();
+            Bitmap current = BitmapFormat.Bitmap(bmData);
+            Bitmap Src = (Bitmap)current.Clone();
             BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
+            current.Dispose();
             return;
         }
         /// <summary>
