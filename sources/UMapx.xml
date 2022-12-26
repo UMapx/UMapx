@@ -20928,6 +20928,14 @@
             <param name="rgb">RGB or BGR</param>
             <returns>RGB tensor arrays</returns>
         </member>
+        <member name="M:UMapx.Imaging.TensorMatrix.ToByteTensor(System.Single[0:,0:][],System.Boolean)">
+            <summary>
+            Converts a Bitmap to an BGR tensor arrays.
+            </summary>
+            <param name="bmData">Bitmap data in BGR terms</param>
+            <param name="rgb">RGB or BGR</param>
+            <returns>RGB tensor arrays</returns>
+        </member>
         <member name="M:UMapx.Imaging.TensorMatrix.ToFloatTensor(System.Drawing.Bitmap,System.Boolean)">
             <summary>
             Converts a Bitmap to an BGR tensor arrays.
@@ -20941,6 +20949,14 @@
             Converts a Bitmap to an BGR tensor arrays.
             </summary>
             <param name="bmData">Bitmap data</param>
+            <param name="rgb">RGB or BGR</param>
+            <returns>RGB tensor arrays</returns>
+        </member>
+        <member name="M:UMapx.Imaging.TensorMatrix.ToFloatTensor(System.Single[0:,0:][],System.Boolean)">
+            <summary>
+            Converts a Bitmap to an BGR tensor arrays.
+            </summary>
+            <param name="bmData">Bitmap data in BGR terms</param>
             <param name="rgb">RGB or BGR</param>
             <returns>RGB tensor arrays</returns>
         </member>
