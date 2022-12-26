@@ -83,7 +83,7 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data in BGR terms</param>
         /// <param name="rgb">RGB or BGR</param>
         /// <returns>RGB tensor arrays</returns>
-        public unsafe static byte[][] ToByteTensor(float[][,] bmData, bool rgb = false)
+        public unsafe static byte[][] ToByteTensor(this float[][,] bmData, bool rgb = false)
         {
             // params
             int width = bmData[0].GetLength(1), height = bmData[1].GetLength(0);
@@ -197,7 +197,7 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data in BGR terms</param>
         /// <param name="rgb">RGB or BGR</param>
         /// <returns>RGB tensor arrays</returns>
-        public unsafe static float[][] ToFloatTensor(float[][,] bmData, bool rgb = false)
+        public unsafe static float[][] ToFloatTensor(this float[][,] bmData, bool rgb = false)
         {
             // params
             int width = bmData[0].GetLength(1), height = bmData[1].GetLength(0);
