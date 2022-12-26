@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using UMapx.Core;
 
 namespace UMapx.Imaging
 {
@@ -79,6 +80,53 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an BGR tensor arrays.
         /// </summary>
+        /// <param name="bmData">Bitmap data in BGR terms</param>
+        /// <param name="rgb">RGB or BGR</param>
+        /// <returns>RGB tensor arrays</returns>
+        public unsafe static byte[][] ToByteTensor(float[][,] bmData, bool rgb = false)
+        {
+            // params
+            int width = bmData[0].GetLength(1), height = bmData[1].GetLength(0);
+            int shift = height * width;
+            byte[] _ix0 = new byte[shift];
+            byte[] _ix1 = new byte[shift];
+            byte[] _ix2 = new byte[shift];
+            int z = 0;
+
+            // do job
+            if (rgb)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    for (int i = 0; i < width; i++, z++)
+                    {
+                        // transform
+                        _ix0[z] = Maths.Byte(255 * bmData[2][j, i]);
+                        _ix1[z] = Maths.Byte(255 * bmData[1][j, i]);
+                        _ix2[z] = Maths.Byte(255 * bmData[0][j, i]);
+                    }
+                }
+            }
+            else
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    for (int i = 0; i < width; i++, z++)
+                    {
+                        // transform
+                        _ix0[z] = Maths.Byte(255 * bmData[0][j, i]);
+                        _ix1[z] = Maths.Byte(255 * bmData[1][j, i]);
+                        _ix2[z] = Maths.Byte(255 * bmData[2][j, i]);
+                    }
+                }
+            }
+
+            // arrays
+            return new byte[][] { _ix0, _ix1, _ix2 };
+        }
+        /// <summary>
+        /// Converts a Bitmap to an BGR tensor arrays.
+        /// </summary>
         /// <param name="Data">Bitmap</param>
         /// <param name="rgb">RGB or BGR</param>
         /// <returns>RGB tensor arrays</returns>
@@ -136,6 +184,53 @@ namespace UMapx.Imaging
                         _ix0[z] = p[k + 0];
                         _ix1[z] = p[k + 1];
                         _ix2[z] = p[k + 2];
+                    }
+                }
+            }
+
+            // arrays
+            return new float[][] { _ix0, _ix1, _ix2 };
+        }
+        /// <summary>
+        /// Converts a Bitmap to an BGR tensor arrays.
+        /// </summary>
+        /// <param name="bmData">Bitmap data in BGR terms</param>
+        /// <param name="rgb">RGB or BGR</param>
+        /// <returns>RGB tensor arrays</returns>
+        public unsafe static float[][] ToFloatTensor(float[][,] bmData, bool rgb = false)
+        {
+            // params
+            int width = bmData[0].GetLength(1), height = bmData[1].GetLength(0);
+            int shift = height * width;
+            float[] _ix0 = new float[shift];
+            float[] _ix1 = new float[shift];
+            float[] _ix2 = new float[shift];
+            int z = 0;
+
+            // do job
+            if (rgb)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    for (int i = 0; i < width; i++, z++)
+                    {
+                        // transform
+                        _ix0[z] = 255 * bmData[2][j, i];
+                        _ix1[z] = 255 * bmData[1][j, i];
+                        _ix2[z] = 255 * bmData[0][j, i];
+                    }
+                }
+            }
+            else
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    for (int i = 0; i < width; i++, z++)
+                    {
+                        // transform
+                        _ix0[z] = 255 * bmData[0][j, i];
+                        _ix1[z] = 255 * bmData[1][j, i];
+                        _ix2[z] = 255 * bmData[2][j, i];
                     }
                 }
             }
