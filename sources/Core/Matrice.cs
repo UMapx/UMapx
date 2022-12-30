@@ -6888,11 +6888,14 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Crop(this float[] a, int start, int length)
         {
-            int na = a.Length, i;
-            float[] v = new float[length];
+            // range processing
+            int y = Maths.Range(start, 0, a.Length);
+            int h = Maths.Range(length, 0, a.Length - start);
 
-            for (i = 0; i < length; i++)
-                v[i] = a[Maths.Mod(start + i, na)];
+            float[] v = new float[h];
+
+            for (int i = 0; i < h; i++)
+                v[i] = a[i + y];
 
             return v;
         }
@@ -6905,11 +6908,14 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] Crop(this Complex32[] a, int start, int length)
         {
-            int na = a.Length, i;
-            Complex32[] v = new Complex32[length];
+            // range processing
+            int y = Maths.Range(start, 0, a.Length);
+            int h = Maths.Range(length, 0, a.Length - start);
 
-            for (i = 0; i < length; i++)
-                v[i] = a[Maths.Mod(start + i, na)];
+            Complex32[] v = new Complex32[h];
+
+            for (int i = 0; i < h; i++)
+                v[i] = a[i + y];
 
             return v;
         }
@@ -6924,20 +6930,23 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Crop(this float[,] m, int y, int x, int height, int width)
         {
-            // params
-            float[,] B = new float[height, width];
-            int i, j;
+            // range processing
+            int xx = Maths.Range(x, 0, m.GetLength(1));
+            int yy = Maths.Range(y, 0, m.GetLength(0));
+            int ww = Maths.Range(width, 0, m.GetLength(1) - x);
+            int hh = Maths.Range(height, 0, m.GetLength(0) - y);
 
-            // do job
-            for (i = 0; i < height; i++)
+            float[,] array = new float[hh, ww];
+
+            for (int i = 0; i < hh; i++)
             {
-                for (j = 0; j < width; j++)
+                for (int j = 0; j < ww; j++)
                 {
-                    B[i, j] = m[i + y, j + x];
+                    array[i, j] = m[i + yy, j + xx];
                 }
             }
 
-            return B;
+            return array;
         }
         /// <summary>
         /// Crops the matrix to the specified size.
@@ -6950,20 +6959,23 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Crop(this Complex32[,] m, int y, int x, int height, int width)
         {
-            // params
-            Complex32[,] B = new Complex32[height, width];
-            int i, j;
+            // range processing
+            int xx = Maths.Range(x, 0, m.GetLength(1));
+            int yy = Maths.Range(y, 0, m.GetLength(0));
+            int ww = Maths.Range(width, 0, m.GetLength(1) - x);
+            int hh = Maths.Range(height, 0, m.GetLength(0) - y);
 
-            // do job
-            for (i = 0; i < height; i++)
+            Complex32[,] array = new Complex32[hh, ww];
+
+            for (int i = 0; i < hh; i++)
             {
-                for (j = 0; j < width; j++)
+                for (int j = 0; j < ww; j++)
                 {
-                    B[i, j] = m[i + y, j + x];
+                    array[i, j] = m[i + yy, j + xx];
                 }
             }
 
-            return B;
+            return array;
         }
         #endregion
 
