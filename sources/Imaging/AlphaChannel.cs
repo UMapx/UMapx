@@ -9,13 +9,13 @@ namespace UMapx.Imaging
     /// Defines the alpha channel filter.
     /// </summary>
     [Serializable]
-    public class AlphaChannelFilter : IBitmapFilter2
+    public class AlphaChannel : IBitmapFilter2
     {
         #region Filter components
         /// <summary>
         /// Initializes the alpha channel filter.
         /// </summary>
-        public AlphaChannelFilter() { }
+        public AlphaChannel() { }
         /// <summary>
         /// Apply filter.
         /// </summary>

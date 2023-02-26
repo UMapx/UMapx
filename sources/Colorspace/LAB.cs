@@ -187,7 +187,7 @@ namespace UMapx.Colorspace
         /// <param name="green">Green [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
         /// <returns>CIE Lab structure</returns>
-        public static LAB ToLAB(int red, int green, int blue)
+        public static LAB FromRGB(int red, int green, int blue)
         {
             return XYZ.ToLAB(XYZ.FromRGB(red, green, blue));
         }
@@ -196,7 +196,7 @@ namespace UMapx.Colorspace
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>CIE Lab structure</returns>
-        public static LAB ToLAB(RGB rgb)
+        public static LAB FromRGB(RGB rgb)
         {
             return XYZ.ToLAB(XYZ.FromRGB(rgb.Red, rgb.Green, rgb.Blue));
         }

@@ -1726,7 +1726,7 @@
             <param name="lab">CIE Lab structure</param>
             <returns>CIE XYZ structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.LAB.ToLAB(System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Colorspace.LAB.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
             Converts a color model RGB in model CIE Lab.
             </summary>
@@ -1735,7 +1735,7 @@
             <param name="blue">Blue [0, 255]</param>
             <returns>CIE Lab structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.LAB.ToLAB(UMapx.Colorspace.RGB)">
+        <member name="M:UMapx.Colorspace.LAB.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
             Converts a color model RGB in model CIE Lab.
             </summary>
@@ -15212,24 +15212,24 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="T:UMapx.Imaging.AlphaChannelFilter">
+        <member name="T:UMapx.Imaging.AlphaChannel">
             <summary>
             Defines the alpha channel filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.AlphaChannelFilter.#ctor">
+        <member name="M:UMapx.Imaging.AlphaChannel.#ctor">
             <summary>
             Initializes the alpha channel filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.AlphaChannelFilter.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.AlphaChannel.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.AlphaChannelFilter.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.AlphaChannel.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -16309,6 +16309,100 @@
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
+        </member>
+        <member name="T:UMapx.Imaging.ColorTransfer">
+            <summary>
+            Defines the color transfer filter.
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.ColorTransfer.factor">
+            <summary>
+            Factor.
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.ColorTransfer.inverted">
+            <summary>
+            Inverted or not.
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.ColorTransfer.space">
+            <summary>
+            Color space.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.ColorTransfer.#ctor(System.Single,System.Boolean,UMapx.Imaging.Space)">
+            <summary>
+            Initializes the color transfer filter.
+            </summary>
+            <param name="factor">Factor [0, 10]</param>
+            <param name="inverted">Inverted or not</param>
+            <param name="space">Color space</param>
+        </member>
+        <member name="P:UMapx.Imaging.ColorTransfer.Factor">
+            <summary>
+            Gets or sets factor.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.ColorTransfer.Inverted">
+            <summary>
+            Inverted or not.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.ColorTransfer.Space">
+            <summary>
+            Gets or sets the color space.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.ColorTransfer.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.ColorTransfer.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.ColorTransfer.ApplyRGB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.ColorTransfer.ApplyHSB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.ColorTransfer.ApplyHSL(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.ColorTransfer.ApplyYCbCr(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.ColorTransfer.Reinhard(System.Single[0:,0:][],System.Single[0:,0:][],System.Single,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="source"></param>
+            <param name="factor"></param>
+            <param name="inverted"></param>
         </member>
         <member name="T:UMapx.Imaging.ContrastCorrection">
             <summary>

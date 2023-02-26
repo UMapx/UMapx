@@ -158,7 +158,7 @@ namespace UMapx.Colorspace
         /// <returns>HSL structure</returns>
         public static HSL FromRGB(int red, int green, int blue)
         {
-            float s = 0.0f, l = 0.0f;
+            float s = 0.0f;
             int h = 0;
 
             float r = red / 255.0f;
@@ -189,7 +189,7 @@ namespace UMapx.Colorspace
                 h = (int)(60 * (r - g) / (max - min) + 240);
             }
 
-            l = (max + min) / 2.0f;
+            float l = (max + min) / 2.0f;
 
             if (l == 0.0 || max == min)
             {
