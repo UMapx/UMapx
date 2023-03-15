@@ -17091,6 +17091,20 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
+        <member name="T:UMapx.Imaging.EpsilonExtensions">
+            <summary>
+            Using for epsilon extenions.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.EpsilonExtensions.EpsilonEquals(System.Single,System.Single,System.Single)">
+            <summary>
+            Epsilon equals method.
+            </summary>
+            <param name="f">Value</param>
+            <param name="other">Value</param>
+            <param name="epsilon">Value</param>
+            <returns>True or false</returns>
+        </member>
         <member name="T:UMapx.Imaging.EqualizeChannel">
             <summary>
             Defines the channel equalization filter.
@@ -17521,6 +17535,11 @@
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
+        </member>
+        <member name="T:UMapx.Imaging.Float3x3">
+            <summary>
+            Ported from gimp. See gimpmatrix.c and gimp-transform-utils.c.
+            </summary>
         </member>
         <member name="T:UMapx.Imaging.GammaCorrection">
             <summary>
@@ -19660,6 +19679,71 @@
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.CosineInterpolate(System.Double,System.Double,System.Double)">
             
+        </member>
+        <member name="T:UMapx.Imaging.PerspectiveWarp">
+            <summary>
+            Defines a perspective warp filter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.PerspectiveWarp.#ctor">
+            <summary>
+            Initializes a perspective warp filter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.PerspectiveWarp.#ctor(UMapx.Core.PointFloat,UMapx.Core.PointFloat,UMapx.Core.PointFloat,UMapx.Core.PointFloat)">
+            <summary>
+            Initializes a perspective warp filter.
+            </summary>
+            <param name="topLeft">Top left point</param>
+            <param name="topRight">Top right point</param>
+            <param name="bottomLeft">Bottom left point</param>
+            <param name="bottomRight">Bottom right point</param>
+        </member>
+        <member name="P:UMapx.Imaging.PerspectiveWarp.TopLeft">
+            <summary>
+            Gets or sets top left point.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.PerspectiveWarp.TopRight">
+            <summary>
+            Gets or sets top right point.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.PerspectiveWarp.BottomLeft">
+            <summary>
+            Gets or sets bottom left point.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.PerspectiveWarp.BottomRight">
+            <summary>
+            Gets or sets bottom right point.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
         </member>
         <member name="T:UMapx.Imaging.PhotoFilter">
             <summary>
