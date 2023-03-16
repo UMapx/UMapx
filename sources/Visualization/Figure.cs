@@ -46,6 +46,7 @@ namespace UMapx.Visualization
         #endregion
 
         #region Private data
+        private Style _style = new Style();
         private int figure_width, figure_height;
         private int canvas_width, canvas_height;
         private float xmin = -5, xmax = 5, ymin = -5, ymax = 5;
@@ -56,7 +57,15 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets figure style.
         /// </summary>
-        public Style Style { get; set; } = new Style();
+        public Style Style
+        {
+            get { return _style; }
+            set
+            {
+                _style?.Dispose();
+                _style = value;
+            }
+        }
         /// <summary>
         /// Gets or sets X label.
         /// </summary>
@@ -544,7 +553,7 @@ namespace UMapx.Visualization
         {
             int i, length = y.Length;
             Point[] points = new Point[x.Length];
-            Pen pen = new Pen(color, depth);
+            using Pen pen = new Pen(color, depth);
             float xi, yi;
 
             for (i = 0; i < length; i++)
@@ -576,8 +585,8 @@ namespace UMapx.Visualization
             int i, length = y.Length;
             Point[] points = new Point[x.Length];
             Point point = new Point();
-            SolidBrush br = new SolidBrush(color);
-            Pen pen = new Pen(color, depth);
+            using SolidBrush br = new SolidBrush(color);
+            using Pen pen = new Pen(color, depth);
             float xi, yi;
 
             if (fill == true)
@@ -632,8 +641,8 @@ namespace UMapx.Visualization
             int i, length = y.Length;
             Point[] points = new Point[x.Length];
             Point point = new Point();
-            SolidBrush br = new SolidBrush(color);
-            Pen pen = new Pen(color, depth);
+            using SolidBrush br = new SolidBrush(color);
+            using Pen pen = new Pen(color, depth);
             float xi, yi;
 
             if (fill == true)
@@ -687,7 +696,7 @@ namespace UMapx.Visualization
         private void StemLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
             Point point = new Point();
-            Pen pen = new Pen(color, depth);
+            using Pen pen = new Pen(color, depth);
             int i, length = y.Length;
             float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
@@ -722,8 +731,8 @@ namespace UMapx.Visualization
         private void StemCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             Point point = new Point();
-            SolidBrush br = new SolidBrush(color);
-            Pen pen = new Pen(color, depth);
+            using SolidBrush br = new SolidBrush(color);
+            using Pen pen = new Pen(color, depth);
             int i, length = y.Length;
             float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
@@ -779,8 +788,8 @@ namespace UMapx.Visualization
         private void StemRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill = false)
         {
             Point point = new Point();
-            SolidBrush br = new SolidBrush(color);
-            Pen pen = new Pen(color, depth);
+            using SolidBrush br = new SolidBrush(color);
+            using Pen pen = new Pen(color, depth);
             int i, length = y.Length;
             float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
@@ -851,8 +860,8 @@ namespace UMapx.Visualization
         private void ScatterCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             Point point = new Point();
-            SolidBrush br = new SolidBrush(color);
-            Pen pen = new Pen(color, depth);
+            using SolidBrush br = new SolidBrush(color);
+            using Pen pen = new Pen(color, depth);
             int i, length = y.Length;
             float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
@@ -906,8 +915,8 @@ namespace UMapx.Visualization
         private void ScatterRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill = false)
         {
             Point point = new Point();
-            SolidBrush br = new SolidBrush(color);
-            Pen pen = new Pen(color, depth);
+            using SolidBrush br = new SolidBrush(color);
+            using Pen pen = new Pen(color, depth);
             int i, length = y.Length;
             float dy = (ymax - ymin) / canvas_height;
             int zero = (int)(canvas_height + ymin / dy);
@@ -968,7 +977,8 @@ namespace UMapx.Visualization
                 Alignment = StringAlignment.Center
             };
 
-            graphics.DrawString(title, Style.FontText, new SolidBrush(Style.ColorText), new PointF(sizeX / 2, dh / 2), format);
+            using var br = new SolidBrush(Style.ColorText);
+            graphics.DrawString(title, Style.FontText, br, new PointF(sizeX / 2, dh / 2), format);
             format.Dispose();
         }
         /// <summary>
@@ -989,7 +999,8 @@ namespace UMapx.Visualization
             };
 
             SizeF size = graphics.MeasureString(xlabel, Style.FontText);
-            graphics.DrawString(xlabel, Style.FontText, new SolidBrush(Style.ColorText), new PointF(sizeX / 2, sizeY - dh / 2 + size.Height / 4), format);
+            using var br = new SolidBrush(Style.ColorText);
+            graphics.DrawString(xlabel, Style.FontText, br, new PointF(sizeX / 2, sizeY - dh / 2 + size.Height / 4), format);
             format.Dispose();
         }
         /// <summary>
@@ -1014,7 +1025,8 @@ namespace UMapx.Visualization
             graphics.TranslateTransform(-sizeX / 2, -sizeY / 2);
 
             SizeF size = graphics.MeasureString(ylabel, Style.FontText);
-            graphics.DrawString(ylabel, Style.FontText, new SolidBrush(Style.ColorText), new PointF(sizeX - dw / 2 + size.Height / 4, sizeY / 2), format);
+            using var br = new SolidBrush(Style.ColorText);
+            graphics.DrawString(ylabel, Style.FontText, br, new PointF(sizeX - dw / 2 + size.Height / 4, sizeY / 2), format);
             format.Dispose();
         }
         /// <summary>
@@ -1062,6 +1074,7 @@ namespace UMapx.Visualization
                 if (disposing)
                 {
                     ImagePane?.Dispose();
+                    _style?.Dispose();
                 }
                 _disposed = true;
             }

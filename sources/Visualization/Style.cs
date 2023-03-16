@@ -9,6 +9,13 @@ namespace UMapx.Visualization
     [Serializable]
     public class Style : IDisposable
     {
+        #region Private data
+
+        private Font _fontMarks = new Font("Trojan Pro", 10, FontStyle.Regular);
+        private Font _fontText = new Font("Trojan Pro", 12, FontStyle.Regular);
+
+        #endregion
+
         #region Initialize
         /// <summary>
         /// Initializes the figure style.
@@ -44,11 +51,33 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets marks font.
         /// </summary>
-        public Font FontMarks { get; set; } = new Font("Trojan Pro", 10, FontStyle.Regular);
+        public Font FontMarks
+        {
+            get
+            {
+                return _fontMarks;
+            }
+            set
+            {
+                _fontMarks?.Dispose();
+                _fontMarks = value;
+            }
+        }
         /// <summary>
         /// Gets or sets text font.
         /// </summary>
-        public Font FontText { get; set; } = new Font("Trojan Pro", 12, FontStyle.Regular);
+        public Font FontText
+        {
+            get
+            {
+                return _fontText;
+            }
+            set
+            {
+                _fontText?.Dispose();
+                _fontText = value;
+            }
+        }
         /// <summary>
         /// Gets or sets shapes depth.
         /// </summary>
@@ -81,8 +110,8 @@ namespace UMapx.Visualization
             {
                 if (disposing)
                 {
-                    FontMarks?.Dispose();
-                    FontText?.Dispose();
+                    _fontText?.Dispose();
+                    _fontMarks?.Dispose();
                 }
                 _disposed = true;
             }
