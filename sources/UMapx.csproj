@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
-    <Version>5.2.6.3</Version>
+    <Version>5.2.6.4</Version>
     <PackageId>UMapx</PackageId>
     <Company>Valery Asiryan</Company>
     <Authors>Valery Asiryan</Authors>
@@ -19,15 +19,15 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>umapxnet.png</PackageIcon>
-    <AssemblyVersion>5.2.6.3</AssemblyVersion>
-    <FileVersion>5.2.6.3</FileVersion>
+    <AssemblyVersion>5.2.6.4</AssemblyVersion>
+    <FileVersion>5.2.6.4</FileVersion>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>umapxnet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <DocumentationFile>UMapx.xml</DocumentationFile>
     <OutputPath></OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
