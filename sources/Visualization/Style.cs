@@ -59,7 +59,10 @@ namespace UMapx.Visualization
             }
             set
             {
-                _fontMarks?.Dispose();
+                if ((_fontMarks != null) && (!ReferenceEquals(_fontMarks, value)))
+                {
+                    _fontMarks.Dispose();
+                }
                 _fontMarks = value;
             }
         }
@@ -74,7 +77,10 @@ namespace UMapx.Visualization
             }
             set
             {
-                _fontText?.Dispose();
+                if ((_fontText != null) && (!ReferenceEquals(_fontText, value)))
+                {
+                    _fontText.Dispose();
+                }
                 _fontText = value;
             }
         }

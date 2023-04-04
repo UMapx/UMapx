@@ -9,19 +9,69 @@ namespace UMapx.Visualization
     [Serializable]
     public class Painter : IDisposable
     {
+        #region Private data
+
+        private Pen _boxPen = new Pen(Color.Red, 5);
+        private Pen _pointPen = new Pen(Color.Yellow, 10);
+        private Font _font = new Font("Arial", 24);
+
+        #endregion
+
         #region Class components
         /// <summary>
         /// Gets or sets box pen.
         /// </summary>
-        public Pen BoxPen { get; set; } = new Pen(Color.Red, 5);
+        public Pen BoxPen
+        {
+            get
+            {
+                return _boxPen;
+            }
+            set
+            {
+                if ((_boxPen != null) && (!ReferenceEquals(_boxPen, value)))
+                {
+                    _boxPen.Dispose();
+                }
+                _boxPen = value;
+            }
+        }
         /// <summary>
         /// Gets or sets point pen.
         /// </summary>
-        public Pen PointPen { get; set; } = new Pen(Color.Yellow, 10);
+        public Pen PointPen
+        {
+            get
+            {
+                return _pointPen;
+            }
+            set
+            {
+                if ((_pointPen != null) && (!ReferenceEquals(_pointPen, value)))
+                {
+                    _pointPen.Dispose();
+                }
+                _pointPen = value;
+            }
+        }
         /// <summary>
         /// Gets or sets text font.
         /// </summary>
-        public Font TextFont { get; set; } = new Font("Arial", 24);
+        public Font TextFont
+        {
+            get
+            {
+                return _font;
+            }
+            set
+            {
+                if ((_font != null) && (!ReferenceEquals(_font, value)))
+                {
+                    _font.Dispose();
+                }
+                _font = value;
+            }
+        }
         /// <summary>
         /// Gets or sets text color.
         /// </summary>
@@ -274,9 +324,9 @@ namespace UMapx.Visualization
             {
                 if (disposing)
                 {
-                    BoxPen?.Dispose();
-                    PointPen?.Dispose();
-                    TextFont?.Dispose();
+                    _boxPen?.Dispose();
+                    _pointPen?.Dispose();
+                    _font?.Dispose();
                 }
                 _disposed = true;
             }
