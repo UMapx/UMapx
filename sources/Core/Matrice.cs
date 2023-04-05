@@ -6933,8 +6933,8 @@ namespace UMapx.Core
             // range processing
             int xx = Maths.Range(x, 0, m.GetLength(1));
             int yy = Maths.Range(y, 0, m.GetLength(0));
-            int ww = Maths.Range(width, 0, m.GetLength(1) - x);
-            int hh = Maths.Range(height, 0, m.GetLength(0) - y);
+            int ww = Maths.Range(width, 0, m.GetLength(1) - xx);
+            int hh = Maths.Range(height, 0, m.GetLength(0) - yy);
 
             float[,] array = new float[hh, ww];
 
@@ -6962,8 +6962,8 @@ namespace UMapx.Core
             // range processing
             int xx = Maths.Range(x, 0, m.GetLength(1));
             int yy = Maths.Range(y, 0, m.GetLength(0));
-            int ww = Maths.Range(width, 0, m.GetLength(1) - x);
-            int hh = Maths.Range(height, 0, m.GetLength(0) - y);
+            int ww = Maths.Range(width, 0, m.GetLength(1) - xx);
+            int hh = Maths.Range(height, 0, m.GetLength(0) - yy);
 
             Complex32[,] array = new Complex32[hh, ww];
 
