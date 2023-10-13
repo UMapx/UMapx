@@ -20096,6 +20096,76 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
+        <member name="T:UMapx.Imaging.Points">
+            <summary>
+            Using for points operations.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Points.Add(System.Drawing.Point[],System.Drawing.Point)">
+            <summary>
+            Returns processed points.
+            </summary>
+            <param name="points">Points</param>
+            <param name="point">Point</param>
+            <returns>Points</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Points.Sub(System.Drawing.Point[],System.Drawing.Point)">
+            <summary>
+            Returns processed points.
+            </summary>
+            <param name="points">Points</param>
+            <param name="point">Point</param>
+            <returns>Points</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Points.Rotate(System.Drawing.Point[],System.Drawing.Point,System.Single)">
+            <summary>
+            Rotates points by angle.
+            </summary>
+            <param name="points">Points</param>
+            <param name="centerPoint">Center point</param>
+            <param name="angle">Angle</param>
+            <returns>Points</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Points.Rotate(System.Drawing.Point,System.Drawing.Point,System.Double)">
+            <summary>
+            Rotates point by angle.
+            </summary>
+            <param name="pointToRotate">The point to rotate.</param>
+            <param name="centerPoint">The center point of rotation.</param>
+            <param name="angleInDegrees">The rotation angle in degrees.</param>
+            <returns>Rotated point</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Points.GetRectangle(System.Drawing.Point[])">
+            <summary>
+            Returns rectangle from points.
+            </summary>
+            <param name="points">Points</param>
+            <returns>Rectangle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Points.GetAngle(System.Drawing.Point,System.Drawing.Point,System.Drawing.Point)">
+            <summary>
+            Return angle of the three points.
+            </summary>
+            <param name="left">Left point</param>
+            <param name="right">Right point</param>
+            <param name="support">Supported point</param>
+            <returns>Angle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Points.GetSupportedPoint(System.Drawing.Point,System.Drawing.Point)">
+            <summary>
+            Returns supported point.
+            </summary>
+            <param name="left">Left point</param>
+            <param name="right">Right point</param>
+            <returns>Point</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Points.GetMeanPoint(System.Drawing.Point[])">
+            <summary>
+            Returns mean point.
+            </summary>
+            <param name="points">Points</param>
+            <returns>Point</returns>
+        </member>
         <member name="T:UMapx.Imaging.Quantization">
             <summary>
             Defines the quantization filter.
@@ -20141,6 +20211,146 @@
             <summary>
             Implements the rebuilding of class data.
             </summary>
+        </member>
+        <member name="T:UMapx.Imaging.Rectangles">
+            <summary>
+            Using for rectangles operations.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Add(System.Drawing.Rectangle,System.Drawing.Point)">
+            <summary>
+            Returns processed rectangle.
+            </summary>
+            <param name="rectangle">Rectangle</param>
+            <param name="point">Point</param>
+            <returns>Rectangle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Sub(System.Drawing.Rectangle,System.Drawing.Point)">
+            <summary>
+            Returns processed rectangle.
+            </summary>
+            <param name="rectangle">Rectangle</param>
+            <param name="point">Point</param>
+            <returns>Rectangle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Add(System.Drawing.Rectangle[],System.Drawing.Point)">
+            <summary>
+            Returns processed rectangles.
+            </summary>
+            <param name="rectangles">Rectangles</param>
+            <param name="point">Point</param>
+            <returns>Rectangles</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Sub(System.Drawing.Rectangle[],System.Drawing.Point)">
+            <summary>
+            Returns processed rectangles.
+            </summary>
+            <param name="rectangles">Rectangles</param>
+            <param name="point">Point</param>
+            <returns>Rectangles</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.ToPoints(System.Drawing.Rectangle)">
+            <summary>
+            Returns four points from rectangle.
+            </summary>
+            <param name="rectangle">Rectangle</param>
+            <returns>Points</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.FromPoints(System.Drawing.Point[])">
+            <summary>
+            Returns rectangle from four points.
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.GetPoint(System.Drawing.Rectangle)">
+            <summary>
+            Returns point from rectangle.
+            </summary>
+            <param name="rectangle">Rectangle</param>
+            <returns>Point</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Area(System.Drawing.Size)">
+            <summary>
+            Returns size area.
+            </summary>
+            <param name="size">Size</param>
+            <returns>Area</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Area(System.Drawing.Rectangle)">
+            <summary>
+            Returns rectangle area.
+            </summary>
+            <param name="rectangle">Rectangle</param>
+            <returns>Area</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Max(System.Drawing.Rectangle[])">
+            <summary>
+            Returns the maximum rectangle.
+            </summary>
+            <param name="rectangles">Rectangles</param>
+            <returns>Rectangle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Min(System.Drawing.Rectangle[])">
+            <summary>
+            Returns the minimum rectangle.
+            </summary>
+            <param name="rectangles">Rectangles</param>
+            <returns>Rectangle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Drawing.Rectangle)">
+            <summary>
+            Returns rectangle scaled to box.
+            </summary>
+            <param name="rectangle">Rectangle</param>
+            <returns>Rectangle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Drawing.Rectangle,System.Single)">
+            <summary>
+            Returns rectangle scaled to box.
+            </summary>
+            <param name="rectangle">Rectangle</param>
+            <param name="scale">Factor</param>
+            <returns>Rectangle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Drawing.Rectangle[])">
+            <summary>
+            Returns rectangle scaled to box.
+            </summary>
+            <param name="rectangles">Rectangle</param>
+            <returns>Rectangle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Single,System.Drawing.Rectangle[])">
+            <summary>
+            Returns rectangle scaled to box with image size.
+            </summary>
+            <param name="rectangles">Rectangles</param>
+            <param name="factor">Factor</param>
+            <returns>Rectangle</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.IoU(System.Drawing.Rectangle,System.Drawing.Rectangle)">
+            <summary>
+            Implements IoU operator.
+            </summary>
+            <param name="a">First rectangle</param>
+            <param name="b">Second rectangle</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Scale(System.Drawing.Rectangle,System.Single,System.Single)">
+            <summary>
+            Implements scale operator.
+            </summary>
+            <param name="rectangle">Rectangle</param>
+            <param name="kx">Factor for x axis</param>
+            <param name="ky">Factor for y axis</param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Imaging.Rectangles.Scale(System.Drawing.Rectangle)">
+            <summary>
+            Implements scale operator.
+            </summary>
+            <param name="rectangle">Rectangle</param>
+            <returns>Rectangle</returns>
         </member>
         <member name="T:UMapx.Imaging.Resize">
             <summary>
