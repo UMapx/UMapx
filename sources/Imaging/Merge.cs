@@ -142,6 +142,7 @@ namespace UMapx.Imaging
         #endregion
 
         #region Merging function components
+
         /// <summary>
         /// Merge function.
         /// </summary>
@@ -150,10 +151,11 @@ namespace UMapx.Imaging
         /// <param name="a0"></param>
         /// <param name="a1"></param>
         /// <returns></returns>
-        private static byte merge(byte x, byte y, int a0, int a1)
+        internal static byte merge(byte x, byte y, int a0, int a1)
         {
             return Maths.Byte((x * a0 + y * a1) / 255);
         }
+
         #endregion
     }
 }

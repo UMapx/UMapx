@@ -22,17 +22,21 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="width">Width</param>
         /// <param name="height">Height</param>
-        public Resize(int width = 512, int height = 512)
+        /// <param name="interpolationMode">Interpolation mode</param>
+        public Resize(int width = 512, int height = 512, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
         {
             Size = new SizeInt(width, height);
+            InterpolationMode = interpolationMode;
         }
         /// <summary>
         /// Initializes the resize filter.
         /// </summary>
         /// <param name="size">Size</param>
-        public Resize(SizeInt size)
+        /// <param name="interpolationMode">Interpolation mode</param>
+        public Resize(SizeInt size, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
         {
             Size = size;
+            InterpolationMode = interpolationMode;
         }
         /// <summary>
         /// Gets or sets image size.
@@ -50,11 +54,163 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
+        /// Gets or sets interpolation mode.
+        /// </summary>
+        public InterpolationMode InterpolationMode { get; set; }
+        /// <summary>
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <param name="bmSrc">Bitmap data</param>
-        public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
+        public void Apply(BitmapData bmData, BitmapData bmSrc)
+        {
+            if (InterpolationMode == InterpolationMode.Bicubic)
+            {
+                ApplyBicubic(bmData, bmSrc);
+            }
+            else if (InterpolationMode == InterpolationMode.Bilinear)
+            {
+                ApplyBilinear(bmData, bmSrc);
+            }
+            else if (InterpolationMode == InterpolationMode.NearestNeighbor)
+            {
+                ApplyNearestNeighbor(bmData, bmSrc);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
+        public void Apply(Bitmap Data, Bitmap Src)
+        {
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+            Apply(bmData, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
+        }
+        #endregion
+
+        #region Private methods
+
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
+        private unsafe void ApplyNearestNeighbor(BitmapData bmData, BitmapData bmSrc)
+        {
+            // get source image size
+            int width = bmSrc.Width;
+            int height = bmSrc.Height;
+
+            int srcStride = bmSrc.Stride;
+            int dstStride = bmData.Stride;
+            double xFactor = (double)width / newWidth;
+            double yFactor = (double)height / newHeight;
+
+            // do the job
+            byte* baseSrc = (byte*)bmSrc.Scan0.ToPointer();
+            byte* baseDst = (byte*)bmData.Scan0.ToPointer();
+
+            // for each line
+            for (int y = 0; y < newHeight; y++)
+            {
+                byte* dst = baseDst + dstStride * y;
+                byte* src = baseSrc + srcStride * ((int)(y * yFactor));
+                byte* p;
+
+                // for each pixel
+                for (int x = 0; x < newWidth; x++)
+                {
+                    p = src + 4 * ((int)(x * xFactor));
+
+                    for (int i = 0; i < 4; i++, dst++, p++)
+                    {
+                        *dst = *p;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
+        private unsafe void ApplyBilinear(BitmapData bmData, BitmapData bmSrc)
+        {
+            // get source image size
+            int width = bmSrc.Width;
+            int height = bmSrc.Height;
+
+            int srcStride = bmSrc.Stride;
+            int dstOffset = bmData.Stride - 4 * newWidth;
+            double xFactor = (double)width / newWidth;
+            double yFactor = (double)height / newHeight;
+
+            // do the job
+            byte* src = (byte*)bmSrc.Scan0.ToPointer();
+            byte* dst = (byte*)bmData.Scan0.ToPointer();
+
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+            // temporary pointers
+
+            // for each line
+            for (int y = 0; y < newHeight; y++)
+            {
+                // Y coordinates
+                double oy = (double)y * yFactor;
+                int oy1 = (int)oy;
+                int oy2 = (oy1 == ymax) ? oy1 : oy1 + 1;
+                double dy1 = oy - (double)oy1;
+                double dy2 = 1.0 - dy1;
+
+                // get temp pointers
+                byte* tp1 = src + oy1 * srcStride;
+                byte* tp2 = src + oy2 * srcStride;
+
+                // for each pixel
+                for (int x = 0; x < newWidth; x++)
+                {
+                    // X coordinates
+                    double ox = (double)x * xFactor;
+                    int ox1 = (int)ox;
+                    int ox2 = (ox1 == xmax) ? ox1 : ox1 + 1;
+                    double dx1 = ox - (double)ox1;
+                    double dx2 = 1.0 - dx1;
+
+                    // get four points
+                    byte* p1 = tp1 + ox1 * 4;
+                    byte* p2 = tp1 + ox2 * 4;
+                    byte* p3 = tp2 + ox1 * 4;
+                    byte* p4 = tp2 + ox2 * 4;
+
+                    // interpolate using 4 points
+                    for (int i = 0; i < 4; i++, dst++, p1++, p2++, p3++, p4++)
+                    {
+                        *dst = (byte)(
+                            dy2 * (dx2 * (*p1) + dx1 * (*p2)) +
+                            dy1 * (dx2 * (*p3) + dx1 * (*p4)));
+                    }
+                }
+                dst += dstOffset;
+            }
+        }
+
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmSrc">Bitmap data</param>
+        private unsafe void ApplyBicubic(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image size
             int width = bmSrc.Width;
@@ -138,19 +294,8 @@ namespace UMapx.Imaging
                 dst += dstOffset;
             }
         }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
-        public void Apply(Bitmap Data, Bitmap Src)
-        {
-            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(Data, bmData);
-            BitmapFormat.Unlock(Src, bmSrc);
-        }
+
+
         #endregion
     }
 }

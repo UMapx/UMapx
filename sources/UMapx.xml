@@ -3961,6 +3961,26 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="T:UMapx.Core.InterpolationMode">
+            <summary>
+            Defines interpolation mode.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.InterpolationMode.Bicubic">
+            <summary>
+            Bicubic interpolation.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.InterpolationMode.Bilinear">
+            <summary>
+            Bilinear interpolation.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.InterpolationMode.NearestNeighbor">
+            <summary>
+            Nearest neighbor interpolation.
+            </summary>
+        </member>
         <member name="T:UMapx.Core.Jagged">
             <summary>
             Uses to work with jagged arrays.
@@ -19158,6 +19178,36 @@
             Implements filter rebuilding.
             </summary>
         </member>
+        <member name="T:UMapx.Imaging.MaskColorFilter">
+            <summary>
+            Defines the mask color filter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.MaskColorFilter.#ctor(System.Drawing.Color)">
+            <summary>
+            Initializes the mask color filter.
+            </summary>
+            <param name="color">Mask color</param>
+        </member>
+        <member name="P:UMapx.Imaging.MaskColorFilter.Color">
+            <summary>
+            Gets or sets color.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.MaskColorFilter.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.MaskColorFilter.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
         <member name="T:UMapx.Imaging.Merge">
             <summary>
             Defines the merge filter.
@@ -20357,22 +20407,29 @@
             Defines the resize filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Resize.#ctor(System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.Resize.#ctor(System.Int32,System.Int32,UMapx.Core.InterpolationMode)">
             <summary>
             Initializes the resize filter.
             </summary>
             <param name="width">Width</param>
             <param name="height">Height</param>
+            <param name="interpolationMode">Interpolation mode</param>
         </member>
-        <member name="M:UMapx.Imaging.Resize.#ctor(UMapx.Core.SizeInt)">
+        <member name="M:UMapx.Imaging.Resize.#ctor(UMapx.Core.SizeInt,UMapx.Core.InterpolationMode)">
             <summary>
             Initializes the resize filter.
             </summary>
             <param name="size">Size</param>
+            <param name="interpolationMode">Interpolation mode</param>
         </member>
         <member name="P:UMapx.Imaging.Resize.Size">
             <summary>
             Gets or sets image size.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.Resize.InterpolationMode">
+            <summary>
+            Gets or sets interpolation mode.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.Resize.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
@@ -20388,6 +20445,27 @@
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.Resize.ApplyNearestNeighbor(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Resize.ApplyBilinear(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Resize.ApplyBicubic(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
         </member>
         <member name="T:UMapx.Imaging.RGBA">
             <summary>
@@ -20464,18 +20542,20 @@
             Defines the rotation filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.#ctor(System.Single)">
+        <member name="M:UMapx.Imaging.Rotate.#ctor(System.Single,UMapx.Core.InterpolationMode)">
             <summary>
             Initializes the rotation filter.
             </summary>
             <param name="angle">Angle</param>
+            <param name="interpolationMode">Interpolation mode</param>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.#ctor(System.Single,System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.Rotate.#ctor(System.Single,System.Drawing.Color,UMapx.Core.InterpolationMode)">
             <summary>
             Initializes the rotation filter.
             </summary>
             <param name="angle">Angle</param>
             <param name="color">Background color</param>
+            <param name="interpolationMode">Interpolation mode</param>
         </member>
         <member name="P:UMapx.Imaging.Rotate.Angle">
             <summary>
@@ -20485,6 +20565,11 @@
         <member name="P:UMapx.Imaging.Rotate.Color">
             <summary>
             Gets or sets background color.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.Rotate.InterpolationMode">
+            <summary>
+            Gets or sets interpolation mode.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.Rotate.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
@@ -20512,6 +20597,27 @@
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.Rotate.ApplyNearestNeighbor(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Rotate.ApplyBilinear(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Rotate.ApplyBicubic(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
         </member>
         <member name="T:UMapx.Imaging.RotateChannel">
             <summary>
