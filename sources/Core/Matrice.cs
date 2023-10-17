@@ -5990,17 +5990,17 @@ namespace UMapx.Core
         /// <param name="matrix">Matrix</param>
         /// <param name="rotation">Rotation</param>
         /// <returns>Matrix</returns>
-        public static float[,] Rotate(this float[,] matrix, Rotation rotation)
+        public static float[,] Rotate(this float[,] matrix, RotationMode rotation)
         {
             switch (rotation)
             {
-                case Rotation.R0:
+                case RotationMode.R0:
                     return matrix;
-                case Rotation.R90:
+                case RotationMode.R90:
                     return Rotate90(matrix);
-                case Rotation.R180:
+                case RotationMode.R180:
                     return Rotate180(matrix);
-                case Rotation.R270:
+                case RotationMode.R270:
                     return Rotate270(matrix);
                 default:
                     return matrix;
@@ -6195,17 +6195,17 @@ namespace UMapx.Core
         /// <param name="matrix">Matrix</param>
         /// <param name="rotation">Rotation</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Rotate(this Complex32[,] matrix, Rotation rotation)
+        public static Complex32[,] Rotate(this Complex32[,] matrix, RotationMode rotation)
         {
             switch (rotation)
             {
-                case Rotation.R0:
+                case RotationMode.R0:
                     return matrix;
-                case Rotation.R90:
+                case RotationMode.R90:
                     return Rotate90(matrix);
-                case Rotation.R180:
+                case RotationMode.R180:
                     return Rotate180(matrix);
-                case Rotation.R270:
+                case RotationMode.R270:
                     return Rotate270(matrix);
                 default:
                     return matrix;

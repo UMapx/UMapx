@@ -18,20 +18,20 @@ namespace UMapx.Imaging
         /// <param name="b">Bitmap</param>
         /// <param name="rotation">Rotation</param>
         /// <returns></returns>
-        public static Bitmap Rotate(this Bitmap b, Rotation rotation)
+        public static Bitmap Rotate(this Bitmap b, RotationMode rotation)
         {
             var clone = (Bitmap)b.Clone();
             switch (rotation)
             {
-                case Rotation.R0:
+                case RotationMode.R0:
                     break;
-                case Rotation.R90:
+                case RotationMode.R90:
                     clone.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     break;
-                case Rotation.R180:
+                case RotationMode.R180:
                     clone.RotateFlip(RotateFlipType.Rotate180FlipNone);
                     break;
-                case Rotation.R270:
+                case RotationMode.R270:
                     clone.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     break;
                 default:

@@ -16,17 +16,17 @@ namespace UMapx.Imaging
         /// <param name="depth">Matrix</param>
         /// <param name="rotation">Rotation</param>
         /// <returns>Matrix</returns>
-        public static ushort[,] Rotate(this ushort[,] depth, Rotation rotation)
+        public static ushort[,] Rotate(this ushort[,] depth, RotationMode rotation)
         {
             switch (rotation)
             {
-                case Rotation.R0:
+                case RotationMode.R0:
                     return depth;
-                case Rotation.R90:
+                case RotationMode.R90:
                     return Rotate90(depth);
-                case Rotation.R180:
+                case RotationMode.R180:
                     return Rotate180(depth);
-                case Rotation.R270:
+                case RotationMode.R270:
                     return Rotate270(depth);
                 default:
                     return depth;
