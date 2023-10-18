@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using UMapx.Core;
 
@@ -186,14 +185,15 @@ namespace UMapx.Imaging
         {
             return new Bitmap(image, size.Width, size.Height);
         }
+
         /// <summary>
-        /// Returns resized image.
+        /// Returns resized image with preserved proportions.
         /// </summary>
         /// <param name="image">Bitmap</param>
         /// <param name="size">Size</param>
         /// <param name="color">Border color</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Resize(this Bitmap image, Size size, Color color)
+        public static Bitmap ResizePreserved(Bitmap image, Size size, Color color)
         {
             // size
             int width = image.Width;
@@ -214,8 +214,34 @@ namespace UMapx.Imaging
             g.Clear(color);
             g.DrawImage(image, rectangle);
 
-            return Resize(background, size);
+            return BitmapTransform.Resize(background, size);
         }
+
+        /// <summary>
+        /// Returns resized image with preserved proportions.
+        /// </summary>
+        /// <param name="image">Bitmap</param>
+        /// <param name="size">Size</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap ResizePreserved(Bitmap image, Size size)
+        {
+            // size
+            int width = size.Width;
+            int height = size.Height;
+            int max = Math.Max(width, height);
+
+            //  borders
+            var rectangle = new Rectangle(
+                (max - width) / 2,
+                (max - height) / 2,
+                width,
+                height);
+
+            // drawing
+            using var resized = BitmapTransform.Resize(image, new Size(max, max));
+            return BitmapTransform.Crop(resized, rectangle);
+        }
+
         #endregion
 
         #region Shift

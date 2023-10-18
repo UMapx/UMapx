@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace UMapx.Core
@@ -7497,6 +7498,120 @@ namespace UMapx.Core
         }
 
         #endregion
+
+        // preserving proportions
+
+        /// <summary>
+        /// Resize method with preserving proportions.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <param name="h">Height</param>
+        /// <param name="w">Width</param>
+        /// <param name="value">Background value</param>
+        /// <param name="interpolationMode">Interpolation mode</param>
+        /// <returns>Matrix</returns>
+        public static float[,] ResizePreserved(this float[,] input, int h, int w, float value, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
+        {
+            int width = input.GetLength(1);
+            int height = input.GetLength(0);
+            int max = Math.Max(width, height);
+            var rect = new Rectangle((max - width) / 2, (max - height) / 2, width, height);
+            var temp = new float[max, max].Add(value);
+
+            for (int y = 0; y < rect.Height; y++)
+            {
+                for (int x = 0; x < rect.Width; x++)
+                {
+                    temp[y + rect.Y, x + rect.X] = input[y, x];
+                }
+            }
+
+            return temp.Resize(h, w, interpolationMode);
+        }
+
+        /// <summary>
+        /// Resize method with preserving proportions.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <param name="h">Height</param>
+        /// <param name="w">Width</param>
+        /// <param name="interpolationMode">Interpolation mode</param>
+        /// <returns>Matrix</returns>
+        public static float[,] ResizePreserved(this float[,] input, int h, int w, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
+        {
+            int width = w;
+            int height = h;
+            int max = Math.Max(width, height);
+            var rect = new Rectangle((max - width) / 2, (max - height) / 2, width, height);
+            var resized = input.Resize(max, max, interpolationMode);
+            var temp = new float[rect.Height, rect.Width];
+
+            for (int y = 0; y < rect.Height; y++)
+            {
+                for (int x = 0; x < rect.Width; x++)
+                {
+                    temp[y, x] = resized[y + rect.Y, x + rect.X];
+                }
+            }
+
+            return temp;
+        }
+
+        /// <summary>
+        /// Resize method with preserving proportions.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <param name="h">Height</param>
+        /// <param name="w">Width</param>
+        /// <param name="value">Background value</param>
+        /// <param name="interpolationMode">Interpolation mode</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] ResizePreserved(this Complex32[,] input, int h, int w, Complex32 value, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
+        {
+            int width = input.GetLength(1);
+            int height = input.GetLength(0);
+            int max = Math.Max(width, height);
+            var rect = new Rectangle((max - width) / 2, (max - height) / 2, width, height);
+            var temp = new Complex32[max, max].Add(value);
+
+            for (int y = 0; y < rect.Height; y++)
+            {
+                for (int x = 0; x < rect.Width; x++)
+                {
+                    temp[y + rect.Y, x + rect.X] = input[y, x];
+                }
+            }
+
+            return temp.Resize(h, w, interpolationMode);
+        }
+
+        /// <summary>
+        /// Resize method with preserving proportions.
+        /// </summary>
+        /// <param name="input">Matrix</param>
+        /// <param name="h">Height</param>
+        /// <param name="w">Width</param>
+        /// <param name="interpolationMode">Interpolation mode</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] ResizePreserved(this Complex32[,] input, int h, int w, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
+        {
+            int width = w;
+            int height = h;
+            int max = Math.Max(width, height);
+            var rect = new Rectangle((max - width) / 2, (max - height) / 2, width, height);
+            var resized = input.Resize(max, max, interpolationMode);
+            var temp = new Complex32[rect.Height, rect.Width];
+
+            for (int y = 0; y < rect.Height; y++)
+            {
+                for (int x = 0; x < rect.Width; x++)
+                {
+                    temp[y, x] = resized[y + rect.Y, x + rect.X];
+                }
+            }
+
+            return temp;
+        }
 
         #endregion
 

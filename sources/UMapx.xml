@@ -8262,6 +8262,48 @@
             <param name="h">Length</param>
             <returns>Array</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.ResizePreserved(System.Single[0:,0:],System.Int32,System.Int32,System.Single,UMapx.Core.InterpolationMode)">
+            <summary>
+            Resize method with preserving proportions.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <param name="value">Background value</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizePreserved(System.Single[0:,0:],System.Int32,System.Int32,UMapx.Core.InterpolationMode)">
+            <summary>
+            Resize method with preserving proportions.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizePreserved(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,UMapx.Core.Complex32,UMapx.Core.InterpolationMode)">
+            <summary>
+            Resize method with preserving proportions.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <param name="value">Background value</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizePreserved(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,UMapx.Core.InterpolationMode)">
+            <summary>
+            Resize method with preserving proportions.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Shift(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
             <summary>
             Implements a shift of matrix elements.
@@ -15834,13 +15876,21 @@
             <param name="size">Size</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Resize(System.Drawing.Bitmap,System.Drawing.Size,System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.BitmapTransform.ResizePreserved(System.Drawing.Bitmap,System.Drawing.Size,System.Drawing.Color)">
             <summary>
-            Returns resized image.
+            Returns resized image with preserved proportions.
             </summary>
             <param name="image">Bitmap</param>
             <param name="size">Size</param>
             <param name="color">Border color</param>
+            <returns>Bitmap</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapTransform.ResizePreserved(System.Drawing.Bitmap,System.Drawing.Size)">
+            <summary>
+            Returns resized image with preserved proportions.
+            </summary>
+            <param name="image">Bitmap</param>
+            <param name="size">Size</param>
             <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Shift(System.Drawing.Bitmap,System.Int32,System.Int32)">
