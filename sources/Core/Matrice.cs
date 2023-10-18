@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace UMapx.Core
 {
@@ -5992,22 +5994,17 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Rotate(this float[,] matrix, RotationMode rotation)
         {
-            switch (rotation)
+            return rotation switch
             {
-                case RotationMode.R0:
-                    return matrix;
-                case RotationMode.R90:
-                    return Rotate90(matrix);
-                case RotationMode.R180:
-                    return Rotate180(matrix);
-                case RotationMode.R270:
-                    return Rotate270(matrix);
-                default:
-                    return matrix;
-            }
+                RotationMode.R0 => matrix,
+                RotationMode.R90 => Rotate90(matrix),
+                RotationMode.R180 => Rotate180(matrix),
+                RotationMode.R270 => Rotate270(matrix),
+                _ => matrix,
+            };
         }
 
-        #region Private
+        #region Private rotation
         /// <summary>
         /// Rotates the matrix by 90 degrees.
         /// </summary>
@@ -6081,10 +6078,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="matrix">Matrix</param>
         /// <param name="angle">Angle</param>
+        /// <param name="interpolationMode">Interpolation mode</param>
         /// <returns>Matrix</returns>
-        public static float[,] Rotate(this float[,] matrix, float angle)
+        public static float[,] Rotate(this float[,] matrix, float angle, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
         {
-            return Rotate(matrix, angle, 0);
+            return Rotate(matrix, angle, 0, interpolationMode);
         }
         /// <summary>
         /// Rotates matrix by angle.
@@ -6092,8 +6090,199 @@ namespace UMapx.Core
         /// <param name="matrix">Matrix</param>
         /// <param name="angle">Angle</param>
         /// <param name="value">Value</param>
+        /// <param name="interpolationMode">Interpolation mode</param>
         /// <returns>Matrix</returns>
-        public static float[,] Rotate(this float[,] matrix, float angle, float value)
+        public static float[,] Rotate(this float[,] matrix, float angle, float value, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
+        {
+            if (interpolationMode == InterpolationMode.Bicubic)
+            {
+                return RotateBicubic(matrix, angle, value);
+            }
+            else if (interpolationMode == InterpolationMode.Bilinear)
+            {
+                return RotateBilinear(matrix, angle, value);
+            }
+            else if (interpolationMode == InterpolationMode.NearestNeighbor)
+            {
+                return RotateNearestNeighbor(matrix, angle, value);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        #region Private rotate
+
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="value">Value</param>
+        /// <returns>Matrix</returns>
+        private static float[,] RotateNearestNeighbor(this float[,] matrix, float angle, float value)
+        {
+            // get source image size
+            int width = matrix.GetLength(1);
+            int height = matrix.GetLength(0);
+            double oldXradius = (double)(width - 1) / 2;
+            double oldYradius = (double)(height - 1) / 2;
+
+            // get destination image size
+            int newWidth = width;
+            int newHeight = height;
+            double newXradius = (double)(newWidth - 1) / 2;
+            double newYradius = (double)(newHeight - 1) / 2;
+
+            // angle's sine and cosine
+            double angleRad = -angle * Math.PI / 180;
+            double angleCos = Math.Cos(angleRad);
+            double angleSin = Math.Sin(angleRad);
+
+            // destination pixel's coordinate relative to image center
+            double cx, cy;
+            // source pixel's coordinates
+            int ox, oy;
+            // output
+            float[,] H = new float[newHeight, newWidth];
+
+            // check pixel format
+            // ARGB
+            cy = -newYradius;
+            for (int y = 0; y < newHeight; y++)
+            {
+                cx = -newXradius;
+                for (int x = 0; x < newWidth; x++)
+                {
+                    // coordinate of the nearest point
+                    ox = (int)(angleCos * cx + angleSin * cy + oldXradius);
+                    oy = (int)(-angleSin * cx + angleCos * cy + oldYradius);
+
+                    // validate source pixel's coordinates
+                    if ((ox < 0) || (oy < 0) || (ox >= width) || (oy >= height))
+                    {
+                        // fill destination image with filler
+                        H[y, x] = value;
+                    }
+                    else
+                    {
+                        // fill destination image with pixel from source image
+                        H[y, x] = matrix[oy, ox];
+                    }
+                    cx++;
+                }
+                cy++;
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="value">Value</param>
+        /// <returns>Matrix</returns>
+        private static float[,] RotateBilinear(this float[,] matrix, float angle, float value)
+        {
+            // get source image size
+            int width = matrix.GetLength(1);
+            int height = matrix.GetLength(0);
+            double oldXradius = (double)(width - 1) / 2;
+            double oldYradius = (double)(height - 1) / 2;
+
+            // get destination image size
+            int newWidth = width;
+            int newHeight = height;
+            double newXradius = (double)(newWidth - 1) / 2;
+            double newYradius = (double)(newHeight - 1) / 2;
+
+            // angle's sine and cosine
+            double angleRad = -angle * Math.PI / 180;
+            double angleCos = Math.Cos(angleRad);
+            double angleSin = Math.Sin(angleRad);
+
+            // destination pixel's coordinate relative to image center
+            double cx, cy;
+            // coordinates of source points
+            double ox, oy, tx, ty, dx1, dy1, dx2, dy2;
+            int ox1, oy1, ox2, oy2;
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+            // output
+            float[,] H = new float[newHeight, newWidth];
+
+            // RGB
+            cy = -newYradius;
+            for (int y = 0; y < newHeight; y++)
+            {
+                // do some pre-calculations of source points' coordinates
+                // (calculate the part which depends on y-loop, but does not
+                // depend on x-loop)
+                tx = angleSin * cy + oldXradius;
+                ty = angleCos * cy + oldYradius;
+
+                cx = -newXradius;
+                for (int x = 0; x < newWidth; x++)
+                {
+                    // coordinates of source point
+                    ox = tx + angleCos * cx;
+                    oy = ty - angleSin * cx;
+
+                    // top-left coordinate
+                    ox1 = (int)ox;
+                    oy1 = (int)oy;
+
+                    // validate source pixel's coordinates
+                    if ((ox1 < 0) || (oy1 < 0) || (ox1 >= width) || (oy1 >= height))
+                    {
+                        // fill destination image with filler
+                        H[y, x] = value;
+                    }
+                    else
+                    {
+                        // bottom-right coordinate
+                        ox2 = (ox1 == xmax) ? ox1 : ox1 + 1;
+                        oy2 = (oy1 == ymax) ? oy1 : oy1 + 1;
+
+                        if ((dx1 = ox - (float)ox1) < 0)
+                            dx1 = 0;
+                        dx2 = 1.0f - dx1;
+
+                        if ((dy1 = oy - (float)oy1) < 0)
+                            dy1 = 0;
+                        dy2 = 1.0f - dy1;
+
+                        // get four points
+                        var p1 = matrix[oy1, ox1];
+                        var p2 = matrix[oy1, ox2];
+                        var p3 = matrix[oy2, ox1];
+                        var p4 = matrix[oy2, ox2];
+
+                        // interpolate using 4 points
+                        H[y, x] = (float)(
+                            dy2 * (dx2 * p1 + dx1 * p2) +
+                            dy1 * (dx2 * p3 + dx1 * p4));
+                    }
+                    cx++;
+                }
+                cy++;
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="value">Value</param>
+        /// <returns>Matrix</returns>
+        private static float[,] RotateBicubic(this float[,] matrix, float angle, float value)
         {
             // get source image size
             int width = matrix.GetLength(1);
@@ -6189,6 +6378,8 @@ namespace UMapx.Core
             return H;
         }
 
+        #endregion
+
         /// <summary>
         /// Rotates matrix by rotation value.
         /// </summary>
@@ -6197,22 +6388,17 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Rotate(this Complex32[,] matrix, RotationMode rotation)
         {
-            switch (rotation)
+            return rotation switch
             {
-                case RotationMode.R0:
-                    return matrix;
-                case RotationMode.R90:
-                    return Rotate90(matrix);
-                case RotationMode.R180:
-                    return Rotate180(matrix);
-                case RotationMode.R270:
-                    return Rotate270(matrix);
-                default:
-                    return matrix;
-            }
+                RotationMode.R0 => matrix,
+                RotationMode.R90 => Rotate90(matrix),
+                RotationMode.R180 => Rotate180(matrix),
+                RotationMode.R270 => Rotate270(matrix),
+                _ => matrix,
+            };
         }
 
-        #region Private
+        #region Private rotation
         /// <summary>
         /// Rotates the matrix by 90 degrees.
         /// </summary>
@@ -6286,10 +6472,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="matrix">Matrix</param>
         /// <param name="angle">Angle</param>
+        /// <param name="interpolationMode">Interpolation mode</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Rotate(this Complex32[,] matrix, float angle)
+        public static Complex32[,] Rotate(this Complex32[,] matrix, float angle, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
         {
-            return Rotate(matrix, angle, 0);
+            return Rotate(matrix, angle, 0, interpolationMode);
         }
         /// <summary>
         /// Rotates matrix by angle.
@@ -6297,8 +6484,199 @@ namespace UMapx.Core
         /// <param name="matrix">Matrix</param>
         /// <param name="angle">Angle</param>
         /// <param name="value">Value</param>
+        /// <param name="interpolationMode">Interpolation mode</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Rotate(this Complex32[,] matrix, float angle, float value)
+        public static Complex32[,] Rotate(this Complex32[,] matrix, float angle, Complex32 value, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
+        {
+            if (interpolationMode == InterpolationMode.Bicubic)
+            {
+                return RotateBicubic(matrix, angle, value);
+            }
+            else if (interpolationMode == InterpolationMode.Bilinear)
+            {
+                return RotateBilinear(matrix, angle, value);
+            }
+            else if (interpolationMode == InterpolationMode.NearestNeighbor)
+            {
+                return RotateNearestNeighbor(matrix, angle, value);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        #region Private rotate
+
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="value">Value</param>
+        /// <returns>Matrix</returns>
+        private static Complex32[,] RotateNearestNeighbor(this Complex32[,] matrix, float angle, Complex32 value)
+        {
+            // get source image size
+            int width = matrix.GetLength(1);
+            int height = matrix.GetLength(0);
+            double oldXradius = (double)(width - 1) / 2;
+            double oldYradius = (double)(height - 1) / 2;
+
+            // get destination image size
+            int newWidth = width;
+            int newHeight = height;
+            double newXradius = (double)(newWidth - 1) / 2;
+            double newYradius = (double)(newHeight - 1) / 2;
+
+            // angle's sine and cosine
+            double angleRad = -angle * Math.PI / 180;
+            double angleCos = Math.Cos(angleRad);
+            double angleSin = Math.Sin(angleRad);
+
+            // destination pixel's coordinate relative to image center
+            double cx, cy;
+            // source pixel's coordinates
+            int ox, oy;
+            // output
+            Complex32[,] H = new Complex32[newHeight, newWidth];
+
+            // check pixel format
+            // ARGB
+            cy = -newYradius;
+            for (int y = 0; y < newHeight; y++)
+            {
+                cx = -newXradius;
+                for (int x = 0; x < newWidth; x++)
+                {
+                    // coordinate of the nearest point
+                    ox = (int)(angleCos * cx + angleSin * cy + oldXradius);
+                    oy = (int)(-angleSin * cx + angleCos * cy + oldYradius);
+
+                    // validate source pixel's coordinates
+                    if ((ox < 0) || (oy < 0) || (ox >= width) || (oy >= height))
+                    {
+                        // fill destination image with filler
+                        H[y, x] = value;
+                    }
+                    else
+                    {
+                        // fill destination image with pixel from source image
+                        H[y, x] = matrix[oy, ox];
+                    }
+                    cx++;
+                }
+                cy++;
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="value">Value</param>
+        /// <returns>Matrix</returns>
+        private static Complex32[,] RotateBilinear(this Complex32[,] matrix, float angle, Complex32 value)
+        {
+            // get source image size
+            int width = matrix.GetLength(1);
+            int height = matrix.GetLength(0);
+            double oldXradius = (double)(width - 1) / 2;
+            double oldYradius = (double)(height - 1) / 2;
+
+            // get destination image size
+            int newWidth = width;
+            int newHeight = height;
+            double newXradius = (double)(newWidth - 1) / 2;
+            double newYradius = (double)(newHeight - 1) / 2;
+
+            // angle's sine and cosine
+            double angleRad = -angle * Math.PI / 180;
+            double angleCos = Math.Cos(angleRad);
+            double angleSin = Math.Sin(angleRad);
+
+            // destination pixel's coordinate relative to image center
+            double cx, cy;
+            // coordinates of source points
+            double ox, oy, tx, ty, dx1, dy1, dx2, dy2;
+            int ox1, oy1, ox2, oy2;
+            // width and height decreased by 1
+            int ymax = height - 1;
+            int xmax = width - 1;
+            // output
+            Complex32[,] H = new Complex32[newHeight, newWidth];
+
+            // RGB
+            cy = -newYradius;
+            for (int y = 0; y < newHeight; y++)
+            {
+                // do some pre-calculations of source points' coordinates
+                // (calculate the part which depends on y-loop, but does not
+                // depend on x-loop)
+                tx = angleSin * cy + oldXradius;
+                ty = angleCos * cy + oldYradius;
+
+                cx = -newXradius;
+                for (int x = 0; x < newWidth; x++)
+                {
+                    // coordinates of source point
+                    ox = tx + angleCos * cx;
+                    oy = ty - angleSin * cx;
+
+                    // top-left coordinate
+                    ox1 = (int)ox;
+                    oy1 = (int)oy;
+
+                    // validate source pixel's coordinates
+                    if ((ox1 < 0) || (oy1 < 0) || (ox1 >= width) || (oy1 >= height))
+                    {
+                        // fill destination image with filler
+                        H[y, x] = value;
+                    }
+                    else
+                    {
+                        // bottom-right coordinate
+                        ox2 = (ox1 == xmax) ? ox1 : ox1 + 1;
+                        oy2 = (oy1 == ymax) ? oy1 : oy1 + 1;
+
+                        if ((dx1 = ox - (float)ox1) < 0)
+                            dx1 = 0;
+                        dx2 = 1.0f - dx1;
+
+                        if ((dy1 = oy - (float)oy1) < 0)
+                            dy1 = 0;
+                        dy2 = 1.0f - dy1;
+
+                        // get four points
+                        var p1 = matrix[oy1, ox1];
+                        var p2 = matrix[oy1, ox2];
+                        var p3 = matrix[oy2, ox1];
+                        var p4 = matrix[oy2, ox2];
+
+                        // interpolate using 4 points
+                        H[y, x] = (Complex32)(
+                            dy2 * (dx2 * p1 + dx1 * p2) +
+                            dy1 * (dx2 * p3 + dx1 * p4));
+                    }
+                    cx++;
+                }
+                cy++;
+            }
+
+            return H;
+        }
+
+        /// <summary>
+        /// Rotates matrix by angle.
+        /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="angle">Angle</param>
+        /// <param name="value">Value</param>
+        /// <returns>Matrix</returns>
+        private static Complex32[,] RotateBicubic(this Complex32[,] matrix, float angle, Complex32 value)
         {
             // get source image size
             int width = matrix.GetLength(1);
@@ -6393,6 +6771,8 @@ namespace UMapx.Core
 
             return H;
         }
+
+        #endregion
         #endregion
 
         #region Resize voids

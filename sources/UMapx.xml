@@ -7972,7 +7972,7 @@
             <param name="v">Array</param>
             <param name="r">Radius</param>
         </member>
-        <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],UMapx.Core.Rotation)">
+        <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],UMapx.Core.RotationMode)">
             <summary>
             Rotates matrix by rotation value.
             </summary>
@@ -8001,15 +8001,26 @@
             <param name="input">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],System.Single)">
+        <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],System.Single,UMapx.Core.InterpolationMode)">
             <summary>
             Rotates matrix by angle.
             </summary>
             <param name="matrix">Matrix</param>
             <param name="angle">Angle</param>
+            <param name="interpolationMode">Interpolation mode</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],System.Single,System.Single)">
+        <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],System.Single,System.Single,UMapx.Core.InterpolationMode)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <param name="value">Value</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.RotateNearestNeighbor(System.Single[0:,0:],System.Single,System.Single)">
             <summary>
             Rotates matrix by angle.
             </summary>
@@ -8018,7 +8029,25 @@
             <param name="value">Value</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Rotate(UMapx.Core.Complex32[0:,0:],UMapx.Core.Rotation)">
+        <member name="M:UMapx.Core.Matrice.RotateBilinear(System.Single[0:,0:],System.Single,System.Single)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <param name="value">Value</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.RotateBicubic(System.Single[0:,0:],System.Single,System.Single)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <param name="value">Value</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Rotate(UMapx.Core.Complex32[0:,0:],UMapx.Core.RotationMode)">
             <summary>
             Rotates matrix by rotation value.
             </summary>
@@ -8047,15 +8076,44 @@
             <param name="input">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Rotate(UMapx.Core.Complex32[0:,0:],System.Single)">
+        <member name="M:UMapx.Core.Matrice.Rotate(UMapx.Core.Complex32[0:,0:],System.Single,UMapx.Core.InterpolationMode)">
             <summary>
             Rotates matrix by angle.
             </summary>
             <param name="matrix">Matrix</param>
             <param name="angle">Angle</param>
+            <param name="interpolationMode">Interpolation mode</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Rotate(UMapx.Core.Complex32[0:,0:],System.Single,System.Single)">
+        <member name="M:UMapx.Core.Matrice.Rotate(UMapx.Core.Complex32[0:,0:],System.Single,UMapx.Core.Complex32,UMapx.Core.InterpolationMode)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <param name="value">Value</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.RotateNearestNeighbor(UMapx.Core.Complex32[0:,0:],System.Single,UMapx.Core.Complex32)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <param name="value">Value</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.RotateBilinear(UMapx.Core.Complex32[0:,0:],System.Single,UMapx.Core.Complex32)">
+            <summary>
+            Rotates matrix by angle.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="angle">Angle</param>
+            <param name="value">Value</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.RotateBicubic(UMapx.Core.Complex32[0:,0:],System.Single,UMapx.Core.Complex32)">
             <summary>
             Rotates matrix by angle.
             </summary>
@@ -9767,27 +9825,27 @@
             </summary>
             <returns>Pair of numbers</returns>
         </member>
-        <member name="T:UMapx.Core.Rotation">
+        <member name="T:UMapx.Core.RotationMode">
             <summary>
-            Defines the rotation of processing.
+            Defines the rotation mode of processing.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Rotation.R0">
+        <member name="F:UMapx.Core.RotationMode.R0">
             <summary>
             0 degrees.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Rotation.R90">
+        <member name="F:UMapx.Core.RotationMode.R90">
             <summary>
             90 degrees. 
             </summary>
         </member>
-        <member name="F:UMapx.Core.Rotation.R180">
+        <member name="F:UMapx.Core.RotationMode.R180">
             <summary>
             180 degrees.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Rotation.R270">
+        <member name="F:UMapx.Core.RotationMode.R270">
             <summary>
             270 degrees.
             </summary>
@@ -15612,7 +15670,7 @@
             Uses for editing and transforming images using GDI+.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,UMapx.Core.Rotation)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,UMapx.Core.RotationMode)">
             <summary>
             Rotates bitmap by rotation value.
             </summary>
@@ -16865,7 +16923,7 @@
             Uses for editing and transforming depth maps.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.DepthTransform.Rotate(System.UInt16[0:,0:],UMapx.Core.Rotation)">
+        <member name="M:UMapx.Imaging.DepthTransform.Rotate(System.UInt16[0:,0:],UMapx.Core.RotationMode)">
             <summary>
             Rotates depth by rotation value.
             </summary>
