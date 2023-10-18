@@ -8122,7 +8122,17 @@
             <param name="value">Value</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Resize(System.Single[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Resize(System.Single[0:,0:],System.Int32,System.Int32,UMapx.Core.InterpolationMode)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizeBicubic(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
             Returns resized matrix.
             </summary>
@@ -8131,7 +8141,7 @@
             <param name="w">Width</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.ResizeBilinear(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
             Returns resized matrix.
             </summary>
@@ -8140,7 +8150,62 @@
             <param name="w">Width</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Resize(System.Single[],System.Int32)">
+        <member name="M:UMapx.Core.Matrice.ResizeNearestNeighbor(System.Single[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,UMapx.Core.InterpolationMode)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizeBicubic(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizeBilinear(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizeNearestNeighbor(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns resized matrix.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="h">Height</param>
+            <param name="w">Width</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(System.Single[],System.Int32,UMapx.Core.InterpolationMode)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizeBicubic(System.Single[],System.Int32)">
             <summary>
             Returns resized vector.
             </summary>
@@ -8148,7 +8213,48 @@
             <param name="h">Length</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[],System.Int32)">
+        <member name="M:UMapx.Core.Matrice.ResizeBilinear(System.Single[],System.Int32)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizeNearestNeighbor(System.Single[],System.Int32)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Resize(UMapx.Core.Complex32[],System.Int32,UMapx.Core.InterpolationMode)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <param name="interpolationMode">Interpolation mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizeBicubic(UMapx.Core.Complex32[],System.Int32)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizeBilinear(UMapx.Core.Complex32[],System.Int32)">
+            <summary>
+            Returns resized vector.
+            </summary>
+            <param name="input">Array</param>
+            <param name="h">Length</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.ResizeNearestNeighbor(UMapx.Core.Complex32[],System.Int32)">
             <summary>
             Returns resized vector.
             </summary>
