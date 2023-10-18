@@ -193,7 +193,7 @@ namespace UMapx.Imaging
         /// <param name="size">Size</param>
         /// <param name="color">Border color</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap ResizePreserved(Bitmap image, Size size, Color color)
+        public static Bitmap ResizePreserved(this Bitmap image, Size size, Color color)
         {
             // size
             int width = image.Width;
@@ -223,7 +223,7 @@ namespace UMapx.Imaging
         /// <param name="image">Bitmap</param>
         /// <param name="size">Size</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap ResizePreserved(Bitmap image, Size size)
+        public static Bitmap ResizePreserved(this Bitmap image, Size size)
         {
             // size
             int width = size.Width;
