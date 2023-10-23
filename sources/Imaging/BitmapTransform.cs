@@ -145,15 +145,11 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public static Bitmap Crop(this Bitmap image, Rectangle rectangle)
         {
-            // image params
-            int width = image.Width;
-            int height = image.Height;
-
             // check section params
-            int x = Maths.Range(rectangle.X, 0, width);
-            int y = Maths.Range(rectangle.Y, 0, height);
-            int w = Maths.Range(rectangle.Width, 0, width - x);
-            int h = Maths.Range(rectangle.Height, 0, height - y);
+            int x = rectangle.X;
+            int y = rectangle.Y;
+            int w = rectangle.Width;
+            int h = rectangle.Height;
 
             // exception
             if (x == 0 &&
@@ -161,14 +157,12 @@ namespace UMapx.Imaging
                 w == 0 &&
                 h == 0) return image;
 
-            // fixes rectangle section
-            var rectangle_fixed = new Rectangle(x, y, w, h);
-
             // crop image to rectangle section
-            var bitmap = new Bitmap(rectangle_fixed.Width, rectangle_fixed.Height);
-            var section = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            var src = new Rectangle(x, y, w, h);
+            var bitmap = new Bitmap(src.Width, src.Height);
+            var dest = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             using var g = Graphics.FromImage(bitmap);
-            g.DrawImage(image, section, rectangle_fixed, GraphicsUnit.Pixel);
+            g.DrawImage(image, dest, src, GraphicsUnit.Pixel);
 
             return bitmap;
         }
