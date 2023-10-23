@@ -210,7 +210,7 @@ namespace UMapx.Imaging
 
                 var current = rectangle.Area();
 
-                if (rectangle.Area() < area)
+                if (current < area)
                 {
                     min = i;
                     area = current;
