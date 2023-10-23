@@ -174,9 +174,12 @@ namespace UMapx.Imaging
                 if (rectangle.IsEmpty)
                     continue;
 
-                if (rectangle.Area() > area)
+                var current = rectangle.Area();
+
+                if (current > area)
                 {
                     max = i;
+                    area = current;
                 }
             }
 
@@ -205,9 +208,12 @@ namespace UMapx.Imaging
                 if (rectangle.IsEmpty)
                     continue;
 
+                var current = rectangle.Area();
+
                 if (rectangle.Area() < area)
                 {
                     min = i;
+                    area = current;
                 }
             }
 
