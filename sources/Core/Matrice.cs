@@ -7838,17 +7838,27 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="start">Starting position</param>
         /// <param name="length">Vector length</param>
+        /// <param name="clamp">Clamp crop or not</param>
         /// <returns>Array</returns>
-        public static float[] Crop(this float[] a, int start, int length)
+        public static float[] Crop(this float[] a, int start, int length, bool clamp = true)
         {
+            // vector param
+            int _length = a.GetLength(0);
+
             // range processing
-            int y = Maths.Range(start, 0, a.Length);
-            int h = Maths.Range(length, 0, a.Length - start);
+            int y = clamp ? Maths.Range(start, 0, a.Length) : start;
+            int h = clamp ? Maths.Range(length, 0, a.Length - start) : length;
 
             float[] v = new float[h];
 
             for (int i = 0; i < h; i++)
-                v[i] = a[i + y];
+            {
+                var iy = i + y;
+
+                if (iy < 0 || iy >= _length) continue;
+
+                v[i] = a[iy];
+            }
 
             return v;
         }
@@ -7858,17 +7868,27 @@ namespace UMapx.Core
         /// <param name="a">Array</param>
         /// <param name="start">Starting position</param>
         /// <param name="length">Vector length</param>
+        /// <param name="clamp">Clamp crop or not</param>
         /// <returns>Array</returns>
-        public static Complex32[] Crop(this Complex32[] a, int start, int length)
+        public static Complex32[] Crop(this Complex32[] a, int start, int length, bool clamp = true)
         {
+            // vector param
+            int _length = a.GetLength(0);
+
             // range processing
-            int y = Maths.Range(start, 0, a.Length);
-            int h = Maths.Range(length, 0, a.Length - start);
+            int y = clamp ? Maths.Range(start, 0, a.Length) : start;
+            int h = clamp ? Maths.Range(length, 0, a.Length - start) : length;
 
             Complex32[] v = new Complex32[h];
 
             for (int i = 0; i < h; i++)
-                v[i] = a[i + y];
+            {
+                var iy = i + y;
+
+                if (iy < 0 || iy >= _length) continue;
+
+                v[i] = a[iy];
+            }
 
             return v;
         }
@@ -7880,22 +7900,35 @@ namespace UMapx.Core
         /// <param name="x">Starting position in width</param>
         /// <param name="height">Height</param>
         /// <param name="width">Width</param>
+        /// <param name="clamp">Clamp crop or not</param>
         /// <returns>Matrix</returns>
-        public static float[,] Crop(this float[,] m, int y, int x, int height, int width)
+        public static float[,] Crop(this float[,] m, int y, int x, int height, int width, bool clamp = true)
         {
+            // image params
+            int _width = m.GetLength(1);
+            int _height = m.GetLength(0);
+
             // range processing
-            int xx = Maths.Range(x, 0, m.GetLength(1));
-            int yy = Maths.Range(y, 0, m.GetLength(0));
-            int ww = Maths.Range(width, 0, m.GetLength(1) - xx);
-            int hh = Maths.Range(height, 0, m.GetLength(0) - yy);
+            int xx = clamp ? Maths.Range(x, 0, m.GetLength(1)) : x;
+            int yy = clamp ? Maths.Range(y, 0, m.GetLength(0)) : y;
+            int ww = clamp ? Maths.Range(width, 0, m.GetLength(1) - xx) : width;
+            int hh = clamp ? Maths.Range(height, 0, m.GetLength(0) - yy) : height;
 
             float[,] array = new float[hh, ww];
 
             for (int i = 0; i < hh; i++)
             {
+                var iyy = i + yy;
+
+                if (iyy < 0 || iyy >= _height) continue;
+
                 for (int j = 0; j < ww; j++)
                 {
-                    array[i, j] = m[i + yy, j + xx];
+                    var jxx = j + xx;
+
+                    if (jxx < 0 || jxx >= _width) continue;
+
+                    array[i, j] = m[iyy, jxx];
                 }
             }
 
@@ -7909,22 +7942,35 @@ namespace UMapx.Core
         /// <param name="x">Starting position in width</param>
         /// <param name="height">Height</param>
         /// <param name="width">Width</param>
+        /// <param name="clamp">Clamp crop or not</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Crop(this Complex32[,] m, int y, int x, int height, int width)
+        public static Complex32[,] Crop(this Complex32[,] m, int y, int x, int height, int width, bool clamp = true)
         {
+            // image params
+            int _width = m.GetLength(1);
+            int _height = m.GetLength(0);
+
             // range processing
-            int xx = Maths.Range(x, 0, m.GetLength(1));
-            int yy = Maths.Range(y, 0, m.GetLength(0));
-            int ww = Maths.Range(width, 0, m.GetLength(1) - xx);
-            int hh = Maths.Range(height, 0, m.GetLength(0) - yy);
+            int xx = clamp ? Maths.Range(x, 0, m.GetLength(1)) : x;
+            int yy = clamp ? Maths.Range(y, 0, m.GetLength(0)) : y;
+            int ww = clamp ? Maths.Range(width, 0, m.GetLength(1) - xx) : width;
+            int hh = clamp ? Maths.Range(height, 0, m.GetLength(0) - yy) : height;
 
             Complex32[,] array = new Complex32[hh, ww];
 
             for (int i = 0; i < hh; i++)
             {
+                var iyy = i + yy;
+
+                if (iyy < 0 || iyy >= _height) continue;
+
                 for (int j = 0; j < ww; j++)
                 {
-                    array[i, j] = m[i + yy, j + xx];
+                    var jxx = j + xx;
+
+                    if (jxx < 0 || jxx >= _width) continue;
+
+                    array[i, j] = m[iyy, jxx];
                 }
             }
 

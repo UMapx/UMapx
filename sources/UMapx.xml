@@ -8368,25 +8368,27 @@
             <param name="v">Array</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Crop(System.Single[],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Crop(System.Single[],System.Int32,System.Int32,System.Boolean)">
             <summary>
             Returns the specified part of the vector.
             </summary>
             <param name="a">Array</param>
             <param name="start">Starting position</param>
             <param name="length">Vector length</param>
+            <param name="clamp">Clamp crop or not</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Crop(UMapx.Core.Complex32[],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Crop(UMapx.Core.Complex32[],System.Int32,System.Int32,System.Boolean)">
             <summary>
             Returns the specified part of the vector.
             </summary>
             <param name="a">Array</param>
             <param name="start">Starting position</param>
             <param name="length">Vector length</param>
+            <param name="clamp">Clamp crop or not</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Crop(System.Single[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Crop(System.Single[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean)">
             <summary>
             Crops the matrix to the specified size.
             </summary>
@@ -8395,9 +8397,10 @@
             <param name="x">Starting position in width</param>
             <param name="height">Height</param>
             <param name="width">Width</param>
+            <param name="clamp">Clamp crop or not</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Crop(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Crop(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean)">
             <summary>
             Crops the matrix to the specified size.
             </summary>
@@ -8406,6 +8409,7 @@
             <param name="x">Starting position in width</param>
             <param name="height">Height</param>
             <param name="width">Width</param>
+            <param name="clamp">Clamp crop or not</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Merge(System.Single[],System.Single[])">
@@ -15866,7 +15870,7 @@
             </summary>
             <param name="image">Bitmap</param>
             <param name="rectangle">Rectangle</param>
-            <param name="clampRectangle">Clamp rectangle or not</param>
+            <param name="clamp">Clamp crop or not</param>
             <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Resize(System.Drawing.Bitmap,System.Drawing.Size)">

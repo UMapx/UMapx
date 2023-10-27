@@ -142,19 +142,19 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="image">Bitmap</param>
         /// <param name="rectangle">Rectangle</param>
-        /// <param name="clampRectangle">Clamp rectangle or not</param>
+        /// <param name="clamp">Clamp crop or not</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Crop(this Bitmap image, Rectangle rectangle, bool clampRectangle = true)
+        public static Bitmap Crop(this Bitmap image, Rectangle rectangle, bool clamp = true)
         {
             // image params
             int width = image.Width;
             int height = image.Height;
 
             // check section params
-            int x = clampRectangle ? Maths.Range(rectangle.X, 0, width) : rectangle.X;
-            int y = clampRectangle ? Maths.Range(rectangle.Y, 0, height) : rectangle.Y;
-            int w = clampRectangle ? Maths.Range(rectangle.Width, 0, width - x) : rectangle.Width;
-            int h = clampRectangle ? Maths.Range(rectangle.Height, 0, height - y) : rectangle.Height;
+            int x = clamp ? Maths.Range(rectangle.X, 0, width) : rectangle.X;
+            int y = clamp ? Maths.Range(rectangle.Y, 0, height) : rectangle.Y;
+            int w = clamp ? Maths.Range(rectangle.Width, 0, width - x) : rectangle.Width;
+            int h = clamp ? Maths.Range(rectangle.Height, 0, height - y) : rectangle.Height;
 
             // exception
             if (x == 0 &&
