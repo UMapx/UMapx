@@ -15860,12 +15860,13 @@
             <param name="direction">Direction</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Crop(System.Drawing.Bitmap,System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Crop(System.Drawing.Bitmap,System.Drawing.Rectangle,System.Boolean)">
             <summary>
             Returns cropped image.
             </summary>
             <param name="image">Bitmap</param>
             <param name="rectangle">Rectangle</param>
+            <param name="clampRectangle">Clamp rectangle or not</param>
             <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Resize(System.Drawing.Bitmap,System.Drawing.Size)">
