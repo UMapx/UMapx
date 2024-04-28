@@ -59,7 +59,7 @@ using UMapx.Window;
 * [FaceONNX](https://github.com/FaceONNX/FaceONNX) - Face analytics library based on deep neural networks and ONNX runtime.
 
 # Relation to other frameworks
-**UMapx** is based on several separate frameworks (AForge.NET, Accord.NET, Alglib and etc). Some functions have been ported from other programming languages and their toolboxes and libraries (Fortran, MATLAB, C++, Python). The purpose of this generalization was the declarative understanding of algorithms of digital signal processing and its optimization and performance improvement. **UMapx** is faster than AForge.NET and Accord.NET in signal processing tasks and contains a larger set of functions for matrix analysis, linear algebra and functional analysis.
+**UMapx** is based on several separate frameworks (AForge.NET, Accord.NET, Alglib etc). Some functions have been ported from other programming languages and their toolboxes and libraries (Fortran, MATLAB, C++, Python). The purpose of this generalization was the declarative understanding of algorithms of digital signal processing and its optimization and performance improvement. **UMapx** is faster than AForge.NET and Accord.NET in signal processing tasks and contains a larger set of functions for matrix analysis, linear algebra and functional analysis.
 
 # License
 **MIT**  
