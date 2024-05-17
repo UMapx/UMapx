@@ -144,18 +144,39 @@ namespace UMapx.Imaging
         /// <param name="right">Right point</param>
         /// <param name="support">Supported point</param>
         /// <returns>Angle</returns>
-        public static float GetAngle(this Point left, Point right, Point support)
+        public static float GetAngle(Point left, Point right, Point support)
         {
             double kk = left.Y > right.Y ? 1 : -1;
 
             double x1 = left.X - support.X;
             double y1 = left.Y - support.Y;
-
+            
             double x2 = right.X - left.X;
             double y2 = right.Y - left.Y;
 
-            double cos = (x1 * x2 + y1 * y2) / Math.Sqrt(x1 * x1 + y1 * y1) / Math.Sqrt(x2 * x2 + y2 * y2);
-            return (float)(kk * (180.0 - Math.Acos(cos) * 57.3));
+            double a = Math.Sqrt(x1 * x1 + y1 * y1);
+            double b = Math.Sqrt(x2 * x2 + y2 * y2);
+            double c = x1 * x2 + y1 * y2;
+
+            double d = c.Div(a.Div(b));
+
+            return (float)(kk * (180.0 - Math.Acos(d) * 57.3));
+        }
+
+        /// <summary>
+        /// Returns div result of two variables.
+        /// </summary>
+        /// <param name="a">First</param>
+        /// <param name="b">Second</param>
+        /// <returns>Result</returns>
+        private static double Div(this double a, double b)
+        {
+            if (a == 0 && b == 0)
+            {
+                return double.Epsilon;
+            }
+
+            return a / b;
         }
 
         /// <summary>
@@ -190,6 +211,7 @@ namespace UMapx.Imaging
 
             return point;
         }
+
         #endregion
     }
 }

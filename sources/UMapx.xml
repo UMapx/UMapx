@@ -20420,6 +20420,14 @@
             <param name="support">Supported point</param>
             <returns>Angle</returns>
         </member>
+        <member name="M:UMapx.Imaging.Points.Div(System.Double,System.Double)">
+            <summary>
+            Returns div result of two variables.
+            </summary>
+            <param name="a">First</param>
+            <param name="b">Second</param>
+            <returns>Result</returns>
+        </member>
         <member name="M:UMapx.Imaging.Points.GetSupportedPoint(System.Drawing.Point,System.Drawing.Point)">
             <summary>
             Returns supported point.
