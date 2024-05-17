@@ -150,7 +150,7 @@ namespace UMapx.Imaging
 
             double x1 = left.X - support.X;
             double y1 = left.Y - support.Y;
-            
+
             double x2 = right.X - left.X;
             double y2 = right.Y - left.Y;
 
@@ -158,7 +158,7 @@ namespace UMapx.Imaging
             double b = Math.Sqrt(x2 * x2 + y2 * y2);
             double c = x1 * x2 + y1 * y2;
 
-            double d = c.Div(a.Div(b));
+            double d = c.Div(a).Div(b);
 
             return (float)(kk * (180.0 - Math.Acos(d) * 57.3));
         }
