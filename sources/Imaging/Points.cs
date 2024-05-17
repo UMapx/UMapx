@@ -144,7 +144,7 @@ namespace UMapx.Imaging
         /// <param name="right">Right point</param>
         /// <param name="support">Supported point</param>
         /// <returns>Angle</returns>
-        public static float GetAngle(Point left, Point right, Point support)
+        public static float GetAngle(this Point left, Point right, Point support)
         {
             double kk = left.Y > right.Y ? 1 : -1;
 
