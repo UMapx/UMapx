@@ -25809,6 +25809,15 @@
             </summary>
             
         </member>
+        <member name="M:UMapx.Video.JPEGStream.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.JPEGStream.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.JPEGStream.Finalize">
+            <inheritdoc/>
+        </member>
         <member name="T:UMapx.Video.MJPEGStream">
             <summary>
             MJPEG video source.
@@ -26051,6 +26060,15 @@
             Free resource.
             </summary>
             
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.Finalize">
+            <inheritdoc/>
         </member>
         <member name="T:UMapx.Video.NewDepthEventArgs">
             <summary>
@@ -26317,6 +26335,15 @@
             Free resource.
             </summary>
             
+        </member>
+        <member name="M:UMapx.Video.ScreenCaptureStream.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.ScreenCaptureStream.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.ScreenCaptureStream.Finalize">
+            <inheritdoc/>
         </member>
         <member name="T:UMapx.Video.VideoCapabilities">
             <summary>
@@ -26593,6 +26620,15 @@
             
             <remarks>Not implemented</remarks>
         </member>
+        <member name="M:UMapx.Video.VideoImageDepthSource.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.VideoImageDepthSource.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.VideoImageDepthSource.Finalize">
+            <inheritdoc/>
+        </member>
         <member name="T:UMapx.Video.VideoImageSource">
             <summary>
             Defines video image source.
@@ -26721,6 +26757,15 @@
             </summary>
             
             <remarks>Not implemented</remarks>
+        </member>
+        <member name="M:UMapx.Video.VideoImageSource.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.VideoImageSource.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Video.VideoImageSource.Finalize">
+            <inheritdoc/>
         </member>
         <member name="T:UMapx.Video.VideoSourceErrorEventArgs">
             <summary>

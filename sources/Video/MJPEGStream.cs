@@ -507,6 +507,7 @@ namespace UMapx.Video
                     if (response != null)
                     {
                         response.Close();
+                        response.Dispose();
                     }
                 }
 
@@ -619,5 +620,38 @@ namespace UMapx.Video
                 stream.ReadTimeout = _requestTimeout;
             }
         }
+
+        #region IDisposable
+
+        private bool _disposed;
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _stopEvent?.Dispose();
+                    _reloadEvent?.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        ~MJPEGStream()
+        {
+            Dispose(false);
+        }
+
+        #endregion
     }
 }

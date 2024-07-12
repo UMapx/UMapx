@@ -375,5 +375,37 @@
 
             PlayingFinished?.Invoke(this, ReasonToFinishPlaying.StoppedByUser);
         }
+
+        #region IDisposable
+
+        private bool _disposed;
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    stopEvent?.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        ~ScreenCaptureStream()
+        {
+            Dispose(false);
+        }
+
+        #endregion
     }
 }

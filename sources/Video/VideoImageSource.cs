@@ -253,5 +253,38 @@ namespace UMapx.Video
         }
 
         #endregion
+
+        #region IDisposable
+
+        private bool _disposed;
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _timer?.Dispose();
+                    _image?.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        ~VideoImageSource()
+        {
+            Dispose(false);
+        }
+
+        #endregion
     }
 }

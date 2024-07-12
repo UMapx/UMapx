@@ -1,3 +1,5 @@
+using System;
+
 namespace UMapx.Video
 {
     /// <summary>
@@ -6,7 +8,7 @@ namespace UMapx.Video
     /// 
     /// <remarks>The interface describes common methods for different type of video sources.</remarks>
     /// 
-    public interface IVideoSource
+    public interface IVideoSource : IDisposable
     {
         /// <summary>
         /// New frame event.
