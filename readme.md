@@ -27,8 +27,8 @@
 
 # Supported types
 **UMapx** supports only
-* 32 bit types - `float`, `Complex32` and etc (compatible with [System.Numerics](https://docs.microsoft.com/ru-ru/dotnet/api/system.numerics?view=netframework-4.8), [NAudio](https://github.com/naudio/NAudio) and other libraries),
-* 32 bit image `BitmapData` format - `Format32bppArgb` (compatible with [AForge.NET](https://github.com/andrewkirillov/AForge.NET), [Accord.NET](https://github.com/accord-net/framework/) and etc),
+* 32 bit types - `float`, `Complex32`, etc (compatible with [System.Numerics](https://docs.microsoft.com/ru-ru/dotnet/api/system.numerics?view=netframework-4.8), [NAudio](https://github.com/naudio/NAudio) and other libraries),
+* 32 bit image `BitmapData` format - `Format32bppArgb` (compatible with [AForge.NET](https://github.com/andrewkirillov/AForge.NET), [Accord.NET](https://github.com/accord-net/framework/) and so on),
 * 24 bit video `BitmapData` format - `Format24bppRgb` (32 bit format not recomended).
 
 # Installation
@@ -59,7 +59,7 @@ using UMapx.Window;
 * [FaceONNX](https://github.com/FaceONNX/FaceONNX) - Face analytics library based on deep neural networks and ONNX runtime.
 
 # Relation to other frameworks
-**UMapx** is based on several separate frameworks (AForge.NET, Accord.NET, Alglib etc). Some functions have been ported from other programming languages and their toolboxes and libraries (Fortran, MATLAB, C++, Python). The purpose of this generalization was the declarative understanding of algorithms of digital signal processing and its optimization and performance improvement. **UMapx** is faster than AForge.NET and Accord.NET in signal processing tasks and contains a larger set of functions for matrix analysis, linear algebra and functional analysis.
+**UMapx** is based on several separate frameworks (AForge.NET, Accord.NET, Alglib, etc). Some functions have been ported from other programming languages and their toolboxes and libraries (Fortran, MATLAB, C++, Python). The purpose of this generalization was the declarative understanding of algorithms of digital signal processing and its optimization and performance improvement. **UMapx** is faster than AForge.NET and Accord.NET in signal processing tasks and contains a larger set of functions for matrix analysis, linear algebra and functional analysis.
 
 # License
 **MIT**  
