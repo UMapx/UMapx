@@ -20629,6 +20629,14 @@
             <param name="rectangle">Rectangle</param>
             <returns>Rectangle</returns>
         </member>
+        <member name="M:UMapx.Imaging.Rectangles.Clamp(System.Drawing.Rectangle,System.Drawing.Rectangle)">
+            <summary>
+            Implements clamp operator.
+            </summary>
+            <param name="first">Rectangle</param>
+            <param name="second">Rectangle</param>
+            <returns>Rectangle</returns>
+        </member>
         <member name="T:UMapx.Imaging.Resize">
             <summary>
             Defines the resize filter.
