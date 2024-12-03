@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using UMapx.Core;
 
 namespace UMapx.Imaging
 {
@@ -369,6 +370,23 @@ namespace UMapx.Imaging
                 Y = y,
                 Width = w,
                 Height = h
+            };
+        }
+
+        /// <summary>
+        /// Implements clamp operator.
+        /// </summary>
+        /// <param name="first">Rectangle</param>
+        /// <param name="second">Rectangle</param>
+        /// <returns>Rectangle</returns>
+        public static Rectangle Clamp(this Rectangle first, Rectangle second)
+        {
+            return new Rectangle
+            {
+                X = Maths.Range(first.X, second.X, second.Width),
+                Y = Maths.Range(first.Y, second.Y, second.Height),
+                Width = Maths.Range(first.Width, second.X, second.Width),
+                Height = Maths.Range(first.Height, second.Y, second.Height)
             };
         }
 
