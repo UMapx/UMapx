@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using UMapx.Core;
+
+//using System.Drawing.Imaging;
+using SkiaDrawing;
+
 
 namespace UMapx.Imaging
 {
@@ -51,6 +54,7 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
+        //public unsafe void Apply(BitmapData bmData)
         public unsafe void Apply(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();

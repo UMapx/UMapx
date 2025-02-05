@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using UMapx.Core;
+using SkiaDrawing;
 
 namespace UMapx.Imaging
 {
@@ -62,7 +61,7 @@ namespace UMapx.Imaging
             Bitmap bmp = new Bitmap(b.Width, b.Height);
             bmp.SetResolution(b.HorizontalResolution, b.VerticalResolution);
             Graphics graphics = Graphics.FromImage(bmp);
-            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            graphics.InterpolationMode = SkiaDrawing.InterpolationMode.HighQualityBilinear;
             graphics.TranslateTransform(point.X, point.Y);
             graphics.RotateTransform(angle);
             graphics.TranslateTransform(-point.X, -point.Y);
@@ -97,7 +96,7 @@ namespace UMapx.Imaging
 
             // set the InterpolationMode to HighQualityBicubic so to ensure a high
             // quality image once it is transformed to the specified size
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            g.InterpolationMode = SkiaDrawing.InterpolationMode.HighQualityBicubic;
 
             // now draw our new image onto the graphics object
             g.DrawImage(image, new Point(0, 0));
