@@ -1,7 +1,7 @@
 namespace UMapx.Video
 {
     using System;
-    using System.Drawing;
+    using SkiaDrawing;
     using System.IO;
     using System.Net;
     using System.Text;
