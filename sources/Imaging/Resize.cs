@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+using SkiaDrawing;
 using UMapx.Core;
 
 namespace UMapx.Imaging
@@ -23,7 +22,7 @@ namespace UMapx.Imaging
         /// <param name="width">Width</param>
         /// <param name="height">Height</param>
         /// <param name="interpolationMode">Interpolation mode</param>
-        public Resize(int width = 512, int height = 512, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
+        public Resize(int width = 512, int height = 512, UMapx.Core.InterpolationMode interpolationMode = UMapx.Core.InterpolationMode.Bicubic)
         {
             Size = new SizeInt(width, height);
             InterpolationMode = interpolationMode;
@@ -33,7 +32,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="size">Size</param>
         /// <param name="interpolationMode">Interpolation mode</param>
-        public Resize(SizeInt size, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
+        public Resize(SizeInt size, UMapx.Core.InterpolationMode interpolationMode = UMapx.Core.InterpolationMode.Bicubic)
         {
             Size = size;
             InterpolationMode = interpolationMode;
@@ -56,7 +55,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets interpolation mode.
         /// </summary>
-        public InterpolationMode InterpolationMode { get; set; }
+        public UMapx.Core.InterpolationMode InterpolationMode { get; set; }
         /// <summary>
         /// Apply filter.
         /// </summary>
@@ -64,15 +63,15 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
-            if (InterpolationMode == InterpolationMode.Bicubic)
+            if (InterpolationMode == UMapx.Core.InterpolationMode.Bicubic)
             {
                 ApplyBicubic(bmData, bmSrc);
             }
-            else if (InterpolationMode == InterpolationMode.Bilinear)
+            else if (InterpolationMode == UMapx.Core.InterpolationMode.Bilinear)
             {
                 ApplyBilinear(bmData, bmSrc);
             }
-            else if (InterpolationMode == InterpolationMode.NearestNeighbor)
+            else if (InterpolationMode == UMapx.Core.InterpolationMode.NearestNeighbor)
             {
                 ApplyNearestNeighbor(bmData, bmSrc);
             }
