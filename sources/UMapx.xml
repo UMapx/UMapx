@@ -20370,7 +20370,7 @@
             Using for points operations.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Points.Add(System.Drawing.Point[],System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Points.Add(SkiaDrawing.Point[],SkiaDrawing.Point)">
             <summary>
             Returns processed points.
             </summary>
@@ -20378,7 +20378,7 @@
             <param name="point">Point</param>
             <returns>Points</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.Sub(System.Drawing.Point[],System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Points.Sub(SkiaDrawing.Point[],SkiaDrawing.Point)">
             <summary>
             Returns processed points.
             </summary>
@@ -20386,7 +20386,7 @@
             <param name="point">Point</param>
             <returns>Points</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.Rotate(System.Drawing.Point[],System.Drawing.Point,System.Single)">
+        <member name="M:UMapx.Imaging.Points.Rotate(SkiaDrawing.Point[],SkiaDrawing.Point,System.Single)">
             <summary>
             Rotates points by angle.
             </summary>
@@ -20395,7 +20395,7 @@
             <param name="angle">Angle</param>
             <returns>Points</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.Rotate(System.Drawing.Point,System.Drawing.Point,System.Double)">
+        <member name="M:UMapx.Imaging.Points.Rotate(SkiaDrawing.Point,SkiaDrawing.Point,System.Double)">
             <summary>
             Rotates point by angle.
             </summary>
@@ -20404,14 +20404,14 @@
             <param name="angleInDegrees">The rotation angle in degrees.</param>
             <returns>Rotated point</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.GetRectangle(System.Drawing.Point[])">
+        <member name="M:UMapx.Imaging.Points.GetRectangle(SkiaDrawing.Point[])">
             <summary>
             Returns rectangle from points.
             </summary>
             <param name="points">Points</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.GetAngle(System.Drawing.Point,System.Drawing.Point,System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Points.GetAngle(SkiaDrawing.Point,SkiaDrawing.Point,SkiaDrawing.Point)">
             <summary>
             Return angle of the three points.
             </summary>
@@ -20428,7 +20428,7 @@
             <param name="b">Second</param>
             <returns>Result</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.GetSupportedPoint(System.Drawing.Point,System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Points.GetSupportedPoint(SkiaDrawing.Point,SkiaDrawing.Point)">
             <summary>
             Returns supported point.
             </summary>
@@ -20436,7 +20436,7 @@
             <param name="right">Right point</param>
             <returns>Point</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.GetMeanPoint(System.Drawing.Point[])">
+        <member name="M:UMapx.Imaging.Points.GetMeanPoint(SkiaDrawing.Point[])">
             <summary>
             Returns mean point.
             </summary>
@@ -20494,7 +20494,7 @@
             Using for rectangles operations.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Add(System.Drawing.Rectangle,System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Rectangles.Add(SkiaDrawing.Rectangle,SkiaDrawing.Point)">
             <summary>
             Returns processed rectangle.
             </summary>
@@ -20502,7 +20502,7 @@
             <param name="point">Point</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Sub(System.Drawing.Rectangle,System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Rectangles.Sub(SkiaDrawing.Rectangle,SkiaDrawing.Point)">
             <summary>
             Returns processed rectangle.
             </summary>
@@ -20510,7 +20510,7 @@
             <param name="point">Point</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Add(System.Drawing.Rectangle[],System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Rectangles.Add(SkiaDrawing.Rectangle[],SkiaDrawing.Point)">
             <summary>
             Returns processed rectangles.
             </summary>
@@ -20518,7 +20518,7 @@
             <param name="point">Point</param>
             <returns>Rectangles</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Sub(System.Drawing.Rectangle[],System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Rectangles.Sub(SkiaDrawing.Rectangle[],SkiaDrawing.Point)">
             <summary>
             Returns processed rectangles.
             </summary>
@@ -20526,63 +20526,63 @@
             <param name="point">Point</param>
             <returns>Rectangles</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToPoints(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.ToPoints(SkiaDrawing.Rectangle)">
             <summary>
             Returns four points from rectangle.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Points</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.FromPoints(System.Drawing.Point[])">
+        <member name="M:UMapx.Imaging.Rectangles.FromPoints(SkiaDrawing.Point[])">
             <summary>
             Returns rectangle from four points.
             </summary>
             <param name="points"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.GetPoint(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.GetPoint(SkiaDrawing.Rectangle)">
             <summary>
             Returns point from rectangle.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Point</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Area(System.Drawing.Size)">
+        <member name="M:UMapx.Imaging.Rectangles.Area(SkiaDrawing.Size)">
             <summary>
             Returns size area.
             </summary>
             <param name="size">Size</param>
             <returns>Area</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Area(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.Area(SkiaDrawing.Rectangle)">
             <summary>
             Returns rectangle area.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Area</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Max(System.Drawing.Rectangle[])">
+        <member name="M:UMapx.Imaging.Rectangles.Max(SkiaDrawing.Rectangle[])">
             <summary>
             Returns the maximum rectangle.
             </summary>
             <param name="rectangles">Rectangles</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Min(System.Drawing.Rectangle[])">
+        <member name="M:UMapx.Imaging.Rectangles.Min(SkiaDrawing.Rectangle[])">
             <summary>
             Returns the minimum rectangle.
             </summary>
             <param name="rectangles">Rectangles</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(SkiaDrawing.Rectangle)">
             <summary>
             Returns rectangle scaled to box.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Drawing.Rectangle,System.Single)">
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(SkiaDrawing.Rectangle,System.Single)">
             <summary>
             Returns rectangle scaled to box.
             </summary>
@@ -20590,14 +20590,14 @@
             <param name="scale">Factor</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Drawing.Rectangle[])">
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(SkiaDrawing.Rectangle[])">
             <summary>
             Returns rectangle scaled to box.
             </summary>
             <param name="rectangles">Rectangle</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Single,System.Drawing.Rectangle[])">
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Single,SkiaDrawing.Rectangle[])">
             <summary>
             Returns rectangle scaled to box with image size.
             </summary>
@@ -20605,7 +20605,7 @@
             <param name="factor">Factor</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.IoU(System.Drawing.Rectangle,System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.IoU(SkiaDrawing.Rectangle,SkiaDrawing.Rectangle)">
             <summary>
             Implements IoU operator.
             </summary>
@@ -20613,7 +20613,7 @@
             <param name="b">Second rectangle</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Scale(System.Drawing.Rectangle,System.Single,System.Single)">
+        <member name="M:UMapx.Imaging.Rectangles.Scale(SkiaDrawing.Rectangle,System.Single,System.Single)">
             <summary>
             Implements scale operator.
             </summary>
@@ -20622,14 +20622,14 @@
             <param name="ky">Factor for y axis</param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Scale(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.Scale(SkiaDrawing.Rectangle)">
             <summary>
             Implements scale operator.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Clamp(System.Drawing.Rectangle,System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.Clamp(SkiaDrawing.Rectangle,SkiaDrawing.Rectangle)">
             <summary>
             Implements clamp operator.
             </summary>
