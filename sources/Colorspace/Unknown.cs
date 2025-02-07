@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using SkiaDrawing;
 
 namespace UMapx.Colorspace
 {
@@ -432,7 +432,7 @@ namespace UMapx.Colorspace
         /// <returns>Structure</returns>
         public static implicit operator Color(Unknown value)
         {
-            return Color.FromArgb((int)value.X, (int)value.Y, (int)value.Z);
+            return Color.FromArgb((byte)value.X, (byte)value.Y, (byte)value.Z);
         }
         #endregion
 

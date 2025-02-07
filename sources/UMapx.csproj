@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <LangVersion>12</LangVersion>
-    <Version>6.1.0.3</Version>
+    <Version>8.0.0.1</Version>
     <PackageId>UMapx</PackageId>
     <Company>Valery Asiryan</Company>
     <Authors>Valery Asiryan</Authors>
@@ -19,8 +19,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>umapxnet.png</PackageIcon>
-    <AssemblyVersion>6.1.0.3</AssemblyVersion>
-    <FileVersion>6.1.0.3</FileVersion>
+    <AssemblyVersion>8.0.0.1</AssemblyVersion>
+    <FileVersion>8.0.0.1</FileVersion>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>umapxnet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>

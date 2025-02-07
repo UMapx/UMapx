@@ -1833,14 +1833,14 @@
         </member>
         <member name="M:UMapx.Colorspace.RGB.op_Implicit(UMapx.Colorspace.RGB)~SkiaDrawing.Color">
             <summary>
-            Defines an explicit conversion RGB в System.Drawing.Color.
+            Defines an explicit conversion RGB в Color.
             </summary>
             <param name="value">RGB structure</param>
             <returns>Color in terms of red, green and blue</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.op_Implicit(SkiaDrawing.Color)~UMapx.Colorspace.RGB">
             <summary>
-            Defines an explicit conversion RGB в System.Drawing.Color.
+            Defines an explicit conversion RGB в Color.
             </summary>
             <param name="value">Color in terms of red, green and blue</param>
             <returns>RGB structure</returns>
@@ -2583,14 +2583,14 @@
             <param name="value">Structure</param>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.Unknown.op_Implicit(System.Drawing.Color)~UMapx.Colorspace.Unknown">
+        <member name="M:UMapx.Colorspace.Unknown.op_Implicit(SkiaDrawing.Color)~UMapx.Colorspace.Unknown">
             <summary>
             Defines an explicit conversion Space в Unknown.
             </summary>
             <param name="value">Structure</param>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.Unknown.op_Implicit(UMapx.Colorspace.Unknown)~System.Drawing.Color">
+        <member name="M:UMapx.Colorspace.Unknown.op_Implicit(UMapx.Colorspace.Unknown)~SkiaDrawing.Color">
             <summary>
             Defines an explicit conversion Unknown в Space.
             </summary>

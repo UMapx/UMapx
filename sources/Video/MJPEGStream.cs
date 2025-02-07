@@ -40,6 +40,7 @@ namespace UMapx.Video
     /// </code>
     /// </remarks>
     /// 
+    [Obsolete]
     public partial class MJPEGStream : IVideoSource
     {
         // URL for MJPEG stream
@@ -528,7 +529,6 @@ namespace UMapx.Video
             try
             {
                 SetUserAgent(request);
-
                 SetProxy(request);
                 SetRequestTimeout(request);
                 SetCredentials(request);
@@ -543,10 +543,7 @@ namespace UMapx.Video
             }
             catch (WebException)
             {
-                if (request != null)
-                {
-                    request.Abort();
-                }
+                request?.Abort();
 
                 throw;
             }
