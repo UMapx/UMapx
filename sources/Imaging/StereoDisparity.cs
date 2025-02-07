@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Threading.Tasks;
+using SkiaDrawing;
 using UMapx.Core;
 
 namespace UMapx.Imaging

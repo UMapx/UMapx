@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+using SkiaDrawing;
 using UMapx.Colorspace;
 
 namespace UMapx.Imaging

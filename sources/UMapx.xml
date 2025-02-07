@@ -1831,14 +1831,14 @@
             </summary>
             <returns>Structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.RGB.op_Implicit(UMapx.Colorspace.RGB)~System.Drawing.Color">
+        <member name="M:UMapx.Colorspace.RGB.op_Implicit(UMapx.Colorspace.RGB)~SkiaDrawing.Color">
             <summary>
             Defines an explicit conversion RGB в System.Drawing.Color.
             </summary>
             <param name="value">RGB structure</param>
             <returns>Color in terms of red, green and blue</returns>
         </member>
-        <member name="M:UMapx.Colorspace.RGB.op_Implicit(System.Drawing.Color)~UMapx.Colorspace.RGB">
+        <member name="M:UMapx.Colorspace.RGB.op_Implicit(SkiaDrawing.Color)~UMapx.Colorspace.RGB">
             <summary>
             Defines an explicit conversion RGB в System.Drawing.Color.
             </summary>
@@ -15430,13 +15430,13 @@
             Gets or sets the amout value [0, 100].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.AdditiveNoise.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.AdditiveNoise.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.AdditiveNoise.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.AdditiveNoise.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -15452,14 +15452,14 @@
             Initializes the alpha channel filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.AlphaChannel.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.AlphaChannel.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.AlphaChannel.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.AlphaChannel.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -15488,43 +15488,43 @@
             Gets or sets the color space.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapFilter.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Appy filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapFilter.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Appy filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFilter.ApplyRGB(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapFilter.ApplyRGB(SkiaDrawing.BitmapData)">
             <summary>
             Appy filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFilter.ApplyHSB(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapFilter.ApplyHSB(SkiaDrawing.BitmapData)">
             <summary>
             Appy filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFilter.ApplyHSL(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapFilter.ApplyHSL(SkiaDrawing.BitmapData)">
             <summary>
             Appy filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFilter.ApplyYCbCr(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapFilter.ApplyYCbCr(SkiaDrawing.BitmapData)">
             <summary>
             Appy filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFilter.ApplyGrayscale(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapFilter.ApplyGrayscale(SkiaDrawing.BitmapData)">
             <summary>
             Appy filter.
             </summary>
@@ -15535,7 +15535,7 @@
             Uses to work with bitmap formats.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.ToIco(System.Drawing.Bitmap,System.Int32)">
+        <member name="M:UMapx.Imaging.BitmapFormat.ToIco(SkiaDrawing.Bitmap,System.Int32)">
             <summary>
             Converts Bitmap to icon file.
             </summary>
@@ -15543,49 +15543,49 @@
             <param name="size">Size</param>
             <returns>Icon</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.ToJpeg(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapFormat.ToJpeg(SkiaDrawing.Bitmap)">
             <summary>
             Converts Bitmap to JPEG format.
             </summary>
             <param name="b">Bitmap</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.ToBmp(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapFormat.ToBmp(SkiaDrawing.Bitmap)">
             <summary>
             Converts Bitmap to BMP format.
             </summary>
             <param name="b">Bitmap</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.ToGif(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapFormat.ToGif(SkiaDrawing.Bitmap)">
             <summary>
             Converts Bitmap to GIF format.
             </summary>
             <param name="b">Bitmap</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.ToPng(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapFormat.ToPng(SkiaDrawing.Bitmap)">
             <summary>
             Converts Bitmap to PNG format.
             </summary>
             <param name="b">Bitmap</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.ToTiff(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapFormat.ToTiff(SkiaDrawing.Bitmap)">
             <summary>
             Converts Bitmap to TIFF format.
             </summary>
             <param name="b">Bitmap</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Bitmap(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapFormat.Bitmap(SkiaDrawing.BitmapData)">
             <summary>
             Gets the Bitmap from the BitmapData.
             </summary>
             <param name="bmData">Bitmap data</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Bitmap(System.Drawing.Bitmap,System.Drawing.Imaging.PixelFormat)">
+        <member name="M:UMapx.Imaging.BitmapFormat.Bitmap(SkiaDrawing.Bitmap,SkiaDrawing.PixelFormat)">
             <summary>
             Converts Bitmap to a specific format
             </summary>
@@ -15593,35 +15593,35 @@
             <param name="pixelformat">Pixel format</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Lock32bpp(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapFormat.Lock32bpp(SkiaDrawing.Bitmap)">
             <summary>
             Blocks Bitmap in system memory.
             </summary>
             <param name="b">Bitmap</param>
             <returns>Bitmap data</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Lock24bpp(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapFormat.Lock24bpp(SkiaDrawing.Bitmap)">
             <summary>
             Blocks Bitmap in system memory.
             </summary>
             <param name="b">Bitmap</param>
             <returns>Bitmap data</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Lock8bpp(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapFormat.Lock8bpp(SkiaDrawing.Bitmap)">
             <summary>
             Blocks Bitmap in system memory.
             </summary>
             <param name="b">Bitmap</param>
             <returns>Bitmap data</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Unlock(System.Drawing.Bitmap,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapFormat.Unlock(SkiaDrawing.Bitmap,SkiaDrawing.BitmapData)">
             <summary>
             Unblocks Bitmap in system memory.
             </summary>
             <param name="b">Bitmap</param>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.CreateBitmap(System.Drawing.Size,System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.BitmapFormat.CreateBitmap(SkiaDrawing.Size,SkiaDrawing.Color)">
             <summary>
             Returns new bitmap.
             </summary>
@@ -15634,7 +15634,7 @@
             Uses to work with bitmap matrices.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToRGB(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToRGB(SkiaDrawing.Bitmap,System.Boolean)">
             <summary>
             Converts a Bitmap to an RGB structure with or without alpha-channel.
             </summary>
@@ -15642,7 +15642,7 @@
             <param name="alpha">Alpha-channel</param>
             <returns>RGBA structure array</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToRGB(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToRGB(SkiaDrawing.BitmapData,System.Boolean)">
             <summary>
             Converts a Bitmap to an RGB structure with or without alpha-channel.
             </summary>
@@ -15657,21 +15657,21 @@
             <param name="array">RGBA structure array</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromRGB(System.Single[0:,0:][],System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromRGB(System.Single[0:,0:][],SkiaDrawing.BitmapData)">
             <summary>
             Converts an RGB structure to a color image.
             </summary>
             <param name="array">RGBA structure array</param>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromRGB(System.Single[0:,0:][],System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromRGB(System.Single[0:,0:][],SkiaDrawing.Bitmap)">
             <summary>
             Converts an RGB structure to a color image.
             </summary>
             <param name="array">RGBA structure array</param>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToHSB(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToHSB(SkiaDrawing.Bitmap,System.Boolean)">
             <summary>
             Converts a Bitmap to an HSB structure with or without alpha-channel.
             </summary>
@@ -15679,7 +15679,7 @@
             <param name="alpha">Alpha-channel</param>
             <returns>HSB structure array</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToHSB(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToHSB(SkiaDrawing.BitmapData,System.Boolean)">
             <summary>
             Converts a Bitmap to an HSB structure with or without alpha-channel.
             </summary>
@@ -15694,21 +15694,21 @@
             <param name="array">HSB structure array</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromHSB(System.Single[0:,0:][],System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromHSB(System.Single[0:,0:][],SkiaDrawing.BitmapData)">
             <summary>
             Converts an HSB structure to a color image.
             </summary>
             <param name="array">HSB structure array</param>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromHSB(System.Single[0:,0:][],System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromHSB(System.Single[0:,0:][],SkiaDrawing.Bitmap)">
             <summary>
             Converts an HSB structure to a color image.
             </summary>
             <param name="array">HSB structure array</param>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToHSL(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToHSL(SkiaDrawing.Bitmap,System.Boolean)">
             <summary>
             Converts a Bitmap to an HSL structure with or without alpha-channel.
             </summary>
@@ -15716,7 +15716,7 @@
             <param name="alpha">Alpha-channel</param>
             <returns>HSL structure array</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToHSL(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToHSL(SkiaDrawing.BitmapData,System.Boolean)">
             <summary>
             Converts a Bitmap to an HSL structure with or without alpha-channel.
             </summary>
@@ -15731,21 +15731,21 @@
             <param name="array">HSL structure array</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromHSL(System.Single[0:,0:][],System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromHSL(System.Single[0:,0:][],SkiaDrawing.BitmapData)">
             <summary>
             Converts an HSL structure to a color image.
             </summary>
             <param name="array">HSL structure array</param>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromHSL(System.Single[0:,0:][],System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromHSL(System.Single[0:,0:][],SkiaDrawing.Bitmap)">
             <summary>
             Converts an HSL structure to a color image.
             </summary>
             <param name="array">HSL structure array</param>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToYCbCr(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToYCbCr(SkiaDrawing.Bitmap,System.Boolean)">
             <summary>
             Converts a Bitmap to an YCbCr structure with or without alpha-channel.
             </summary>
@@ -15753,7 +15753,7 @@
             <param name="alpha">Alpha-channel</param>
             <returns>YCbCr structure array</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToYCbCr(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToYCbCr(SkiaDrawing.BitmapData,System.Boolean)">
             <summary>
             Converts a Bitmap to an YCbCr structure with or without alpha-channel.
             </summary>
@@ -15768,28 +15768,28 @@
             <param name="array">YCbCr structure array</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromYCbCr(System.Single[0:,0:][],System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromYCbCr(System.Single[0:,0:][],SkiaDrawing.BitmapData)">
             <summary>
             Converts an YCbCr structure to a color image.
             </summary>
             <param name="array">YCbCr structure array</param>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromYCbCr(System.Single[0:,0:][],System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromYCbCr(System.Single[0:,0:][],SkiaDrawing.Bitmap)">
             <summary>
             Converts an YCbCr structure to a color image.
             </summary>
             <param name="array">YCbCr structure array</param>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToGrayscale(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToGrayscale(SkiaDrawing.Bitmap)">
             <summary>
             Converts Bitmap to averaged channel value matrix.
             </summary>
             <param name="Data">Bitmap</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToGrayscale(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.ToGrayscale(SkiaDrawing.BitmapData)">
             <summary>
             Converts Bitmap to averaged channel value matrix.
             </summary>
@@ -15803,14 +15803,14 @@
             <param name="m">Matrix</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromGrayscale(System.Single[0:,0:],System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromGrayscale(System.Single[0:,0:],SkiaDrawing.BitmapData)">
             <summary>
             Converts a matrix of channel values to a monochrome Bitmap.
             </summary>
             <param name="m">Matrix</param>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromGrayscale(System.Single[0:,0:],System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapMatrix.FromGrayscale(System.Single[0:,0:],SkiaDrawing.Bitmap)">
             <summary>
             Converts a matrix of channel values to a monochrome Bitmap.
             </summary>
@@ -15822,7 +15822,7 @@
             Uses for editing and transforming images using GDI+.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,UMapx.Core.RotationMode)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(SkiaDrawing.Bitmap,UMapx.Core.RotationMode)">
             <summary>
             Rotates bitmap by rotation value.
             </summary>
@@ -15830,7 +15830,7 @@
             <param name="rotation">Rotation</param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,System.Single)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(SkiaDrawing.Bitmap,System.Single)">
             <summary>
             Rotates the bitmap by the specified angle. 
             </summary>
@@ -15838,7 +15838,7 @@
             <param name="angle">Angle</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,UMapx.Core.PointFloat,System.Single)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(SkiaDrawing.Bitmap,UMapx.Core.PointFloat,System.Single)">
             <summary>
             Rotates the bitmap by the specified angle. 
             </summary>
@@ -15847,7 +15847,7 @@
             <param name="angle">Angle in degrees</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,System.Single,System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Rotate(SkiaDrawing.Bitmap,System.Single,SkiaDrawing.Color)">
             <summary>
             Returns rotated image.
             </summary>
@@ -15856,7 +15856,7 @@
             <param name="color">Background color</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Flip(System.Drawing.Bitmap,UMapx.Core.Direction)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Flip(SkiaDrawing.Bitmap,UMapx.Core.Direction)">
             <summary>
             Flips bitmap by direction.
             </summary>
@@ -15864,7 +15864,7 @@
             <param name="direction">Direction</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Crop(System.Drawing.Bitmap,System.Drawing.Rectangle,System.Boolean)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Crop(SkiaDrawing.Bitmap,SkiaDrawing.Rectangle,System.Boolean)">
             <summary>
             Returns cropped image.
             </summary>
@@ -15873,7 +15873,7 @@
             <param name="clamp">Clamp crop or not</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Resize(System.Drawing.Bitmap,System.Drawing.Size)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Resize(SkiaDrawing.Bitmap,SkiaDrawing.Size)">
             <summary>
             Returns resized image.
             </summary>
@@ -15881,7 +15881,7 @@
             <param name="size">Size</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.ResizePreserved(System.Drawing.Bitmap,System.Drawing.Size,System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.BitmapTransform.ResizePreserved(SkiaDrawing.Bitmap,SkiaDrawing.Size,SkiaDrawing.Color)">
             <summary>
             Returns resized image with preserved proportions.
             </summary>
@@ -15890,7 +15890,7 @@
             <param name="color">Border color</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.ResizePreserved(System.Drawing.Bitmap,System.Drawing.Size)">
+        <member name="M:UMapx.Imaging.BitmapTransform.ResizePreserved(SkiaDrawing.Bitmap,SkiaDrawing.Size)">
             <summary>
             Returns resized image with preserved proportions.
             </summary>
@@ -15898,7 +15898,7 @@
             <param name="size">Size</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Shift(System.Drawing.Bitmap,System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Shift(SkiaDrawing.Bitmap,System.Int32,System.Int32)">
             <summary>
             Shifts the bitmap.
             </summary>
@@ -15907,7 +15907,7 @@
             <param name="w">The number of positions by which the shift occurs in width</param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.ShiftX(System.Drawing.Bitmap,System.Int32)">
+        <member name="M:UMapx.Imaging.BitmapTransform.ShiftX(SkiaDrawing.Bitmap,System.Int32)">
             <summary>
             Shifts bitmap by X axis.
             </summary>
@@ -15915,7 +15915,7 @@
             <param name="value">Shift value</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.ShiftY(System.Drawing.Bitmap,System.Int32)">
+        <member name="M:UMapx.Imaging.BitmapTransform.ShiftY(SkiaDrawing.Bitmap,System.Int32)">
             <summary>
             Shifts bitmap by Y axis.
             </summary>
@@ -15923,7 +15923,7 @@
             <param name="value">Shift value</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Merge(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Merge(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Merges two bitmaps.
             </summary>s
@@ -15931,7 +15931,7 @@
             <param name="foreground">Foreground bitmap</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Merge(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Merge(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap,SkiaDrawing.Rectangle)">
             <summary>
             Merges two bitmaps.
             </summary>
@@ -15939,7 +15939,7 @@
             <param name="foreground">Foreground image</param>
             <param name="rectangle">Rectangle</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapTransform.Transparency(System.Drawing.Bitmap,System.Int32)">
+        <member name="M:UMapx.Imaging.BitmapTransform.Transparency(SkiaDrawing.Bitmap,System.Int32)">
             <summary>
             Sets the transparency of the bitmap. 
             </summary>
@@ -16160,27 +16160,27 @@
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BottomHat.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BottomHat.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BottomHat.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BottomHat.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.BottomHat.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BottomHat.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BottomHat.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BottomHat.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -16215,40 +16215,40 @@
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.BoxBlur.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BoxBlur.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BoxBlur.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BoxBlur.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.BoxBlur.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BoxBlur.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BoxBlur.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.BoxBlur.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.BoxBlur.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BoxBlur.ApplyVertical(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.BoxBlur.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BoxBlur.ApplyHorizontal(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -16296,7 +16296,7 @@
             Initializes the color canvas class.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.CanvasColor.#ctor(System.Int32,System.Int32,System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.CanvasColor.#ctor(System.Int32,System.Int32,SkiaDrawing.Color)">
             <summary>
             Initializes the color canvas class.
             </summary>
@@ -16335,7 +16335,7 @@
             Initializes the gradient canvas class.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.CanvasGradient.#ctor(System.Int32,System.Int32,System.Double,System.Drawing.Color,System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.CanvasGradient.#ctor(System.Int32,System.Int32,System.Double,SkiaDrawing.Color,SkiaDrawing.Color)">
             <summary>
             Initializes the gradient canvas class.
             </summary>
@@ -16392,13 +16392,13 @@
             Gets or sets channel.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Chromakey.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Chromakey.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Chromakey.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Chromakey.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -16433,27 +16433,27 @@
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Closing.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Closing.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Closing.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Closing.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Closing.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Closing.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Closing.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Closing.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -16498,13 +16498,13 @@
             Keycolor [-1, 1].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.CMYKFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.CMYKFilter.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.CMYKFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.CMYKFilter.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -16515,7 +16515,7 @@
             Defines the color replacement filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ColorReplace.#ctor(System.Drawing.Color,System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.ColorReplace.#ctor(SkiaDrawing.Color,SkiaDrawing.Color)">
             <summary>
             Initializes the color replacement filter.
             </summary>
@@ -16537,13 +16537,13 @@
             Output color.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ColorReplace.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.ColorReplace.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.ColorReplace.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.ColorReplace.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -16592,42 +16592,42 @@
             Gets or sets the color space.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ColorTransfer.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.ColorTransfer.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.ColorTransfer.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.ColorTransfer.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.ColorTransfer.ApplyRGB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.ColorTransfer.ApplyRGB(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.ColorTransfer.ApplyHSB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.ColorTransfer.ApplyHSB(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.ColorTransfer.ApplyHSL(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.ColorTransfer.ApplyHSL(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.ColorTransfer.ApplyYCbCr(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.ColorTransfer.ApplyYCbCr(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -16735,27 +16735,27 @@
             </summary>
             <param name="m">Matrix</param>
         </member>
-        <member name="M:UMapx.Imaging.Convolution.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Convolution.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Convolution.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Convolution.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Convolution.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Convolution.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Convolution.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Convolution.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -16926,43 +16926,43 @@
             Gets or sets the color space.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Correction.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Correction.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Correction.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Correction.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Correction.ApplyRGB(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Correction.ApplyRGB(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Correction.ApplyHSL(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Correction.ApplyHSL(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Correction.ApplyHSB(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Correction.ApplyHSB(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Correction.ApplyYCbCr(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Correction.ApplyYCbCr(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Correction.ApplyGrayscale(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Correction.ApplyGrayscale(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -17000,7 +17000,7 @@
             Defines the crop filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Crop.#ctor(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Crop.#ctor(SkiaDrawing.Rectangle)">
             <summary>
             Initializes the crop filter.
             </summary>
@@ -17020,27 +17020,27 @@
             Gets or sets rectangle.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Crop.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Crop.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Crop.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Crop.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Crop.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Crop.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Crop.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Crop.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -17051,7 +17051,7 @@
             Uses to work with depth matrices.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.DepthMatrix.ToDepth(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.DepthMatrix.ToDepth(SkiaDrawing.Bitmap)">
             <summary>
             Converts Bitmap into unshort matrix.
             </summary>
@@ -17159,7 +17159,7 @@
             <param name="depth">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Imaging.DepthTransform.Crop(System.UInt16[0:,0:],System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.DepthTransform.Crop(System.UInt16[0:,0:],SkiaDrawing.Rectangle)">
             <summary>
             Crops the depth.
             </summary>
@@ -17167,7 +17167,7 @@
             <param name="rectangle">Rectangle</param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Imaging.DepthTransform.Resize(System.UInt16[0:,0:],System.Drawing.Size)">
+        <member name="M:UMapx.Imaging.DepthTransform.Resize(System.UInt16[0:,0:],SkiaDrawing.Size)">
             <summary>
             Resizes the depth.
             </summary>
@@ -17191,7 +17191,7 @@
             <param name="a">Matrix</param>
             <param name="b">Matrix</param>
         </member>
-        <member name="M:UMapx.Imaging.DepthTransform.Merge(System.UInt16[0:,0:],System.UInt16[0:,0:],System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.DepthTransform.Merge(System.UInt16[0:,0:],System.UInt16[0:,0:],SkiaDrawing.Rectangle)">
             <summary>
             Merges two depths.
             </summary>
@@ -17235,40 +17235,40 @@
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Dilatation.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Dilatation.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Dilatation.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Dilatation.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Dilatation.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Dilatation.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Dilatation.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Dilatation.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Dilatation.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Dilatation.ApplyVertical(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Dilatation.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Dilatation.ApplyHorizontal(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -17304,27 +17304,27 @@
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.EdgeGlow.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.EdgeGlow.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.EdgeGlow.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.EdgeGlow.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.EdgeGlow.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.EdgeGlow.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.EdgeGlow.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.EdgeGlow.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -17365,13 +17365,13 @@
             Gets or sets the channel of the RGBA model.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.EqualizeChannel.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.EqualizeChannel.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.EqualizeChannel.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.EqualizeChannel.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -17406,40 +17406,40 @@
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Erosion.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Erosion.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Erosion.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Erosion.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Erosion.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Erosion.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Erosion.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Erosion.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Erosion.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Erosion.ApplyVertical(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Erosion.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Erosion.ApplyHorizontal(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -17472,14 +17472,14 @@
             Gets or sets the matrix.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ErrorDiffusionDithering.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.ErrorDiffusionDithering.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.ErrorDiffusionDithering.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.ErrorDiffusionDithering.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -17633,14 +17633,14 @@
             Gets or sets the sigma value (0, 1).
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ExposureFusion.Apply(System.Drawing.Bitmap[])">
+        <member name="M:UMapx.Imaging.ExposureFusion.Apply(SkiaDrawing.Bitmap[])">
             <summary>
             Apply filter.
             </summary>
             <param name="images">Bitmap array</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.ExposureFusion.Apply(System.Drawing.Imaging.BitmapData[])">
+        <member name="M:UMapx.Imaging.ExposureFusion.Apply(SkiaDrawing.BitmapData[])">
             <summary>
             Apply filter.
             </summary>
@@ -17696,40 +17696,40 @@
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.FlatFieldCorrection.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.FlatFieldCorrection.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.FlatFieldCorrection.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.FlatFieldCorrection.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.FlatFieldCorrection.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.FlatFieldCorrection.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.FlatFieldCorrection.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.FlatFieldCorrection.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.FlatFieldCorrection.FlatField(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.FlatFieldCorrection.FlatField(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Flat-field filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.FlatFieldCorrection.GlobalMeans(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.FlatFieldCorrection.GlobalMeans(SkiaDrawing.BitmapData)">
             <summary>
             Global means.
             </summary>
@@ -17763,13 +17763,13 @@
             Gets or sets flip Y.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Flip.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Flip.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Flip.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Flip.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -17889,13 +17889,13 @@
             Gets or sets the blue channel value.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Grayscale.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Grayscale.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Grayscale.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Grayscale.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -17916,13 +17916,13 @@
             Initializes the grayscale filter Y.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Grayscale.IsGrayscale(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Grayscale.IsGrayscale(SkiaDrawing.Bitmap)">
             <summary>
             The image is grayscale or not.
             </summary>
             <param name="data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Grayscale.IsGrayscale(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Grayscale.IsGrayscale(SkiaDrawing.BitmapData)">
             <summary>
             The image is grayscale or not.
             </summary>
@@ -17979,13 +17979,13 @@
             Gets or sets the channel of the RGBA model.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HideChannel.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.HideChannel.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.HideChannel.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.HideChannel.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -18005,13 +18005,13 @@
             Initializes the global histogram equalization filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HistogramEqualization.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.HistogramEqualization.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.HistogramEqualization.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.HistogramEqualization.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -18135,13 +18135,13 @@
             Brightness [-1, 1].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HSBFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.HSBFilter.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.HSBFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.HSBFilter.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -18173,13 +18173,13 @@
             Gets or sets the hue range [0, 359].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HSBGrayscale.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.HSBGrayscale.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.HSBGrayscale.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.HSBGrayscale.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -18218,13 +18218,13 @@
             Lightness [-1, 1].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HSLFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.HSLFilter.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.HSLFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.HSLFilter.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -18256,13 +18256,13 @@
             Gets or sets the hue range [0, 359].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.HSLGrayscale.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.HSLGrayscale.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.HSLGrayscale.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.HSLGrayscale.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -18273,13 +18273,13 @@
             Defines the interface for bitmap filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.IBitmapFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.IBitmapFilter.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.IBitmapFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.IBitmapFilter.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -18290,14 +18290,14 @@
             Defines the interface for two images bitmap filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.IBitmapFilter2.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.IBitmapFilter2.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.IBitmapFilter2.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.IBitmapFilter2.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -19077,61 +19077,61 @@
             Gets or sets the matrix mask.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.LocalCorrection.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalCorrection.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalCorrection.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.LocalCorrection.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalCorrection.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalCorrection.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalCorrection.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.LocalCorrection.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalCorrection.ApplyRGB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalCorrection.ApplyRGB(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalCorrection.ApplyHSL(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalCorrection.ApplyHSL(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalCorrection.ApplyHSB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalCorrection.ApplyHSB(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalCorrection.ApplyYCbCr(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalCorrection.ApplyYCbCr(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalCorrection.ApplyGrayscale(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalCorrection.ApplyGrayscale(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -19177,27 +19177,27 @@
             </summary>
             <param name="size">Radius</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramEqualization.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramEqualization.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramEqualization.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.LocalHistogramEqualization.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramEqualization.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramEqualization.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramEqualization.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.LocalHistogramEqualization.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -19260,19 +19260,19 @@
             Smoothing.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramStretch.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramStretch.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramStretch.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -19280,7 +19280,7 @@
             <param name="bmMax">Bitmap data</param>
             <param name="bmMin">Bitmap data</param> 
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyRGB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyRGB(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -19288,7 +19288,7 @@
             <param name="bmMax">Bitmap data</param>
             <param name="bmMin">Bitmap data</param> 
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyHSB(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyHSB(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -19296,7 +19296,7 @@
             <param name="bmMax">Bitmap data</param>
             <param name="bmMin">Bitmap data</param> 
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyHSL(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyHSL(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -19304,7 +19304,7 @@
             <param name="bmMax">Bitmap data</param>
             <param name="bmMin">Bitmap data</param> 
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyYCbCr(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyYCbCr(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -19312,7 +19312,7 @@
             <param name="bmMax">Bitmap data</param>
             <param name="bmMin">Bitmap data</param> 
         </member>
-        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyGrayscale(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.LocalHistogramStretch.ApplyGrayscale(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -19402,7 +19402,7 @@
             Defines the mask color filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.MaskColorFilter.#ctor(System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.MaskColorFilter.#ctor(SkiaDrawing.Color)">
             <summary>
             Initializes the mask color filter.
             </summary>
@@ -19413,14 +19413,14 @@
             Gets or sets color.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.MaskColorFilter.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.MaskColorFilter.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.MaskColorFilter.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.MaskColorFilter.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -19463,14 +19463,14 @@
             Gets or sets a pair of integers representing an ordered pair of X and Y coordinates.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Merge.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Merge.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Merge.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Merge.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -19525,40 +19525,40 @@
             Gets or sets thresholds.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Morphology.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Morphology.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Morphology.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Morphology.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Morphology.ApplyVertical(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Morphology.ApplyHorizontal(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -19626,7 +19626,7 @@
             Reset motion detector.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.MotionDetector.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.MotionDetector.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter and returns motion level in range [0, 1].
             </summary>
@@ -19642,14 +19642,14 @@
         <member name="M:UMapx.Imaging.MotionDetector.Finalize">
             <inheritdoc/>
         </member>
-        <member name="M:UMapx.Imaging.MotionDetector.ProcessFrameWithoutFilter(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.MotionDetector.ProcessFrameWithoutFilter(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Process frame.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.MotionDetector.ProcessFrameWithFilter(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.MotionDetector.ProcessFrameWithFilter(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Process frame.
             </summary>
@@ -19727,27 +19727,27 @@
             Gets or sets the depth value [0, 1].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.OilPainting.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.OilPainting.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.OilPainting.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.OilPainting.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.OilPainting.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.OilPainting.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.OilPainting.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.OilPainting.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -19782,27 +19782,27 @@
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Opening.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Opening.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Opening.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Opening.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Opening.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Opening.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Opening.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Opening.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -19834,14 +19834,14 @@
             Gets or sets the second image coefficient.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Operation.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Operation.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Operation.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Operation.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -19988,26 +19988,26 @@
             Gets or sets bottom right point.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.PerspectiveWarp.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -20019,7 +20019,7 @@
             Defines the color photo filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.PhotoFilter.#ctor(UMapx.Core.IFloatMesh,System.Drawing.Color,System.Single)">
+        <member name="M:UMapx.Imaging.PhotoFilter.#ctor(UMapx.Core.IFloatMesh,SkiaDrawing.Color,System.Single)">
             <summary>
             Initializes the color photo filter.
             </summary>
@@ -20027,7 +20027,7 @@
             <param name="color">Color</param>
             <param name="strength">Strenght [0, 1]</param>
         </member>
-        <member name="M:UMapx.Imaging.PhotoFilter.#ctor(System.Drawing.Color,System.Single)">
+        <member name="M:UMapx.Imaging.PhotoFilter.#ctor(SkiaDrawing.Color,System.Single)">
             <summary>
             Initializes the color photo filter.
             </summary>
@@ -20054,13 +20054,13 @@
             Gets or sets filter strenght [0, 1].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.PhotoFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.PhotoFilter.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.PhotoFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.PhotoFilter.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -20197,27 +20197,27 @@
             Gets or sets point matrix.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.PointAddition.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.PointAddition.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.PointAddition.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.PointAddition.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.PointAddition.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.PointAddition.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.PointAddition.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.PointAddition.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -20339,27 +20339,27 @@
             Gets or sets point matrix.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.PointMultiplication.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.PointMultiplication.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.PointMultiplication.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.PointMultiplication.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.PointMultiplication.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.PointMultiplication.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.PointMultiplication.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.PointMultiplication.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -20370,7 +20370,7 @@
             Using for points operations.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Points.Add(System.Drawing.Point[],System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Points.Add(SkiaDrawing.Point[],SkiaDrawing.Point)">
             <summary>
             Returns processed points.
             </summary>
@@ -20378,7 +20378,7 @@
             <param name="point">Point</param>
             <returns>Points</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.Sub(System.Drawing.Point[],System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Points.Sub(SkiaDrawing.Point[],SkiaDrawing.Point)">
             <summary>
             Returns processed points.
             </summary>
@@ -20386,7 +20386,7 @@
             <param name="point">Point</param>
             <returns>Points</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.Rotate(System.Drawing.Point[],System.Drawing.Point,System.Single)">
+        <member name="M:UMapx.Imaging.Points.Rotate(SkiaDrawing.Point[],SkiaDrawing.Point,System.Single)">
             <summary>
             Rotates points by angle.
             </summary>
@@ -20395,7 +20395,7 @@
             <param name="angle">Angle</param>
             <returns>Points</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.Rotate(System.Drawing.Point,System.Drawing.Point,System.Double)">
+        <member name="M:UMapx.Imaging.Points.Rotate(SkiaDrawing.Point,SkiaDrawing.Point,System.Double)">
             <summary>
             Rotates point by angle.
             </summary>
@@ -20404,14 +20404,14 @@
             <param name="angleInDegrees">The rotation angle in degrees.</param>
             <returns>Rotated point</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.GetRectangle(System.Drawing.Point[])">
+        <member name="M:UMapx.Imaging.Points.GetRectangle(SkiaDrawing.Point[])">
             <summary>
             Returns rectangle from points.
             </summary>
             <param name="points">Points</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.GetAngle(System.Drawing.Point,System.Drawing.Point,System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Points.GetAngle(SkiaDrawing.Point,SkiaDrawing.Point,SkiaDrawing.Point)">
             <summary>
             Return angle of the three points.
             </summary>
@@ -20428,7 +20428,7 @@
             <param name="b">Second</param>
             <returns>Result</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.GetSupportedPoint(System.Drawing.Point,System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Points.GetSupportedPoint(SkiaDrawing.Point,SkiaDrawing.Point)">
             <summary>
             Returns supported point.
             </summary>
@@ -20436,7 +20436,7 @@
             <param name="right">Right point</param>
             <returns>Point</returns>
         </member>
-        <member name="M:UMapx.Imaging.Points.GetMeanPoint(System.Drawing.Point[])">
+        <member name="M:UMapx.Imaging.Points.GetMeanPoint(SkiaDrawing.Point[])">
             <summary>
             Returns mean point.
             </summary>
@@ -20494,7 +20494,7 @@
             Using for rectangles operations.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Add(System.Drawing.Rectangle,System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Rectangles.Add(SkiaDrawing.Rectangle,SkiaDrawing.Point)">
             <summary>
             Returns processed rectangle.
             </summary>
@@ -20502,7 +20502,7 @@
             <param name="point">Point</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Sub(System.Drawing.Rectangle,System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Rectangles.Sub(SkiaDrawing.Rectangle,SkiaDrawing.Point)">
             <summary>
             Returns processed rectangle.
             </summary>
@@ -20510,7 +20510,7 @@
             <param name="point">Point</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Add(System.Drawing.Rectangle[],System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Rectangles.Add(SkiaDrawing.Rectangle[],SkiaDrawing.Point)">
             <summary>
             Returns processed rectangles.
             </summary>
@@ -20518,7 +20518,7 @@
             <param name="point">Point</param>
             <returns>Rectangles</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Sub(System.Drawing.Rectangle[],System.Drawing.Point)">
+        <member name="M:UMapx.Imaging.Rectangles.Sub(SkiaDrawing.Rectangle[],SkiaDrawing.Point)">
             <summary>
             Returns processed rectangles.
             </summary>
@@ -20526,63 +20526,63 @@
             <param name="point">Point</param>
             <returns>Rectangles</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToPoints(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.ToPoints(SkiaDrawing.Rectangle)">
             <summary>
             Returns four points from rectangle.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Points</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.FromPoints(System.Drawing.Point[])">
+        <member name="M:UMapx.Imaging.Rectangles.FromPoints(SkiaDrawing.Point[])">
             <summary>
             Returns rectangle from four points.
             </summary>
             <param name="points"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.GetPoint(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.GetPoint(SkiaDrawing.Rectangle)">
             <summary>
             Returns point from rectangle.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Point</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Area(System.Drawing.Size)">
+        <member name="M:UMapx.Imaging.Rectangles.Area(SkiaDrawing.Size)">
             <summary>
             Returns size area.
             </summary>
             <param name="size">Size</param>
             <returns>Area</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Area(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.Area(SkiaDrawing.Rectangle)">
             <summary>
             Returns rectangle area.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Area</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Max(System.Drawing.Rectangle[])">
+        <member name="M:UMapx.Imaging.Rectangles.Max(SkiaDrawing.Rectangle[])">
             <summary>
             Returns the maximum rectangle.
             </summary>
             <param name="rectangles">Rectangles</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Min(System.Drawing.Rectangle[])">
+        <member name="M:UMapx.Imaging.Rectangles.Min(SkiaDrawing.Rectangle[])">
             <summary>
             Returns the minimum rectangle.
             </summary>
             <param name="rectangles">Rectangles</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(SkiaDrawing.Rectangle)">
             <summary>
             Returns rectangle scaled to box.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Drawing.Rectangle,System.Single)">
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(SkiaDrawing.Rectangle,System.Single)">
             <summary>
             Returns rectangle scaled to box.
             </summary>
@@ -20590,14 +20590,14 @@
             <param name="scale">Factor</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Drawing.Rectangle[])">
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(SkiaDrawing.Rectangle[])">
             <summary>
             Returns rectangle scaled to box.
             </summary>
             <param name="rectangles">Rectangle</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Single,System.Drawing.Rectangle[])">
+        <member name="M:UMapx.Imaging.Rectangles.ToBox(System.Single,SkiaDrawing.Rectangle[])">
             <summary>
             Returns rectangle scaled to box with image size.
             </summary>
@@ -20605,7 +20605,7 @@
             <param name="factor">Factor</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.IoU(System.Drawing.Rectangle,System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.IoU(SkiaDrawing.Rectangle,SkiaDrawing.Rectangle)">
             <summary>
             Implements IoU operator.
             </summary>
@@ -20613,7 +20613,7 @@
             <param name="b">Second rectangle</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Scale(System.Drawing.Rectangle,System.Single,System.Single)">
+        <member name="M:UMapx.Imaging.Rectangles.Scale(SkiaDrawing.Rectangle,System.Single,System.Single)">
             <summary>
             Implements scale operator.
             </summary>
@@ -20622,14 +20622,14 @@
             <param name="ky">Factor for y axis</param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Scale(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.Scale(SkiaDrawing.Rectangle)">
             <summary>
             Implements scale operator.
             </summary>
             <param name="rectangle">Rectangle</param>
             <returns>Rectangle</returns>
         </member>
-        <member name="M:UMapx.Imaging.Rectangles.Clamp(System.Drawing.Rectangle,System.Drawing.Rectangle)">
+        <member name="M:UMapx.Imaging.Rectangles.Clamp(SkiaDrawing.Rectangle,SkiaDrawing.Rectangle)">
             <summary>
             Implements clamp operator.
             </summary>
@@ -20667,35 +20667,35 @@
             Gets or sets interpolation mode.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Resize.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Resize.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Resize.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Resize.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Resize.ApplyNearestNeighbor(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Resize.ApplyNearestNeighbor(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Resize.ApplyBilinear(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Resize.ApplyBilinear(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Resize.ApplyBicubic(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Resize.ApplyBicubic(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -20760,13 +20760,13 @@
             Blue [-255, 255].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.RGBFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.RGBFilter.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.RGBFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.RGBFilter.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -20784,7 +20784,7 @@
             <param name="angle">Angle</param>
             <param name="interpolationMode">Interpolation mode</param>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.#ctor(System.Single,System.Drawing.Color,UMapx.Core.InterpolationMode)">
+        <member name="M:UMapx.Imaging.Rotate.#ctor(System.Single,SkiaDrawing.Color,UMapx.Core.InterpolationMode)">
             <summary>
             Initializes the rotation filter.
             </summary>
@@ -20807,47 +20807,47 @@
             Gets or sets interpolation mode.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Rotate.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Rotate.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Rotate.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Rotate.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.ApplyNearestNeighbor(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Rotate.ApplyNearestNeighbor(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.ApplyBilinear(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Rotate.ApplyBilinear(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Rotate.ApplyBicubic(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Rotate.ApplyBicubic(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
@@ -20864,13 +20864,13 @@
             Initializes the channel rotation filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.RotateChannel.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.RotateChannel.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.RotateChannel.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.RotateChannel.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -20901,13 +20901,13 @@
             Gets or sets the amout value [0, 100].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.SaltAndPepper.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.SaltAndPepper.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.SaltAndPepper.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.SaltAndPepper.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -20934,13 +20934,13 @@
             Gets or sets the saturation value [-100, 100].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.SaturationCorrection.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.SaturationCorrection.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.SaturationCorrection.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.SaturationCorrection.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -21039,33 +21039,33 @@
             Gets or sets the offset value of axis Y.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Shift.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Shift.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Shift.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Shift.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Shift.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Shift.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Shift.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Shift.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Shift.ShiftY(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.Shift.ShiftY(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData,System.Int32,System.Int32,System.Int32)">
             <summary>
             Apply filter.
             </summary>
@@ -21075,7 +21075,7 @@
             <param name="height">Image height</param>
             <param name="stride">Stride</param>
         </member>
-        <member name="M:UMapx.Imaging.Shift.ShiftX(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.Shift.ShiftX(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData,System.Int32,System.Int32,System.Int32)">
             <summary>
             Apply filter.
             </summary>
@@ -21128,13 +21128,13 @@
             Gets or sets the channel of the RGBA model.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ShowChannel.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.ShowChannel.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.ShowChannel.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.ShowChannel.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -21262,14 +21262,14 @@
             Uses to work with the statistical characteristics of the image.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Statistics.Histogram(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Statistics.Histogram(SkiaDrawing.BitmapData)">
             <summary>
             Gets a histogram of the image.
             </summary>
             <param name="bmData">Bitmap data</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Imaging.Statistics.Histogram(System.Drawing.Imaging.BitmapData,UMapx.Imaging.RGBA)">
+        <member name="M:UMapx.Imaging.Statistics.Histogram(SkiaDrawing.BitmapData,UMapx.Imaging.RGBA)">
             <summary>
             Gets a histogram of the image.
             </summary>
@@ -21277,14 +21277,14 @@
             <param name="channel">Channel of RGBA model</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Imaging.Statistics.Histogram(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Statistics.Histogram(SkiaDrawing.Bitmap)">
             <summary>
             Gets a histogram of the image.
             </summary>
             <param name="Data">Bitmap</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Imaging.Statistics.Histogram(System.Drawing.Bitmap,UMapx.Imaging.RGBA)">
+        <member name="M:UMapx.Imaging.Statistics.Histogram(SkiaDrawing.Bitmap,UMapx.Imaging.RGBA)">
             <summary>
             Gets a histogram of the image.
             </summary>
@@ -21306,28 +21306,28 @@
             <param name="H">Histogram</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Imaging.Statistics.OtsuThreshold(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Statistics.OtsuThreshold(SkiaDrawing.BitmapData)">
             <summary>
             Calculates the optimal threshold using the Otsu method for the original bitmap.
             </summary>
             <param name="bmData">Bitmap data</param>
             <returns>Integer number</returns>
         </member>
-        <member name="M:UMapx.Imaging.Statistics.OtsuThreshold(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Statistics.OtsuThreshold(SkiaDrawing.Bitmap)">
             <summary>
             Calculates the optimal threshold using the Otsu method for the original bitmap.
             </summary>
             <param name="Data">Bitmap</param>
             <returns>Integer number</returns>
         </member>
-        <member name="M:UMapx.Imaging.Statistics.SISThreshold(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Statistics.SISThreshold(SkiaDrawing.BitmapData)">
             <summary>
             Calculates the optimal threshold for the original bitmap.
             </summary>
             <param name="bmData">Bitmap data</param>
             <returns>Integer number</returns>
         </member>
-        <member name="M:UMapx.Imaging.Statistics.SISThreshold(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Statistics.SISThreshold(SkiaDrawing.Bitmap)">
             <summary>
             Calculates the optimal threshold for the original bitmap.
             </summary>
@@ -21460,14 +21460,14 @@
             Gets or sets the algorithm.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.StereoAnaglyph.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.StereoAnaglyph.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.StereoAnaglyph.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.StereoAnaglyph.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -21571,14 +21571,14 @@
             Smoothing or not.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.StereoDisparity.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.StereoDisparity.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.StereoDisparity.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.StereoDisparity.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -21641,7 +21641,7 @@
             Uses to work with tensor matrices.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.TensorMatrix.ToByteTensor(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.TensorMatrix.ToByteTensor(SkiaDrawing.Bitmap,System.Boolean)">
             <summary>
             Converts a Bitmap to an BGR tensor arrays.
             </summary>
@@ -21649,7 +21649,7 @@
             <param name="rgb">RGB or BGR</param>
             <returns>RGB tensor arrays</returns>
         </member>
-        <member name="M:UMapx.Imaging.TensorMatrix.ToByteTensor(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.TensorMatrix.ToByteTensor(SkiaDrawing.BitmapData,System.Boolean)">
             <summary>
             Converts a Bitmap to an BGR tensor arrays.
             </summary>
@@ -21665,7 +21665,7 @@
             <param name="rgb">RGB or BGR</param>
             <returns>RGB tensor arrays</returns>
         </member>
-        <member name="M:UMapx.Imaging.TensorMatrix.ToFloatTensor(System.Drawing.Bitmap,System.Boolean)">
+        <member name="M:UMapx.Imaging.TensorMatrix.ToFloatTensor(SkiaDrawing.Bitmap,System.Boolean)">
             <summary>
             Converts a Bitmap to an BGR tensor arrays.
             </summary>
@@ -21673,7 +21673,7 @@
             <param name="rgb">RGB or BGR</param>
             <returns>RGB tensor arrays</returns>
         </member>
-        <member name="M:UMapx.Imaging.TensorMatrix.ToFloatTensor(System.Drawing.Imaging.BitmapData,System.Boolean)">
+        <member name="M:UMapx.Imaging.TensorMatrix.ToFloatTensor(SkiaDrawing.BitmapData,System.Boolean)">
             <summary>
             Converts a Bitmap to an BGR tensor arrays.
             </summary>
@@ -21796,13 +21796,13 @@
             Gets or sets the depth value [0, 1].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Texturer.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.Texturer.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.Texturer.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.Texturer.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -21903,13 +21903,13 @@
             Gets or sets the tone diffusion dithering matrix. 
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.ToneDiffusionDithering.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.ToneDiffusionDithering.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.ToneDiffusionDithering.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.ToneDiffusionDithering.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -21976,27 +21976,27 @@
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.TopHat.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.TopHat.Apply(SkiaDrawing.BitmapData,SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
             <param name="bmSrc">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.TopHat.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.TopHat.Apply(SkiaDrawing.Bitmap,SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.TopHat.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.TopHat.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.TopHat.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.TopHat.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -22028,13 +22028,13 @@
             Implements filter rebuilding.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.TransparencyCorrection.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.TransparencyCorrection.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.TransparencyCorrection.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.TransparencyCorrection.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -22103,13 +22103,13 @@
             Cr [-1, 1].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.YCbCrFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.YCbCrFilter.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.YCbCrFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.YCbCrFilter.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
@@ -22120,7 +22120,7 @@
             Defines the color filter based on the YUV structure.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotoFilter.#ctor(System.Drawing.Color,System.Single)">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.#ctor(SkiaDrawing.Color,System.Single)">
             <summary>
             Initializes the color filter based on the YUV structure.
             </summary>
@@ -22142,19 +22142,19 @@
             Gets or sets the filter strength [0, 1].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotoFilter.Apply(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.Apply(SkiaDrawing.BitmapData)">
             <summary>
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotoFilter.Apply(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.Apply(SkiaDrawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.YUVPhotoFilter.IsGrayColor(System.Drawing.Color)">
+        <member name="M:UMapx.Imaging.YUVPhotoFilter.IsGrayColor(SkiaDrawing.Color)">
             <summary>
             Checks if the color is a shade of gray.
             </summary>
@@ -26102,7 +26102,7 @@
             </summary>
             
         </member>
-        <member name="M:UMapx.Video.NewFrameEventArgs.#ctor(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Video.NewFrameEventArgs.#ctor(SkiaDrawing.Bitmap)">
             <summary>
             Initializes a new instance of the <see cref="T:UMapx.Video.NewFrameEventArgs"/> class.
             </summary>
@@ -26277,7 +26277,7 @@
             <remarks>Current state of video source object - running or not.</remarks>
             
         </member>
-        <member name="M:UMapx.Video.ScreenCaptureStream.#ctor(System.Drawing.Rectangle)">
+        <member name="M:UMapx.Video.ScreenCaptureStream.#ctor(SkiaDrawing.Rectangle)">
             <summary>
             Initializes a new instance of the <see cref="T:UMapx.Video.ScreenCaptureStream"/> class.
             </summary>
@@ -26285,7 +26285,7 @@
             <param name="region">Screen's rectangle to capture (the rectangle may cover multiple displays).</param>
             
         </member>
-        <member name="M:UMapx.Video.ScreenCaptureStream.#ctor(System.Drawing.Rectangle,System.Int32)">
+        <member name="M:UMapx.Video.ScreenCaptureStream.#ctor(SkiaDrawing.Rectangle,System.Int32)">
             <summary>
             Initializes a new instance of the <see cref="T:UMapx.Video.ScreenCaptureStream"/> class.
             </summary>
@@ -26383,7 +26383,7 @@
             Initializes video capabilities.
             </summary>
         </member>
-        <member name="M:UMapx.Video.VideoCapabilities.#ctor(System.Drawing.Size,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Video.VideoCapabilities.#ctor(SkiaDrawing.Size,System.Int32,System.Int32,System.Int32)">
             <summary>
             Initializes video capabilities.
             </summary>
@@ -26477,7 +26477,7 @@
             Defines video image depth source.
             </summary>
         </member>
-        <member name="M:UMapx.Video.VideoImageDepthSource.#ctor(System.Drawing.Bitmap,System.UInt16[0:,0:])">
+        <member name="M:UMapx.Video.VideoImageDepthSource.#ctor(SkiaDrawing.Bitmap,System.UInt16[0:,0:])">
             <summary>
             Initializes video image depth source.
             </summary>
@@ -26491,7 +26491,7 @@
             <param name="sender">sender</param>
             <param name="e">e</param>
         </member>
-        <member name="M:UMapx.Video.VideoImageDepthSource.OnNewFrame(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Video.VideoImageDepthSource.OnNewFrame(SkiaDrawing.Bitmap)">
             <summary>
             Called when video source gets new frame.
             </summary>
@@ -26642,7 +26642,7 @@
             Defines video image source.
             </summary>
         </member>
-        <member name="M:UMapx.Video.VideoImageSource.#ctor(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Video.VideoImageSource.#ctor(SkiaDrawing.Bitmap)">
             <summary>
             Initializes video image source.
             </summary>
@@ -26655,7 +26655,7 @@
             <param name="sender">sender</param>
             <param name="e">e</param>
         </member>
-        <member name="M:UMapx.Video.VideoImageSource.OnNewFrame(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Video.VideoImageSource.OnNewFrame(SkiaDrawing.Bitmap)">
             <summary>
             Called when video source gets new frame.
             </summary>
@@ -26898,19 +26898,19 @@
             Gets or sets property of auto range axes.
             </summary>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Draw(System.Drawing.Graphics)">
+        <member name="M:UMapx.Visualization.Figure.Draw(SkiaDrawing.Graphics)">
             <summary>
             Draws figure to graphics object.
             </summary>
             <param name="graphics">Graphics</param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Image(System.Drawing.Bitmap)">
+        <member name="M:UMapx.Visualization.Figure.Image(SkiaDrawing.Bitmap)">
             <summary>
             Show image at the figure.
             </summary>
             <param name="bitmap">Bitmap</param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Plot(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Symbol)">
+        <member name="M:UMapx.Visualization.Figure.Plot(System.Single[],System.Single[],System.Single,SkiaDrawing.Color,UMapx.Visualization.Symbol)">
             <summary>
             Adds graph pane to continuous plot.
             </summary>
@@ -26926,7 +26926,7 @@
             </summary>
             <param name="pane">Graph pane</param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Stem(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Symbol)">
+        <member name="M:UMapx.Visualization.Figure.Stem(System.Single[],System.Single[],System.Single,SkiaDrawing.Color,UMapx.Visualization.Symbol)">
             <summary>
             Adds graph pane to stem plot.
             </summary>
@@ -26942,7 +26942,7 @@
             </summary>
             <param name="pane">Graph pane</param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Scatter(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Symbol)">
+        <member name="M:UMapx.Visualization.Figure.Scatter(System.Single[],System.Single[],System.Single,SkiaDrawing.Color,UMapx.Visualization.Symbol)">
             <summary>
             Add graph pane to scatter plot.
             </summary>
@@ -26963,7 +26963,7 @@
             Removes all graphs from the figure. 
             </summary>
         </member>
-        <member name="M:UMapx.Visualization.Figure.PlotLine(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color)">
+        <member name="M:UMapx.Visualization.Figure.PlotLine(SkiaDrawing.Graphics,System.Single[],System.Single[],System.Single,SkiaDrawing.Color)">
             <summary>
             
             </summary>
@@ -26973,19 +26973,7 @@
             <param name="depth"></param>
             <param name="color"></param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.PlotCircle(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color,System.Single,System.Boolean)">
-            <summary>
-            
-            </summary>
-            <param name="graphics"></param>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="depth"></param>
-            <param name="color"></param>
-            <param name="radius"></param>
-            <param name="fill"></param>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.PlotRectangle(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color,System.Single,System.Boolean)">
+        <member name="M:UMapx.Visualization.Figure.PlotCircle(SkiaDrawing.Graphics,System.Single[],System.Single[],System.Single,SkiaDrawing.Color,System.Single,System.Boolean)">
             <summary>
             
             </summary>
@@ -26997,17 +26985,7 @@
             <param name="radius"></param>
             <param name="fill"></param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.StemLine(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color)">
-            <summary>
-            
-            </summary>
-            <param name="graphics"></param>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="depth"></param>
-            <param name="color"></param>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.StemCircle(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color,System.Single,System.Boolean)">
+        <member name="M:UMapx.Visualization.Figure.PlotRectangle(SkiaDrawing.Graphics,System.Single[],System.Single[],System.Single,SkiaDrawing.Color,System.Single,System.Boolean)">
             <summary>
             
             </summary>
@@ -27019,7 +26997,17 @@
             <param name="radius"></param>
             <param name="fill"></param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.StemRectangle(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color,System.Single,System.Boolean)">
+        <member name="M:UMapx.Visualization.Figure.StemLine(SkiaDrawing.Graphics,System.Single[],System.Single[],System.Single,SkiaDrawing.Color)">
+            <summary>
+            
+            </summary>
+            <param name="graphics"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="depth"></param>
+            <param name="color"></param>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.StemCircle(SkiaDrawing.Graphics,System.Single[],System.Single[],System.Single,SkiaDrawing.Color,System.Single,System.Boolean)">
             <summary>
             
             </summary>
@@ -27031,17 +27019,7 @@
             <param name="radius"></param>
             <param name="fill"></param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.ScatterLine(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color)">
-            <summary>
-            
-            </summary>
-            <param name="graphics"></param>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="depth"></param>
-            <param name="color"></param>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.ScatterCircle(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color,System.Single,System.Boolean)">
+        <member name="M:UMapx.Visualization.Figure.StemRectangle(SkiaDrawing.Graphics,System.Single[],System.Single[],System.Single,SkiaDrawing.Color,System.Single,System.Boolean)">
             <summary>
             
             </summary>
@@ -27053,7 +27031,17 @@
             <param name="radius"></param>
             <param name="fill"></param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.ScatterRectangle(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color,System.Single,System.Boolean)">
+        <member name="M:UMapx.Visualization.Figure.ScatterLine(SkiaDrawing.Graphics,System.Single[],System.Single[],System.Single,SkiaDrawing.Color)">
+            <summary>
+            
+            </summary>
+            <param name="graphics"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="depth"></param>
+            <param name="color"></param>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.ScatterCircle(SkiaDrawing.Graphics,System.Single[],System.Single[],System.Single,SkiaDrawing.Color,System.Single,System.Boolean)">
             <summary>
             
             </summary>
@@ -27065,7 +27053,19 @@
             <param name="radius"></param>
             <param name="fill"></param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Paint_Title(System.Drawing.Graphics,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Visualization.Figure.ScatterRectangle(SkiaDrawing.Graphics,System.Single[],System.Single[],System.Single,SkiaDrawing.Color,System.Single,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="graphics"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="depth"></param>
+            <param name="color"></param>
+            <param name="radius"></param>
+            <param name="fill"></param>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.Paint_Title(SkiaDrawing.Graphics,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             
             </summary>
@@ -27076,7 +27076,7 @@
             <param name="dw"></param>
             <param name="dh"></param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Paint_LabelX(System.Drawing.Graphics,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Visualization.Figure.Paint_LabelX(SkiaDrawing.Graphics,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             
             </summary>
@@ -27087,7 +27087,7 @@
             <param name="dw"></param>
             <param name="dh"></param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Paint_LabelY(System.Drawing.Graphics,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Visualization.Figure.Paint_LabelY(SkiaDrawing.Graphics,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             
             </summary>
@@ -27214,14 +27214,14 @@
             Initializes inference painter.
             </summary>
         </member>
-        <member name="M:UMapx.Visualization.Painter.Draw(System.Drawing.Graphics,UMapx.Visualization.PaintData[])">
+        <member name="M:UMapx.Visualization.Painter.Draw(SkiaDrawing.Graphics,UMapx.Visualization.PaintData[])">
             <summary>
             Draws tracking and recognition results.
             </summary>
             <param name="graphics">Graphics</param>
             <param name="paintData">Paint data</param>
         </member>
-        <member name="M:UMapx.Visualization.Painter.Draw(System.Drawing.Graphics,System.String,System.Drawing.Rectangle[])">
+        <member name="M:UMapx.Visualization.Painter.Draw(SkiaDrawing.Graphics,System.String,SkiaDrawing.Rectangle[])">
             <summary>
             Draws tracking and recognition results.
             </summary>
@@ -27229,14 +27229,14 @@
             <param name="title">Title</param>
             <param name="rectangles">Rectangles</param>
         </member>
-        <member name="M:UMapx.Visualization.Painter.Draw(System.Drawing.Graphics,System.Drawing.Point[])">
+        <member name="M:UMapx.Visualization.Painter.Draw(SkiaDrawing.Graphics,SkiaDrawing.Point[])">
             <summary>
             Draws tracking and recognition results.
             </summary>
             <param name="graphics">Graphics</param>
             <param name="points">Points</param>
         </member>
-        <member name="M:UMapx.Visualization.Painter.Draw(System.Drawing.Graphics,System.Drawing.Rectangle[],System.String[][])">
+        <member name="M:UMapx.Visualization.Painter.Draw(SkiaDrawing.Graphics,SkiaDrawing.Rectangle[],System.String[][])">
             <summary>
             Draws tracking and recognition results.
             </summary>
@@ -27244,7 +27244,7 @@
             <param name="rectangles">Rectangles</param>
             <param name="labels">Labels</param>
         </member>
-        <member name="M:UMapx.Visualization.Painter.GetLabel(System.Drawing.Graphics,System.Drawing.Font,System.Drawing.Rectangle,System.Single,System.String[])">
+        <member name="M:UMapx.Visualization.Painter.GetLabel(SkiaDrawing.Graphics,SkiaDrawing.Font,SkiaDrawing.Rectangle,System.Single,System.String[])">
             <summary>
             Returns label string.
             </summary>
