@@ -196,3 +196,4 @@ Installer/Installer/output/
 *.VC.opendb
 .vs/
 .idea/
+*.DS_Store
