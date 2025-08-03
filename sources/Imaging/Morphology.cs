@@ -8,6 +8,10 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the morphology filter.
+    /// <remarks>
+    /// More information can be found on the website:
+    /// https://en.wikipedia.org/wiki/Mathematical_morphology
+    /// </remarks>
     /// </summary>
     [Serializable]
     public class Morphology : IBitmapFilter2, IBitmapFilter

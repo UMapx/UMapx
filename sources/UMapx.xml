@@ -19748,6 +19748,10 @@
         <member name="T:UMapx.Imaging.Morphology">
             <summary>
             Defines the morphology filter.
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Mathematical_morphology
+            </remarks>
             </summary>
         </member>
         <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,UMapx.Core.MorphologyMode)">
