@@ -19891,6 +19891,59 @@
             Implements filter rebuilding.
             </summary>
         </member>
+        <member name="T:UMapx.Imaging.NormalBump">
+            <summary>
+            Defines a normal bump filter.
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Normal_mapping
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.NormalBump.#ctor(System.Int32)">
+            <summary>
+            Initializes the normal bump filter.
+            </summary>
+            <param name="scale">Scale [-5, 5]</param>
+        </member>
+        <member name="P:UMapx.Imaging.NormalBump.Scale">
+            <summary>
+            Gets or sets the scale value [-5, 5].
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.NormalBump.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.NormalBump.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.NormalBump.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.NormalBump.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.NormalBump.NormalBumpOperator(System.Int32)">
+            <summary>
+            Returns the normal bump operator.
+            </summary>
+            <param name="scale">Scale</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="T:UMapx.Imaging.OilPainting">
             <summary>
             Defines the oil filter.
