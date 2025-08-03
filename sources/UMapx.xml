@@ -1210,30 +1210,65 @@
             </code>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Pade.#ctor(System.Single[],System.Int32,System.Int32)">
+        <member name="M:UMapx.Analysis.Pade.#ctor">
             <summary>
             Initializes the Pade approximant.
+            </summary>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.Compute(System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Returns the Pade approximant.
             </summary>
             <param name="taylorCoeffs">Taylor series coefficients</param>
             <param name="m">The degree of the numerator of a rational function</param>
             <param name="n">The degree of the denominator of a rational function</param>
-            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+            <returns>Coeffs</returns>
         </member>
-        <member name="P:UMapx.Analysis.Pade.NumeratorCoeffs">
+        <member name="M:UMapx.Analysis.Pade.Compute(UMapx.Core.Complex32[],System.Int32,System.Int32)">
             <summary>
-            Gets the numerator coeffs.
+            Returns the Pade approximant.
             </summary>
+            <param name="taylorCoeffs">Taylor series coefficients</param>
+            <param name="m">The degree of the numerator of a rational function</param>
+            <param name="n">The degree of the denominator of a rational function</param>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+            <returns>Coeffs</returns>
         </member>
-        <member name="P:UMapx.Analysis.Pade.DenominatorCoeffs">
-            <summary>
-            Gets the denominator coeffs.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.Pade.Evaluate(System.Single)">
+        <member name="M:UMapx.Analysis.Pade.Compute(System.Single,System.Single[],System.Single[])">
             <summary>
             Evaluates a function.
             </summary>
             <param name="x">Value</param>
+            <param name="numeratorCoeffs">Numerator coeffs</param>
+            <param name="denominatorCoeffs">Denominator coeffs</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.Compute(UMapx.Core.Complex32,System.Single[],System.Single[])">
+            <summary>
+            Evaluates a function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="numeratorCoeffs">Numerator coeffs</param>
+            <param name="denominatorCoeffs">Denominator coeffs</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.Compute(System.Single,UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Evaluates a function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="numeratorCoeffs">Numerator coeffs</param>
+            <param name="denominatorCoeffs">Denominator coeffs</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.Compute(UMapx.Core.Complex32,UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Evaluates a function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="numeratorCoeffs">Numerator coeffs</param>
+            <param name="denominatorCoeffs">Denominator coeffs</param>
             <returns>Value</returns>
         </member>
         <member name="T:UMapx.Analysis.Roots">

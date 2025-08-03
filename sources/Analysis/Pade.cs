@@ -17,20 +17,20 @@ namespace UMapx.Analysis
     [Serializable]
     public class Pade
     {
-        #region Private data
-        private readonly float[] numeratorCoeffs;
-        private readonly float[] denominatorCoeffs;
-        #endregion
-
         #region Class components
         /// <summary>
         /// Initializes the Pade approximant.
         /// </summary>
+        public Pade() { }
+        /// <summary>
+        /// Returns the Pade approximant.
+        /// </summary>
         /// <param name="taylorCoeffs">Taylor series coefficients</param>
         /// <param name="m">The degree of the numerator of a rational function</param>
         /// <param name="n">The degree of the denominator of a rational function</param>
-        /// <exception cref="ArgumentException"></exception>
-        public Pade(float[] taylorCoeffs, int m, int n)
+        /// <exception cref="ArgumentException">Exception</exception>
+        /// <returns>Coeffs</returns>
+        public (float[] NumeratorCoeffs, float[] DenominatorCoeffs) Compute(float[] taylorCoeffs, int m, int n)
         {
             if (taylorCoeffs.Length < m + n + 1)
                 throw new ArgumentException("Not enough Taylor series coefficients for the specified orders.");
@@ -50,7 +50,7 @@ namespace UMapx.Analysis
 
             float[] q = Matrice.Solve(A, b);
 
-            denominatorCoeffs = new float[n + 1];
+            float[] denominatorCoeffs = new float[n + 1];
             denominatorCoeffs[0] = 1.0f;
 
             for (int i = 0; i < n; i++)
@@ -58,7 +58,7 @@ namespace UMapx.Analysis
                 denominatorCoeffs[i + 1] = q[i];
             }
 
-            numeratorCoeffs = new float[m + 1];
+            float[] numeratorCoeffs = new float[m + 1];
 
             for (int k = 0; k <= m; k++)
             {
@@ -70,24 +70,143 @@ namespace UMapx.Analysis
                 }
                 numeratorCoeffs[k] = sum;
             }
+
+            return (numeratorCoeffs, denominatorCoeffs);
         }
         /// <summary>
-        /// Gets the numerator coeffs.
+        /// Returns the Pade approximant.
         /// </summary>
-        public float[] NumeratorCoeffs => this.numeratorCoeffs;
-        /// <summary>
-        /// Gets the denominator coeffs.
-        /// </summary>
-        public float[] DenominatorCoeffs => this.denominatorCoeffs;
+        /// <param name="taylorCoeffs">Taylor series coefficients</param>
+        /// <param name="m">The degree of the numerator of a rational function</param>
+        /// <param name="n">The degree of the denominator of a rational function</param>
+        /// <exception cref="ArgumentException">Exception</exception>
+        /// <returns>Coeffs</returns>
+        public (Complex32[] NumeratorCoeffs, Complex32[] DenominatorCoeffs) Compute(Complex32[] taylorCoeffs, int m, int n)
+        {
+            if (taylorCoeffs.Length < m + n + 1)
+                throw new ArgumentException("Not enough Taylor series coefficients for the specified orders.");
+
+            Complex32[,] A = new Complex32[n, n];
+            Complex32[] b = new Complex32[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                b[i] = -taylorCoeffs[m + i + 1];
+
+                for (int j = 0; j < n; j++)
+                {
+                    A[i, j] = taylorCoeffs[m + i - j];
+                }
+            }
+
+            Complex32[] q = Matrice.Solve(A, b);
+
+            Complex32[] denominatorCoeffs = new Complex32[n + 1];
+            denominatorCoeffs[0] = 1.0f;
+
+            for (int i = 0; i < n; i++)
+            {
+                denominatorCoeffs[i + 1] = q[i];
+            }
+
+            Complex32[] numeratorCoeffs = new Complex32[m + 1];
+
+            for (int k = 0; k <= m; k++)
+            {
+                Complex32 sum = 0.0f;
+
+                for (int j = 0; j <= Math.Min(k, n); j++)
+                {
+                    sum += denominatorCoeffs[j] * taylorCoeffs[k - j];
+                }
+                numeratorCoeffs[k] = sum;
+            }
+
+            return (numeratorCoeffs, denominatorCoeffs);
+        }
         /// <summary>
         /// Evaluates a function.
         /// </summary>
         /// <param name="x">Value</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs</param>
         /// <returns>Value</returns>
-        public float Evaluate(float x)
+        public float Compute(float x, float[] numeratorCoeffs, float[] denominatorCoeffs)
         {
             float num = 0;
             float den = 0;
+
+            for (int i = numeratorCoeffs.Length - 1; i >= 0; i--)
+            {
+                num = num * x + numeratorCoeffs[i];
+            }
+
+            for (int i = denominatorCoeffs.Length - 1; i >= 0; i--)
+            {
+                den = den * x + denominatorCoeffs[i];
+            }
+
+            return num / den;
+        }
+        /// <summary>
+        /// Evaluates a function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs</param>
+        /// <returns>Value</returns>
+        public Complex32 Compute(Complex32 x, float[] numeratorCoeffs, float[] denominatorCoeffs)
+        {
+            Complex32 num = 0;
+            Complex32 den = 0;
+
+            for (int i = numeratorCoeffs.Length - 1; i >= 0; i--)
+            {
+                num = num * x + numeratorCoeffs[i];
+            }
+
+            for (int i = denominatorCoeffs.Length - 1; i >= 0; i--)
+            {
+                den = den * x + denominatorCoeffs[i];
+            }
+
+            return num / den;
+        }
+        /// <summary>
+        /// Evaluates a function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs</param>
+        /// <returns>Value</returns>
+        public Complex32 Compute(float x, Complex32[] numeratorCoeffs, Complex32[] denominatorCoeffs)
+        {
+            Complex32 num = 0;
+            Complex32 den = 0;
+
+            for (int i = numeratorCoeffs.Length - 1; i >= 0; i--)
+            {
+                num = num * x + numeratorCoeffs[i];
+            }
+
+            for (int i = denominatorCoeffs.Length - 1; i >= 0; i--)
+            {
+                den = den * x + denominatorCoeffs[i];
+            }
+
+            return num / den;
+        }
+        /// <summary>
+        /// Evaluates a function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs</param>
+        /// <returns>Value</returns>
+        public Complex32 Compute(Complex32 x, Complex32[] numeratorCoeffs, Complex32[] denominatorCoeffs)
+        {
+            Complex32 num = 0;
+            Complex32 den = 0;
 
             for (int i = numeratorCoeffs.Length - 1; i >= 0; i--)
             {
