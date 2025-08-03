@@ -78,7 +78,6 @@ namespace UMapx.Transform
         // IEEE Transactions on Communication, COM-31:532-540 
         // (1983).
         // Designed by Valery Asiryan (c), 2015-2020
-        // Moscow, Russia.
         // **************************************************
 
         /// <summary>

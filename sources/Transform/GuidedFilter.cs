@@ -203,7 +203,6 @@ namespace UMapx.Transform
         // **************************************************
         // ORIGINALS: Kaiming He, Jian Sun, and Xiaoou Tang.
         // Designed by Valery Asiryan (c), 2015-2018
-        // Moscow, Russia.
         // **************************************************
 
         /// <summary>

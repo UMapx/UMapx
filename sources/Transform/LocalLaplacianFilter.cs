@@ -172,7 +172,6 @@ namespace UMapx.Transform
         // MIT technical report, November 2011.
         // 
         // Designed by Valery Asiryan (c), 2015-2020
-        // Moscow, Russia.
         // **************************************************
 
 

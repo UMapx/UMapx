@@ -200,7 +200,6 @@ namespace UMapx.Transform
         // 2011, Article 69.
         // 
         // Designed by Valery Asiryan (c), 2015-2020
-        // Moscow, Russia.
         // **************************************************
 
         /// <summary>

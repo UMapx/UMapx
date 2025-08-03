@@ -55,7 +55,7 @@ namespace UMapx.Transform
 
         #region Fast Sine Transform
         /// <summary>
-        /// Forward cosine transform.
+        /// Forward sine transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -84,7 +84,7 @@ namespace UMapx.Transform
             return C;
         }
         /// <summary>
-        /// Backward cosine transform.
+        /// Backward sine transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -114,7 +114,7 @@ namespace UMapx.Transform
             return C;
         }
         /// <summary>
-        /// Forward cosine transform.
+        /// Forward sine transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -207,7 +207,7 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Backward cosine transform.
+        /// Backward sine transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
@@ -295,7 +295,7 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Forward Fourier transform.
+        /// Forward sine transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -304,7 +304,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Backward Fourier transform.
+        /// Backward sine transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -313,7 +313,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Forward Fourier transform.
+        /// Forward sine transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -322,7 +322,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Backward Fourier transform.
+        /// Backward sine transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>

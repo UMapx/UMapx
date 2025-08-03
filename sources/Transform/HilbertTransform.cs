@@ -383,7 +383,7 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Forward Fourier transform.
+        /// Forward Hilbert transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -392,7 +392,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Backward Fourier transform.
+        /// Backward Hilbert transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -401,7 +401,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Forward Fourier transform.
+        /// Forward Hilbert transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -410,7 +410,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Backward Fourier transform.
+        /// Backward Hilbert transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
