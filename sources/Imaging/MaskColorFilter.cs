@@ -52,7 +52,6 @@ namespace UMapx.Imaging
                     }
                 }
             }
-            return;
         }
 
         /// <summary>

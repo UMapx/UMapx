@@ -2414,12 +2414,12 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Returns the matrix vector corresponding to the specified threshold value.
+        /// Returns the matrix vector corresponding to the specified morphology mode.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="threshold">Threshold</param>
+        /// <param name="mode">Morphology mode</param>
         /// <returns>Array</returns>
-        public static float[] Morph(this float[,] m, int threshold)
+        public static float[] Morph(this float[,] m, MorphologyMode mode = MorphologyMode.Median)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             float[] v = new float[ml];
@@ -2434,7 +2434,7 @@ namespace UMapx.Core
                 }
 
                 Array.Sort(v);
-                u[i] = v[threshold];
+                u[i] = v[LinealgOptions.MorphologyFilter.GetFilterRank(mode, v.Length)];
             }
             return u;
         }
@@ -2858,16 +2858,17 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Matrix morphology (separable)
+        #region Matrix morphology
         /// <summary>
         /// Returns the matrix result of morphological minimum.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <param name="r0">Height radius</param>
         /// <param name="r1">Width radius</param>
+        /// <returns>Matrix</returns>
         public static float[,] Min(this float[,] m, int r0, int r1)
         {
-            return Morph(m, r0, r1, 0, 0);
+            return Morph(m, r0, r1, MorphologyMode.Erosion);
         }
         /// <summary>
         /// Returns the matrix result of morphological maximum.
@@ -2875,9 +2876,10 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="r0">Height radius</param>
         /// <param name="r1">Width radius</param>
+        /// <returns>Matrix</returns>
         public static float[,] Max(this float[,] m, int r0, int r1)
         {
-            return Morph(m, r0, r1, r0 - 1, r1 - 1);
+            return Morph(m, r0, r1, MorphologyMode.Dilatation);
         }
         /// <summary>
         /// Returns the matrix result of morphology.
@@ -2885,11 +2887,11 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="r0">Height radius</param>
         /// <param name="r1">Width radius</param>
-        /// <param name="t0">Threshold by height</param>
-        /// <param name="t1">Threshold by width</param>
-        public static float[,] Morph(this float[,] m, int r0, int r1, int t0, int t1)
+        /// <param name="mode">Morphology mode</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Morph(this float[,] m, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
         {
-            return LinealgOptions.MorphVertical(LinealgOptions.MorphHorizontal(m, r1, t1), r0, t0);
+            return LinealgOptions.MorphologyFilter.Apply(m, r0 / 2, r1 / 2, mode);
         }
         #endregion
 
@@ -4789,16 +4791,16 @@ namespace UMapx.Core
             return maximum;
         }
         /// <summary>
-        /// Gets the value of the vector element corresponding to the threshold value.
+        /// Gets the value of the vector element corresponding to the morphology mode.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="threshold">Threshold</param>
+        /// <param name="mode">Morphology mode</param>
         /// <returns>float precision floating point number</returns>
-        public static float Morph(this float[] v, int threshold)
+        public static float Morph(this float[] v, MorphologyMode mode = MorphologyMode.Median)
         {
             float[] u = (float[])v.Clone();
             Array.Sort(u);
-            return u[threshold];
+            return u[LinealgOptions.MorphologyFilter.GetFilterRank(mode, u.Length)];
         }
         /// <summary>
         /// Returns the covariance value of a vector.
@@ -5821,75 +5823,33 @@ namespace UMapx.Core
 
         #region Vector morphology
         /// <summary>
-        /// Returns the vector result of morphology maximum.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="r">Radius</param>
-        public static float[] Max(this float[] v, int r)
-        {
-            return Morph(v, r, r - 1);
-        }
-        /// <summary>
         /// Returns the vector result of morphology minimum.
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="r">Radius</param>
         public static float[] Min(this float[] v, int r)
         {
-            return Morph(v, r, r - 1);
+            return Morph(v, r, MorphologyMode.Erosion);
+        }
+        /// <summary>
+        /// Returns the vector result of morphology maximum.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="r">Radius</param>
+        public static float[] Max(this float[] v, int r)
+        {
+            return Morph(v, r, MorphologyMode.Dilatation);
         }
         /// <summary>
         /// Returns the vector result of morphology.
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="r">Radius</param>
-        /// <param name="t">Threshold</param>
+        /// <param name="mode">Morphology mode</param>
         /// <returns>Array</returns>
-        public static float[] Morph(this float[] v, int r, int t)
+        public static float[] Morph(this float[] v, int r, MorphologyMode mode = MorphologyMode.Median)
         {
-            int l = v.Length;
-
-            if (l < 2 || r < 2)
-                return v;
-
-            float[] output = new float[l];
-            int h = r >= l ? l - 1 : r;
-            int w = r >> 1;
-            int dl = l - w;
-            float[] s = new float[h];
-            int x;
-
-            for (x = 0; x < h; x++)
-            {
-                s[x] = v[x];
-            }
-
-            Array.Sort(s);
-
-            for (x = 0; x < w; x++)
-            {
-                output[x] = s[t];
-            }
-
-            for (x = w; x < dl; x++)
-            {
-                var i = Array.IndexOf(s, v[x - w]);
-                s[i] = v[x + w];
-                LinealgOptions.FastSort(ref s, i);
-
-                output[x] = s[t];
-            }
-
-            for (x = dl; x < l; x++)
-            {
-                var i = Array.IndexOf(s, v[x - w]);
-                s[i] = v[x];
-                LinealgOptions.FastSort(ref s, i);
-
-                output[x] = s[t];
-            }
-
-            return output;
+            return LinealgOptions.MorphologyFilter.Apply(v, r / 2, mode);
         }
         #endregion
 
@@ -9080,7 +9040,6 @@ namespace UMapx.Core
                     a[z, j] = temp;
                 }
             }
-            return;
         }
         /// <summary>
         /// Implements a permutation of the vectors of the matrix.
@@ -9135,7 +9094,6 @@ namespace UMapx.Core
                     a[z, j] = temp;
                 }
             }
-            return;
         }
         /// <summary>
         /// Implements a permutation of the elements of the vector.
@@ -9149,7 +9107,6 @@ namespace UMapx.Core
             float e1 = v[i], e2 = v[j];
             // swapping vector elements:
             v[j] = e1; v[i] = e2;
-            return;
         }
         /// <summary>
         /// Implements a permutation of the elements of the vector.
@@ -9163,7 +9120,6 @@ namespace UMapx.Core
             Complex32 e1 = v[i], e2 = v[j];
             // swapping vector elements:
             v[j] = e1; v[i] = e2;
-            return;
         }
         #endregion
 

@@ -77,7 +77,6 @@ namespace UMapx.Imaging
                     p[3] = Maths.Byte(values[p[3]] * length);
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -88,7 +87,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
     }

@@ -81,7 +81,6 @@ namespace UMapx.Transform
                     }
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -106,8 +105,6 @@ namespace UMapx.Transform
                     data[i] = 0;
                 }
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -142,7 +139,6 @@ namespace UMapx.Transform
                     }
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -168,8 +164,6 @@ namespace UMapx.Transform
                     data[i].Imag = 0;
                 }
             }
-
-            return;
         }
         #endregion
     }

@@ -120,7 +120,6 @@ namespace UMapx.Decomposition
                     q[i, j] = p[i, j];
                 }
             }
-            return;
         }
         #endregion
     }

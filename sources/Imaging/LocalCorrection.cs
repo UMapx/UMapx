@@ -157,7 +157,6 @@ namespace UMapx.Imaging
                     ApplyGrayscale(bmData, bmSrc);
                     break;
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -171,7 +170,6 @@ namespace UMapx.Imaging
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Data, bmData);
             BitmapFormat.Unlock(Src, bmSrc);
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -186,7 +184,6 @@ namespace UMapx.Imaging
             BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
             current.Dispose();
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -197,7 +194,6 @@ namespace UMapx.Imaging
             var Src = (Bitmap)Data.Clone();
             Apply(Data, Src);
             Src.Dispose();
-            return;
         }
         #endregion
 
@@ -225,8 +221,7 @@ namespace UMapx.Imaging
                     p[k1] = Maths.Byte(this.values[p[k1], pSrc[k1]] * length);
                     p[k] = Maths.Byte(this.values[p[k], pSrc[k]] * length);
                 }
-            }
-            );
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -255,8 +250,7 @@ namespace UMapx.Imaging
 
                     p[k2] = rgb.Red; p[k1] = rgb.Green; p[k] = rgb.Blue;
                 }
-            }
-            );
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -285,10 +279,7 @@ namespace UMapx.Imaging
 
                     p[k2] = rgb.Red; p[k1] = rgb.Green; p[k] = rgb.Blue;
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -317,10 +308,7 @@ namespace UMapx.Imaging
 
                     p[k2] = rgb.Red; p[k1] = rgb.Green; p[k] = rgb.Blue;
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -347,8 +335,6 @@ namespace UMapx.Imaging
                     p[k + 2] = p[k + 1] = p[k] = Maths.Byte(this.values[lumax, lumay] * length);
                 }
             });
-
-            return;
         }
         #endregion
     }

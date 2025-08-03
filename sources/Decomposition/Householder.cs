@@ -133,8 +133,6 @@ namespace UMapx.Decomposition
 
                 matrices[i] = z;
             }
-
-            return;
         }
         /// <summary>
         /// 
@@ -265,7 +263,6 @@ namespace UMapx.Decomposition
 
             matrices[n - 1][n - 1] = 1;
             Im[0] = 0;
-            return;
         }
         #endregion
     }

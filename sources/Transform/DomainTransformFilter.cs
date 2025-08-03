@@ -116,8 +116,6 @@ namespace UMapx.Transform
                 for (i = 0; i < l0; i++)
                     data[i] = (1.0f + this.factor) * (data[i] - copy[i]) + copy[i];
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -142,8 +140,6 @@ namespace UMapx.Transform
                     for (j = 0; j < l1; j++)
                         data[i, j] = (1.0f + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -166,8 +162,6 @@ namespace UMapx.Transform
                 for (i = 0; i < l0; i++)
                     data[i] = (1.0 + this.factor) * (data[i] - copy[i]) + copy[i];
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -192,8 +186,6 @@ namespace UMapx.Transform
                     for (j = 0; j < l1; j++)
                         data[i, j] = (1.0 + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
             }
-
-            return;
         }
         #endregion
 
@@ -261,8 +253,6 @@ namespace UMapx.Transform
                 tdrf_h(I, dIdx, sigma_H_i);
                 tdrf_v(I, dIdy, sigma_H_i);
             }
-
-            return;
         }
         /// <summary>
         /// Domain transform filter.
@@ -314,8 +304,6 @@ namespace UMapx.Transform
                 tdrf_h(I, dIdx, sigma_H_i);
                 tdrf_v(I, dIdy, sigma_H_i);
             }
-
-            return;
         }
         /// <summary>
         /// Domain transform filter.
@@ -354,8 +342,6 @@ namespace UMapx.Transform
                 // 1D filter
                 tdrf(I, dIdy, sigma_H_i);
             }
-
-            return;
         }
         /// <summary>
         /// Domain transform filter.
@@ -394,8 +380,6 @@ namespace UMapx.Transform
                 // 1D filter
                 tdrf(I, dIdy, sigma_H_i);
             }
-
-            return;
         }
 
         /// <summary>
@@ -422,8 +406,6 @@ namespace UMapx.Transform
             for (i = 0; i < h; i++)
                 for (j = w - 2; j >= 0; j--)
                     F[i, j] = F[i, j] + V[i, j + 1] * (F[i, j + 1] - F[i, j]);
-
-            return;
         }
         /// <summary>
         /// Transformed domain recursive filter (vertical).
@@ -449,8 +431,6 @@ namespace UMapx.Transform
             for (i = h - 2; i >= 0; i--)
                 for (j = 0; j < w; j++)
                     F[i, j] = F[i, j] + V[i + 1, j] * (F[i + 1, j] - F[i, j]);
-
-            return;
         }
         /// <summary>
         /// Transformed domain recursive filter (horizontal).
@@ -476,8 +456,6 @@ namespace UMapx.Transform
             for (i = 0; i < h; i++)
                 for (j = w - 2; j >= 0; j--)
                     F[i, j] = F[i, j] + V[i, j + 1] * (F[i, j + 1] - F[i, j]);
-
-            return;
         }
         /// <summary>
         /// Transformed domain recursive filter (vertical).
@@ -503,8 +481,6 @@ namespace UMapx.Transform
             for (i = h - 2; i >= 0; i--)
                 for (j = 0; j < w; j++)
                     F[i, j] = F[i, j] + V[i + 1, j] * (F[i + 1, j] - F[i, j]);
-
-            return;
         }
 
         /// <summary>
@@ -528,8 +504,6 @@ namespace UMapx.Transform
             // Right -> Left filter.
             for (i = h - 2; i >= 0; i--)
                 F[i] = F[i] + V[i + 1] * (F[i + 1] - F[i]);
-
-            return;
         }
         /// <summary>
         /// Transformed domain recursive filter.
@@ -552,8 +526,6 @@ namespace UMapx.Transform
             // Right -> Left filter.
             for (i = h - 2; i >= 0; i--)
                 F[i] = F[i] + V[i + 1] * (F[i + 1] - F[i]);
-
-            return;
         }
         #endregion
     }

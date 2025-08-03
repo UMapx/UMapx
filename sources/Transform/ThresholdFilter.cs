@@ -102,7 +102,6 @@ namespace UMapx.Transform
                     }
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -151,8 +150,6 @@ namespace UMapx.Transform
                     }
                 }
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -203,7 +200,6 @@ namespace UMapx.Transform
                     }
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -262,7 +258,6 @@ namespace UMapx.Transform
                     }
                 }
             }
-            return;
         }
         #endregion
 

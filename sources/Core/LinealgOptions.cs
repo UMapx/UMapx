@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace UMapx.Core
@@ -10,9 +11,9 @@ namespace UMapx.Core
     {
         #region Private data
         /// <summary>
-        /// 
+        /// Exception message.
         /// </summary>
-        private static string exception = "The length of the row of matrix A must be equal to the length of the column of matrix B";
+        private static readonly string exception = "The length of the row of matrix A must be equal to the length of the column of matrix B";
         #endregion
 
         #region Determinant
@@ -481,6 +482,114 @@ namespace UMapx.Core
 
             return C;
         }
+
+        #region Modified Whittle matrix multiplication
+        /// <summary>
+        /// Implements matrix multiplication using modified Whittle optimization.
+        /// </summary>
+        /// <param name="A">Row of A</param>
+        /// <param name="B">Matrix B</param>
+        /// <param name="C">Row of C</param>
+        /// <param name="length">Length</param>
+        /// <param name="width">Width</param>
+        /// <param name="i">Index</param>
+        private static void Whittle_Mul(float[][] A, float[][] B, float[][] C, int length, int width, int i)
+        {
+            float[] iRowA = A[i];
+            float[] iRowC = C[i];
+            int k, j;
+
+            for (k = 0; k < length; k++)
+            {
+                float[] kRowB = B[k];
+                float ikA = iRowA[k];
+
+                for (j = 0; j < width; j++)
+                {
+                    iRowC[j] += ikA * kRowB[j];
+                }
+            }
+        }
+        /// <summary>
+        /// Implements matrix multiplication using modified Whittle optimization.
+        /// </summary>
+        /// <param name="A">Row of A</param>
+        /// <param name="B">Matrix B</param>
+        /// <param name="C">Row of C</param>
+        /// <param name="length">Length</param>
+        /// <param name="width">Width</param>
+        /// <param name="i">Index</param>
+        private static void Whittle_Mul(Complex32[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+        {
+            Complex32[] iRowA = A[i];
+            Complex32[] iRowC = C[i];
+            int k, j;
+
+            for (k = 0; k < length; k++)
+            {
+                Complex32[] kRowB = B[k];
+                Complex32 ikA = iRowA[k];
+
+                for (j = 0; j < width; j++)
+                {
+                    iRowC[j] += ikA * kRowB[j];
+                }
+            }
+        }
+        /// <summary>
+        /// Implements matrix multiplication using modified Whittle optimization.
+        /// </summary>
+        /// <param name="A">Row of A</param>
+        /// <param name="B">Matrix B</param>
+        /// <param name="C">Row of C</param>
+        /// <param name="length">Length</param>
+        /// <param name="width">Width</param>
+        /// <param name="i">Index</param>
+        private static void Whittle_Mul(Complex32[][] A, float[][] B, Complex32[][] C, int length, int width, int i)
+        {
+            Complex32[] iRowA = A[i];
+            Complex32[] iRowC = C[i];
+            int k, j;
+
+            for (k = 0; k < length; k++)
+            {
+                float[] kRowB = B[k];
+                Complex32 ikA = iRowA[k];
+
+                for (j = 0; j < width; j++)
+                {
+                    iRowC[j] += ikA * kRowB[j];
+                }
+            }
+        }
+        /// <summary>
+        /// Implements matrix multiplication using modified Whittle optimization.
+        /// </summary>
+        /// <param name="A">Row of A</param>
+        /// <param name="B">Matrix B</param>
+        /// <param name="C">Row of C</param>
+        /// <param name="length">Length</param>
+        /// <param name="width">Width</param>
+        /// <param name="i">Index</param>
+        private static void Whittle_Mul(float[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+        {
+            float[] iRowA = A[i];
+            Complex32[] iRowC = C[i];
+            int k, j;
+
+            for (k = 0; k < length; k++)
+            {
+                Complex32[] kRowB = B[k];
+                Complex32 ikA = iRowA[k];
+
+                for (j = 0; j < width; j++)
+                {
+                    iRowC[j] += ikA * kRowB[j];
+                }
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Convolution
@@ -1602,156 +1711,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Morphology (separable)
-        /// <summary>
-        /// Implements local average of matrices (horizontal).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="r1">Size</param>
-        /// <param name="threshold">Threshold</param>
-        /// <returns>Jagged array</returns>
-        public static float[,] MorphHorizontal(float[,] A, int r1, int threshold)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (width < 2 || r1 < 2)
-                return A;
-
-            float[,] H = new float[height, width];
-            int h = r1 >= width ? width - 1 : r1;
-            int v = h >> 1;
-            int dl = width - v;
-
-            Parallel.For(0, height, y =>
-            {
-                float[] s = new float[h];
-                int x;
-
-                for (x = 0; x < h; x++)
-                {
-                    s[x] = A[y, x];
-                }
-
-                Array.Sort(s);
-
-                for (x = 0; x < v; x++)
-                {
-                    H[y, x] = s[threshold];
-                }
-
-                for (x = v; x < dl; x++)
-                {
-                    var i = Array.IndexOf(s, A[y, x - v]);
-                    s[i] = A[y, x + v];
-                    FastSort(ref s, i);
-
-                    H[y, x] = s[threshold];
-                }
-
-                for (x = dl; x < width; x++)
-                {
-                    var i = Array.IndexOf(s, A[y, x - v]);
-                    s[i] = A[y, x];
-                    FastSort(ref s, i);
-
-                    H[y, x] = s[threshold];
-                }
-            });
-
-            return H;
-        }
-        /// <summary>
-        /// Implements local average of matrices (vertical).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="r0">Size</param>
-        /// <param name="threshold">Threshold</param>
-        /// <returns>Jagged array</returns>
-        public static float[,] MorphVertical(float[,] A, int r0, int threshold)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (height < 2 || r0 < 2)
-                return A;
-
-            float[,] H = new float[height, width];
-            int h = r0 >= height ? height - 1 : r0;
-            int v = h >> 1;
-            int dl = height - v;
-
-            Parallel.For(0, width, x =>
-            {
-                float[] s = new float[h];
-                int y;
-
-                for (y = 0; y < h; y++)
-                {
-                    s[y] = A[y, x];
-                }
-
-                Array.Sort(s);
-
-                for (y = 0; y < v; y++)
-                {
-                    H[y, x] = s[threshold];
-                }
-
-                for (y = v; y < dl; y++)
-                {
-                    var i = Array.IndexOf(s, A[y - v, x]);
-                    s[i] = A[y + v, x];
-                    FastSort(ref s, i);
-
-                    H[y, x] = s[threshold];
-                }
-
-                for (y = dl; y < height; y++)
-                {
-                    var i = Array.IndexOf(s, A[y - v, x]);
-                    s[i] = A[y, x];
-                    FastSort(ref s, i);
-
-                    H[y, x] = s[threshold];
-                }
-            });
-
-            return H;
-        }
-        /// <summary>
-        /// O(N) sort algorithm.
-        /// </summary>
-        /// <param name="s">Array</param>
-        /// <param name="index">Index</param>
-        public static void FastSort(ref float[] s, int index)
-        {
-            int length = s.Length - 1;
-
-            for (int i = index; i < length; i++)
-            {
-                if (s[i] > s[i + 1])
-                {
-                    var t = s[i + 1];
-                    s[i + 1] = s[i];
-                    s[i    ] = t;
-                }
-                else
-                    break;
-            }
-
-            for (int i = index; i > 0; i--)
-            {
-                if (s[i] < s[i - 1])
-                {
-                    var t = s[i - 1];
-                    s[i - 1] = s[i];
-                    s[i    ] = t;
-                }
-                else
-                    break;
-            }
-        }
-        #endregion
-
         #region Mean (separable)
         /// <summary>
         /// Implements local average of matrices (horizontal).
@@ -1949,115 +1908,533 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Modified Whittle multiply optimizations
+        #region Morphology (separable) [Obsolete]
         /// <summary>
-        /// Implements matrix multiplication using modified Whittle optimization.
+        /// Implements local average of matrices (horizontal).
         /// </summary>
-        /// <param name="A">Row of A</param>
-        /// <param name="B">Matrix B</param>
-        /// <param name="C">Row of C</param>
-        /// <param name="length">Length</param>
-        /// <param name="width">Width</param>
-        /// <param name="i">Index</param>
-        private static void Whittle_Mul(float[][] A, float[][] B, float[][] C, int length, int width, int i)
+        /// <param name="A">Jagged array</param>
+        /// <param name="r1">Size</param>
+        /// <param name="threshold">Threshold</param>
+        /// <returns>Jagged array</returns>
+        [Obsolete]
+        public static float[,] MorphHorizontal(float[,] A, int r1, int threshold)
         {
-            float[] iRowA = A[i];
-            float[] iRowC = C[i];
-            int k, j;
+            int height = A.GetLength(0), width = A.GetLength(1);
 
-            for (k = 0; k < length; k++)
+            if (width < 2 || r1 < 2)
+                return A;
+
+            float[,] H = new float[height, width];
+            int h = r1 >= width ? width - 1 : r1;
+            int v = h >> 1;
+            int dl = width - v;
+
+            Parallel.For(0, height, y =>
             {
-                float[] kRowB = B[k];
-                float ikA = iRowA[k];
+                float[] s = new float[h];
+                int x;
 
-                for (j = 0; j < width; j++)
+                for (x = 0; x < h; x++)
                 {
-                    iRowC[j] += ikA * kRowB[j];
+                    s[x] = A[y, x];
                 }
-            }
-            return;
+
+                Array.Sort(s);
+
+                for (x = 0; x < v; x++)
+                {
+                    H[y, x] = s[threshold];
+                }
+
+                for (x = v; x < dl; x++)
+                {
+                    var i = Array.IndexOf(s, A[y, x - v]);
+                    s[i] = A[y, x + v];
+                    FastSort(ref s, i);
+
+                    H[y, x] = s[threshold];
+                }
+
+                for (x = dl; x < width; x++)
+                {
+                    var i = Array.IndexOf(s, A[y, x - v]);
+                    s[i] = A[y, x];
+                    FastSort(ref s, i);
+
+                    H[y, x] = s[threshold];
+                }
+            });
+
+            return H;
         }
         /// <summary>
-        /// Implements matrix multiplication using modified Whittle optimization.
+        /// Implements local average of matrices (vertical).
         /// </summary>
-        /// <param name="A">Row of A</param>
-        /// <param name="B">Matrix B</param>
-        /// <param name="C">Row of C</param>
-        /// <param name="length">Length</param>
-        /// <param name="width">Width</param>
-        /// <param name="i">Index</param>
-        private static void Whittle_Mul(Complex32[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+        /// <param name="A">Jagged array</param>
+        /// <param name="r0">Size</param>
+        /// <param name="threshold">Threshold</param>
+        /// <returns>Jagged array</returns>
+        [Obsolete]
+        public static float[,] MorphVertical(float[,] A, int r0, int threshold)
         {
-            Complex32[] iRowA = A[i];
-            Complex32[] iRowC = C[i];
-            int k, j;
+            int height = A.GetLength(0), width = A.GetLength(1);
 
-            for (k = 0; k < length; k++)
+            if (height < 2 || r0 < 2)
+                return A;
+
+            float[,] H = new float[height, width];
+            int h = r0 >= height ? height - 1 : r0;
+            int v = h >> 1;
+            int dl = height - v;
+
+            Parallel.For(0, width, x =>
             {
-                Complex32[] kRowB = B[k];
-                Complex32 ikA = iRowA[k];
+                float[] s = new float[h];
+                int y;
 
-                for (j = 0; j < width; j++)
+                for (y = 0; y < h; y++)
                 {
-                    iRowC[j] += ikA * kRowB[j];
+                    s[y] = A[y, x];
                 }
-            }
-            return;
+
+                Array.Sort(s);
+
+                for (y = 0; y < v; y++)
+                {
+                    H[y, x] = s[threshold];
+                }
+
+                for (y = v; y < dl; y++)
+                {
+                    var i = Array.IndexOf(s, A[y - v, x]);
+                    s[i] = A[y + v, x];
+                    FastSort(ref s, i);
+
+                    H[y, x] = s[threshold];
+                }
+
+                for (y = dl; y < height; y++)
+                {
+                    var i = Array.IndexOf(s, A[y - v, x]);
+                    s[i] = A[y, x];
+                    FastSort(ref s, i);
+
+                    H[y, x] = s[threshold];
+                }
+            });
+
+            return H;
         }
         /// <summary>
-        /// Implements matrix multiplication using modified Whittle optimization.
+        /// O(N) sort algorithm.
         /// </summary>
-        /// <param name="A">Row of A</param>
-        /// <param name="B">Matrix B</param>
-        /// <param name="C">Row of C</param>
-        /// <param name="length">Length</param>
-        /// <param name="width">Width</param>
-        /// <param name="i">Index</param>
-        private static void Whittle_Mul(Complex32[][] A, float[][] B, Complex32[][] C, int length, int width, int i)
+        /// <param name="s">Array</param>
+        /// <param name="index">Index</param>
+        [Obsolete]
+        public static void FastSort(ref float[] s, int index)
         {
-            Complex32[] iRowA = A[i];
-            Complex32[] iRowC = C[i];
-            int k, j;
+            int length = s.Length - 1;
 
-            for (k = 0; k < length; k++)
+            for (int i = index; i < length; i++)
             {
-                float[] kRowB = B[k];
-                Complex32 ikA = iRowA[k];
-
-                for (j = 0; j < width; j++)
+                if (s[i] > s[i + 1])
                 {
-                    iRowC[j] += ikA * kRowB[j];
+                    var t = s[i + 1];
+                    s[i + 1] = s[i];
+                    s[i    ] = t;
                 }
+                else
+                    break;
             }
-            return;
+
+            for (int i = index; i > 0; i--)
+            {
+                if (s[i] < s[i - 1])
+                {
+                    var t = s[i - 1];
+                    s[i - 1] = s[i];
+                    s[i    ] = t;
+                }
+                else
+                    break;
+            }
         }
+        #endregion
+
+        #region Morphology
+
         /// <summary>
-        /// Implements matrix multiplication using modified Whittle optimization.
+        /// Defines a morphology filter class for basic implementation.
         /// </summary>
-        /// <param name="A">Row of A</param>
-        /// <param name="B">Matrix B</param>
-        /// <param name="C">Row of C</param>
-        /// <param name="length">Length</param>
-        /// <param name="width">Width</param>
-        /// <param name="i">Index</param>
-        private static void Whittle_Mul(float[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+        public static class MorphologyFilter
         {
-            float[] iRowA = A[i];
-            Complex32[] iRowC = C[i];
-            int k, j;
-
-            for (k = 0; k < length; k++)
+            /// <summary>
+            /// Applies morphology filter to 2D array.
+            /// </summary>
+            /// <param name="data">Array</param>
+            /// <param name="r0">Radius</param>
+            /// <param name="r1">Radius</param>
+            /// <param name="mode">Mode</param>
+            /// <returns>Array</returns>
+            public static float[,] Apply(float[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
             {
-                Complex32[] kRowB = B[k];
-                Complex32 ikA = iRowA[k];
+                int height = data.GetLength(0);
+                int width = data.GetLength(1);
+                int windowHeight = 2 * r0 + 1;
+                int windowWidth = 2 * r1 + 1;
+                int windowSize = windowHeight * windowWidth;
+                int rank = GetFilterRank(mode, windowSize);
+                var comparer = Comparer<float>.Default;
 
-                for (j = 0; j < width; j++)
+                float[,] result = new float[height, width];
+
+                Parallel.For(0, height, i =>
                 {
-                    iRowC[j] += ikA * kRowB[j];
-                }
+                    for (int j = 0; j < width; j++)
+                    {
+                        var set = new HeapSet<float>(comparer);
+
+                        for (int di = -r0; di <= r0; di++)
+                        {
+                            int ni = Maths.Range(i + di, 0, height - 1);
+                            for (int dj = -r1; dj <= r1; dj++)
+                            {
+                                int nj = Maths.Range(j + dj, 0, width - 1);
+                                set.Add(data[ni, nj]);
+                            }
+                        }
+
+                        set.Balance(rank + 1);
+
+                        result[i, j] = set.GetRank();
+                    }
+                });
+
+                return result;
             }
-            return;
+
+            /// <summary>
+            /// Applies morphology filter to 1D array.
+            /// </summary>
+            /// <param name="data">Array</param>
+            /// <param name="r">Radius</param>
+            /// <param name="mode">Mode</param>
+            /// <returns>Array</returns>
+            public static float[] Apply(float[] data, int r, MorphologyMode mode = MorphologyMode.Median)
+            {
+                int N = data.Length;
+                int windowSize = 2 * r + 1;
+                int rank = GetFilterRank(mode, windowSize);
+                var comparer = Comparer<float>.Default;
+
+                float[] result = new float[N];
+
+                for (int i = 0; i < N; i++)
+                {
+                    var set = new HeapSet<float>(comparer);
+
+                    for (int offset = -r; offset <= r; offset++)
+                    {
+                        int idx = Maths.Range(i + offset, 0, N - 1);
+                        set.Add(data[idx]);
+                    }
+
+                    set.Balance(rank + 1);
+
+                    result[i] = set.GetRank();
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// Gets filter rank.
+            /// </summary>
+            /// <param name="mode">Mode</param>
+            /// <param name="windowSize">Window size</param>
+            /// <returns>Value</returns>
+            public static int GetFilterRank(MorphologyMode mode, int windowSize)
+            {
+                return mode switch
+                {
+                    MorphologyMode.Erosion => 0,
+                    MorphologyMode.Median => windowSize / 2,
+                    _ => windowSize - 1
+                };
+            }
         }
+
+        /// <summary>
+        /// Defines a morphology filter class for histogram implementation.
+        /// </summary>
+        public static class MorphologyHistogramFilter
+        {
+            /// <summary>
+            /// Applies morphology filter to 2D array.
+            /// </summary>
+            /// <param name="data">Array</param>
+            /// <param name="r0">Radius</param>
+            /// <param name="r1">Radius</param>
+            /// <param name="mode">Mode</param>
+            /// <returns>Array</returns>
+            public static byte[,] Apply(byte[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
+            {
+                int height = data.GetLength(0);
+                int width = data.GetLength(1);
+                int windowHeight = 2 * r0 + 1;
+                int windowWidth = 2 * r1 + 1;
+                int windowSize = windowHeight * windowWidth;
+                int medianPos = GetFilterRank(mode, windowSize);
+                int range = byte.MaxValue + 1;
+
+                byte[,] result = new byte[height, width];
+
+                Parallel.For(0, height, i =>
+                {
+                    for (int j = 0; j < width; j++)
+                    {
+                        int[] histogram = new int[range];
+
+                        for (int di = -r0; di <= r0; di++)
+                        {
+                            int ni = Maths.Range(i + di, 0, height - 1);
+
+                            for (int dj = -r1; dj <= r1; dj++)
+                            {
+                                int nj = Maths.Range(j + dj, 0, width - 1);
+                                byte val = data[ni, nj];
+                                histogram[val]++;
+                            }
+                        }
+
+                        int count = 0;
+                        byte median = 0;
+
+                        for (int k = 0; k < range; k++)
+                        {
+                            count += histogram[k];
+
+                            if (count >= medianPos)
+                            {
+                                median = (byte)k;
+                                break;
+                            }
+                        }
+
+                        result[i, j] = median;
+                    }
+                });
+
+                return result;
+            }
+
+            /// <summary>
+            /// Applies morphology filter to 1D array.
+            /// </summary>
+            /// <param name="data">Array</param>
+            /// <param name="r">Radius</param>
+            /// <param name="mode">Mode</param>
+            /// <returns>Array</returns>
+            public static byte[] Apply(byte[] data, int r, MorphologyMode mode = MorphologyMode.Median)
+            {
+                int length = data.Length;
+                int windowSize = 2 * r + 1;
+                int medianPos = GetFilterRank(mode, windowSize);
+                int range = byte.MaxValue + 1;
+
+                byte[] result = new byte[length];
+
+                for (int i = 0; i < length; i++)
+                {
+                    int[] histogram = new int[range];
+
+                    for (int offset = -r; offset <= r; offset++)
+                    {
+                        int idx = Maths.Range(i + offset, 0, length - 1);
+                        histogram[data[idx]]++;
+                    }
+
+                    int count = 0;
+                    byte median = 0;
+
+                    for (int k = 0; k < range; k++)
+                    {
+                        count += histogram[k];
+
+                        if (count >= medianPos)
+                        {
+                            median = (byte)k;
+                            break;
+                        }
+                    }
+
+                    result[i] = median;
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// Gets filter rank.
+            /// </summary>
+            /// <param name="mode">Mode</param>
+            /// <param name="windowSize">Window size</param>
+            /// <returns>Value</returns>
+            public static int GetFilterRank(MorphologyMode mode, int windowSize)
+            {
+                return mode switch
+                {
+                    MorphologyMode.Erosion => 1,
+                    MorphologyMode.Median => (windowSize + 1) / 2,
+                    _ => windowSize,
+                };
+            }
+        }
+
+        /// <summary>
+        /// Defines a morphology filter class for fast histogram implementation.
+        /// </summary>
+        public static class MorphologyHistogramFastFilter
+        {
+            /// <summary>
+            /// Applies morphology filter to 2D array.
+            /// </summary>
+            /// <param name="data">Array</param>
+            /// <param name="r0">Radius</param>
+            /// <param name="r1">Radius</param>
+            /// <param name="mode">Mode</param>
+            /// <returns>Array</returns>
+            public static byte[,] Apply(byte[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
+            {
+                int height = data.GetLength(0);
+                int width = data.GetLength(1);
+                int windowHeight = 2 * r0 + 1;
+                int windowWidth = 2 * r1 + 1;
+                int windowSize = windowHeight * windowWidth;
+                int rank = GetFilterRank(mode, windowSize);
+                int range = byte.MaxValue + 1;
+
+                byte[,] result = new byte[height, width];
+
+                Parallel.For(0, height, i =>
+                {
+                    int[] histogram = new int[range];
+
+                    for (int di = -r0; di <= r0; di++)
+                    {
+                        int ni = Maths.Range(i + di, 0, height - 1);
+
+                        for (int dj = -r1; dj <= r1; dj++)
+                        {
+                            int nj = Maths.Range(0 + dj, 0, width - 1);
+                            histogram[data[ni, nj]]++;
+                        }
+                    }
+
+                    result[i, 0] = GetHistogramRank(histogram, rank);
+
+                    for (int j = 1; j < width; j++)
+                    {
+                        int outCol = Maths.Range(j - r1 - 1, 0, width - 1);
+                        int inCol = Maths.Range(j + r1, 0, width - 1);
+
+                        for (int di = -r0; di <= r0; di++)
+                        {
+                            int ni = Maths.Range(i + di, 0, height - 1);
+
+                            byte outVal = data[ni, outCol];
+                            histogram[outVal]--;
+
+                            byte inVal = data[ni, inCol];
+                            histogram[inVal]++;
+                        }
+
+                        result[i, j] = GetHistogramRank(histogram, rank);
+                    }
+                });
+
+                return result;
+            }
+
+            /// <summary>
+            /// Applies morphology filter to 1D array.
+            /// </summary>
+            /// <param name="data">Array</param>
+            /// <param name="r">Radius</param>
+            /// <param name="mode">Mode</param>
+            /// <returns>Array</returns>
+            public static byte[] Apply(byte[] data, int r, MorphologyMode mode = MorphologyMode.Median)
+            {
+                int length = data.Length;
+                int windowSize = 2 * r + 1;
+                int rank = GetFilterRank(mode, windowSize);
+                int range = byte.MaxValue + 1;
+
+                byte[] result = new byte[length];
+
+                int[] histogram = new int[range];
+
+                for (int i = 0; i < windowSize && i < length; i++)
+                {
+                    int idx = Maths.Range(i, 0, length - 1);
+                    histogram[data[idx]]++;
+                }
+
+                result[0] = GetHistogramRank(histogram, rank);
+
+                for (int i = 1; i < length; i++)
+                {
+                    int outIdx = Maths.Range(i - r - 1, 0, length - 1);
+                    int inIdx = Maths.Range(i + r, 0, length - 1);
+
+                    histogram[data[outIdx]]--;
+                    histogram[data[inIdx]]++;
+
+                    result[i] = GetHistogramRank(histogram, rank);
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// Gets filter rank.
+            /// </summary>
+            /// <param name="mode">Mode</param>
+            /// <param name="windowSize">Window size</param>
+            /// <returns>Value</returns>
+            public static int GetFilterRank(MorphologyMode mode, int windowSize)
+            {
+                return mode switch
+                {
+                    MorphologyMode.Erosion => 1,
+                    MorphologyMode.Median => (windowSize + 1) / 2,
+                    _ => windowSize,
+                };
+            }
+
+            /// <summary>
+            /// Gets histogram rank.
+            /// </summary>
+            /// <param name="histogram">Histogram</param>
+            /// <param name="rank">Rank</param>
+            /// <returns>Value</returns>
+            public static byte GetHistogramRank(int[] histogram, int rank)
+            {
+                int count = 0;
+
+                for (int i = 0; i < histogram.Length; i++)
+                {
+                    count += histogram[i];
+
+                    if (count >= rank)
+                    {
+                        return (byte)i;
+                    }
+                }
+                return 0; // fallback (should not happen if rank valid)
+            }
+        }
+
         #endregion
     }
 }

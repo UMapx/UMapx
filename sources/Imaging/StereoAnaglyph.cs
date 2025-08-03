@@ -119,7 +119,6 @@ namespace UMapx.Imaging
                     }
                     break;
             }
-            return;
         }
         /// <summary>
         /// Apply filter.

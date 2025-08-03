@@ -150,8 +150,6 @@
             {
                 image[i] = tensorOperator(image[i], b[i]);
             }
-
-            return;
         }
         /// <summary>
         /// Implements operator function.
@@ -167,8 +165,6 @@
             {
                 image[i] = tensorOperator(image[i], b);
             }
-
-            return;
         }
         #endregion
 

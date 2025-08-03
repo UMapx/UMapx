@@ -52,7 +52,6 @@ namespace UMapx.Decomposition
 
                 q = Matrice.SetCol(q, Matrice.Div(u, Matrice.Norm(u)), j); // set j-column of matrix Q.
             }
-            return;
         }
         #endregion
 

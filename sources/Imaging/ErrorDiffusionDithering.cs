@@ -125,7 +125,6 @@ namespace UMapx.Imaging
                     Diffuse(r - color.R, g - color.G, b - color.B, p);
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -137,7 +136,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         /// <summary>
         /// Implements filter rebuilding.

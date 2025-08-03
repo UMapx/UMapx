@@ -6,44 +6,41 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Defines the opening filter.
+    /// Defines the median filter.
     /// </summary>
     [Serializable]
-    public class Opening : IBitmapFilter2, IBitmapFilter
+    public class Median : IBitmapFilter2, IBitmapFilter
     {
         #region Private data
-        private readonly Erosion erosion = new Erosion();
-        private readonly Dilatation dilatation = new Dilatation();
+        private int rw;
+        private int rh;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Initializes the opening filter.
+        /// Initializes the median filter.
         /// </summary>
         /// <param name="radius">Radius</param>
-        public Opening(int radius = 3)
+        public Median(int radius = 3)
         {
-            erosion = new Erosion(radius);
-            dilatation = new Dilatation(radius);
+            Size = new SizeInt(radius, radius);
         }
         /// <summary>
-        /// Initializes the opening filter.
+        /// Initializes the median filter.
         /// </summary>
         /// <param name="width">Filter width</param>
         /// <param name="height">Filter height</param>
-        public Opening(int width, int height)
+        public Median(int width, int height)
         {
-            erosion = new Erosion(width, height);
-            dilatation = new Dilatation(width, height);
+            Size = new SizeInt(width, height);
         }
         /// <summary>
-        /// Initializes the opening filter.
+        /// Initializes the median filter.
         /// </summary>
         /// <param name="size">Filter size</param>
-        public Opening(SizeInt size)
+        public Median(SizeInt size)
         {
-            erosion = new Erosion(size);
-            dilatation = new Dilatation(size);
+            Size = size;
         }
         /// <summary>
         /// Gets or sets the filter size.
@@ -52,12 +49,12 @@ namespace UMapx.Imaging
         {
             get
             {
-                return erosion.Size;
+                return new SizeInt(rw, rh);
             }
             set
             {
-                erosion.Size = value;
-                dilatation.Size = value;
+                this.rw = value.Width;
+                this.rh = value.Height;
             }
         }
         /// <summary>
@@ -67,8 +64,7 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
-            erosion.Apply(bmSrc, bmData);
-            dilatation.Apply(bmData, bmSrc);
+            Morphology.Median(Size.Width, Size.Height).Apply(bmData, bmSrc);
         }
         /// <summary>
         /// Apply filter.

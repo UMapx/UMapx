@@ -318,8 +318,6 @@ namespace UMapx.Decomposition
                     }
                 }
             }
-
-            return;
         }
         /// <summary>
         ///   Adaptation of the original Fortran QZIT routine from EISPACK.

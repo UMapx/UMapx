@@ -3961,9 +3961,79 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="T:UMapx.Core.HeapSet`1">
+            <summary>
+            Defines a heap set.
+            </summary>
+            <typeparam name="T">Type</typeparam>
+        </member>
+        <member name="M:UMapx.Core.HeapSet`1.#ctor(System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Initializes the heap set.
+            </summary>
+            <param name="comparer">Comparer</param>
+        </member>
+        <member name="P:UMapx.Core.HeapSet`1.Count">
+            <summary>
+            Gets the heap set items count.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.HeapSet`1.Add(`0)">
+            <summary>
+            Adds an item to the heap set.
+            </summary>
+            <param name="item">Item</param>
+        </member>
+        <member name="M:UMapx.Core.HeapSet`1.Balance(System.Int32)">
+            <summary>
+            Balances the heap set.
+            </summary>
+            <param name="targetLowSize">Target low size</param>
+        </member>
+        <member name="M:UMapx.Core.HeapSet`1.GetRank">
+            <summary>
+            Returns the rank.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:UMapx.Core.Heap`1">
+            <summary>
+            Defines a heap.
+            </summary>
+            <typeparam name="T">Type</typeparam>
+        </member>
+        <member name="M:UMapx.Core.Heap`1.#ctor(System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Initializes the heap.
+            </summary>
+            <param name="comparer">Comparer</param>
+        </member>
+        <member name="P:UMapx.Core.Heap`1.Count">
+            <summary>
+            Gets the heap items count.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Heap`1.Add(`0)">
+            <summary>
+            Adds an item to the heap.
+            </summary>
+            <param name="item">Item</param>
+        </member>
+        <member name="M:UMapx.Core.Heap`1.Peek">
+            <summary>
+            Gets a heap peek.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Heap`1.Extract">
+            <summary>
+            Extracts an item from the heap.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:UMapx.Core.InterpolationMode">
             <summary>
-            Defines interpolation mode.
+            Defines an interpolation mode.
             </summary>
         </member>
         <member name="F:UMapx.Core.InterpolationMode.Bicubic">
@@ -4295,7 +4365,7 @@
         </member>
         <member name="F:UMapx.Core.LinealgOptions.exception">
             <summary>
-            
+            Exception message.
             </summary>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.Determinant(System.Single*,System.Int32)">
@@ -4359,6 +4429,50 @@
             <param name="A">Jagged array</param>
             <param name="B">Jagged array</param>
             <returns>Jagged array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[][],System.Single[][],System.Single[][],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Implements matrix multiplication using modified Whittle optimization.
+            </summary>
+            <param name="A">Row of A</param>
+            <param name="B">Matrix B</param>
+            <param name="C">Row of C</param>
+            <param name="length">Length</param>
+            <param name="width">Width</param>
+            <param name="i">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Implements matrix multiplication using modified Whittle optimization.
+            </summary>
+            <param name="A">Row of A</param>
+            <param name="B">Matrix B</param>
+            <param name="C">Row of C</param>
+            <param name="length">Length</param>
+            <param name="width">Width</param>
+            <param name="i">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.Complex32[][],System.Single[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Implements matrix multiplication using modified Whittle optimization.
+            </summary>
+            <param name="A">Row of A</param>
+            <param name="B">Matrix B</param>
+            <param name="C">Row of C</param>
+            <param name="length">Length</param>
+            <param name="width">Width</param>
+            <param name="i">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Implements matrix multiplication using modified Whittle optimization.
+            </summary>
+            <param name="A">Row of A</param>
+            <param name="B">Matrix B</param>
+            <param name="C">Row of C</param>
+            <param name="length">Length</param>
+            <param name="width">Width</param>
+            <param name="i">Index</param>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.Conv(System.Single[0:,0:],System.Single[0:,0:],System.Boolean)">
             <summary>
@@ -4468,31 +4582,6 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MorphHorizontal(System.Single[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Implements local average of matrices (horizontal).
-            </summary>
-            <param name="A">Jagged array</param>
-            <param name="r1">Size</param>
-            <param name="threshold">Threshold</param>
-            <returns>Jagged array</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.MorphVertical(System.Single[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Implements local average of matrices (vertical).
-            </summary>
-            <param name="A">Jagged array</param>
-            <param name="r0">Size</param>
-            <param name="threshold">Threshold</param>
-            <returns>Jagged array</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.FastSort(System.Single[]@,System.Int32)">
-            <summary>
-            O(N) sort algorithm.
-            </summary>
-            <param name="s">Array</param>
-            <param name="index">Index</param>
-        </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanHorizontal(System.Single[0:,0:],System.Int32)">
             <summary>
             Implements local average of matrices (horizontal).
@@ -4525,49 +4614,134 @@
             <param name="r0">Size</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[][],System.Single[][],System.Single[][],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MorphHorizontal(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
-            Implements matrix multiplication using modified Whittle optimization.
+            Implements local average of matrices (horizontal).
             </summary>
-            <param name="A">Row of A</param>
-            <param name="B">Matrix B</param>
-            <param name="C">Row of C</param>
-            <param name="length">Length</param>
-            <param name="width">Width</param>
-            <param name="i">Index</param>
+            <param name="A">Jagged array</param>
+            <param name="r1">Size</param>
+            <param name="threshold">Threshold</param>
+            <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MorphVertical(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
-            Implements matrix multiplication using modified Whittle optimization.
+            Implements local average of matrices (vertical).
             </summary>
-            <param name="A">Row of A</param>
-            <param name="B">Matrix B</param>
-            <param name="C">Row of C</param>
-            <param name="length">Length</param>
-            <param name="width">Width</param>
-            <param name="i">Index</param>
+            <param name="A">Jagged array</param>
+            <param name="r0">Size</param>
+            <param name="threshold">Threshold</param>
+            <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.Complex32[][],System.Single[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.FastSort(System.Single[]@,System.Int32)">
             <summary>
-            Implements matrix multiplication using modified Whittle optimization.
+            O(N) sort algorithm.
             </summary>
-            <param name="A">Row of A</param>
-            <param name="B">Matrix B</param>
-            <param name="C">Row of C</param>
-            <param name="length">Length</param>
-            <param name="width">Width</param>
-            <param name="i">Index</param>
+            <param name="s">Array</param>
+            <param name="index">Index</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+        <member name="T:UMapx.Core.LinealgOptions.MorphologyFilter">
             <summary>
-            Implements matrix multiplication using modified Whittle optimization.
+            Defines a morphology filter class for basic implementation.
             </summary>
-            <param name="A">Row of A</param>
-            <param name="B">Matrix B</param>
-            <param name="C">Row of C</param>
-            <param name="length">Length</param>
-            <param name="width">Width</param>
-            <param name="i">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyFilter.Apply(System.Single[0:,0:],System.Int32,System.Int32,UMapx.Core.MorphologyMode)">
+            <summary>
+            Applies morphology filter to 2D array.
+            </summary>
+            <param name="data">Array</param>
+            <param name="r0">Radius</param>
+            <param name="r1">Radius</param>
+            <param name="mode">Mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyFilter.Apply(System.Single[],System.Int32,UMapx.Core.MorphologyMode)">
+            <summary>
+            Applies morphology filter to 1D array.
+            </summary>
+            <param name="data">Array</param>
+            <param name="r">Radius</param>
+            <param name="mode">Mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyFilter.GetFilterRank(UMapx.Core.MorphologyMode,System.Int32)">
+            <summary>
+            Gets filter rank.
+            </summary>
+            <param name="mode">Mode</param>
+            <param name="windowSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="T:UMapx.Core.LinealgOptions.MorphologyHistogramFilter">
+            <summary>
+            Defines a morphology filter class for histogram implementation.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyHistogramFilter.Apply(System.Byte[0:,0:],System.Int32,System.Int32,UMapx.Core.MorphologyMode)">
+            <summary>
+            Applies morphology filter to 2D array.
+            </summary>
+            <param name="data">Array</param>
+            <param name="r0">Radius</param>
+            <param name="r1">Radius</param>
+            <param name="mode">Mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyHistogramFilter.Apply(System.Byte[],System.Int32,UMapx.Core.MorphologyMode)">
+            <summary>
+            Applies morphology filter to 1D array.
+            </summary>
+            <param name="data">Array</param>
+            <param name="r">Radius</param>
+            <param name="mode">Mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyHistogramFilter.GetFilterRank(UMapx.Core.MorphologyMode,System.Int32)">
+            <summary>
+            Gets filter rank.
+            </summary>
+            <param name="mode">Mode</param>
+            <param name="windowSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="T:UMapx.Core.LinealgOptions.MorphologyHistogramFastFilter">
+            <summary>
+            Defines a morphology filter class for fast histogram implementation.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyHistogramFastFilter.Apply(System.Byte[0:,0:],System.Int32,System.Int32,UMapx.Core.MorphologyMode)">
+            <summary>
+            Applies morphology filter to 2D array.
+            </summary>
+            <param name="data">Array</param>
+            <param name="r0">Radius</param>
+            <param name="r1">Radius</param>
+            <param name="mode">Mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyHistogramFastFilter.Apply(System.Byte[],System.Int32,UMapx.Core.MorphologyMode)">
+            <summary>
+            Applies morphology filter to 1D array.
+            </summary>
+            <param name="data">Array</param>
+            <param name="r">Radius</param>
+            <param name="mode">Mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyHistogramFastFilter.GetFilterRank(UMapx.Core.MorphologyMode,System.Int32)">
+            <summary>
+            Gets filter rank.
+            </summary>
+            <param name="mode">Mode</param>
+            <param name="windowSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(System.Int32[],System.Int32)">
+            <summary>
+            Gets histogram rank.
+            </summary>
+            <param name="histogram">Histogram</param>
+            <param name="rank">Rank</param>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Core.Maths">
             <summary>
@@ -6543,12 +6717,12 @@
             <param name="index">Index array</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Morph(System.Single[0:,0:],System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Morph(System.Single[0:,0:],UMapx.Core.MorphologyMode)">
             <summary>
-            Returns the matrix vector corresponding to the specified threshold value.
+            Returns the matrix vector corresponding to the specified morphology mode.
             </summary>
             <param name="m">Matrix</param>
-            <param name="threshold">Threshold</param>
+            <param name="mode">Morphology mode</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(System.Single[0:,0:])">
@@ -6768,6 +6942,7 @@
             <param name="m">Matrix</param>
             <param name="r0">Height radius</param>
             <param name="r1">Width radius</param>
+            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Max(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
@@ -6776,16 +6951,17 @@
             <param name="m">Matrix</param>
             <param name="r0">Height radius</param>
             <param name="r1">Width radius</param>
+            <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Morph(System.Single[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Morph(System.Single[0:,0:],System.Int32,System.Int32,UMapx.Core.MorphologyMode)">
             <summary>
             Returns the matrix result of morphology.
             </summary>
             <param name="m">Matrix</param>
             <param name="r0">Height radius</param>
             <param name="r1">Width radius</param>
-            <param name="t0">Threshold by height</param>
-            <param name="t1">Threshold by width</param>
+            <param name="mode">Morphology mode</param>
+            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
@@ -7659,12 +7835,12 @@
             <param name="index">Max index</param>
             <returns>float precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Morph(System.Single[],System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Morph(System.Single[],UMapx.Core.MorphologyMode)">
             <summary>
-            Gets the value of the vector element corresponding to the threshold value.
+            Gets the value of the vector element corresponding to the morphology mode.
             </summary>
             <param name="v">Array</param>
-            <param name="threshold">Threshold</param>
+            <param name="mode">Morphology mode</param>
             <returns>float precision floating point number</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Cov(System.Single[])">
@@ -7935,13 +8111,6 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Max(System.Single[],System.Int32)">
-            <summary>
-            Returns the vector result of morphology maximum.
-            </summary>
-            <param name="v">Array</param>
-            <param name="r">Radius</param>
-        </member>
         <member name="M:UMapx.Core.Matrice.Min(System.Single[],System.Int32)">
             <summary>
             Returns the vector result of morphology minimum.
@@ -7949,13 +8118,20 @@
             <param name="v">Array</param>
             <param name="r">Radius</param>
         </member>
-        <member name="M:UMapx.Core.Matrice.Morph(System.Single[],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.Matrice.Max(System.Single[],System.Int32)">
+            <summary>
+            Returns the vector result of morphology maximum.
+            </summary>
+            <param name="v">Array</param>
+            <param name="r">Radius</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Morph(System.Single[],System.Int32,UMapx.Core.MorphologyMode)">
             <summary>
             Returns the vector result of morphology.
             </summary>
             <param name="v">Array</param>
             <param name="r">Radius</param>
-            <param name="t">Threshold</param>
+            <param name="mode">Morphology mode</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(System.Single[],System.Int32)">
@@ -9444,6 +9620,26 @@
             <param name="b">Array</param>
             <returns>Array</returns>
         </member>
+        <member name="T:UMapx.Core.MorphologyMode">
+            <summary>
+            Defines a morphology mode.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.MorphologyMode.Erosion">
+            <summary>
+            Erosion.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.MorphologyMode.Median">
+            <summary>
+            Median.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.MorphologyMode.Dilatation">
+            <summary>
+            Dilatation.
+            </summary>
+        </member>
         <member name="T:UMapx.Core.PointFloat">
             <summary>
             Defines a pair of float numbers representing an ordered pair of X and Y coordinates.
@@ -9979,7 +10175,7 @@
         </member>
         <member name="T:UMapx.Core.RotationMode">
             <summary>
-            Defines the rotation mode of processing.
+            Defines a rotation mode.
             </summary>
         </member>
         <member name="F:UMapx.Core.RotationMode.R0">
@@ -17261,20 +17457,6 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Dilatation.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.Dilatation.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
         <member name="T:UMapx.Imaging.EdgeGlow">
             <summary>
             Defines the edge glow filter.
@@ -17431,20 +17613,6 @@
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
-        </member>
-        <member name="M:UMapx.Imaging.Erosion.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.Erosion.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
         </member>
         <member name="T:UMapx.Imaging.ErrorDiffusionDithering">
             <summary>
@@ -19427,6 +19595,61 @@
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
+        <member name="T:UMapx.Imaging.Median">
+            <summary>
+            Defines the median filter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Median.#ctor(System.Int32)">
+            <summary>
+            Initializes the median filter.
+            </summary>
+            <param name="radius">Radius</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes the median filter.
+            </summary>
+            <param name="width">Filter width</param>
+            <param name="height">Filter height</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.#ctor(UMapx.Core.SizeInt)">
+            <summary>
+            Initializes the median filter.
+            </summary>
+            <param name="size">Filter size</param>
+        </member>
+        <member name="P:UMapx.Imaging.Median.Size">
+            <summary>
+            Gets or sets the filter size.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Median.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
         <member name="T:UMapx.Imaging.Merge">
             <summary>
             Defines the merge filter.
@@ -19490,37 +19713,40 @@
         <member name="T:UMapx.Imaging.Morphology">
             <summary>
             Defines the morphology filter.
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Mathematical_morphology
+            </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,UMapx.Core.MorphologyMode)">
             <summary>
             Initializes the morphology filter.
             </summary>
             <param name="radius">Radius</param>
-            <param name="threshold">Threshold</param>
+            <param name="mode">Morphology mode</param>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,System.Int32,UMapx.Core.MorphologyMode)">
             <summary>
             Initializes the morphology filter.
             </summary>
             <param name="width">Filter width</param>
             <param name="height">Filter height</param>
-            <param name="widthThreshold">Threshold by width</param>
-            <param name="heightThreshold">Threshold by height</param>
+            <param name="mode">Morphology mode</param>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.#ctor(UMapx.Core.SizeInt,UMapx.Core.SizeInt)">
+        <member name="M:UMapx.Imaging.Morphology.#ctor(UMapx.Core.SizeInt,UMapx.Core.MorphologyMode)">
             <summary>
             Initializes the morphology filter.
             </summary>
             <param name="size">Filter size</param>
-            <param name="threshold">Thresholds</param>
+            <param name="mode">Morphology mode</param>
         </member>
         <member name="P:UMapx.Imaging.Morphology.Size">
             <summary>
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Morphology.Threshold">
+        <member name="P:UMapx.Imaging.Morphology.Mode">
             <summary>
             Gets or sets thresholds.
             </summary>
@@ -19550,27 +19776,6 @@
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
-        </member>
-        <member name="M:UMapx.Imaging.Morphology.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.Morphology.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.Morphology.FastSort(System.Byte[]@,System.Int32)">
-            <summary>
-            O(N) sort algorithm.
-            </summary>
-            <param name="s">Array</param>
-            <param name="index">Index</param>
         </member>
         <member name="M:UMapx.Imaging.Morphology.Erosion(System.Int32,System.Int32)">
             <summary>

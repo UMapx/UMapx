@@ -38,7 +38,6 @@ namespace UMapx.Imaging
                     p[2] = green;
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.

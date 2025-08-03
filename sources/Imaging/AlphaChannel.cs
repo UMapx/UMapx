@@ -34,7 +34,6 @@ namespace UMapx.Imaging
                     p[3] = (byte)RGB.Average(pSrc[2], pSrc[1], pSrc[0]);
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.

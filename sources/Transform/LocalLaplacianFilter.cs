@@ -133,7 +133,6 @@ namespace UMapx.Transform
         public void Apply(float[,] data)
         {
             llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -142,7 +141,6 @@ namespace UMapx.Transform
         public void Apply(float[] data)
         {
             llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -264,8 +262,6 @@ namespace UMapx.Transform
                     input[y, x] = I_outp[y, x];
                 }
             }
-
-            return;
         }
         /// <summary>
         /// Local laplacian filter.
@@ -341,8 +337,6 @@ namespace UMapx.Transform
             {
                 input[y] = I_outp[y];
             }
-
-            return;
         }
 
         /// <summary>

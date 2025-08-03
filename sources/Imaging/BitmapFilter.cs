@@ -80,7 +80,6 @@ namespace UMapx.Imaging
                     ApplyGrayscale(bmData);
                     break;
             }
-            return;
         }
         /// <summary>
         /// Appy filter.
@@ -91,7 +90,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
 
@@ -109,7 +107,6 @@ namespace UMapx.Imaging
             this.filter.Apply(rgb[2]);
 
             BitmapMatrix.FromRGB(rgb, bmData);
-            return;
         }
         /// <summary>
         /// Appy filter.
@@ -120,7 +117,6 @@ namespace UMapx.Imaging
             float[][,] hsb = BitmapMatrix.ToHSB(bmData, true);
             this.filter.Apply(hsb[2]);
             BitmapMatrix.FromHSB(hsb, bmData);
-            return;
         }
         /// <summary>
         /// Appy filter.
@@ -131,7 +127,6 @@ namespace UMapx.Imaging
             float[][,] hsl = BitmapMatrix.ToHSL(bmData, true);
             this.filter.Apply(hsl[2]);
             BitmapMatrix.FromHSL(hsl, bmData);
-            return;
         }
         /// <summary>
         /// Appy filter.
@@ -142,7 +137,6 @@ namespace UMapx.Imaging
             float[][,] ycbcr = BitmapMatrix.ToYCbCr(bmData, true);
             this.filter.Apply(ycbcr[0]);
             BitmapMatrix.FromYCbCr(ycbcr, bmData);
-            return;
         }
         /// <summary>
         /// Appy filter.
@@ -153,7 +147,6 @@ namespace UMapx.Imaging
             float[,] y = BitmapMatrix.ToGrayscale(bmData);
             this.filter.Apply(y);
             BitmapMatrix.FromGrayscale(y, bmData);
-            return;
         }
         #endregion
     }

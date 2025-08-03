@@ -435,7 +435,6 @@ namespace UMapx.Transform
                 f[i] *= 2.0;
                 f[i + n2] = Complex32.Zero;
             }
-            return;
         }
         /// <summary>
         /// Implements the rearrangement of the spectrum UMapxing to Hilbert.

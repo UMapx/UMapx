@@ -121,10 +121,7 @@ namespace UMapx.Imaging
                     dst[k + 1] = merge(dst[k + 1], src[l + 1], a0, a1);
                     dst[k + 2] = merge(dst[k + 2], src[l + 2], a0, a1);
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.

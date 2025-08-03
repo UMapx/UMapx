@@ -86,10 +86,7 @@ namespace UMapx.Imaging
                         p[k + 0] = output.B;
                     }
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.
