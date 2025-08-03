@@ -7,7 +7,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Defines the oil filter.
+    /// Defines the oil painting filter.
     /// <remarks>
     /// More information can be found on the website:
     /// https://www.codeproject.com/articles/471994/oilpainteffect
@@ -26,7 +26,7 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Initializes the oil filter.
+        /// Initializes the oil painting filter.
         /// </summary>
         /// <param name="radius">Radius</param>
         /// <param name="depth">Value [0, 1]</param>
@@ -36,7 +36,7 @@ namespace UMapx.Imaging
             Depth = depth;
         }
         /// <summary>
-        /// Initializes the oil filter.
+        /// Initializes the oil painting filter.
         /// </summary>
         /// <param name="height">Filter height</param>
         /// <param name="width">Filter width</param>
@@ -47,7 +47,7 @@ namespace UMapx.Imaging
             Depth = depth;
         }
         /// <summary>
-        /// Initializes the oil filter.
+        /// Initializes the oil painting filter.
         /// </summary>
         /// <param name="size">Radius</param>
         /// <param name="depth">Value [0, 1]</param>

@@ -16600,6 +16600,25 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
         <member name="T:UMapx.Imaging.Closing">
             <summary>
             Defines the closing filter.
@@ -19946,7 +19965,7 @@
         </member>
         <member name="T:UMapx.Imaging.OilPainting">
             <summary>
-            Defines the oil filter.
+            Defines the oil painting filter.
             <remarks>
             More information can be found on the website:
             https://www.codeproject.com/articles/471994/oilpainteffect
@@ -19955,14 +19974,14 @@
         </member>
         <member name="M:UMapx.Imaging.OilPainting.#ctor(System.Int32,System.Double)">
             <summary>
-            Initializes the oil filter.
+            Initializes the oil painting filter.
             </summary>
             <param name="radius">Radius</param>
             <param name="depth">Value [0, 1]</param>
         </member>
         <member name="M:UMapx.Imaging.OilPainting.#ctor(System.Int32,System.Int32,System.Double)">
             <summary>
-            Initializes the oil filter.
+            Initializes the oil painting filter.
             </summary>
             <param name="height">Filter height</param>
             <param name="width">Filter width</param>
@@ -19970,7 +19989,7 @@
         </member>
         <member name="M:UMapx.Imaging.OilPainting.#ctor(UMapx.Core.SizeInt,System.Double)">
             <summary>
-            Initializes the oil filter.
+            Initializes the oil painting filter.
             </summary>
             <param name="size">Radius</param>
             <param name="depth">Value [0, 1]</param>
@@ -21484,6 +21503,77 @@
             <summary>
             Implements filter rebuilding.
             </summary>
+        </member>
+        <member name="T:UMapx.Imaging.SmartOilPainting">
+            <summary>
+            Defines the smart oil painting filter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.SmartOilPainting.#ctor(System.Int32,System.Int32,System.Single)">
+            <summary>
+            Initializes the smart oil painting filter.
+            </summary>
+            <param name="radius">Radius</param>
+            <param name="levels">Levels [2, 256]</param>
+            <param name="sharpening">Sharpening (> 0)</param>
+        </member>
+        <member name="M:UMapx.Imaging.SmartOilPainting.#ctor(System.Int32,System.Int32,System.Int32,System.Single)">
+            <summary>
+            Initializes the smart oil painting filter.
+            </summary>
+            <param name="height">Filter height</param>
+            <param name="width">Filter width</param>
+            <param name="levels">Levels [2, 256]</param>
+            <param name="sharpening">Sharpening (> 0)</param>
+        </member>
+        <member name="M:UMapx.Imaging.SmartOilPainting.#ctor(UMapx.Core.SizeInt,System.Int32,System.Single)">
+            <summary>
+            Initializes the smart oil painting filter.
+            </summary>
+            <param name="size">Radius</param>
+            <param name="levels">Levels [2, 256]</param>
+            <param name="sharpening">Sharpening (> 0)</param>
+        </member>
+        <member name="P:UMapx.Imaging.SmartOilPainting.Size">
+            <summary>
+            Gets or sets the filter size.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.SmartOilPainting.Levels">
+            <summary>
+            Gets or sets number of levels [2, 256].
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.SmartOilPainting.Sharpening">
+            <summary>
+            Gets or sets sharpening value (> 0).
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.SmartOilPainting.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.SmartOilPainting.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.SmartOilPainting.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.SmartOilPainting.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
         </member>
         <member name="T:UMapx.Imaging.Space">
             <summary>
