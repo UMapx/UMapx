@@ -1197,7 +1197,7 @@
             <param name="eps"></param>
             <returns></returns>
         </member>
-        <member name="T:UMapx.Analysis.PadeApproximant">
+        <member name="T:UMapx.Analysis.Pade">
             <summary>
             Defines a Pade approximant.
             <remarks>
@@ -1210,7 +1210,7 @@
             </code>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.PadeApproximant.#ctor(System.Single[],System.Int32,System.Int32)">
+        <member name="M:UMapx.Analysis.Pade.#ctor(System.Single[],System.Int32,System.Int32)">
             <summary>
             Initializes the Pade approximant.
             </summary>
@@ -1219,17 +1219,17 @@
             <param name="n">The degree of the denominator of a rational function</param>
             <exception cref="T:System.ArgumentException"></exception>
         </member>
-        <member name="P:UMapx.Analysis.PadeApproximant.NumeratorCoeffs">
+        <member name="P:UMapx.Analysis.Pade.NumeratorCoeffs">
             <summary>
             Gets the numerator coeffs.
             </summary>
         </member>
-        <member name="P:UMapx.Analysis.PadeApproximant.DenominatorCoeffs">
+        <member name="P:UMapx.Analysis.Pade.DenominatorCoeffs">
             <summary>
             Gets the denominator coeffs.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.PadeApproximant.Evaluate(System.Single)">
+        <member name="M:UMapx.Analysis.Pade.Evaluate(System.Single)">
             <summary>
             Evaluates a function.
             </summary>

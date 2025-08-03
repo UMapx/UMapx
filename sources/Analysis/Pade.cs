@@ -15,7 +15,7 @@ namespace UMapx.Analysis
     /// </code>
     /// </summary>
     [Serializable]
-    public class PadeApproximant
+    public class Pade
     {
         #region Private data
         private readonly float[] numeratorCoeffs;
@@ -30,7 +30,7 @@ namespace UMapx.Analysis
         /// <param name="m">The degree of the numerator of a rational function</param>
         /// <param name="n">The degree of the denominator of a rational function</param>
         /// <exception cref="ArgumentException"></exception>
-        public PadeApproximant(float[] taylorCoeffs, int m, int n)
+        public Pade(float[] taylorCoeffs, int m, int n)
         {
             if (taylorCoeffs.Length < m + n + 1)
                 throw new ArgumentException("Not enough Taylor series coefficients for the specified orders.");
