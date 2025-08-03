@@ -16013,41 +16013,6 @@
             <param name="m">Matrix</param>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToByteGrayscale(System.Drawing.Bitmap)">
-            <summary>
-            Converts Bitmap to averaged channel value matrix.
-            </summary>
-            <param name="Data">Bitmap</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.ToByteGrayscale(System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Converts Bitmap to averaged channel value matrix.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromByteGrayscale(System.Byte[0:,0:])">
-            <summary>
-            Converts a matrix of channel values to a monochrome Bitmap.
-            </summary>
-            <param name="m">Matrix</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromByteGrayscale(System.Byte[0:,0:],System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Converts a matrix of channel values to a monochrome Bitmap.
-            </summary>
-            <param name="m">Matrix</param>
-            <param name="bmData">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapMatrix.FromByteGrayscale(System.Byte[0:,0:],System.Drawing.Bitmap)">
-            <summary>
-            Converts a matrix of channel values to a monochrome Bitmap.
-            </summary>
-            <param name="m">Matrix</param>
-            <param name="Data">Bitmap</param>
-        </member>
         <member name="T:UMapx.Imaging.BitmapTransform">
             <summary>
             Uses for editing and transforming images using GDI+.
