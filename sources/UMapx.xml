@@ -17492,20 +17492,6 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Dilatation.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.Dilatation.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
         <member name="T:UMapx.Imaging.EdgeGlow">
             <summary>
             Defines the edge glow filter.
@@ -17662,20 +17648,6 @@
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
-        </member>
-        <member name="M:UMapx.Imaging.Erosion.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.Erosion.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
         </member>
         <member name="T:UMapx.Imaging.ErrorDiffusionDithering">
             <summary>
@@ -19658,6 +19630,61 @@
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
+        <member name="T:UMapx.Imaging.Median">
+            <summary>
+            Defines the median filter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Median.#ctor(System.Int32)">
+            <summary>
+            Initializes the median filter.
+            </summary>
+            <param name="radius">Radius</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes the median filter.
+            </summary>
+            <param name="width">Filter width</param>
+            <param name="height">Filter height</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.#ctor(UMapx.Core.SizeInt)">
+            <summary>
+            Initializes the median filter.
+            </summary>
+            <param name="size">Filter size</param>
+        </member>
+        <member name="P:UMapx.Imaging.Median.Size">
+            <summary>
+            Gets or sets the filter size.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Median.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Median.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
         <member name="T:UMapx.Imaging.Merge">
             <summary>
             Defines the merge filter.
@@ -19723,35 +19750,34 @@
             Defines the morphology filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,UMapx.Core.MorphologyMode)">
             <summary>
             Initializes the morphology filter.
             </summary>
             <param name="radius">Radius</param>
-            <param name="threshold">Threshold</param>
+            <param name="mode">Morphology mode</param>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,System.Int32,UMapx.Core.MorphologyMode)">
             <summary>
             Initializes the morphology filter.
             </summary>
             <param name="width">Filter width</param>
             <param name="height">Filter height</param>
-            <param name="widthThreshold">Threshold by width</param>
-            <param name="heightThreshold">Threshold by height</param>
+            <param name="mode">Morphology mode</param>
         </member>
-        <member name="M:UMapx.Imaging.Morphology.#ctor(UMapx.Core.SizeInt,UMapx.Core.SizeInt)">
+        <member name="M:UMapx.Imaging.Morphology.#ctor(UMapx.Core.SizeInt,UMapx.Core.MorphologyMode)">
             <summary>
             Initializes the morphology filter.
             </summary>
             <param name="size">Filter size</param>
-            <param name="threshold">Thresholds</param>
+            <param name="mode">Morphology mode</param>
         </member>
         <member name="P:UMapx.Imaging.Morphology.Size">
             <summary>
             Gets or sets the filter size.
             </summary>
         </member>
-        <member name="P:UMapx.Imaging.Morphology.Threshold">
+        <member name="P:UMapx.Imaging.Morphology.Mode">
             <summary>
             Gets or sets thresholds.
             </summary>
@@ -19781,27 +19807,6 @@
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
-        </member>
-        <member name="M:UMapx.Imaging.Morphology.ApplyVertical(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.Morphology.ApplyHorizontal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.Morphology.FastSort(System.Byte[]@,System.Int32)">
-            <summary>
-            O(N) sort algorithm.
-            </summary>
-            <param name="s">Array</param>
-            <param name="index">Index</param>
         </member>
         <member name="M:UMapx.Imaging.Morphology.Erosion(System.Int32,System.Int32)">
             <summary>

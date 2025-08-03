@@ -6,10 +6,10 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Defines the dilatation filter.
+    /// Defines the median filter.
     /// </summary>
     [Serializable]
-    public class Dilatation : IBitmapFilter2, IBitmapFilter
+    public class Median : IBitmapFilter2, IBitmapFilter
     {
         #region Private data
         private int rw;
@@ -18,27 +18,27 @@ namespace UMapx.Imaging
 
         #region Filter components
         /// <summary>
-        /// Initializes the dilatation filter.
+        /// Initializes the median filter.
         /// </summary>
         /// <param name="radius">Radius</param>
-        public Dilatation(int radius = 3)
+        public Median(int radius = 3)
         {
             Size = new SizeInt(radius, radius);
         }
         /// <summary>
-        /// Initializes the dilatation filter.
+        /// Initializes the median filter.
         /// </summary>
         /// <param name="width">Filter width</param>
         /// <param name="height">Filter height</param>
-        public Dilatation(int width, int height)
+        public Median(int width, int height)
         {
             Size = new SizeInt(width, height);
         }
         /// <summary>
-        /// Initializes the dilatation filter.
+        /// Initializes the median filter.
         /// </summary>
         /// <param name="size">Filter size</param>
-        public Dilatation(SizeInt size)
+        public Median(SizeInt size)
         {
             Size = size;
         }
@@ -64,7 +64,7 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
-            Morphology.Dilatation(Size.Width, Size.Height).Apply(bmData, bmSrc);
+            Morphology.Median(Size.Width, Size.Height).Apply(bmData, bmSrc);
         }
         /// <summary>
         /// Apply filter.

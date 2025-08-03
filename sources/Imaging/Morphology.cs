@@ -15,8 +15,6 @@ namespace UMapx.Imaging
         #region Private data
         private int rw;
         private int rh;
-        private int tw;
-        private int th;
         #endregion
 
         #region Filter components
@@ -24,33 +22,32 @@ namespace UMapx.Imaging
         /// Initializes the morphology filter.
         /// </summary>
         /// <param name="radius">Radius</param>
-        /// <param name="threshold">Threshold</param>
-        public Morphology(int radius = 3, int threshold = 0)
+        /// <param name="mode">Morphology mode</param>
+        public Morphology(int radius = 3, MorphologyMode mode = MorphologyMode.Median)
         {
             Size = new SizeInt(radius, radius);
-            Threshold = new SizeInt(threshold, threshold);
+            Mode = mode;
         }
         /// <summary>
         /// Initializes the morphology filter.
         /// </summary>
         /// <param name="width">Filter width</param>
         /// <param name="height">Filter height</param>
-        /// <param name="widthThreshold">Threshold by width</param>
-        /// <param name="heightThreshold">Threshold by height</param>
-        public Morphology(int width, int height, int widthThreshold, int heightThreshold)
+        /// <param name="mode">Morphology mode</param>
+        public Morphology(int width, int height, MorphologyMode mode = MorphologyMode.Median)
         {
             Size = new SizeInt(width, height);
-            Threshold = new SizeInt(widthThreshold, heightThreshold);
+            Mode = mode;
         }
         /// <summary>
         /// Initializes the morphology filter.
         /// </summary>
         /// <param name="size">Filter size</param>
-        /// <param name="threshold">Thresholds</param>
-        public Morphology(SizeInt size, SizeInt threshold)
+        /// <param name="mode">Morphology mode</param>
+        public Morphology(SizeInt size, MorphologyMode mode = MorphologyMode.Median)
         {
             Size = size;
-            Threshold = threshold;
+            Mode = mode;
         }
         /// <summary>
         /// Gets or sets the filter size.
@@ -70,40 +67,90 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets thresholds.
         /// </summary>
-        public SizeInt Threshold
-        {
-            get
-            {
-                return new SizeInt(tw, th);
-            }
-            set
-            {
-                this.tw = value.Width;
-                this.th = value.Height;
-            }
+        public MorphologyMode Mode
+        { 
+            get; 
+            set; 
         }
         /// <summary>
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <param name="bmSrc">Bitmap data</param>
-        public void Apply(BitmapData bmData, BitmapData bmSrc)
+        public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
-            if (rw >= 2 && rh >= 2)
+            int width = bmSrc.Width;
+            int height = bmSrc.Height;
+            int stride = bmSrc.Stride;
+
+            var ry = rh / 2;
+            var rx = rw / 2;
+            int windowHeight = 2 * ry + 1;
+            int windowWidth = 2 * rx + 1;
+            int windowSize = windowHeight * windowWidth;
+
+            int rank = LinealgOptions.MorphologyHistogramFastFilter.GetFilterRank(Mode, windowSize);
+            int range = byte.MaxValue + 1;
+
+            byte* src = (byte*)bmSrc.Scan0.ToPointer();
+            byte* dst = (byte*)bmData.Scan0.ToPointer();
+
+            Parallel.For(0, height, y =>
             {
-                ApplyVertical(bmSrc, bmData);
-                ApplyHorizontal(bmData, bmSrc);
-            }
-            else if (rw >= 2 && rh < 2)
-            {
-                ApplyHorizontal(bmData, bmSrc);
-            }
-            else if (rw < 2 && rh >= 2)
-            {
-                ApplyVertical(bmData, bmSrc);
-            }
-            else return;
+                // отдельная гистограмма для каждого канала
+                int[] histB = new int[range];
+                int[] histG = new int[range];
+                int[] histR = new int[range];
+
+                for (int dy = -ry; dy <= ry; dy++)
+                {
+                    int yi = Maths.Range(y + dy, 0, height - 1);
+
+                    for (int dx = -rx; dx <= rx; dx++)
+                    {
+                        int xi = Maths.Range(0 + dx, 0, width - 1);
+                        byte* pixel = src + yi * stride + xi * 4;
+
+                        histB[pixel[0]]++;
+                        histG[pixel[1]]++;
+                        histR[pixel[2]]++;
+                    }
+                }
+
+                byte* dstPixel = dst + y * stride;
+                dstPixel[0] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histB, rank); // B
+                dstPixel[1] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histG, rank); // G
+                dstPixel[2] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histR, rank); // R
+
+                for (int x = 1; x < width; x++)
+                {
+                    int outX = Maths.Range(x - rx - 1, 0, width - 1);
+                    int inX = Maths.Range(x + rx, 0, width - 1);
+
+                    for (int dy = -ry; dy <= ry; dy++)
+                    {
+                        int yi = Maths.Range(y + dy, 0, height - 1);
+
+                        byte* outPixel = src + yi * stride + outX * 4;
+                        byte* inPixel = src + yi * stride + inX * 4;
+
+                        histB[outPixel[0]]--;
+                        histG[outPixel[1]]--;
+                        histR[outPixel[2]]--;
+
+                        histB[inPixel[0]]++;
+                        histG[inPixel[1]]++;
+                        histR[inPixel[2]]++;
+                    }
+
+                    byte* pDst = dst + y * stride + x * 4;
+                    pDst[0] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histB, rank); // B
+                    pDst[1] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histG, rank); // G
+                    pDst[2] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histR, rank); // R
+                }
+            });
         }
+
         /// <summary>
         /// Apply filter.
         /// </summary>
@@ -116,7 +163,6 @@ namespace UMapx.Imaging
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Data, bmData);
             BitmapFormat.Unlock(Src, bmSrc);
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -131,7 +177,6 @@ namespace UMapx.Imaging
             BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
             current.Dispose();
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -142,247 +187,6 @@ namespace UMapx.Imaging
             var Src = (Bitmap)Data.Clone();
             Apply(Data, Src);
             Src.Dispose();
-            return;
-        }
-        #endregion
-
-        #region Private voids
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
-        private unsafe void ApplyVertical(BitmapData bmData, BitmapData bmSrc)
-        {
-            #region Data
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            byte* src = (byte*)bmSrc.Scan0.ToPointer();
-            byte* dst = (byte*)bmData.Scan0.ToPointer();
-            int h = rh >= height ? height - 1 : rh;
-            int v = h >> 1;
-            int dl = height - v;
-            int threshold = th;
-            #endregion
-
-            Parallel.For(0, width, x =>
-            {
-                byte[] r = new byte[h];
-                byte[] g = new byte[h];
-                byte[] b = new byte[h];
-                int p, w, q, y, i;
-                int xx = x * 4;
-
-                for (p = xx, y = 0; y < h; y++, p += stride)
-                {
-                    r[y] = src[p + 2];
-                    g[y] = src[p + 1];
-                    b[y] = src[p + 0];
-                }
-
-                Array.Sort(r);
-                Array.Sort(g);
-                Array.Sort(b);
-
-                for (p = xx, y = 0; y < v; y++, p += stride)
-                {
-                    dst[p + 2] = r[threshold];
-                    dst[p + 1] = g[threshold];
-                    dst[p + 0] = b[threshold];
-                }
-
-                for (
-                    y = v,
-                    p = xx + (y - v) * stride,
-                    q = xx + (y + 0) * stride,
-                    w = xx + (y + v) * stride;
-
-                    y < dl;
-
-                    y++,
-                    p += stride,
-                    q += stride,
-                    w += stride)
-                {
-                    i = Array.IndexOf(r, src[p + 2]);
-                    r[i] = src[w + 2];
-                    FastSort(ref r, i);
-                    dst[q + 2] = r[threshold];
-
-                    i = Array.IndexOf(g, src[p + 1]);
-                    g[i] = src[w + 1];
-                    FastSort(ref g, i);
-                    dst[q + 1] = g[threshold];
-
-                    i = Array.IndexOf(b, src[p + 0]);
-                    b[i] = src[w + 0];
-                    FastSort(ref b, i);
-                    dst[q + 0] = b[threshold];
-                }
-
-                for (
-                    y = dl,
-                    p = xx + (y - v) * stride,
-                    q = xx + (y + 0) * stride;
-
-                    y < height;
-
-                    y++,
-                    p += stride,
-                    q += stride)
-                {
-                    i = Array.IndexOf(r, src[p + 2]);
-                    r[i] = src[q + 2];
-                    FastSort(ref r, i);
-                    dst[q + 2] = r[threshold];
-
-                    i = Array.IndexOf(g, src[p + 1]);
-                    g[i] = src[q + 1];
-                    FastSort(ref g, i);
-                    dst[q + 1] = g[threshold];
-
-                    i = Array.IndexOf(b, src[p + 0]);
-                    b[i] = src[q + 0];
-                    FastSort(ref b, i);
-                    dst[q + 0] = b[threshold];
-                }
-
-            });
-
-            return;
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
-        private unsafe void ApplyHorizontal(BitmapData bmData, BitmapData bmSrc)
-        {
-            #region Data
-            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            byte* src = (byte*)bmSrc.Scan0.ToPointer();
-            byte* dst = (byte*)bmData.Scan0.ToPointer();
-            int h = rw >= width ? width - 1 : rw;
-            int v = h >> 1;
-            int dl = width - v;
-            int threshold = tw;
-            #endregion
-
-            Parallel.For(0, height, y =>
-            {
-                byte[] r = new byte[h];
-                byte[] g = new byte[h];
-                byte[] b = new byte[h];
-                int p, q, w, x, i;
-                int yy = y * stride;
-
-                for (p = yy, x = 0; x < h; x++, p += 4)
-                {
-                    r[x] = src[p + 2];
-                    g[x] = src[p + 1];
-                    b[x] = src[p + 0];
-                }
-
-                Array.Sort(r);
-                Array.Sort(g);
-                Array.Sort(b);
-
-                for (p = yy, x = 0; x < v; x++, p += 4)
-                {
-                    dst[p + 2] = r[threshold];
-                    dst[p + 1] = g[threshold];
-                    dst[p + 0] = b[threshold];
-                }
-
-                for (
-                    x = v,
-                    p = yy + (x - v) * 4,
-                    q = yy + (x + 0) * 4,
-                    w = yy + (x + v) * 4;
-
-                    x < dl;
-
-                    x++,
-                    p += 4,
-                    q += 4,
-                    w += 4)
-                {
-                    i = Array.IndexOf(r, src[p + 2]);
-                    r[i] = src[w + 2];
-                    FastSort(ref r, i);
-                    dst[q + 2] = r[threshold];
-
-                    i = Array.IndexOf(g, src[p + 1]);
-                    g[i] = src[w + 1];
-                    FastSort(ref g, i);
-                    dst[q + 1] = g[threshold];
-
-                    i = Array.IndexOf(b, src[p + 0]);
-                    b[i] = src[w + 0];
-                    FastSort(ref b, i);
-                    dst[q + 0] = b[threshold];
-                }
-
-                for (
-                    x = dl,
-                    p = (x - v) * 4 + yy,
-                    q = (x + 0) * 4 + yy;
-
-                    x < width;
-
-                    x++,
-                    p += 4,
-                    q += 4)
-                {
-                    i = Array.IndexOf(r, src[p + 2]);
-                    r[i] = src[q + 2];
-                    FastSort(ref r, i);
-                    dst[q + 2] = r[threshold];
-
-                    i = Array.IndexOf(g, src[p + 1]);
-                    g[i] = src[q + 1];
-                    FastSort(ref g, i);
-                    dst[q + 1] = g[threshold];
-
-                    i = Array.IndexOf(b, src[p + 0]);
-                    b[i] = src[q + 0];
-                    FastSort(ref b, i);
-                    dst[q + 0] = b[threshold];
-                }
-
-            });
-        }
-        /// <summary>
-        /// O(N) sort algorithm.
-        /// </summary>
-        /// <param name="s">Array</param>
-        /// <param name="index">Index</param>
-        private static void FastSort(ref byte[] s, int index)
-        {
-            int length = s.Length - 1;
-
-            for (int i = index; i < length; i++)
-            {
-                if (s[i] > s[i + 1])
-                {
-                    var t = s[i + 1];
-                    s[i + 1] = s[i];
-                    s[i] = t;
-                }
-                else
-                    break;
-            }
-
-            for (int i = index; i > 0; i--)
-            {
-                if (s[i] < s[i - 1])
-                {
-                    var t = s[i - 1];
-                    s[i - 1] = s[i];
-                    s[i] = t;
-                }
-                else
-                    break;
-            }
         }
         #endregion
 
@@ -395,7 +199,7 @@ namespace UMapx.Imaging
         /// <returns>Morphology</returns>
         public static Morphology Erosion(int width, int height)
         {
-            return new Morphology(width, height, 0, 0);
+            return new Morphology(width, height, MorphologyMode.Erosion);
         }
         /// <summary>
         /// Returns dilatation filter.
@@ -405,7 +209,7 @@ namespace UMapx.Imaging
         /// <returns>Morphology</returns>
         public static Morphology Dilatation(int width, int height)
         {
-            return new Morphology(width, height, width - 1, height - 1);
+            return new Morphology(width, height, MorphologyMode.Dilatation);
         }
         /// <summary>
         /// Returns median filter.
@@ -415,7 +219,7 @@ namespace UMapx.Imaging
         /// <returns>Morphology</returns>
         public static Morphology Median(int width, int height)
         {
-            return new Morphology(width, height, width / 2, height / 2);
+            return new Morphology(width, height, MorphologyMode.Median);
         }
         #endregion
     }
