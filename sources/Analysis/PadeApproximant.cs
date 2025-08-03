@@ -22,6 +22,7 @@ namespace UMapx.Analysis
         private readonly float[] denominatorCoeffs;
         #endregion
 
+        #region Class components
         /// <summary>
         /// Initializes the Pade approximant.
         /// </summary>
@@ -93,6 +94,7 @@ namespace UMapx.Analysis
 
             return num / den;
         }
+        #endregion
     }
 
 }
