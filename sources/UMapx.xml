@@ -1197,6 +1197,35 @@
             <param name="eps"></param>
             <returns></returns>
         </member>
+        <member name="T:UMapx.Analysis.PadeApproximant">
+            <summary>
+            Defines a Pade approximant.
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Pad%C3%A9_approximant
+            </remarks>
+            Example: exp(x) = 1 + x + x^2/2! + x^3/3! + ...
+            <code>
+            float[] taylorExp = new float[] { 1.0f, 1.0f, 0.5f, 1.0f/6.0f, 1.0f/24.0f, 1.0f/120.0f, 1.0f/720.0f };
+            </code>
+            </summary>
+        </member>
+        <member name="M:UMapx.Analysis.PadeApproximant.#ctor(System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Initializes the Pade approximant.
+            </summary>
+            <param name="taylorCoeffs">Taylor series coefficients</param>
+            <param name="m">The degree of the numerator of a rational function</param>
+            <param name="n">The degree of the denominator of a rational function</param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:UMapx.Analysis.PadeApproximant.Evaluate(System.Single)">
+            <summary>
+            Evaluates a function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
         <member name="T:UMapx.Analysis.Roots">
             <summary>
             Defines a class for solving equations using the spectral decomposition of a matrix.
