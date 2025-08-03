@@ -2082,9 +2082,6 @@ namespace UMapx.Core
             /// <returns>Array</returns>
             public static float[,] Apply(float[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
             {
-                if (r0 < 1 || r1 < 1)
-                    return data;
-
                 int height = data.GetLength(0);
                 int width = data.GetLength(1);
                 int windowHeight = 2 * r0 + 1;
@@ -2129,9 +2126,6 @@ namespace UMapx.Core
             /// <returns>Array</returns>
             public static float[] Apply(float[] data, int r, MorphologyMode mode = MorphologyMode.Median)
             {
-                if (r < 1)
-                    return data;
-
                 int N = data.Length;
                 int windowSize = 2 * r + 1;
                 int rank = GetFilterRank(mode, windowSize);
@@ -2189,9 +2183,6 @@ namespace UMapx.Core
             /// <returns>Array</returns>
             public static byte[,] Apply(byte[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
             {
-                if (r0 < 1 || r1 < 1)
-                    return data;
-
                 int height = data.GetLength(0);
                 int width = data.GetLength(1);
                 int windowHeight = 2 * r0 + 1;
@@ -2250,9 +2241,6 @@ namespace UMapx.Core
             /// <returns>Array</returns>
             public static byte[] Apply(byte[] data, int r, MorphologyMode mode = MorphologyMode.Median)
             {
-                if (r < 1)
-                    return data;
-
                 int length = data.Length;
                 int windowSize = 2 * r + 1;
                 int medianPos = GetFilterRank(mode, windowSize);
@@ -2322,9 +2310,6 @@ namespace UMapx.Core
             /// <returns>Array</returns>
             public static byte[,] Apply(byte[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
             {
-                if (r0 < 1 || r1 < 1)
-                    return data;
-
                 int height = data.GetLength(0);
                 int width = data.GetLength(1);
                 int windowHeight = 2 * r0 + 1;
@@ -2384,9 +2369,6 @@ namespace UMapx.Core
             /// <returns>Array</returns>
             public static byte[] Apply(byte[] data, int r, MorphologyMode mode = MorphologyMode.Median)
             {
-                if (r < 1)
-                    return data;
-
                 int length = data.Length;
                 int windowSize = 2 * r + 1;
                 int rank = GetFilterRank(mode, windowSize);
