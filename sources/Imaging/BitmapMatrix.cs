@@ -1047,5 +1047,109 @@ namespace UMapx.Imaging
             return;
         }
         #endregion
+
+        #region Byte
+        /// <summary>
+        /// Converts Bitmap to averaged channel value matrix.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <returns>Matrix</returns>
+        public static byte[,] ToByteGrayscale(this Bitmap Data)
+        {
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            byte[,] rgb = ToByteGrayscale(bmData);
+            BitmapFormat.Unlock(Data, bmData);
+            return rgb;
+        }
+        /// <summary>
+        /// Converts Bitmap to averaged channel value matrix.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Matrix</returns>
+        public unsafe static byte[,] ToByteGrayscale(this BitmapData bmData)
+        {
+            int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
+            byte[,] rgb = new byte[height, width];
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            Parallel.For(0, height, j =>
+            {
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+                    rgb[j, i] = (byte)RGB.Average(p[k + 2], p[k + 1], p[k]);
+                }
+            });
+
+            return rgb;
+        }
+        /// <summary>
+        /// Converts a matrix of channel values to a monochrome Bitmap.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <returns>Bitmap</returns>
+        public unsafe static Bitmap FromByteGrayscale(this byte[,] m)
+        {
+            int width = m.GetLength(1), height = m.GetLength(0);
+            Bitmap bitmap = new Bitmap(width, height);
+            BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            Parallel.For(0, height, j =>
+            {
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+                    p[k + 2] = p[k + 1] = p[k] = m[j, i];
+                    p[k + 3] = 255;
+                }
+            });
+
+            BitmapFormat.Unlock(bitmap, bmData);
+            return bitmap;
+        }
+        /// <summary>
+        /// Converts a matrix of channel values to a monochrome Bitmap.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="bmData">Bitmap data</param>
+        public unsafe static void FromByteGrayscale(this byte[,] m, BitmapData bmData)
+        {
+            int width = m.GetLength(1), height = m.GetLength(0);
+            int stride = bmData.Stride;
+            byte* p = (byte*)bmData.Scan0.ToPointer();
+
+            Parallel.For(0, height, j =>
+            {
+                int i, k, jstride = j * stride;
+
+                for (i = 0; i < width; i++)
+                {
+                    k = jstride + i * 4;
+                    p[k + 2] = p[k + 1] = p[k] = m[j, i];
+                    p[k + 3] = 255;
+                }
+            });
+
+            return;
+        }
+        /// <summary>
+        /// Converts a matrix of channel values to a monochrome Bitmap.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="Data">Bitmap</param>
+        public static void FromByteGrayscale(this byte[,] m, Bitmap Data)
+        {
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            FromByteGrayscale(m, bmData);
+            BitmapFormat.Unlock(Data, bmData);
+            return;
+        }
+        #endregion
     }
 }

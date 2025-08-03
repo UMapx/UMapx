@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Threading.Tasks;
 using UMapx.Core;
 
 namespace UMapx.Imaging
@@ -113,7 +112,7 @@ namespace UMapx.Imaging
 
             if (apply_median)
             {
-                disparity = Matrice.Morph(disparity, even_win, even_win, even_win / 2, even_win / 2);
+                disparity = Matrice.Morph(disparity, even_win, even_win, MorphologyMode.Median);
             }
 
             return disparity;

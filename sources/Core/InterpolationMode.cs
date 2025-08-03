@@ -1,7 +1,7 @@
 ﻿namespace UMapx.Core
 {
     /// <summary>
-    /// Defines interpolation mode.
+    /// Defines an interpolation mode.
     /// </summary>
     public enum InterpolationMode
     {

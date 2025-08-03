@@ -1,7 +1,7 @@
 ﻿namespace UMapx.Core
 {
     /// <summary>
-    /// Defines the rotation mode of processing.
+    /// Defines a rotation mode.
     /// </summary>
     public enum RotationMode
     {
