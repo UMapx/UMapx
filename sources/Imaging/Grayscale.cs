@@ -97,7 +97,6 @@ namespace UMapx.Imaging
                     p[0] = p[1] = p[2] = Maths.Byte(cr * p[2] + cg * p[1] + cb * p[0]);
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.

@@ -129,8 +129,6 @@ namespace UMapx.Imaging
                     p[k] = p[k + 1] = p[k + 2] = (p[k] >= threshold) ? (byte)0 : (byte)255;
                 }
             });
-
-            return;
         }
         /// <summary>
         /// Apply filter.

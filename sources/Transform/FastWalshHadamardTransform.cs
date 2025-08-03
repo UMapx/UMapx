@@ -614,7 +614,6 @@ namespace UMapx.Transform
 
                 k0 /= 2; k1 *= 2; k2 /= 2;
             }
-            return;
         }
         /// <summary>
         /// 
@@ -649,7 +648,6 @@ namespace UMapx.Transform
 
                 k0 /= 2; k1 *= 2; k2 /= 2;
             }
-            return;
         }
         #endregion
     }

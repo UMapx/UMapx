@@ -155,7 +155,6 @@ namespace UMapx.Imaging
             BitmapFormat.Unlock(Min, bmMin);
 
             Max.Dispose(); Min.Dispose(); current.Dispose();
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -182,7 +181,6 @@ namespace UMapx.Imaging
             BitmapFormat.Unlock(Min, bmMin);
 
             Max.Dispose(); Min.Dispose();
-            return;
         }
         #endregion
 
@@ -214,7 +212,6 @@ namespace UMapx.Imaging
                     ApplyGrayscale(bmData, bmMax, bmMin);
                     break;
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -269,8 +266,7 @@ namespace UMapx.Imaging
                     }
                     // end local function.
                 }
-            }
-            );
+            });
         }
         /// <summary>
         /// Apply filter.

@@ -97,10 +97,7 @@ namespace UMapx.Imaging
                         p[k + 3] = pSrc[c + 3]; // Alpha
                     }
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -128,7 +125,6 @@ namespace UMapx.Imaging
             BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
             current.Dispose();
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -139,7 +135,6 @@ namespace UMapx.Imaging
             var Src = (Bitmap)Data.Clone();
             Apply(Data, Src);
             Src.Dispose();
-            return;
         }
         #endregion
     }

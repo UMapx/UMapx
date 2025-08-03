@@ -109,7 +109,6 @@ namespace UMapx.Imaging
                     ApplyGrayscale(bmData);
                     break;
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -120,7 +119,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
 
@@ -153,10 +151,7 @@ namespace UMapx.Imaging
 
                     p[k + 2] = rgb.Red; p[k + 1] = rgb.Green; p[k] = rgb.Blue;
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -183,10 +178,7 @@ namespace UMapx.Imaging
                     rgb = hsl.ToRGB;
                     p[k + 2] = rgb.Red; p[k + 1] = rgb.Green; p[k] = rgb.Blue;
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -213,10 +205,7 @@ namespace UMapx.Imaging
                     rgb = hsb.ToRGB;
                     p[k + 2] = rgb.Red; p[k + 1] = rgb.Green; p[k] = rgb.Blue;
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -243,10 +232,7 @@ namespace UMapx.Imaging
                     rgb = ycbcr.ToRGB;
                     p[k + 2] = rgb.Red; p[k + 1] = rgb.Green; p[k] = rgb.Blue;
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -271,10 +257,7 @@ namespace UMapx.Imaging
                     luma = RGB.Average(p[k + 2], p[k + 1], p[k]);
                     p[k + 2] = p[k + 1] = p[k] = Maths.Byte(values[luma] * length);
                 }
-            }
-            );
-
-            return;
+            });
         }
         #endregion
     }

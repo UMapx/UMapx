@@ -213,8 +213,6 @@ namespace UMapx.Imaging
                     }
                 });
             }
-
-            return;
         }
         /// <summary>
         /// Converts an RGB structure to a color image.
@@ -226,7 +224,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             FromRGB(array, bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
 
@@ -464,7 +461,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             FromHSB(array, bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
 
@@ -689,8 +685,6 @@ namespace UMapx.Imaging
                     }
                 });
             }
-
-            return;
         }
         /// <summary>
         /// Converts an HSL structure to a color image.
@@ -702,7 +696,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             FromHSL(array, bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
 
@@ -927,8 +920,6 @@ namespace UMapx.Imaging
                     }
                 });
             }
-
-            return;
         }
         /// <summary>
         /// Converts an YCbCr structure to a color image.
@@ -940,7 +931,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             FromYCbCr(array, bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
 
@@ -1031,8 +1021,6 @@ namespace UMapx.Imaging
                     p[k + 3] = 255;
                 }
             });
-
-            return;
         }
         /// <summary>
         /// Converts a matrix of channel values to a monochrome Bitmap.
@@ -1044,7 +1032,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             FromGrayscale(m, bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
 
@@ -1135,8 +1122,6 @@ namespace UMapx.Imaging
                     p[k + 3] = 255;
                 }
             });
-
-            return;
         }
         /// <summary>
         /// Converts a matrix of channel values to a monochrome Bitmap.
@@ -1148,7 +1133,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             FromByteGrayscale(m, bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
     }

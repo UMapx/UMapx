@@ -69,7 +69,6 @@ namespace UMapx.Imaging
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Data, bmData);
             BitmapFormat.Unlock(Src, bmSrc);
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -84,7 +83,6 @@ namespace UMapx.Imaging
             BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
             current.Dispose();
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -95,7 +93,6 @@ namespace UMapx.Imaging
             var Src = (Bitmap)Data.Clone();
             Apply(Data, Src);
             Src.Dispose();
-            return;
         }
         /// <summary>
         /// Apply filter.

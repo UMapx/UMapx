@@ -35,7 +35,6 @@ namespace UMapx.Decomposition
                 diag[i] = A[i, i];
 
             this.matrix = Matrice.Dot(A, diag, true);
-            return;
         }
         #endregion
 

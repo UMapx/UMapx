@@ -9040,7 +9040,6 @@ namespace UMapx.Core
                     a[z, j] = temp;
                 }
             }
-            return;
         }
         /// <summary>
         /// Implements a permutation of the vectors of the matrix.
@@ -9095,7 +9094,6 @@ namespace UMapx.Core
                     a[z, j] = temp;
                 }
             }
-            return;
         }
         /// <summary>
         /// Implements a permutation of the elements of the vector.
@@ -9109,7 +9107,6 @@ namespace UMapx.Core
             float e1 = v[i], e2 = v[j];
             // swapping vector elements:
             v[j] = e1; v[i] = e2;
-            return;
         }
         /// <summary>
         /// Implements a permutation of the elements of the vector.
@@ -9123,7 +9120,6 @@ namespace UMapx.Core
             Complex32 e1 = v[i], e2 = v[j];
             // swapping vector elements:
             v[j] = e1; v[i] = e2;
-            return;
         }
         #endregion
 

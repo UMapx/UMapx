@@ -104,7 +104,6 @@ namespace UMapx.Decomposition
 
                 lower[j] = v;
             }
-            return;
         }
         #endregion
     }

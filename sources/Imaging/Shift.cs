@@ -99,7 +99,6 @@ namespace UMapx.Imaging
                 ShiftX(bmSrc, bmData, width, height, stride);
                 ShiftY(bmData, bmSrc, width, height, stride);
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -127,7 +126,6 @@ namespace UMapx.Imaging
             BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
             current.Dispose();
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -138,7 +136,6 @@ namespace UMapx.Imaging
             var Src = (Bitmap)Data.Clone();
             Apply(Data, Src);
             Src.Dispose();
-            return;
         }
         #endregion
 
@@ -186,7 +183,6 @@ namespace UMapx.Imaging
                     }
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -231,7 +227,6 @@ namespace UMapx.Imaging
                     }
                 }
             }
-            return;
         }
         #endregion
     }

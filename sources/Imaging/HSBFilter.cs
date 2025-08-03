@@ -110,10 +110,7 @@ namespace UMapx.Imaging
                     p[k + 1] = rgb.Green;
                     p[k + 2] = rgb.Red;
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.
@@ -124,7 +121,6 @@ namespace UMapx.Imaging
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
             Apply(bmData);
             BitmapFormat.Unlock(Data, bmData);
-            return;
         }
         #endregion
     }

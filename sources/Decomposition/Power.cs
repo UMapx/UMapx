@@ -43,7 +43,6 @@ namespace UMapx.Decomposition
                 beta = Matrice.Norm(w);
                 v = Matrice.Div(w, beta);
             }
-            return;
         }
         /// <summary>
         /// Returns a vector of eigenvalues.

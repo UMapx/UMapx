@@ -509,7 +509,6 @@ namespace UMapx.Core
                     iRowC[j] += ikA * kRowB[j];
                 }
             }
-            return;
         }
         /// <summary>
         /// Implements matrix multiplication using modified Whittle optimization.
@@ -536,7 +535,6 @@ namespace UMapx.Core
                     iRowC[j] += ikA * kRowB[j];
                 }
             }
-            return;
         }
         /// <summary>
         /// Implements matrix multiplication using modified Whittle optimization.
@@ -563,7 +561,6 @@ namespace UMapx.Core
                     iRowC[j] += ikA * kRowB[j];
                 }
             }
-            return;
         }
         /// <summary>
         /// Implements matrix multiplication using modified Whittle optimization.
@@ -590,7 +587,6 @@ namespace UMapx.Core
                     iRowC[j] += ikA * kRowB[j];
                 }
             }
-            return;
         }
         #endregion
 

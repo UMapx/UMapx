@@ -140,8 +140,6 @@ namespace UMapx.Imaging
                     p[k    ] = Maths.Byte(bb * s + p[k    ] * (1.0f - s));
                 }
             });
-
-            return;
         }
         /// <summary>
         /// Apply filter.

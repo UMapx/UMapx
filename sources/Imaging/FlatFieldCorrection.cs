@@ -72,7 +72,6 @@ namespace UMapx.Imaging
         {
             gb.Apply(bmSrc);
             FlatField(bmData, bmSrc);
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -86,7 +85,6 @@ namespace UMapx.Imaging
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Data, bmData);
             BitmapFormat.Unlock(Src, bmSrc);
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -101,7 +99,6 @@ namespace UMapx.Imaging
             BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
             current.Dispose();
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -112,7 +109,6 @@ namespace UMapx.Imaging
             var Src = (Bitmap)Data.Clone();
             Apply(Data, Src);
             Src.Dispose();
-            return;
         }
         #endregion
 
@@ -152,10 +148,7 @@ namespace UMapx.Imaging
                         p[k] = Maths.Byte(p[k] * mR / pSrc[k]);
                     }
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Global means.
@@ -182,7 +175,6 @@ namespace UMapx.Imaging
             this.mR = r / total;
             this.mG = g / total;
             this.mB = b / total;
-            return;
         }
         #endregion
     }

@@ -81,10 +81,7 @@ namespace UMapx.Imaging
                     p[k + 1] = Maths.Byte((z * green) + (this.depth * green) * t);
                     p[k] = Maths.Byte((z * blue) + (this.depth * blue) * t);
                 }
-            }
-            );
-
-            return;
+            });
         }
         /// <summary>
         /// Apply filter.

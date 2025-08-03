@@ -87,8 +87,6 @@ namespace UMapx.Transform
                     data[i, j] = dummy[i, j];
                 }
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -117,8 +115,6 @@ namespace UMapx.Transform
                     data[i, j] = dummy[i, j];
                 }
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -144,8 +140,6 @@ namespace UMapx.Transform
             {
                 data[i] = dummy[i];
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -171,8 +165,6 @@ namespace UMapx.Transform
             {
                 data[i] = dummy[i];
             }
-
-            return;
         }
         #endregion
     }

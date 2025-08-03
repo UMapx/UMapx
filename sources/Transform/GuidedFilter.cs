@@ -124,8 +124,6 @@ namespace UMapx.Transform
                 for (i = 0; i < l0; i++)
                     data[i] = (1.0f + this.factor) * (data[i] - copy[i]) + copy[i];
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -150,8 +148,6 @@ namespace UMapx.Transform
                     for (j = 0; j < l1; j++)
                         data[i, j] = (1.0f + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -174,8 +170,6 @@ namespace UMapx.Transform
                 for (i = 0; i < l0; i++)
                     data[i] = (1.0 + this.factor) * (data[i] - copy[i]) + copy[i];
             }
-
-            return;
         }
         /// <summary>
         /// Apply filter.
@@ -200,8 +194,6 @@ namespace UMapx.Transform
                     for (j = 0; j < l1; j++)
                         data[i, j] = (1.0 + this.factor) * (data[i, j] - copy[i, j]) + copy[i, j];
             }
-
-            return;
         }
         #endregion
 
@@ -305,8 +297,6 @@ namespace UMapx.Transform
             for (i = 0; i < l0; i++)
                 for (j = 0; j < l1; j++)
                     input[i, j] = a[i, j] * input[i, j] + b[i, j];
-
-            return;
         }
         /// <summary>
         /// Guided filer function.
@@ -349,8 +339,6 @@ namespace UMapx.Transform
             // Calculating μ(a) * I + μ(b):
             for (i = 0; i < length; i++)
                 input[i] = a[i] * input[i] + b[i];
-
-            return;
         }
         /// <summary>
         /// Guided filer function.

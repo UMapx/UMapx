@@ -57,7 +57,6 @@ namespace UMapx.Imaging
                     p[c1] = 0;
                 }
             }
-            return;
         }
         /// <summary>
         /// Apply filter.

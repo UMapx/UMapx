@@ -104,7 +104,6 @@ namespace UMapx.Decomposition
             {
                 upper[i, i] = 1.0f;
             }
-            return;
         }
         #endregion
     }

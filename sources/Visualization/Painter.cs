@@ -129,8 +129,6 @@ namespace UMapx.Visualization
                         new Rectangle[] { paintData[i].Rectangle },
                         new string[][] { paintData[i].Labels });
             }
-
-            return;
         }
         #endregion
 
@@ -177,8 +175,6 @@ namespace UMapx.Visualization
                     }
                 }
             }
-
-            return;
         }
         /// <summary>
         /// Draws tracking and recognition results.

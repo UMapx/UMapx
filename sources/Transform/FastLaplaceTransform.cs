@@ -359,8 +359,6 @@ namespace UMapx.Transform
             {
                 v[i] = Math.Exp(-sigma * i) * v[i];
             }
-
-            return;
         }
         /// <summary>
         /// 
@@ -377,8 +375,6 @@ namespace UMapx.Transform
             {
                 v[i] = v[i] / Math.Exp(-sigma * i);
             }
-
-            return;
         }
         #endregion
     }

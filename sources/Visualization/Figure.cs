@@ -568,7 +568,6 @@ namespace UMapx.Visualization
                 points[i].Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
             }
             graphics.DrawLines(pen, points);
-            return;
         }
         /// <summary>
         /// 
@@ -624,7 +623,6 @@ namespace UMapx.Visualization
                 }
             }
             graphics.DrawLines(pen, points);
-            return;
         }
         /// <summary>
         /// 
@@ -680,7 +678,6 @@ namespace UMapx.Visualization
                 }
             }
             graphics.DrawLines(pen, points);
-            return;
         }
         #endregion
 
@@ -715,8 +712,6 @@ namespace UMapx.Visualization
 
                 graphics.DrawLine(pen, point.X, zero, point.X, point.Y);
             }
-
-            return;
         }
         /// <summary>
         /// 
@@ -772,8 +767,6 @@ namespace UMapx.Visualization
                     graphics.DrawLine(pen, point.X, zero, point.X, point.Y);
                 }
             }
-
-            return;
         }
         /// <summary>
         /// 
@@ -829,8 +822,6 @@ namespace UMapx.Visualization
                     graphics.DrawLine(pen, point.X, zero, point.X, point.Y);
                 }
             }
-
-            return;
         }
         #endregion
 
@@ -899,8 +890,6 @@ namespace UMapx.Visualization
                     graphics.DrawEllipse(pen, point.X - radius / 2, point.Y - radius / 2, radius, radius);
                 }
             }
-
-            return;
         }
         /// <summary>
         /// 
@@ -954,8 +943,6 @@ namespace UMapx.Visualization
                     graphics.DrawRectangle(pen, point.X - radius / 2, point.Y - radius / 2, radius, radius);
                 }
             }
-
-            return;
         }
         #endregion
 

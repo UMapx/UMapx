@@ -120,8 +120,6 @@ namespace UMapx.Decomposition
                     t[i + 1, i] = beta;
                 }
             }
-
-            return;
         }
         #endregion
     }
