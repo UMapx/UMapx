@@ -1219,6 +1219,16 @@
             <param name="n">The degree of the denominator of a rational function</param>
             <exception cref="T:System.ArgumentException"></exception>
         </member>
+        <member name="P:UMapx.Analysis.PadeApproximant.NumeratorCoeffs">
+            <summary>
+            Gets the numerator coeffs.
+            </summary>
+        </member>
+        <member name="P:UMapx.Analysis.PadeApproximant.DenominatorCoeffs">
+            <summary>
+            Gets the denominator coeffs.
+            </summary>
+        </member>
         <member name="M:UMapx.Analysis.PadeApproximant.Evaluate(System.Single)">
             <summary>
             Evaluates a function.

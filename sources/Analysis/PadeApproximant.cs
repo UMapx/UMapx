@@ -71,7 +71,14 @@ namespace UMapx.Analysis
                 numeratorCoeffs[k] = sum;
             }
         }
-
+        /// <summary>
+        /// Gets the numerator coeffs.
+        /// </summary>
+        public float[] NumeratorCoeffs => this.numeratorCoeffs;
+        /// <summary>
+        /// Gets the denominator coeffs.
+        /// </summary>
+        public float[] DenominatorCoeffs => this.denominatorCoeffs;
         /// <summary>
         /// Evaluates a function.
         /// </summary>
