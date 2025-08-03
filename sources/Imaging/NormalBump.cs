@@ -93,7 +93,7 @@ namespace UMapx.Imaging
         }
         #endregion
 
-        #region Static methods
+        #region Public static
         /// <summary>
         /// Returns the normal bump operator.
         /// </summary>
