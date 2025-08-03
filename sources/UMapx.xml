@@ -1202,7 +1202,7 @@
             Defines a Pade approximant.
             <remarks>
             More information can be found on the website:
-            https://en.wikipedia.org/wiki/Pad%C3%A9_approximant
+            https://en.wikipedia.org/wiki/Pad%C3%A9_approximant.
             </remarks>
             Example: exp(x) = 1 + x + x^2/2! + x^3/3! + ...
             <code>
@@ -1210,28 +1210,36 @@
             </code>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Pade.#ctor">
+        <member name="M:UMapx.Analysis.Pade.#ctor(System.Int32,System.Int32)">
             <summary>
             Initializes the Pade approximant.
+            <param name="m">The degree of the numerator of a rational function</param>
+            <param name="n">The degree of the denominator of a rational function</param>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Pade.Compute(System.Single[],System.Int32,System.Int32)">
+        <member name="P:UMapx.Analysis.Pade.M">
+            <summary>
+            Gets or sets the degree of the numerator of a rational function.
+            </summary>
+        </member>
+        <member name="P:UMapx.Analysis.Pade.N">
+            <summary>
+            Gets or sets the degree of the denominator of a rational function
+            </summary>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.Compute(System.Single[])">
             <summary>
             Returns the Pade approximant.
             </summary>
             <param name="taylorCoeffs">Taylor series coefficients</param>
-            <param name="m">The degree of the numerator of a rational function</param>
-            <param name="n">The degree of the denominator of a rational function</param>
             <exception cref="T:System.ArgumentException">Exception</exception>
             <returns>Coeffs</returns>
         </member>
-        <member name="M:UMapx.Analysis.Pade.Compute(UMapx.Core.Complex32[],System.Int32,System.Int32)">
+        <member name="M:UMapx.Analysis.Pade.Compute(UMapx.Core.Complex32[])">
             <summary>
             Returns the Pade approximant.
             </summary>
             <param name="taylorCoeffs">Taylor series coefficients</param>
-            <param name="m">The degree of the numerator of a rational function</param>
-            <param name="n">The degree of the denominator of a rational function</param>
             <exception cref="T:System.ArgumentException">Exception</exception>
             <returns>Coeffs</returns>
         </member>

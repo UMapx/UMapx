@@ -7,7 +7,7 @@ namespace UMapx.Analysis
     /// Defines a Pade approximant.
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Pad%C3%A9_approximant
+    /// https://en.wikipedia.org/wiki/Pad%C3%A9_approximant.
     /// </remarks>
     /// Example: exp(x) = 1 + x + x^2/2! + x^3/3! + ...
     /// <code>
@@ -17,20 +17,63 @@ namespace UMapx.Analysis
     [Serializable]
     public class Pade
     {
+        #region Private data
+        private int m;
+        private int n;
+        #endregion
+
         #region Class components
         /// <summary>
         /// Initializes the Pade approximant.
+        /// <param name="m">The degree of the numerator of a rational function</param>
+        /// <param name="n">The degree of the denominator of a rational function</param>
         /// </summary>
-        public Pade() { }
+        public Pade(int m = 2, int n = 2)
+        {
+            this.M = m;
+            this.N = n;
+        }
+        /// <summary>
+        /// Gets or sets the degree of the numerator of a rational function.
+        /// </summary>
+        public int M
+        {
+            get
+            {
+                return this.m;
+            }
+            set
+            {
+                if (value < 1)
+                    throw new Exception("Invalid argument value");
+
+                this.m = value;
+            }
+        }
+        /// <summary>
+        /// Gets or sets the degree of the denominator of a rational function
+        /// </summary>
+        public int N
+        {
+            get
+            {
+                return this.n;
+            }
+            set
+            {
+                if (value < 1)
+                    throw new Exception("Invalid argument value");
+
+                this.n = value;
+            }
+        }
         /// <summary>
         /// Returns the Pade approximant.
         /// </summary>
         /// <param name="taylorCoeffs">Taylor series coefficients</param>
-        /// <param name="m">The degree of the numerator of a rational function</param>
-        /// <param name="n">The degree of the denominator of a rational function</param>
         /// <exception cref="ArgumentException">Exception</exception>
         /// <returns>Coeffs</returns>
-        public (float[] NumeratorCoeffs, float[] DenominatorCoeffs) Compute(float[] taylorCoeffs, int m, int n)
+        public (float[] NumeratorCoeffs, float[] DenominatorCoeffs) Compute(float[] taylorCoeffs)
         {
             if (taylorCoeffs.Length < m + n + 1)
                 throw new ArgumentException("Not enough Taylor series coefficients for the specified orders.");
@@ -77,11 +120,9 @@ namespace UMapx.Analysis
         /// Returns the Pade approximant.
         /// </summary>
         /// <param name="taylorCoeffs">Taylor series coefficients</param>
-        /// <param name="m">The degree of the numerator of a rational function</param>
-        /// <param name="n">The degree of the denominator of a rational function</param>
         /// <exception cref="ArgumentException">Exception</exception>
         /// <returns>Coeffs</returns>
-        public (Complex32[] NumeratorCoeffs, Complex32[] DenominatorCoeffs) Compute(Complex32[] taylorCoeffs, int m, int n)
+        public (Complex32[] NumeratorCoeffs, Complex32[] DenominatorCoeffs) Compute(Complex32[] taylorCoeffs)
         {
             if (taylorCoeffs.Length < m + n + 1)
                 throw new ArgumentException("Not enough Taylor series coefficients for the specified orders.");
