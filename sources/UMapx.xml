@@ -16482,6 +16482,110 @@
             Implements filter rebuilding.
             </summary>
         </member>
+        <member name="T:UMapx.Imaging.CannyEdgeDetector">
+            <summary>
+            Defines a Canny edge detector.
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Canny_edge_detector
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.#ctor(System.Single,System.Single,System.Int32)">
+            <summary>
+            Initializes the Canny edge detector.
+            </summary>
+            <param name="lowThreshold">Low threshold</param>
+            <param name="highThreshold">High threshold</param>
+            <param name="radius">Gaussian blur radius</param>
+        </member>
+        <member name="P:UMapx.Imaging.CannyEdgeDetector.LowThreshold">
+            <summary>
+            Gets or sets the low threshold.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.CannyEdgeDetector.HighThreshold">
+            <summary>
+            Gets or sets the high threshold.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.CannyEdgeDetector.Radius">
+            <summary>
+            Gets or sets the Gaussian blur radius.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.GaussianBlur(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
+            <summary>
+            Apply Gaussian blur.
+            </summary>
+            <param name="src">Source</param>
+            <param name="dst">Destination</param>
+            <param name="radius">Radius</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.ApplySobel(System.Single[0:,0:],System.Single[0:,0:],System.Single[0:,0:],System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Apply Sobel filter.
+            </summary>
+            <param name="blurred">Blurred source</param>
+            <param name="gx">Gx</param>
+            <param name="gy">Gy</param>
+            <param name="magnitude">Magnitude</param>
+            <param name="angle">Angle</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.NonMaximumSuppression(System.Single[0:,0:],System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Non-max suppression.
+            </summary>
+            <param name="mag">Magnitute</param>
+            <param name="dir">Dir</param>
+            <param name="output">Output</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.Hysteresis(System.Single[0:,0:],System.Boolean[0:,0:],System.Single,System.Single)">
+            <summary>
+            Hysteresis.
+            </summary>
+            <param name="nms">NMS</param>
+            <param name="edges">Edges</param>
+            <param name="low">Low</param>
+            <param name="high">High</param>
+        </member>
+        <member name="M:UMapx.Imaging.CannyEdgeDetector.FollowEdge(System.Int32,System.Int32,System.Single[0:,0:],System.Boolean[0:,0:],System.Boolean[0:,0:],System.Single)">
+            <summary>
+            Follow edge.
+            </summary>
+            <param name="x">X</param>
+            <param name="y">Y</param>
+            <param name="nms">NMS</param>
+            <param name="edges">Edges</param>
+            <param name="visited">Visited</param>
+            <param name="low">Low</param>
+        </member>
         <member name="T:UMapx.Imaging.CanvasColor">
             <summary>
             Defines the color canvas class.
@@ -16595,25 +16699,6 @@
             <param name="bmData">Bitmap data</param>
         </member>
         <member name="M:UMapx.Imaging.Chromakey.Apply(System.Drawing.Bitmap)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="Data">Bitmap</param>
-        </member>
-        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="Data">Bitmap</param>
-            <param name="Src">Bitmap</param>
-        </member>
-        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.CannyEdgeDetector.Apply(System.Drawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
