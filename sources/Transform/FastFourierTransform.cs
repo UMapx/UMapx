@@ -440,7 +440,7 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// Forward Fourier transform (Bluestein FFT).
+        /// Fast Fourier transform (Bluestein FFT).
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
