@@ -357,9 +357,6 @@ namespace UMapx.Transform
             }
             else
             {
-                if (!Maths.IsPower(M, 2))
-                    throw new Exception("Dimension of the signal must be a power of 2");
-
                 Parallel.For(0, N, i =>
                 {
                     Complex32[] row = new Complex32[M];
