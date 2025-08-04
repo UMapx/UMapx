@@ -23403,17 +23403,19 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.fft(UMapx.Core.Complex32[])">
+        <member name="M:UMapx.Transform.FastFourierTransform.Bluestein(UMapx.Core.Complex32[],System.Boolean)">
             <summary>
-            Forward Fourier transform.
+            Forward Fourier transform (Bluestein FFT).
             </summary>
-            <param name="data">Array</param>
+            <param name="input"></param>
+            <param name="inverse"></param>
         </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.ifft(UMapx.Core.Complex32[])">
+        <member name="M:UMapx.Transform.FastFourierTransform.FFT(UMapx.Core.Complex32[],System.Boolean)">
             <summary>
-            Backward Fourier transform.
+            Forward Fourier transform (Cooley-Tukey FFT).
             </summary>
             <param name="data">Array</param>
+            <param name="inverse">Inverse or not</param>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.GetReversedBits(System.Int32)">
             <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Threading.Tasks;
 using UMapx.Core;
 
@@ -74,11 +75,16 @@ namespace UMapx.Transform
         public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
-
             Complex32[] B = (Complex32[])A.Clone();
-            fft(B);
+
+            if (!Maths.IsPower(N, 2))
+            {
+                Bluestein(B, false);
+            }
+            else
+            {
+                FFT(B, false);
+            }
 
             if (normalized == true)
             {
@@ -95,11 +101,16 @@ namespace UMapx.Transform
         public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
-
             Complex32[] A = (Complex32[])B.Clone();
-            ifft(A);
+
+            if (!Maths.IsPower(N, 2))
+            {
+                Bluestein(B, true);
+            }
+            else
+            {
+                FFT(A, true);
+            }
 
             if (normalized == true)
             {
@@ -134,7 +145,7 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    ifft(row);
+                    FFT(row, true);
 
                     for (j = 0; j < M; j++)
                     {
@@ -153,7 +164,7 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fft(col);
+                    FFT(col, false);
 
                     for (i = 0; i < N; i++)
                     {
@@ -182,7 +193,7 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fft(col);
+                    FFT(col, false);
 
                     for (i = 0; i < N; i++)
                     {
@@ -211,7 +222,7 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    ifft(row);
+                    FFT(row, true);
 
                     for (j = 0; j < M; j++)
                     {
@@ -251,7 +262,7 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    ifft(col);
+                    FFT(col, true);
 
                     for (i = 0; i < N; i++)
                     {
@@ -269,7 +280,7 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fft(row);
+                    FFT(row, false);
 
                     for (j = 0; j < M; j++)
                     {
@@ -296,7 +307,7 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    ifft(col);
+                    FFT(col, true);
 
                     for (i = 0; i < N; i++)
                     {
@@ -324,7 +335,7 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fft(row);
+                    FFT(row, false);
 
                     for (j = 0; j < M; j++)
                     {
@@ -389,55 +400,66 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// Forward Fourier transform.
+        /// Forward Fourier transform (Bluestein FFT).
         /// </summary>
-        /// <param name="data">Array</param>
-        private static void fft(Complex32[] data)
+        /// <param name="input"></param>
+        /// <param name="inverse"></param>
+        private static void Bluestein(Complex32[] input, bool inverse)
         {
-            int n = data.Length;
-            int m = Log2(n);
+            int N = input.Length;
 
-            // reorder data first
-            FastFourierTransform.ReorderData(data);
+            // Find power-of-two convolution size
+            int M = 1;
+            while (M < 2 * N) M <<= 1;
 
-            // compute FFT
-            int tn = 1, tm, k, i, even, odd;
-            Complex32[] rotation;
-            Complex32 t, ce, co;
-            float tr, ti;
+            Complex32[] a = new Complex32[M];
+            Complex32[] b = new Complex32[M];
+            Complex32[] c = new Complex32[M];
 
-            for (k = 1; k <= m; k++)
+            float sign = inverse ? 1 : -1;
+
+            // Precompute chirp
+            for (int n = 0; n < N; n++)
             {
-                rotation = FastFourierTransform.ForwardComplexRotation(k);
-                tm = tn; tn <<= 1;
+                float angle = Maths.Pi * n * n / N;
+                Complex w = Complex.FromPolarCoordinates(1.0, sign * angle);
+                a[n] = input[n] * w;
+                b[n] = Complex.FromPolarCoordinates(1.0, -sign * angle);
+            }
 
-                for (i = 0; i < tm; i++)
-                {
-                    t = rotation[i];
+            // Zero-padding
+            for (int n = N; n < M; n++)
+            {
+                a[n] = Complex.Zero;
+                b[n] = Complex.Zero;
+            }
 
-                    for (even = i; even < n; even += tn)
-                    {
-                        odd = even + tm;
-                        ce = data[even];
-                        co = data[odd];
+            // Flip b to prepare for convolution
+            for (int i = N; i < M; i++) b[i] = Complex.Zero;
+            Array.Reverse(b, 0, N);
 
-                        tr = co.Real * t.Real - co.Imag * t.Imag;
-                        ti = co.Real * t.Imag + co.Imag * t.Real;
+            // Perform convolution using FFT
+            FFT(a, false);
+            FFT(b, false);
+            for (int i = 0; i < M; i++) c[i] = a[i] * b[i];
+            FFT(c, true);
 
-                        data[even].Real += tr;
-                        data[even].Imag += ti;
-
-                        data[odd].Real = ce.Real - tr;
-                        data[odd].Imag = ce.Imag - ti;
-                    }
-                }
+            // Final multiplication
+            for (int n = 0; n < N; n++)
+            {
+                double angle = Math.PI * n * n / N;
+                Complex w = Complex.FromPolarCoordinates(1.0, sign * angle);
+                input[n] = c[n] * w;
+                if (inverse)
+                    input[n] /= N;
             }
         }
         /// <summary>
-        /// Backward Fourier transform.
+        /// Forward Fourier transform (Cooley-Tukey FFT).
         /// </summary>
         /// <param name="data">Array</param>
-        private static void ifft(Complex32[] data)
+        /// <param name="inverse">Inverse or not</param>
+        private static void FFT(Complex32[] data, bool inverse)
         {
             int n = data.Length;
             int m = Log2(n);
@@ -453,7 +475,7 @@ namespace UMapx.Transform
 
             for (k = 1; k <= m; k++)
             {
-                rotation = FastFourierTransform.BackwardComplexRotation(k);
+                rotation = inverse ? FastFourierTransform.BackwardComplexRotation(k) : FastFourierTransform.ForwardComplexRotation(k);
                 tm = tn; tn <<= 1;
 
                 for (i = 0; i < tm; i++)

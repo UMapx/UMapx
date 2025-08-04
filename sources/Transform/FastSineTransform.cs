@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Threading.Tasks;
 using UMapx.Core;
 
@@ -61,27 +62,30 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public float[] Forward(float[] A)
         {
-            int N = A.Length, N2 = N * 2, i, k;
-            Complex32[] B = new Complex32[N2];
+            int n = A.Length;
+            int m = 2 * (n + 1);
 
-            for (i = 0; i < N; i++)
+            Complex32[] extended = new Complex32[m];
+            extended[0] = Complex.Zero;
+
+            for (int i = 0; i < n; i++)
             {
-                B[i] = A[i];
+                extended[i + 1] = new Complex(A[i], 0);
+                extended[m - 1 - i] = new Complex(-A[i], 0);
             }
 
-            B = FFT.Forward(B);
+            extended[n + 1] = Complex.Zero;
+            FFT.Forward(extended);
 
-            float[] C = new float[N];
-            Complex32 c = -Maths.I * Maths.Pi / N;
+            float scale = Maths.Sqrt(2.0f / (n + 1));
+            float[] output = new float[n];
 
-            for (k = 0; k < N; k++)
+            for (int i = 0; i < n; i++)
             {
-                C[k] = 2.0f * (B[k] * Maths.Exp(c * k)).Imag;
+                output[i] = scale * extended[i + 1].Imag;
             }
 
-            C[0] = A[N - 1] / Maths.Sqrt2;
-
-            return C;
+            return A;
         }
         /// <summary>
         /// Backward sine transform.
@@ -90,28 +94,30 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public float[] Backward(float[] B)
         {
-            int N = B.Length, N2 = N * 2, i, k;
-            Complex32[] A = new Complex32[N2];
-            float Bk, temp, c = Maths.Pi / N;
+            int n = B.Length;
+            int m = 2 * (n + 1);
 
-            for (k = 0; k < N; k++)
+            Complex32[] spectrum = new Complex32[m];
+            spectrum[0] = Complex.Zero;
+
+            for (int i = 0; i < n; i++)
             {
-                Bk = B[k];
-                temp = k * c;
-                A[k] = new Complex32(Bk * (float)Math.Cos(temp), Bk * (float)Math.Sin(temp));
+                spectrum[i + 1] = new Complex(0, B[i]);
+                spectrum[m - 1 - i] = new Complex(0, -B[i]);
             }
 
-            A = FFT.Backward(A);
-            float[] C = new float[N];
+            spectrum[n + 1] = Complex.Zero;
+            FFT.Backward(spectrum);
 
-            for (i = 0; i < N; i++)
+            float scale = Maths.Sqrt(2.0f / (n + 1));
+            float[] output = new float[n];
+
+            for (int i = 0; i < n; i++)
             {
-                C[i] = -A[i].Imag * 2.0f;
+                output[i] = scale * spectrum[i + 1].Real;
             }
 
-            C[N - 1] = B[0] * Maths.Sqrt2;
-
-            return C;
+            return output;
         }
         /// <summary>
         /// Forward sine transform.
