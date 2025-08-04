@@ -5,10 +5,11 @@ using UMapx.Core;
 namespace UMapx.Transform
 {
     /// <summary>
-    /// Defines the fast Fourier transform using the Cooley-Tukey algorithm.
+    /// Defines the fast Fourier transform using the Cooley-Tukey and Bluestein algorithms.
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
+    /// https://en.wikipedia.org/wiki/Chirp_Z-transform
     /// </remarks>
     /// </summary>
     [Serializable]
