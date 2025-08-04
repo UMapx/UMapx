@@ -46,7 +46,7 @@ namespace UMapx.Analysis
         /// <param name="a">Lower limit</param>
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Compute(IFloat function, float a, float b, int n)
         {
             // chose method of integration
@@ -75,7 +75,7 @@ namespace UMapx.Analysis
         /// <param name="a">Lower limit</param>
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Compute(float[] y, float a, float b, int n)
         {
             // chose method of integration

@@ -22,7 +22,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="element">"Element</param>
         /// <param name="n">Radius</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public unsafe static float Determinant(float* element, int n)
         {
             float* mtx_u_ii, mtx_ii_j;

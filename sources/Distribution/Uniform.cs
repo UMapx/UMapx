@@ -134,7 +134,7 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Function(float x)
         {
             if (x < a)
@@ -151,7 +151,7 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Distribution(float x)
         {
             if (x < a)
@@ -167,7 +167,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Entropy
         {
             get

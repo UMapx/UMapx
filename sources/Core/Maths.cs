@@ -91,7 +91,7 @@ namespace UMapx.Core
         /// Converts a value to a type float.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Float(float x)
         {
             return (x > 1.0f) ? 1.0f : ((x < 0) ? 0 : x);
@@ -315,7 +315,7 @@ namespace UMapx.Core
         /// Returns the number raised to the second power.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Pow(float a)
         {
             return (float)Math.Pow(a, 2);
@@ -325,7 +325,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <param name="b">Power</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Pow(float a, float b)
         {
             return (float)Math.Pow(a, b);
@@ -334,7 +334,7 @@ namespace UMapx.Core
         /// Returns the exponent raised to the power.
         /// </summary>
         /// <param name="a">Power</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Exp(float a)
         {
             return (float)Math.Pow(E, a);
@@ -343,7 +343,7 @@ namespace UMapx.Core
         /// Returns the natural logarithm of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Log(float a)
         {
             return (float)Math.Log(a);
@@ -352,7 +352,7 @@ namespace UMapx.Core
         /// Returns the decimal logarithm of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Log10(float a)
         {
             return (float)Math.Log(a, 10.0);
@@ -361,7 +361,7 @@ namespace UMapx.Core
         /// Returns the binary logarithm of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Log2(float a)
         {
             return (float)Math.Log(a, 2);
@@ -371,7 +371,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <param name="b">Base</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Log(float a, float b)
         {
             return (float)Math.Log(a, b);
@@ -380,7 +380,7 @@ namespace UMapx.Core
         /// Returns the square root of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Sqrt(float a)
         {
             return (float)Math.Sqrt(a);
@@ -390,7 +390,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <param name="b">Power</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Sqrt(float a, float b)
         {
             return (float)Math.Pow(a, 1.0 / b);
@@ -399,7 +399,7 @@ namespace UMapx.Core
         /// Returns the modulus of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Abs(float a)
         {
             if (a < 0.0)
@@ -413,7 +413,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">First number</param>
         /// <param name="b">Second number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Max(float a, float b)
         {
             if (a < b)
@@ -428,7 +428,7 @@ namespace UMapx.Core
         /// <param name="a">First number</param>
         /// <param name="b">Second number</param>
         /// <param name="c">Third number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Max(float a, float b, float c)
         {
             return Max(a, Max(b, c));
@@ -438,7 +438,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">First number</param>
         /// <param name="b">Second number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Min(float a, float b)
         {
             if (a < b)
@@ -453,7 +453,7 @@ namespace UMapx.Core
         /// <param name="a">First number</param>
         /// <param name="b">Second number</param>
         /// <param name="c">Third number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Min(float a, float b, float c)
         {
             return Min(a, Min(b, c));
@@ -462,7 +462,7 @@ namespace UMapx.Core
         /// Returns the sign of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static int Sign(float a)
         {
             if (a < 0)
@@ -479,7 +479,7 @@ namespace UMapx.Core
         /// Returns the rounded number down.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Floor(float a)
         {
             return (float)Math.Floor(a);
@@ -488,7 +488,7 @@ namespace UMapx.Core
         /// Returns the rounded number up.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Ceil(float a)
         {
             return (float)Math.Ceiling(a);
@@ -497,7 +497,7 @@ namespace UMapx.Core
         /// Returns the rounded number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Round(float a)
         {
             return (float)Math.Round(a, 0);
@@ -507,7 +507,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <param name="dig">Digits</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Round(float a, int dig)
         {
             return (float)Math.Round(a, dig);
@@ -657,7 +657,7 @@ namespace UMapx.Core
         /// Returns the cosine of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Cos(float a)
         {
             return (float)Math.Cos(a);
@@ -666,7 +666,7 @@ namespace UMapx.Core
         /// Returns the sine of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Sin(float a)
         {
             return (float)Math.Sin(a);
@@ -675,7 +675,7 @@ namespace UMapx.Core
         /// Returns the tangent of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Tg(float a)
         {
             return (float)Math.Sin(a) / (float)Math.Cos(a);
@@ -684,7 +684,7 @@ namespace UMapx.Core
         /// Returns the cotangent of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Ctg(float a)
         {
             return (float)Math.Cos(a) / (float)Math.Sin(a);
@@ -693,7 +693,7 @@ namespace UMapx.Core
         /// Returns the secant of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Sec(float a)
         {
             return 1.0f / (float)Math.Cos(a);
@@ -702,7 +702,7 @@ namespace UMapx.Core
         /// Returns the cosecant of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Cosc(float a)
         {
             return 1.0f / (float)Math.Sin(a);
@@ -711,7 +711,7 @@ namespace UMapx.Core
         /// Returns the arcsine of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Asin(float a)
         {
             return (float)Math.Asin(a);
@@ -720,7 +720,7 @@ namespace UMapx.Core
         /// Returns the arccosine of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Acos(float a)
         {
             return (float)Math.Acos(a);
@@ -729,7 +729,7 @@ namespace UMapx.Core
         /// Returns the arctangent of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Atg(float a)
         {
             return (float)Math.Atan(a);
@@ -738,7 +738,7 @@ namespace UMapx.Core
         /// Returns the arccotangent of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Actg(float a)
         {
             return Pi / 2 - (float)Math.Atan(a);
@@ -747,7 +747,7 @@ namespace UMapx.Core
         /// Returns the arcsecance of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Asec(float a)
         {
             return (float)Math.Acos(1.0 / a);
@@ -756,7 +756,7 @@ namespace UMapx.Core
         /// Returns the arccosecant of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Acosc(float a)
         {
             return (float)Math.Asin(1.0 / a);
@@ -881,7 +881,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic sine of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Sh(float a)
         {
             return (float)Math.Sinh(a);
@@ -890,7 +890,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic cosine of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Ch(float a)
         {
             return (float)Math.Cosh(a);
@@ -899,7 +899,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic tangent of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Th(float a)
         {
             return (float)Math.Sinh(a) / (float)Math.Cosh(a);
@@ -908,7 +908,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic cotangent of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Cth(float a)
         {
             return (float)Math.Cosh(a) / (float)Math.Sinh(a);
@@ -917,7 +917,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic secant of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Sch(float a)
         {
             return 1.0f / (float)Math.Cosh(a);
@@ -926,7 +926,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic cosecant of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Csch(float a)
         {
             return 1.0f / (float)Math.Sinh(a);
@@ -935,7 +935,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic arcsine of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Ash(float a)
         {
             return (float)Math.Log(a + Math.Sqrt(a * a + 1));
@@ -944,7 +944,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic arccosine of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Ach(float a)
         {
             if (a >= 0)
@@ -957,7 +957,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic arctangent of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Ath(float a)
         {
             return 1.0f / 2.0f * (float)Math.Log((1 + a) / (1 - a));
@@ -966,7 +966,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic arccotangent of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Acth(float a)
         {
             return 1.0f / 2.0f * (float)Math.Log((a + 1) / (a - 1));
@@ -975,7 +975,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic arcsecance of a number.
         /// </summary>
         /// <param name="a">Angle in radians</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Asch(float a)
         {
             return (float)Math.Log((1 + (float)Math.Sqrt(1 - a * a)) / a);
@@ -984,7 +984,7 @@ namespace UMapx.Core
         /// Returns the hyperbolic arccosecant of a number.
         /// </summary>
         /// <param name="a">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Acsch(float a)
         {
             if (a < 0)
@@ -1610,7 +1610,7 @@ namespace UMapx.Core
         /// Returns the value of the Euler function.
         /// </summary>
         /// <param name="n">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static int Etf(int n)
         {
             // factorization with only primes
@@ -1629,7 +1629,7 @@ namespace UMapx.Core
         /// Returns the value of the Euler function.
         /// </summary>
         /// <param name="n">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static long Etf(long n)
         {
             // factorization with only primes
@@ -1847,7 +1847,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <param name="b">Number</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Hypotenuse(float a, float b)
         {
             float r = 0.0f;
@@ -2026,13 +2026,36 @@ namespace UMapx.Core
         #endregion
 
         #region Other
+
+        /// <summary>
+        /// Copies sign.
+        /// </summary>
+        /// <param name="magnitude">Magnitude</param>
+        /// <param name="sign">Sign</param>
+        /// <returns>Value</returns>
+        public static int CopySign(int magnitude, int sign)
+        {
+            return Math.Abs(magnitude) * Math.Sign(sign);
+        }
+
+        /// <summary>
+        /// Copies sign.
+        /// </summary>
+        /// <param name="magnitude">Magnitude</param>
+        /// <param name="sign">Sign</param>
+        /// <returns>Value</returns>
+        public static float CopySign(float magnitude, float sign)
+        {
+            return Math.Abs(magnitude) * Math.Sign(sign);
+        }
+
         /// <summary>
         /// Normalizes a variable relative to the {min, max} range.
         /// </summary>
         /// <param name="x">Value</param>
         /// <param name="min">Minimum value</param>
         /// <param name="max">Maximum value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static int Normalize(int x, int min, int max)
         {
             int a = max - min;
@@ -2046,7 +2069,7 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="min">Minimum value</param>
         /// <param name="max">Maximum value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Normalize(float x, float min, float max)
         {
             float a = max - min;

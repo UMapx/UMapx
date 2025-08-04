@@ -14,7 +14,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="c">Approximation coefficients</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Polynomial(float x, float[] c)
         {
             int n = c.Length, i;
@@ -73,7 +73,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="pow">Power</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float SummaryPow(float[] v, float pow)
         {
             float sum = 0;
@@ -92,7 +92,7 @@ namespace UMapx.Analysis
         /// <param name="y">Array</param>
         /// <param name="powx">Power of x</param>
         /// <param name="powy">Power of y</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float SummaryPow(float[] x, float[] y, float powx, float powy)
         {
             float sum = 0;
@@ -109,7 +109,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="a">Approximation</param>
         /// <param name="b">Function</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Error(float[] a, float[] b)
         {
             float vara = Matrice.Var(a);
@@ -227,7 +227,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="pow">Power</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 SummaryPow(Complex32[] v, float pow)
         {
             Complex32 sum = 0;
@@ -246,7 +246,7 @@ namespace UMapx.Analysis
         /// <param name="y">Array</param>
         /// <param name="powx">Power of x</param>
         /// <param name="powy">Power of y</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 SummaryPow(Complex32[] x, Complex32[] y, float powx, float powy)
         {
             Complex32 sum = 0;
@@ -263,7 +263,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="a">Approximation</param>
         /// <param name="b">Function</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Error(Complex32[] a, Complex32[] b)
         {
             Complex32 vara = Matrice.Var(a);

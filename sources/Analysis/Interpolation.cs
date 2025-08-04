@@ -50,7 +50,7 @@ namespace UMapx.Analysis
         /// <param name="z">Function matrix</param>
         /// <param name="xl">The value of the first argument to calculate</param>
         /// <param name="yl">The value of the second argument to calculate</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Compute(float[] x, float[] y, float[,] z, float xl, float yl)
         {
             return bilinear(x, y, z, xl, yl);
@@ -61,7 +61,7 @@ namespace UMapx.Analysis
         /// <param name="x">Array of values of the argument</param>
         /// <param name="y">Array of values of the function</param>
         /// <param name="xl">The value of the argument to calculate</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Compute(float[] x, float[] y, float xl)
         {
             // chose method of interpolation

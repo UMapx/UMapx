@@ -138,7 +138,7 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Function(float x)
         {
             return Maths.Exp(Maths.Pow((x - mu), 2) / (-2.0f * sigma * sigma)) / (Maths.Sqrt(2.0f * Maths.Pi) * sigma);
@@ -147,7 +147,7 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Distribution(float x)
         {
             return 0.5f + 0.5f * Special.Erf((x - mu) / Maths.Sqrt(2.0f * sigma * sigma));
@@ -155,7 +155,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Entropy
         {
             get

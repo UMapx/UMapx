@@ -28,13 +28,13 @@
         /// Returns the amplitude value at the given frequency.
         /// </summary>
         /// <param name="w">Frequency (rad / s)</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         float Amplitude(float w);
         /// <summary>
         /// Returns the phase value at the given frequency.
         /// </summary>
         /// <param name="w">Frequency (rad / s)</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         float Phase(float w);
         #endregion
     }

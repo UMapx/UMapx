@@ -62,7 +62,7 @@ namespace UMapx.Analysis
         /// <param name="function">Continuous function delegate</param>
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Compute(IFloat function, float a, float b)
         {
             // chose method of nonlinear
@@ -85,7 +85,7 @@ namespace UMapx.Analysis
         /// <param name="function">Continuous function delegate</param>
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public Complex32 Compute(IComplex function, Complex32 a, Complex32 b)
         {
             // chose method of nonlinear

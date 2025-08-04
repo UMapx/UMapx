@@ -104,7 +104,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="eta">Argument</param>
         /// <param name="tau">Argument</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Function(float eta, float tau)
         {
             float ksi = eta * tau;
@@ -115,7 +115,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="t">Argument</param>
         /// <param name="tau">Argument</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Distribution(float t, float tau)
         {
             throw new NotSupportedException();

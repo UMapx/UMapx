@@ -39,7 +39,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         float Entropy { get; }
         #endregion
     }

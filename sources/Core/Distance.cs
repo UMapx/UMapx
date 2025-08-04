@@ -13,7 +13,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Euclidean(this float[] p, float[] q)
         {
             float sum = 0;
@@ -62,7 +62,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Chebyshev(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -113,7 +113,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Manhattan(this float[] p, float[] q)
         {
             float sum = 0;
@@ -162,7 +162,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Angular(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -218,7 +218,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float BrayCurtis(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -269,7 +269,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Canberra(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -317,7 +317,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Dice(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -370,7 +370,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Hellinger(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -419,7 +419,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Jaccard(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -474,7 +474,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Kulczynski(this float[] p, float[] q)
         {
             // TODO: Rewrite the integer dissimilarities (Yule, Russel-Rao,...)
@@ -532,7 +532,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <param name="order">Order</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Minkowski(this float[] p, float[] q, float order)
         {
             int n = p.Length;
@@ -581,7 +581,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float RusselRao(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -630,7 +630,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float SokalMichener(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -686,7 +686,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float SokalSneath(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -740,7 +740,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Yule(this float[] p, float[] q)
         {
             int n = p.Length;
@@ -796,7 +796,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float SquareEuclidian(this float[] p, float[] q)
         {
             int n = p.Length;

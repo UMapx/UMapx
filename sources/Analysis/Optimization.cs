@@ -46,7 +46,7 @@ namespace UMapx.Analysis
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
         /// <param name="max">Search maximum or minimum</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Compute(IFloat function, float a, float b, bool max = false)
         {
             // max or min

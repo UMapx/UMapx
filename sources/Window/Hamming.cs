@@ -23,7 +23,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
             return 0.53836f - 0.46164f * Cosine.cosinefunc(2 * x, frameSize);

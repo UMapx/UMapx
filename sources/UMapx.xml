@@ -252,7 +252,7 @@
             <param name="x">Argument value</param>
             <param name="h">Step</param>
             <param name="order">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.Differentation.Compute(System.Single[],System.Int32,System.Single,System.Int32)">
             <summary>
@@ -262,7 +262,7 @@
             <param name="index">Index of argument</param>
             <param name="h">Step</param>
             <param name="order">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.Differentation.Compute(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
             <summary>
@@ -479,7 +479,7 @@
             <param name="a">Lower limit</param>
             <param name="b">Upper limit</param>
             <param name="n">Number of splits</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.Integration.Compute(System.Single[],System.Single,System.Single,System.Int32)">
             <summary>
@@ -489,7 +489,7 @@
             <param name="a">Lower limit</param>
             <param name="b">Upper limit</param>
             <param name="n">Number of splits</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.Integration.Compute(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
             <summary>
@@ -754,7 +754,7 @@
             <param name="z">Function matrix</param>
             <param name="xl">The value of the first argument to calculate</param>
             <param name="yl">The value of the second argument to calculate</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.Compute(System.Single[],System.Single[],System.Single)">
             <summary>
@@ -763,7 +763,7 @@
             <param name="x">Array of values of the argument</param>
             <param name="y">Array of values of the function</param>
             <param name="xl">The value of the argument to calculate</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.Compute(UMapx.Core.Complex32[],UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
@@ -884,7 +884,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="c">Approximation coefficients</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Polynomial(System.Single[],System.Single[])">
             <summary>
@@ -909,7 +909,7 @@
             </summary>
             <param name="v">Array</param>
             <param name="pow">Power</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.SummaryPow(System.Single[],System.Single[],System.Single,System.Single)">
             <summary>
@@ -919,7 +919,7 @@
             <param name="y">Array</param>
             <param name="powx">Power of x</param>
             <param name="powy">Power of y</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Error(System.Single[],System.Single[])">
             <summary>
@@ -927,7 +927,7 @@
             </summary>
             <param name="a">Approximation</param>
             <param name="b">Function</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Equation(System.Single[])">
             <summary>
@@ -975,7 +975,7 @@
             </summary>
             <param name="v">Array</param>
             <param name="pow">Power</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.SummaryPow(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Single,System.Single)">
             <summary>
@@ -985,7 +985,7 @@
             <param name="y">Array</param>
             <param name="powx">Power of x</param>
             <param name="powy">Power of y</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Error(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
@@ -993,7 +993,7 @@
             </summary>
             <param name="a">Approximation</param>
             <param name="b">Function</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Equation(UMapx.Core.Complex32[])">
             <summary>
@@ -1042,7 +1042,7 @@
             <param name="function">Continuous function delegate</param>
             <param name="a">Start of line</param>
             <param name="b">End of line</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.Nonlinear.Compute(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
@@ -1051,7 +1051,7 @@
             <param name="function">Continuous function delegate</param>
             <param name="a">Start of line</param>
             <param name="b">End of line</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.Nonlinear.bisec(UMapx.Core.IFloat,System.Single,System.Single,System.Single)">
             <summary>
@@ -1175,7 +1175,7 @@
             <param name="a">Start of line</param>
             <param name="b">End of line</param>
             <param name="max">Search maximum or minimum</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Analysis.Optimization.goldenMin(UMapx.Core.IFloat,System.Single,System.Single,System.Single)">
             <summary>
@@ -1962,7 +1962,7 @@
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
             <param name="blue">Blue [0, 255]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.Average(System.Single,System.Single,System.Single)">
             <summary>
@@ -1971,21 +1971,21 @@
             <param name="red">Red</param>
             <param name="green">Green</param>
             <param name="blue">Blue</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.Average(UMapx.Colorspace.RGB)">
             <summary>
             Calculates the average brightness value.
             </summary>
             <param name="rgb">RGB structure</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.Average(UMapx.Colorspace.sRGB)">
             <summary>
             Calculates the average brightness value.
             </summary>
             <param name="rgb">sRGB structure</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.PAL(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -1994,7 +1994,7 @@
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
             <param name="blue">Blue [0, 255]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.PAL(System.Single,System.Single,System.Single)">
             <summary>
@@ -2003,21 +2003,21 @@
             <param name="red">Red</param>
             <param name="green">Green</param>
             <param name="blue">Blue</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.PAL(UMapx.Colorspace.RGB)">
             <summary>
             Calculates the brightness value in the standard (PAL/NTC).
             </summary>
             <param name="rgb">RGB structure</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.PAL(UMapx.Colorspace.sRGB)">
             <summary>
             Calculates the brightness value in the standard (PAL/NTC).
             </summary>
             <param name="rgb">RGB structure</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.HDTV(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -2026,7 +2026,7 @@
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
             <param name="blue">Blue [0, 255]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.HDTV(System.Single,System.Single,System.Single)">
             <summary>
@@ -2035,21 +2035,21 @@
             <param name="red">Red</param>
             <param name="green">Green</param>
             <param name="blue">Blue</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.HDTV(UMapx.Colorspace.RGB)">
             <summary>
             Calculates the brightness value in the standard HDTV.
             </summary>
             <param name="rgb">RGB structure</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.HDTV(UMapx.Colorspace.sRGB)">
             <summary>
             Calculates the brightness value in the standard HDTV.
             </summary>
             <param name="rgb">sRGB structure</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.RYY(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -2058,7 +2058,7 @@
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
             <param name="blue">Blue [0, 255]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.RYY(System.Single,System.Single,System.Single)">
             <summary>
@@ -2067,21 +2067,21 @@
             <param name="red">Red</param>
             <param name="green">Green</param>
             <param name="blue">Blue</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.RYY(UMapx.Colorspace.RGB)">
             <summary>
             Calculates the brightness value in the standard RYY.
             </summary>
             <param name="rgb">RGB structure</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.RYY(UMapx.Colorspace.sRGB)">
             <summary>
             Calculates the brightness value in the standard RYY.
             </summary>
             <param name="rgb">sRGB structure</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.Temp2RGB(System.Single)">
             <summary>
@@ -3719,7 +3719,7 @@
             Defines the delegate of a continuous function that depends on a single argument.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Core.IComplex">
             <summary>
@@ -3734,7 +3734,7 @@
             </summary>
             <param name="x">First argument</param>
             <param name="y">Second argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Core.IComplexMesh">
             <summary>
@@ -3775,7 +3775,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Euclidean(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3791,7 +3791,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Chebyshev(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3807,7 +3807,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Manhattan(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3823,7 +3823,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Angular(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3839,7 +3839,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.BrayCurtis(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3855,7 +3855,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Canberra(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3871,7 +3871,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Dice(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3887,7 +3887,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Hellinger(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3903,7 +3903,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Jaccard(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3919,7 +3919,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Kulczynski(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3936,7 +3936,7 @@
             <param name="p">Array</param>
             <param name="q">Array</param>
             <param name="order">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Minkowski(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
             <summary>
@@ -3953,7 +3953,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.RusselRao(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3969,7 +3969,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.SokalMichener(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -3985,7 +3985,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.SokalSneath(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -4001,7 +4001,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Yule(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -4017,7 +4017,7 @@
             </summary>
             <param name="p">Array</param>
             <param name="q">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.SquareEuclidian(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -4331,7 +4331,7 @@
             Returns the value of a bicubic function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Gaussian(System.Single,System.Single)">
             <summary>
@@ -4339,14 +4339,14 @@
             </summary>
             <param name="x">Argument</param>
             <param name="sigma">Standard deviation (0, +inf)</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Gaussian(System.Single)">
             <summary>
             Returns the value of a Gaussian function σ = 1.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Lanczos(System.Single,System.Single)">
             <summary>
@@ -4354,91 +4354,91 @@
             </summary>
             <param name="x">Argument</param>
             <param name="a">Parameter</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Lanczos(System.Single)">
             <summary>
             Returns the value of the Lanczos function, with a = 1.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Uniform(System.Single)">
             <summary>
             Returns the value of a uniform function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Triangular(System.Single)">
             <summary>
             Returns the value of a triangular function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Trapezoid(System.Single)">
             <summary>
             Returns the value of the trapezoid function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Epanechnikov(System.Single)">
             <summary>
             Returns the value of the Epanechnikov function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Quartic(System.Single)">
             <summary>
             Returns the value of a Q function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Triweight(System.Single)">
             <summary>
             Returns the value of a T-function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Tricube(System.Single)">
             <summary>
             Returns the value of a tricubic function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Cosine(System.Single)">
             <summary>
             Returns the value of the cosine function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Logistic(System.Single)">
             <summary>
             Returns the value of a logistic function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Sigmoid(System.Single)">
             <summary>
             Returns the value of a sigmoid function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Silverman(System.Single)">
             <summary>
             Returns the value of the Silverman function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Core.LinealgOptions">
             <summary>
@@ -4456,7 +4456,7 @@
             </summary>
             <param name="element">"Element</param>
             <param name="n">Radius</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.Determinant(UMapx.Core.Complex32*,System.Int32)">
             <summary>
@@ -4908,7 +4908,7 @@
             Converts a value to a type float.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.IsRange(System.Single,System.Single,System.Single)">
             <summary>
@@ -5019,7 +5019,7 @@
             Returns the number raised to the second power.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Pow(System.Single,System.Single)">
             <summary>
@@ -5027,35 +5027,35 @@
             </summary>
             <param name="a">Number</param>
             <param name="b">Power</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Exp(System.Single)">
             <summary>
             Returns the exponent raised to the power.
             </summary>
             <param name="a">Power</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Log(System.Single)">
             <summary>
             Returns the natural logarithm of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Log10(System.Single)">
             <summary>
             Returns the decimal logarithm of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Log2(System.Single)">
             <summary>
             Returns the binary logarithm of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Log(System.Single,System.Single)">
             <summary>
@@ -5063,14 +5063,14 @@
             </summary>
             <param name="a">Number</param>
             <param name="b">Base</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sqrt(System.Single)">
             <summary>
             Returns the square root of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sqrt(System.Single,System.Single)">
             <summary>
@@ -5078,14 +5078,14 @@
             </summary>
             <param name="a">Number</param>
             <param name="b">Power</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Abs(System.Single)">
             <summary>
             Returns the modulus of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Max(System.Single,System.Single)">
             <summary>
@@ -5093,7 +5093,7 @@
             </summary>
             <param name="a">First number</param>
             <param name="b">Second number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Max(System.Single,System.Single,System.Single)">
             <summary>
@@ -5102,7 +5102,7 @@
             <param name="a">First number</param>
             <param name="b">Second number</param>
             <param name="c">Third number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Min(System.Single,System.Single)">
             <summary>
@@ -5110,7 +5110,7 @@
             </summary>
             <param name="a">First number</param>
             <param name="b">Second number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Min(System.Single,System.Single,System.Single)">
             <summary>
@@ -5119,35 +5119,35 @@
             <param name="a">First number</param>
             <param name="b">Second number</param>
             <param name="c">Third number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sign(System.Single)">
             <summary>
             Returns the sign of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Floor(System.Single)">
             <summary>
             Returns the rounded number down.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Ceil(System.Single)">
             <summary>
             Returns the rounded number up.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Round(System.Single)">
             <summary>
             Returns the rounded number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Round(System.Single,System.Int32)">
             <summary>
@@ -5155,7 +5155,7 @@
             </summary>
             <param name="a">Number</param>
             <param name="dig">Digits</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Abs(UMapx.Core.Complex32)">
             <summary>
@@ -5266,84 +5266,84 @@
             Returns the cosine of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sin(System.Single)">
             <summary>
             Returns the sine of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Tg(System.Single)">
             <summary>
             Returns the tangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Ctg(System.Single)">
             <summary>
             Returns the cotangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sec(System.Single)">
             <summary>
             Returns the secant of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Cosc(System.Single)">
             <summary>
             Returns the cosecant of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Asin(System.Single)">
             <summary>
             Returns the arcsine of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Acos(System.Single)">
             <summary>
             Returns the arccosine of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Atg(System.Single)">
             <summary>
             Returns the arctangent of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Actg(System.Single)">
             <summary>
             Returns the arccotangent of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Asec(System.Single)">
             <summary>
             Returns the arcsecance of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Acosc(System.Single)">
             <summary>
             Returns the arccosecant of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Cos(UMapx.Core.Complex32)">
             <summary>
@@ -5434,84 +5434,84 @@
             Returns the hyperbolic sine of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Ch(System.Single)">
             <summary>
             Returns the hyperbolic cosine of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Th(System.Single)">
             <summary>
             Returns the hyperbolic tangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Cth(System.Single)">
             <summary>
             Returns the hyperbolic cotangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sch(System.Single)">
             <summary>
             Returns the hyperbolic secant of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Csch(System.Single)">
             <summary>
             Returns the hyperbolic cosecant of an angle.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Ash(System.Single)">
             <summary>
             Returns the hyperbolic arcsine of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Ach(System.Single)">
             <summary>
             Returns the hyperbolic arccosine of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Ath(System.Single)">
             <summary>
             Returns the hyperbolic arctangent of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Acth(System.Single)">
             <summary>
             Returns the hyperbolic arccotangent of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Asch(System.Single)">
             <summary>
             Returns the hyperbolic arcsecance of a number.
             </summary>
             <param name="a">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Acsch(System.Single)">
             <summary>
             Returns the hyperbolic arccosecant of a number.
             </summary>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sh(UMapx.Core.Complex32)">
             <summary>
@@ -5794,14 +5794,14 @@
             Returns the value of the Euler function.
             </summary>
             <param name="n">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Etf(System.Int64)">
             <summary>
             Returns the value of the Euler function.
             </summary>
             <param name="n">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sieve(System.Int32)">
             <summary>
@@ -5884,7 +5884,7 @@
             </summary>
             <param name="a">Number</param>
             <param name="b">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Cubic(System.Single,System.Single,System.Single)">
             <summary>
@@ -5932,6 +5932,22 @@
             <param name="b">Number</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Core.Maths.CopySign(System.Int32,System.Int32)">
+            <summary>
+            Copies sign.
+            </summary>
+            <param name="magnitude">Magnitude</param>
+            <param name="sign">Sign</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.CopySign(System.Single,System.Single)">
+            <summary>
+            Copies sign.
+            </summary>
+            <param name="magnitude">Magnitude</param>
+            <param name="sign">Sign</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Maths.Normalize(System.Int32,System.Int32,System.Int32)">
             <summary>
             Normalizes a variable relative to the {min, max} range.
@@ -5939,7 +5955,7 @@
             <param name="x">Value</param>
             <param name="min">Minimum value</param>
             <param name="max">Maximum value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Normalize(System.Single,System.Single,System.Single)">
             <summary>
@@ -5948,7 +5964,7 @@
             <param name="x">Value</param>
             <param name="min">Minimum value</param>
             <param name="max">Maximum value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Core.Matrice">
             <summary>
@@ -6095,14 +6111,14 @@
             Returns the trace value of a square matrix.
             </summary>
             <param name="m">Matrix</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Det(System.Single[0:,0:])">
             <summary>
             Returns the value of the matrix determinant.
             </summary>
             <param name="m">Matrix</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Norm(System.Single[0:,0:],System.Single)">
             <summary>
@@ -6147,7 +6163,7 @@
             Returns the value of the matrix determinant.
             </summary>
             <param name="m">Matrix</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Norm(UMapx.Core.Complex32[0:,0:],System.Single)">
             <summary>
@@ -7122,14 +7138,14 @@
             </summary>
             <param name="a">Array</param>
             <param name="p">Parameter p</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Norm(System.Single[])">
             <summary>
             Returns the norm of the vector.
             </summary>
             <param name="a">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Norm(UMapx.Core.Complex32[],System.Single)">
             <summary>
@@ -7137,14 +7153,14 @@
             </summary>
             <param name="a">Array</param>
             <param name="p">Parameter p</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Norm(UMapx.Core.Complex32[])">
             <summary>
             Returns the norm of the vector.
             </summary>
             <param name="a">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Round(System.Single[],System.Int32,System.MidpointRounding)">
             <summary>
@@ -7170,7 +7186,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex32[],System.Single[])">
             <summary>
@@ -7178,7 +7194,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Angle(System.Single[],UMapx.Core.Complex32[])">
             <summary>
@@ -7186,7 +7202,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Angle(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
@@ -7194,7 +7210,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Proj(System.Single[],System.Single[])">
             <summary>
@@ -7202,7 +7218,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Proj(UMapx.Core.Complex32[],System.Single[])">
             <summary>
@@ -7210,7 +7226,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Proj(System.Single[],UMapx.Core.Complex32[])">
             <summary>
@@ -7218,7 +7234,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Proj(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
@@ -7226,7 +7242,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Cosines(System.Single[])">
             <summary>
@@ -7756,7 +7772,7 @@
             Returns the total value of a vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sum(UMapx.Core.Complex32[])">
             <summary>
@@ -7770,35 +7786,35 @@
             Returns the total product of a vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32[])">
             <summary>
             Returns the total product of a vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Single[])">
             <summary>
             Returns the common quotient of a vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex32[])">
             <summary>
             Returns the common quotient of a vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(System.Single[])">
             <summary>
             Returns the average value of a vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(UMapx.Core.Complex32[])">
             <summary>
@@ -7812,7 +7828,7 @@
             Returns the variance value.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Var(UMapx.Core.Complex32[])">
             <summary>
@@ -7827,7 +7843,7 @@
             </summary>
             <param name="x">Array</param>
             <param name="y">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Var(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
@@ -7842,7 +7858,7 @@
             Returns the standard deviation.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.StnDev(UMapx.Core.Complex32[])">
             <summary>
@@ -7857,7 +7873,7 @@
             </summary>
             <param name="x">Array</param>
             <param name="y">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.StnDev(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
@@ -7872,7 +7888,7 @@
             Returns the value of the vector mode.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mode(UMapx.Core.Complex32[])">
             <summary>
@@ -7892,7 +7908,7 @@
             Gets the value of the minimum element of the vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Min(System.Single[],System.Int32@)">
             <summary>
@@ -7900,14 +7916,14 @@
             </summary>
             <param name="v">Array</param>
             <param name="index">Max index</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Max(System.Single[])">
             <summary>
             Gets the value of the maximum element of the vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Max(System.Single[],System.Int32@)">
             <summary>
@@ -7915,7 +7931,7 @@
             </summary>
             <param name="v">Array</param>
             <param name="index">Max index</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Morph(System.Single[],UMapx.Core.MorphologyMode)">
             <summary>
@@ -7923,14 +7939,14 @@
             </summary>
             <param name="v">Array</param>
             <param name="mode">Morphology mode</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Cov(System.Single[])">
             <summary>
             Returns the covariance value of a vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Cov(UMapx.Core.Complex32[])">
             <summary>
@@ -7944,7 +7960,7 @@
             Returns the entropy of a vector.
             </summary>
             <param name="v">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Normalized(System.Single[])">
             <summary>
@@ -8063,7 +8079,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
@@ -8071,7 +8087,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(UMapx.Core.Complex32[],System.Single[])">
             <summary>
@@ -8079,7 +8095,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[],UMapx.Core.Complex32[])">
             <summary>
@@ -8087,7 +8103,7 @@
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[],System.Single[0:,0:])">
             <summary>
@@ -10447,42 +10463,42 @@
             Returns the value of the integral cosine.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Si(System.Single)">
             <summary>
             Returns the value of the integral sine.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Ei(System.Single)">
             <summary>
             Returns the value of an integral exponential function.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Li(System.Single)">
             <summary>
             Returns the value of the integral logarithm.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Fresnelc(System.Single)">
             <summary>
             Returns the value of the Fresnel integral C (x).
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Fresnels(System.Single)">
             <summary>
             Returns the value of the Fresnel integral S(x).
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
             <summary>
@@ -10490,7 +10506,7 @@
             </summary>
             <param name="x">Number</param>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.L(System.Single,System.Int32)">
             <summary>
@@ -10498,7 +10514,7 @@
             </summary>
             <param name="x">Number</param>
             <param name="v">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
             <summary>
@@ -10506,7 +10522,7 @@
             </summary>
             <param name="a">Number</param>
             <param name="b">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Beta(System.Int32,System.Int32)">
             <summary>
@@ -10514,7 +10530,7 @@
             </summary>
             <param name="m">Integer number</param>
             <param name="n">Integer number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single,System.Single)">
             <summary>
@@ -10523,7 +10539,7 @@
             <param name="a">Number</param>
             <param name="b">Number</param>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.BetaDerivative(System.Single,System.Single)">
             <summary>
@@ -10531,7 +10547,7 @@
             </summary>
             <param name="a">Number</param>
             <param name="b">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.BetaIncomplete(System.Single,System.Single,System.Single)">
             <summary>
@@ -10540,7 +10556,7 @@
             <param name="a">Number</param>
             <param name="b">Number</param>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Incbcf(System.Single,System.Single,System.Single)">
             <summary>
@@ -10589,28 +10605,28 @@
             Returns the value of the Euler Gamma function: Г(z).
             </summary>
             <param name="z">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.GammaLog(System.Single)">
             <summary>
             Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
             </summary>
             <param name="z">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.DiGamma(System.Single)">
             <summary>
             Returns the value of the Digamma function: ψ(z).
             </summary>
             <param name="z">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.TriGamma(System.Single)">
             <summary>
             Returns the value of the Trigamma function: ψ1(z).
             </summary>
             <param name="z">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gamma(System.Single,System.UInt32)">
             <summary>
@@ -10618,7 +10634,7 @@
             </summary>
             <param name="z">Number</param>
             <param name="p">Power</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.GammaQ(System.Single,System.Single)">
             <summary>
@@ -10626,7 +10642,7 @@
             </summary>
             <param name="s">Number</param>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.GammaP(System.Single,System.Single)">
             <summary>
@@ -10634,7 +10650,7 @@
             </summary>
             <param name="s">Number</param>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.GammaIncomplete(System.Single,System.Single)">
             <summary>
@@ -10642,7 +10658,7 @@
             </summary>
             <param name="s">Number</param>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.GammaIncomplete(System.Single,System.Single,System.Boolean)">
             <summary>
@@ -10651,7 +10667,7 @@
             <param name="s">Number</param>
             <param name="x">Number</param>
             <param name="complemented">Additional function or not</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Polynomials(System.Single,System.Single[],System.Int32)">
             <summary>
@@ -10681,7 +10697,7 @@
             Returns the value of the Laplace integral (error function).
             </summary>
             <param name="x">The value of the upper limit of the integral</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erf(System.Single,System.Boolean)">
             <summary>
@@ -10689,14 +10705,14 @@
             </summary>
             <param name="x">The value of the upper limit of the integral</param>
             <param name="inverse">Reverse function or not</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erfi(System.Single)">
             <summary>
             Returns the value of the imaginary error function.
             </summary>
             <param name="x">The value of the upper limit of the integral</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erf(System.Single,System.Single,System.Single)">
             <summary>
@@ -10705,7 +10721,7 @@
             <param name="x">The value of the upper limit of the integral</param>
             <param name="a">The lower boundary of the normalization</param>
             <param name="b">The upper limit of the normalization</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erf(System.Single,UMapx.Core.RangeFloat)">
             <summary>
@@ -10713,14 +10729,14 @@
             </summary>
             <param name="x">The value of the upper limit of the integral</param>
             <param name="range">A pair of fractional numbers</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erfc(System.Single)">
             <summary>
             Returns the value of the Laplace integral (an additional error function).
             </summary>
             <param name="x">The value of the upper limit of the integral</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erfc(System.Single,System.Single,System.Single)">
             <summary>
@@ -10729,7 +10745,7 @@
             <param name="x">The value of the upper limit of the integral</param>
             <param name="a">The lower boundary of the normalization</param>
             <param name="b">The upper limit of the normalization</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erfc(System.Single,UMapx.Core.RangeFloat)">
             <summary>
@@ -10737,7 +10753,7 @@
             </summary>
             <param name="x">The value of the upper limit of the integral</param>
             <param name="range">A pair of fractional numbers</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
             <summary>
@@ -10745,21 +10761,21 @@
             </summary>
             <param name="x">Argument</param>
             <param name="inverse">Inverse function or not</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.J0(System.Single)">
             <summary>
             Returns the value of the Bessel function of the first kind at a = 0.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.J1(System.Single)">
             <summary>
             Returns the value of the Bessel function of the first kind at a = 1.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.J(System.Single,System.Int32)">
             <summary>
@@ -10767,21 +10783,21 @@
             </summary>
             <param name="x">Number</param>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Y0(System.Single)">
             <summary>
             Returns the value of the Bessel function of the second kind at a = 0.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Y1(System.Single)">
             <summary>
             Returns the value of the Bessel function of the second kind at a = 1.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Y(System.Single,System.Int32)">
             <summary>
@@ -10789,21 +10805,21 @@
             </summary>
             <param name="x">Number</param>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.I0(System.Single)">
             <summary>
             Returns the value of the modified Bessel function of the first kind at a = 0.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.I1(System.Single)">
             <summary>
             Returns the value of the modified Bessel function of the first kind at a = 1.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.I(System.Single,System.Int32)">
             <summary>
@@ -10811,21 +10827,21 @@
             </summary>
             <param name="x">Number</param>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.K0(System.Single)">
             <summary>
             Returns the value of the modified Bessel function of the second kind at a = 0.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.K1(System.Single)">
             <summary>
             Returns the value of the modified Bessel function of the second kind at a = 1.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.K(System.Single,System.Int32)">
             <summary>
@@ -10833,7 +10849,7 @@
             </summary>
             <param name="x">Number</param>
             <param name="a">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Owen(System.Single,System.Single)">
             <summary>
@@ -10841,7 +10857,7 @@
             </summary>
             <param name="h">First argument</param>
             <param name="a">Second argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.owenhaah(System.Single,System.Single,System.Single)">
             <summary>
@@ -10850,7 +10866,7 @@
             <param name="h">First argument</param>
             <param name="a">Second argument</param>
             <param name="ah">h * a</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="F:UMapx.Core.Special.arange">
             <summary>
@@ -10897,28 +10913,28 @@
             Returns the value of the inverse Guderman function.
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gd(System.Single)">
             <summary>
             Returns the value of the Guderman function.
             </summary>
             <param name="x">Angle in radians</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Cas(System.Single)">
             <summary>
             Returns the value of the function Cas(x).
             </summary>
             <param name="theta">Theta</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Sinc(System.Single)">
             <summary>
             Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
             </summary>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Sinc(System.Single,System.Single)">
             <summary>
@@ -10926,7 +10942,7 @@
             </summary>
             <param name="x">Number</param>
             <param name="a">Parameter</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Binomial(System.Single,System.Single)">
             <summary>
@@ -10934,7 +10950,7 @@
             </summary>
             <param name="n">Number</param>
             <param name="k">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.LogBinomial(System.Single,System.Single)">
             <summary>
@@ -10942,21 +10958,21 @@
             </summary>
             <param name="n">Number</param>
             <param name="k">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.LogFactorial(System.Single)">
             <summary>
             Returns the natural logarithm of the factorial of a number log(n!).
             </summary>
             <param name="n">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Factorial(System.Single)">
             <summary>
             Returns the factorial of a number.
             </summary>
             <param name="n">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.FactorialDown(System.Single,System.Single)">
             <summary>
@@ -10964,7 +10980,7 @@
             </summary>
             <param name="n">Number</param>
             <param name="k">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.FactorialUp(System.Single,System.Single)">
             <summary>
@@ -10972,7 +10988,7 @@
             </summary>
             <param name="n">Number</param>
             <param name="k">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Fibonacci(System.Int32)">
             <summary>
@@ -10993,7 +11009,7 @@
             Returns the Bernoulli number.
             </summary>
             <param name="n">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Bernoulli(System.Int32,System.Single)">
             <summary>
@@ -11001,14 +11017,14 @@
             </summary>
             <param name="n">Order</param>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Euler(System.Int32)">
             <summary>
             Returns the Euler number.
             </summary>
             <param name="n">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Euler(System.Int32,System.Single)">
             <summary>
@@ -11016,14 +11032,14 @@
             </summary>
             <param name="n">Order</param>
             <param name="x">Number</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Harm(System.Int32)">
             <summary>
             Returns the harmonic number.
             </summary>
             <param name="n">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Harm(System.Int32,System.Single)">
             <summary>
@@ -11031,7 +11047,7 @@
             </summary>
             <param name="n">Order</param>
             <param name="m">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.ChebyshevT(System.Single,System.Int32)">
             <summary>
@@ -11039,7 +11055,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="n">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.ChebyshevU(System.Single,System.Int32)">
             <summary>
@@ -11047,7 +11063,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="n">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Abel(System.Single,System.Single,System.Int32)">
             <summary>
@@ -11056,7 +11072,7 @@
             <param name="x">Argument</param>
             <param name="a">Power</param>
             <param name="n">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Laguerre(System.Single,System.Single,System.Int32)">
             <summary>
@@ -11065,7 +11081,7 @@
             <param name="x">Argument</param>
             <param name="a">Power</param>
             <param name="k">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Legendre(System.Single,System.Int32)">
             <summary>
@@ -11073,7 +11089,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="m">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Hermite(System.Single,System.Int32)">
             <summary>
@@ -11081,7 +11097,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="m">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gegenbauer(System.Single,System.Single,System.Int32)">
             <summary>
@@ -11090,7 +11106,7 @@
             <param name="x">Argument</param>
             <param name="a">Power</param>
             <param name="n">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Mahler(System.Single,System.Single)">
             <summary>
@@ -11098,7 +11114,7 @@
             </summary>
             <param name="x">Number</param>
             <param name="t">Parameter</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gompertz(System.Single,System.Single,System.Single,System.Single)">
             <summary>
@@ -11108,7 +11124,7 @@
             <param name="a">Upper asymptote</param>
             <param name="b">Growth parameter</param>
             <param name="c">Growth rate</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Heaviside(System.Single,System.Single)">
             <summary>
@@ -11116,7 +11132,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="k">Smoothing factor</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Logistic(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
             <summary>
@@ -11129,7 +11145,7 @@
             <param name="v">Affect</param>
             <param name="q">Central moment</param>
             <param name="c">Offset</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Logistic(System.Single,System.Single,System.Single,System.Single)">
             <summary>
@@ -11139,14 +11155,14 @@
             <param name="a">Lower asymptote</param>
             <param name="k">Upper asymptote</param>
             <param name="b">Growth rate</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Logistic(System.Single)">
             <summary>
             Returns the value of a logistic function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Dirac(System.Single,System.Single)">
             <summary>
@@ -11154,7 +11170,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="a">Coefficient</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
             <summary>
@@ -11162,7 +11178,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="positive">D- или D+</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
             <summary>
@@ -11177,7 +11193,7 @@
             <param name="b">Parameter</param>
             <param name="c">Parameter</param>
             <param name="z">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single)">
             <summary>
@@ -11193,7 +11209,7 @@
             <param name="a">Parameter</param>
             <param name="b">Parameter</param>
             <param name="z">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gerf(System.Single,System.Int32)">
             <summary>
@@ -11201,14 +11217,14 @@
             </summary>
             <param name="x">Argument (0, +inf)</param>
             <param name="n">Order [0, +inf)</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gerf(System.Single)">
             <summary>
             Returns the value of the generalized error function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Rademacher(System.Single,System.Int32)">
             <summary>
@@ -11216,7 +11232,7 @@
             </summary>
             <param name="t">Argument [0, 1]</param>
             <param name="n">Order</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32,System.Single)">
             <summary>
@@ -11225,7 +11241,7 @@
             <param name="y">Firset parameter</param>
             <param name="v">Second parameter</param>
             <param name="t">Time parameter</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32)">
             <summary>
@@ -11233,7 +11249,7 @@
             </summary>
             <param name="y">Firset parameter</param>
             <param name="v">Second parameter</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.LambertW(System.Single,System.Boolean)">
             <summary>
@@ -11241,7 +11257,7 @@
             </summary>
             <param name="x">Argument [-1/e,+inf)</param>
             <param name="branch">Function branch</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Ssqrt(System.Single,System.Boolean)">
             <summary>
@@ -11249,14 +11265,14 @@
             </summary>
             <param name="x">Argument [1,+inf)</param>
             <param name="branch">Function branch</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Minkowski(System.Single)">
             <summary>
             Returns the value of the Minkowski function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="F:UMapx.Core.Special.A027641">
             <summary>
@@ -12325,14 +12341,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Arcsine.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Bayes">
             <summary>
@@ -12421,20 +12437,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Bernoulli.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Bernoulli.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Beta">
             <summary>
@@ -12507,20 +12523,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Beta.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Beta.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.BetaPrime">
             <summary>
@@ -12593,14 +12609,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.BetaPrime.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Binomial">
             <summary>
@@ -12673,20 +12689,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Binomial.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Binomial.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.BirnbaumSaunders">
             <summary>
@@ -12765,14 +12781,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.BirnbaumSaunders.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Burr">
             <summary>
@@ -12845,14 +12861,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Burr.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Cauchy">
             <summary>
@@ -12925,20 +12941,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Cauchy.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Cauchy.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.ChiSquare">
             <summary>
@@ -13005,14 +13021,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.ChiSquare.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.ChoiWilliams">
             <summary>
@@ -13080,7 +13096,7 @@
             </summary>
             <param name="eta">Argument</param>
             <param name="tau">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.ChoiWilliams.Distribution(System.Single,System.Single)">
             <summary>
@@ -13088,7 +13104,7 @@
             </summary>
             <param name="t">Argument</param>
             <param name="tau">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.ConeShape">
             <summary>
@@ -13156,7 +13172,7 @@
             </summary>
             <param name="eta">Argument</param>
             <param name="tau">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.ConeShape.Distribution(System.Single,System.Single)">
             <summary>
@@ -13164,7 +13180,7 @@
             </summary>
             <param name="t">Argument</param>
             <param name="tau">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Erlang">
             <summary>
@@ -13231,21 +13247,21 @@
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Erlang.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Erlang.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Exponential">
             <summary>
@@ -13312,20 +13328,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Exponential.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Exponential.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.FisherSnedecor">
             <summary>
@@ -13398,14 +13414,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.FisherSnedecor.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.FisherZ">
             <summary>
@@ -13478,14 +13494,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.FisherZ.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Gamma">
             <summary>
@@ -13558,20 +13574,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Gamma.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Gamma.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Gaussian">
             <summary>
@@ -13644,20 +13660,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Gaussian.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Gaussian.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Geometric">
             <summary>
@@ -13724,20 +13740,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Geometric.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Geometric.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Gompertz">
             <summary>
@@ -13810,14 +13826,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Gompertz.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Gumbel">
             <summary>
@@ -13890,14 +13906,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Gumbel.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.HyperbolicSecant">
             <summary>
@@ -13958,14 +13974,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.HyperbolicSecant.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Hypergeometric">
             <summary>
@@ -14044,20 +14060,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Hypergeometric.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Hypergeometric.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.IDistribution">
             <summary>
@@ -14103,7 +14119,7 @@
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Kumaraswamy">
             <summary>
@@ -14176,14 +14192,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Kumaraswamy.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Kumaraswamy.momentGeneratingFunction(System.Int32,System.Single,System.Single)">
             <summary>
@@ -14265,20 +14281,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Laplace.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Laplace.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Levy">
             <summary>
@@ -14351,14 +14367,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Levy.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Logarithmic">
             <summary>
@@ -14420,14 +14436,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Logarithmic.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Logarithmic.Entropy">
             <summary>
@@ -14505,20 +14521,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.LogGaussian.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.LogGaussian.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Logistic">
             <summary>
@@ -14596,14 +14612,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Logistic.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.LogLogistic">
             <summary>
@@ -14676,20 +14692,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.LogLogistic.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.LogLogistic.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Nakagami">
             <summary>
@@ -14774,14 +14790,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Nakagami.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Pareto">
             <summary>
@@ -14854,20 +14870,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Pareto.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Pareto.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Poisson">
             <summary>
@@ -14934,20 +14950,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Poisson.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Poisson.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Poisson.Row(System.Single)">
             <summary>
@@ -15010,14 +15026,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Rademacher.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Rademacher.Entropy">
             <summary>
@@ -15089,20 +15105,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Rayleigh.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Rayleigh.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Student">
             <summary>
@@ -15169,14 +15185,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Student.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Student.LogFunction(System.Single)">
             <summary>
@@ -15267,14 +15283,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Triangular.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Uniform">
             <summary>
@@ -15347,20 +15363,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Uniform.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Uniform.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.UQuadratic">
             <summary>
@@ -15433,14 +15449,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.UQuadratic.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Weibull">
             <summary>
@@ -15513,20 +15529,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Weibull.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Weibull.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Wigner">
             <summary>
@@ -15588,20 +15604,20 @@
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Wigner.Distribution(System.Single)">
             <summary>
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Wigner.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.WrappedCauchy">
             <summary>
@@ -15674,14 +15690,14 @@
             Returns the value of the probability distribution function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.WrappedCauchy.Function(System.Single)">
             <summary>
             Returns the value of the probability density function.
             </summary>
             <param name="x">Value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Imaging.AdditiveNoise">
             <summary>
@@ -16240,7 +16256,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Screen(System.Single,System.Single)">
             <summary>
@@ -16248,7 +16264,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Difference(System.Single,System.Single)">
             <summary>
@@ -16256,7 +16272,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Negation(System.Single,System.Single)">
             <summary>
@@ -16264,7 +16280,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Exclusion(System.Single,System.Single)">
             <summary>
@@ -16272,7 +16288,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Overlay(System.Single,System.Single)">
             <summary>
@@ -16280,7 +16296,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.HardLight(System.Single,System.Single)">
             <summary>
@@ -16288,7 +16304,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Dodge(System.Single,System.Single)">
             <summary>
@@ -16296,7 +16312,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.SoftDodge(System.Single,System.Single)">
             <summary>
@@ -16304,7 +16320,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Burn(System.Single,System.Single)">
             <summary>
@@ -16312,7 +16328,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.SoftBurn(System.Single,System.Single)">
             <summary>
@@ -16320,7 +16336,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Reflect(System.Single,System.Single)">
             <summary>
@@ -16328,7 +16344,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Glow(System.Single,System.Single)">
             <summary>
@@ -16336,7 +16352,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Stamp(System.Single,System.Single)">
             <summary>
@@ -16344,7 +16360,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Freeze(System.Single,System.Single)">
             <summary>
@@ -16352,7 +16368,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Heat(System.Single,System.Single)">
             <summary>
@@ -16360,7 +16376,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Interpolation(System.Single,System.Single)">
             <summary>
@@ -16368,7 +16384,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Photoshop(System.Single,System.Single)">
             <summary>
@@ -16376,7 +16392,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Illusions(System.Single,System.Single)">
             <summary>
@@ -16384,7 +16400,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Pegtop(System.Single,System.Single)">
             <summary>
@@ -16392,7 +16408,7 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Fw3c(System.Single,System.Single)">
             <summary>
@@ -16400,14 +16416,14 @@
             </summary>
             <param name="a">First layer</param>
             <param name="b">Second layer</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Gw3c(System.Single)">
             <summary>
             Implements the "Cairo" function.
             </summary>
             <param name="a">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Imaging.BottomHat">
             <summary>
@@ -18693,7 +18709,7 @@
             <param name="nbase">Logarithm base</param>
             <param name="a">Factor [-1, 1]</param>
             <param name="b">Offset (0, 1]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.SingleScaleRetinex(System.Single,System.Single,System.Single,System.Int32)">
             <summary>
@@ -18713,7 +18729,7 @@
             <param name="xlow">Filter brightness</param>
             <param name="a">Factor (0, 1]</param>
             <param name="b">Offset (0, 1]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.LocalContrastInversion(System.Single,System.Single,System.Int32)">
             <summary>
@@ -18731,7 +18747,7 @@
             <param name="x">Brightness</param>
             <param name="xlow">Filter brightness</param>
             <param name="a">Factor [-1, 1]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.LocalContrastEnhancement(System.Single,System.Int32)">
             <summary>
@@ -18749,7 +18765,7 @@
             <param name="mu">Filter brightness</param>
             <param name="a">Contrast [-1, 1]</param>
             <param name="b">Offset (0, 1]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.HomomorphicEnhancement(System.Single,System.Single,System.Int32)">
             <summary>
@@ -18768,7 +18784,7 @@
             <param name="mu">Filter brightness</param>
             <param name="a">Contrast [-1, 1]</param>
             <param name="b">Offset [-1, 1]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.KsiContrastEnchancement(System.Single,System.Single,System.Int32)">
             <summary>
@@ -18786,7 +18802,7 @@
             <param name="x">Brightness</param>
             <param name="mu">Filter brightness</param>
             <param name="d">Degree of difference [0, 1]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.SAUCE(System.Single,System.Int32)">
             <summary>
@@ -18803,7 +18819,7 @@
             <param name="x">Brightness</param>
             <param name="xlow">Filter brightness</param>
             <param name="difference">Difference [0, 1]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Bradley(System.Single,System.Int32)">
             <summary>
@@ -18831,7 +18847,7 @@
             <param name="mu">Filter brightness</param>
             <param name="s">Shadows</param>
             <param name="l">Highlights</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.LogStretch(System.Single,System.Single,System.Int32)">
             <summary>
@@ -18848,7 +18864,7 @@
             </summary>
             <param name="a">Number</param>
             <param name="power">Power</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Gamma(System.Single,System.Int32)">
             <summary>
@@ -18864,7 +18880,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="g">Gamma</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Shift(System.Single,System.Int32)">
             <summary>
@@ -18880,7 +18896,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="b">Offset (-0.5, 0.5)</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Bin(System.Single,System.Int32)">
             <summary>
@@ -18896,7 +18912,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="threshold">Threshold [0, 1]</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Exposure(System.Single,System.Int32)">
             <summary>
@@ -18912,7 +18928,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="average">Average</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Sin(System.Single,System.Int32)">
             <summary>
@@ -18928,7 +18944,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="delta">Delta</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Cos(System.Single,System.Int32)">
             <summary>
@@ -18944,7 +18960,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="delta">Delta</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Log(System.Single,System.Single,System.Int32)">
             <summary>
@@ -18962,7 +18978,7 @@
             <param name="x">Argument</param>
             <param name="a">Logarithm base</param>
             <param name="delta">Delta</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Add(System.Single,System.Int32)">
             <summary>
@@ -18986,7 +19002,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="value">Contrast</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.LogContrast(System.Single,System.Int32)">
             <summary>
@@ -19002,7 +19018,7 @@
             </summary>
             <param name="x">Brightness</param>
             <param name="power">Power</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Invert(System.Int32)">
             <summary>
@@ -19016,7 +19032,7 @@
             Negates the value.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Equalize(System.Single,System.Single,System.Single)">
             <summary>
@@ -19025,7 +19041,7 @@
             <param name="x">Argument</param>
             <param name="max">Maximum value</param>
             <param name="min">Minimum value</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Equalize(System.Single,System.Single,System.Int32)">
             <summary>
@@ -19063,7 +19079,7 @@
             <param name="xmax">Maximum value</param>
             <param name="xmin">Minimum value</param>
             <param name="delta">Delta</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Levels(System.Single,System.Single,System.Single,System.Single,System.Int32)">
             <summary>
@@ -22752,14 +22768,14 @@
             Returns the amplitude value at the given frequency.
             </summary>
             <param name="w">Frequency (rad / s)</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Response.FIR.Phase(System.Single)">
             <summary>
             Returns the phase value at the given frequency.
             </summary>
             <param name="w">Frequency (rad / s)</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Response.FIR.LowPass">
             <summary>
@@ -22840,14 +22856,14 @@
             Returns the amplitude value at the given frequency.
             </summary>
             <param name="w">Frequency (rad / s)</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Response.IIR.Phase(System.Single)">
             <summary>
             Returns the phase value at the given frequency.
             </summary>
             <param name="w">Frequency (rad / s)</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Response.IIR.Stability">
             <summary>
@@ -22905,14 +22921,14 @@
             Returns the amplitude value at the given frequency.
             </summary>
             <param name="w">Frequency (rad / s)</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Response.IResponse.Phase(System.Single)">
             <summary>
             Returns the phase value at the given frequency.
             </summary>
             <param name="w">Frequency (rad / s)</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Transform.CosineTransform">
             <summary>
@@ -29424,7 +29440,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.BarlettHann.GetWindow(System.Int32)">
             <summary>
@@ -29450,7 +29466,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Blackman.GetWindow(System.Int32)">
             <summary>
@@ -29476,7 +29492,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.BlackmanHarris.GetWindow(System.Int32)">
             <summary>
@@ -29501,7 +29517,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.BlackmanNuttall.GetWindow(System.Int32)">
             <summary>
@@ -29539,14 +29555,14 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Confined.G(System.Single)">
             <summary>
             Функция G(x).
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Confined.GetWindow(System.Int32)">
             <summary>
@@ -29571,7 +29587,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Cosine.GetWindow(System.Int32)">
             <summary>
@@ -29811,7 +29827,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.FlatTop.GetWindow(System.Int32)">
             <summary>
@@ -29843,7 +29859,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Gabor.GetWindow(System.Int32)">
             <summary>
@@ -29869,7 +29885,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Hamming.GetWindow(System.Int32)">
             <summary>
@@ -29895,7 +29911,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Hann.GetWindow(System.Int32)">
             <summary>
@@ -29919,7 +29935,7 @@
             Returns the value of a window function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.IWindow.GetWindow">
             <summary>
@@ -29982,7 +29998,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Kaiser.GetWindow(System.Int32)">
             <summary>
@@ -30007,7 +30023,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Lanzcos.GetWindow(System.Int32)">
             <summary>
@@ -30044,7 +30060,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Normal.GetWindow(System.Int32)">
             <summary>
@@ -30069,7 +30085,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Nuttall.GetWindow(System.Int32)">
             <summary>
@@ -30095,7 +30111,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Parzen.GetWindow(System.Int32)">
             <summary>
@@ -30127,7 +30143,7 @@
             <param name="x">Argument</param>
             <param name="p">Sign</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Planck.Function(System.Single,System.Int32)">
             <summary>
@@ -30135,7 +30151,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Planck.GetWindow(System.Int32)">
             <summary>
@@ -30248,7 +30264,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Sine.GetWindow(System.Int32)">
             <summary>
@@ -30263,7 +30279,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Window.Tukey">
             <summary>
@@ -30288,7 +30304,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Tukey.GetWindow(System.Int32)">
             <summary>
@@ -30313,7 +30329,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Welch.GetWindow(System.Int32)">
             <summary>
@@ -30503,7 +30519,7 @@
             Returns the value of a window function.
             </summary>
             <param name="x">Argument</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.WindowBase.GetWindow">
             <summary>
@@ -30532,7 +30548,7 @@
             </summary>
             <param name="x">Argument</param>
             <param name="frameSize">Window size</param>
-            <returns>float precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.WindowBase.GetWindow(System.Int32)">
             <summary>

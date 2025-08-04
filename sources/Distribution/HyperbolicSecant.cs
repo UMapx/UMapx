@@ -78,7 +78,7 @@ namespace UMapx.Distribution
         /// Returns the value of the probability distribution function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Distribution(float x)
         {
             float angle = (float)Math.Atan(Math.Exp(x * Math.PI / 2.0));
@@ -88,7 +88,7 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Function(float x)
         {
             return 0.5f * Maths.Sch(x * (Maths.Pi / 2.0f));

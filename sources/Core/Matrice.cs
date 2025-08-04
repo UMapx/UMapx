@@ -375,7 +375,7 @@ namespace UMapx.Core
         /// Returns the trace value of a square matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Trace(this float[,] m)
         {
             if (!Matrice.IsSquare(m))
@@ -395,7 +395,7 @@ namespace UMapx.Core
         /// Returns the value of the matrix determinant.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Det(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -525,7 +525,7 @@ namespace UMapx.Core
         /// Returns the value of the matrix determinant.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Det(this Complex32[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -3088,7 +3088,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="p">Parameter p</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Norm(this float[] a, float p)
         {
             int length = a.Length, i;
@@ -3104,7 +3104,7 @@ namespace UMapx.Core
         /// Returns the norm of the vector.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Norm(this float[] a)
         {
             return Norm(a, 2);
@@ -3114,7 +3114,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="p">Parameter p</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Norm(this Complex32[] a, float p)
         {
             int length = a.Length, i;
@@ -3130,7 +3130,7 @@ namespace UMapx.Core
         /// Returns the norm of the vector.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Norm(this Complex32[] a)
         {
             return Norm(a, 2);
@@ -3185,7 +3185,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Angle(this float[] a, float[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
@@ -3195,7 +3195,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Angle(this Complex32[] a, float[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
@@ -3205,7 +3205,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Angle(this float[] a, Complex32[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
@@ -3215,7 +3215,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Angle(this Complex32[] a, Complex32[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
@@ -3226,7 +3226,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Proj(this float[] a, float[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
@@ -3236,7 +3236,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Proj(this Complex32[] a, float[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
@@ -3246,7 +3246,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Proj(this float[] a, Complex32[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
@@ -3256,7 +3256,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Proj(this Complex32[] a, Complex32[] b)
         {
             return Matrice.Dot(a, b) / Matrice.Norm(b);
@@ -4431,7 +4431,7 @@ namespace UMapx.Core
         /// Returns the total value of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Sum(this float[] v)
         {
             float total = 0;
@@ -4465,7 +4465,7 @@ namespace UMapx.Core
         /// Returns the total product of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Mul(this float[] v)
         {
             float total = 1;
@@ -4482,7 +4482,7 @@ namespace UMapx.Core
         /// Returns the total product of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Mul(this Complex32[] v)
         {
             Complex32 total = 1;
@@ -4499,7 +4499,7 @@ namespace UMapx.Core
         /// Returns the common quotient of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Div(this float[] v)
         {
             float total = 1;
@@ -4516,7 +4516,7 @@ namespace UMapx.Core
         /// Returns the common quotient of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Div(this Complex32[] v)
         {
             Complex32 total = 1;
@@ -4533,7 +4533,7 @@ namespace UMapx.Core
         /// Returns the average value of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Mean(this float[] v)
         {
             return Matrice.Sum(v) / v.Length;
@@ -4551,7 +4551,7 @@ namespace UMapx.Core
         /// Returns the variance value.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Var(this float[] v)
         {
             int length = v.Length;
@@ -4588,7 +4588,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Array</param>
         /// <param name="y">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Var(this float[] x, float[] y)
         {
             int length = x.Length;
@@ -4623,7 +4623,7 @@ namespace UMapx.Core
         /// Returns the standard deviation.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float StnDev(this float[] v)
         {
             return (float)Math.Sqrt(Matrice.Var(v));
@@ -4642,7 +4642,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Array</param>
         /// <param name="y">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float StnDev(this float[] x, float[] y)
         {
             return (float)Math.Sqrt(Matrice.Var(x, y));
@@ -4661,7 +4661,7 @@ namespace UMapx.Core
         /// Returns the value of the vector mode.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Mode(this float[] v)
         {
             int count = 0;
@@ -4725,7 +4725,7 @@ namespace UMapx.Core
         /// Gets the value of the minimum element of the vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Min(this float[] v)
         {
             return Min(v, out _);
@@ -4735,7 +4735,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="index">Max index</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Min(this float[] v, out int index)
         {
             int length = v.Length;
@@ -4760,7 +4760,7 @@ namespace UMapx.Core
         /// Gets the value of the maximum element of the vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Max(this float[] v)
         {
             return Max(v, out _);
@@ -4770,7 +4770,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="index">Max index</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Max(this float[] v, out int index)
         {
             int length = v.Length;
@@ -4795,7 +4795,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="mode">Morphology mode</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Morph(this float[] v, MorphologyMode mode = MorphologyMode.Median)
         {
             float[] u = (float[])v.Clone();
@@ -4806,7 +4806,7 @@ namespace UMapx.Core
         /// Returns the covariance value of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Cov(this float[] v)
         {
             int xlength = v.Length;
@@ -4842,7 +4842,7 @@ namespace UMapx.Core
         /// Returns the entropy of a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Entropy(this float[] v)
         {
             float H = 0;
@@ -5314,7 +5314,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Dot(this float[] a, float[] b)
         {
             int length = a.Length, i;
@@ -5331,7 +5331,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Dot(this Complex32[] a, Complex32[] b)
         {
             int length = a.Length, i;
@@ -5348,7 +5348,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Dot(this Complex32[] a, float[] b)
         {
             int length = a.Length, i;
@@ -5365,7 +5365,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static Complex32 Dot(this float[] a, Complex32[] b)
         {
             int length = a.Length, i;

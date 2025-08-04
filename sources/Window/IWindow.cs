@@ -14,7 +14,7 @@
         /// Returns the value of a window function.
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         float Function(float x);
         /// <summary>
         /// Returns the window function.

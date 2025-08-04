@@ -55,7 +55,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
             float a = G(-0.5f) * (G(x + frameSize) + G(x - frameSize));
@@ -66,7 +66,7 @@ namespace UMapx.Window
         /// Функция G(x).
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         private float G(float x)
         {
             float a = (frameSize - 1) / 2;

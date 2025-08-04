@@ -46,7 +46,7 @@ namespace UMapx.Analysis
         /// <param name="x">Argument value</param>
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Compute(IFloat function, float x, float h, int order)
         {
             // exception
@@ -77,7 +77,7 @@ namespace UMapx.Analysis
         /// <param name="index">Index of argument</param>
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public float Compute(float[] y, int index, float h, int order)
         {
             // exception

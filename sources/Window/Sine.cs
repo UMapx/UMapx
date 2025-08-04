@@ -23,7 +23,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
             return (float)Math.Sin(Math.PI * x / (frameSize - 1));
@@ -47,7 +47,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         internal static float sinefunc(float x, int frameSize)
         {
             return (float)Math.Sin(Math.PI * x / (frameSize - 1));

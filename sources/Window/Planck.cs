@@ -44,7 +44,7 @@ namespace UMapx.Window
         /// <param name="x">Argument</param>
         /// <param name="p">Sign</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         private float Z(float x, bool p, int frameSize)
         {
             // params:
@@ -61,7 +61,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="frameSize">Window size</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
             // Planck taper window:

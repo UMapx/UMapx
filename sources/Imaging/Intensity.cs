@@ -17,7 +17,7 @@ namespace UMapx.Imaging
         /// <param name="nbase">Logarithm base</param>
         /// <param name="a">Factor [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float SingleScaleRetinex(float x, float xlow, float nbase, float a, float b)
         {
             // Singe scale retinex modified algorithm
@@ -60,7 +60,7 @@ namespace UMapx.Imaging
         /// <param name="xlow">Filter brightness</param>
         /// <param name="a">Factor (0, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float LocalContrastInversion(float x, float xlow, float a, float b)
         {
             return a * x / (xlow + b);
@@ -98,7 +98,7 @@ namespace UMapx.Imaging
         /// <param name="x">Brightness</param>
         /// <param name="xlow">Filter brightness</param>
         /// <param name="a">Factor [-1, 1]</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float LocalContrastEnhancement(float x, float xlow, float a)
         {
             return x + a * (x - xlow);
@@ -138,7 +138,7 @@ namespace UMapx.Imaging
         /// <param name="mu">Filter brightness</param>
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float HomomorphicEnhancement(float x, float mu, float a, float b)
         {
             return (float)Math.Exp(Math.Log(x) - a * Math.Log(mu + b));
@@ -177,7 +177,7 @@ namespace UMapx.Imaging
         /// <param name="mu">Filter brightness</param>
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset [-1, 1]</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float KsiContrastEnchancement(float x, float mu, float a, float b)
         {
             // x ∈ [0, 1], μ ∈ [0, 1] - mean of x.
@@ -225,7 +225,7 @@ namespace UMapx.Imaging
         /// <param name="x">Brightness</param>
         /// <param name="mu">Filter brightness</param>
         /// <param name="d">Degree of difference [0, 1]</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float SAUCE(float x, float mu, float d)
         {
             // Ravimal Bandara algorithm
@@ -276,7 +276,7 @@ namespace UMapx.Imaging
         /// <param name="x">Brightness</param>
         /// <param name="xlow">Filter brightness</param>
         /// <param name="difference">Difference [0, 1]</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Bradley(float x, float xlow, float difference = 0.15f)
         {
             // Bradley local threshold void.
@@ -330,7 +330,7 @@ namespace UMapx.Imaging
         /// <param name="mu">Filter brightness</param>
         /// <param name="s">Shadows</param>
         /// <param name="l">Highlights</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float LogStretch(float x, float mu, float s, float l)
         {
             return Intensity.LogPow(x, Maths.Range(Intensity.log05 / (float)Math.Log(mu), s, l));
@@ -367,7 +367,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">Number</param>
         /// <param name="power">Power</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float LogPow(float a, float power)
         {
             return (float)Math.Exp(Math.Log(a) * power);
@@ -396,7 +396,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="g">Gamma</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Gamma(float x, float g)
         {
             return (float)Math.Pow(x, g);
@@ -422,7 +422,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="b">Offset (-0.5, 0.5)</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Shift(float x, float b)
         {
             float v = log05 / (float)Math.Log(0.5 - b);
@@ -449,7 +449,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="threshold">Threshold [0, 1]</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Bin(float x, float threshold)
         {
             return (x > threshold) ? 1 : 0;
@@ -475,7 +475,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="average">Average</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Exposure(float x, float average)
         {
             float T = 255.0f / average;
@@ -502,7 +502,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="delta">Delta</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Sin(float x, float delta)
         {
             return 0.5f * (float)Math.Sin((3.14 * x) - (3.14 / 2)) + 0.5f + delta;
@@ -528,7 +528,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="delta">Delta</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Cos(float x, float delta)
         {
             return 0.5f * (float)Math.Cos((3.14 * x) - 3.14) + 0.5f + delta;
@@ -556,7 +556,7 @@ namespace UMapx.Imaging
         /// <param name="x">Argument</param>
         /// <param name="a">Logarithm base</param>
         /// <param name="delta">Delta</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Log(float x, float a, float delta)
         {
             return (float)Math.Log((1.0 + (x + delta) / 0.5), a);
@@ -597,7 +597,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Argument</param>
         /// <param name="value">Contrast</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Contrast(float x, float value)
         {
             value = (1 + value);
@@ -628,7 +628,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Brightness</param>
         /// <param name="power">Power</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float LogContrast(float x, float power)
         {
             if (x <= 0.5)
@@ -656,7 +656,7 @@ namespace UMapx.Imaging
         /// Negates the value.
         /// </summary>
         /// <param name="x">Argument</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Invert(float x)
         {
             return 1.0f - x;
@@ -667,7 +667,7 @@ namespace UMapx.Imaging
         /// <param name="x">Argument</param>
         /// <param name="max">Maximum value</param>
         /// <param name="min">Minimum value</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Equalize(float x, float min, float max)
         {
             float a = max - min;
@@ -728,7 +728,7 @@ namespace UMapx.Imaging
         /// <param name="xmax">Maximum value</param>
         /// <param name="xmin">Minimum value</param>
         /// <param name="delta">Delta</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Linear(float x, float xmax, float xmin, float delta)
         {
             return (x - xmin) / (xmax - xmin) + delta;

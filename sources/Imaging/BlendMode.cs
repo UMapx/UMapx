@@ -17,7 +17,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Average(float a, float b)
         {
             return (a + b) / 2.0f;
@@ -27,7 +27,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Screen(float a, float b)
         {
             return 1 - (1 - a) * (1 - b);
@@ -37,7 +37,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Difference(float a, float b)
         {
             return Math.Abs(a - b);
@@ -47,7 +47,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Negation(float a, float b)
         {
             return 1 - Math.Abs(1 - a - b);
@@ -57,7 +57,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Exclusion(float a, float b)
         {
             return a + b - 2 * a * b;
@@ -67,7 +67,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Overlay(float a, float b)
         {
             if (a < 0.5)
@@ -81,7 +81,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float HardLight(float a, float b)
         {
             if (b < 0.5)
@@ -95,7 +95,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Dodge(float a, float b)
         {
             return a / (1 - b);
@@ -105,7 +105,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float SoftDodge(float a, float b)
         {
             if (a + b < 1)
@@ -119,7 +119,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Burn(float a, float b)
         {
             return 1 - (1 - a) / b;
@@ -129,7 +129,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float SoftBurn(float a, float b)
         {
             if (a + b < 1)
@@ -143,7 +143,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Reflect(float a, float b)
         {
             return a * a / (1 - b);
@@ -153,7 +153,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Glow(float a, float b)
         {
             return b * b / (1 - a);
@@ -163,7 +163,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Stamp(float a, float b)
         {
             return a + 2 * b - 1;
@@ -173,7 +173,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Freeze(float a, float b)
         {
             float x = 1 - a;
@@ -184,7 +184,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Heat(float a, float b)
         {
             float x = 1 - b;
@@ -195,7 +195,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Interpolation(float a, float b)
         {
             return 0.5f - 0.25f * (float)Math.Cos(Math.PI * a) - 0.25f * (float)Math.Cos(Math.PI * b);
@@ -205,7 +205,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Photoshop(float a, float b)
         {
             if (b < 0.5)
@@ -219,7 +219,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Illusions(float a, float b)
         {
             float x = 2 * (0.5f - b);
@@ -231,7 +231,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Pegtop(float a, float b)
         {
             return (1 - 2 * b) * a * a + 2 * b * a;
@@ -241,7 +241,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="a">First layer</param>
         /// <param name="b">Second layer</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Fw3c(float a, float b)
         {
             if (b <= 0.5)
@@ -254,7 +254,7 @@ namespace UMapx.Imaging
         /// Implements the "Cairo" function.
         /// </summary>
         /// <param name="a">Argument</param>
-        /// <returns>float precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Gw3c(float a)
         {
             if (a <= 0.25)
