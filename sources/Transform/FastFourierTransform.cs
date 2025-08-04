@@ -474,7 +474,9 @@ namespace UMapx.Transform
             }
 
             for (int i = 1; i < N; i++)
+            {
                 b[M - i] = b[i];
+            }
 
             CooleyTukeyFFT(a, false);
             CooleyTukeyFFT(b, false);
