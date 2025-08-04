@@ -28,7 +28,7 @@ namespace UMapx.Transform
 
         #region Initialize
         /// <summary>
-        /// Initializes the fast Fourier transform using the Cooley-Tukey algorithm.
+        /// Initializes the fast Fourier transform using the Cooley-Tukey and Bluestein algorithms.
         /// </summary>
         /// <param name="normalized">Normalized transform or not</param>
         /// <param name="direction">Processing direction</param>
