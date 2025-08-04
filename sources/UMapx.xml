@@ -23407,12 +23407,12 @@
             <summary>
             Forward Fourier transform (Bluestein FFT).
             </summary>
-            <param name="input"></param>
-            <param name="inverse"></param>
+            <param name="data">Array</param>
+            <param name="inverse">Inverse or not</param>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.CooleyTukeyFFT(UMapx.Core.Complex32[],System.Boolean)">
             <summary>
-            Forward Fourier transform (Cooley-Tukey FFT).
+            Fast Fourier transform (Cooley-Tukey FFT).
             </summary>
             <param name="data">Array</param>
             <param name="inverse">Inverse or not</param>

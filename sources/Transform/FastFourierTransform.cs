@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using System.Threading.Tasks;
 using UMapx.Core;
 
@@ -442,14 +441,13 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Fourier transform (Bluestein FFT).
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="inverse"></param>
-        public static void BluesteinFFT(Complex32[] input, bool inverse)
+        /// <param name="data">Array</param>
+        /// <param name="inverse">Inverse or not</param>
+        public static void BluesteinFFT(Complex32[] data, bool inverse)
         {
-            int N = input.Length;
-
-            // Находим ближайшую степень двойки
+            int N = data.Length;
             int M = 1;
+
             while (M < 2 * N - 1)
                 M <<= 1;
 
@@ -460,44 +458,43 @@ namespace UMapx.Transform
             float sign = inverse ? 1f : -1f;
             float norm = 1f / M;
 
-            // Chirp-модуляция
             for (int n = 0; n < N; n++)
             {
                 float angle = Maths.Pi * n * n / N;
                 Complex32 w = Maths.Exp(sign * Maths.I * angle);
-                a[n] = input[n] * w;
+                a[n] = data[n] * w;
                 b[n] = Maths.Exp(-sign * Maths.I * angle);
             }
 
-            // Остальное обнулено
             for (int i = N; i < M; i++)
             {
                 a[i] = Complex32.Zero;
                 b[i] = Complex32.Zero;
             }
 
-            // Зеркальное дополнение ядра
             for (int i = 1; i < N; i++)
                 b[M - i] = b[i];
 
-            // Выполняем свёртку через FFT
             CooleyTukeyFFT(a, false);
             CooleyTukeyFFT(b, false);
+
             for (int i = 0; i < M; i++)
+            {
                 c[i] = a[i] * b[i];
+            }
+
             CooleyTukeyFFT(c, true);
 
-            // Обратная модуляция + нормализация
             for (int n = 0; n < N; n++)
             {
                 float angle = Maths.Pi * n * n / N;
                 Complex32 w = Maths.Exp(sign * Maths.I * angle);
-                input[n] = c[n] * w;
-                input[n] *= norm; // Нормализация для согласованности с матрицей
+                data[n] = c[n] * w;
+                data[n] *= norm;
             }
         }
         /// <summary>
-        /// Forward Fourier transform (Cooley-Tukey FFT).
+        /// Fast Fourier transform (Cooley-Tukey FFT).
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
