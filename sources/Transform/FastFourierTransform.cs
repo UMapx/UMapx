@@ -443,7 +443,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
-        public static void BluesteinFFT(Complex32[] data, bool inverse)
+        private static void BluesteinFFT(Complex32[] data, bool inverse)
         {
             int N = data.Length;
             int M = 1;
