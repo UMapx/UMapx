@@ -79,11 +79,11 @@ namespace UMapx.Transform
 
             if (!Maths.IsPower(N, 2))
             {
-                Bluestein(B, false);
+                BluesteinFFT(B, false);
             }
             else
             {
-                FFT(B, false);
+                CooleyTukeyFFT(B, false);
             }
 
             if (normalized == true)
@@ -105,11 +105,11 @@ namespace UMapx.Transform
 
             if (!Maths.IsPower(N, 2))
             {
-                Bluestein(B, true);
+                BluesteinFFT(B, true);
             }
             else
             {
-                FFT(A, true);
+                CooleyTukeyFFT(A, true);
             }
 
             if (normalized == true)
@@ -132,9 +132,6 @@ namespace UMapx.Transform
 
             if (direction == Direction.Both)
             {
-                if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                    throw new Exception("Dimension of the signal must be a power of 2");
-
                 Parallel.For(0, N, i =>
                 {
                     Complex32[] row = new Complex32[M];
@@ -145,14 +142,20 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    FFT(row, true);
+                    if (!Maths.IsPower(M, 2))
+                    {
+                        BluesteinFFT(row, true);
+                    }
+                    else
+                    {
+                        CooleyTukeyFFT(row, true);
+                    }
 
                     for (j = 0; j < M; j++)
                     {
                         B[i, j] = row[j];
                     }
-                }
-                );
+                });
 
                 Parallel.For(0, M, j =>
                 {
@@ -164,14 +167,20 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    FFT(col, false);
+                    if (!Maths.IsPower(N, 2))
+                    {
+                        BluesteinFFT(col, false);
+                    }
+                    else
+                    {
+                        CooleyTukeyFFT(col, false);
+                    }
 
                     for (i = 0; i < N; i++)
                     {
                         B[i, j] = col[i];
                     }
-                }
-                );
+                });
 
                 if (normalized == true)
                 {
@@ -180,9 +189,6 @@ namespace UMapx.Transform
             }
             else if (direction == Direction.Vertical)
             {
-                if (!Maths.IsPower(N, 2))
-                    throw new Exception("Dimension of the signal must be a power of 2");
-
                 Parallel.For(0, M, j =>
                 {
                     Complex32[] col = new Complex32[N];
@@ -193,14 +199,20 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    FFT(col, false);
+                    if (!Maths.IsPower(N, 2))
+                    {
+                        BluesteinFFT(col, false);
+                    }
+                    else
+                    {
+                        CooleyTukeyFFT(col, false);
+                    }
 
                     for (i = 0; i < N; i++)
                     {
                         B[i, j] = col[i];
                     }
-                }
-                );
+                });
 
                 if (normalized == true)
                 {
@@ -209,9 +221,6 @@ namespace UMapx.Transform
             }
             else
             {
-                if (!Maths.IsPower(M, 2))
-                    throw new Exception("Dimension of the signal must be a power of 2");
-
                 Parallel.For(0, N, i =>
                 {
                     Complex32[] row = new Complex32[M];
@@ -222,7 +231,14 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    FFT(row, true);
+                    if (!Maths.IsPower(M, 2))
+                    {
+                        BluesteinFFT(row, true);
+                    }
+                    else
+                    {
+                        CooleyTukeyFFT(row, true);
+                    }
 
                     for (j = 0; j < M; j++)
                     {
@@ -251,25 +267,30 @@ namespace UMapx.Transform
 
             if (direction == Direction.Both)
             {
-                if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                    throw new Exception("Dimension of the signal must be a power of 2");
-
                 Parallel.For(0, M, j =>
                 {
                     Complex32[] col = new Complex32[N];
                     int i;
+
                     for (i = 0; i < N; i++)
                     {
                         col[i] = A[i, j];
                     }
-                    FFT(col, true);
+
+                    if (!Maths.IsPower(N, 2))
+                    {
+                        BluesteinFFT(col, true);
+                    }
+                    else
+                    {
+                        CooleyTukeyFFT(col, true);
+                    }
 
                     for (i = 0; i < N; i++)
                     {
                         A[i, j] = col[i];
                     }
-                }
-                );
+                });
 
                 Parallel.For(0, N, i =>
                 {
@@ -280,14 +301,21 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    FFT(row, false);
+
+                    if (!Maths.IsPower(M, 2))
+                    {
+                        BluesteinFFT(row, false);
+                    }
+                    else
+                    {
+                        CooleyTukeyFFT(row, false);
+                    }
 
                     for (j = 0; j < M; j++)
                     {
                         A[i, j] = row[j];
                     }
-                }
-                );
+                });
 
                 if (normalized == true)
                 {
@@ -296,18 +324,24 @@ namespace UMapx.Transform
             }
             else if (direction == Direction.Vertical)
             {
-                if (!Maths.IsPower(N, 2))
-                    throw new Exception("Dimension of the signal must be a power of 2");
-
                 Parallel.For(0, M, j =>
                 {
                     Complex32[] col = new Complex32[N];
                     int i;
+
                     for (i = 0; i < N; i++)
                     {
                         col[i] = A[i, j];
                     }
-                    FFT(col, true);
+
+                    if (!Maths.IsPower(N, 2))
+                    {
+                        BluesteinFFT(col, true);
+                    }
+                    else
+                    {
+                        CooleyTukeyFFT(col, true);
+                    }
 
                     for (i = 0; i < N; i++)
                     {
@@ -335,7 +369,15 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    FFT(row, false);
+
+                    if (!Maths.IsPower(M, 2))
+                    {
+                        BluesteinFFT(row, false);
+                    }
+                    else
+                    {
+                        CooleyTukeyFFT(row, false);
+                    }
 
                     for (j = 0; j < M; j++)
                     {
@@ -390,8 +432,6 @@ namespace UMapx.Transform
         #endregion
 
         #region Private data
-        private const int minLength = 2;
-        private const int maxLength = 16384;
         private const int minBits = 1;
         private const int maxBits = 14;
         private static int[][] reversedBits = new int[maxBits][];
@@ -404,54 +444,56 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="input"></param>
         /// <param name="inverse"></param>
-        private static void Bluestein(Complex32[] input, bool inverse)
+        public static void BluesteinFFT(Complex32[] input, bool inverse)
         {
             int N = input.Length;
 
-            // Find power-of-two convolution size
+            // Находим ближайшую степень двойки
             int M = 1;
-            while (M < 2 * N) M <<= 1;
+            while (M < 2 * N - 1)
+                M <<= 1;
 
-            Complex32[] a = new Complex32[M];
-            Complex32[] b = new Complex32[M];
-            Complex32[] c = new Complex32[M];
+            var a = new Complex32[M];
+            var b = new Complex32[M];
+            var c = new Complex32[M];
 
-            float sign = inverse ? 1 : -1;
+            float sign = inverse ? 1f : -1f;
+            float norm = 1f / M;
 
-            // Precompute chirp
+            // Chirp-модуляция
             for (int n = 0; n < N; n++)
             {
                 float angle = Maths.Pi * n * n / N;
-                Complex w = Complex.FromPolarCoordinates(1.0, sign * angle);
+                Complex32 w = Maths.Exp(sign * Maths.I * angle);
                 a[n] = input[n] * w;
-                b[n] = Complex.FromPolarCoordinates(1.0, -sign * angle);
+                b[n] = Maths.Exp(-sign * Maths.I * angle);
             }
 
-            // Zero-padding
-            for (int n = N; n < M; n++)
+            // Остальное обнулено
+            for (int i = N; i < M; i++)
             {
-                a[n] = Complex.Zero;
-                b[n] = Complex.Zero;
+                a[i] = Complex32.Zero;
+                b[i] = Complex32.Zero;
             }
 
-            // Flip b to prepare for convolution
-            for (int i = N; i < M; i++) b[i] = Complex.Zero;
-            Array.Reverse(b, 0, N);
+            // Зеркальное дополнение ядра
+            for (int i = 1; i < N; i++)
+                b[M - i] = b[i];
 
-            // Perform convolution using FFT
-            FFT(a, false);
-            FFT(b, false);
-            for (int i = 0; i < M; i++) c[i] = a[i] * b[i];
-            FFT(c, true);
+            // Выполняем свёртку через FFT
+            CooleyTukeyFFT(a, false);
+            CooleyTukeyFFT(b, false);
+            for (int i = 0; i < M; i++)
+                c[i] = a[i] * b[i];
+            CooleyTukeyFFT(c, true);
 
-            // Final multiplication
+            // Обратная модуляция + нормализация
             for (int n = 0; n < N; n++)
             {
-                double angle = Math.PI * n * n / N;
-                Complex w = Complex.FromPolarCoordinates(1.0, sign * angle);
+                float angle = Maths.Pi * n * n / N;
+                Complex32 w = Maths.Exp(sign * Maths.I * angle);
                 input[n] = c[n] * w;
-                if (inverse)
-                    input[n] /= N;
+                input[n] *= norm; // Нормализация для согласованности с матрицей
             }
         }
         /// <summary>
@@ -459,7 +501,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
-        private static void FFT(Complex32[] data, bool inverse)
+        private static void CooleyTukeyFFT(Complex32[] data, bool inverse)
         {
             int n = data.Length;
             int m = Log2(n);
@@ -639,7 +681,7 @@ namespace UMapx.Transform
         /// <returns>Integer number</returns>
         private static int Log2(int x)
         {
-            return (int)(Math.Log10(x) / 0.30102999566398);
+            return (int)Math.Log(x, 2);
         }
         #endregion
     }
