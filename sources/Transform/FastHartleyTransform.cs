@@ -17,7 +17,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Fourier transform.
         /// </summary>
-        private FastFourierTransform FFT;
+        private readonly FastFourierTransform FFT;
         #endregion
 
         #region Initialize

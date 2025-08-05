@@ -16,10 +16,10 @@ namespace UMapx.Window
     public class ShortTimeFourierTransform : IWindowTransform, ITransform
     {
         #region Private data
-        private FourierTransform FFT;
+        private readonly FourierTransform DFT;
         private IWindow window;
         private Direction direction;
-        private float[] coefs;
+        private readonly float[] coefs;
         #endregion
 
         #region Initialize
@@ -32,7 +32,7 @@ namespace UMapx.Window
         public ShortTimeFourierTransform(IWindow function, bool normalized = true, Direction direction = Direction.Vertical)
         {
             // fourier transform initialization:
-            this.FFT = new FourierTransform(normalized, direction);
+            this.DFT = new FourierTransform(normalized, direction);
             Direction = direction;
             Window = function;
 
@@ -46,11 +46,11 @@ namespace UMapx.Window
         {
             get
             {
-                return this.FFT.Normalized;
+                return this.DFT.Normalized;
             }
             set
             {
-                this.FFT.Normalized = value;
+                this.DFT.Normalized = value;
             }
         }
         /// <summary>
@@ -98,7 +98,7 @@ namespace UMapx.Window
                 for (j = 0; j < frame; j++)
                     data[j] = A[i + j] * coefs[Maths.Mod(i - frame / 2, frame)];
 
-                data = FFT.Forward(data);
+                data = DFT.Forward(data);
 
                 for (j = 0; j < frame; j++)
                     B[i + j] = data[j];
@@ -126,7 +126,7 @@ namespace UMapx.Window
                     data[j] = B[i + j];
                 }
 
-                data = FFT.Backward(data);
+                data = DFT.Backward(data);
 
                 for (j = 0; j < frame; j++)
                 {

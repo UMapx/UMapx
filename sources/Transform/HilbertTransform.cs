@@ -18,7 +18,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Fourier transform.
         /// </summary>
-        private FourierTransform FFT;
+        private readonly FourierTransform DFT;
         #endregion
 
         #region Initialize
@@ -29,7 +29,7 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public HilbertTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
-            this.FFT = new FourierTransform(normalized, direction);
+            this.DFT = new FourierTransform(normalized, direction);
         }
         /// <summary>
         /// Normalized transform or not.
@@ -38,11 +38,11 @@ namespace UMapx.Transform
         {
             get
             {
-                return this.FFT.Normalized;
+                return this.DFT.Normalized;
             }
             set
             {
-                this.FFT.Normalized = value;
+                this.DFT.Normalized = value;
             }
         }
         /// <summary>
@@ -52,11 +52,11 @@ namespace UMapx.Transform
         {
             get
             {
-                return this.FFT.Direction;
+                return this.DFT.Direction;
             }
             set
             {
-                this.FFT.Direction = value;
+                this.DFT.Direction = value;
             }
         }
         #endregion
@@ -70,9 +70,9 @@ namespace UMapx.Transform
         public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            Complex32[] F = FFT.Forward(A);
+            Complex32[] F = DFT.Forward(A);
             HilbertTransform.hilbertf(F, N);
-            F = FFT.Backward(F);
+            F = DFT.Backward(F);
             return HilbertTransform.hilbertb(A, F, N);
         }
         /// <summary>
@@ -106,8 +106,8 @@ namespace UMapx.Transform
             if (Direction == Direction.Both)
             {
                 // 2-dimension horizontal Hilbert transform:
-                FFT.Direction = Direction.Horizontal;
-                B = FFT.Forward(B);
+                DFT.Direction = Direction.Horizontal;
+                B = DFT.Forward(B);
 
                 Parallel.For(0, N, i =>
                 {
@@ -127,7 +127,7 @@ namespace UMapx.Transform
                     }
                 });
 
-                B = FFT.Backward(B);
+                B = DFT.Backward(B);
 
                 Parallel.For(0, N, i =>
                 {
@@ -152,8 +152,8 @@ namespace UMapx.Transform
 
 
                 // 2-dimension vertical Hilbert transform:
-                FFT.Direction = Direction.Vertical;
-                B = FFT.Forward(B);
+                DFT.Direction = Direction.Vertical;
+                B = DFT.Forward(B);
 
                 Parallel.For(0, M, j =>
                 {
@@ -173,7 +173,7 @@ namespace UMapx.Transform
                     }
                 });
 
-                B = FFT.Backward(B);
+                B = DFT.Backward(B);
 
                 Parallel.For(0, M, j =>
                 {
@@ -195,12 +195,12 @@ namespace UMapx.Transform
                     }
                 });
 
-                FFT.Direction = Direction.Both;
+                DFT.Direction = Direction.Both;
             }
             else if (Direction == Direction.Vertical)
             {
                 // 2-dimension vertical Hilbert transform:
-                B = FFT.Forward(B);
+                B = DFT.Forward(B);
 
                 Parallel.For(0, M, j =>
                 {
@@ -220,7 +220,7 @@ namespace UMapx.Transform
                     }
                 });
 
-                B = FFT.Backward(B);
+                B = DFT.Backward(B);
 
                 Parallel.For(0, M, j =>
                 {
@@ -245,7 +245,7 @@ namespace UMapx.Transform
             else
             {
                 // 2-dimension horizontal Hilbert transform:
-                B = FFT.Forward(B);
+                B = DFT.Forward(B);
 
                 Parallel.For(0, N, i =>
                 {
@@ -265,7 +265,7 @@ namespace UMapx.Transform
                     }
                 });
 
-                B = FFT.Backward(B);
+                B = DFT.Backward(B);
 
                 Parallel.For(0, N, i =>
                 {

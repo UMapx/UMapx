@@ -24560,7 +24560,7 @@
             </remarks>
             </summary>
         </member>
-        <member name="F:UMapx.Transform.HilbertTransform.FFT">
+        <member name="F:UMapx.Transform.HilbertTransform.DFT">
             <summary>
             Fourier transform.
             </summary>

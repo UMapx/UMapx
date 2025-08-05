@@ -16,7 +16,7 @@ namespace UMapx.Window
     public class FastShortTimeFourierTransform : IWindowTransform, ITransform
     {
         #region Private data
-        private FastFourierTransform FFT;
+        private readonly FastFourierTransform FFT;
         private IWindow window;
         private Direction direction;
         private float[] coefs;
