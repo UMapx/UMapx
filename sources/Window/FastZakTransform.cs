@@ -5,21 +5,21 @@ using UMapx.Transform;
 namespace UMapx.Window
 {
     /// <summary>
-    /// Defines the Zak transform.
+    /// Defines the fast Zak transform.
     /// </summary>
     [Serializable]
-    public class ZakTransform
+    public class FastZakTransform
     {
         #region Private data
-        private FourierTransform DFT = new FourierTransform(false, Direction.Vertical);
+        private FastFourierTransform FFT = new FastFourierTransform(false, Direction.Vertical);
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Initializes the Zak transform.
+        /// Initializes the fast Zak transform.
         /// </summary>
         /// <param name="m">Number of frequency shifts [4, N]</param>
-        public ZakTransform(int m)
+        public FastZakTransform(int m)
         {
             M = m;
         }
@@ -42,29 +42,29 @@ namespace UMapx.Window
         public Complex32[,] Forward(Complex32[] input)
         {
             int N = input.Length;
-            if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M.");
+            if (N % M != 0)
+                throw new ArgumentException("The length of the input must be a multiple of M.");
 
             int L = N / M;
             var result = new Complex32[N, L];
 
+            Complex32[] buffer = new Complex32[L];
+
             for (int m = 0; m < N; m++)
             {
+                for (int k = 0; k < L; k++)
+                {
+                    int index = (m - M * k) % N;
+                    if (index < 0) index += N;
+
+                    buffer[k] = input[index];
+                }
+
+                buffer = FFT.Forward(buffer);
+
                 for (int n = 0; n < L; n++)
                 {
-                    Complex32 sum = Complex32.Zero;
-
-                    for (int k = 0; k < L; k++)
-                    {
-                        int index = (m - M * k) % N;
-                        if (index < 0) index += N;
-
-                        float angle = 2 * Maths.Pi * n * k / L;
-                        Complex32 w = Maths.Exp(new Complex32(0, angle)); // e^{i*angle}
-
-                        sum += input[index] * w;
-                    }
-
-                    result[m, n] = sum;
+                    result[m, n] = buffer[n];
                 }
             }
 
@@ -79,29 +79,29 @@ namespace UMapx.Window
         public Complex32[,] Forward(float[] input)
         {
             int N = input.Length;
-            if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M.");
+            if (N % M != 0)
+                throw new ArgumentException("The length of the input must be a multiple of M.");
 
             int L = N / M;
             var result = new Complex32[N, L];
 
+            Complex32[] buffer = new Complex32[L];
+
             for (int m = 0; m < N; m++)
             {
+                for (int k = 0; k < L; k++)
+                {
+                    int index = (m - M * k) % N;
+                    if (index < 0) index += N;
+
+                    buffer[k] = input[index];
+                }
+
+                buffer = FFT.Forward(buffer);
+
                 for (int n = 0; n < L; n++)
                 {
-                    Complex32 sum = Complex32.Zero;
-
-                    for (int k = 0; k < L; k++)
-                    {
-                        int index = (m - M * k) % N;
-                        if (index < 0) index += N;
-
-                        float angle = 2 * Maths.Pi * n * k / L;
-                        Complex32 w = Maths.Exp(new Complex32(0, angle)); // e^{i*angle}
-
-                        sum += input[index] * w;
-                    }
-
-                    result[m, n] = sum;
+                    result[m, n] = buffer[n];
                 }
             }
 
@@ -167,7 +167,7 @@ namespace UMapx.Window
                 }
             }
 
-            Z = DFT.Forward(G);
+            Z = FFT.Forward(G);
 
             float w = 2 / (float)Math.Sqrt(M);
             float even, odd, phi;
@@ -228,7 +228,7 @@ namespace UMapx.Window
                 }
             }
 
-            Z = DFT.Forward(G);
+            Z = FFT.Forward(G);
 
             float w = 2 / (float)Math.Sqrt(M);
             float even, odd, phi;

@@ -164,7 +164,7 @@ namespace UMapx.Window
             {
                 ZakTransform zakTransform = new ZakTransform(M);
 
-                return WeylHeisenbergTransform.Matrix(zakTransform.Forward(g0), M);
+                return WeylHeisenbergTransform.Matrix(zakTransform.Orthogonalize(g0), M);
             }
 
             return WeylHeisenbergTransform.Matrix(g0, M);

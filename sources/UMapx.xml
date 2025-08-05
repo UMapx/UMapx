@@ -29810,6 +29810,63 @@
             <param name="M">Number of frequency shifts</param>
             <returns>Array</returns>
         </member>
+        <member name="T:UMapx.Window.FastZakTransform">
+            <summary>
+            Defines the fast Zak transform.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.#ctor(System.Int32)">
+            <summary>
+            Initializes the fast Zak transform.
+            </summary>
+            <param name="m">Number of frequency shifts [4, N]</param>
+        </member>
+        <member name="P:UMapx.Window.FastZakTransform.M">
+            <summary>
+            Gets or sets number of frequency shifts [4, N].
+            <remarks>
+            Even number.
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Forward(System.Single[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Zak transform.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <returns>Array</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Orthogonalize(System.Single[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Orthogonalize(UMapx.Core.Complex32[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
         <member name="T:UMapx.Window.FlatTop">
             <summary>
             Defines the "Flat-Top" window function.
@@ -30576,61 +30633,43 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Window.ZakTransform.Forward(System.Single[])">
-            <summary>
-            Forward Zak transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
         <member name="M:UMapx.Window.ZakTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
             Forward Zak transform.
             </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
         </member>
-        <member name="M:UMapx.Window.ZakTransform.Forward(System.Single[0:,0:])">
+        <member name="M:UMapx.Window.ZakTransform.Forward(System.Single[])">
             <summary>
             Forward Zak transform.
             </summary>
-            <param name="A">Matrix</param>
+            <param name="input">Array</param>
             <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Zak transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.Backward(System.Single[])">
-            <summary>
-            Backward Zak transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Zak transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Zak transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
         </member>
         <member name="M:UMapx.Window.ZakTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
             Backward Zak transform.
             </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
+            <param name="matrix">Matrix</param>
+            <returns>Array</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.ZakTransform.Orthogonalize(System.Single[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.ZakTransform.Orthogonalize(UMapx.Core.Complex32[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
         </member>
     </members>
 </doc>

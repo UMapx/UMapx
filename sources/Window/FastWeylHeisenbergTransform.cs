@@ -88,8 +88,8 @@ namespace UMapx.Window
         public Complex32[] Forward(Complex32[] A)
         {
             float[] g0 = WeylHeisenbergTransform.GetPacket(this.window, A.Length);
-            ZakTransform zakTransform = new ZakTransform(m);
-            return FastWeylHeisenbergTransform.WHT(A, zakTransform.Forward(g0), m);
+            FastZakTransform zakTransform = new FastZakTransform(m);
+            return FastWeylHeisenbergTransform.WHT(A, zakTransform.Orthogonalize(g0), m);
         }
         /// <summary>
         /// Backward Weyl-Heisenberg transform.
@@ -99,8 +99,8 @@ namespace UMapx.Window
         public Complex32[] Backward(Complex32[] B)
         {
             float[] g0 = WeylHeisenbergTransform.GetPacket(this.window, B.Length);
-            ZakTransform zakTransform = new ZakTransform(m);
-            return FastWeylHeisenbergTransform.IWHT(B, zakTransform.Forward(g0), m);
+            FastZakTransform zakTransform = new FastZakTransform(m);
+            return FastWeylHeisenbergTransform.IWHT(B, zakTransform.Orthogonalize(g0), m);
         }
         /// <summary>
         /// Forward Weyl-Heisenberg transform.
@@ -112,9 +112,9 @@ namespace UMapx.Window
             Complex32[,] B = (Complex32[,])A.Clone();
             int N = B.GetLength(0), M = B.GetLength(1);
 
-            ZakTransform zakTransform = new ZakTransform(m);
-            float[] g0 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, N));
-            float[] g1 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, M));
+            FastZakTransform zakTransform = new FastZakTransform(m);
+            float[] g0 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, N));
+            float[] g1 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, M));
 
             if (direction == Direction.Both)
             {
@@ -208,9 +208,9 @@ namespace UMapx.Window
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
-            ZakTransform zakTransform = new ZakTransform(m);
-            float[] g0 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, N));
-            float[] g1 = zakTransform.Forward(WeylHeisenbergTransform.GetPacket(this.window, M));
+            FastZakTransform zakTransform = new FastZakTransform(m);
+            float[] g0 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, N));
+            float[] g1 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, M));
 
             if (direction == Direction.Both)
             {
