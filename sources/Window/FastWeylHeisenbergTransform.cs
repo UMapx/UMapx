@@ -18,7 +18,7 @@ namespace UMapx.Window
     public class FastWeylHeisenbergTransform : IWindowTransform, ITransform
     {
         #region Private data
-        private static FastFourierTransform FFT = new FastFourierTransform(false, Direction.Horizontal);
+        private static readonly FastFourierTransform FFT = new FastFourierTransform(false, Direction.Horizontal);
         private IWindow window;
         private int m;
         private Direction direction;

@@ -11,7 +11,7 @@ namespace UMapx.Window
     public class ZakTransform
     {
         #region Private data
-        private FourierTransform DFT = new FourierTransform(false, Direction.Vertical);
+        private readonly FourierTransform DFT = new FourierTransform(false, Direction.Vertical);
         #endregion
 
         #region Initialize

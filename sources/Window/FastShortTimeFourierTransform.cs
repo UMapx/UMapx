@@ -19,7 +19,7 @@ namespace UMapx.Window
         private readonly FastFourierTransform FFT;
         private IWindow window;
         private Direction direction;
-        private float[] coefs;
+        private readonly float[] coefs;
         #endregion
 
         #region Initialize

@@ -11,7 +11,7 @@ namespace UMapx.Window
     public class FastZakTransform
     {
         #region Private data
-        private FastFourierTransform FFT = new FastFourierTransform(false, Direction.Vertical);
+        private readonly FastFourierTransform FFT = new FastFourierTransform(false, Direction.Vertical);
         #endregion
 
         #region Initialize
