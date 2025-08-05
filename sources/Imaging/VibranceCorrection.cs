@@ -7,45 +7,42 @@ using UMapx.Colorspace;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Defines the saturation correction filter.
+    /// Defines the vibrance correction filter (RGB-based).
     /// </summary>
     [Serializable]
-    public class SaturationCorrection : IBitmapFilter
+    public class VibranceCorrection : IBitmapFilter
     {
         #region Private data
-        private float saturation;
+        private float vibrance;
         #endregion
 
         #region Filter components
         /// <summary>
-        /// Initializes the saturation correction filter.
+        /// Initializes the vibrance correction filter.
         /// </summary>
-        /// <param name="saturation">Saturation [-100, 100]</param>
-        public SaturationCorrection(float saturation)
+        /// <param name="vibrance">Vibrance [-100, 100]</param>
+        public VibranceCorrection(float vibrance)
         {
-            Saturation = saturation;
+            Vibrance = vibrance;
         }
+
         /// <summary>
-        /// Initializes the saturation correction filter.
+        /// Initializes the vibrance correction filter.
         /// </summary>
-        public SaturationCorrection()
+        public VibranceCorrection()
         {
-            Saturation = 20;
+            Vibrance = 20;
         }
+
         /// <summary>
-        /// Gets or sets the saturation value [-100, 100].
+        /// Gets or sets the vibrance value [-100, 100].
         /// </summary>
-        public float Saturation
+        public float Vibrance
         {
-            get
-            {
-                return this.saturation;
-            }
-            set
-            {
-                this.saturation = value;
-            }
+            get => vibrance;
+            set => vibrance = Math.Max(-100, Math.Min(100, value));
         }
+
         /// <summary>
         /// Apply filter.
         /// </summary>
@@ -54,22 +51,21 @@ namespace UMapx.Imaging
         {
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();
-            float s = this.saturation / 100.0f;
+            float v = this.vibrance / 100.0f;
 
             Parallel.For(0, height, y =>
             {
-                int x, ystride, k;
-                ystride = y * stride;
+                int ystride = y * stride;
 
-                for (x = 0; x < width; x++)
+                for (int x = 0; x < width; x++)
                 {
-                    k = ystride + x * 4;
+                    int k = ystride + x * 4;
 
                     byte r = p[k + 2];
                     byte g = p[k + 1];
                     byte b = p[k + 0];
-
-                    RGB rgb = RGB.Saturation(r, g, b, s);
+                    
+                    RGB rgb = RGB.Vibrance(r, g, b, v);
 
                     p[k + 2] = rgb.Red;
                     p[k + 1] = rgb.Green;
@@ -77,6 +73,7 @@ namespace UMapx.Imaging
                 }
             });
         }
+
         /// <summary>
         /// Apply filter.
         /// </summary>

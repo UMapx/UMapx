@@ -249,17 +249,19 @@ namespace UMapx.Imaging
             int width = blurred.GetLength(1);
             int height = blurred.GetLength(0);
 
-            int[,] sobelX = new int[,] {
-            { -1, 0, 1 },
-            { -2, 0, 2 },
-            { -1, 0, 1 }
-        };
+            int[,] sobelX = new int[,] 
+            {
+                { -1, 0, 1 },
+                { -2, 0, 2 },
+                { -1, 0, 1 }
+            };
 
-            int[,] sobelY = new int[,] {
-            { -1, -2, -1 },
-            {  0,  0,  0 },
-            {  1,  2,  1 }
-        };
+            int[,] sobelY = new int[,] 
+            {
+                { -1, -2, -1 },
+                {  0,  0,  0 },
+                {  1,  2,  1 }
+            };
 
             Parallel.For(1, height - 1, y =>
             {

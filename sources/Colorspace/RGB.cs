@@ -504,27 +504,9 @@ namespace UMapx.Colorspace
 
             // Result color:
             return new RGB(
-                Maths.Byte(blue + (blue - max) * s),
+                Maths.Byte(red + (red - max) * s),
                 Maths.Byte(green + (green - max) * s),
-                Maths.Byte(red + (red - max) * s));
-        }
-        /// <summary>
-        /// Corrects color saturation.
-        /// </summary>
-        /// <param name="red">Red </param>
-        /// <param name="green">Green</param>
-        /// <param name="blue">Blue</param>
-        /// <param name="s">Saturation</param>
-        /// <returns>RGB structure</returns>
-        public static sRGB Saturation(float red, float green, float blue, float s)
-        {
-            float max = Maths.Max(red, green, blue);
-
-            // Result color:
-            return new sRGB(
-                Maths.Byte(blue + (blue - max) * s),
-                Maths.Byte(green + (green - max) * s),
-                Maths.Byte(red + (red - max) * s));
+                Maths.Byte(blue + (blue - max) * s));
         }
         /// <summary>
         /// Corrects color saturation.
@@ -536,15 +518,44 @@ namespace UMapx.Colorspace
         {
             return Saturation(rgb.Red, rgb.Green, rgb.Blue, s);
         }
+        #endregion
+
+        #region Vibrance
         /// <summary>
-        /// Corrects color saturation.
+        /// Corrects color vibrance.
         /// </summary>
-        /// <param name="rgb">sRGB structure</param>
+        /// <param name="red">Red [0, 255]</param>
+        /// <param name="green">Green [0, 255]</param>
+        /// <param name="blue">Blue [0, 255]</param>
+        /// <param name="v">Saturation</param>
+        /// <returns>RGB structure</returns>
+        public static RGB Vibrance(int red, int green, int blue, float v)
+        {
+            // Result color:
+            float max = Maths.Max(red, green, blue);
+
+            // Estimate "dullness": high when all components are close to each other
+            float dullness = 1.0f - (Math.Abs(red - max) + Math.Abs(green - max) + Math.Abs(blue - max)) / (3.0f * 255.0f);
+
+            // Vibrance scale is stronger for dull colors
+            float boost = v * dullness;
+
+            // Apply boost like in Saturation
+            byte nr = Maths.Byte(red + (red - max) * boost);
+            byte ng = Maths.Byte(green + (green - max) * boost);
+            byte nb = Maths.Byte(blue + (blue - max) * boost);
+
+            return new RGB(nr, ng, nb);
+        }
+        /// <summary>
+        /// Corrects color vibrance.
+        /// </summary>
+        /// <param name="rgb">RGB structure</param>
         /// <param name="s">Saturation</param>
         /// <returns>RGB structure</returns>
-        public static sRGB Saturation(sRGB rgb, float s)
+        public static RGB Vibrance(RGB rgb, float s)
         {
-            return Saturation(rgb.Red, rgb.Green, rgb.Blue, s);
+            return Vibrance(rgb.Red, rgb.Green, rgb.Blue, s);
         }
         #endregion
 

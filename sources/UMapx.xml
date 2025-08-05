@@ -2100,16 +2100,6 @@
             <param name="s">Saturation</param>
             <returns>RGB structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.RGB.Saturation(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Corrects color saturation.
-            </summary>
-            <param name="red">Red </param>
-            <param name="green">Green</param>
-            <param name="blue">Blue</param>
-            <param name="s">Saturation</param>
-            <returns>RGB structure</returns>
-        </member>
         <member name="M:UMapx.Colorspace.RGB.Saturation(UMapx.Colorspace.RGB,System.Single)">
             <summary>
             Corrects color saturation.
@@ -2118,11 +2108,21 @@
             <param name="s">Saturation</param>
             <returns>RGB structure</returns>
         </member>
-        <member name="M:UMapx.Colorspace.RGB.Saturation(UMapx.Colorspace.sRGB,System.Single)">
+        <member name="M:UMapx.Colorspace.RGB.Vibrance(System.Int32,System.Int32,System.Int32,System.Single)">
             <summary>
-            Corrects color saturation.
+            Corrects color vibrance.
             </summary>
-            <param name="rgb">sRGB structure</param>
+            <param name="red">Red [0, 255]</param>
+            <param name="green">Green [0, 255]</param>
+            <param name="blue">Blue [0, 255]</param>
+            <param name="v">Saturation</param>
+            <returns>RGB structure</returns>
+        </member>
+        <member name="M:UMapx.Colorspace.RGB.Vibrance(UMapx.Colorspace.RGB,System.Single)">
+            <summary>
+            Corrects color vibrance.
+            </summary>
+            <param name="rgb">RGB structure</param>
             <param name="s">Saturation</param>
             <returns>RGB structure</returns>
         </member>
@@ -22566,6 +22566,39 @@
             <param name="bmData">Bitmap data</param>
         </member>
         <member name="M:UMapx.Imaging.TransparencyCorrection.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
+        <member name="T:UMapx.Imaging.VibranceCorrection">
+            <summary>
+            Defines the vibrance correction filter (RGB-based).
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.VibranceCorrection.#ctor(System.Single)">
+            <summary>
+            Initializes the vibrance correction filter.
+            </summary>
+            <param name="vibrance">Vibrance [-100, 100]</param>
+        </member>
+        <member name="M:UMapx.Imaging.VibranceCorrection.#ctor">
+            <summary>
+            Initializes the vibrance correction filter.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.VibranceCorrection.Vibrance">
+            <summary>
+            Gets or sets the vibrance value [-100, 100].
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.VibranceCorrection.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.VibranceCorrection.Apply(System.Drawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
