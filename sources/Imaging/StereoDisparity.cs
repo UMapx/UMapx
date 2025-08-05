@@ -104,6 +104,12 @@ namespace UMapx.Imaging
             var even_win = Maths.IsEven(win) ? win : win + 1;
             var disparity = disparity_processor(im_l, im_r, even_win, max_dis, weight, x, y, z);
 
+            if (apply_median)
+            {
+                // NOT USED
+                disparity = Matrice.Morph(disparity, even_win, even_win, MorphologyMode.Median);
+            }
+
             return disparity;
         }
         /// <summary>
