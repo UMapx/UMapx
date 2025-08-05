@@ -8,7 +8,7 @@ namespace UMapx.Analysis
     /// </summary>
     internal static class LeastSquaresOptions
     {
-        #region float components
+        #region Float components
         /// <summary>
         /// Returns the polynomial value.
         /// </summary>
@@ -162,7 +162,7 @@ namespace UMapx.Analysis
         }
         #endregion
 
-        #region complex components
+        #region Complex components
         /// <summary>
         /// Returns the polynomial value.
         /// </summary>

@@ -8,14 +8,14 @@
         /// <summary>
         /// Bicubic interpolation.
         /// </summary>
-        Bicubic = 1,
+        Bicubic,
         /// <summary>
         /// Bilinear interpolation.
         /// </summary>
-        Bilinear = 2,
+        Bilinear,
         /// <summary>
         /// Nearest neighbor interpolation.
         /// </summary>
-        NearestNeighbor = 3
+        NearestNeighbor
     }
 }
