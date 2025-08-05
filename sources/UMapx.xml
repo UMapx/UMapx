@@ -22073,14 +22073,13 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.StereoDisparity.#ctor(System.Int32,System.Int32,System.Single,System.Boolean)">
+        <member name="M:UMapx.Imaging.StereoDisparity.#ctor(System.Int32,System.Int32,System.Single)">
             <summary>
             Initializes the stereo disparity filter for a pair of images.
             </summary>
             <param name="disparity">Disparity</param>
             <param name="window">Window size</param>
             <param name="weight">Gradient weight</param>
-            <param name="smoothing">Smoothing or not</param>
         </member>
         <member name="P:UMapx.Imaging.StereoDisparity.Disparity">
             <summary>
@@ -22095,11 +22094,6 @@
         <member name="P:UMapx.Imaging.StereoDisparity.Weight">
             <summary>
             Gets or sets weight.
-            </summary>
-        </member>
-        <member name="P:UMapx.Imaging.StereoDisparity.Smoothing">
-            <summary>
-            Smoothing or not.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.StereoDisparity.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">

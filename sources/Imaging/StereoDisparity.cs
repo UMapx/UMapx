@@ -22,13 +22,11 @@ namespace UMapx.Imaging
         /// <param name="disparity">Disparity</param>
         /// <param name="window">Window size</param>
         /// <param name="weight">Gradient weight</param>
-        /// <param name="smoothing">Smoothing or not</param>
-        public StereoDisparity(int disparity = 50, int window = 8, float weight = 5, bool smoothing = false)
+        public StereoDisparity(int disparity = 50, int window = 8, float weight = 5)
         {
             Disparity = disparity;
             Window = window;
             Weight = weight;
-            Smoothing = smoothing;
         }
         /// <summary>
         /// Gets or sets disparity.
@@ -43,10 +41,6 @@ namespace UMapx.Imaging
         /// </summary>
         public float Weight { get; set; }
         /// <summary>
-        /// Smoothing or not.
-        /// </summary>
-        public bool Smoothing { get; set; }
-        /// <summary>
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
@@ -58,7 +52,7 @@ namespace UMapx.Imaging
             var right = BitmapMatrix.ToGrayscale(bmSrc);
 
             // apply filter
-            var output = disparity_estimator(left, right, Window, Disparity, Weight, Smoothing);
+            var output = disparity_estimator(left, right, Window, Disparity, Weight);
 
             // return result
             return output;
@@ -109,11 +103,6 @@ namespace UMapx.Imaging
 
             var even_win = Maths.IsEven(win) ? win : win + 1;
             var disparity = disparity_processor(im_l, im_r, even_win, max_dis, weight, x, y, z);
-
-            if (apply_median)
-            {
-                disparity = Matrice.Morph(disparity, even_win, even_win, MorphologyMode.Median);
-            }
 
             return disparity;
         }
