@@ -27026,7 +27026,7 @@
             object creates background thread and notifies about new frames with the
             help of <see cref="E:UMapx.Video.MJPEGStream.NewFrame"/> event.</remarks>
             
-            <exception cref="T:System.ArgumentException">Video source is not specified.</exception>
+            <exception cref="T:System.ArgumentException">Video source is not specified</exception>
             
         </member>
         <member name="M:UMapx.Video.MJPEGStream.SignalToStop">
@@ -27301,7 +27301,7 @@
             object creates background thread and notifies about new frames with the
             help of <see cref="E:UMapx.Video.ScreenCaptureStream.NewFrame"/> event.</remarks>
             
-            <exception cref="T:System.ArgumentException">Video source is not specified.</exception>
+            <exception cref="T:System.ArgumentException">Video source is not specified</exception>
             
         </member>
         <member name="M:UMapx.Video.ScreenCaptureStream.SignalToStop">
