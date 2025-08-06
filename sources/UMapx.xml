@@ -24439,14 +24439,14 @@
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.FastWalshHadamardTransform.fwht(System.Single[])">
-             <summary>
-            
-             </summary>
-             <param name="data">Array</param>
+            <summary>
+            Fast Walsh-Hadamard transform.
+            </summary>
+            <param name="data">Array</param>
         </member>
         <member name="M:UMapx.Transform.FastWalshHadamardTransform.fwht(UMapx.Core.Complex32[])">
             <summary>
-            
+            Fast Walsh-Hadamard transform.
             </summary>
             <param name="data">Array</param>
         </member>
