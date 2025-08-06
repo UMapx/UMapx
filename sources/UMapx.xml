@@ -23124,7 +23124,7 @@
             </summary>
             <param name="data">Matrix</param>
         </member>
-        <member name="M:UMapx.Transform.BilateralFilter.bilateralfilter(System.Single[0:,0:],System.Int32,System.Single,System.Int32,System.Single)">
+        <member name="M:UMapx.Transform.BilateralFilter.bilateralfilter(System.Single[0:,0:],System.Int32,System.Single,System.Int32)">
             <summary>
             Applies fast bilateral filter.
             </summary>
@@ -23132,7 +23132,6 @@
             <param name="r">Radius</param>
             <param name="s">Range Gaussian sigma</param>
             <param name="samples">Number of quantization levels for intensity</param>
-            <param name="factor">Factor [-1, 1]</param>
             <returns>Filtered image</returns>
         </member>
         <member name="M:UMapx.Transform.BilateralFilter.bilateralfilter(UMapx.Core.Complex32[0:,0:],System.Int32,System.Single,System.Int32)">

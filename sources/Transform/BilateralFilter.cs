@@ -198,9 +198,8 @@ namespace UMapx.Transform
         /// <param name="r">Radius</param>
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
-        /// <param name="factor">Factor [-1, 1]</param>
         /// <returns>Filtered image</returns>
-        internal static void bilateralfilter(float[,] array, int r, float s = 0.1f, int samples = 32, float factor = -1.0f)
+        internal static void bilateralfilter(float[,] array, int r, float s = 0.1f, int samples = 32)
         {
             int height = array.GetLength(0);
             int width = array.GetLength(1);
