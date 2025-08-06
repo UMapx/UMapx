@@ -15,18 +15,9 @@ namespace UMapx.Transform
     public class GuidedFilter : IFilter
     {
         #region Private data
-        /// <summary>
-        /// Epsilon.
-        /// </summary>
         private float eps;
-        /// <summary>
-        /// Factor.
-        /// </summary>
-        private float factor;
-        /// <summary>
-        /// Radius.
-        /// </summary>
         private int radius;
+        private float factor;
         #endregion
 
         #region Filter components
@@ -38,9 +29,9 @@ namespace UMapx.Transform
         /// <param name="factor">Factor [-1, 1]</param>
         public GuidedFilter(int radius, float eps = 0.025f, float factor = -1.0f)
         {
-            this.radius = radius;
+            this.Radius = radius;
             this.Eps = eps;
-            this.factor = factor;
+            this.Factor = factor;
         }
         /// <summary>
         /// Gets or sets the radius.
@@ -93,12 +84,12 @@ namespace UMapx.Transform
         /// <summary>
         /// Creates a guided filter with the specified parameters for a bilateral filter.
         /// </summary>
-        /// <param name="s">σs</param>
         /// <param name="r">σr</param>
+        /// <param name="s">σs</param>
         /// <returns>Guided filter</returns>
-        public static GuidedFilter FromBilateral(int s, float r)
+        public static GuidedFilter FromBilateral(int r, float s = 0.1f)
         {
-            return new GuidedFilter(s, r * r);
+            return new GuidedFilter(r, s * s);
         }
         #endregion
 

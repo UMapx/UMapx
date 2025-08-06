@@ -1713,7 +1713,94 @@ namespace UMapx.Core
 
         #region Mean (separable)
         /// <summary>
-        /// Implements local average of matrices (horizontal).
+        ///  Implements local average of vector.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="r">Radius</param>
+        public static float[] Mean(float[] v, int r)
+        {
+            int l = v.Length;
+
+            if (l < 2 || r < 2)
+                return v;
+
+            float[] output = new float[l];
+            int h = r >= l ? l - 1 : r;
+            int w = r >> 1;
+            int dl = l - w;
+            float s = 0;
+            int x;
+
+            for (x = 0; x < h; x++)
+            {
+                s += v[x];
+            }
+
+            for (x = 0; x < w; x++)
+            {
+                output[x] = s / h;
+            }
+
+            for (x = w; x < dl; x++)
+            {
+                s = s - v[x - w] + v[x + w];
+                output[x] = s / h;
+            }
+
+            for (x = dl; x < l; x++)
+            {
+                s = s - v[x - w] + v[x];
+                output[x] = s / h;
+            }
+
+            return output;
+        }
+        /// <summary>
+        ///  Implements local average of vector.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="r">Radius</param>
+        public static Complex32[] Mean(Complex32[] v, int r)
+        {
+            int l = v.Length;
+
+            if (l < 2 || r < 2)
+                return v;
+
+            Complex32[] output = new Complex32[l];
+            int h = r >= l ? l - 1 : r;
+            int w = r >> 1;
+            int dl = l - w;
+            Complex32 s = 0;
+            int x;
+
+            for (x = 0; x < h; x++)
+            {
+                s += v[x];
+            }
+
+            for (x = 0; x < w; x++)
+            {
+                output[x] = s / h;
+            }
+
+            for (x = w; x < dl; x++)
+            {
+                s = s - v[x - w] + v[x + w];
+                output[x] = s / h;
+            }
+
+            for (x = dl; x < l; x++)
+            {
+                s = s - v[x - w] + v[x];
+                output[x] = s / h;
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Implements local average of matrice (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
@@ -1761,7 +1848,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements local average of matrices (vertical).
+        /// Implements local average of matrice (vertical).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
@@ -1810,7 +1897,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements local average of matrices (horizontal).
+        /// Implements local average of matrice (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
@@ -1858,7 +1945,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements local average of matrices (vertical).
+        /// Implements local average of matrice (vertical).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
@@ -1905,6 +1992,434 @@ namespace UMapx.Core
             });
 
             return H;
+        }
+
+        /// <summary>
+        /// Implements weighted local average of vector.
+        /// </summary>
+        /// <param name="values">Array of values</param>
+        /// <param name="weights">Array of weights (same length as values)</param>
+        /// <param name="r">Radius</param>
+        /// <returns>Weighted blurred array</returns>
+        public static float[] MeanWeighted(float[] values, float[] weights, int r)
+        {
+            int l = values.Length;
+
+            if (l < 2 || r < 2)
+                return values;
+
+            float[] output = new float[l];
+            int h = r >= l ? l - 1 : r;
+            int w = r >> 1;
+            int dl = l - w;
+
+            float sumVal = 0;
+            float sumW = 0;
+            int x;
+
+            for (x = 0; x < h; x++)
+            {
+                sumVal += values[x] * weights[x];
+                sumW += weights[x];
+            }
+
+            for (x = 0; x < w; x++)
+            {
+                output[x] = sumVal / (sumW + 1e-8f);
+            }
+
+            for (x = w; x < dl; x++)
+            {
+                int xAdd = x + w;
+                int xSub = x - w - 1;
+
+                if (xAdd < l)
+                {
+                    sumVal += values[xAdd] * weights[xAdd];
+                    sumW += weights[xAdd];
+                }
+                if (xSub >= 0)
+                {
+                    sumVal -= values[xSub] * weights[xSub];
+                    sumW -= weights[xSub];
+                }
+
+                output[x] = sumVal / (sumW + 1e-8f);
+            }
+
+            for (x = dl; x < l; x++)
+            {
+                int xSub = x - w - 1;
+
+                if (xSub >= 0)
+                {
+                    sumVal -= values[xSub] * weights[xSub];
+                    sumW -= weights[xSub];
+                }
+
+                output[x] = sumVal / (sumW + 1e-8f);
+            }
+
+            return output;
+        }
+        /// <summary>
+        /// Implements weighted local average of vector.
+        /// </summary>
+        /// <param name="values">Array of values</param>
+        /// <param name="weights">Array of weights (same length as values)</param>
+        /// <param name="r">Radius</param>
+        /// <returns>Weighted blurred array</returns>
+        public static Complex32[] MeanWeighted(Complex32[] values, Complex32[] weights, int r)
+        {
+            int l = values.Length;
+
+            if (l < 2 || r < 2)
+                return values;
+
+            Complex32[] output = new Complex32[l];
+            int h = r >= l ? l - 1 : r;
+            int w = r >> 1;
+            int dl = l - w;
+
+            Complex32 sumVal = 0;
+            Complex32 sumW = 0;
+            int x;
+
+            for (x = 0; x < h; x++)
+            {
+                sumVal += values[x] * weights[x];
+                sumW += weights[x];
+            }
+
+            for (x = 0; x < w; x++)
+            {
+                output[x] = sumVal / (sumW + 1e-8f);
+            }
+
+            for (x = w; x < dl; x++)
+            {
+                int xAdd = x + w;
+                int xSub = x - w - 1;
+
+                if (xAdd < l)
+                {
+                    sumVal += values[xAdd] * weights[xAdd];
+                    sumW += weights[xAdd];
+                }
+                if (xSub >= 0)
+                {
+                    sumVal -= values[xSub] * weights[xSub];
+                    sumW -= weights[xSub];
+                }
+
+                output[x] = sumVal / (sumW + 1e-8f);
+            }
+
+            for (x = dl; x < l; x++)
+            {
+                int xSub = x - w - 1;
+
+                if (xSub >= 0)
+                {
+                    sumVal -= values[xSub] * weights[xSub];
+                    sumW -= weights[xSub];
+                }
+
+                output[x] = sumVal / (sumW + 1e-8f);
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Implements local weighted average of matrice (horizontal).
+        /// </summary>
+        /// <param name="A">Jagged array</param>
+        /// <param name="weights">Weights</param>
+        /// <param name="r1">Size</param>
+        /// <returns>Jagged array</returns>
+        /// <returns></returns>
+        public static float[,] MeanHorizontalWeighted(float[,] A, float[,] weights, int r1)
+        {
+            int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (width < 2 || r1 < 2)
+                return A;
+
+            float[,] result = new float[height, width];
+            int h = r1 >= width ? width - 1 : r1;
+            int v = h >> 1;
+            int dl = width - v;
+
+            Parallel.For(0, height, y =>
+            {
+                float sumVal = 0;
+                float sumW = 0;
+                int x;
+
+                for (x = 0; x < h; x++)
+                {
+                    sumVal += A[y, x] * weights[y, x];
+                    sumW += weights[y, x];
+                }
+
+                for (x = 0; x < v; x++)
+                {
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (x = v; x < dl; x++)
+                {
+                    int xAdd = x + v;
+                    int xSub = x - v - 1;
+
+                    if (xAdd < width)
+                    {
+                        sumVal += A[y, xAdd] * weights[y, xAdd];
+                        sumW += weights[y, xAdd];
+                    }
+
+                    if (xSub >= 0)
+                    {
+                        sumVal -= A[y, xSub] * weights[y, xSub];
+                        sumW -= weights[y, xSub];
+                    }
+
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (x = dl; x < width; x++)
+                {
+                    int xSub = x - v - 1;
+
+                    if (xSub >= 0)
+                    {
+                        sumVal -= A[y, xSub] * weights[y, xSub];
+                        sumW -= weights[y, xSub];
+                    }
+
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+            });
+
+            return result;
+        }
+        /// <summary>
+        /// Implements local weighted average of matrice (vertical).
+        /// </summary>
+        /// <param name="A">Jagged array</param>
+        /// <param name="weights">Weights</param>
+        /// <param name="r0">Size</param>
+        /// <returns>Jagged array</returns>
+        public static float[,] MeanVerticalWeighted(float[,] A, float[,] weights, int r0)
+        {
+            int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (height < 2 || r0 < 2)
+                return A;
+
+            float[,] result = new float[height, width];
+            int h = r0 >= height ? height - 1 : r0;
+            int v = h >> 1;
+            int dl = height - v;
+
+            Parallel.For(0, width, x =>
+            {
+                float sumVal = 0;
+                float sumW = 0;
+                int y;
+
+                for (y = 0; y < h; y++)
+                {
+                    sumVal += A[y, x] * weights[y, x];
+                    sumW += weights[y, x];
+                }
+
+                for (y = 0; y < v; y++)
+                {
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (y = v; y < dl; y++)
+                {
+                    int yAdd = y + v;
+                    int ySub = y - v - 1;
+
+                    if (yAdd < height)
+                    {
+                        sumVal += A[yAdd, x] * weights[yAdd, x];
+                        sumW += weights[yAdd, x];
+                    }
+
+                    if (ySub >= 0)
+                    {
+                        sumVal -= A[ySub, x] * weights[ySub, x];
+                        sumW -= weights[ySub, x];
+                    }
+
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (y = dl; y < height; y++)
+                {
+                    int ySub = y - v - 1;
+
+                    if (ySub >= 0)
+                    {
+                        sumVal -= A[ySub, x] * weights[ySub, x];
+                        sumW -= weights[ySub, x];
+                    }
+
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+            });
+
+            return result;
+        }
+        /// <summary>
+        /// Implements local weighted average of matrice (horizontal).
+        /// </summary>
+        /// <param name="A">Jagged array</param>
+        /// <param name="weights">Weights</param>
+        /// <param name="r1">Size</param>
+        /// <returns>Jagged array</returns>
+        /// <returns></returns>
+        public static Complex32[,] MeanHorizontalWeighted(Complex32[,] A, Complex32[,] weights, int r1)
+        {
+            int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (width < 2 || r1 < 2)
+                return A;
+
+            Complex32[,] result = new Complex32[height, width];
+            int h = r1 >= width ? width - 1 : r1;
+            int v = h >> 1;
+            int dl = width - v;
+
+            Parallel.For(0, height, y =>
+            {
+                Complex32 sumVal = 0;
+                Complex32 sumW = 0;
+                int x;
+
+                for (x = 0; x < h; x++)
+                {
+                    sumVal += A[y, x] * weights[y, x];
+                    sumW += weights[y, x];
+                }
+
+                for (x = 0; x < v; x++)
+                {
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (x = v; x < dl; x++)
+                {
+                    int xAdd = x + v;
+                    int xSub = x - v - 1;
+
+                    if (xAdd < width)
+                    {
+                        sumVal += A[y, xAdd] * weights[y, xAdd];
+                        sumW += weights[y, xAdd];
+                    }
+
+                    if (xSub >= 0)
+                    {
+                        sumVal -= A[y, xSub] * weights[y, xSub];
+                        sumW -= weights[y, xSub];
+                    }
+
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (x = dl; x < width; x++)
+                {
+                    int xSub = x - v - 1;
+
+                    if (xSub >= 0)
+                    {
+                        sumVal -= A[y, xSub] * weights[y, xSub];
+                        sumW -= weights[y, xSub];
+                    }
+
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+            });
+
+            return result;
+        }
+        /// <summary>
+        /// Implements local weighted average of matrice (vertical).
+        /// </summary>
+        /// <param name="A">Jagged array</param>
+        /// <param name="weights">Weights</param>
+        /// <param name="r0">Size</param>
+        /// <returns>Jagged array</returns>
+        public static Complex32[,] MeanVerticalWeighted(Complex32[,] A, Complex32[,] weights, int r0)
+        {
+            int height = A.GetLength(0), width = A.GetLength(1);
+
+            if (height < 2 || r0 < 2)
+                return A;
+
+            Complex32[,] result = new Complex32[height, width];
+            int h = r0 >= height ? height - 1 : r0;
+            int v = h >> 1;
+            int dl = height - v;
+
+            Parallel.For(0, width, x =>
+            {
+                Complex32 sumVal = 0;
+                Complex32 sumW = 0;
+                int y;
+
+                for (y = 0; y < h; y++)
+                {
+                    sumVal += A[y, x] * weights[y, x];
+                    sumW += weights[y, x];
+                }
+
+                for (y = 0; y < v; y++)
+                {
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (y = v; y < dl; y++)
+                {
+                    int yAdd = y + v;
+                    int ySub = y - v - 1;
+
+                    if (yAdd < height)
+                    {
+                        sumVal += A[yAdd, x] * weights[yAdd, x];
+                        sumW += weights[yAdd, x];
+                    }
+
+                    if (ySub >= 0)
+                    {
+                        sumVal -= A[ySub, x] * weights[ySub, x];
+                        sumW -= weights[ySub, x];
+                    }
+
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (y = dl; y < height; y++)
+                {
+                    int ySub = y - v - 1;
+
+                    if (ySub >= 0)
+                    {
+                        sumVal -= A[ySub, x] * weights[ySub, x];
+                        sumW -= weights[ySub, x];
+                    }
+
+                    result[y, x] = sumVal / (sumW + 1e-8f);
+                }
+            });
+
+            return result;
         }
         #endregion
 
@@ -2062,7 +2577,6 @@ namespace UMapx.Core
         #endregion
 
         #region Morphology
-
         /// <summary>
         /// Defines a morphology filter class for basic implementation.
         /// </summary>

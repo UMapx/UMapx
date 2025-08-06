@@ -4664,9 +4664,23 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
+        <member name="M:UMapx.Core.LinealgOptions.Mean(System.Single[],System.Int32)">
+            <summary>
+             Implements local average of vector.
+            </summary>
+            <param name="v">Array</param>
+            <param name="r">Radius</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.Mean(UMapx.Core.Complex32[],System.Int32)">
+            <summary>
+             Implements local average of vector.
+            </summary>
+            <param name="v">Array</param>
+            <param name="r">Radius</param>
+        </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanHorizontal(System.Single[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrices (horizontal).
+            Implements local average of matrice (horizontal).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r1">Size</param>
@@ -4674,7 +4688,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanVertical(System.Single[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrices (vertical).
+            Implements local average of matrice (vertical).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r0">Size</param>
@@ -4682,7 +4696,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanHorizontal(UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrices (horizontal).
+            Implements local average of matrice (horizontal).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r1">Size</param>
@@ -4690,9 +4704,65 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanVertical(UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrices (vertical).
+            Implements local average of matrice (vertical).
             </summary>
             <param name="A">Jagged array</param>
+            <param name="r0">Size</param>
+            <returns>Jagged array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MeanWeighted(System.Single[],System.Single[],System.Int32)">
+            <summary>
+            Implements weighted local average of vector.
+            </summary>
+            <param name="values">Array of values</param>
+            <param name="weights">Array of weights (same length as values)</param>
+            <param name="r">Radius</param>
+            <returns>Weighted blurred array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MeanWeighted(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32)">
+            <summary>
+            Implements weighted local average of vector.
+            </summary>
+            <param name="values">Array of values</param>
+            <param name="weights">Array of weights (same length as values)</param>
+            <param name="r">Radius</param>
+            <returns>Weighted blurred array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MeanHorizontalWeighted(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
+            <summary>
+            Implements local weighted average of matrice (horizontal).
+            </summary>
+            <param name="A">Jagged array</param>
+            <param name="weights">Weights</param>
+            <param name="r1">Size</param>
+            <returns>Jagged array</returns>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MeanVerticalWeighted(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
+            <summary>
+            Implements local weighted average of matrice (vertical).
+            </summary>
+            <param name="A">Jagged array</param>
+            <param name="weights">Weights</param>
+            <param name="r0">Size</param>
+            <returns>Jagged array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MeanHorizontalWeighted(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32)">
+            <summary>
+            Implements local weighted average of matrice (horizontal).
+            </summary>
+            <param name="A">Jagged array</param>
+            <param name="weights">Weights</param>
+            <param name="r1">Size</param>
+            <returns>Jagged array</returns>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MeanVerticalWeighted(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32)">
+            <summary>
+            Implements local weighted average of matrice (vertical).
+            </summary>
+            <param name="A">Jagged array</param>
+            <param name="weights">Weights</param>
             <param name="r0">Size</param>
             <returns>Jagged array</returns>
         </member>
@@ -7077,6 +7147,24 @@
             <param name="r0">Height radius</param>
             <param name="r1">Width radius</param>
         </member>
+        <member name="M:UMapx.Core.Matrice.Mean(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns the result matrix of local weighted averaging.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="w">Matrix</param>
+            <param name="r0">Height radius</param>
+            <param name="r1">Width radius</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mean(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Returns the result matrix of local weighted averaging.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="w">Matrix</param>
+            <param name="r0">Height radius</param>
+            <param name="r1">Width radius</param>
+        </member>
         <member name="M:UMapx.Core.Matrice.IsEquals(System.Single[],System.Single[])">
             <summary>
             Checks the equality of two vectors.
@@ -8244,6 +8332,22 @@
             Returns the result vector of local averaging.
             </summary>
             <param name="v">Array</param>
+            <param name="r">Radius</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mean(System.Single[],System.Single[],System.Int32)">
+            <summary>
+            Returns the result vector of local weighted averaging.
+            </summary>
+            <param name="v">Array</param>
+            <param name="w">Array</param>
+            <param name="r">Radius</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mean(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32)">
+            <summary>
+            Returns the result vector of local weighted averaging.
+            </summary>
+            <param name="v">Array</param>
+            <param name="w">Array</param>
             <param name="r">Radius</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],UMapx.Core.RotationMode)">
@@ -22957,6 +23061,110 @@
             <param name="w">Frequency (rad / s)</param>
             <returns>Value</returns>
         </member>
+        <member name="T:UMapx.Transform.BilateralFilter">
+            <summary>
+            Defines the bilateral filter.
+            <remarks>
+            Fast implementation.
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Bilateral_filter
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.BilateralFilter.#ctor(System.Int32,System.Single,System.Int32,System.Single)">
+            <summary>
+            Initializes the bilateral filter.
+            </summary>
+            <param name="radius">Radius (>1)</param>
+            <param name="sigma">Range Gaussian sigma (>0)</param>
+            <param name="levels">Number of quantization levels for intensity</param>
+            <param name="factor">Factor [-1, 1]</param>
+        </member>
+        <member name="P:UMapx.Transform.BilateralFilter.Radius">
+            <summary>
+            Gets or sets the radius.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.BilateralFilter.Sigma">
+            <summary>
+            Gets or sets the value of the range Gaussian sigma (>0).
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.BilateralFilter.Levels">
+            <summary>
+            Gets or sets the number of quantization levels for intensity.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.BilateralFilter.Factor">
+            <summary>
+            Gets or sets the factor [-1, 1].
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.BilateralFilter.Apply(System.Single[])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Array</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralFilter.Apply(System.Single[0:,0:])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Matrix</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralFilter.Apply(UMapx.Core.Complex32[])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Array</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralFilter.Apply(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Matrix</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralFilter.bilateralfilter(System.Single[0:,0:],System.Int32,System.Single,System.Int32,System.Single)">
+            <summary>
+            Applies fast bilateral filter.
+            </summary>
+            <param name="array">Input signal</param>
+            <param name="r">Radius</param>
+            <param name="s">Range Gaussian sigma</param>
+            <param name="samples">Number of quantization levels for intensity</param>
+            <param name="factor">Factor [-1, 1]</param>
+            <returns>Filtered image</returns>
+        </member>
+        <member name="M:UMapx.Transform.BilateralFilter.bilateralfilter(UMapx.Core.Complex32[0:,0:],System.Int32,System.Single,System.Int32)">
+            <summary>
+            Applies fast bilateral filter.
+            </summary>
+            <param name="array">Input signal</param>
+            <param name="r">Radius</param>
+            <param name="s">Range Gaussian sigma</param>
+            <param name="samples">Number of quantization levels for intensity</param>
+            <returns>Filtered image</returns>
+        </member>
+        <member name="M:UMapx.Transform.BilateralFilter.bilateralfilter(System.Single[],System.Int32,System.Single,System.Int32)">
+            <summary>
+            Applies fast bilateral filter.
+            </summary>
+            <param name="input">Input signal</param>
+            <param name="r">Radius</param>
+            <param name="s">Range Gaussian sigma</param>
+            <param name="samples">Number of quantization levels for intensity</param>
+            <returns>Filtered image</returns>
+        </member>
+        <member name="M:UMapx.Transform.BilateralFilter.bilateralfilter(UMapx.Core.Complex32[],System.Int32,System.Single,System.Int32)">
+            <summary>
+            Applies fast bilateral filter.
+            </summary>
+            <param name="input">Input signal</param>
+            <param name="r">Radius</param>
+            <param name="s">Range Gaussian sigma</param>
+            <param name="samples">Number of quantization levels for intensity</param>
+            <returns>Filtered image</returns>
+        </member>
         <member name="T:UMapx.Transform.CosineTransform">
             <summary>
             Defines the cosine transform.
@@ -24374,21 +24582,6 @@
             </remarks>
             </summary>
         </member>
-        <member name="F:UMapx.Transform.GuidedFilter.eps">
-            <summary>
-            Epsilon.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.GuidedFilter.factor">
-            <summary>
-            Factor.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.GuidedFilter.radius">
-            <summary>
-            Radius.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.GuidedFilter.#ctor(System.Int32,System.Single,System.Single)">
             <summary>
             Initializes the guided filter.
@@ -24419,8 +24612,8 @@
             <summary>
             Creates a guided filter with the specified parameters for a bilateral filter.
             </summary>
-            <param name="s">σs</param>
             <param name="r">σr</param>
+            <param name="s">σs</param>
             <returns>Guided filter</returns>
         </member>
         <member name="M:UMapx.Transform.GuidedFilter.Apply(System.Single[])">

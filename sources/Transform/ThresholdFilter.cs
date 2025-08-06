@@ -32,8 +32,8 @@ namespace UMapx.Transform
         /// <param name="type">Compress type</param>
         public ThresholdFilter(float threshold, ThresholdType type = ThresholdType.Abs)
         {
-            this.threshold = threshold;
-            this.type = type;
+            this.Threshold = threshold;
+            this.Type = type;
         }
         /// <summary>
         /// Gets or sets the threshold type.

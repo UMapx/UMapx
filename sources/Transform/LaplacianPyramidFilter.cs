@@ -26,8 +26,8 @@ namespace UMapx.Transform
         /// <param name="factor">Factor [-1, 1]</param>
         public LaplacianPyramidFilter(LaplacianPyramidTransform lap, float factor = -1.0f)
         {
-            this.lap = lap;
-            this.factor = factor;
+            this.LaplacianPyramid = lap;
+            this.Factor = factor;
         }
         /// <summary>
         /// Gets or sets the Laplacian pyramid.

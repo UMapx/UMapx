@@ -47,7 +47,7 @@ namespace UMapx.Transform
         /// <param name="max">Maximum frequency</param>
         public FrequencyFilter(int min, int max)
         {
-            this.frequencyRange = new RangeInt(min, max);
+            this.FrequencyRange = new RangeInt(min, max);
         }
         /// <summary>
         /// Apply filter.

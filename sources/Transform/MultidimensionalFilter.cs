@@ -16,7 +16,7 @@ namespace UMapx.Transform
         /// <param name="filter">IFilter</param>
         public MultidimensionalFilter(IFilter filter)
         {
-            Filter = filter;
+            this.Filter = filter;
         }
         /// <summary>
         /// Gets or sets filter.

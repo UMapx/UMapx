@@ -2904,7 +2904,6 @@ namespace UMapx.Core
         /// <param name="r1">Width radius</param>
         public static float[,] Mean(this float[,] m, int r0, int r1)
         {
-            // both processing
             return LinealgOptions.MeanVertical(LinealgOptions.MeanHorizontal(m, r1), r0);
         }
         /// <summary>
@@ -2916,6 +2915,29 @@ namespace UMapx.Core
         public static Complex32[,] Mean(this Complex32[,] m, int r0, int r1)
         {
             return LinealgOptions.MeanVertical(LinealgOptions.MeanHorizontal(m, r1), r0);
+        }
+
+        /// <summary>
+        /// Returns the result matrix of local weighted averaging.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="w">Matrix</param>
+        /// <param name="r0">Height radius</param>
+        /// <param name="r1">Width radius</param>
+        public static float[,] Mean(this float[,] m, float[,] w, int r0, int r1)
+        {
+            return LinealgOptions.MeanVerticalWeighted(LinealgOptions.MeanHorizontalWeighted(m, w, r1), w, r0);
+        }
+        /// <summary>
+        /// Returns the result matrix of local weighted averaging.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="w">Matrix</param>
+        /// <param name="r0">Height radius</param>
+        /// <param name="r1">Width radius</param>
+        public static Complex32[,] Mean(this Complex32[,] m, Complex32[,] w, int r0, int r1)
+        {
+            return LinealgOptions.MeanVerticalWeighted(LinealgOptions.MeanHorizontalWeighted(m, w, r1), w, r0);
         }
         #endregion
 
@@ -5861,41 +5883,7 @@ namespace UMapx.Core
         /// <param name="r">Radius</param>
         public static float[] Mean(this float[] v, int r)
         {
-            int l = v.Length;
-
-            if (l < 2 || r < 2)
-                return v;
-
-            float[] output = new float[l];
-            int h = r >= l ? l - 1 : r;
-            int w = r >> 1;
-            int dl = l - w;
-            float s = 0;
-            int x;
-
-            for (x = 0; x < h; x++)
-            {
-                s += v[x];
-            }
-
-            for (x = 0; x < w; x++)
-            {
-                output[x] = s / h;
-            }
-
-            for (x = w; x < dl; x++)
-            {
-                s = s - v[x - w] + v[x + w];
-                output[x] = s / h;
-            }
-
-            for (x = dl; x < l; x++)
-            {
-                s = s - v[x - w] + v[x];
-                output[x] = s / h;
-            }
-
-            return output;
+            return LinealgOptions.Mean(v, r);
         }
         /// <summary>
         /// Returns the result vector of local averaging.
@@ -5904,41 +5892,27 @@ namespace UMapx.Core
         /// <param name="r">Radius</param>
         public static Complex32[] Mean(this Complex32[] v, int r)
         {
-            int l = v.Length;
-            
-            if (l < 2 || r < 2)
-                return v;
-
-            Complex32[] output = new Complex32[l];
-            int h = r >= l ? l - 1 : r;
-            int w = r >> 1;
-            int dl = l - w;
-            Complex32 s = 0;
-            int x;
-
-            for (x = 0; x < h; x++)
-            {
-                s += v[x];
-            }
-
-            for (x = 0; x < w; x++)
-            {
-                output[x] = s / h;
-            }
-
-            for (x = w; x < dl; x++)
-            {
-                s = s - v[x - w] + v[x + w];
-                output[x] = s / h;
-            }
-
-            for (x = dl; x < l; x++)
-            {
-                s = s - v[x - w] + v[x];
-                output[x] = s / h;
-            }
-
-            return output;
+            return LinealgOptions.Mean(v, r);
+        }
+        /// <summary>
+        /// Returns the result vector of local weighted averaging.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="w">Array</param>
+        /// <param name="r">Radius</param>
+        public static float[] Mean(this float[] v, float[] w, int r)
+        {
+            return LinealgOptions.MeanWeighted(v, w, r);
+        }
+        /// <summary>
+        /// Returns the result vector of local weighted averaging.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="w">Array</param>
+        /// <param name="r">Radius</param>
+        public static Complex32[] Mean(this Complex32[] v, Complex32[] w, int r)
+        {
+            return LinealgOptions.MeanWeighted(v, w, r);
         }
         #endregion
 
