@@ -7,7 +7,7 @@ namespace UMapx.Transform
     /// <summary>
     /// Defines the bilateral filter.
     /// <remarks>
-    /// Fast implementation.
+    /// Optimized implementation.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Bilateral_filter
     /// </remarks>
