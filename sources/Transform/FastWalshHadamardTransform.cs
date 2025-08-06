@@ -582,7 +582,7 @@ namespace UMapx.Transform
 
         #region Private data
         /// <summary>
-        ///
+        /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
         private void fwht(float[] data)
@@ -616,7 +616,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// 
+        /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
         private void fwht(Complex32[] data)
