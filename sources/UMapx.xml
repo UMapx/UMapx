@@ -23164,6 +23164,123 @@
             <param name="samples">Number of quantization levels for intensity</param>
             <returns>Filtered image</returns>
         </member>
+        <member name="T:UMapx.Transform.BilateralGridFilter">
+            <summary>
+            Defines the bilateral filter.
+            <remarks>
+            Fast implementation of the bilateral filter (real-time).
+            More information can be found on the website:
+            https://www.researchgate.net/publication/220184523_Real-time_edge-aware_image_processing_with_the_bilateral_grid
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes the bilateral grid filter.
+            </summary>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+            <param name="factor">Factor [-1, 1]</param>
+        </member>
+        <member name="P:UMapx.Transform.BilateralGridFilter.SigmaSpatial">
+            <summary>
+            Gets or sets the spatial smoothing factor.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.BilateralGridFilter.SigmaRange">
+            <summary>
+            Gets or sets the range smoothing factor.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.BilateralGridFilter.Factor">
+            <summary>
+            Gets or sets the factor [-1, 1].
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.Apply(System.Single[])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Array</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.Apply(System.Single[0:,0:])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Matrix</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.Apply(UMapx.Core.Complex32[])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Array</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.Apply(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="data">Matrix</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.bilateralgridfilter(System.Single[],System.Single,System.Single)">
+            <summary>
+            Applies bilateral grid filter.
+            </summary>
+            <param name="input">Input</param>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.bilateralgridfilter(System.Single[0:,0:],System.Single,System.Single)">
+            <summary>
+            Applies bilateral grid filter.
+            </summary>
+            <param name="input">Input</param>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.bilateralgridfilter(UMapx.Core.Complex32[],System.Single,System.Single)">
+            <summary>
+            Applies bilateral grid filter.
+            </summary>
+            <param name="input">Input</param>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.bilateralgridfilter(UMapx.Core.Complex32[0:,0:],System.Single,System.Single)">
+            <summary>
+            Applies bilateral grid filter.
+            </summary>
+            <param name="input">Input</param>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.boxblur2d(System.Single[0:,0:],System.Int32)">
+            <summary>
+            Implements 2D box blur filter.
+            </summary>
+            <param name="grid">Grid</param>
+            <param name="radius">Radius</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.boxblur3d(System.Single[0:,0:,0:],System.Int32)">
+            <summary>
+            Implements 3D box blur filter.
+            </summary>
+            <param name="grid">Grid</param>
+            <param name="radius">Radius</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.boxblur2d(UMapx.Core.Complex32[0:,0:],System.Int32)">
+            <summary>
+            Implements 2D box blur filter.
+            </summary>
+            <param name="grid">Grid</param>
+            <param name="radius">Radius</param>
+        </member>
+        <member name="M:UMapx.Transform.BilateralGridFilter.boxblur3d(UMapx.Core.Complex32[0:,0:,0:],System.Int32)">
+            <summary>
+            Implements 3D box blur filter.
+            </summary>
+            <param name="grid">Grid</param>
+            <param name="radius">Radius</param>
+        </member>
         <member name="T:UMapx.Transform.CosineTransform">
             <summary>
             Defines the cosine transform.
