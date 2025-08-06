@@ -23592,6 +23592,134 @@
             <param name="D">Difference</param>
             <param name="sigma">Sigma</param>
         </member>
+        <member name="T:UMapx.Transform.EdgeAvoidingWaveletFilter">
+            <summary>
+            Defines the edge-avoiding wavelet filter.
+            <remarks>
+            More information can be found on the website:
+            https://www.cs.huji.ac.il/w~raananf/projects/eaw/
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes the edge-avoiding wavelet filter.
+            </summary>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+            <param name="factor">Factor [-1, 1]</param>
+        </member>
+        <member name="P:UMapx.Transform.EdgeAvoidingWaveletFilter.SigmaSpatial">
+            <summary>
+            Gets or sets the spatial smoothing factor.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.EdgeAvoidingWaveletFilter.SigmaRange">
+            <summary>
+            Gets or sets the range smoothing factor.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.EdgeAvoidingWaveletFilter.Factor">
+            <summary>
+            Gets or sets the factor [-1, 1].
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Apply(System.Single[])">
+            <summary>
+            Applies edge-avoiding wavelet filter.
+            </summary>
+            <param name="input">Input</param>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Apply(System.Single[0:,0:])">
+            <summary>
+            Applies edge-avoiding wavelet filter.
+            </summary>
+            <param name="input">Input</param>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Apply(UMapx.Core.Complex32[])">
+            <summary>
+            Applies edge-avoiding wavelet filter.
+            </summary>
+            <param name="input">Input</param>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Apply(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Applies edge-avoiding wavelet filter.
+            </summary>
+            <param name="input">Input</param>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Decompose(System.Single[],System.Single,System.Single)">
+            <summary>
+            Decomposes array into base and detail layers.
+            </summary>
+            <param name="input">Array</param>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Reconstruct(System.Single[],System.Single[],System.Single[])">
+            <summary>
+            Reconstructs array from base and detail layers.
+            </summary>
+            <param name="baseLevel">Base level</param>
+            <param name="detail2">Detail 1</param>
+            <param name="detail1">Detail 2</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Decompose(UMapx.Core.Complex32[],System.Single,System.Single)">
+            <summary>
+            Decomposes array into base and detail layers.
+            </summary>
+            <param name="input">Array</param>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Reconstruct(UMapx.Core.Complex32[],UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Reconstructs array from base and detail layers.
+            </summary>
+            <param name="baseLevel">Base level</param>
+            <param name="detail2">Detail 1</param>
+            <param name="detail1">Detail 2</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Decompose(System.Single[0:,0:],System.Single,System.Single)">
+            <summary>
+            Decomposes matrix into base and detail layers.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Reconstruct(System.Single[0:,0:],System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Reconstructs matrix from base and detail layers.
+            </summary>
+            <param name="baseLevel">Base level</param>
+            <param name="detail2">Detail 1</param>
+            <param name="detail1">Detail 2</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Decompose(UMapx.Core.Complex32[0:,0:],System.Single,System.Single)">
+            <summary>
+            Decomposes matrix into base and detail layers.
+            </summary>
+            <param name="input">Matrix</param>
+            <param name="sigmaSpatial">Spatial smoothing factor</param>
+            <param name="sigmaRange">Range smoothing factor</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.EdgeAvoidingWaveletFilter.Reconstruct(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Reconstructs matrix from base and detail layers.
+            </summary>
+            <param name="baseLevel">Base level</param>
+            <param name="detail2">Detail 1</param>
+            <param name="detail1">Detail 2</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="T:UMapx.Transform.FastCosineTransform">
             <summary>
             Defines the fast cosine transform.
