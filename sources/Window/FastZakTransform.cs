@@ -43,7 +43,7 @@ namespace UMapx.Window
         {
             int N = input.Length;
             if (N % M != 0)
-                throw new ArgumentException("The length of the input must be a multiple of M.");
+                throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
             var result = new Complex32[N, L];
@@ -80,7 +80,7 @@ namespace UMapx.Window
         {
             int N = input.Length;
             if (N % M != 0)
-                throw new ArgumentException("The length of the input must be a multiple of M.");
+                throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
             var result = new Complex32[N, L];
@@ -120,7 +120,7 @@ namespace UMapx.Window
             int L = matrix.GetLength(1);
 
             if (N % M != 0 || L != N / M)
-                throw new ArgumentException("The dimensions of matrix do not correspond to the M parameter.");
+                throw new ArgumentException("The dimensions of matrix do not correspond to the M parameter");
 
             var output = new Complex32[N];
 

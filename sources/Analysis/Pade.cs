@@ -76,7 +76,7 @@ namespace UMapx.Analysis
         public (float[] NumeratorCoeffs, float[] DenominatorCoeffs) Compute(float[] taylorCoeffs)
         {
             if (taylorCoeffs.Length < m + n + 1)
-                throw new ArgumentException("Not enough Taylor series coefficients for the specified orders.");
+                throw new ArgumentException("Not enough Taylor series coefficients for the specified orders");
 
             float[,] A = new float[n, n];
             float[] b = new float[n];
@@ -125,7 +125,7 @@ namespace UMapx.Analysis
         public (Complex32[] NumeratorCoeffs, Complex32[] DenominatorCoeffs) Compute(Complex32[] taylorCoeffs)
         {
             if (taylorCoeffs.Length < m + n + 1)
-                throw new ArgumentException("Not enough Taylor series coefficients for the specified orders.");
+                throw new ArgumentException("Not enough Taylor series coefficients for the specified orders");
 
             Complex32[,] A = new Complex32[n, n];
             Complex32[] b = new Complex32[n];

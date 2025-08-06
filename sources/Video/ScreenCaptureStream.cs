@@ -215,7 +215,7 @@
         /// object creates background thread and notifies about new frames with the
         /// help of <see cref="NewFrame"/> event.</remarks>
         /// 
-        /// <exception cref="ArgumentException">Video source is not specified.</exception>
+        /// <exception cref="ArgumentException">Video source is not specified</exception>
         /// 
         public void Start( )
         {

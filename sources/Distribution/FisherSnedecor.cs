@@ -33,9 +33,9 @@ namespace UMapx.Distribution
         public FisherSnedecor(int d1 = 1, int d2 = 1)
         {
             if (d1 <= 0)
-                throw new ArgumentOutOfRangeException("d1", "The value must be greater than zero.");
+                throw new ArgumentOutOfRangeException("d1", "The value must be greater than zero");
             if (d2 <= 0)
-                throw new ArgumentOutOfRangeException("d2", "The value must be greater than zero.");
+                throw new ArgumentOutOfRangeException("d2", "The value must be greater than zero");
 
             this.d1 = d1;
             this.d2 = d2;
