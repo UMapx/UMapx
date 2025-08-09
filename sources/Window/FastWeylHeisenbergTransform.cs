@@ -84,6 +84,280 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public Complex32[] Forward(Complex32[] A)
         {
+            int N = A.Length, Mloc = this.m;
+            var cache = PolyphaseCache.Build(N, Mloc, this.window);
+            return FWHT(A, cache);
+        }
+        /// <summary>
+        /// Backward Weyl-Heisenberg transform.
+        /// </summary>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
+        public Complex32[] Backward(Complex32[] B)
+        {
+            int N = B.Length, Mloc = this.m;
+            var cache = PolyphaseCache.Build(N, Mloc, this.window);
+            return IFWHT(B, cache);
+        }
+        /// <summary>
+        /// Forward Weyl-Heisenberg transform.
+        /// </summary>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
+        public Complex32[,] Forward(Complex32[,] A)
+        {
+            Complex32[,] B = (Complex32[,])A.Clone();
+            int N = B.GetLength(0), M = B.GetLength(1);
+
+            FastZakTransform zakTransform = new FastZakTransform(m);
+            float[] g0 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, N));
+            float[] g1 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, M));
+
+            PolyphaseCache cacheCols = null;
+            PolyphaseCache cacheRows = null;
+
+            if (direction == Direction.Both || direction == Direction.Vertical)
+                cacheCols = PolyphaseCache.Build(N, this.m, this.window);
+
+            if (direction == Direction.Both || direction == Direction.Horizontal)
+                cacheRows = PolyphaseCache.Build(M, this.m, this.window);
+
+            if (direction == Direction.Both)
+            {
+                Parallel.For(0, N, i =>
+                {
+                    Complex32[] row = new Complex32[M];
+                    int j;
+
+                    for (j = 0; j < M; j++)
+                    {
+                        row[j] = B[i, j];
+                    }
+
+                    row = FWHT(row, cacheRows);
+
+                    for (j = 0; j < M; j++)
+                    {
+                        B[i, j] = row[j];
+                    }
+                });
+
+                Parallel.For(0, M, j =>
+                {
+                    Complex32[] col = new Complex32[N];
+                    int i;
+
+                    for (i = 0; i < N; i++)
+                    {
+                        col[i] = B[i, j];
+                    }
+
+                    col = FWHT(col, cacheCols);
+
+                    for (i = 0; i < N; i++)
+                    {
+                        B[i, j] = col[i];
+                    }
+                });
+            }
+            else if (direction == Direction.Vertical)
+            {
+                Parallel.For(0, M, j =>
+                {
+                    Complex32[] col = new Complex32[N];
+                    int i;
+
+                    for (i = 0; i < N; i++)
+                    {
+                        col[i] = B[i, j];
+                    }
+
+                    col = FWHT(col, cacheCols);
+
+                    for (i = 0; i < N; i++)
+                    {
+                        B[i, j] = col[i];
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, N, i =>
+                {
+                    Complex32[] row = new Complex32[M];
+                    int j;
+
+                    for (j = 0; j < M; j++)
+                    {
+                        row[j] = B[i, j];
+                    }
+
+                    row = FWHT(row, cacheRows);
+
+                    for (j = 0; j < M; j++)
+                    {
+                        B[i, j] = row[j];
+                    }
+                });
+            }
+
+            return B;
+        }
+        /// <summary>
+        /// Backward Weyl-Heisenberg transform.
+        /// </summary>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
+        public Complex32[,] Backward(Complex32[,] B)
+        {
+            Complex32[,] A = (Complex32[,])B.Clone();
+            int N = B.GetLength(0);
+            int M = B.GetLength(1);
+
+            FastZakTransform zakTransform = new FastZakTransform(m);
+            float[] g0 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, N));
+            float[] g1 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, M));
+
+            PolyphaseCache cacheCols = null;
+            PolyphaseCache cacheRows = null;
+
+            if (direction == Direction.Both || direction == Direction.Vertical)
+                cacheCols = PolyphaseCache.Build(N, this.m, this.window);
+
+            if (direction == Direction.Both || direction == Direction.Horizontal)
+                cacheRows = PolyphaseCache.Build(M, this.m, this.window);
+
+            if (direction == Direction.Both)
+            {
+                Parallel.For(0, M, j =>
+                {
+                    Complex32[] col = new Complex32[N];
+                    int i;
+
+                    for (i = 0; i < N; i++)
+                    {
+                        col[i] = A[i, j];
+                    }
+
+                    col = IFWHT(col, cacheCols);
+
+                    for (i = 0; i < N; i++)
+                    {
+                        A[i, j] = col[i];
+                    }
+                });
+
+                Parallel.For(0, N, i =>
+                {
+                    Complex32[] row = new Complex32[M];
+                    int j;
+
+                    for (j = 0; j < M; j++)
+                    {
+                        row[j] = A[i, j];
+                    }
+
+                    row = IFWHT(row, cacheRows);
+
+                    for (j = 0; j < M; j++)
+                    {
+                        A[i, j] = row[j];
+                    }
+                });
+            }
+            else if (direction == Direction.Vertical)
+            {
+                Parallel.For(0, M, j =>
+                {
+                    Complex32[] col = new Complex32[N];
+                    int i;
+
+                    for (i = 0; i < N; i++)
+                    {
+                        col[i] = A[i, j];
+                    }
+
+                    col = IFWHT(col, cacheCols);
+
+                    for (i = 0; i < N; i++)
+                    {
+                        A[i, j] = col[i];
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, N, i =>
+                {
+                    Complex32[] row = new Complex32[M];
+                    int j;
+
+                    for (j = 0; j < M; j++)
+                    {
+                        row[j] = A[i, j];
+                    }
+
+                    row = IFWHT(row, cacheRows);
+
+                    for (j = 0; j < M; j++)
+                    {
+                        A[i, j] = row[j];
+                    }
+                });
+            }
+
+            return A;
+        }
+        /// <summary>
+        /// Forward Weyl-Heisenberg transform.
+        /// </summary>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
+        public float[] Forward(float[] A)
+        {
+            throw new NotSupportedException();
+        }
+        /// <summary>
+        /// Backward Weyl-Heisenberg transform.
+        /// </summary>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
+        public float[] Backward(float[] B)
+        {
+            throw new NotSupportedException();
+        }
+        /// <summary>
+        /// Forward Weyl-Heisenberg transform.
+        /// </summary>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
+        public float[,] Forward(float[,] A)
+        {
+            throw new NotSupportedException();
+        }
+        /// <summary>
+        /// Backward Weyl-Heisenberg transform.
+        /// </summary>
+        /// <param name="B">Matrix</param>
+        /// <returns>Matrix</returns>
+        public float[,] Backward(float[,] B)
+        {
+            throw new NotSupportedException();
+        }
+        #endregion
+
+        #region Private voids
+
+        private static readonly FastFourierTransform fastFourierTransform = new FastFourierTransform(false, Direction.Vertical);
+
+        /// <summary>
+        /// Forward Weyl-Heisenberg transform.
+        /// </summary>
+        /// <param name="A">Array</param>
+        /// <param name="C">Polyphase cache</param>
+        /// <returns>Array</returns>
+        internal Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
+        {
             int N = A.Length;
             int Mloc = this.m;
             if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
@@ -94,10 +368,7 @@ namespace UMapx.Window
             // S_hat[n0, q] = FFT_L { g[r*M + n0] } over r
             // T_hat[n0, q] = FFT_L { g[r*M + (n0+M/2)%M] } over r
             // Dimensions: [M, L]
-            lock (locker)
-            {
-                PrepareFastCachesPolyphase(N, Mloc); // [M, L]
-            }
+            var S_hat = C.S_hat; var T_hat = C.T_hat;
 
             // 1) Polyphase split of A by residue n0 (mod M), then FFT along r (length L):
             //    Xhat[n0, q] = FFT_L { A[r*M + n0] }_r
@@ -209,12 +480,14 @@ namespace UMapx.Window
 
             return B;
         }
+
         /// <summary>
         /// Backward Weyl-Heisenberg transform.
         /// </summary>
         /// <param name="B">Array</param>
+        /// <param name="C">Polyphase cache</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        internal Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
         {
             int N = B.Length;
             int Mloc = this.m;
@@ -224,10 +497,7 @@ namespace UMapx.Window
 
             // Use the same window caches as in Forward():
             // S_hat/T_hat are FFT_L of the window’s polyphase components.
-            lock (locker)
-            {
-                PrepareFastCachesPolyphase(N, Mloc); // [M, L]
-            }
+            var S_hat = C.S_hat; var T_hat = C.T_hat;
 
             // 1) Undo the k-assembly for each l:
             //    From B[l,k], rebuild Sp_main[k], Sp_half[k]:
@@ -328,309 +598,142 @@ namespace UMapx.Window
 
             return Arec;
         }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
-        {
-            Complex32[,] B = (Complex32[,])A.Clone();
-            int N = B.GetLength(0), M = B.GetLength(1);
-
-            FastZakTransform zakTransform = new FastZakTransform(m);
-            float[] g0 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, N));
-            float[] g1 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, M));
-
-            if (direction == Direction.Both)
-            {
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
-
-                    row = Forward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
-                });
-
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                    }
-
-                    col = Forward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
-                });
-            }
-            else if (direction == Direction.Vertical)
-            {
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                    }
-
-                    col = Forward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
-                });
-            }
-            else
-            {
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
-
-                    row = Forward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
-                });
-            }
-
-            return B;
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
-        {
-            Complex32[,] A = (Complex32[,])B.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-
-            FastZakTransform zakTransform = new FastZakTransform(m);
-            float[] g0 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, N));
-            float[] g1 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, M));
-
-            if (direction == Direction.Both)
-            {
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
-
-                    col = Backward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
-                });
-
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j];
-                    }
-
-                    row = Backward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
-                });
-            }
-            else if (direction == Direction.Vertical)
-            {
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
-
-                    col = Backward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
-                });
-            }
-            else
-            {
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j];
-                    }
-
-                    row = Backward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
-                });
-            }
-
-            return A;
-        }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public float[] Forward(float[] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public float[] Backward(float[] B)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Forward(float[,] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Backward(float[,] B)
-        {
-            throw new NotSupportedException();
-        }
-        #endregion
-
-        #region Private voids
-
-        private static readonly FastFourierTransform fastFourierTransform = new FastFourierTransform(false, Direction.Vertical);
-        private readonly object locker = new object();
-        private Complex32[,] S_hat; // [M, L] FFT_L по r от s_n0[r] = g[r*M + n0]
-        private Complex32[,] T_hat; // [M, L] FFT_L по r от t_n0[r] = g[r*M + (n0 + M/2) mod M]
-        private int cachedN_poly = -1;
 
         /// <summary>
-        /// Precomputes FFT_L of the polyphase components of the orthogonalized window.
-        /// These cached arrays S_hat and T_hat are used in both Forward() and Backward()
-        /// to avoid recomputing window FFTs for every transform call.
+        /// Defines the polyphase cache for the fast Weyl–Heisenberg transform.
+        /// <para>
+        /// This cache stores precomputed FFTs of the polyphase components of the
+        /// orthogonalized analysis window. It is used in both forward and backward
+        /// transforms to avoid recomputing window-related data for each call.
+        /// </para>
+        /// <para>
+        /// Parameters:
+        /// <list type="bullet">
+        /// <item><description><see cref="N"/> – total signal length</description></item>
+        /// <item><description><see cref="M"/> – number of frequency shifts (must be even)</description></item>
+        /// <item><description><see cref="L"/> – number of time shifts, L = N / M</description></item>
+        /// <item><description><see cref="S_hat"/> – FFT<sub>L</sub> of the main polyphase branch
+        /// s<sub>n0</sub>[r] = g[r*M + n0], dimensions [M, L]</description></item>
+        /// <item><description><see cref="T_hat"/> – FFT<sub>L</sub> of the half-shifted polyphase branch
+        /// t<sub>n0</sub>[r] = g[r*M + (n0 + M/2) mod M], dimensions [M, L]</description></item>
+        /// </list>
+        /// </para>
+        /// <remarks>
+        /// The cache is specific to a given combination of (N, M, window function).
+        /// If the window changes, the cache must be rebuilt.
+        /// </remarks>
         /// </summary>
-        /// <param name="N">Total signal length.</param>
-        /// <param name="Mloc">Number of frequency shifts M (must be even).</param>
-        private void PrepareFastCachesPolyphase(int N, int Mloc)
+        internal sealed class PolyphaseCache
         {
-            // If cache for the given N is already computed, reuse it
-            if (cachedN_poly == N && S_hat != null && T_hat != null)
-                return;
+            /// <summary>
+            /// Total signal length.
+            /// </summary>
+            public readonly int N;
 
-            int L = N / Mloc; // number of time shifts
+            /// <summary>
+            /// Number of frequency shifts (must be even).
+            /// </summary>
+            public readonly int M;
 
-            // Step 1: Generate the initial WH analysis window g0 of length N
-            //         from the current IWindow object (e.g., Gaussian, Hanning, etc.)
-            var g0 = WeylHeisenbergTransform.GetPacket(this.window, N);
+            /// <summary>
+            /// Number of time shifts (L = N / M).
+            /// </summary>
+            public readonly int L;
 
-            // Step 2: Orthogonalize g0 using Zak-domain orthogonalization
-            //         to produce a WH-orthonormal window g.
-            //         This matches the behavior of Matrix(..., true) in the slow implementation.
-            var zakOrth = new ZakTransform(Mloc);
-            var g = zakOrth.Orthogonalize(g0); // real-valued array of length N
+            /// <summary>
+            /// FFT<sub>L</sub> of the main branch polyphase components [M, L].
+            /// </summary>
+            public readonly Complex32[,] S_hat;
 
-            // Allocate caches for the FFTs of polyphase components:
-            // S_hat[n0, q] = FFT_L over r of polyphase component g[r*M + n0]
-            // T_hat[n0, q] = FFT_L over r of polyphase component g[r*M + (n0 + M/2) % M]
-            S_hat = new Complex32[Mloc, L];
-            T_hat = new Complex32[Mloc, L];
+            /// <summary>
+            /// FFT<sub>L</sub> of the half-shifted branch polyphase components [M, L].
+            /// </summary>
+            public readonly Complex32[,] T_hat;
 
-            var s = new Complex32[L]; // temporary buffer for length-L FFT
-
-            for (int n0 = 0; n0 < Mloc; n0++)
+            /// <summary>
+            /// Creates a new instance of the polyphase cache.
+            /// </summary>
+            /// <param name="N">Total signal length</param>
+            /// <param name="M">Number of frequency shifts</param>
+            /// <param name="L">Number of time shifts</param>
+            /// <param name="S">FFT of the main branch polyphase components</param>
+            /// <param name="T">FFT of the half-shifted branch polyphase components</param>
+            public PolyphaseCache(int N, int M, int L, Complex32[,] S, Complex32[,] T)
             {
-                // --- Main branch polyphase component ---
-                // s[r] = g[r*M + n0], r = 0..L-1
-                for (int r = 0; r < L; r++)
-                    s[r] = new Complex32(g[r * Mloc + n0], 0);
-
-                // Forward FFT along r (length L)
-                FFT(s, false);
-
-                // Store as S_hat[n0, :]
-                for (int q = 0; q < L; q++)
-                    S_hat[n0, q] = s[q];
-
-                // --- Half-shifted branch polyphase component ---
-                // Index n1 is (n0 + M/2) mod M — frequency index shifted by half the band.
-                int n1 = (n0 + Mloc / 2) % Mloc;
-
-                for (int r = 0; r < L; r++)
-                    s[r] = new Complex32(g[r * Mloc + n1], 0);
-
-                // Forward FFT along r
-                FFT(s, false);
-
-                // Store as T_hat[n0, :]
-                for (int q = 0; q < L; q++)
-                    T_hat[n0, q] = s[q];
+                this.N = N;
+                this.M = M;
+                this.L = L;
+                this.S_hat = S;
+                this.T_hat = T;
             }
 
-            // Mark cache as valid for this N
-            cachedN_poly = N;
-        }
+            /// <summary>
+            /// Precomputes FFT_L of the polyphase components of the orthogonalized window.
+            /// These cached arrays S_hat and T_hat are used in both Forward() and Backward()
+            /// to avoid recomputing window FFTs for every transform call.
+            /// </summary>
+            /// <param name="N">Total signal length</param>
+            /// <param name="Mloc">Number of frequency shifts M (must be even)</param>
+            /// <param name="window">Windows function</param>
+            /// <returns>Polyphase cache</returns>
+            public static PolyphaseCache Build(int N, int Mloc, IWindow window)
+            {
+                // If cache for the given N is already computed, reuse it
+                if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
+                int L = N / Mloc;
+                if (L * Mloc != N) throw new Exception("N must be divisible by M");
 
+                // Step 1: Generate the initial WH analysis window g0 of length N
+                //         from the current IWindow object (e.g., Gaussian, Hanning, etc.)
+                var g0 = WeylHeisenbergTransform.GetPacket(window, N);
+
+                // Step 2: Orthogonalize g0 using Zak-domain orthogonalization
+                //         to produce a WH-orthonormal window g.
+                //         This matches the behavior of Matrix(..., true) in the slow implementation.
+                var zakOrth = new ZakTransform(Mloc);
+                var g = zakOrth.Orthogonalize(g0); // real-valued array of length N
+
+                // Allocate caches for the FFTs of polyphase components:
+                // S_hat[n0, q] = FFT_L over r of polyphase component g[r*M + n0]
+                // T_hat[n0, q] = FFT_L over r of polyphase component g[r*M + (n0 + M/2) % M]
+                var S_hat = new Complex32[Mloc, L];
+                var T_hat = new Complex32[Mloc, L];
+
+                var s = new Complex32[L]; // temporary buffer for length-L FFT
+
+                for (int n0 = 0; n0 < Mloc; n0++)
+                {
+                    // --- Main branch polyphase component ---
+                    // s[r] = g[r*M + n0], r = 0..L-1
+                    for (int r = 0; r < L; r++)
+                        s[r] = new Complex32(g[r * Mloc + n0], 0);
+
+                    // Forward FFT along r (length L)
+                    FFT(s, false);
+
+                    // Store as S_hat[n0, :]
+                    for (int q = 0; q < L; q++)
+                        S_hat[n0, q] = s[q];
+
+                    // --- Half-shifted branch polyphase component ---
+                    // Index n1 is (n0 + M/2) mod M — frequency index shifted by half the band.
+                    int n1 = (n0 + Mloc / 2) % Mloc;
+
+                    for (int r = 0; r < L; r++)
+                        s[r] = new Complex32(g[r * Mloc + n1], 0);
+
+                    // Forward FFT along r
+                    FFT(s, false);
+
+                    // Store as T_hat[n0, :]
+                    for (int q = 0; q < L; q++)
+                        T_hat[n0, q] = s[q];
+                }
+
+                // return cache
+                return new PolyphaseCache(N, Mloc, L, S_hat, T_hat);
+            }
+        }
 
         /// <summary>
         /// Returns the complex phase factor e^{-j * π * k / 2}.
@@ -647,7 +750,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="k">Frequency index (integer).</param>
         /// <returns>Complex value of e^{-j * π * k / 2}.</returns>
-        private static Complex32 PhaseMinusPiOver2(int k)
+        internal static Complex32 PhaseMinusPiOver2(int k)
         {
             // e^{-jπk/2} is periodic with period 4 in k:
             //   k mod 4 = 0 →  1  (0° phase)
@@ -670,7 +773,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="a">Input</param>
         /// <param name="inverse">Iverse or not</param>
-        private static void FFT(Complex32[] a, bool inverse)
+        internal static void FFT(Complex32[] a, bool inverse)
         {
             var n = a.Length;
 
