@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UMapx.Core;
+using UMapx.Distribution;
 using UMapx.Transform;
 
 namespace UMapx.Window
@@ -13,12 +14,10 @@ namespace UMapx.Window
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class FastWeylHeisenbergTransform : IWindowTransform, ITransform
+    public class FastWeylHeisenbergTransform : WeylHeisenbergTransform, IWindowTransform, ITransform
     {
         #region Private data
-        private IWindow window;
-        private int m;
-        private Direction direction;
+        private bool complex;
         #endregion
 
         #region Initialize
@@ -28,51 +27,23 @@ namespace UMapx.Window
         /// <param name="window">Windows function</param>
         /// <param name="m">Number of frequency shifts [4, N]</param>
         /// <param name="direction">Processing direction</param>
-        public FastWeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical)
-        {
-            Window = window; M = m; Direction = direction;
-        }
+        public FastWeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical) : base(window, m, direction) { }
         /// <summary>
-        /// Gets or sets number of frequency shifts [4, N].
+        /// Use complex transform or not.
         /// <remarks>
-        /// Even number.
+        /// The algorithm will be fast only for the forward transform.
         /// </remarks>
         /// </summary>
-        public int M
+        public bool Complex
         {
             get
-            {
-                return this.m;
+            { 
+                return this.complex; 
             }
             set
-            {
-                if (value <= 2 || !Maths.IsEven(value))
-                    throw new Exception("Invalid argument value");
-
-                this.m = value;
+            { 
+                this.complex = value; 
             }
-        }
-        /// <summary>
-        /// Gets or sets the processing direction.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
-        }
-        /// <summary>
-        /// Gets or sets the window function.
-        /// </summary>
-        public IWindow Window
-        {
-            get { return window; }
-            set { window = value; }
         }
         #endregion
 
@@ -82,19 +53,22 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public override Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
             var cache = PolyphaseCache.Build(N, this.m, this.window);
-            return FWHT(A, cache);
+            return FWHT(A, cache, this.complex);
         }
         /// <summary>
         /// Backward Weyl-Heisenberg transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public override Complex32[] Backward(Complex32[] B)
         {
+            if (this.complex)
+                return base.Backward(B);
+
             int N = B.Length;
             var cache = PolyphaseCache.Build(N, this.m, this.window);
             return IFWHT(B, cache);
@@ -104,7 +78,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
+        public override Complex32[,] Forward(Complex32[,] A)
         {
             Complex32[,] B = (Complex32[,])A.Clone();
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -130,7 +104,7 @@ namespace UMapx.Window
                         row[j] = B[i, j];
                     }
 
-                    row = FWHT(row, cacheRows);
+                    row = FWHT(row, cacheRows, this.complex);
 
                     for (j = 0; j < M; j++)
                     {
@@ -148,7 +122,7 @@ namespace UMapx.Window
                         col[i] = B[i, j];
                     }
 
-                    col = FWHT(col, cacheCols);
+                    col = FWHT(col, cacheCols, this.complex);
 
                     for (i = 0; i < N; i++)
                     {
@@ -168,7 +142,7 @@ namespace UMapx.Window
                         col[i] = B[i, j];
                     }
 
-                    col = FWHT(col, cacheCols);
+                    col = FWHT(col, cacheCols, this.complex);
 
                     for (i = 0; i < N; i++)
                     {
@@ -188,7 +162,7 @@ namespace UMapx.Window
                         row[j] = B[i, j];
                     }
 
-                    row = FWHT(row, cacheRows);
+                    row = FWHT(row, cacheRows, this.complex);
 
                     for (j = 0; j < M; j++)
                     {
@@ -204,8 +178,11 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
+        public override Complex32[,] Backward(Complex32[,] B)
         {
+            if (this.complex)
+                return base.Backward(B);
+
             Complex32[,] A = (Complex32[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
@@ -300,42 +277,6 @@ namespace UMapx.Window
 
             return A;
         }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public float[] Forward(float[] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public float[] Backward(float[] B)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Forward(float[,] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Backward(float[,] B)
-        {
-            throw new NotSupportedException();
-        }
         #endregion
 
         #region Private voids
@@ -345,10 +286,35 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <param name="C">Polyphase cache</param>
+        /// <param name="complex">Complex of not</param>
         /// <returns>Array</returns>
-        internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
+        internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C, bool complex = false)
         {
             int N = A.Length;
+            var B = new Complex32[N];
+
+            if (complex)
+            {
+                var Ar = new Complex32[N];
+                var Ai = new Complex32[N];
+                for (int n = 0; n < N; n++)
+                {
+                    Ar[n] = new Complex32(A[n].Real, 0);
+                    Ai[n] = new Complex32(A[n].Imag, 0);
+                }
+
+                // Run the “real-input” fast WH twice
+                var Br = FWHT(Ar, C);   // already matches matrix for real inputs
+                var Bi = FWHT(Ai, C);
+
+                // Combine: U^H(Ar + i Ai) = U^H Ar + i U^H Ai
+
+                for (int u = 0; u < N; u++)
+                    B[u] = Br[u] + Complex32.I * Bi[u];
+
+                return B;
+            }
+
             int Mloc = C.M;
             if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
             int L = N / Mloc;
@@ -424,7 +390,6 @@ namespace UMapx.Window
             //
             //    Finally apply the global phase exp(-j*pi*k/2) that matches the original basis
             //    (accounts for the (n - M/4) phase in the matrix version).
-            var B = new Complex32[N];
             var rowMain = new Complex32[Mloc];
             var rowHalf = new Complex32[Mloc];
             var Sp_main = new Complex32[Mloc];

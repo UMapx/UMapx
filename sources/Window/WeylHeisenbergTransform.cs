@@ -19,15 +19,15 @@ namespace UMapx.Window
         /// <summary>
         /// Windows function.
         /// </summary>
-        private IWindow window;
+        protected IWindow window;
         /// <summary>
         /// Number of frequency shifts.
         /// </summary>
-        private int m;
+        protected int m;
         /// <summary>
         /// Processing direction.
         /// </summary>
-        private Direction direction;
+        protected Direction direction;
         #endregion
 
         #region Initialize
@@ -228,7 +228,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public virtual Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
             Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
@@ -240,7 +240,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public virtual Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
             Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
@@ -252,7 +252,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
+        public virtual Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
             Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
@@ -278,7 +278,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
+        public virtual Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
             Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
@@ -304,7 +304,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public float[] Forward(float[] A)
+        public virtual float[] Forward(float[] A)
         {
             throw new NotSupportedException();
         }
@@ -313,7 +313,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public float[] Backward(float[] B)
+        public virtual float[] Backward(float[] B)
         {
             throw new NotSupportedException();
         }
@@ -322,7 +322,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public float[,] Forward(float[,] A)
+        public virtual float[,] Forward(float[,] A)
         {
             throw new NotSupportedException();
         }
@@ -331,7 +331,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public float[,] Backward(float[,] B)
+        public virtual float[,] Backward(float[,] B)
         {
             throw new NotSupportedException();
         }
