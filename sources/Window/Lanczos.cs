@@ -7,14 +7,14 @@ namespace UMapx.Window
     /// Defines the Lanczos window function.
     /// </summary>
     [Serializable]
-    public class Lanzcos : WindowBase
+    public class Lanczos : WindowBase
     {
         #region Window components
         /// <summary>
         /// Initializes the Lanczos window function.
         /// </summary>
         /// <param name="frameSize">Window size</param>
-        public Lanzcos(int frameSize)
+        public Lanczos(int frameSize)
         {
             this.FrameSize = frameSize;
         }
