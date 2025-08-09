@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UMapx.Core;
-using UMapx.Distribution;
 using UMapx.Transform;
 
 namespace UMapx.Window
@@ -293,10 +292,14 @@ namespace UMapx.Window
             int N = A.Length;
             var B = new Complex32[N];
 
+            // Use complex transform or not
+            // (works for a complex signal)
             if (complex)
             {
                 var Ar = new Complex32[N];
                 var Ai = new Complex32[N];
+
+                // Separate
                 for (int n = 0; n < N; n++)
                 {
                     Ar[n] = new Complex32(A[n].Real, 0);
@@ -308,9 +311,10 @@ namespace UMapx.Window
                 var Bi = FWHT(Ai, C);
 
                 // Combine: U^H(Ar + i Ai) = U^H Ar + i U^H Ai
-
                 for (int u = 0; u < N; u++)
+                {
                     B[u] = Br[u] + Complex32.I * Bi[u];
+                }
 
                 return B;
             }
