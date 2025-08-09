@@ -9,7 +9,7 @@ namespace UMapx.Window
     /// Defines fast Weyl-Heisenberg transform.
     /// <remarks>
     /// The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
-    /// Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan.
+    /// Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
     /// </remarks>
     /// </summary>
     [Serializable]
