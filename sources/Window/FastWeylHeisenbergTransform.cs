@@ -84,8 +84,8 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public Complex32[] Forward(Complex32[] A)
         {
-            int N = A.Length, Mloc = this.m;
-            var cache = PolyphaseCache.Build(N, Mloc, this.window);
+            int N = A.Length;
+            var cache = PolyphaseCache.Build(N, this.m, this.window);
             return FWHT(A, cache);
         }
         /// <summary>
@@ -95,8 +95,8 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public Complex32[] Backward(Complex32[] B)
         {
-            int N = B.Length, Mloc = this.m;
-            var cache = PolyphaseCache.Build(N, Mloc, this.window);
+            int N = B.Length;
+            var cache = PolyphaseCache.Build(N, this.m, this.window);
             return IFWHT(B, cache);
         }
         /// <summary>
@@ -348,18 +348,16 @@ namespace UMapx.Window
 
         #region Private voids
 
-        private static readonly FastFourierTransform fastFourierTransform = new FastFourierTransform(false, Direction.Vertical);
-
         /// <summary>
         /// Forward Weyl-Heisenberg transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <param name="C">Polyphase cache</param>
         /// <returns>Array</returns>
-        internal Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
+        internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
         {
             int N = A.Length;
-            int Mloc = this.m;
+            int Mloc = C.M;
             if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
             int L = N / Mloc;
             if (L * Mloc != N) throw new Exception("N must be divisible by M");
@@ -487,10 +485,10 @@ namespace UMapx.Window
         /// <param name="B">Array</param>
         /// <param name="C">Polyphase cache</param>
         /// <returns>Array</returns>
-        internal Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
+        internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
         {
             int N = B.Length;
-            int Mloc = this.m;
+            int Mloc = C.M;
             if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
             int L = N / Mloc;
             if (L * Mloc != N) throw new Exception("N must be divisible by M");
@@ -775,6 +773,7 @@ namespace UMapx.Window
         /// <param name="inverse">Iverse or not</param>
         internal static void FFT(Complex32[] a, bool inverse)
         {
+            var fastFourierTransform = new FastFourierTransform(false, Direction.Vertical);
             var n = a.Length;
 
             if (inverse)
