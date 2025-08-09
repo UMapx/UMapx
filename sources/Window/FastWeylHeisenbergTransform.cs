@@ -285,15 +285,15 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <param name="C">Polyphase cache</param>
-        /// <param name="complex">Complex of not</param>
+        /// <param name="complex">Complex or not</param>
         /// <returns>Array</returns>
         internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C, bool complex = false)
         {
             int N = A.Length;
             var B = new Complex32[N];
 
-            // Use complex transform or not
-            // (works for a complex signal)
+            // Use the complex transform or not
+            // (works for complex signals)
             if (complex)
             {
                 var Ar = new Complex32[N];
@@ -307,7 +307,7 @@ namespace UMapx.Window
                 }
 
                 // Run the “real-input” fast WH twice
-                var Br = FWHT(Ar, C);   // already matches matrix for real inputs
+                var Br = FWHT(Ar, C);  // already matches matrix for real inputs
                 var Bi = FWHT(Ai, C);
 
                 // Combine: U^H(Ar + i Ai) = U^H Ar + i U^H Ai
