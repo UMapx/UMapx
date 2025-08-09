@@ -30359,6 +30359,11 @@
             <param name="a">Input</param>
             <param name="inverse">Iverse or not</param>
         </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.fastFourierTransform">
+            <summary>
+            UMapx fast Fourier transform.
+            </summary>
+        </member>
         <member name="T:UMapx.Window.FastZakTransform">
             <summary>
             Defines the fast Zak transform.

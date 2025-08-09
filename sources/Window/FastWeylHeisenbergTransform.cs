@@ -109,10 +109,6 @@ namespace UMapx.Window
             Complex32[,] B = (Complex32[,])A.Clone();
             int N = B.GetLength(0), M = B.GetLength(1);
 
-            FastZakTransform zakTransform = new FastZakTransform(m);
-            float[] g0 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, N));
-            float[] g1 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, M));
-
             PolyphaseCache cacheCols = null;
             PolyphaseCache cacheRows = null;
 
@@ -213,10 +209,6 @@ namespace UMapx.Window
             Complex32[,] A = (Complex32[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
-
-            FastZakTransform zakTransform = new FastZakTransform(m);
-            float[] g0 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, N));
-            float[] g1 = zakTransform.Orthogonalize(WeylHeisenbergTransform.GetPacket(this.window, M));
 
             PolyphaseCache cacheCols = null;
             PolyphaseCache cacheRows = null;
@@ -776,7 +768,6 @@ namespace UMapx.Window
         /// <param name="inverse">Iverse or not</param>
         internal static void FFT(Complex32[] a, bool inverse)
         {
-            var fastFourierTransform = new FastFourierTransform(false, Direction.Vertical);
             var n = a.Length;
 
             if (inverse)
@@ -803,6 +794,11 @@ namespace UMapx.Window
                 }
             }
         }
+
+        /// <summary>
+        /// UMapx fast Fourier transform.
+        /// </summary>
+        private static readonly FastFourierTransform fastFourierTransform = new FastFourierTransform(false, Direction.Vertical);
 
         #endregion
     }
