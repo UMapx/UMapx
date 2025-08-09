@@ -78,7 +78,7 @@ namespace UMapx.Transform
                 throw new Exception("Dimension of the signal must be a power of 2");
 
             float[] B = (float[])A.Clone();
-            fwht(B);
+            FWHT(B);
 
             if (normalized)
             {
@@ -99,7 +99,7 @@ namespace UMapx.Transform
                 throw new Exception("Dimension of the signal must be a power of 2");
 
             float[] A = (float[])B.Clone();
-            fwht(A);
+            FWHT(A);
 
             if (normalized)
             {
@@ -131,7 +131,7 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    fwht(row);
+                    FWHT(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -150,7 +150,7 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fwht(col);
+                    FWHT(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -176,7 +176,7 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fwht(col);
+                    FWHT(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -202,7 +202,7 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    fwht(row);
+                    FWHT(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -239,7 +239,7 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    fwht(col);
+                    FWHT(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -257,7 +257,7 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fwht(row);
+                    FWHT(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -281,7 +281,7 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    fwht(col);
+                    FWHT(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -306,7 +306,7 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fwht(row);
+                    FWHT(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -334,7 +334,7 @@ namespace UMapx.Transform
                 throw new Exception("Dimension of the signal must be a power of 2");
 
             Complex32[] B = (Complex32[])A.Clone();
-            fwht(B);
+            FWHT(B);
 
             if (normalized)
             {
@@ -355,7 +355,7 @@ namespace UMapx.Transform
                 throw new Exception("Dimension of the signal must be a power of 2");
 
             Complex32[] A = (Complex32[])B.Clone();
-            fwht(A);
+            FWHT(A);
 
             if (normalized)
             {
@@ -387,7 +387,7 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    fwht(row);
+                    FWHT(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -406,7 +406,7 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fwht(col);
+                    FWHT(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -432,7 +432,7 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    fwht(col);
+                    FWHT(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -458,7 +458,7 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    fwht(row);
+                    FWHT(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -495,7 +495,7 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    fwht(col);
+                    FWHT(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -513,7 +513,7 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fwht(row);
+                    FWHT(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -537,7 +537,7 @@ namespace UMapx.Transform
                     {
                         col[i] = A[i, j];
                     }
-                    fwht(col);
+                    FWHT(col);
 
                     for (i = 0; i < N; i++)
                     {
@@ -562,7 +562,7 @@ namespace UMapx.Transform
                     {
                         row[j] = A[i, j];
                     }
-                    fwht(row);
+                    FWHT(row);
 
                     for (j = 0; j < M; j++)
                     {
@@ -585,7 +585,7 @@ namespace UMapx.Transform
         /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
-        private void fwht(float[] data)
+        private void FWHT(float[] data)
         {
             int N = data.Length;
             int log2N = (int)Maths.Log2(N);
@@ -619,7 +619,7 @@ namespace UMapx.Transform
         /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
-        private void fwht(Complex32[] data)
+        private void FWHT(Complex32[] data)
         {
             int N = data.Length;
             int log2N = (int)Maths.Log2(N);

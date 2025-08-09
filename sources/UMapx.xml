@@ -24438,13 +24438,13 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.FastWalshHadamardTransform.fwht(System.Single[])">
+        <member name="M:UMapx.Transform.FastWalshHadamardTransform.FWHT(System.Single[])">
             <summary>
             Fast Walsh-Hadamard transform.
             </summary>
             <param name="data">Array</param>
         </member>
-        <member name="M:UMapx.Transform.FastWalshHadamardTransform.fwht(UMapx.Core.Complex32[])">
+        <member name="M:UMapx.Transform.FastWalshHadamardTransform.FWHT(UMapx.Core.Complex32[])">
             <summary>
             Fast Walsh-Hadamard transform.
             </summary>
@@ -30161,9 +30161,7 @@
             Defines fast Weyl-Heisenberg transform.
             <remarks>
             The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
-            Weyl-Heisenberg transforms.
-            More information can be found on the website:
-            https://ieeexplore.ieee.org/document/9117707/
+            Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan.
             </remarks>
             </summary>
         </member>
@@ -30248,31 +30246,6 @@
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.WHT(UMapx.Core.Complex32[],System.Single[],System.Int32)">
-            <summary>
-            Fast forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="input">Array</param>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IWHT(UMapx.Core.Complex32[],System.Single[],System.Int32)">
-            <summary>
-            Fast backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="input">Array</param>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.GetRotation(System.Int32)">
-            <summary>
-            Returns an array of phase rotations.
-            </summary>
-            <param name="M">Number of frequency shifts</param>
-            <returns>Array</returns>
         </member>
         <member name="T:UMapx.Window.FastZakTransform">
             <summary>
