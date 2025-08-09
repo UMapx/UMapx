@@ -70,7 +70,7 @@ namespace UMapx.Window
 
             int N = B.Length;
             var cache = PolyphaseCache.Build(N, this.m, this.window);
-            return IFWHT(B, cache);
+            return IFWHT(B, cache, this.complex);
         }
         /// <summary>
         /// Forward Weyl-Heisenberg transform.
@@ -207,7 +207,7 @@ namespace UMapx.Window
                         col[i] = A[i, j];
                     }
 
-                    col = IFWHT(col, cacheCols);
+                    col = IFWHT(col, cacheCols, this.complex);
 
                     for (i = 0; i < N; i++)
                     {
@@ -225,7 +225,7 @@ namespace UMapx.Window
                         row[j] = A[i, j];
                     }
 
-                    row = IFWHT(row, cacheRows);
+                    row = IFWHT(row, cacheRows, this.complex);
 
                     for (j = 0; j < M; j++)
                     {
@@ -245,7 +245,7 @@ namespace UMapx.Window
                         col[i] = A[i, j];
                     }
 
-                    col = IFWHT(col, cacheCols);
+                    col = IFWHT(col, cacheCols, this.complex);
 
                     for (i = 0; i < N; i++)
                     {
@@ -265,7 +265,7 @@ namespace UMapx.Window
                         row[j] = A[i, j];
                     }
 
-                    row = IFWHT(row, cacheRows);
+                    row = IFWHT(row, cacheRows, this.complex);
 
                     for (j = 0; j < M; j++)
                     {
@@ -293,7 +293,7 @@ namespace UMapx.Window
             var B = new Complex32[N];
 
             // Use the complex transform or not
-            // (works for complex signals)
+            // (complex signals)
             if (complex)
             {
                 var Ar = new Complex32[N];
@@ -445,9 +445,15 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <param name="C">Polyphase cache</param>
+        /// <param name="complex">Complex or not</param>
         /// <returns>Array</returns>
-        internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
+        internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C, bool complex = false)
         {
+            // Use the complex transform or not
+            // (complex signals)
+            if (complex)
+                throw new NotImplementedException("This transform doesn't support complex inversions");
+
             int N = B.Length;
             int Mloc = C.M;
             if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
