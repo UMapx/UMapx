@@ -179,10 +179,10 @@ namespace UMapx.Window
         {
             // exeption by length
             if (window.FrameSize > length)
-                return WeylHeisenbergTransform.nSymmetry(window, length);
+                return WeylHeisenbergTransform.NSymmetry(window, length);
 
             // params for approximation
-            float[] w = WeylHeisenbergTransform.nSymmetry(window, (int)window.FrameSize);
+            float[] w = WeylHeisenbergTransform.NSymmetry(window, (int)window.FrameSize);
             int n = w.Length;
             float min = Math.Min(w[0], w[n - 1]);
             float[] g = new float[length];
@@ -208,7 +208,7 @@ namespace UMapx.Window
         /// <param name="window">Windows function</param>
         /// <param name="length">Number of samples</param>
         /// <returns>Array</returns>
-        private static float[] nSymmetry(IWindow window, int length)
+        private static float[] NSymmetry(IWindow window, int length)
         {
             // creaing window function
             float[] g = window.GetWindow(length + 1);
