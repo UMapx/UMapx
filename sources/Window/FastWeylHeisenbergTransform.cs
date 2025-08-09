@@ -535,7 +535,7 @@ namespace UMapx.Window
 
                 for (int n0 = 0; n0 < Mloc; n0++)
                 {
-                    Cmain[n0, l] = Sp_main[n0] * (1f / Maths.Sqrt(L * N)); // keep your current scale convention
+                    Cmain[n0, l] = Sp_main[n0] * (1f / Maths.Sqrt(L * N));
                     Chalf[n0, l] = Sp_half[n0] * (1f / Maths.Sqrt(L * N));
                 }
             }
