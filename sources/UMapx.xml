@@ -30175,7 +30175,7 @@
         </member>
         <member name="P:UMapx.Window.FastWeylHeisenbergTransform.Complex">
             <summary>
-            Use complex transform or not.
+            Use the complex transform or not.
             <remarks>
             The algorithm will be fast only for the forward transform.
             </remarks>

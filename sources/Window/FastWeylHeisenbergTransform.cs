@@ -28,7 +28,7 @@ namespace UMapx.Window
         /// <param name="direction">Processing direction</param>
         public FastWeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical) : base(window, m, direction) { }
         /// <summary>
-        /// Use complex transform or not.
+        /// Use the complex transform or not.
         /// <remarks>
         /// The algorithm will be fast only for the forward transform.
         /// </remarks>
