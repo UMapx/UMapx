@@ -26,7 +26,6 @@ namespace UMapx.Window
         /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
-            // Berlett-Hann function:
             float a = Math.Abs(Math.Abs(x / (frameSize - 1)) - 0.5f);
             return 0.62f - 0.48f * a - 0.38f * Cosine.cosinefunc(2 * x, frameSize);
         }

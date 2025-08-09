@@ -51,7 +51,7 @@ namespace UMapx.Video
         private IWebProxy _proxy = null;
         // received frames count
         private int _framesReceived;
-        // recieved byte count
+        // received byte count
         private long _bytesReceived;
         // use separate HTTP connection group or use default
         private bool _useSeparateConnectionGroup = true;
