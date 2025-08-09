@@ -30215,7 +30215,7 @@
             </summary>
             <param name="A">Array</param>
             <param name="C">Polyphase cache</param>
-            <param name="complex">Complex of not</param>
+            <param name="complex">Complex or not</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IFWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
