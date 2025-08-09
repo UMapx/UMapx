@@ -30247,6 +30247,39 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PrepareFastCachesPolyphase(System.Int32,System.Int32)">
+            <summary>
+            Precomputes FFT_L of the polyphase components of the orthogonalized window.
+            These cached arrays S_hat and T_hat are used in both Forward() and Backward()
+            to avoid recomputing window FFTs for every transform call.
+            </summary>
+            <param name="N">Total signal length.</param>
+            <param name="Mloc">Number of frequency shifts M (must be even).</param>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PhaseMinusPiOver2(System.Int32)">
+            <summary>
+            Returns the complex phase factor e^{-j * π * k / 2}.
+            This term has a period of 4 over k, meaning it only takes
+            four distinct values: 1, -j, -1, +j.
+            
+            Such factors often appear in WH transforms, DFT twiddle factors,
+            and modulation/demodulation stages where a quarter-period
+            phase shift in the complex plane is required.
+            
+            In the Weyl–Heisenberg transform context, this phase multiplier
+            accounts for the shift by M/4 in the time-frequency tiling,
+            separating cosine and sine branches during synthesis/analysis.
+            </summary>
+            <param name="k">Frequency index (integer).</param>
+            <returns>Complex value of e^{-j * π * k / 2}.</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FFT(UMapx.Core.Complex32[],System.Boolean)">
+            <summary>
+            Fast Fourier transform.
+            </summary>
+            <param name="a">Input</param>
+            <param name="inverse">Iverse or not</param>
+        </member>
         <member name="T:UMapx.Window.FastZakTransform">
             <summary>
             Defines the fast Zak transform.

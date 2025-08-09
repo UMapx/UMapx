@@ -560,62 +560,126 @@ namespace UMapx.Window
         #region Private voids
 
         private static readonly FastFourierTransform fastFourierTransform = new FastFourierTransform(false, Direction.Vertical);
-        private object locker = new object();
+        private readonly object locker = new object();
         private Complex32[,] S_hat; // [M, L] FFT_L по r от s_n0[r] = g[r*M + n0]
         private Complex32[,] T_hat; // [M, L] FFT_L по r от t_n0[r] = g[r*M + (n0 + M/2) mod M]
         private int cachedN_poly = -1;
 
+        /// <summary>
+        /// Precomputes FFT_L of the polyphase components of the orthogonalized window.
+        /// These cached arrays S_hat and T_hat are used in both Forward() and Backward()
+        /// to avoid recomputing window FFTs for every transform call.
+        /// </summary>
+        /// <param name="N">Total signal length.</param>
+        /// <param name="Mloc">Number of frequency shifts M (must be even).</param>
         private void PrepareFastCachesPolyphase(int N, int Mloc)
         {
-            if (cachedN_poly == N && S_hat != null && T_hat != null) return;
+            // If cache for the given N is already computed, reuse it
+            if (cachedN_poly == N && S_hat != null && T_hat != null)
+                return;
 
-            int L = N / Mloc;
+            int L = N / Mloc; // number of time shifts
 
+            // Step 1: Generate the initial WH analysis window g0 of length N
+            //         from the current IWindow object (e.g., Gaussian, Hanning, etc.)
             var g0 = WeylHeisenbergTransform.GetPacket(this.window, N);
-            var zakOrth = new ZakTransform(Mloc);
-            var g = zakOrth.Orthogonalize(g0); // as in Matrix(..., true)
 
+            // Step 2: Orthogonalize g0 using Zak-domain orthogonalization
+            //         to produce a WH-orthonormal window g.
+            //         This matches the behavior of Matrix(..., true) in the slow implementation.
+            var zakOrth = new ZakTransform(Mloc);
+            var g = zakOrth.Orthogonalize(g0); // real-valued array of length N
+
+            // Allocate caches for the FFTs of polyphase components:
+            // S_hat[n0, q] = FFT_L over r of polyphase component g[r*M + n0]
+            // T_hat[n0, q] = FFT_L over r of polyphase component g[r*M + (n0 + M/2) % M]
             S_hat = new Complex32[Mloc, L];
             T_hat = new Complex32[Mloc, L];
 
-            var s = new Complex32[L];
+            var s = new Complex32[L]; // temporary buffer for length-L FFT
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
-                // s_n0[r] = g[r*M + n0]
-                for (int r = 0; r < L; r++) s[r] = new Complex32(g[r * Mloc + n0], 0);
-                FFT(s, false);
-                for (int q = 0; q < L; q++) S_hat[n0, q] = s[q];
+                // --- Main branch polyphase component ---
+                // s[r] = g[r*M + n0], r = 0..L-1
+                for (int r = 0; r < L; r++)
+                    s[r] = new Complex32(g[r * Mloc + n0], 0);
 
-                // t_n0[r] = g[r*M + (n0 + M/2) % M]
-                int n1 = (n0 + Mloc / 2) % Mloc;
-                for (int r = 0; r < L; r++) s[r] = new Complex32(g[r * Mloc + n1], 0);
+                // Forward FFT along r (length L)
                 FFT(s, false);
-                for (int q = 0; q < L; q++) T_hat[n0, q] = s[q];
+
+                // Store as S_hat[n0, :]
+                for (int q = 0; q < L; q++)
+                    S_hat[n0, q] = s[q];
+
+                // --- Half-shifted branch polyphase component ---
+                // Index n1 is (n0 + M/2) mod M — frequency index shifted by half the band.
+                int n1 = (n0 + Mloc / 2) % Mloc;
+
+                for (int r = 0; r < L; r++)
+                    s[r] = new Complex32(g[r * Mloc + n1], 0);
+
+                // Forward FFT along r
+                FFT(s, false);
+
+                // Store as T_hat[n0, :]
+                for (int q = 0; q < L; q++)
+                    T_hat[n0, q] = s[q];
             }
 
+            // Mark cache as valid for this N
             cachedN_poly = N;
         }
 
+
+        /// <summary>
+        /// Returns the complex phase factor e^{-j * π * k / 2}.
+        /// This term has a period of 4 over k, meaning it only takes
+        /// four distinct values: 1, -j, -1, +j.
+        /// 
+        /// Such factors often appear in WH transforms, DFT twiddle factors,
+        /// and modulation/demodulation stages where a quarter-period
+        /// phase shift in the complex plane is required.
+        /// 
+        /// In the Weyl–Heisenberg transform context, this phase multiplier
+        /// accounts for the shift by M/4 in the time-frequency tiling,
+        /// separating cosine and sine branches during synthesis/analysis.
+        /// </summary>
+        /// <param name="k">Frequency index (integer).</param>
+        /// <returns>Complex value of e^{-j * π * k / 2}.</returns>
         private static Complex32 PhaseMinusPiOver2(int k)
         {
-            // e^{-j*pi*k/2} — period 4 over k
+            // e^{-jπk/2} is periodic with period 4 in k:
+            //   k mod 4 = 0 →  1  (0° phase)
+            //   k mod 4 = 1 → -j  (-90° phase)
+            //   k mod 4 = 2 → -1  (-180° phase)
+            //   k mod 4 = 3 → +j  (+90° phase)
+            //
+            // Bitwise AND with 3 (0b11) is a fast way to compute k % 4.
             return (k & 3) switch
             {
-                0 => new Complex32(+1, 0),//  1
-                1 => new Complex32(0, -1),// -j
-                2 => new Complex32(-1, 0),// -1
-                _ => new Complex32(0, +1),// +j
+                0 => new Complex32(+1, 0),  // 0°   :  1
+                1 => new Complex32(0, -1),  // -90° : -j
+                2 => new Complex32(-1, 0),  // 180° : -1
+                _ => new Complex32(0, +1),  // +90° : +j
             };
         }
 
+        /// <summary>
+        /// Fast Fourier transform.
+        /// </summary>
+        /// <param name="a">Input</param>
+        /// <param name="inverse">Iverse or not</param>
         private static void FFT(Complex32[] a, bool inverse)
         {
             var n = a.Length;
 
             if (inverse)
             {
+                // Perform the inverse FFT (frequency → time domain)
                 var b = fastFourierTransform.Backward(a);
+
+                // Apply orthonormal scaling by sqrt(1 / N) to match analysis/synthesis norms
                 float inv = Maths.Sqrt(1f / n);
 
                 for (int i = 0; i < n; i++)
@@ -625,6 +689,7 @@ namespace UMapx.Window
             }
             else
             {
+                // Perform the forward FFT (time → frequency domain)
                 var b = fastFourierTransform.Forward(a);
 
                 for (int i = 0; i < n; i++)
