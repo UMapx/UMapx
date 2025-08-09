@@ -585,9 +585,12 @@ namespace UMapx.Window
             // 3) Return from Zak/FFT domain back to the time domain:
             //    For each residue n0, take IFFT_L over q to get A[r*M + n0].
             var Arec = new Complex32[N];
+
             for (int n0 = 0; n0 < Mloc; n0++)
             {
-                for (int q = 0; q < L; q++) bufL[q] = Xhat[n0, q];
+                for (int q = 0; q < L; q++) 
+                    bufL[q] = Xhat[n0, q];
+
                 FFT(bufL, true); // inverse FFT along r (assumed to divide by L internally)
 
                 for (int r = 0; r < L; r++)
