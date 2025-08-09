@@ -295,15 +295,12 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 operator /(float a, Complex32 b)
         {
-            if (b.Imag == 0)
-            {
-                return new Complex32(a / b.Real, 0);
-            }
-            else if (b.Real == 0)
-            {
-                return new Complex32(0, a / b.Imag);
-            }
-            return new Complex32(a / b.Real, a / b.Imag);
+            // (a + 0i) / (bRe + i*bIm) = a*(bRe - i*bIm) / (bRe^2 + bIm^2)
+            float bRe = b.Real;
+            float bIm = b.Imag;
+            float abs = bRe * bRe + bIm * bIm;
+
+            return new Complex32(a * bRe / abs, -a * bIm / abs);
         }
         #endregion
 
