@@ -290,6 +290,7 @@ namespace UMapx.Window
         internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C, bool complex = false)
         {
             int N = A.Length;
+            if (!Maths.IsPower(N, 2)) throw new Exception("Dimension of the signal must be a power of 2");
             var B = new Complex32[N];
 
             // Use the complex transform or not
@@ -455,6 +456,7 @@ namespace UMapx.Window
                 throw new NotImplementedException("This transform doesn't support complex inversions");
 
             int N = B.Length;
+            if (!Maths.IsPower(N, 2)) throw new Exception("Dimension of the signal must be a power of 2");
             int Mloc = C.M;
             if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
             int L = N / Mloc;
@@ -647,6 +649,7 @@ namespace UMapx.Window
             public static PolyphaseCache Build(int N, int Mloc, IWindow window)
             {
                 // If cache for the given N is already computed, reuse it
+                //if (!Maths.IsPower(N, 2)) throw new Exception("Dimension of the signal must be a power of 2");
                 if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
                 int L = N / Mloc;
                 if (L * Mloc != N) throw new Exception("N must be divisible by M");
