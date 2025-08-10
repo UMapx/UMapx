@@ -658,7 +658,7 @@ namespace UMapx.Window
                 // Step 2: Orthogonalize g0 using Zak-domain orthogonalization
                 //         to produce a WH-orthonormal window g.
                 //         This matches the behavior of Matrix(..., true) in the slow implementation.
-                var zakOrth = new ZakTransform(Mloc);
+                var zakOrth = new FastZakTransform(Mloc);
                 var g = zakOrth.Orthogonalize(g0); // real-valued array of length N
 
                 // Allocate caches for the FFTs of polyphase components:
