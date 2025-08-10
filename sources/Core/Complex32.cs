@@ -477,5 +477,22 @@ namespace UMapx.Core
             return new Complex32(this.Real, this.Imag);
         }
         #endregion
+
+        #region Static methods
+
+        /// <summary>
+        /// Creates a complex number from polar coordinates.
+        /// </summary>
+        /// <param name="magnitude">Magnitude (radius)</param>
+        /// <param name="phase">Phase (angle in radians)</param>
+        public static Complex32 FromPolarCoordinates(float magnitude, float phase)
+        {
+            return new Complex32(
+                magnitude * (float)Math.Cos(phase),
+                magnitude * (float)Math.Sin(phase)
+            );
+        }
+
+        #endregion
     }
 }

@@ -3719,6 +3719,13 @@
             </summary>
             <returns>Complex number</returns>
         </member>
+        <member name="M:UMapx.Core.Complex32.FromPolarCoordinates(System.Single,System.Single)">
+            <summary>
+            Creates a complex number from polar coordinates.
+            </summary>
+            <param name="magnitude">Magnitude (radius)</param>
+            <param name="phase">Phase (angle in radians)</param>
+        </member>
         <member name="T:UMapx.Core.IFloat">
             <summary>
             Defines the delegate of a continuous function that depends on a single argument.
@@ -6007,14 +6014,6 @@
             <param name="b">Number</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Atan2(System.Single,System.Single)">
-            <summary>
-            Returns the angle whose tangent is the quotient of two specified numbers.
-            </summary>
-            <param name="y">Value</param>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
         <member name="M:UMapx.Core.Maths.CopySign(System.Int32,System.Int32)">
             <summary>
             Copies sign.
@@ -6022,13 +6021,6 @@
             <param name="magnitude">Magnitude</param>
             <param name="sign">Sign</param>
             <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Maths.FromPolarCoordinates(System.Single,System.Single)">
-            <summary>
-            Creates a complex number from polar coordinates.
-            </summary>
-            <param name="magnitude">Magnitude (radius)</param>
-            <param name="phase">Phase (angle in radians)</param>
         </member>
         <member name="M:UMapx.Core.Maths.CopySign(System.Single,System.Single)">
             <summary>
