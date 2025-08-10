@@ -64,7 +64,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Gets or sets the scaling function of backward transform.
         /// </summary>
-        public float[] iLowPass
+        public float[] ILowPass
         {
             get
             {
@@ -78,7 +78,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Gets or sets the wavelet function of backward transform.
         /// </summary>
-        public float[] iHighPass
+        public float[] IHighPass
         {
             get
             {

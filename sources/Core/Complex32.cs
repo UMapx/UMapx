@@ -42,6 +42,16 @@ namespace UMapx.Core
             }
         }
         /// <summary>
+        /// Gets the value of the module * module.
+        /// </summary>
+        public float Abs2
+        {
+            get
+            {
+                return Real * Real + Imag * Imag;
+            }
+        }
+        /// <summary>
         /// Gets the value of the phase.
         /// </summary>
         public float Angle

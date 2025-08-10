@@ -80,8 +80,8 @@ namespace UMapx.Wavelet
             {
                 this.lp = value.LowPass;
                 this.hp = value.HighPass;
-                this.ilp = value.iLowPass;
-                this.ihp = value.iHighPass;
+                this.ilp = value.ILowPass;
+                this.ihp = value.IHighPass;
             }
         }
         #endregion

@@ -2026,7 +2026,16 @@ namespace UMapx.Core
         #endregion
 
         #region Other
-
+        /// <summary>
+        /// Returns the angle whose tangent is the quotient of two specified numbers.
+        /// </summary>
+        /// <param name="y">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float Atan2(float y, float x)
+        {
+            return (float)Math.Atan2(y, x);
+        }
         /// <summary>
         /// Copies sign.
         /// </summary>
@@ -2037,7 +2046,18 @@ namespace UMapx.Core
         {
             return Math.Abs(magnitude) * Math.Sign(sign);
         }
-
+        /// <summary>
+        /// Creates a complex number from polar coordinates.
+        /// </summary>
+        /// <param name="magnitude">Magnitude (radius)</param>
+        /// <param name="phase">Phase (angle in radians)</param>
+        public static Complex32 FromPolarCoordinates(float magnitude, float phase)
+        {
+            return new Complex32(
+                magnitude * (float)Math.Cos(phase),
+                magnitude * (float)Math.Sin(phase)
+            );
+        }
         /// <summary>
         /// Copies sign.
         /// </summary>

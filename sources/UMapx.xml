@@ -3430,6 +3430,11 @@
             Gets the value of the module.
             </summary>
         </member>
+        <member name="P:UMapx.Core.Complex32.Abs2">
+            <summary>
+            Gets the value of the module * module.
+            </summary>
+        </member>
         <member name="P:UMapx.Core.Complex32.Angle">
             <summary>
             Gets the value of the phase.
@@ -6002,6 +6007,14 @@
             <param name="b">Number</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Core.Maths.Atan2(System.Single,System.Single)">
+            <summary>
+            Returns the angle whose tangent is the quotient of two specified numbers.
+            </summary>
+            <param name="y">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Maths.CopySign(System.Int32,System.Int32)">
             <summary>
             Copies sign.
@@ -6009,6 +6022,13 @@
             <param name="magnitude">Magnitude</param>
             <param name="sign">Sign</param>
             <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.FromPolarCoordinates(System.Single,System.Single)">
+            <summary>
+            Creates a complex number from polar coordinates.
+            </summary>
+            <param name="magnitude">Magnitude (radius)</param>
+            <param name="phase">Phase (angle in radians)</param>
         </member>
         <member name="M:UMapx.Core.Maths.CopySign(System.Single,System.Single)">
             <summary>
@@ -29081,12 +29101,12 @@
             Gets or sets the wavelet function of forward transform.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.iLowPass">
+        <member name="P:UMapx.Wavelet.WaveletPack.ILowPass">
             <summary>
             Gets or sets the scaling function of backward transform.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.iHighPass">
+        <member name="P:UMapx.Wavelet.WaveletPack.IHighPass">
             <summary>
             Gets or sets the wavelet function of backward transform.
             </summary>
