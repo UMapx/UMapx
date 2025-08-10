@@ -30,7 +30,7 @@ namespace UMapx.Window
         /// <summary>
         /// Use the complex transform or not.
         /// <remarks>
-        /// The algorithm will be fast only for the forward transform.
+        /// The algorithm will be fast only for the forward transform, but will be equal to the original one.
         /// </remarks>
         /// </summary>
         public bool Complex
