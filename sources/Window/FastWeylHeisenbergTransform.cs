@@ -657,7 +657,7 @@ namespace UMapx.Window
 
                 // Step 1: Generate the initial WH analysis window g0 of length N
                 //         from the current IWindow object (e.g., Gaussian, Hanning, etc.)
-                var g0 = WeylHeisenbergTransform.GetPacket(window, N);
+                var g0 = FastWeylHeisenbergTransform.GetPacket(window, N);
 
                 // Step 2: Orthogonalize g0 using Zak-domain orthogonalization
                 //         to produce a WH-orthonormal window g.
