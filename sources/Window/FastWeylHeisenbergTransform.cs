@@ -431,10 +431,12 @@ namespace UMapx.Window
                     var Q = phase * Sp_half[k]; // “sine”   branch contribution
 
                     // Match the matrix API scaling: divide by sqrt(N)
-                    B[l * Mloc + k] = new Complex32(
+                    var psi = new Complex32(
                         P.Real / Maths.Sqrt(N),
                         Q.Imag / Maths.Sqrt(N)
                     );
+
+                    B[l * Mloc + k] = psi.Real + psi.Imag;
                 }
             }
 
@@ -484,16 +486,17 @@ namespace UMapx.Window
             {
                 for (int k = 0; k < Mloc; k++)
                 {
+                    var b = B[l * Mloc + k];               // теперь B — почти всегда real
                     var phase = PhaseMinusPiOver2(k);
-                    var phaseConj = new Complex32(phase.Real, -phase.Imag); // conj(phase)
+                    var phaseConj = new Complex32(phase.Real, -phase.Imag);
 
-                    var b = B[l * Mloc + k];
+                    // сумма S = (Re(P) + Im(Q)) / sqrt(N)  =>  масштаб назад:
+                    float S = b.Real * s;                  // s = sqrt(N)
 
-                    // Invert packing: P := (b.Re * sqrt(N)) + 0i;   Q := i * (b.Im * sqrt(N))
-                    var P = new Complex32(b.Real * s, 0);
-                    var Q = new Complex32(0, b.Imag * s);
+                    // минимально-нормовое разложение: Re(P)=S/2, Im(Q)=S/2
+                    var P = new Complex32(1 * S, 0);    // чисто реальный вклад для main
+                    var Q = new Complex32(0, 1 * S);    // чисто мнимый вклад для half
 
-                    // Remove the per-k phase to obtain Sp_*[k]
                     Sp_main[k] = phaseConj * P;
                     Sp_half[k] = phaseConj * Q;
                 }
@@ -564,7 +567,7 @@ namespace UMapx.Window
                 FFT(bufL, true); // inverse FFT along r (assumed to divide by L internally)
 
                 for (int r = 0; r < L; r++)
-                    Arec[r * Mloc + n0] = bufL[r];
+                    Arec[r * Mloc + n0] = bufL[r].Real;
             }
 
             return Arec;

@@ -126,7 +126,7 @@ namespace UMapx.Window
                             (g0[i] * exp).Real,
                             (Maths.I * g0[j] * exp).Real);
 
-                        G[n, u] = psi;
+                        G[n, u] = psi.Real - psi.Imag;
                     }
                 }
             });
