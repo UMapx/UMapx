@@ -486,16 +486,13 @@ namespace UMapx.Window
             {
                 for (int k = 0; k < Mloc; k++)
                 {
-                    var b = B[l * Mloc + k];               // теперь B — почти всегда real
+                    var b = B[l * Mloc + k];
                     var phase = PhaseMinusPiOver2(k);
                     var phaseConj = new Complex32(phase.Real, -phase.Imag);
 
-                    // сумма S = (Re(P) + Im(Q)) / sqrt(N)  =>  масштаб назад:
-                    float S = b.Real * s;                  // s = sqrt(N)
-
-                    // минимально-нормовое разложение: Re(P)=S/2, Im(Q)=S/2
-                    var P = new Complex32(1 * S, 0);    // чисто реальный вклад для main
-                    var Q = new Complex32(0, 1 * S);    // чисто мнимый вклад для half
+                    // sum S = (Re(P) + Im(Q)) / sqrt(N)  =>  scale back:
+                    var P = new Complex32(b.Real * s, 0);    // real input for main
+                    var Q = new Complex32(0, b.Real * s);    // real input for half
 
                     Sp_main[k] = phaseConj * P;
                     Sp_half[k] = phaseConj * Q;
