@@ -100,7 +100,7 @@ namespace UMapx.Wavelet
             // forward multi-scale wavelet transform
             for (int i = 0; i < nLevels; i++)
             {
-                A = this.dwt(A, i);
+                A = this.DWT(A, i);
             }
 
             return A;
@@ -118,7 +118,7 @@ namespace UMapx.Wavelet
             // backward multi-scale wavelet transform
             for (int i = nLevels; i > 0; i--)
             {
-                B = this.idwt(B, i);
+                B = this.IDWT(B, i);
             }
 
             return B;
@@ -153,14 +153,14 @@ namespace UMapx.Wavelet
                 for (i = 0; i < Bound1; i++)
                 {
                     for (j = 0; j < Bound2; j++) buff2[j] = output[i, j];
-                    buff2 = this.dwt(buff2, lev);
+                    buff2 = this.DWT(buff2, lev);
                     for (j = 0; j < Bound2; j++) output[i, j] = buff2[j];
                 }
 
                 for (j = 0; j < Bound2; j++)
                 {
                     for (i = 0; i < Bound1; i++) buff1[i] = output[i, j];
-                    buff1 = this.dwt(buff1, lev);
+                    buff1 = this.DWT(buff1, lev);
                     for (i = 0; i < Bound1; i++) output[i, j] = buff1[i];
                 }
             }
@@ -192,14 +192,14 @@ namespace UMapx.Wavelet
                 for (i = 0; i < Bound1 << 1; i++)
                 {
                     for (j = 0; j < Bound2 << 1; j++) buff2[j] = output[i, j];
-                    buff2 = this.idwt(buff2, lev);
+                    buff2 = this.IDWT(buff2, lev);
                     for (j = 0; j < Bound2 << 1; j++) output[i, j] = buff2[j];
                 }
 
                 for (j = 0; j < Bound2 << 1; j++)
                 {
                     for (i = 0; i < Bound1 << 1; i++) buff1[i] = output[i, j];
-                    buff1 = this.idwt(buff1, lev);
+                    buff1 = this.IDWT(buff1, lev);
                     for (i = 0; i < Bound1 << 1; i++) output[i, j] = buff1[i];
                 }
             }
@@ -219,7 +219,7 @@ namespace UMapx.Wavelet
             // forward multi-scale wavelet transform
             for (int i = 0; i < nLevels; i++)
             {
-                A = this.dwt(A, i);
+                A = this.DWT(A, i);
             }
 
             return A;
@@ -237,7 +237,7 @@ namespace UMapx.Wavelet
             // backward multi-scale wavelet transform
             for (int i = nLevels; i > 0; i--)
             {
-                B = this.idwt(B, i);
+                B = this.IDWT(B, i);
             }
 
             return B;
@@ -272,14 +272,14 @@ namespace UMapx.Wavelet
                 for (i = 0; i < Bound1; i++)
                 {
                     for (j = 0; j < Bound2; j++) buff2[j] = output[i, j];
-                    buff2 = this.dwt(buff2, lev);
+                    buff2 = this.DWT(buff2, lev);
                     for (j = 0; j < Bound2; j++) output[i, j] = buff2[j];
                 }
 
                 for (j = 0; j < Bound2; j++)
                 {
                     for (i = 0; i < Bound1; i++) buff1[i] = output[i, j];
-                    buff1 = this.dwt(buff1, lev);
+                    buff1 = this.DWT(buff1, lev);
                     for (i = 0; i < Bound1; i++) output[i, j] = buff1[i];
                 }
             }
@@ -311,14 +311,14 @@ namespace UMapx.Wavelet
                 for (i = 0; i < Bound1 << 1; i++)
                 {
                     for (j = 0; j < Bound2 << 1; j++) buff2[j] = output[i, j];
-                    buff2 = this.idwt(buff2, lev);
+                    buff2 = this.IDWT(buff2, lev);
                     for (j = 0; j < Bound2 << 1; j++) output[i, j] = buff2[j];
                 }
 
                 for (j = 0; j < Bound2 << 1; j++)
                 {
                     for (i = 0; i < Bound1 << 1; i++) buff1[i] = output[i, j];
-                    buff1 = this.idwt(buff1, lev);
+                    buff1 = this.IDWT(buff1, lev);
                     for (i = 0; i < Bound1 << 1; i++) output[i, j] = buff1[i];
                 }
             }
@@ -334,7 +334,7 @@ namespace UMapx.Wavelet
         /// <param name="input">Input signal</param>
         /// <param name="level">Current level of transform</param>
         /// <returns>Output data</returns>
-        private float[] dwt(float[] input, int level)
+        internal float[] DWT(float[] input, int level)
         {
             // params
             int length = input.Length;
@@ -405,7 +405,7 @@ namespace UMapx.Wavelet
         /// <param name="input">Input signal</param>
         /// <param name="level">Current level of transform</param>
         /// <returns>Output data</returns>
-        private float[] idwt(float[] input, int level)
+        internal float[] IDWT(float[] input, int level)
         {
             // params
             int length = input.Length;
@@ -468,7 +468,7 @@ namespace UMapx.Wavelet
         /// <param name="input">Input signal</param>
         /// <param name="level">Current level of transform</param>
         /// <returns>Output data</returns>
-        private Complex32[] dwt(Complex32[] input, int level)
+        internal Complex32[] DWT(Complex32[] input, int level)
         {
             // params
             int length = input.Length;
@@ -539,7 +539,7 @@ namespace UMapx.Wavelet
         /// <param name="input">Input signal</param>
         /// <param name="level">Current level of transform</param>
         /// <returns>Output data</returns>
-        private Complex32[] idwt(Complex32[] input, int level)
+        internal Complex32[] IDWT(Complex32[] input, int level)
         {
             // params
             int length = input.Length;

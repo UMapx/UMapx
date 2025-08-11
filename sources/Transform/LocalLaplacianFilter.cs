@@ -345,7 +345,7 @@ namespace UMapx.Transform
         /// <param name="i">Increment</param>
         /// <param name="step">Step</param>
         /// <returns>Function</returns>
-        internal static float Rec(float x, float i, float step)
+        private static float Rec(float x, float i, float step)
         {
             float y = Math.Abs(x - i);
             return y < step ? (1.0f - y / step) : 0;
@@ -357,7 +357,7 @@ namespace UMapx.Transform
         /// <param name="step">Step</param>
         /// <param name="length">Length of table</param>
         /// <returns>Table</returns>
-        internal static float[] Rec(float i, float step, int length)
+        private static float[] Rec(float i, float step, int length)
         {
             float[] table = new float[length];
 
@@ -375,7 +375,7 @@ namespace UMapx.Transform
         /// <param name="factor">Factor</param>
         /// <param name="i">Increment</param>
         /// <returns>Function</returns>
-        internal static float Rem(float x, float sigma, float factor, float i)
+        private static float Rem(float x, float sigma, float factor, float i)
         {
             float z = 2 * sigma * sigma;
             float y = x - i;
@@ -389,7 +389,7 @@ namespace UMapx.Transform
         /// <param name="i">Increment</param>
         /// <param name="length">Length of table</param>
         /// <returns>Table</returns>
-        internal static float[] Rem(float sigma, float factor, float i, int length)
+        private static float[] Rem(float sigma, float factor, float i, int length)
         {
             float[] table = new float[length];
 

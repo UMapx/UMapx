@@ -441,7 +441,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
-        private static void BluesteinFFT(Complex32[] data, bool inverse)
+        internal static void BluesteinFFT(Complex32[] data, bool inverse)
         {
             int N = data.Length;
             int M = 1;
@@ -498,7 +498,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
-        private static void CooleyTukeyFFT(Complex32[] data, bool inverse)
+        internal static void CooleyTukeyFFT(Complex32[] data, bool inverse)
         {
             int n = data.Length;
             int m = Log2(n);

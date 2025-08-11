@@ -29900,7 +29900,7 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.dwt(System.Single[],System.Int32)">
+        <member name="M:UMapx.Wavelet.WaveletTransform.DWT(System.Single[],System.Int32)">
             <summary>
             Forward discrete wavelet transform.
             </summary>
@@ -29908,7 +29908,7 @@
             <param name="level">Current level of transform</param>
             <returns>Output data</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.idwt(System.Single[],System.Int32)">
+        <member name="M:UMapx.Wavelet.WaveletTransform.IDWT(System.Single[],System.Int32)">
             <summary>
             Backward discrete wavelet transform.
             </summary>
@@ -29916,7 +29916,7 @@
             <param name="level">Current level of transform</param>
             <returns>Output data</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.dwt(UMapx.Core.Complex32[],System.Int32)">
+        <member name="M:UMapx.Wavelet.WaveletTransform.DWT(UMapx.Core.Complex32[],System.Int32)">
             <summary>
             Forward discrete wavelet transform.
             </summary>
@@ -29924,7 +29924,7 @@
             <param name="level">Current level of transform</param>
             <returns>Output data</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.idwt(UMapx.Core.Complex32[],System.Int32)">
+        <member name="M:UMapx.Wavelet.WaveletTransform.IDWT(UMapx.Core.Complex32[],System.Int32)">
             <summary>
             Backward discrete wavelet transform.
             </summary>
