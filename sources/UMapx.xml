@@ -16951,6 +16951,108 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
+        <member name="T:UMapx.Imaging.CLAHE">
+            <summary>
+            Defines the Contrast Limited Adaptive Histogram Equalization (CLAHE).
+            Operates in RGB by equalizing luminance (Rec.709) with bilinear interpolation between tile LUTs.
+            <remarks>
+            More information can be found on the website:
+            https://uk.mathworks.com/help/visionhdl/ug/contrast-adaptive-histogram-equalization.html
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.CLAHE.#ctor(System.Int32,System.Int32,System.Single)">
+            <summary>
+            Initializes CLAHE filter.
+            </summary>
+            <param name="tilesX">Number of tiles horizontally (>=1)</param>
+            <param name="tilesY">Number of tiles vertically (>=1)</param>
+            <param name="clipLimit">Contrast limit factor (>=0). 0 disables clipping.</param>
+        </member>
+        <member name="P:UMapx.Imaging.CLAHE.TilesX">
+            <summary>
+            Gets or sets tiles horizontally.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.CLAHE.TilesY">
+            <summary>
+            Gets or sets tiles vertically.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.CLAHE.ClipLimit">
+            <summary>
+            Contrast limit factor. Absolute clip is: clipLimit * (tileArea / Bins).
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.CLAHE.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.CLAHE.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.CLAHE.MakeBreaks(System.Int32,System.Int32)">
+            <summary>
+            Computes tile breakpoints (inclusive/exclusive borders) along one axis,
+            dividing <paramref name="size"/> pixels into <paramref name="tiles"/> nearly equal tiles.
+            Remainder pixels are distributed by adding +1 to the first <c>rem</c> tiles.
+            Example: size=10, tiles=3 → breaks: [0, 4, 7, 10].
+            </summary>
+            <param name="size">Axis length in pixels (width or height).</param>
+            <param name="tiles">Number of tiles along this axis (>= 1).</param>
+            <returns>Array of length <c>tiles+1</c> with cumulative borders; segment i is [br[i], br[i+1]).</returns>
+        </member>
+        <member name="M:UMapx.Imaging.CLAHE.MakeCenters(System.Int32[])">
+            <summary>
+            Converts tile breakpoints to tile center coordinates on the pixel grid.
+            Center is computed as the midpoint between inclusive pixel indices:
+            mid([a, b)) ≈ (a + b - 1) / 2.
+            </summary>
+            <param name="br">Breaks as produced by <see cref="M:UMapx.Imaging.CLAHE.MakeBreaks(System.Int32,System.Int32)"/>.</param>
+            <returns>Array of tile center positions (float) aligned to pixel coordinates.</returns>
+        </member>
+        <member name="M:UMapx.Imaging.CLAHE.PrecomputeAxis(System.Int32,System.Single[])">
+            <summary>
+            Precomputes, for each pixel position along an axis, the indices of the left/right neighboring
+            tile centers and their interpolation weights. This is used for bilinear interpolation across tiles.
+            Complexity: O(n), no per-pixel binary search required.
+            </summary>
+            <param name="n">Axis length in pixels (width or height).</param>
+            <param name="centers">Tile center coordinates from <see cref="M:UMapx.Imaging.CLAHE.MakeCenters(System.Int32[])"/> (sorted ascending).</param>
+            <returns>
+            Tuple of:
+            <list type="bullet">
+            <item><description><c>i0[p]</c> – index of left tile center for pixel p</description></item>
+            <item><description><c>i1[p]</c> – index of right tile center for pixel p (i0 or i0+1)</description></item>
+            <item><description><c>w0[p]</c> – weight for left center</description></item>
+            <item><description><c>w1[p]</c> – weight for right center (1 - w0)</description></item>
+            </list>
+            </returns>
+        </member>
+        <member name="M:UMapx.Imaging.CLAHE.BuildTileLUT(System.Byte*,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Single)">
+            <summary>
+            Builds a CLAHE lookup table (LUT) for a single tile region:
+            1) computes luminance histogram (Rec.709) over the tile,
+            2) applies contrast limiting with excess redistribution,
+            3) converts clipped histogram to equalization LUT via CDF normalization.
+            </summary>
+            <param name="basePtr">Pointer to the first byte of the bitmap data.</param>
+            <param name="stride">Stride in bytes of the bitmap row (may be &gt; width*4).</param>
+            <param name="x0">Inclusive left bound of the tile.</param>
+            <param name="x1">Exclusive right bound of the tile.</param>
+            <param name="y0">Inclusive top bound of the tile.</param>
+            <param name="y1">Exclusive bottom bound of the tile.</param>
+            <param name="clipLimitFactor">
+            Relative clip limit factor. Absolute limit per bin is
+            <c>clip = clipLimitFactor * (tileArea / Bins)</c>. Use 0 to disable clipping.
+            </param>
+            <returns>Byte LUT of length 256 mapping input luminance → equalized luminance.</returns>
+        </member>
         <member name="T:UMapx.Imaging.Closing">
             <summary>
             Defines the closing filter.
