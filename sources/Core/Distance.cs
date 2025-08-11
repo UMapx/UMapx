@@ -477,8 +477,6 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Kulczynski(this float[] p, float[] q)
         {
-            // TODO: Rewrite the integer dissimilarities (Yule, Russel-Rao,...)
-            // using generics
             int n = p.Length;
             int tf = 0;
             int ft = 0;
