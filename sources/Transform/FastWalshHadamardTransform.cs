@@ -585,9 +585,13 @@ namespace UMapx.Transform
         /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
-        private void FWHT(float[] data)
+        internal void FWHT(float[] data)
         {
             int N = data.Length;
+
+            if (!Maths.IsPower(N, 2))
+                throw new Exception("Dimension of the signal must be a power of 2");
+
             int log2N = (int)Maths.Log2(N);
             float x_even, x_odd;
 
@@ -619,9 +623,13 @@ namespace UMapx.Transform
         /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
-        private void FWHT(Complex32[] data)
+        internal void FWHT(Complex32[] data)
         {
             int N = data.Length;
+
+            if (!Maths.IsPower(N, 2))
+                throw new Exception("Dimension of the signal must be a power of 2");
+
             int log2N = (int)Maths.Log2(N);
             Complex32 x_even, x_odd;
 
