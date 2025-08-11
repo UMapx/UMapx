@@ -31,7 +31,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="tilesX">Number of tiles horizontally (>=1)</param>
         /// <param name="tilesY">Number of tiles vertically (>=1)</param>
-        /// <param name="clipLimit">Contrast limit factor (>=0). 0 disables clipping.</param>
+        /// <param name="clipLimit">Contrast limit factor (>=0). 0 disables clipping</param>
         public CLAHE(int tilesX = 8, int tilesY = 8, float clipLimit = 2.0f)
         {
             TilesX = tilesX;
