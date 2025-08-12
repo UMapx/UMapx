@@ -326,24 +326,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LoGaussian(int m, int l, float sigma)
         {
-            int r1 = m / 2;
-            int r2 = l / 2;
-            float[,] H = new float[m, l];
-            float sigma2 = sigma * sigma;
-            float f0 = -1.0f / (Maths.Pi * sigma2 * sigma2);
-            float f1 = 2.0f * sigma2;
-            float kernel;
-            int i, j, x, y;
-
-            for (y = -r1, i = 0; i < m; y++, i++)
-            {
-                for (x = -r2, j = 0; j < l; x++, j++)
-                {
-                    kernel = (x * x + y * y) / f1;
-                    H[i, j] = f0 * (1.0f - kernel) * Maths.Exp(-kernel);
-                }
-            }
-            return new Convolution(H);
+            return new Convolution(Operator.LoGaussian(m, l, sigma));
         }
         /// <summary>
         /// Implements the construction of the Gaussian blur filter.
@@ -354,19 +337,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Gaussian(int m, int l, float sigma)
         {
-            int r1 = m / 2;
-            int r2 = l / 2;
-            float[,] H = new float[m, l];
-            int i, j, x, y;
-
-            for (y = -r1, i = 0; i < m; y++, i++)
-            {
-                for (x = -r2, j = 0; j < l; x++, j++)
-                {
-                    H[i, j] = Kernel.Gaussian(x, sigma) * Kernel.Gaussian(y, sigma);
-                }
-            }
-            return new Convolution(H);
+            return new Convolution(Operator.Gaussian(m, l, sigma));
         }
         /// <summary>
         /// Implements the construction of the "unsharp masking" filter.
@@ -377,37 +348,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Unsharp(int m, int l, float sigma)
         {
-            float[,] G = new float[m, l];
-            int i, j, x, y;
-            int r1 = m / 2;
-            int r2 = l / 2;
-
-            for (y = -r1, i = 0; i < m; y++, i++)
-            {
-                for (x = -r2, j = 0; j < l; x++, j++)
-                {
-                    G[i, j] = Kernel.Gaussian(x, sigma) * Kernel.Gaussian(y, sigma);
-                }
-            }
-
-            float[,] invG = new float[m, l];
-            float max = G[0, 0];
-            float summary = 0;
-            float v, iv;
-
-            for (i = 0; i < m; i++)
-            {
-                for (j = 0; j < l; j++)
-                {
-                    v = G[i, j] / max;
-                    iv = v > byte.MaxValue ? byte.MaxValue : (int)v;
-                    invG[i, j] = -iv;
-                    summary += iv;
-                }
-            }
-
-            invG[m / 2, l / 2] = 2 * summary - invG[m / 2, l / 2];
-            return new Convolution(invG);
+            return new Convolution(Operator.Unsharp(m, l, sigma));
         }
         /// <summary>
         /// Implements the construction of the high-pass filter.
@@ -418,20 +359,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution HighPass(int m, int l, float boost)
         {
-            int r1 = m / 2;
-            int r2 = l / 2;
-            float[,] H = new float[m, l];
-            int i, j;
-
-            for (i = 0; i < m; i++)
-            {
-                for (j = 0; j < l; j++)
-                {
-                    H[i, j] = -1;
-                }
-            }
-            H[r1, r2] = boost;
-            return new Convolution(H);
+            return new Convolution(Operator.HighPass(m, l, boost));
         }
         /// <summary>
         /// Implements the construction of the low-pass filter.
@@ -441,7 +369,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LowPass(int m, int l)
         {
-            return Convolution.HighPass(m, l, 1);
+            return new Convolution(Operator.LowPass(m, l));
         }
         /// <summary>
         /// Implements the construction of the emboss filter.
@@ -450,14 +378,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Emboss(int n)
         {
-            float[,] H = new float[n, n];
-            int r = n - 1, r2 = r / 2;
-
-            H[0, 0] = -2; H[0, r2] = -1; //         0;
-            H[r2, 0] = -1; H[r2, r2] = 1; H[r2, r] = 1;
-            H[r, r2] = 1; H[r, r] = 2; //         0;
-
-            return new Convolution(H);
+            return new Convolution(Operator.Emboss(n));
         }
         #endregion
 
@@ -468,7 +389,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Roberts()
         {
-            return new Convolution(Operators.Roberts());
+            return new Convolution(Operator.Roberts());
         }
         /// <summary>
         /// Implements the construction of the Prewitt operator [3 x 3].
@@ -476,7 +397,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Prewitt()
         {
-            return new Convolution(Operators.Prewitt());
+            return new Convolution(Operator.Prewitt());
         }
         /// <summary>
         /// Implements the construction of the Sobel operator [3 x 3].
@@ -484,7 +405,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Sobel()
         {
-            return new Convolution(Operators.Sobel());
+            return new Convolution(Operator.Sobel());
         }
         /// <summary>
         /// Implements the construction of the Scharr operator [3 x 3].
@@ -492,7 +413,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Scharr()
         {
-            return new Convolution(Operators.Scharr());
+            return new Convolution(Operator.Scharr());
         }
         /// <summary>
         /// Implements the construction of the Laplacian operator [3 x 3].
@@ -500,7 +421,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Laplacian()
         {
-            return new Convolution(Operators.Laplacian());
+            return new Convolution(Operator.Laplacian());
         }
         /// <summary>
         /// Implements the construction of the diagonal Laplacian operator [3 x 3].
@@ -508,7 +429,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LaplacianDiagonal()
         {
-            return new Convolution(Operators.LaplacianDiagonal());
+            return new Convolution(Operator.LaplacianDiagonal());
         }
         /// <summary>
         /// Implements the construction of the inverted Laplacian operator [3 x 3].
@@ -516,7 +437,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LaplacianInvert()
         {
-            return new Convolution(Operators.LaplacianInvert());
+            return new Convolution(Operator.LaplacianInvert());
         }
         #endregion
 
@@ -528,7 +449,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Kirsh(Gradient direction)
         {
-            return new Convolution(Matrice.Kirsh(direction));
+            return new Convolution(Operator.Kirsh(direction));
         }
         /// <summary>
         /// Implements the construction of the Roberts operator [3 x 3]. [2 x 2].
@@ -537,7 +458,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Roberts(Gradient direction)
         {
-            return new Convolution(Matrice.Roberts(direction));
+            return new Convolution(Operator.Roberts(direction));
         }
         #endregion
     }
