@@ -355,7 +355,7 @@ namespace UMapx.Window
             // Then we apply the quarter-phase e^{+jπk/2} (accounts for the (n - M/4) shift).
             //
             // Final normalization:
-            //   gain = √M / (√N · √2) = 1 / (√L · √2).
+            //   gain = √M / (√N).
             //
             // Output packing (two channels):
             //   B_main[u] =  P * gain
@@ -364,7 +364,7 @@ namespace UMapx.Window
             var Sp_main = new Complex32[Mloc];
             var Sp_half = new Complex32[Mloc];
 
-            float gain = Maths.Sqrt(Mloc) / (Maths.Sqrt(N) * Maths.Sqrt(2f)); // = 1/(√L·√2)
+            float gain = Maths.Sqrt(Mloc) / Maths.Sqrt(N);
 
             for (int l = 0; l < L; l++)
             {
@@ -388,7 +388,7 @@ namespace UMapx.Window
                     int u = l * Mloc + k;
 
                     // Two-channel output that matches the slow matrix reference (G^H A):
-                    B[u + 0] = P * gain;                  // main channel
+                    B[u + 0] =                P * gain;   // main channel
                     B[u + N] = -Complex32.I * Q * gain;   // half channel (−j factor)
                 }
             }
@@ -407,7 +407,7 @@ namespace UMapx.Window
         /// This inverts the forward packing:
         ///   forward: B_main =  P * gain
         ///            B_half = (-j) Q * gain
-        ///   where gain = √M / (√N · √2) = 1 / (√L · √2).
+        ///   where gain = √M / (√N) = 1 / (2√L).
         ///
         /// Inverse mapping:
         ///   P = B_main / gain
@@ -447,9 +447,9 @@ namespace UMapx.Window
             var Y_half = new Complex32[Mloc];
 
             // gain used in the forward:
-            //   gain = 1 / (√L · √2)
+            //   gain = 1 / (2√L)
             // hence inverse gain:
-            float invGain = 1.0f / Maths.Sqrt(2 * L);
+            float invGain = 1.0f / (2 * Maths.Sqrt(L));
 
             for (int l = 0; l < L; l++)
             {

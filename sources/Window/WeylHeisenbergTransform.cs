@@ -122,8 +122,8 @@ namespace UMapx.Window
                         i = Maths.Mod(n - l * M, N);
                         j = Maths.Mod(n + M / 2 - l * M, N);
 
-                        G[n, u + 0] =           g0[i] * exp / Maths.Sqrt(2);
-                        G[n, u + N] = Maths.I * g0[j] * exp / Maths.Sqrt(2);
+                        G[n, u + 0] =           g0[i] * exp;
+                        G[n, u + N] = Maths.I * g0[j] * exp;
                     }
                 }
             });
@@ -242,7 +242,7 @@ namespace UMapx.Window
             int N = B.Length;
             Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
             Complex32[] A = Matrice.Dot(B, U);
-            return A;
+            return A.Div(2);
         }
         /// <summary>
         /// Forward Weyl-Heisenberg transform.
@@ -294,7 +294,7 @@ namespace UMapx.Window
             {
                 A = B.Dot(V.Hermitian());
             }
-            return A;
+            return A.Div(2);
         }
         /// <summary>
         /// Forward Weyl-Heisenberg transform.

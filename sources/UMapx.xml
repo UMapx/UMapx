@@ -30454,7 +30454,7 @@
              This inverts the forward packing:
                forward: B_main =  P * gain
                         B_half = (-j) Q * gain
-               where gain = √M / (√N · √2) = 1 / (√L · √2).
+               where gain = √M / (√N) = 1 / (2√L).
             
              Inverse mapping:
                P = B_main / gain
