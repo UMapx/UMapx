@@ -468,7 +468,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Roberts()
         {
-            return new Convolution(Matrice.Roberts());
+            return new Convolution(Operators.Roberts());
         }
         /// <summary>
         /// Implements the construction of the Prewitt operator [3 x 3].
@@ -476,7 +476,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Prewitt()
         {
-            return new Convolution(Matrice.Prewitt());
+            return new Convolution(Operators.Prewitt());
         }
         /// <summary>
         /// Implements the construction of the Sobel operator [3 x 3].
@@ -484,7 +484,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Sobel()
         {
-            return new Convolution(Matrice.Sobel());
+            return new Convolution(Operators.Sobel());
         }
         /// <summary>
         /// Implements the construction of the Scharr operator [3 x 3].
@@ -492,7 +492,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Scharr()
         {
-            return new Convolution(Matrice.Scharr());
+            return new Convolution(Operators.Scharr());
         }
         /// <summary>
         /// Implements the construction of the Laplacian operator [3 x 3].
@@ -500,7 +500,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Laplacian()
         {
-            return new Convolution(Matrice.Laplacian());
+            return new Convolution(Operators.Laplacian());
         }
         /// <summary>
         /// Implements the construction of the diagonal Laplacian operator [3 x 3].
@@ -508,7 +508,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LaplacianDiagonal()
         {
-            return new Convolution(Matrice.LaplacianDiagonal());
+            return new Convolution(Operators.LaplacianDiagonal());
         }
         /// <summary>
         /// Implements the construction of the inverted Laplacian operator [3 x 3].
@@ -516,7 +516,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LaplacianInvert()
         {
-            return new Convolution(Matrice.LaplacianInvert());
+            return new Convolution(Operators.LaplacianInvert());
         }
         #endregion
 
