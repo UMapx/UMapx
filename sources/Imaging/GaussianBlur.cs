@@ -30,7 +30,12 @@ namespace UMapx.Imaging
         /// <param name="size">Filter size</param>
         /// <param name="sigma">Sigma</param>
         /// <param name="boxes">Number of boxes (>0)</param>
-        public GaussianBlur(SizeInt size, SizeFloat sigma, int boxes = 3) : this(size.Width, size.Height, sigma.Width, sigma.Height, boxes) { }
+        public GaussianBlur(SizeInt size, SizeFloat sigma, int boxes = 3)
+        {
+            this.Size = size;
+            this.Sigma = sigma;
+            this.Boxes = boxes;
+        }
         /// <summary>
         /// Initializes the Gaussian blur filter.
         /// </summary>
