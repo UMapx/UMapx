@@ -10071,14 +10071,14 @@
             <summary>
             Implements the construction of the emboss filter.
             </summary>
-            <param name="n">Size</param>
+            <param name="radius">Size</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Operator.MotionBlur(System.Int32,System.Single,System.Single)">
             <summary>
             Implements the motion blur filter.
             </summary>
-            <param name="length">Kernel length</param>
+            <param name="radius">Size</param>
             <param name="angle">Angle in degrees</param>
             <param name="blur">Edge blur factor [0, 1]</param>
         </member>
@@ -17702,14 +17702,14 @@
             <summary>
             Implements the construction of the emboss filter.
             </summary>
-            <param name="n">Size</param>
+            <param name="radius">Size</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Imaging.Convolution.MotionBlur(System.Int32,System.Single,System.Single)">
             <summary>
             Implements the motion blur filter.
             </summary>
-            <param name="length">Kernel length</param>
+            <param name="radius">Size</param>
             <param name="angle">Angle in degrees</param>
             <param name="blur">Edge blur factor [0, 1]</param>
         </member>
@@ -19720,6 +19720,73 @@
             <summary>
             Implements filter rebuilding.
             </summary>
+        </member>
+        <member name="T:UMapx.Imaging.Kuwahara">
+            <summary>
+            Defines the Kuwahara filter.
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Kuwahara_filter
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Kuwahara.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes the Kuwahara filter.
+            </summary>
+            <param name="radius">Radius</param>
+            <param name="windows">Number of windows (4 or 8)</param>
+        </member>
+        <member name="M:UMapx.Imaging.Kuwahara.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes the Kuwahara filter.
+            </summary>
+            <param name="width">Filter width</param>
+            <param name="height">Filter height</param>
+            <param name="windows">Number of windows (4 or 8)</param>
+        </member>
+        <member name="M:UMapx.Imaging.Kuwahara.#ctor(UMapx.Core.SizeInt,System.Int32)">
+            <summary>
+            Initializes the Kuwahara filter.
+            </summary>
+            <param name="size">Filter size</param>
+            <param name="windows">Number of windows (4 or 8)</param>
+        </member>
+        <member name="P:UMapx.Imaging.Kuwahara.Size">
+            <summary>
+            Gets or sets the filter size.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.Kuwahara.Windows">
+            <summary>
+            Gets or sets the number of windows (4 or 8).
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Kuwahara.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Kuwahara.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.Kuwahara.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Kuwahara.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
         </member>
         <member name="T:UMapx.Imaging.LevelsCorrection">
             <summary>

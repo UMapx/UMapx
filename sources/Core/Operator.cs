@@ -295,12 +295,12 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the emboss filter.
         /// </summary>
-        /// <param name="n">Size</param>
+        /// <param name="radius">Size</param>
         /// <returns>Matrix</returns>
-        public static float[,] Emboss(int n)
+        public static float[,] Emboss(int radius)
         {
-            float[,] H = new float[n, n];
-            int r = n - 1, r2 = r / 2;
+            float[,] H = new float[radius, radius];
+            int r = radius - 1, r2 = r / 2;
 
             H[0, 0] = -2; H[0, r2] = -1;
             H[r2, 0] = -1; H[r2, r2] = 1; H[r2, r] = 1;
@@ -311,15 +311,15 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the motion blur filter.
         /// </summary>
-        /// <param name="length">Kernel length</param>
+        /// <param name="radius">Size</param>
         /// <param name="angle">Angle in degrees</param>
         /// <param name="blur">Edge blur factor [0, 1]</param>
-        public static float[,] MotionBlur(int length, float angle, float blur)
+        public static float[,] MotionBlur(int radius, float angle, float blur)
         {
-            if (length < 1) length = 1;
-            if (length % 2 == 0) length++;
-            int size = length;
-            int radius = size / 2;
+            if (radius < 1) radius = 1;
+            if (radius % 2 == 0) radius++;
+            int size = radius;
+            int radius2 = size / 2;
             float[,] m = new float[size, size];
             double theta = angle * Maths.Pi / 180.0;
             double cos = Math.Cos(theta);
@@ -327,14 +327,14 @@ namespace UMapx.Core
 
             for (int i = 0; i < size; i++)
             {
-                double t = i - radius;
-                int x = (int)Math.Round(radius + t * cos);
-                int y = (int)Math.Round(radius + t * sin);
+                double t = i - radius2;
+                int x = (int)Math.Round(radius2 + t * cos);
+                int y = (int)Math.Round(radius2 + t * sin);
                 if (x < 0 || x >= size || y < 0 || y >= size) continue;
                 float w = 1f;
                 if (blur > 0)
                 {
-                    float f = 1f - Math.Abs((float)t) / radius;
+                    float f = 1f - Math.Abs((float)t) / radius2;
                     w = (1 - blur) + blur * f;
                 }
                 m[y, x] = w;

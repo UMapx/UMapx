@@ -374,21 +374,21 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the construction of the emboss filter.
         /// </summary>
-        /// <param name="n">Size</param>
+        /// <param name="radius">Size</param>
         /// <returns>Matrix</returns>
-        public static Convolution Emboss(int n)
+        public static Convolution Emboss(int radius)
         {
-            return new Convolution(Operator.Emboss(n));
+            return new Convolution(Operator.Emboss(radius));
         }
         /// <summary>
         /// Implements the motion blur filter.
         /// </summary>
-        /// <param name="length">Kernel length</param>
+        /// <param name="radius">Size</param>
         /// <param name="angle">Angle in degrees</param>
         /// <param name="blur">Edge blur factor [0, 1]</param>
-        public static Convolution MotionBlur(int length, float angle, float blur)
+        public static Convolution MotionBlur(int radius, float angle, float blur)
         {
-            return new Convolution(Operator.MotionBlur(length, angle, blur));
+            return new Convolution(Operator.MotionBlur(radius, angle, blur));
         }
         #endregion
 
