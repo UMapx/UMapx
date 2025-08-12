@@ -4901,6 +4901,85 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Vector concatenation
+        /// <summary>
+        /// Implements vector concatenation.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
+        public static float[] Concat(this float[] a, float[] b)
+        {
+            int na = a.Length, nb = b.Length, i;
+            float[] v = new float[na + nb];
+
+            for (i = 0; i < na; i++)
+                v[i] = a[i];
+
+            for (i = 0; i < nb; i++)
+                v[na + i] = b[i];
+
+            return v;
+        }
+        /// <summary>
+        /// Implements vector concatenation.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Concat(this Complex32[] a, Complex32[] b)
+        {
+            int na = a.Length, nb = b.Length, i;
+            Complex32[] v = new Complex32[na + nb];
+
+            for (i = 0; i < na; i++)
+                v[i] = a[i];
+
+            for (i = 0; i < nb; i++)
+                v[na + i] = b[i];
+
+            return v;
+        }
+        /// <summary>
+        /// Implements vector concatenation.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Concat(this Complex32[] a, float[] b)
+        {
+            int na = a.Length, nb = b.Length, i;
+            Complex32[] v = new Complex32[na + nb];
+
+            for (i = 0; i < na; i++)
+                v[i] = a[i];
+
+            for (i = 0; i < nb; i++)
+                v[na + i] = b[i];
+
+            return v;
+        }
+        /// <summary>
+        /// Implements vector concatenation.
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="b">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Concat(this float[] a, Complex32[] b)
+        {
+            int na = a.Length, nb = b.Length, i;
+            Complex32[] v = new Complex32[na + nb];
+
+            for (i = 0; i < na; i++)
+                v[i] = a[i];
+
+            for (i = 0; i < nb; i++)
+                v[na + i] = b[i];
+
+            return v;
+        }
+        #endregion
+
         #region Vector as diagonal matrix
         /// <summary>
         /// Implements the scalar product of a matrix by a vector of the form: A * diag(v).
@@ -5246,85 +5325,6 @@ namespace UMapx.Core
             }
 
             return temp;
-        }
-        #endregion
-
-        #region Vector extrude
-        /// <summary>
-        /// Implements vector concating.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="b">Array</param>
-        /// <returns>Array</returns>
-        public static float[] Concat(this float[] a, float[] b)
-        {
-            int na = a.Length, nb = b.Length, i;
-            float[] v = new float[na + nb];
-
-            for (i = 0; i < na; i++)
-                v[i] = a[i];
-
-            for (i = 0; i < nb; i++)
-                v[na + i] = b[i];
-
-            return v;
-        }
-        /// <summary>
-        /// Implements vector concating.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="b">Array</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Concat(this Complex32[] a, Complex32[] b)
-        {
-            int na = a.Length, nb = b.Length, i;
-            Complex32[] v = new Complex32[na + nb];
-
-            for (i = 0; i < na; i++)
-                v[i] = a[i];
-
-            for (i = 0; i < nb; i++)
-                v[na + i] = b[i];
-
-            return v;
-        }
-        /// <summary>
-        /// Implements vector concating.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="b">Array</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Concat(this Complex32[] a, float[] b)
-        {
-            int na = a.Length, nb = b.Length, i;
-            Complex32[] v = new Complex32[na + nb];
-
-            for (i = 0; i < na; i++)
-                v[i] = a[i];
-
-            for (i = 0; i < nb; i++)
-                v[na + i] = b[i];
-
-            return v;
-        }
-        /// <summary>
-        /// Implements vector concating.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="b">Array</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Concat(this float[] a, Complex32[] b)
-        {
-            int na = a.Length, nb = b.Length, i;
-            Complex32[] v = new Complex32[na + nb];
-
-            for (i = 0; i < na; i++)
-                v[i] = a[i];
-
-            for (i = 0; i < nb; i++)
-                v[na + i] = b[i];
-
-            return v;
         }
         #endregion
 

@@ -8069,6 +8069,38 @@
             <param name="m">Vector</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Concat(System.Single[],System.Single[])">
+            <summary>
+            Implements vector concatenation.
+            </summary>
+            <param name="a">Array</param>
+            <param name="b">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Concat(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Implements vector concatenation.
+            </summary>
+            <param name="a">Array</param>
+            <param name="b">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Concat(UMapx.Core.Complex32[],System.Single[])">
+            <summary>
+            Implements vector concatenation.
+            </summary>
+            <param name="a">Array</param>
+            <param name="b">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Concat(System.Single[],UMapx.Core.Complex32[])">
+            <summary>
+            Implements vector concatenation.
+            </summary>
+            <param name="a">Array</param>
+            <param name="b">Array</param>
+            <returns>Array</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[0:,0:],System.Single[],System.Boolean)">
             <summary>
             Implements the scalar product of a matrix by a vector of the form: A * diag(v).
@@ -8139,38 +8171,6 @@
             <param name="m">Matrix</param>
             <param name="v">Array</param>
             <param name="inverse">Use inverse to diagonal matrix or not</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Concat(System.Single[],System.Single[])">
-            <summary>
-            Implements vector concating.
-            </summary>
-            <param name="a">Array</param>
-            <param name="b">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Concat(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
-            <summary>
-            Implements vector concating.
-            </summary>
-            <param name="a">Array</param>
-            <param name="b">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Concat(UMapx.Core.Complex32[],System.Single[])">
-            <summary>
-            Implements vector concating.
-            </summary>
-            <param name="a">Array</param>
-            <param name="b">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Core.Matrice.Concat(System.Single[],UMapx.Core.Complex32[])">
-            <summary>
-            Implements vector concating.
-            </summary>
-            <param name="a">Array</param>
-            <param name="b">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[],System.Single[])">
