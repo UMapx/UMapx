@@ -8141,33 +8141,33 @@
             <param name="inverse">Use inverse to diagonal matrix or not</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Extrude(System.Single[],System.Single[])">
+        <member name="M:UMapx.Core.Matrice.Concat(System.Single[],System.Single[])">
             <summary>
-            Implements vector extruding.
+            Implements vector concating.
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Extrude(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+        <member name="M:UMapx.Core.Matrice.Concat(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
-            Implements vector extruding.
+            Implements vector concating.
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Extrude(UMapx.Core.Complex32[],System.Single[])">
+        <member name="M:UMapx.Core.Matrice.Concat(UMapx.Core.Complex32[],System.Single[])">
             <summary>
-            Implements vector extruding.
+            Implements vector concating.
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Extrude(System.Single[],UMapx.Core.Complex32[])">
+        <member name="M:UMapx.Core.Matrice.Concat(System.Single[],UMapx.Core.Complex32[])">
             <summary>
-            Implements vector extruding.
+            Implements vector concating.
             </summary>
             <param name="a">Array</param>
             <param name="b">Array</param>

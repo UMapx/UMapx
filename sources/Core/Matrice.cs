@@ -5251,12 +5251,12 @@ namespace UMapx.Core
 
         #region Vector extrude
         /// <summary>
-        /// Implements vector extruding.
+        /// Implements vector concating.
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static float[] Extrude(this float[] a, float[] b)
+        public static float[] Concat(this float[] a, float[] b)
         {
             int na = a.Length, nb = b.Length, i;
             float[] v = new float[na + nb];
@@ -5270,12 +5270,12 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Implements vector extruding.
+        /// Implements vector concating.
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex32[] Extrude(this Complex32[] a, Complex32[] b)
+        public static Complex32[] Concat(this Complex32[] a, Complex32[] b)
         {
             int na = a.Length, nb = b.Length, i;
             Complex32[] v = new Complex32[na + nb];
@@ -5289,12 +5289,12 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Implements vector extruding.
+        /// Implements vector concating.
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex32[] Extrude(this Complex32[] a, float[] b)
+        public static Complex32[] Concat(this Complex32[] a, float[] b)
         {
             int na = a.Length, nb = b.Length, i;
             Complex32[] v = new Complex32[na + nb];
@@ -5308,12 +5308,12 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Implements vector extruding.
+        /// Implements vector concating.
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="b">Array</param>
         /// <returns>Array</returns>
-        public static Complex32[] Extrude(this float[] a, Complex32[] b)
+        public static Complex32[] Concat(this float[] a, Complex32[] b)
         {
             int na = a.Length, nb = b.Length, i;
             Complex32[] v = new Complex32[na + nb];

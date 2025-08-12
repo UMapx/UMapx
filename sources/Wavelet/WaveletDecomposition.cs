@@ -77,7 +77,7 @@ namespace UMapx.Wavelet
             // backward multi-scale wavelet decomposition
             for (int i = 0; i < nLevels; i++)
             {
-                A = Matrice.Extrude(A, B[i]);
+                A = Matrice.Concat(A, B[i]);
             }
 
             return WaveletTransform.Backward(A);
@@ -195,7 +195,7 @@ namespace UMapx.Wavelet
             // backward multi-scale wavelet decomposition
             for (int i = 0; i < nLevels; i++)
             {
-                A = Matrice.Extrude(A, B[i]);
+                A = Matrice.Concat(A, B[i]);
             }
 
             return WaveletTransform.Backward(A);
