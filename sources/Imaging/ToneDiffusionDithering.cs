@@ -87,7 +87,7 @@ namespace UMapx.Imaging
         #endregion
 
         #region Static methods
-        private static System.Random rand = new System.Random();
+        private static readonly Random rand = new Random();
         /// <summary>
         /// Initializes the order dithering filter.
         /// <remarks>

@@ -98,9 +98,9 @@ namespace UMapx.Core
 
         #region Jagged array
         /// <summary>
-        /// 
+        /// Random generator.
         /// </summary>
-        private static Random rnd = new Random();
+        private static readonly Random rnd = new Random();
         /// <summary>
         /// Implements the construction of a vector of random numbers, the values of which are distributed UMapxing to a uniform distribution.
         /// </summary>

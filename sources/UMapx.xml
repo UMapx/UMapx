@@ -4225,7 +4225,7 @@
         </member>
         <member name="F:UMapx.Core.Jagged.rnd">
             <summary>
-            
+            Random generator.
             </summary>
         </member>
         <member name="M:UMapx.Core.Jagged.Rand(System.Int32,System.Int32)">

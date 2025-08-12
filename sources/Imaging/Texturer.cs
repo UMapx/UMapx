@@ -96,7 +96,7 @@ namespace UMapx.Imaging
         #endregion
 
         #region Static methods
-        private static Random rand = new Random();
+        private static readonly Random rand = new Random();
         private static int r;
 
         /// <summary>

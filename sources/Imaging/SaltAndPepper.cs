@@ -16,7 +16,7 @@ namespace UMapx.Imaging
     {
         #region Private data
         private double amount = 10;
-        private Random generator = new Random();
+        private readonly Random generator = new Random();
         #endregion
 
         #region Filter components
