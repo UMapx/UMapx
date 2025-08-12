@@ -424,7 +424,7 @@ namespace UMapx.Window
         {
             int N = C.N;
             if (!Maths.IsPower(N, 2)) throw new Exception("Dimension of the signal must be a power of 2");
-            if (B.Length != 2 * N) throw new Exception("Expect 2N coefficients (main + half).");
+            if (B.Length != 2 * N) throw new Exception("Expect 2N coefficients (main + half)");
 
             int Mloc = C.M;
             if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
