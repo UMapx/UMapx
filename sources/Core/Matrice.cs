@@ -2759,9 +2759,6 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Concat(this Complex32[,] A, float[,] B, Direction direction)
         {
-            if (A == null) throw new ArgumentNullException(nameof(A));
-            if (B == null) throw new ArgumentNullException(nameof(B));
-
             int aRows = A.GetLength(0), aCols = A.GetLength(1);
             int bRows = B.GetLength(0), bCols = B.GetLength(1);
 
@@ -2801,9 +2798,6 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Concat(this float[,] A, Complex32[,] B, Direction direction)
         {
-            if (A == null) throw new ArgumentNullException(nameof(A));
-            if (B == null) throw new ArgumentNullException(nameof(B));
-
             int aRows = A.GetLength(0), aCols = A.GetLength(1);
             int bRows = B.GetLength(0), bCols = B.GetLength(1);
 
