@@ -18826,11 +18826,12 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.Grid.#ctor(System.Int32)">
+        <member name="M:UMapx.Imaging.Grid.#ctor(System.Int32,System.Int32)">
             <summary>
             Initializes the grid filter.
             </summary>
             <param name="value">Value [0, 100]</param>
+            <param name="thickness">Thickness (>0)</param>
         </member>
         <member name="M:UMapx.Imaging.Grid.#ctor">
             <summary>
@@ -18840,6 +18841,11 @@
         <member name="P:UMapx.Imaging.Grid.Value">
             <summary>
             Gets or sets the value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.Grid.Thickness">
+            <summary>
+            Gets or sets the thickness (>0).
             </summary>
         </member>
         <member name="M:UMapx.Imaging.Grid.Rebuild">
@@ -21326,13 +21332,14 @@
             <param name="value">Value [0, 100]</param>
             <returns>Array of ordered pairs of X and Y</returns>
         </member>
-        <member name="M:UMapx.Imaging.PointMatrix.Grid(System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.PointMatrix.Grid(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             Returns the point matrix.
             </summary>
             <param name="width">Image width</param>
             <param name="height">Image height</param>
             <param name="value">Value [0, 100]</param>
+            <param name="thickness">Tickness (>0)</param>
             <returns>Array of ordered pairs of X and Y</returns>
         </member>
         <member name="M:UMapx.Imaging.PointMatrix.Water(System.Int32,System.Int32,System.Int32)">

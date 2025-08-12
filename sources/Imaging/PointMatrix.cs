@@ -156,22 +156,25 @@ namespace UMapx.Imaging
         /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] Pixelate(int width, int height, int value)
         {
-            PointInt[,] pixelate = new PointInt[width, height];
+            if (value < 1) value = 1;
 
-            Parallel.For(0, width, x =>
+            var pixelate = new PointInt[width, height];
+
+            int maxX0 = Math.Max(0, width - value);
+            int maxY0 = Math.Max(0, height - value);
+
+            Parallel.For(0, height, y =>
             {
-                int y, newX, newY;
+                int y0 = Math.Min(y / value * value, maxY0);
 
-                for (y = 0; y < height; y++)
+                for (int x = 0; x < width; x++)
                 {
-                    newX = (int)(value - x % value);
-                    newY = (int)(value - y % value);
+                    int x0 = Math.Min(x / value * value, maxX0);
 
-                    pixelate[x, y].X = newX - value;
-                    pixelate[x, y].Y = newY - value;
+                    pixelate[x, y].X = x0 - x;
+                    pixelate[x, y].Y = y0 - y;
                 }
-            }
-            );
+            });
 
             return pixelate;
         }
@@ -181,32 +184,43 @@ namespace UMapx.Imaging
         /// <param name="width">Image width</param>
         /// <param name="height">Image height</param>
         /// <param name="value">Value [0, 100]</param>
+        /// <param name="thickness">Tickness (>0)</param>
         /// <returns>Array of ordered pairs of X and Y</returns>
-        public static PointInt[,] Grid(int width, int height, int value)
+        public static PointInt[,] Grid(int width, int height, int value, int thickness = 1)
         {
-            PointInt[,] grid = new PointInt[width, height];
+            if (width <= 0 || height <= 0)
+                return new PointInt[width, height];
 
-            Parallel.For(0, width, x =>
+            if (value < 1) value = 1;
+            if (thickness < 1) thickness = 1;
+            if (thickness > value) thickness = value;
+
+            var grid = new PointInt[width, height];
+            int maxX0 = Math.Max(0, width - value);
+            int maxY0 = Math.Max(0, height - value);
+
+            Parallel.For(0, height, y =>
             {
-                int y, newX, newY;
+                int y0 = Math.Min(y / value * value, maxY0);
+                int offY = y - y0;
+                bool onH = offY < thickness;
 
-                for (y = 0; y < height; y++)
+                for (int x = 0; x < width; x++)
                 {
-                    newX = (int)(value - x % value);
-                    newY = (int)(value - y % value);
+                    int x0 = Math.Min(x / value * value, maxX0);
+                    int offX = x - x0;
+                    bool onV = offX < thickness;
 
-                    if (newX == value)
-                        grid[x, y].X = -x;
-                    else
-                        grid[x, y].X = newX - value;
+                    int dx = x0 - x;
+                    int dy = y0 - y;
 
-                    if (newY == value)
-                        grid[x, y].Y = -y;
-                    else
-                        grid[x, y].Y = newY - value;
+                    if (onV) dx = -x;
+                    if (onH) dy = -y;
+
+                    grid[x, y].X = dx;
+                    grid[x, y].Y = dy;
                 }
-            }
-            );
+            });
 
             return grid;
         }

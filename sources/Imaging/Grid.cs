@@ -14,6 +14,7 @@ namespace UMapx.Imaging
     {
         #region Private data
         private int value = 20;
+        private int thickness = 1;
         #endregion
 
         #region Filter components
@@ -21,9 +22,11 @@ namespace UMapx.Imaging
         /// Initializes the grid filter.
         /// </summary>
         /// <param name="value">Value [0, 100]</param>
-        public Grid(int value)
+        /// <param name="thickness">Thickness (>0)</param>
+        public Grid(int value, int thickness = 1)
         {
             Value = value;
+            Thickness = thickness;
         }
         /// <summary>
         /// Initializes the grid filter.
@@ -45,11 +48,26 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
+        /// Gets or sets the thickness (>0).
+        /// </summary>
+        public int Thickness
+        {
+            get
+            {
+                return this.thickness;
+            }
+            set
+            {
+                this.thickness = value;
+                this.rebuild = true;
+            }
+        }
+        /// <summary>
         /// Implements filter rebuilding.
         /// </summary>
         protected override void Rebuild()
         {
-            this.points = PointMatrix.Grid(this.width, this.height, this.value);
+            this.points = PointMatrix.Grid(this.width, this.height, this.value, this.thickness);
         }
         #endregion
     }
