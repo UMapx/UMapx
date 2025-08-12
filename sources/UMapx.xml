@@ -30320,14 +30320,6 @@
             <param name="m">Number of frequency shifts [4, N]</param>
             <param name="direction">Processing direction</param>
         </member>
-        <member name="P:UMapx.Window.FastWeylHeisenbergTransform.Complex">
-            <summary>
-            Use the complex transform or not.
-            <remarks>
-            The algorithm will be fast only for the forward transform, but will be equal to the original one.
-            </remarks>
-            </summary>
-        </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
             Forward Weyl-Heisenberg transform.
@@ -30356,23 +30348,62 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache,System.Boolean)">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <param name="C">Polyphase cache</param>
-            <param name="complex">Complex or not</param>
-            <returns>Array</returns>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
+             <summary>
+             Forward fast Weyl–Heisenberg transform (2-channel packing, length = 2N).
+             
+             Input:
+               A ∈ ℂ^N,  N = M * L,  M is even.
+             
+             Output:
+               B ∈ ℂ^{2N}, split as:
+                 B_main[u] = B[u + 0],   u = l*M + k
+                 B_half[u] = B[u + N],   u = l*M + k
+            
+             This matches the column-wise “slow” matrix reference G ∈ ℂ^{N×2N} with columns:
+               main: g[i] * exp( j*2π*k/M * (n - M/4) ) / √2
+               half: j*g[j] * exp( j*2π*k/M * (n - M/4) ) / √2
+            
+             Analysis (i.e., G^H A) realized via:
+               - polyphase split over residue n0 (mod M) and FFT_L along r,
+               - frequency-domain correlations with conj(S_hat/T_hat),
+               - carry-phase compensation for the half branch when (n0 + M/2) wraps,
+               - DFT_M over n0 (via forward FFT over n0) + quarter-phase e^{+jπk/2},
+               - normalization gain = √M / (√N · √2) = 1 / (√L · √2).
+            
+             Notes:
+               Caches C.S_hat, C.T_hat must be built from the SAME orthonormalized window
+               as used by the slow matrix builder, otherwise values will differ by window scaling.
+             </summary>
+             <param name="A">Input signal (length N)</param>
+             <param name="C">Polyphase cache (built for N,M,window)</param>
+             <returns>B of length 2N: main (0..N-1) and half (N..2N-1) branches</returns>
         </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IFWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache,System.Boolean)">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <param name="C">Polyphase cache</param>
-            <param name="complex">Complex or not</param>
-            <returns>Array</returns>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IFWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
+             <summary>
+             Inverse fast Weyl–Heisenberg transform (2-channel input, length = 2N).
+            
+             Input:
+               B ∈ ℂ^{2N}, split as:
+                 B_main[u] = B[u + 0],   u = l*M + k
+                 B_half[u] = B[u + N],   u = l*M + k
+            
+             This inverts the forward packing:
+               forward: B_main =  P * gain
+                        B_half = (-j) Q * gain
+               where gain = √M / (√N · √2) = 1 / (√L · √2).
+            
+             Inverse mapping:
+               P = B_main / gain
+               Q =  j * B_half / gain
+            
+             Then we undo the quarter-phase e^{+jπk/2}, invert the DFT over n₀,
+             apply the adjoint of the frequency-domain correlations, and finally
+             invert the polyphase FFT over r to reconstruct A.
+             </summary>
+             <param name="B">Input coefficients of length 2N (main first, then half)</param>
+             <param name="C">Polyphase cache (built for N, M, window)</param>
+             <returns>Reconstructed signal A of length N</returns>
         </member>
         <member name="T:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache">
             <summary>
@@ -30446,22 +30477,28 @@
             <param name="window">Windows function</param>
             <returns>Polyphase cache</returns>
         </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PhaseMinusPiOver2(System.Int32)">
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PhasePlusPiOver2(System.Int32)">
             <summary>
-            Returns the complex phase factor e^{-j * π * k / 2}.
-            This term has a period of 4 over k, meaning it only takes
-            four distinct values: 1, -j, -1, +j.
+            Returns the complex phase factor e^{+j * π * k / 2}.
+            This term is 4-periodic in k and takes only four distinct values: 1, +j, −1, −j.
             
-            Such factors often appear in WH transforms, DFT twiddle factors,
-            and modulation/demodulation stages where a quarter-period
-            phase shift in the complex plane is required.
+            Context:
+            • Quarter-period phase factors appear in WH transforms, DFT twiddle factors,
+              and modulation/demodulation stages.
+            • In the Weyl–Heisenberg transform, this multiplier is used during n₀→k assembly
+              with a positive-exponent DFT to align phases with the matrix reference.
             
-            In the Weyl–Heisenberg transform context, this phase multiplier
-            accounts for the shift by M/4 in the time-frequency tiling,
-            separating cosine and sine branches during synthesis/analysis.
+            Relationship:
+              PhasePlusPiOver2(k) = conj(PhaseMinusPiOver2(k)).
+            
+            Mapping (k mod 4):
+              0 →  1   (  0°)
+              1 → +j   (+90°)
+              2 → −1   (180°)
+              3 → −j   (−90°)
             </summary>
             <param name="k">Frequency index (integer).</param>
-            <returns>Complex value of e^{-j * π * k / 2}.</returns>
+            <returns>Complex value of e^{+j * π * k / 2}.</returns>
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FFT(UMapx.Core.Complex32[],System.Boolean)">
             <summary>

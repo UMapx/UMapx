@@ -102,7 +102,7 @@ namespace UMapx.Window
             if (L <= 0)
                 throw new Exception("Number of frequency shifts not defined correctly");
 
-            Complex32[,] G = new Complex32[N, N];
+            Complex32[,] G = new Complex32[N, N * 2];
             Complex32 c = 2 * Maths.Pi * Maths.I;
             float a = M / 2.0f;
 
@@ -110,7 +110,7 @@ namespace UMapx.Window
             {
                 float phase = n - a / 2.0f;
                 int k, l, u, i, j;
-                Complex32 exp, psi;
+                Complex32 exp;
 
                 for (k = 0; k < M; k++)
                 {
@@ -122,11 +122,8 @@ namespace UMapx.Window
                         i = Maths.Mod(n - l * M, N);
                         j = Maths.Mod(n + M / 2 - l * M, N);
 
-                        psi = new Complex32(
-                            (g0[i] * exp).Real,
-                            (Maths.I * g0[j] * exp).Real);
-
-                        G[n, u] = psi;
+                        G[n, u + 0] =           g0[i] * exp / Maths.Sqrt(2);
+                        G[n, u + N] = Maths.I * g0[j] * exp / Maths.Sqrt(2);
                     }
                 }
             });
@@ -243,7 +240,7 @@ namespace UMapx.Window
         public virtual Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
             Complex32[] A = Matrice.Dot(B, U);
             return A;
         }
@@ -281,8 +278,8 @@ namespace UMapx.Window
         public virtual Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
+            Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
             Complex32[,] A;
 
             if (direction == Direction.Both)

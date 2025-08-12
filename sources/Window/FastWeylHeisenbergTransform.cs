@@ -15,10 +15,6 @@ namespace UMapx.Window
     [Serializable]
     public class FastWeylHeisenbergTransform : WeylHeisenbergTransform, IWindowTransform, ITransform
     {
-        #region Private data
-        private bool complex;
-        #endregion
-
         #region Initialize
         /// <summary>
         /// Initializes fast Weyl-Heisenberg transform.
@@ -27,23 +23,6 @@ namespace UMapx.Window
         /// <param name="m">Number of frequency shifts [4, N]</param>
         /// <param name="direction">Processing direction</param>
         public FastWeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical) : base(window, m, direction) { }
-        /// <summary>
-        /// Use the complex transform or not.
-        /// <remarks>
-        /// The algorithm will be fast only for the forward transform, but will be equal to the original one.
-        /// </remarks>
-        /// </summary>
-        public bool Complex
-        {
-            get
-            { 
-                return this.complex; 
-            }
-            set
-            { 
-                this.complex = value; 
-            }
-        }
         #endregion
 
         #region Weyl-Heisenberg Transform
@@ -56,7 +35,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             var cache = PolyphaseCache.Build(N, this.m, this.window);
-            return FWHT(A, cache, this.complex);
+            return FWHT(A, cache);
         }
         /// <summary>
         /// Backward Weyl-Heisenberg transform.
@@ -65,12 +44,9 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public override Complex32[] Backward(Complex32[] B)
         {
-            if (this.complex)
-                return base.Backward(B);
-
-            int N = B.Length;
+            int N = B.Length / 2;
             var cache = PolyphaseCache.Build(N, this.m, this.window);
-            return IFWHT(B, cache, this.complex);
+            return IFWHT(B, cache);
         }
         /// <summary>
         /// Forward Weyl-Heisenberg transform.
@@ -79,11 +55,11 @@ namespace UMapx.Window
         /// <returns>Matrix</returns>
         public override Complex32[,] Forward(Complex32[,] A)
         {
-            Complex32[,] B = (Complex32[,])A.Clone();
-            int N = B.GetLength(0), M = B.GetLength(1);
+            int N = A.GetLength(0); // rows
+            int M = A.GetLength(1); // cols
 
-            PolyphaseCache cacheCols = null;
-            PolyphaseCache cacheRows = null;
+            PolyphaseCache cacheCols = null; // U for length N (vertical)
+            PolyphaseCache cacheRows = null; // V for length M (horizontal)
 
             if (direction == Direction.Both || direction == Direction.Vertical)
                 cacheCols = PolyphaseCache.Build(N, this.m, this.window);
@@ -93,84 +69,79 @@ namespace UMapx.Window
 
             if (direction == Direction.Both)
             {
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
-
-                    row = FWHT(row, cacheRows, this.complex);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
-                });
+                // 1) Left-multiply: U^H · A  → shape: (2N × M)
+                var tmp = new Complex32[2 * N, M];
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N];
+                    for (int i = 0; i < N; i++) col[i] = A[i, j];
 
-                    for (i = 0; i < N; i++)
+                    var tr = FWHT(col, cacheCols); // length 2N
+                    for (int i = 0; i < 2 * N; i++) tmp[i, j] = tr[i];
+                });
+
+                // 2) Right-multiply by V via conjugation trick:
+                //    row * V = conj( FWHT( conj(row) ) )  → shape: (2N × 2M)
+                var B = new Complex32[2 * N, 2 * M];
+
+                Parallel.For(0, 2 * N, i =>
+                {
+                    var row = new Complex32[M];
+                    for (int j = 0; j < M; j++) row[j] = tmp[i, j];
+
+                    // conj → FWHT → conj
+                    for (int j = 0; j < M; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag);
+                    var tr = FWHT(row, cacheRows); // V^H * conj(row)
+
+                    for (int j = 0; j < 2 * M; j++)
                     {
-                        col[i] = B[i, j];
-                    }
-
-                    col = FWHT(col, cacheCols, this.complex);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
+                        var c = tr[j];
+                        B[i, j] = new Complex32(c.Real, -c.Imag); // conj(...)
                     }
                 });
+
+                return B;
             }
-            else if (direction == Direction.Vertical)
+
+            if (direction == Direction.Vertical)
             {
+                // B = U^H · A  → (2N × M)
+                var B = new Complex32[2 * N, M];
+
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N];
+                    for (int i = 0; i < N; i++) col[i] = A[i, j];
 
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                    }
-
-                    col = FWHT(col, cacheCols, this.complex);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
+                    var tr = FWHT(col, cacheCols); // 2N
+                    for (int i = 0; i < 2 * N; i++) B[i, j] = tr[i];
                 });
+
+                return B;
             }
-            else
+            else // Horizontal
             {
+                // B = A · V  → (N × 2M)  (via the same conjugation trick per row)
+                var B = new Complex32[N, 2 * M];
+
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var row = new Complex32[M];
+                    for (int j = 0; j < M; j++) row[j] = A[i, j];
 
-                    for (j = 0; j < M; j++)
+                    for (int j = 0; j < M; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag);
+                    var tr = FWHT(row, cacheRows); // V^H * conj(row)
+
+                    for (int j = 0; j < 2 * M; j++)
                     {
-                        row[j] = B[i, j];
-                    }
-
-                    row = FWHT(row, cacheRows, this.complex);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
+                        var c = tr[j];
+                        B[i, j] = new Complex32(c.Real, -c.Imag); // conj(...)
                     }
                 });
-            }
 
-            return B;
+                return B;
+            }
         }
         /// <summary>
         /// Backward Weyl-Heisenberg transform.
@@ -179,160 +150,150 @@ namespace UMapx.Window
         /// <returns>Matrix</returns>
         public override Complex32[,] Backward(Complex32[,] B)
         {
-            if (this.complex)
-                return base.Backward(B);
+            int N2 = B.GetLength(0); // possibly 2N
+            int M2 = B.GetLength(1); // possibly 2M
 
-            Complex32[,] A = (Complex32[,])B.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-
-            PolyphaseCache cacheCols = null;
-            PolyphaseCache cacheRows = null;
+            PolyphaseCache cacheCols = null; // for target N = N2/2 (vertical inverse)
+            PolyphaseCache cacheRows = null; // for target M = M2/2 (horizontal inverse)
 
             if (direction == Direction.Both || direction == Direction.Vertical)
-                cacheCols = PolyphaseCache.Build(N, this.m, this.window);
+                cacheCols = PolyphaseCache.Build(N2 / 2, this.m, this.window);
 
             if (direction == Direction.Both || direction == Direction.Horizontal)
-                cacheRows = PolyphaseCache.Build(M, this.m, this.window);
+                cacheRows = PolyphaseCache.Build(M2 / 2, this.m, this.window);
 
             if (direction == Direction.Both)
             {
-                Parallel.For(0, M, j =>
+                // Inverse order of Forward(Both):
+                // 1) Undo right multiply (· V) per row using the conjugation trick:
+                //    row = conj( IFWHT( conj(B_row) ) )  → shape: (N2 × M2/2)
+                var tmp = new Complex32[N2, M2 / 2];
+
+                Parallel.For(0, N2, i =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var row = new Complex32[M2];
+                    for (int j = 0; j < M2; j++) row[j] = B[i, j];
 
-                    for (i = 0; i < N; i++)
+                    for (int j = 0; j < M2; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
+                    var inv = IFWHT(row, cacheRows); // length M2/2
+
+                    for (int j = 0; j < M2 / 2; j++)
                     {
-                        col[i] = A[i, j];
-                    }
-
-                    col = IFWHT(col, cacheCols, this.complex);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
+                        var c = inv[j];
+                        tmp[i, j] = new Complex32(c.Real, -c.Imag); // conj(...)
                     }
                 });
 
-                Parallel.For(0, N, i =>
+                // 2) Undo left multiply (U^H ·) per column: 2N → N
+                var A = new Complex32[N2 / 2, M2 / 2];
+
+                Parallel.For(0, M2 / 2, j =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var col = new Complex32[N2];
+                    for (int i = 0; i < N2; i++) col[i] = tmp[i, j];
 
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j];
-                    }
-
-                    row = IFWHT(row, cacheRows, this.complex);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
+                    var inv = IFWHT(col, cacheCols); // length N2/2
+                    for (int i = 0; i < N2 / 2; i++) A[i, j] = inv[i];
                 });
+
+                return A;
             }
-            else if (direction == Direction.Vertical)
+
+            if (direction == Direction.Vertical)
             {
-                Parallel.For(0, M, j =>
+                // A = (U^H)^{-1} · B : columns 2N → N
+                var A = new Complex32[N2 / 2, M2];
+
+                Parallel.For(0, M2, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N2];
+                    for (int i = 0; i < N2; i++) col[i] = B[i, j];
 
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
-
-                    col = IFWHT(col, cacheCols, this.complex);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
+                    var inv = IFWHT(col, cacheCols); // N2/2
+                    for (int i = 0; i < N2 / 2; i++) A[i, j] = inv[i];
                 });
+
+                return A;
             }
-            else
+            else // Horizontal
             {
-                Parallel.For(0, N, i =>
+                // A = B · V^{-1} : rows 2M → M (via conjugation trick)
+                var A = new Complex32[N2, M2 / 2];
+
+                Parallel.For(0, N2, i =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var row = new Complex32[M2];
+                    for (int j = 0; j < M2; j++) row[j] = B[i, j];
 
-                    for (j = 0; j < M; j++)
+                    for (int j = 0; j < M2; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
+                    var inv = IFWHT(row, cacheRows); // M2/2
+
+                    for (int j = 0; j < M2 / 2; j++)
                     {
-                        row[j] = A[i, j];
-                    }
-
-                    row = IFWHT(row, cacheRows, this.complex);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
+                        var c = inv[j];
+                        A[i, j] = new Complex32(c.Real, -c.Imag); // conj(...)
                     }
                 });
-            }
 
-            return A;
+                return A;
+            }
         }
+
         #endregion
 
         #region Private voids
 
         /// <summary>
-        /// Forward Weyl-Heisenberg transform.
+        /// Forward fast Weyl–Heisenberg transform (2-channel packing, length = 2N).
+        /// 
+        /// Input:
+        ///   A ∈ ℂ^N,  N = M * L,  M is even.
+        /// 
+        /// Output:
+        ///   B ∈ ℂ^{2N}, split as:
+        ///     B_main[u] = B[u + 0],   u = l*M + k
+        ///     B_half[u] = B[u + N],   u = l*M + k
+        ///
+        /// This matches the column-wise “slow” matrix reference G ∈ ℂ^{N×2N} with columns:
+        ///   main: g[i] * exp( j*2π*k/M * (n - M/4) ) / √2
+        ///   half: j*g[j] * exp( j*2π*k/M * (n - M/4) ) / √2
+        ///
+        /// Analysis (i.e., G^H A) realized via:
+        ///   - polyphase split over residue n0 (mod M) and FFT_L along r,
+        ///   - frequency-domain correlations with conj(S_hat/T_hat),
+        ///   - carry-phase compensation for the half branch when (n0 + M/2) wraps,
+        ///   - DFT_M over n0 (via forward FFT over n0) + quarter-phase e^{+jπk/2},
+        ///   - normalization gain = √M / (√N · √2) = 1 / (√L · √2).
+        ///
+        /// Notes:
+        ///   Caches C.S_hat, C.T_hat must be built from the SAME orthonormalized window
+        ///   as used by the slow matrix builder, otherwise values will differ by window scaling.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <param name="C">Polyphase cache</param>
-        /// <param name="complex">Complex or not</param>
-        /// <returns>Array</returns>
-        internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C, bool complex = false)
+        /// <param name="A">Input signal (length N)</param>
+        /// <param name="C">Polyphase cache (built for N,M,window)</param>
+        /// <returns>B of length 2N: main (0..N-1) and half (N..2N-1) branches</returns>
+        internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
         {
             int N = A.Length;
             if (!Maths.IsPower(N, 2)) throw new Exception("Dimension of the signal must be a power of 2");
-            var B = new Complex32[N];
 
-            // Use the complex transform or not
-            // (complex signals)
-            if (complex)
-            {
-                var Ar = new Complex32[N];
-                var Ai = new Complex32[N];
-
-                // Separate
-                for (int n = 0; n < N; n++)
-                {
-                    Ar[n] = new Complex32(A[n].Real, 0);
-                    Ai[n] = new Complex32(A[n].Imag, 0);
-                }
-
-                // Run the “real-input” fast WH twice
-                var Br = FWHT(Ar, C);  // already matches matrix for real inputs
-                var Bi = FWHT(Ai, C);
-
-                // Combine: U^H(Ar + i Ai) = U^H Ar + i U^H Ai
-                for (int u = 0; u < N; u++)
-                {
-                    B[u] = Br[u] + Complex32.I * Bi[u];
-                }
-
-                return B;
-            }
+            var B = new Complex32[2 * N];
 
             int Mloc = C.M;
             if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
+
             int L = N / Mloc;
             if (L * Mloc != N) throw new Exception("N must be divisible by M");
 
-            // Precompute Zak/FFT caches of the (orthogonalized) window:
-            // S_hat[n0, q] = FFT_L { g[r*M + n0] } over r
-            // T_hat[n0, q] = FFT_L { g[r*M + (n0+M/2)%M] } over r
-            // Dimensions: [M, L]
-            var S_hat = C.S_hat; var T_hat = C.T_hat;
+            // Cached FFT_L spectra of window polyphase components (built from orthonormalized g):
+            //   S_hat[n0,q] = FFT_L{ g[r*M + n0] }_r
+            //   T_hat[n0,q] = FFT_L{ g[r*M + (n0+M/2) mod M] }_r
+            // Dimensions: [M, L].
+            var S_hat = C.S_hat;
+            var T_hat = C.T_hat;
 
-            // 1) Polyphase split of A by residue n0 (mod M), then FFT along r (length L):
-            //    Xhat[n0, q] = FFT_L { A[r*M + n0] }_r
+            // 1) Polyphase split over residue n0 (mod M). For each n0 we FFT along r (length L):
+            //    Xhat[n0,q] = FFT_L{ A[r*M + n0] }_r
             var Xhat = new Complex32[Mloc, L];
             var tmp = new Complex32[L];
 
@@ -341,100 +302,94 @@ namespace UMapx.Window
                 for (int r = 0; r < L; r++)
                     tmp[r] = A[r * Mloc + n0];
 
-                FFT(tmp, false); // forward FFT along r (no scaling assumed)
+                FFT(tmp, false); // forward FFT along r (no extra scaling)
 
                 for (int q = 0; q < L; q++)
                     Xhat[n0, q] = tmp[q];
             }
 
-            // 2) Correlations along the time-shift index l via frequency domain:
-            //    Cmain[n0, l]  = IFFT_L { conj(S_hat[n0,q]) * Xhat[n0,q] }_q
-            //    Chalf[n0, l]  = IFFT_L { conj(T_hat[n0,q]) * Xhat[n0,q] * phase_carry(q) }_q
+            // 2) Frequency-domain correlations to accumulate over time-shift l:
             //
-            //    Here phase_carry(q) accounts for the wrap-around of the half-shifted branch:
-            //    when (n0 + M/2) overflows modulo M, it induces a +1 shift in r, which is
-            //    a multiplicative phase factor in frequency: exp(-j*2π*q/L) for carry=1.
+            // main branch:
+            //   Cmain[n0,l] = IFFT_L{ conj(S_hat[n0,q]) * Xhat[n0,q] }_q
+            //
+            // half branch:
+            //   Chalf[n0,l] = IFFT_L{ conj(T_hat[n0,q]) * Xhat[n0,q] * phase_carry(q) }_q
+            //
+            // carry phase:
+            //   when (n0 + M/2) >= M, the half-branch index wraps and induces a +1 shift in r.
+            //   A +1 shift in r corresponds in frequency to multiplication by exp(-j*2π*q/L).
             var Cmain = new Complex32[Mloc, L];
             var Chalf = new Complex32[Mloc, L];
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
-                // --- main branch correlation ---
+                // main: correlate in frequency and go back to l-domain
                 for (int q = 0; q < L; q++)
                     tmp[q] = S_hat[n0, q].Conjugate * Xhat[n0, q];
 
-                FFT(tmp, true); // inverse FFT along r (produces correlation sequence over l)
-
+                FFT(tmp, true); // inverse FFT over r → correlation over l
                 for (int l = 0; l < L; l++)
                     Cmain[n0, l] = tmp[l];
 
-                // --- half branch correlation with r-carry compensation ---
-                // carry = 1 if (n0 + M/2) >= M, i.e., the half-shift in n0 crosses a block boundary in r
+                // half: same, but with carry-phase if (n0 + M/2) wraps
                 int carry = ((n0 + Mloc / 2) >= Mloc) ? 1 : 0;
 
                 for (int q = 0; q < L; q++)
                 {
-                    // Phase factor from a +carry circular shift in r-domain:
-                    // shiftPhase(q) = exp(-j * 2π * q * carry / L)
                     float ang = 2f * Maths.Pi * q * carry / L;
-                    var shiftPhase = Maths.Exp(-Complex32.I * ang);
+                    var shiftPhase = Maths.Exp(-Complex32.I * ang); // exp(-j*2π*q/L) when carry=1
 
-                    // Correlation in frequency domain for half branch (note conj on T_hat):
                     tmp[q] = T_hat[n0, q].Conjugate * Xhat[n0, q] * shiftPhase;
                 }
 
-                FFT(tmp, true); // inverse FFT along r
-
+                FFT(tmp, true); // inverse FFT over r
                 for (int l = 0; l < L; l++)
                     Chalf[n0, l] = tmp[l];
             }
 
-            // 3) Assemble over frequency shifts k for each time shift l:
-            //    Over n0 we need a DFT with positive exponent => use IFFT_M (which yields +j sign)
-            //    and then compensate its internal 1/M scaling by multiplying by M afterwards.
+            // 3) Assemble over frequency shifts k for each time shift l.
             //
-            //    Finally apply the global phase exp(-j*pi*k/2) that matches the original basis
-            //    (accounts for the (n - M/4) phase in the matrix version).
-            var rowMain = new Complex32[Mloc];
-            var rowHalf = new Complex32[Mloc];
+            // Over n0 we need a DFT with positive exponent e^{+j2π kn0/M}.
+            // We realize it by a forward FFT over n0 (no extra *M here).
+            // Then we apply the quarter-phase e^{+jπk/2} (accounts for the (n - M/4) shift).
+            //
+            // Final normalization:
+            //   gain = √M / (√N · √2) = 1 / (√L · √2).
+            //
+            // Output packing (two channels):
+            //   B_main[u] =  P * gain
+            //   B_half[u] = (-j) Q * gain
+            // where P, Q are the assembled complex contributions of main/half branches.
             var Sp_main = new Complex32[Mloc];
             var Sp_half = new Complex32[Mloc];
 
+            float gain = Maths.Sqrt(Mloc) / (Maths.Sqrt(N) * Maths.Sqrt(2f)); // = 1/(√L·√2)
+
             for (int l = 0; l < L; l++)
             {
-                // Collect the l-th “row” across n0
+                // collect l-th rows across n0
                 for (int n0 = 0; n0 < Mloc; n0++)
                 {
-                    rowMain[n0] = Cmain[n0, l];
-                    rowHalf[n0] = Chalf[n0, l];
+                    Sp_main[n0] = Cmain[n0, l];
+                    Sp_half[n0] = Chalf[n0, l];
                 }
 
-                Array.Copy(rowMain, Sp_main, Mloc);
-                Array.Copy(rowHalf, Sp_half, Mloc);
-
-                // IFFT_M over n0 (positive-exponent DFT), then undo the internal /M by *M
-                FFT(Sp_main, true);
-                FFT(Sp_half, true);
+                // forward DFT over n0 via FFT (positive-exponent convention)
+                FFT(Sp_main, false);
+                FFT(Sp_half, false);
 
                 for (int k = 0; k < Mloc; k++)
                 {
-                    Sp_main[k] *= Mloc;
-                    Sp_half[k] *= Mloc;
-                }
+                    var phase = PhasePlusPiOver2(k); // e^{+jπk/2}
+                    var P = phase * Sp_main[k];      // main contribution
+                    var Q = phase * Sp_half[k];      // half contribution
 
-                // Per-k phase alignment and channel packing (cos -> Re, sin -> Im)
-                for (int k = 0; k < Mloc; k++)
-                {
-                    var phase = PhaseMinusPiOver2(k); // exp(-j*pi*k/2)
+                    int u = l * Mloc + k;
 
-                    var P = phase * Sp_main[k]; // “cosine” branch contribution
-                    var Q = phase * Sp_half[k]; // “sine”   branch contribution
-
-                    // Match the matrix API scaling: divide by sqrt(N)
-                    B[l * Mloc + k] = new Complex32(
-                        P.Real / Maths.Sqrt(N),
-                        Q.Imag / Maths.Sqrt(N)
-                    );
+                    // Two-channel output that matches the slow matrix reference (G^H A):
+                    B[u + 0] = P * gain;                 // main channel
+                    B[u + N] = -Complex32.I * Q * gain;   // half channel (−j factor)
                 }
             }
 
@@ -442,92 +397,116 @@ namespace UMapx.Window
         }
 
         /// <summary>
-        /// Backward Weyl-Heisenberg transform.
+        /// Inverse fast Weyl–Heisenberg transform (2-channel input, length = 2N).
+        ///
+        /// Input:
+        ///   B ∈ ℂ^{2N}, split as:
+        ///     B_main[u] = B[u + 0],   u = l*M + k
+        ///     B_half[u] = B[u + N],   u = l*M + k
+        ///
+        /// This inverts the forward packing:
+        ///   forward: B_main =  P * gain
+        ///            B_half = (-j) Q * gain
+        ///   where gain = √M / (√N · √2) = 1 / (√L · √2).
+        ///
+        /// Inverse mapping:
+        ///   P = B_main / gain
+        ///   Q =  j * B_half / gain
+        ///
+        /// Then we undo the quarter-phase e^{+jπk/2}, invert the DFT over n₀,
+        /// apply the adjoint of the frequency-domain correlations, and finally
+        /// invert the polyphase FFT over r to reconstruct A.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <param name="C">Polyphase cache</param>
-        /// <param name="complex">Complex or not</param>
-        /// <returns>Array</returns>
-        internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C, bool complex = false)
+        /// <param name="B">Input coefficients of length 2N (main first, then half)</param>
+        /// <param name="C">Polyphase cache (built for N, M, window)</param>
+        /// <returns>Reconstructed signal A of length N</returns>
+        internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
         {
-            int N = B.Length;
+            int N = C.N;
             if (!Maths.IsPower(N, 2)) throw new Exception("Dimension of the signal must be a power of 2");
-
-            // Use the complex transform or not
-            // (complex signals)
-            if (complex)
-                throw new NotImplementedException("This transform doesn't support complex inversions");
+            if (B.Length != 2 * N) throw new Exception("Expect 2N coefficients (main + half).");
 
             int Mloc = C.M;
             if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
+
             int L = N / Mloc;
             if (L * Mloc != N) throw new Exception("N must be divisible by M");
 
-            // Use the same window caches as in Forward():
-            // S_hat/T_hat are FFT_L of the window’s polyphase components.
-            var S_hat = C.S_hat; var T_hat = C.T_hat;
+            // Cached FFT_L spectra of window polyphase components:
+            var S_hat = C.S_hat; // [M, L]
+            var T_hat = C.T_hat; // [M, L]
 
-            // 1) Undo the k-assembly for each l:
-            //    From B[l,k], rebuild Sp_main[k], Sp_half[k]:
-            //      Forward had:  P = phase * Sp_main[k];  B.Re = Re(P)/sqrt(N)
-            //                    Q = phase * Sp_half[k];  B.Im = Im(Q)/sqrt(N)
-            //    Here we invert that mapping and remove the per-k phase.
+            // ----- 1) Undo k-assembly (for each l) -----
+            //
+            // From B_main/B_half recover P,Q, remove quarter-phase, and
+            // invert the DFT over n0 (IFFT_M) to obtain Cmain[:,l], Chalf[:,l].
             var Cmain = new Complex32[Mloc, L];
             var Chalf = new Complex32[Mloc, L];
 
-            var Sp_main = new Complex32[Mloc];
-            var Sp_half = new Complex32[Mloc];
+            var Y_main = new Complex32[Mloc]; // spectra over k for a fixed l
+            var Y_half = new Complex32[Mloc];
 
-            float s = Maths.Sqrt(N);
+            // gain used in the forward:
+            //   gain = 1 / (√L · √2)
+            // hence inverse gain:
+            float invGain = 1.0f / Maths.Sqrt(2 * L);
 
             for (int l = 0; l < L; l++)
             {
+                // rebuild Y_main[k], Y_half[k]
                 for (int k = 0; k < Mloc; k++)
                 {
-                    var phase = PhaseMinusPiOver2(k);
-                    var phaseConj = new Complex32(phase.Real, -phase.Imag); // conj(phase)
+                    int u = l * Mloc + k;
 
-                    var b = B[l * Mloc + k];
+                    var bMain = B[u + 0];
+                    var bHalf = B[u + N];
 
-                    // Invert packing: P := (b.Re * sqrt(N)) + 0i;   Q := i * (b.Im * sqrt(N))
-                    var P = new Complex32(b.Real * s, 0);
-                    var Q = new Complex32(0, b.Imag * s);
+                    // Invert forward packing:
+                    //   P =  B_main / gain
+                    //   Q =  j * B_half / gain
+                    var P = bMain * invGain;
+                    var Q = Complex32.I * bHalf * invGain;
 
-                    // Remove the per-k phase to obtain Sp_*[k]
-                    Sp_main[k] = phaseConj * P;
-                    Sp_half[k] = phaseConj * Q;
+                    // Remove quarter-phase e^{+jπk/2} → multiply by its conjugate
+                    var phase = PhasePlusPiOver2(k);
+                    var phaseConj = new Complex32(phase.Real, -phase.Imag);
+
+                    Y_main[k] = phaseConj * P;
+                    Y_half[k] = phaseConj * Q;
                 }
 
-                // Forward used: Sp_* = IFFT_M(row) * M
-                // Therefore, row = FFT_M(Sp_*) / M  (no extra scaling terms)
-                FFT(Sp_main, false); // FFT over n0 (length M)
-                FFT(Sp_half, false);
+                // Invert DFT over n0: IFFT_M.
+                // Our FFT(true) applies an internal 1/√M; compensate by √M to get unit gain.
+                FFT(Y_main, true);
+                FFT(Y_half, true);
 
+                float cM = Maths.Sqrt(Mloc); // compensates the internal 1/√M from IFFT
                 for (int n0 = 0; n0 < Mloc; n0++)
                 {
-                    Cmain[n0, l] = Sp_main[n0] * (1f / Maths.Sqrt(L * N));
-                    Chalf[n0, l] = Sp_half[n0] * (1f / Maths.Sqrt(L * N));
+                    Cmain[n0, l] = Y_main[n0] * cM;
+                    Chalf[n0, l] = Y_half[n0] * cM;
                 }
             }
 
-            // 2) Undo the correlation step along l (apply adjoint operators in frequency):
-            //    Forward: Cmain = IFFT_L{ conj(S_hat)*Xhat }, Chalf = IFFT_L{ conj(T_hat)*Xhat * phase_carry }
-            //    Backward (adjoint): Xhat += S_hat * FFT_L{Cmain}, and
-            //                        Xhat += T_hat * FFT_L{Chalf} * phase_carry_adj
+            // ----- 2) Adjoint of frequency-domain correlations (over l) -----
             //
-            //    For the half branch, the carry phase in Forward used exp(-j*2π*q*carry/L),
-            //    so the adjoint here uses the conjugate factor, i.e. exp(+j*2π*q*carry/L).
+            // Forward used:
+            //   Cmain = IFFT_L{ conj(S_hat) * Xhat }
+            //   Chalf = IFFT_L{ conj(T_hat) * Xhat * phase_carry }
+            //
+            // Adjoint (backward) therefore uses:
+            //   Xhat += S_hat * FFT_L{ Cmain }
+            //   Xhat += T_hat * FFT_L{ Chalf } * conj(phase_carry)
             var Xhat = new Complex32[Mloc, L];
             var bufL = new Complex32[L];
             var bufL2 = new Complex32[L];
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
-                // prodMain[q] = FFT_L{ Cmain[n0,:] }
+                // FFT_L over l
                 for (int l = 0; l < L; l++) bufL[l] = Cmain[n0, l];
                 FFT(bufL, false);
 
-                // prodHalf[q] = FFT_L{ Chalf[n0,:] }
                 for (int l = 0; l < L; l++) bufL2[l] = Chalf[n0, l];
                 FFT(bufL2, false);
 
@@ -535,15 +514,15 @@ namespace UMapx.Window
 
                 for (int q = 0; q < L; q++)
                 {
-                    // main branch adjoint: multiply by S_hat (adjoint of conj(S_hat))
+                    // main branch adjoint
                     Xhat[n0, q] += S_hat[n0, q] * bufL[q];
 
-                    // half branch adjoint: multiply by T_hat * exp(+j*2π*q*carry/L)
+                    // half branch adjoint (conjugate of forward’s carry-phase)
                     if (carry != 0)
                     {
                         float ang = 2f * Maths.Pi * q * carry / L;
-                        var shiftPhase = Maths.Exp(Complex32.I * ang); // adjoint to the forward’s (-) sign
-                        Xhat[n0, q] += T_hat[n0, q] * shiftPhase * bufL2[q];
+                        var shiftPhaseAdj = Maths.Exp(Complex32.I * ang); // exp(+j*2π*q/L)
+                        Xhat[n0, q] += T_hat[n0, q] * shiftPhaseAdj * bufL2[q];
                     }
                     else
                     {
@@ -552,16 +531,18 @@ namespace UMapx.Window
                 }
             }
 
-            // 3) Return from Zak/FFT domain back to the time domain:
-            //    For each residue n0, take IFFT_L over q to get A[r*M + n0].
+            // ----- 3) Inverse polyphase recomposition (over r) -----
+            //
+            // For each residue n0, take IFFT_L over q to obtain samples along r:
+            //   A[r*M + n0] = IFFT_L{ Xhat[n0, q] }_q
             var Arec = new Complex32[N];
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
-                for (int q = 0; q < L; q++) 
+                for (int q = 0; q < L; q++)
                     bufL[q] = Xhat[n0, q];
 
-                FFT(bufL, true); // inverse FFT along r (assumed to divide by L internally)
+                FFT(bufL, true); // inverse FFT along r (library applies internal 1/√L)
 
                 for (int r = 0; r < L; r++)
                     Arec[r * Mloc + n0] = bufL[r];
@@ -708,35 +689,35 @@ namespace UMapx.Window
         }
 
         /// <summary>
-        /// Returns the complex phase factor e^{-j * π * k / 2}.
-        /// This term has a period of 4 over k, meaning it only takes
-        /// four distinct values: 1, -j, -1, +j.
+        /// Returns the complex phase factor e^{+j * π * k / 2}.
+        /// This term is 4-periodic in k and takes only four distinct values: 1, +j, −1, −j.
         /// 
-        /// Such factors often appear in WH transforms, DFT twiddle factors,
-        /// and modulation/demodulation stages where a quarter-period
-        /// phase shift in the complex plane is required.
+        /// Context:
+        /// • Quarter-period phase factors appear in WH transforms, DFT twiddle factors,
+        ///   and modulation/demodulation stages.
+        /// • In the Weyl–Heisenberg transform, this multiplier is used during n₀→k assembly
+        ///   with a positive-exponent DFT to align phases with the matrix reference.
         /// 
-        /// In the Weyl–Heisenberg transform context, this phase multiplier
-        /// accounts for the shift by M/4 in the time-frequency tiling,
-        /// separating cosine and sine branches during synthesis/analysis.
+        /// Relationship:
+        ///   PhasePlusPiOver2(k) = conj(PhaseMinusPiOver2(k)).
+        /// 
+        /// Mapping (k mod 4):
+        ///   0 →  1   (  0°)
+        ///   1 → +j   (+90°)
+        ///   2 → −1   (180°)
+        ///   3 → −j   (−90°)
         /// </summary>
         /// <param name="k">Frequency index (integer).</param>
-        /// <returns>Complex value of e^{-j * π * k / 2}.</returns>
-        internal static Complex32 PhaseMinusPiOver2(int k)
+        /// <returns>Complex value of e^{+j * π * k / 2}.</returns>
+        internal static Complex32 PhasePlusPiOver2(int k)
         {
-            // e^{-jπk/2} is periodic with period 4 in k:
-            //   k mod 4 = 0 →  1  (0° phase)
-            //   k mod 4 = 1 → -j  (-90° phase)
-            //   k mod 4 = 2 → -1  (-180° phase)
-            //   k mod 4 = 3 → +j  (+90° phase)
-            //
-            // Bitwise AND with 3 (0b11) is a fast way to compute k % 4.
+            // Fast k % 4 using bitwise AND with 3 (0b11).
             return (k & 3) switch
             {
-                0 => new Complex32(+1, 0),  // 0°   :  1
-                1 => new Complex32(0, -1),  // -90° : -j
-                2 => new Complex32(-1, 0),  // 180° : -1
-                _ => new Complex32(0, +1),  // +90° : +j
+                0 => new Complex32(+1, 0),  //   0°
+                1 => new Complex32(0, +1),  // +90°
+                2 => new Complex32(-1, 0),  // 180°
+                _ => new Complex32(0, -1),  // −90°
             };
         }
 
