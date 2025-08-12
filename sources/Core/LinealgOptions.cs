@@ -2987,7 +2987,7 @@ namespace UMapx.Core
         /// <param name="dst">Destination</param>
         /// <param name="r0">R0</param>
         /// <param name="c0">C0</param>
-        public static void CopyToComplex(float[,] src, Complex32[,] dst, int r0, int c0)
+        public static void Copy(float[,] src, Complex32[,] dst, int r0, int c0)
         {
             int rows = src.GetLength(0), cols = src.GetLength(1);
             for (int i = 0; i < rows; i++)

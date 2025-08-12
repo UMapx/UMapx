@@ -2770,7 +2770,7 @@ namespace UMapx.Core
                     {
                         var R = new Complex32[aRows, aCols + bCols];
                         LinealgOptions.Copy(A, R, 0, 0);
-                        LinealgOptions.CopyToComplex(B, R, 0, aCols);
+                        LinealgOptions.Copy(B, R, 0, aCols);
                         return R;
                     }
 
@@ -2780,7 +2780,7 @@ namespace UMapx.Core
                     {
                         var R = new Complex32[aRows + bRows, aCols];
                         LinealgOptions.Copy(A, R, 0, 0);
-                        LinealgOptions.CopyToComplex(B, R, aRows, 0);
+                        LinealgOptions.Copy(B, R, aRows, 0);
                         return R;
                     }
 
@@ -2808,7 +2808,7 @@ namespace UMapx.Core
                         throw new ArgumentException("For horizontal concat, row counts must match");
                     {
                         var R = new Complex32[aRows, aCols + bCols];
-                        LinealgOptions.CopyToComplex(A, R, 0, 0);
+                        LinealgOptions.Copy(A, R, 0, 0);
                         LinealgOptions.Copy(B, R, 0, aCols);
                         return R;
                     }
@@ -2818,7 +2818,7 @@ namespace UMapx.Core
                         throw new ArgumentException("For vertical concat, column counts must match");
                     {
                         var R = new Complex32[aRows + bRows, aCols];
-                        LinealgOptions.CopyToComplex(A, R, 0, 0);
+                        LinealgOptions.Copy(A, R, 0, 0);
                         LinealgOptions.Copy(B, R, aRows, 0);
                         return R;
                     }

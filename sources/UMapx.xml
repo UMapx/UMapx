@@ -4925,7 +4925,7 @@
             <param name="r0">R0</param>
             <param name="c0">C0</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.CopyToComplex(System.Single[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.Copy(System.Single[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
             <summary>
             Copies matrix.
             </summary>
