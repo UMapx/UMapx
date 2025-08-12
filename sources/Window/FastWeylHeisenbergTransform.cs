@@ -709,7 +709,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="k">Frequency index (integer).</param>
         /// <returns>Complex value of e^{+j * π * k / 2}.</returns>
-        internal static Complex32 PhasePlusPiOver2(int k)
+        private static Complex32 PhasePlusPiOver2(int k)
         {
             // Fast k % 4 using bitwise AND with 3 (0b11).
             return (k & 3) switch
@@ -726,7 +726,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="a">Input</param>
         /// <param name="inverse">Iverse or not</param>
-        internal static void FFT(Complex32[] a, bool inverse)
+        private static void FFT(Complex32[] a, bool inverse)
         {
             var n = a.Length;
 
