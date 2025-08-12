@@ -318,37 +318,28 @@ namespace UMapx.Imaging
 
         #region Radius matrix
         /// <summary>
-        /// Implements the construction of the inverted Gausssian filter.
-        /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <param name="sigma">Standard deviation (!=0)</param>
-        /// <returns>Matrix</returns>
-        public static Convolution LoGaussian(int m, int l, float sigma)
-        {
-            return new Convolution(Operator.LoGaussian(m, l, sigma));
-        }
-        /// <summary>
         /// Implements the construction of the Gaussian blur filter.
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
-        /// <param name="sigma">Standard deviation (!=0)</param>
+        /// <param name="sigmaX">Standard deviation X (>0)</param>
+        /// <param name="sigmaY">Standard deviation Y (>0)</param>
         /// <returns>Matrix</returns>
-        public static Convolution Gaussian(int m, int l, float sigma)
+        public static Convolution Gaussian(int m, int l, float sigmaY, float sigmaX)
         {
-            return new Convolution(Operator.Gaussian(m, l, sigma));
+            return new Convolution(Operator.Gaussian(m, l, sigmaY, sigmaX));
         }
         /// <summary>
         /// Implements the construction of the "unsharp masking" filter.
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
-        /// <param name="sigma">Standard deviation (!=0)</param>
+        /// <param name="sigmaX">Standard deviation X (>0)</param>
+        /// <param name="sigmaY">Standard deviation Y (>0)</param>
         /// <returns>Matrix</returns>
-        public static Convolution Unsharp(int m, int l, float sigma)
+        public static Convolution Unsharp(int m, int l, float sigmaY, float sigmaX)
         {
-            return new Convolution(Operator.Unsharp(m, l, sigma));
+            return new Convolution(Operator.Unsharp(m, l, sigmaY, sigmaX));
         }
         /// <summary>
         /// Implements the construction of the high-pass filter.

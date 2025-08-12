@@ -167,41 +167,14 @@ namespace UMapx.Core
 
         #region Radius
         /// <summary>
-        /// Implements the construction of the inverted Gausssian filter.
-        /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <param name="sigma">Standard deviation (!=0)</param>
-        /// <returns>Matrix</returns>
-        public static float[,] LoGaussian(int m, int l, float sigma)
-        {
-            int r1 = m / 2;
-            int r2 = l / 2;
-            float[,] H = new float[m, l];
-            float sigma2 = sigma * sigma;
-            float f0 = -1.0f / (Maths.Pi * sigma2 * sigma2);
-            float f1 = 2.0f * sigma2;
-            float kernel;
-            int i, j, x, y;
-
-            for (y = -r1, i = 0; i < m; y++, i++)
-            {
-                for (x = -r2, j = 0; j < l; x++, j++)
-                {
-                    kernel = (x * x + y * y) / f1;
-                    H[i, j] = f0 * (1.0f - kernel) * Maths.Exp(-kernel);
-                }
-            }
-            return H;
-        }
-        /// <summary>
         /// Implements the construction of the Gaussian blur filter.
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
-        /// <param name="sigma">Standard deviation (!=0)</param>
+        /// <param name="sigmaX">Standard deviation X (>0)</param>
+        /// <param name="sigmaY">Standard deviation Y (>0)</param>
         /// <returns>Matrix</returns>
-        public static float[,] Gaussian(int m, int l, float sigma)
+        public static float[,] Gaussian(int m, int l, float sigmaY, float sigmaX)
         {
             int r1 = m / 2;
             int r2 = l / 2;
@@ -212,7 +185,7 @@ namespace UMapx.Core
             {
                 for (x = -r2, j = 0; j < l; x++, j++)
                 {
-                    H[i, j] = Kernel.Gaussian(x, sigma) * Kernel.Gaussian(y, sigma);
+                    H[i, j] = Kernel.Gaussian(x, sigmaX) * Kernel.Gaussian(y, sigmaY);
                 }
             }
             return H;
@@ -222,9 +195,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
-        /// <param name="sigma">Standard deviation (!=0)</param>
+        /// <param name="sigmaX">Standard deviation X (>0)</param>
+        /// <param name="sigmaY">Standard deviation Y (>0)</param>
         /// <returns>Matrix</returns>
-        public static float[,] Unsharp(int m, int l, float sigma)
+        public static float[,] Unsharp(int m, int l, float sigmaY, float sigmaX)
         {
             float[,] G = new float[m, l];
             int i, j, x, y;
@@ -235,7 +209,7 @@ namespace UMapx.Core
             {
                 for (x = -r2, j = 0; j < l; x++, j++)
                 {
-                    G[i, j] = Kernel.Gaussian(x, sigma) * Kernel.Gaussian(y, sigma);
+                    G[i, j] = Kernel.Gaussian(x, sigmaX) * Kernel.Gaussian(y, sigmaY);
                 }
             }
 

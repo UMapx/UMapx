@@ -10023,31 +10023,24 @@
             <param name="direction">Gradient direction</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Operator.LoGaussian(System.Int32,System.Int32,System.Single)">
-            <summary>
-            Implements the construction of the inverted Gausssian filter.
-            </summary>
-            <param name="m">Height</param>
-            <param name="l">Width</param>
-            <param name="sigma">Standard deviation (!=0)</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Core.Operator.Gaussian(System.Int32,System.Int32,System.Single)">
+        <member name="M:UMapx.Core.Operator.Gaussian(System.Int32,System.Int32,System.Single,System.Single)">
             <summary>
             Implements the construction of the Gaussian blur filter.
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
-            <param name="sigma">Standard deviation (!=0)</param>
+            <param name="sigmaX">Standard deviation X (>0)</param>
+            <param name="sigmaY">Standard deviation Y (>0)</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Operator.Unsharp(System.Int32,System.Int32,System.Single)">
+        <member name="M:UMapx.Core.Operator.Unsharp(System.Int32,System.Int32,System.Single,System.Single)">
             <summary>
             Implements the construction of the "unsharp masking" filter.
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
-            <param name="sigma">Standard deviation (!=0)</param>
+            <param name="sigmaX">Standard deviation X (>0)</param>
+            <param name="sigmaY">Standard deviation Y (>0)</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Operator.HighPass(System.Int32,System.Int32,System.Single)">
@@ -17281,6 +17274,146 @@
             </param>
             <returns>Byte LUT of length 256 mapping input luminance → equalized luminance.</returns>
         </member>
+        <member name="T:UMapx.Imaging.GaussianBlur">
+            <summary>
+            Defines the Gaussian blur filter.
+            <remarks>
+            This is a very fast pseudo-Gaussian blur via N separable box filters (default 3).
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.#ctor(UMapx.Core.SizeInt,UMapx.Core.SizeFloat,System.Int32)">
+            <summary>
+            Initializes the Gaussian blur filter.
+            </summary>
+            <param name="size">Filter size</param>
+            <param name="sigma">Sigma</param>
+            <param name="boxes">Number of boxes</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.#ctor(System.Int32,System.Int32,System.Single,System.Single,System.Int32)">
+            <summary>
+            Initializes the Gaussian blur filter.
+            </summary>
+            <param name="width">Filter width</param>
+            <param name="height">Filter height</param>
+            <param name="sigmaX">Standard deviation X (>0)</param>
+            <param name="sigmaY">Standard deviation Y (>0)</param>
+            <param name="boxes">Number of boxes</param>
+        </member>
+        <member name="P:UMapx.Imaging.GaussianBlur.Size">
+            <summary>
+            Gets or sets the filter size.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.GaussianBlur.Sigma">
+            <summary>
+            Gets or sets the filter size.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.GaussianBlur.Boxes">
+            <summary>
+            Gets or sets a number of boxes.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.BoxBlurN(System.Single[],System.Single[],System.Int32,System.Int32,System.Int32[],System.Int32[])">
+            <summary>
+            Apply N separable box-filter passes in-place.
+            For each pass i:
+              - run a horizontal box blur with radius radsX[i] into <paramref name="tmp"/>.
+              - run a vertical box blur with radius radsY[i] from <paramref name="tmp"/> back into <paramref name="src"/>.
+            If a radius on a pass is 0, the source buffer is simply copied through for that direction.
+            The final result remains in <paramref name="src"/>.
+            </summary>
+            <param name="src">Working buffer (and final destination) of size w*h.</param>
+            <param name="tmp">Temporary buffer of size w*h (reused across passes).</param>
+            <param name="w">Image width (pixels).</param>
+            <param name="h">Image height (pixels).</param>
+            <param name="radsX">Per-pass horizontal radii (length >= number of passes).</param>
+            <param name="radsY">Per-pass vertical radii (length >= number of passes).</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.BoxBlurH(System.Single[],System.Single[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            One horizontal box blur pass with edge clamping (replicate).
+            Uses a sliding window (running sum) to achieve O(w) per row.
+            </summary>
+            <param name="src">Source buffer (w*h).</param>
+            <param name="dst">Destination buffer (w*h).</param>
+            <param name="w">Width.</param>
+            <param name="h">Height.</param>
+            <param name="r">Radius (window width = 2*r+1).</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.BoxBlurV(System.Single[],System.Single[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            One vertical box blur pass with edge clamping (replicate).
+            Uses a sliding window (running sum) to achieve O(h) per column.
+            </summary>
+            <param name="src">Source buffer (w*h).</param>
+            <param name="dst">Destination buffer (w*h).</param>
+            <param name="w">Width.</param>
+            <param name="h">Height.</param>
+            <param name="r">Radius (window height = 2*r+1).</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.ExtractToFloats(System.Drawing.Imaging.BitmapData,System.Single[],System.Single[],System.Single[],System.Single[])">
+            <summary>
+            Read 32bpp ARGB bitmap data into 4 float channel planes (BGRA order).
+            Channels are stored as [0..255] floats, no normalization or gamma applied.
+            </summary>
+            <param name="bm">Locked 32bpp bitmap data.</param>
+            <param name="B">Destination Blue plane (w*h).</param>
+            <param name="G">Destination Green plane (w*h).</param>
+            <param name="R">Destination Red plane (w*h).</param>
+            <param name="A">Destination Alpha plane (w*h).</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.WriteBack(System.Drawing.Imaging.BitmapData,System.Single[],System.Single[],System.Single[],System.Single[])">
+            <summary>
+            Write 4 float channel planes (BGRA order) back to a 32bpp ARGB bitmap.
+            Values are clamped to [0,255] and rounded to nearest (0.5 up).
+            No gamma correction is applied.
+            </summary>
+            <param name="bm">Locked 32bpp bitmap data.</param>
+            <param name="B">Blue plane.</param>
+            <param name="G">Green plane.</param>
+            <param name="R">Red plane.</param>
+            <param name="A">Alpha plane.</param>
+        </member>
+        <member name="M:UMapx.Imaging.GaussianBlur.BoxesForGauss(System.Single,System.Int32)">
+            <summary>
+            Compute <paramref name="n"/> odd box sizes whose convolution approximates
+            a Gaussian with standard deviation <paramref name="sigma"/>.
+            Returns an array of sizes where the first m entries are the lower odd width (wl),
+            and the rest are the higher odd width (wu = wl + 2). This is the classic
+            "fast almost-Gaussian" 3-box generalization.
+            </summary>
+            <param name="sigma">Target standard deviation (pixels).</param>
+            <param name="n">Number of boxes (>=1), typically 3.</param>
+            <returns>Array of odd box widths of length <paramref name="n"/>.</returns>
+        </member>
         <member name="T:UMapx.Imaging.Closing">
             <summary>
             Defines the closing filter.
@@ -17654,31 +17787,24 @@
             <param name="Gy">Gradient Y</param>
             <returns>Double precision floating point number</returns>
         </member>
-        <member name="M:UMapx.Imaging.Convolution.LoGaussian(System.Int32,System.Int32,System.Single)">
-            <summary>
-            Implements the construction of the inverted Gausssian filter.
-            </summary>
-            <param name="m">Height</param>
-            <param name="l">Width</param>
-            <param name="sigma">Standard deviation (!=0)</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Imaging.Convolution.Gaussian(System.Int32,System.Int32,System.Single)">
+        <member name="M:UMapx.Imaging.Convolution.Gaussian(System.Int32,System.Int32,System.Single,System.Single)">
             <summary>
             Implements the construction of the Gaussian blur filter.
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
-            <param name="sigma">Standard deviation (!=0)</param>
+            <param name="sigmaX">Standard deviation X (>0)</param>
+            <param name="sigmaY">Standard deviation Y (>0)</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Imaging.Convolution.Unsharp(System.Int32,System.Int32,System.Single)">
+        <member name="M:UMapx.Imaging.Convolution.Unsharp(System.Int32,System.Int32,System.Single,System.Single)">
             <summary>
             Implements the construction of the "unsharp masking" filter.
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
-            <param name="sigma">Standard deviation (!=0)</param>
+            <param name="sigmaX">Standard deviation X (>0)</param>
+            <param name="sigmaY">Standard deviation Y (>0)</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Imaging.Convolution.HighPass(System.Int32,System.Int32,System.Single)">
