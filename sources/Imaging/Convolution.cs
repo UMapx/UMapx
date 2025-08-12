@@ -380,6 +380,16 @@ namespace UMapx.Imaging
         {
             return new Convolution(Operator.Emboss(n));
         }
+        /// <summary>
+        /// Implements the motion blur filter.
+        /// </summary>
+        /// <param name="length">Kernel length</param>
+        /// <param name="angle">Angle in degrees</param>
+        /// <param name="blur">Edge blur factor [0, 1]</param>
+        public static Convolution MotionBlur(int length, float angle, float blur)
+        {
+            return new Convolution(Operator.MotionBlur(length, angle, blur));
+        }
         #endregion
 
         #region Fixed radius matrix

@@ -302,11 +302,58 @@ namespace UMapx.Core
             float[,] H = new float[n, n];
             int r = n - 1, r2 = r / 2;
 
-            H[0, 0] = -2; H[0, r2] = -1; //         0;
+            H[0, 0] = -2; H[0, r2] = -1;
             H[r2, 0] = -1; H[r2, r2] = 1; H[r2, r] = 1;
-            H[r, r2] = 1; H[r, r] = 2; //         0;
+            H[r, r2] = 1; H[r, r] = 2;
 
             return H;
+        }
+        /// <summary>
+        /// Implements the motion blur filter.
+        /// </summary>
+        /// <param name="length">Kernel length</param>
+        /// <param name="angle">Angle in degrees</param>
+        /// <param name="blur">Edge blur factor [0, 1]</param>
+        public static float[,] MotionBlur(int length, float angle, float blur)
+        {
+            if (length < 1) length = 1;
+            if (length % 2 == 0) length++;
+            int size = length;
+            int radius = size / 2;
+            float[,] m = new float[size, size];
+            double theta = angle * Maths.Pi / 180.0;
+            double cos = Math.Cos(theta);
+            double sin = Math.Sin(theta);
+
+            for (int i = 0; i < size; i++)
+            {
+                double t = i - radius;
+                int x = (int)Math.Round(radius + t * cos);
+                int y = (int)Math.Round(radius + t * sin);
+                if (x < 0 || x >= size || y < 0 || y >= size) continue;
+                float w = 1f;
+                if (blur > 0)
+                {
+                    float f = 1f - Math.Abs((float)t) / radius;
+                    w = (1 - blur) + blur * f;
+                }
+                m[y, x] = w;
+            }
+
+            float sum = 0;
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    sum += m[i, j];
+
+            if (sum > 0)
+            {
+                float inv = 1f / sum;
+                for (int i = 0; i < size; i++)
+                    for (int j = 0; j < size; j++)
+                        m[i, j] *= inv;
+            }
+
+            return m;
         }
         #endregion
     }
