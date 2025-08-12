@@ -18745,7 +18745,7 @@
             </summary>
             <param name="size">Filter size</param>
             <param name="sigma">Sigma</param>
-            <param name="boxes">Number of boxes</param>
+            <param name="boxes">Number of boxes (>0)</param>
         </member>
         <member name="M:UMapx.Imaging.GaussianBlur.#ctor(System.Int32,System.Int32,System.Single,System.Single,System.Int32)">
             <summary>
@@ -18755,7 +18755,7 @@
             <param name="height">Filter height</param>
             <param name="sigmaX">Standard deviation X (>0)</param>
             <param name="sigmaY">Standard deviation Y (>0)</param>
-            <param name="boxes">Number of boxes</param>
+            <param name="boxes">Number of boxes (>0)</param>
         </member>
         <member name="P:UMapx.Imaging.GaussianBlur.Size">
             <summary>
@@ -18764,12 +18764,12 @@
         </member>
         <member name="P:UMapx.Imaging.GaussianBlur.Sigma">
             <summary>
-            Gets or sets the filter size.
+            Gets or sets the filter size (>0).
             </summary>
         </member>
         <member name="P:UMapx.Imaging.GaussianBlur.Boxes">
             <summary>
-            Gets or sets a number of boxes.
+            Gets or sets a number of boxes (>0).
             </summary>
         </member>
         <member name="M:UMapx.Imaging.GaussianBlur.Apply(System.Drawing.Bitmap)">
