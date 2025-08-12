@@ -30377,7 +30377,6 @@
              </summary>
              <param name="A">Input signal (length N)</param>
              <param name="C">Polyphase cache (built for N,M,window)</param>
-             <param name="complex">Unused (kept for backward compatibility)</param>
              <returns>B of length 2N: main (0..N-1) and half (N..2N-1) branches</returns>
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IFWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">

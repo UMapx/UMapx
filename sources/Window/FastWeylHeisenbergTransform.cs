@@ -55,11 +55,11 @@ namespace UMapx.Window
         /// <returns>Matrix</returns>
         public override Complex32[,] Forward(Complex32[,] A)
         {
-            Complex32[,] B = (Complex32[,])A.Clone();
-            int N = B.GetLength(0), M = B.GetLength(1);
+            int N = A.GetLength(0); // rows
+            int M = A.GetLength(1); // cols
 
-            PolyphaseCache cacheCols = null;
-            PolyphaseCache cacheRows = null;
+            PolyphaseCache cacheCols = null; // U for length N (vertical)
+            PolyphaseCache cacheRows = null; // V for length M (horizontal)
 
             if (direction == Direction.Both || direction == Direction.Vertical)
                 cacheCols = PolyphaseCache.Build(N, this.m, this.window);
@@ -69,84 +69,79 @@ namespace UMapx.Window
 
             if (direction == Direction.Both)
             {
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
-
-                    row = FWHT(row, cacheRows);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
-                });
+                // 1) Left-multiply: U^H · A  → shape: (2N × M)
+                var tmp = new Complex32[2 * N, M];
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N];
+                    for (int i = 0; i < N; i++) col[i] = A[i, j];
 
-                    for (i = 0; i < N; i++)
+                    var tr = FWHT(col, cacheCols); // length 2N
+                    for (int i = 0; i < 2 * N; i++) tmp[i, j] = tr[i];
+                });
+
+                // 2) Right-multiply by V via conjugation trick:
+                //    row * V = conj( FWHT( conj(row) ) )  → shape: (2N × 2M)
+                var B = new Complex32[2 * N, 2 * M];
+
+                Parallel.For(0, 2 * N, i =>
+                {
+                    var row = new Complex32[M];
+                    for (int j = 0; j < M; j++) row[j] = tmp[i, j];
+
+                    // conj → FWHT → conj
+                    for (int j = 0; j < M; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag);
+                    var tr = FWHT(row, cacheRows); // V^H * conj(row)
+
+                    for (int j = 0; j < 2 * M; j++)
                     {
-                        col[i] = B[i, j];
-                    }
-
-                    col = FWHT(col, cacheCols);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
+                        var c = tr[j];
+                        B[i, j] = new Complex32(c.Real, -c.Imag); // conj(...)
                     }
                 });
+
+                return B;
             }
-            else if (direction == Direction.Vertical)
+
+            if (direction == Direction.Vertical)
             {
+                // B = U^H · A  → (2N × M)
+                var B = new Complex32[2 * N, M];
+
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N];
+                    for (int i = 0; i < N; i++) col[i] = A[i, j];
 
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                    }
-
-                    col = FWHT(col, cacheCols);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
+                    var tr = FWHT(col, cacheCols); // 2N
+                    for (int i = 0; i < 2 * N; i++) B[i, j] = tr[i];
                 });
+
+                return B;
             }
-            else
+            else // Horizontal
             {
+                // B = A · V  → (N × 2M)  (via the same conjugation trick per row)
+                var B = new Complex32[N, 2 * M];
+
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var row = new Complex32[M];
+                    for (int j = 0; j < M; j++) row[j] = A[i, j];
 
-                    for (j = 0; j < M; j++)
+                    for (int j = 0; j < M; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag);
+                    var tr = FWHT(row, cacheRows); // V^H * conj(row)
+
+                    for (int j = 0; j < 2 * M; j++)
                     {
-                        row[j] = B[i, j];
-                    }
-
-                    row = FWHT(row, cacheRows);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
+                        var c = tr[j];
+                        B[i, j] = new Complex32(c.Real, -c.Imag); // conj(...)
                     }
                 });
-            }
 
-            return B;
+                return B;
+            }
         }
         /// <summary>
         /// Backward Weyl-Heisenberg transform.
@@ -155,100 +150,95 @@ namespace UMapx.Window
         /// <returns>Matrix</returns>
         public override Complex32[,] Backward(Complex32[,] B)
         {
-            Complex32[,] A = (Complex32[,])B.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
+            int N2 = B.GetLength(0); // possibly 2N
+            int M2 = B.GetLength(1); // possibly 2M
 
-            PolyphaseCache cacheCols = null;
-            PolyphaseCache cacheRows = null;
+            PolyphaseCache cacheCols = null; // for target N = N2/2 (vertical inverse)
+            PolyphaseCache cacheRows = null; // for target M = M2/2 (horizontal inverse)
 
             if (direction == Direction.Both || direction == Direction.Vertical)
-                cacheCols = PolyphaseCache.Build(N, this.m, this.window);
+                cacheCols = PolyphaseCache.Build(N2 / 2, this.m, this.window);
 
             if (direction == Direction.Both || direction == Direction.Horizontal)
-                cacheRows = PolyphaseCache.Build(M, this.m, this.window);
+                cacheRows = PolyphaseCache.Build(M2 / 2, this.m, this.window);
 
             if (direction == Direction.Both)
             {
-                Parallel.For(0, M, j =>
+                // Inverse order of Forward(Both):
+                // 1) Undo right multiply (· V) per row using the conjugation trick:
+                //    row = conj( IFWHT( conj(B_row) ) )  → shape: (N2 × M2/2)
+                var tmp = new Complex32[N2, M2 / 2];
+
+                Parallel.For(0, N2, i =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var row = new Complex32[M2];
+                    for (int j = 0; j < M2; j++) row[j] = B[i, j];
 
-                    for (i = 0; i < N; i++)
+                    for (int j = 0; j < M2; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
+                    var inv = IFWHT(row, cacheRows); // length M2/2
+
+                    for (int j = 0; j < M2 / 2; j++)
                     {
-                        col[i] = A[i, j];
-                    }
-
-                    col = IFWHT(col, cacheCols);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
+                        var c = inv[j];
+                        tmp[i, j] = new Complex32(c.Real, -c.Imag); // conj(...)
                     }
                 });
 
-                Parallel.For(0, N, i =>
+                // 2) Undo left multiply (U^H ·) per column: 2N → N
+                var A = new Complex32[N2 / 2, M2 / 2];
+
+                Parallel.For(0, M2 / 2, j =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var col = new Complex32[N2];
+                    for (int i = 0; i < N2; i++) col[i] = tmp[i, j];
 
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j];
-                    }
-
-                    row = IFWHT(row, cacheRows);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
+                    var inv = IFWHT(col, cacheCols); // length N2/2
+                    for (int i = 0; i < N2 / 2; i++) A[i, j] = inv[i];
                 });
+
+                return A;
             }
-            else if (direction == Direction.Vertical)
+
+            if (direction == Direction.Vertical)
             {
-                Parallel.For(0, M, j =>
+                // A = (U^H)^{-1} · B : columns 2N → N
+                var A = new Complex32[N2 / 2, M2];
+
+                Parallel.For(0, M2, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N2];
+                    for (int i = 0; i < N2; i++) col[i] = B[i, j];
 
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
-
-                    col = IFWHT(col, cacheCols);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
+                    var inv = IFWHT(col, cacheCols); // N2/2
+                    for (int i = 0; i < N2 / 2; i++) A[i, j] = inv[i];
                 });
+
+                return A;
             }
-            else
+            else // Horizontal
             {
-                Parallel.For(0, N, i =>
+                // A = B · V^{-1} : rows 2M → M (via conjugation trick)
+                var A = new Complex32[N2, M2 / 2];
+
+                Parallel.For(0, N2, i =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var row = new Complex32[M2];
+                    for (int j = 0; j < M2; j++) row[j] = B[i, j];
 
-                    for (j = 0; j < M; j++)
+                    for (int j = 0; j < M2; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
+                    var inv = IFWHT(row, cacheRows); // M2/2
+
+                    for (int j = 0; j < M2 / 2; j++)
                     {
-                        row[j] = A[i, j];
-                    }
-
-                    row = IFWHT(row, cacheRows);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
+                        var c = inv[j];
+                        A[i, j] = new Complex32(c.Real, -c.Imag); // conj(...)
                     }
                 });
-            }
 
-            return A;
+                return A;
+            }
         }
+
         #endregion
 
         #region Private voids
@@ -281,7 +271,6 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Input signal (length N)</param>
         /// <param name="C">Polyphase cache (built for N,M,window)</param>
-        /// <param name="complex">Unused (kept for backward compatibility)</param>
         /// <returns>B of length 2N: main (0..N-1) and half (N..2N-1) branches</returns>
         internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
         {
@@ -458,9 +447,9 @@ namespace UMapx.Window
             var Y_half = new Complex32[Mloc];
 
             // gain used in the forward:
-            //   gain = 1 / √L
+            //   gain = 1 / (√L · √2)
             // hence inverse gain:
-            float invGain = 1.0f / L;
+            float invGain = 1.0f / Maths.Sqrt(2 * L);
 
             for (int l = 0; l < L; l++)
             {
@@ -561,7 +550,6 @@ namespace UMapx.Window
 
             return Arec;
         }
-
 
         /// <summary>
         /// Defines the polyphase cache for the fast Weyl–Heisenberg transform.
