@@ -255,15 +255,15 @@ namespace UMapx.Window
         ///     B_half[u] = B[u + N],   u = l*M + k
         ///
         /// This matches the column-wise “slow” matrix reference G ∈ ℂ^{N×2N} with columns:
-        ///   main: g[i] * exp( j*2π*k/M * (n - M/4) ) / √2
-        ///   half: j*g[j] * exp( j*2π*k/M * (n - M/4) ) / √2
+        ///   main:   g[i] * exp( j*2π*k/M * (n - M/4) )
+        ///   half: j*g[j] * exp( j*2π*k/M * (n - M/4) )
         ///
         /// Analysis (i.e., G^H A) realized via:
         ///   - polyphase split over residue n0 (mod M) and FFT_L along r,
         ///   - frequency-domain correlations with conj(S_hat/T_hat),
         ///   - carry-phase compensation for the half branch when (n0 + M/2) wraps,
         ///   - DFT_M over n0 (via forward FFT over n0) + quarter-phase e^{+jπk/2},
-        ///   - normalization gain = √M / (√N · √2) = 1 / (√L · √2).
+        ///   - normalization gain = √M / √N = 1 / (2√L).
         ///
         /// Notes:
         ///   Caches C.S_hat, C.T_hat must be built from the SAME orthonormalized window
@@ -355,7 +355,7 @@ namespace UMapx.Window
             // Then we apply the quarter-phase e^{+jπk/2} (accounts for the (n - M/4) shift).
             //
             // Final normalization:
-            //   gain = √M / (√N).
+            //   gain = √M / √N.
             //
             // Output packing (two channels):
             //   B_main[u] =  P * gain
@@ -407,10 +407,10 @@ namespace UMapx.Window
         /// This inverts the forward packing:
         ///   forward: B_main =  P * gain
         ///            B_half = (-j) Q * gain
-        ///   where gain = √M / (√N) = 1 / (2√L).
+        ///   where gain = √M / √N = 1 / (2√L).
         ///
         /// Inverse mapping:
-        ///   P = B_main / gain
+        ///   P =      B_main / gain
         ///   Q =  j * B_half / gain
         ///
         /// Then we undo the quarter-phase e^{+jπk/2}, invert the DFT over n₀,
@@ -462,7 +462,7 @@ namespace UMapx.Window
                     var bHalf = B[u + N];
 
                     // Invert forward packing:
-                    //   P =  B_main / gain
+                    //   P =      B_main / gain
                     //   Q =  j * B_half / gain
                     var P = bMain * invGain;
                     var Q = Complex32.I * bHalf * invGain;
