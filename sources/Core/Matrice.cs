@@ -2671,6 +2671,171 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Matrix concatenation
+        /// <summary>
+        /// Implements matrix concatenation.
+        /// </summary>
+        /// <param name="A">Matrix</param>
+        /// <param name="B">Matrix</param>
+        /// <param name="direction">Direction</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Concat(this float[,] A, float[,] B, Direction direction = Direction.Horizontal)
+        {
+            int aRows = A.GetLength(0), aCols = A.GetLength(1);
+            int bRows = B.GetLength(0), bCols = B.GetLength(1);
+
+            switch (direction)
+            {
+                case Direction.Horizontal:
+                    if (aRows != bRows)
+                        throw new ArgumentException("For horizontal concat, row counts must match");
+                    {
+                        var R = new float[aRows, aCols + bCols];
+                        LinealgOptions.Copy(A, R, 0, 0);
+                        LinealgOptions.Copy(B, R, 0, aCols);
+                        return R;
+                    }
+
+                case Direction.Vertical:
+                    if (aCols != bCols)
+                        throw new ArgumentException("For vertical concat, column counts must match");
+                    {
+                        var R = new float[aRows + bRows, aCols];
+                        LinealgOptions.Copy(A, R, 0, 0);
+                        LinealgOptions.Copy(B, R, aRows, 0);
+                        return R;
+                    }
+
+                case Direction.Both:
+                default:
+                    throw new NotSupportedException("Both direction does not have an unambiguous meaning for matrix concatenation");
+            }
+        }
+        /// <summary>
+        /// Implements matrix concatenation.
+        /// </summary>
+        /// <param name="A">Matrix</param>
+        /// <param name="B">Matrix</param>
+        /// <param name="direction">Direction</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Concat(this Complex32[,] A, Complex32[,] B, Direction direction)
+        {
+            int aRows = A.GetLength(0), aCols = A.GetLength(1);
+            int bRows = B.GetLength(0), bCols = B.GetLength(1);
+
+            switch (direction)
+            {
+                case Direction.Horizontal:
+                    if (aRows != bRows)
+                        throw new ArgumentException("For horizontal concat, row counts must match");
+                    {
+                        var R = new Complex32[aRows, aCols + bCols];
+                        LinealgOptions.Copy(A, R, 0, 0);
+                        LinealgOptions.Copy(B, R, 0, aCols);
+                        return R;
+                    }
+
+                case Direction.Vertical:
+                    if (aCols != bCols)
+                        throw new ArgumentException("For vertical concat, column counts must match");
+                    {
+                        var R = new Complex32[aRows + bRows, aCols];
+                        LinealgOptions.Copy(A, R, 0, 0);
+                        LinealgOptions.Copy(B, R, aRows, 0);
+                        return R;
+                    }
+
+                case Direction.Both:
+                default:
+                    throw new NotSupportedException("Both direction does not have an unambiguous meaning for matrix concatenation");
+            }
+        }
+        /// <summary>
+        /// Implements matrix concatenation.
+        /// </summary>
+        /// <param name="A">Matrix</param>
+        /// <param name="B">Matrix</param>
+        /// <param name="direction">Direction</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Concat(this Complex32[,] A, float[,] B, Direction direction)
+        {
+            if (A == null) throw new ArgumentNullException(nameof(A));
+            if (B == null) throw new ArgumentNullException(nameof(B));
+
+            int aRows = A.GetLength(0), aCols = A.GetLength(1);
+            int bRows = B.GetLength(0), bCols = B.GetLength(1);
+
+            switch (direction)
+            {
+                case Direction.Horizontal:
+                    if (aRows != bRows)
+                        throw new ArgumentException("For horizontal concat, row counts must match");
+                    {
+                        var R = new Complex32[aRows, aCols + bCols];
+                        LinealgOptions.Copy(A, R, 0, 0);
+                        LinealgOptions.CopyToComplex(B, R, 0, aCols);
+                        return R;
+                    }
+
+                case Direction.Vertical:
+                    if (aCols != bCols)
+                        throw new ArgumentException("For vertical concat, column counts must match");
+                    {
+                        var R = new Complex32[aRows + bRows, aCols];
+                        LinealgOptions.Copy(A, R, 0, 0);
+                        LinealgOptions.CopyToComplex(B, R, aRows, 0);
+                        return R;
+                    }
+
+                case Direction.Both:
+                default:
+                    throw new NotSupportedException("Both direction does not have an unambiguous meaning for matrix concatenation");
+            }
+        }
+        /// <summary>
+        /// Implements matrix concatenation.
+        /// </summary>
+        /// <param name="A">Matrix</param>
+        /// <param name="B">Matrix</param>
+        /// <param name="direction">Direction</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Concat(this float[,] A, Complex32[,] B, Direction direction)
+        {
+            if (A == null) throw new ArgumentNullException(nameof(A));
+            if (B == null) throw new ArgumentNullException(nameof(B));
+
+            int aRows = A.GetLength(0), aCols = A.GetLength(1);
+            int bRows = B.GetLength(0), bCols = B.GetLength(1);
+
+            switch (direction)
+            {
+                case Direction.Horizontal:
+                    if (aRows != bRows)
+                        throw new ArgumentException("For horizontal concat, row counts must match");
+                    {
+                        var R = new Complex32[aRows, aCols + bCols];
+                        LinealgOptions.CopyToComplex(A, R, 0, 0);
+                        LinealgOptions.Copy(B, R, 0, aCols);
+                        return R;
+                    }
+
+                case Direction.Vertical:
+                    if (aCols != bCols)
+                        throw new ArgumentException("For vertical concat, column counts must match");
+                    {
+                        var R = new Complex32[aRows + bRows, aCols];
+                        LinealgOptions.CopyToComplex(A, R, 0, 0);
+                        LinealgOptions.Copy(B, R, aRows, 0);
+                        return R;
+                    }
+
+                case Direction.Both:
+                default:
+                    throw new NotSupportedException("Both direction does not have an unambiguous meaning for matrix concatenation");
+            }
+        }
+        #endregion
+
         // Matrix special
 
         #region Matrix dot

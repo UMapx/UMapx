@@ -4907,6 +4907,33 @@
             <param name="rank">Rank</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.LinealgOptions.Copy(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Copies matrix.
+            </summary>
+            <param name="src">Source</param>
+            <param name="dst">Destination</param>
+            <param name="r0">R0</param>
+            <param name="c0">C0</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.Copy(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Copies matrix.
+            </summary>
+            <param name="src">Source</param>
+            <param name="dst">Destination</param>
+            <param name="r0">R0</param>
+            <param name="c0">C0</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.CopyToComplex(System.Single[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Copies matrix.
+            </summary>
+            <param name="src">Source</param>
+            <param name="dst">Destination</param>
+            <param name="r0">R0</param>
+            <param name="c0">C0</param>
+        </member>
         <member name="T:UMapx.Core.Maths">
             <summary>
             Uses to implement basic algebraic, trigonometric and hyperbolic operations.
@@ -7005,6 +7032,42 @@
             Returns the normalized matrix.
             </summary>
             <param name="m">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Concat(System.Single[0:,0:],System.Single[0:,0:],UMapx.Core.Direction)">
+            <summary>
+            Implements matrix concatenation.
+            </summary>
+            <param name="A">Matrix</param>
+            <param name="B">Matrix</param>
+            <param name="direction">Direction</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Concat(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],UMapx.Core.Direction)">
+            <summary>
+            Implements matrix concatenation.
+            </summary>
+            <param name="A">Matrix</param>
+            <param name="B">Matrix</param>
+            <param name="direction">Direction</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Concat(UMapx.Core.Complex32[0:,0:],System.Single[0:,0:],UMapx.Core.Direction)">
+            <summary>
+            Implements matrix concatenation.
+            </summary>
+            <param name="A">Matrix</param>
+            <param name="B">Matrix</param>
+            <param name="direction">Direction</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Concat(System.Single[0:,0:],UMapx.Core.Complex32[0:,0:],UMapx.Core.Direction)">
+            <summary>
+            Implements matrix concatenation.
+            </summary>
+            <param name="A">Matrix</param>
+            <param name="B">Matrix</param>
+            <param name="direction">Direction</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Dot(System.Single[0:,0:],System.Single[0:,0:])">

@@ -2950,5 +2950,51 @@ namespace UMapx.Core
         }
 
         #endregion
+
+        #region Copy
+        /// <summary>
+        /// Copies matrix.
+        /// </summary>
+        /// <param name="src">Source</param>
+        /// <param name="dst">Destination</param>
+        /// <param name="r0">R0</param>
+        /// <param name="c0">C0</param>
+        public static void Copy(float[,] src, float[,] dst, int r0, int c0)
+        {
+            int rows = src.GetLength(0), cols = src.GetLength(1);
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++)
+                    dst[r0 + i, c0 + j] = src[i, j];
+        }
+        /// <summary>
+        /// Copies matrix.
+        /// </summary>
+        /// <param name="src">Source</param>
+        /// <param name="dst">Destination</param>
+        /// <param name="r0">R0</param>
+        /// <param name="c0">C0</param>
+        public static void Copy(Complex32[,] src, Complex32[,] dst, int r0, int c0)
+        {
+            int rows = src.GetLength(0), cols = src.GetLength(1);
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++)
+                    dst[r0 + i, c0 + j] = src[i, j];
+        }
+        /// <summary>
+        /// Copies matrix.
+        /// </summary>
+        /// <param name="src">Source</param>
+        /// <param name="dst">Destination</param>
+        /// <param name="r0">R0</param>
+        /// <param name="c0">C0</param>
+        public static void CopyToComplex(float[,] src, Complex32[,] dst, int r0, int c0)
+        {
+            int rows = src.GetLength(0), cols = src.GetLength(1);
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++)
+                    dst[r0 + i, c0 + j] = new Complex32(src[i, j], 0f);
+        }
+
+        #endregion
     }
 }
