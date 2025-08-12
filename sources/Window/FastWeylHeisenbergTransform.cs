@@ -388,7 +388,7 @@ namespace UMapx.Window
                     int u = l * Mloc + k;
 
                     // Two-channel output that matches the slow matrix reference (G^H A):
-                    B[u + 0] = P * gain;                 // main channel
+                    B[u + 0] = P * gain;                  // main channel
                     B[u + N] = -Complex32.I * Q * gain;   // half channel (−j factor)
                 }
             }
