@@ -38,7 +38,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <param name="type">Type</param>
-        public static object Load(Stream stream, Type type)
+        public static object Open(Stream stream, Type type)
         {
             XmlSerializer xml = new XmlSerializer(type);
             return xml.Deserialize(stream);
@@ -48,7 +48,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="fileName">File name</param>
         /// <param name="type">Type</param>
-        public static object Load(string fileName, Type type)
+        public static object Open(string fileName, Type type)
         {
             FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             XmlSerializer xml = new XmlSerializer(type);

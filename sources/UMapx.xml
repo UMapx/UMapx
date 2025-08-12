@@ -11724,14 +11724,14 @@
             <param name="fileName">File name</param>
             <param name="o">Object</param>
         </member>
-        <member name="M:UMapx.Core.Xml.Load(System.IO.Stream,System.Type)">
+        <member name="M:UMapx.Core.Xml.Open(System.IO.Stream,System.Type)">
             <summary>
             Load data from the file.
             </summary>
             <param name="stream">Stream</param>
             <param name="type">Type</param>
         </member>
-        <member name="M:UMapx.Core.Xml.Load(System.String,System.Type)">
+        <member name="M:UMapx.Core.Xml.Open(System.String,System.Type)">
             <summary>
             Load data from the file.
             </summary>
