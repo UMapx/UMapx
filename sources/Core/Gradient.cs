@@ -1,4 +1,4 @@
-﻿namespace UMapx.Imaging
+﻿namespace UMapx.Core
 {
     /// <summary>
     /// Defines the direction of the gradient vector.

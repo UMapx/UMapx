@@ -468,7 +468,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Roberts()
         {
-            return new Convolution(new float[2, 2] { { 1, 0 }, { 0, -1 } });
+            return new Convolution(Matrice.Roberts());
         }
         /// <summary>
         /// Implements the construction of the Prewitt operator [3 x 3].
@@ -476,7 +476,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Prewitt()
         {
-            return new Convolution(new float[3, 3] { { -1, -1, -1 }, { 0, 0, 0 }, { 1, 1, 1 } });
+            return new Convolution(Matrice.Prewitt());
         }
         /// <summary>
         /// Implements the construction of the Sobel operator [3 x 3].
@@ -484,7 +484,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Sobel()
         {
-            return new Convolution(new float[3, 3] { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } });
+            return new Convolution(Matrice.Sobel());
         }
         /// <summary>
         /// Implements the construction of the Scharr operator [3 x 3].
@@ -492,7 +492,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Scharr()
         {
-            return new Convolution(new float[3, 3] { { 3, 10, 3 }, { 0, 0, 0 }, { -3, -10, -3 } });
+            return new Convolution(Matrice.Scharr());
         }
         /// <summary>
         /// Implements the construction of the Laplacian operator [3 x 3].
@@ -500,7 +500,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Laplacian()
         {
-            return new Convolution(new float[3, 3] { { 0, 1, 0 }, { 1, -4, 1 }, { 0, 1, 0 } });
+            return new Convolution(Matrice.Laplacian());
         }
         /// <summary>
         /// Implements the construction of the diagonal Laplacian operator [3 x 3].
@@ -508,7 +508,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LaplacianDiagonal()
         {
-            return new Convolution(new float[3, 3] { { 1, 1, 1 }, { 1, -8, 1 }, { 1, 1, 1 } });
+            return new Convolution(Matrice.LaplacianDiagonal());
         }
         /// <summary>
         /// Implements the construction of the inverted Laplacian operator [3 x 3].
@@ -516,7 +516,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution LaplacianInvert()
         {
-            return new Convolution(new float[3, 3] { { -1, 0, -1 }, { 0, 4, 0 }, { -1, 0, -1 } });
+            return new Convolution(Matrice.LaplacianInvert());
         }
         #endregion
 
@@ -528,58 +528,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Kirsh(Gradient direction)
         {
-            float[,] H = new float[3, 3];
-
-            if (direction == Gradient.North)
-            {
-                H[0, 0] = 5; H[0, 1] = 5; H[0, 2] = 5;
-                H[1, 0] = -3; H[1, 1] = 0; H[1, 2] = -3;
-                H[2, 0] = -3; H[2, 1] = -3; H[2, 2] = -3;
-            }
-            else if (direction == Gradient.NorthWest)
-            {
-                H[0, 0] = 5; H[0, 1] = 5; H[0, 2] = -3;
-                H[1, 0] = 5; H[1, 1] = 0; H[1, 2] = -3;
-                H[2, 0] = -3; H[2, 1] = -3; H[2, 2] = -3;
-            }
-            else if (direction == Gradient.West)
-            {
-                H[0, 0] = 5; H[0, 1] = -3; H[0, 2] = -3;
-                H[1, 0] = 5; H[1, 1] = 0; H[1, 2] = -3;
-                H[2, 0] = 5; H[2, 1] = -3; H[2, 2] = -3;
-            }
-            else if (direction == Gradient.SouthWest)
-            {
-                H[0, 0] = -3; H[0, 1] = -3; H[0, 2] = -3;
-                H[1, 0] = 5; H[1, 1] = 0; H[1, 2] = -3;
-                H[2, 0] = 5; H[2, 1] = 5; H[2, 2] = -3;
-            }
-            else if (direction == Gradient.South)
-            {
-                H[0, 0] = -3; H[0, 1] = -3; H[0, 2] = -3;
-                H[1, 0] = -3; H[1, 1] = 0; H[1, 2] = -3;
-                H[2, 0] = 5; H[2, 1] = 5; H[2, 2] = 5;
-            }
-            else if (direction == Gradient.SouthEast)
-            {
-                H[0, 0] = -3; H[0, 1] = -3; H[0, 2] = -3;
-                H[1, 0] = -3; H[1, 1] = 0; H[1, 2] = 5;
-                H[2, 0] = -3; H[2, 1] = 5; H[2, 2] = 5;
-            }
-            else if (direction == Gradient.East)
-            {
-                H[0, 0] = -3; H[0, 1] = -3; H[0, 2] = 5;
-                H[1, 0] = -3; H[1, 1] = 0; H[1, 2] = 5;
-                H[2, 0] = -3; H[2, 1] = -3; H[2, 2] = 5;
-            }
-            else if (direction == Gradient.NorthEast)
-            {
-                H[0, 0] = -3; H[0, 1] = 5; H[0, 2] = 5;
-                H[1, 0] = -3; H[1, 1] = 0; H[1, 2] = 5;
-                H[2, 0] = -3; H[2, 1] = -3; H[2, 2] = -3;
-            }
-
-            return new Convolution(H);
+            return new Convolution(Matrice.Kirsh(direction));
         }
         /// <summary>
         /// Implements the construction of the Roberts operator [3 x 3]. [2 x 2].
@@ -588,30 +537,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Convolution Roberts(Gradient direction)
         {
-            float[,] H = new float[2, 2];
-
-            if (direction == Gradient.North)
-            {
-                H[0, 0] = 0; H[0, 1] = 1;
-                H[1, 0] = -1; H[1, 1] = 0;
-            }
-            else if (direction == Gradient.West)
-            {
-                H[0, 0] = 1; H[0, 1] = 0;
-                H[1, 0] = 0; H[1, 1] = -1;
-            }
-            else if (direction == Gradient.South)
-            {
-                H[0, 0] = 0; H[0, 1] = -1;
-                H[1, 0] = 1; H[1, 1] = 0;
-            }
-            else // Properties.Gradient.East
-            {
-                H[0, 0] = -1; H[0, 1] = 0;
-                H[1, 0] = 0; H[1, 1] = 1;
-            }
-
-            return new Convolution(H);
+            return new Convolution(Matrice.Roberts(direction));
         }
         #endregion
     }

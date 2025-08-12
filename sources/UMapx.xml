@@ -4055,6 +4055,51 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="T:UMapx.Core.Gradient">
+            <summary>
+            Defines the direction of the gradient vector.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Gradient.North">
+            <summary>
+            North direction.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Gradient.NorthWest">
+            <summary>
+            North-West direction.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Gradient.West">
+            <summary>
+            West direction.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Gradient.SouthWest">
+            <summary>
+            South-West direction.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Gradient.South">
+            <summary>
+            South direction.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Gradient.SouthEast">
+            <summary>
+            South-East direction.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Gradient.East">
+            <summary>
+            East direction.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Gradient.NorthEast">
+            <summary>
+            North-East direction.
+            </summary>
+        </member>
         <member name="T:UMapx.Core.HeapSet`1">
             <summary>
             Defines a heap set.
@@ -9896,6 +9941,62 @@
             <param name="A">Square matrix</param>
             <param name="b">Array</param>
             <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Roberts(UMapx.Core.Gradient)">
+            <summary>
+            Implements the construction of the Roberts operator [3 x 3]. [2 x 2].
+            </summary>
+            <param name="direction">Gradient direction</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Kirsh(UMapx.Core.Gradient)">
+            <summary>
+            Implements the construction of the Kirsh operator [3 x 3].
+            </summary>
+            <param name="direction">Gradient direction</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Roberts">
+            <summary>
+            Implements the construction of the Roberts operator [2 x 2].
+            </summary>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Prewitt">
+            <summary>
+            Implements the construction of the Prewitt operator [3 x 3].
+            </summary>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Sobel">
+            <summary>
+            Implements the construction of the Sobel operator [3 x 3].
+            </summary>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Scharr">
+            <summary>
+            Implements the construction of the Scharr operator [3 x 3].
+            </summary>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Laplacian">
+            <summary>
+            Implements the construction of the Laplacian operator [3 x 3].
+            </summary>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.LaplacianDiagonal">
+            <summary>
+            Implements the construction of the diagonal Laplacian operator [3 x 3].
+            </summary>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.LaplacianInvert">
+            <summary>
+            Implements the construction of the inverted Laplacian operator [3 x 3].
+            </summary>
+            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Core.MorphologyMode">
             <summary>
@@ -17582,14 +17683,14 @@
             </summary>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Imaging.Convolution.Kirsh(UMapx.Imaging.Gradient)">
+        <member name="M:UMapx.Imaging.Convolution.Kirsh(UMapx.Core.Gradient)">
             <summary>
             Implements the construction of the Kirsh operator [3 x 3].
             </summary>
             <param name="direction">Gradient direction</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Imaging.Convolution.Roberts(UMapx.Imaging.Gradient)">
+        <member name="M:UMapx.Imaging.Convolution.Roberts(UMapx.Core.Gradient)">
             <summary>
             Implements the construction of the Roberts operator [3 x 3]. [2 x 2].
             </summary>
@@ -18493,51 +18594,6 @@
         <member name="M:UMapx.Imaging.GammaCorrection.Rebuild">
             <summary>
             Implements filter rebuilding.
-            </summary>
-        </member>
-        <member name="T:UMapx.Imaging.Gradient">
-            <summary>
-            Defines the direction of the gradient vector.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.Gradient.North">
-            <summary>
-            North direction.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.Gradient.NorthWest">
-            <summary>
-            North-West direction.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.Gradient.West">
-            <summary>
-            West direction.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.Gradient.SouthWest">
-            <summary>
-            South-West direction.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.Gradient.South">
-            <summary>
-            South direction.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.Gradient.SouthEast">
-            <summary>
-            South-East direction.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.Gradient.East">
-            <summary>
-            East direction.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.Gradient.NorthEast">
-            <summary>
-            North-East direction.
             </summary>
         </member>
         <member name="T:UMapx.Imaging.Grayscale">
