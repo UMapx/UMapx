@@ -18621,6 +18621,83 @@
             Ported from gimp. See gimpmatrix.c and gimp-transform-utils.c.
             </summary>
         </member>
+        <member name="T:UMapx.Imaging.FreiChen">
+            <summary>
+            Defines Frei-Chen convolution filter.
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Frei-Chen_operator
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.FreiChen.#ctor(UMapx.Imaging.FreiChenMode)">
+            <summary>
+            Initializes Frei-Chen filter.
+            </summary>
+            <param name="mode">Filter mode</param>
+        </member>
+        <member name="P:UMapx.Imaging.FreiChen.Mode">
+            <summary>
+            Gets or sets filter mode.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.FreiChen.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.FreiChen.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.FreiChen.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.FreiChen.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.FreiChen.CreateMasks">
+            <summary>
+            Creates masks.
+            </summary>
+            <returns>Jagged array</returns>
+        </member>
+        <member name="T:UMapx.Imaging.FreiChenMode">
+            <summary>
+            Frei-Chen convolution filter mode.
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.FreiChenMode.Gradient">
+            <summary>
+            Gradient components (F1, F2).
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.FreiChenMode.Edge">
+            <summary>
+            Edge components (F1-F4).
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.FreiChenMode.Line">
+            <summary>
+            Line components (F5-F8).
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.FreiChenMode.Average">
+            <summary>
+            Average component (F9).
+            </summary>
+        </member>
         <member name="T:UMapx.Imaging.GammaCorrection">
             <summary>
             Defines the gamma correction filter.
