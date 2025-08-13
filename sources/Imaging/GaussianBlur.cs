@@ -120,15 +120,9 @@ namespace UMapx.Imaging
         {
             var bmDst = BitmapFormat.Lock32bpp(Data);
             var bmSrc = BitmapFormat.Lock32bpp(Src);
-            try
-            {
-                Apply(bmDst, bmSrc);
-            }
-            finally
-            {
-                BitmapFormat.Unlock(Data, bmDst);
-                BitmapFormat.Unlock(Src, bmSrc);
-            }
+            Apply(bmDst, bmSrc);
+            BitmapFormat.Unlock(Data, bmDst);
+            BitmapFormat.Unlock(Src, bmSrc);
         }
         /// <summary>
         /// Apply filter.
