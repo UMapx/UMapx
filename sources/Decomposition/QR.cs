@@ -19,6 +19,9 @@ namespace UMapx.Decomposition
         private int m, n;
         private float[][] qr;
         private float[] diag;
+        private float[,] q;
+        private float[,] r;
+        private float[,] h;
         #endregion
 
         #region Initialize
@@ -40,24 +43,8 @@ namespace UMapx.Decomposition
         {
             get
             {
-                float[,] H = new float[m, n];
-                for (int i = 0; i < m; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        if (i >= j)
-                        {
-                            H[i, j] = qr[i][j];
-                        }
-                        else
-                        {
-                            H[i, j] = 0.0f;
-                        }
-                    }
-                }
-                return H;
+                return h;
             }
-
         }
         /// <summary>
         /// Returns the upper triangular matrix R.
@@ -66,26 +53,6 @@ namespace UMapx.Decomposition
         {
             get
             {
-                var r = new float[n, n]; // GeneralMatrix X = new GeneralMatrix(n, n);
-
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        if (i < j)
-                        {
-                            r[i, j] = qr[i][j];
-                        }
-                        else if (i == j)
-                        {
-                            r[i, j] = diag[i];
-                        }
-                        else
-                        {
-                            r[i, j] = 0.0f;
-                        }
-                    }
-                }
                 return r;
             }
         }
@@ -96,35 +63,6 @@ namespace UMapx.Decomposition
         {
             get
             {
-                float[,] q = new float[m, n];
-                int i, j, k;
-                float s;
-
-                for (k = n - 1; k >= 0; k--)
-                {
-                    for (i = 0; i < m; i++)
-                    {
-                        q[i, k] = 0.0f;
-                    }
-                    q[k, k] = 1.0f;
-                    for (j = k; j < n; j++)
-                    {
-                        if (qr[k][k] != 0)
-                        {
-                            s = 0.0f;
-                            for (i = k; i < m; i++)
-                            {
-                                s += qr[i][k] * q[i, j];
-                            }
-                            s = (-s) / qr[k][k];
-
-                            for (i = k; i < m; i++)
-                            {
-                                q[i, j] += s * qr[i][k];
-                            }
-                        }
-                    }
-                }
                 return q;
             }
         }
@@ -188,6 +126,75 @@ namespace UMapx.Decomposition
                 }
 
                 diag[k] = -nrm;
+            }
+
+            // prepare Q matrix
+            q = new float[m, n];
+
+            for (k = n - 1; k >= 0; k--)
+            {
+                for (i = 0; i < m; i++)
+                {
+                    q[i, k] = 0.0f;
+                }
+                q[k, k] = 1.0f;
+                for (j = k; j < n; j++)
+                {
+                    if (qr[k][k] != 0)
+                    {
+                        s = 0.0f;
+                        for (i = k; i < m; i++)
+                        {
+                            s += qr[i][k] * q[i, j];
+                        }
+                        s = (-s) / qr[k][k];
+
+                        for (i = k; i < m; i++)
+                        {
+                            q[i, j] += s * qr[i][k];
+                        }
+                    }
+                }
+            }
+
+            // prepare R matrix
+            r = new float[n, n];
+
+            for (i = 0; i < n; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    if (i < j)
+                    {
+                        r[i, j] = qr[i][j];
+                    }
+                    else if (i == j)
+                    {
+                        r[i, j] = diag[i];
+                    }
+                    else
+                    {
+                        r[i, j] = 0.0f;
+                    }
+                }
+            }
+
+            // prepare H matrix
+            h = new float[m, n];
+
+            for (i = 0; i < m; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    if (i >= j)
+                    {
+                        h[i, j] = qr[i][j];
+                    }
+                    else
+                    {
+                        h[i, j] = 0.0f;
+                    }
+                }
             }
         }
         #endregion

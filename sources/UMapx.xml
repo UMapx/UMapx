@@ -11798,6 +11798,42 @@
             <param name="n"></param>
             <param name="m"></param>
         </member>
+        <member name="T:UMapx.Decomposition.Bidiagonal">
+            <summary>
+            Defines bidiagonal decomposition.
+            <remarks>
+            This is a representation of a matrix in the form A = U * B * V', where U and V are orthogonal matrices
+            obtained using Householder transformations and B is a bidiagonal matrix.
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.Bidiagonal.#ctor(System.Single[0:,0:])">
+            <summary>
+            Initializes bidiagonal decomposition.
+            </summary>
+            <param name="A">Matrix</param>
+        </member>
+        <member name="P:UMapx.Decomposition.Bidiagonal.U">
+            <summary>
+            Gets the orthogonal matrix U.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.Bidiagonal.B">
+            <summary>
+            Gets the bidiagonal matrix B.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.Bidiagonal.V">
+            <summary>
+            Gets the orthogonal matrix V.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.Bidiagonal.decompose(System.Single[0:,0:])">
+            <summary>
+            Performs bidiagonal decomposition using Householder transformations.
+            </summary>
+            <param name="A">Matrix</param>
+        </member>
         <member name="T:UMapx.Decomposition.Cholesky">
             <summary>
             Defines Cholesky decomposition.
