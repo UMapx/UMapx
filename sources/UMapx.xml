@@ -12458,6 +12458,45 @@
             <param name="A"></param>
             <param name="iterations"></param>
         </member>
+        <member name="T:UMapx.Decomposition.PLU">
+            <summary>
+            Defines PLU decomposition.
+            <remarks>
+            This is the representation of a square matrix A as the product of three matrices: P * A = L * U,
+            where P is the permutation matrix, L is the lower triangular matrix with unit diagonal, and U is
+            the upper triangular matrix. The decomposition is computed with partial pivoting.
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/LU_decomposition#LU_decomposition_with_partial_pivoting
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.PLU.#ctor(System.Single[0:,0:])">
+            <summary>
+            Initializes PLU decomposition.
+            </summary>
+            <param name="A">Square matrix</param>
+        </member>
+        <member name="P:UMapx.Decomposition.PLU.P">
+            <summary>
+            Gets the permutation matrix.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.PLU.L">
+            <summary>
+            Gets the lower triangular matrix.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.PLU.U">
+            <summary>
+            Gets the upper triangular matrix.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.PLU.pludecomp(System.Single[][])">
+            <summary>
+            Computes PLU decomposition with partial pivoting.
+            </summary>
+            <param name="a">Jagged array</param>
+        </member>
         <member name="T:UMapx.Decomposition.Polar">
             <summary>
             Defines polar decomposition.
