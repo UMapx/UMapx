@@ -11,7 +11,7 @@ namespace UMapx.Decomposition
     /// In addition, the Householder transform is actively used for orthogonalization of bases; ultimately, the Householder matrix has the following properties:
     /// H = H', H' * H = I; det(H) = -1.
     /// In this class, two types of the Householder transform are implemented: reduction to a three-diagonal matrix and construction of the Householder matrix from a given vector.
-    /// In the first case, the original Square matrix is defined as: A = H * T * H '.
+    /// In the first case, the original square matrix is defined as: A = H * T * H '.
     /// More information can be found on the website: 
     /// https://en.wikipedia.org/wiki/Householder_transformation
     /// </remarks>
@@ -47,8 +47,8 @@ namespace UMapx.Decomposition
         /// <param name="A">Square matrix</param>
         public Householder(float[,] A)
         {
-            if (!Matrice.IsSquare(A))
-                throw new Exception("The matrix must be square");
+            if (!Matrice.IsSymmetric(A))
+                throw new Exception("The matrix must be symmetric");
 
             // properties:
             this.n = A.GetLength(0);
