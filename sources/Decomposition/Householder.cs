@@ -47,17 +47,16 @@ namespace UMapx.Decomposition
         /// <param name="A">Square matrix</param>
         public Householder(float[,] A)
         {
-            if (!Matrice.IsSquare(A))
-                throw new Exception("The matrix must be square");
+            if (!Matrice.IsSymmetric(A))
+                throw new Exception("The matrix must be symmetric");
 
             // properties:
             this.n = A.GetLength(0);
-            this.Re = new float[n];
-            this.Im = new float[n];
 
-            // reduction to 
-            // tridiagonalization matrix:
-            tred2(A);
+            Tridiagonal tridiagonal = new Tridiagonal(A);
+            this.Re = tridiagonal.Diagonal;
+            this.Im = tridiagonal.OffDiagonal;
+            this.matrices = tridiagonal.Orthogonal;
         }
         #endregion
 
@@ -133,136 +132,6 @@ namespace UMapx.Decomposition
 
                 matrices[i] = z;
             }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="a"></param>
-        private void tred2(float[,] a)
-        {
-            int i, j, k;
-            this.matrices = Jagged.ToJagged(a);
-
-            // Symmetric Householder reduction to tridiagonal form.
-            // This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson, 
-            // Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
-            for (j = 0; j < n; j++)
-            {
-                Re[j] = matrices[n - 1][j];
-            }
-
-            float scale, h, f, g, hh;
-
-            // Householder reduction to tridiagonal form.
-            for (i = n - 1; i > 0; i--)
-            {
-                // Scale to avoid under/overflow.
-                scale = 0;
-                h = 0;
-                for (k = 0; k < i; k++)
-                    scale = scale + System.Math.Abs(Re[k]);
-
-                if (scale == 0)
-                {
-                    Im[i] = Re[i - 1];
-                    for (j = 0; j < i; j++)
-                    {
-                        Re[j] = matrices[i - 1][j];
-                        matrices[i][j] = 0;
-                        matrices[j][i] = 0;
-                    }
-                }
-                else
-                {
-                    // Generate Householder Matrice.
-                    for (k = 0; k < i; k++)
-                    {
-                        Re[k] /= scale;
-                        h += Re[k] * Re[k];
-                    }
-
-                    f = Re[i - 1];
-                    g = (float)System.Math.Sqrt(h);
-                    if (f > 0) g = -g;
-
-                    Im[i] = scale * g;
-                    h = h - f * g;
-                    Re[i - 1] = f - g;
-                    for (j = 0; j < i; j++)
-                        Im[j] = 0;
-
-                    // Apply similarity transformation to remaining columns.
-                    for (j = 0; j < i; j++)
-                    {
-                        f = Re[j];
-                        matrices[j][i] = f;
-                        g = Im[j] + matrices[j][j] * f;
-                        for (k = j + 1; k <= i - 1; k++)
-                        {
-                            g += matrices[k][j] * Re[k];
-                            Im[k] += matrices[k][j] * f;
-                        }
-                        Im[j] = g;
-                    }
-
-                    f = 0;
-                    for (j = 0; j < i; j++)
-                    {
-                        Im[j] /= h;
-                        f += Im[j] * Re[j];
-                    }
-
-                    hh = f / (h + h);
-                    for (j = 0; j < i; j++)
-                        Im[j] -= hh * Re[j];
-
-                    for (j = 0; j < i; j++)
-                    {
-                        f = Re[j];
-                        g = Im[j];
-                        for (k = j; k <= i - 1; k++)
-                            matrices[k][j] -= (f * Im[k] + g * Re[k]);
-
-                        Re[j] = matrices[i - 1][j];
-                        matrices[i][j] = 0;
-                    }
-                }
-                Re[i] = h;
-            }
-
-            // Accumulate transformations.
-            for (i = 0; i < n - 1; i++)
-            {
-                matrices[n - 1][i] = matrices[i][i];
-                matrices[i][i] = 1;
-                h = Re[i + 1];
-                if (h != 0)
-                {
-                    for (k = 0; k <= i; k++)
-                        Re[k] = matrices[k][i + 1] / h;
-
-                    for (j = 0; j <= i; j++)
-                    {
-                        g = 0;
-                        for (k = 0; k <= i; k++)
-                            g += matrices[k][i + 1] * matrices[k][j];
-                        for (k = 0; k <= i; k++)
-                            matrices[k][j] -= g * Re[k];
-                    }
-                }
-
-                for (k = 0; k <= i; k++)
-                    matrices[k][i + 1] = 0;
-            }
-
-            for (j = 0; j < n; j++)
-            {
-                Re[j] = matrices[n - 1][j];
-                matrices[n - 1][j] = 0;
-            }
-
-            matrices[n - 1][n - 1] = 1;
-            Im[0] = 0;
         }
         #endregion
     }
