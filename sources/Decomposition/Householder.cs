@@ -44,7 +44,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Initializes Householder transformation.
         /// </summary>
-        /// <param name="A">Square matrix</param>
+        /// <param name="A">Symmetric matrix</param>
         public Householder(float[,] A)
         {
             if (!Matrice.IsSymmetric(A))
