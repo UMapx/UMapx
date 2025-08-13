@@ -12,7 +12,7 @@ namespace UMapx.Decomposition
     /// </remarks>
     /// </summary>
     [Serializable]
-    public partial class GEVD
+    public class GEVD
     {
         #region Private data
         private int n;
@@ -161,6 +161,21 @@ namespace UMapx.Decomposition
         #endregion
 
         #region Private voids
+        /// <summary>
+        /// Performs the QZ reduction of matrices A and B.
+        /// </summary>
+        /// <param name="a">Matrix A (will be overwritten by the quasi-triangular form S)</param>
+        /// <param name="b">Matrix B (will be overwritten by the upper triangular form T)</param>
+        /// <param name="eps">Epsilon [0, 1]</param>
+        /// <param name="z">Matrix that accumulates the right orthogonal transformations</param>
+        /// <param name="ierr">Convergence flag</param>
+        internal static void qzdecomp(float[][] a, float[][] b, float eps, float[][] z, ref int ierr)
+        {
+            int n = a.Length;
+            bool matz = true;
+            qzhes(n, a, b, matz, z);
+            qzit(n, a, b, eps, matz, z, ref ierr);
+        }
         /// <summary>
         ///   Adaptation of the original Fortran QZHES routine from EISPACK.
         /// </summary>
@@ -1380,8 +1395,8 @@ namespace UMapx.Decomposition
         /// <param name="b"></param>
         private static float Sign(float a, float b)
         {
-            float x = (a >= 0 ? a : -a);
-            return (b >= 0 ? x : -x);
+            float x = a >= 0 ? a : -a;
+            return b >= 0 ? x : -x;
         }
         #endregion
     }

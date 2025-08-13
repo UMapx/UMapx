@@ -48,7 +48,8 @@ namespace UMapx.Decomposition
             for (int i = 0; i < n; i++) zMat[i][i] = 1f;
             int ierr = 0;
 
-            GEVD.DecomposeQZ(a, b, Maths.Float(eps), zMat, ref ierr);
+            GEVD.qzdecomp(a, b, Maths.Float(eps), zMat, ref ierr);
+
             if (ierr != 0)
                 throw new Exception("QZ decomposition failed to converge");
 
@@ -93,6 +94,7 @@ namespace UMapx.Decomposition
             for (int i = n - 1; i >= 0; i--)
             {
                 inv[i, i] = 1f / m[i, i];
+
                 for (int j = i + 1; j < n; j++)
                 {
                     float sum = 0f;
