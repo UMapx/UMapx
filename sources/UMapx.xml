@@ -3746,17 +3746,26 @@
             Private tic.
             </summary>
         </member>
+        <member name="M:UMapx.Core.Debugger.Print``1(``0)">
+            <summary>
+            Print value to console.
+            </summary>
+            <typeparam name="T">Type</typeparam>
+            <param name="A">Value</param>
+        </member>
         <member name="M:UMapx.Core.Debugger.Print``1(``0[],System.Boolean)">
             <summary>
             Print vector to console.
             </summary>
-            <param name="A">Vector</param>
+            <typeparam name="T">Type</typeparam>
+            <param name="A">Array</param>
             <param name="vertical">Vertical or not</param>
         </member>
         <member name="M:UMapx.Core.Debugger.Print``1(``0[0:,0:])">
             <summary>
             Print matrix to console.
             </summary>
+            <typeparam name="T">Type</typeparam>
             <param name="A">Matrix</param>
         </member>
         <member name="M:UMapx.Core.Debugger.Tic">

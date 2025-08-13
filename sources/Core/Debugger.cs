@@ -25,9 +25,20 @@ namespace UMapx.Core
 
         #region Print methods
         /// <summary>
+        /// Print value to console.
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="A">Value</param>
+        public static void Print<T>(T A)
+        {
+            Console.WriteLine(A);
+            Console.WriteLine();
+        }
+        /// <summary>
         /// Print vector to console.
         /// </summary>
-        /// <param name="A">Vector</param>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="A">Array</param>
         /// <param name="vertical">Vertical or not</param>
         public static void Print<T>(T[] A, bool vertical = false)
         {
@@ -122,10 +133,12 @@ namespace UMapx.Core
                     startCol = endCol;
                 }
             }
+            Console.WriteLine();
         }
         /// <summary>
         /// Print matrix to console.
         /// </summary>
+        /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Matrix</param>
         public static void Print<T>(T[,] A)
         {
@@ -206,6 +219,7 @@ namespace UMapx.Core
                 // Next block
                 startCol = endCol;
             }
+            Console.WriteLine();
         }
         #endregion
 
