@@ -11804,6 +11804,8 @@
             <remarks>
             This is a representation of a matrix in the form A = U * B * V', where U and V are orthogonal matrices
             obtained using Householder transformations and B is a bidiagonal matrix.
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Bidiagonalization
             </remarks>
             </summary>
         </member>
@@ -23414,6 +23416,76 @@
             <summary>
             Implements filter rebuilding.
             </summary>
+        </member>
+        <member name="T:UMapx.Imaging.Wiener">
+            <summary>
+            Defines the Wiener filter for local noise reduction.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Wiener.#ctor(System.Int32,System.Single)">
+            <summary>
+            Initializes the Wiener filter with square window.
+            </summary>
+            <param name="radius">Window radius.</param>
+            <param name="noise">Noise variance.</param>
+        </member>
+        <member name="M:UMapx.Imaging.Wiener.#ctor(System.Int32,System.Int32,System.Single)">
+            <summary>
+            Initializes the Wiener filter.
+            </summary>
+            <param name="width">Window width.</param>
+            <param name="height">Window height.</param>
+            <param name="noise">Noise variance.</param>
+        </member>
+        <member name="M:UMapx.Imaging.Wiener.#ctor(UMapx.Core.SizeInt,System.Single)">
+            <summary>
+            Initializes the Wiener filter.
+            </summary>
+            <param name="size">Window size.</param>
+            <param name="noise">Noise variance.</param>
+        </member>
+        <member name="P:UMapx.Imaging.Wiener.Size">
+            <summary>
+            Gets or sets the window size.
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.Wiener.Noise">
+            <summary>
+            Gets or sets the noise variance.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Wiener.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Wiener.Apply(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+            <param name="Src">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.Wiener.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+        </member>
+        <member name="M:UMapx.Imaging.Wiener.Apply(System.Drawing.Bitmap)">
+            <summary>
+            Apply filter.
+            </summary>
+            <param name="Data">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Imaging.Wiener.ApplyInternal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Internal apply method.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <param name="bmSrc">Bitmap data</param>
         </member>
         <member name="T:UMapx.Imaging.YCbCrFilter">
             <summary>
