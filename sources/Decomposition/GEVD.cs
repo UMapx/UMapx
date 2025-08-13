@@ -12,7 +12,7 @@ namespace UMapx.Decomposition
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class GEVD
+    public partial class GEVD
     {
         #region Private data
         private int n;
