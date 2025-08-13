@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the Gaussian blur filter.
     /// <remarks>
-    /// This is a very fast pseudo-Gaussian blur via N separable box filters (default 3).
+    /// This is a very fast pseudo-Gaussian blur filter via N separable box filters (default 3).
     /// </remarks>
     /// </summary>
     [Serializable]
