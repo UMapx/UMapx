@@ -12725,6 +12725,9 @@
         <member name="P:UMapx.Decomposition.SVD.P">
             <summary>
             Gets the pseudoinverse matrix.
+            <remarks>
+            NOT RECOMMENDED.
+            </remarks>
             </summary>
         </member>
         <member name="M:UMapx.Decomposition.SVD.svdcmp(System.Single[0:,0:])">
