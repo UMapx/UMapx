@@ -3726,6 +3726,50 @@
             <param name="magnitude">Magnitude (radius)</param>
             <param name="phase">Phase (angle in radians)</param>
         </member>
+        <member name="T:UMapx.Core.Debugger">
+            <summary>
+            Uses to debug data such as matrices and vectors.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Debugger.Gap">
+            <summary>
+            Space between the columns.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Debugger.rowIndent">
+            <summary>
+            Two leading spaces.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Debugger.tic">
+            <summary>
+            Private tic.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Debugger.Print``1(``0[],System.Boolean)">
+            <summary>
+            Print vector to console.
+            </summary>
+            <param name="A">Vector</param>
+            <param name="vertical">Vertical or not</param>
+        </member>
+        <member name="M:UMapx.Core.Debugger.Print``1(``0[0:,0:])">
+            <summary>
+            Print matrix to console.
+            </summary>
+            <param name="A">Matrix</param>
+        </member>
+        <member name="M:UMapx.Core.Debugger.Tic">
+            <summary>
+            Starts elapsing time.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Debugger.Toc">
+            <summary>
+            Returns elapsed time in miliseconds.
+            </summary>
+            <returns>Int</returns>
+        </member>
         <member name="T:UMapx.Core.IFloat">
             <summary>
             Defines the delegate of a continuous function that depends on a single argument.
@@ -11676,27 +11720,6 @@
             </summary>
             <param name="s">Input string</param>
             <returns>Text as a sequence of Unicode characters</returns>
-        </member>
-        <member name="T:UMapx.Core.TicToc">
-            <summary>
-            Uses for tic/toc operations.
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.TicToc.tic">
-            <summary>
-            Private member.
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.TicToc.Tic">
-            <summary>
-            Starts elapsing time.
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.TicToc.Toc">
-            <summary>
-            Returns elapsed time in miliseconds.
-            </summary>
-            <returns>Int</returns>
         </member>
         <member name="T:UMapx.Core.Xml">
             <summary>

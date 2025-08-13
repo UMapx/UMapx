@@ -127,7 +127,7 @@ namespace UMapx.Core
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
-            return this.ToString("G3");
+            return this.ToString("G5");
         }
         /// <summary>
         /// Converts complex number to its corresponding string representation.
