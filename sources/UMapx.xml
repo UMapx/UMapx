@@ -3736,7 +3736,7 @@
             Space between the columns.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Debugger.rowIndent">
+        <member name="F:UMapx.Core.Debugger.RowIndent">
             <summary>
             Two leading spaces.
             </summary>

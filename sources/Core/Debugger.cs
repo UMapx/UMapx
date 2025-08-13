@@ -16,7 +16,7 @@ namespace UMapx.Core
         /// <summary>
         /// Two leading spaces.
         /// </summary>
-        private const string rowIndent = "  ";
+        private const string RowIndent = "  ";
         /// <summary>
         /// Private tic.
         /// </summary>
@@ -64,7 +64,7 @@ namespace UMapx.Core
                 for (int i = 0; i < n; i++)
                 {
                     var line = new StringBuilder();
-                    line.Append(rowIndent);              // uses same indent as your matrix/vector print
+                    line.Append(RowIndent);              // uses same indent as your matrix/vector print
                     line.Append(s[i].PadLeft(colWidth)); // align to the right like MATLAB
                     Console.WriteLine(line.ToString());
                 }
@@ -89,7 +89,7 @@ namespace UMapx.Core
                 while (startCol < n)
                 {
                     // Choose how many columns fit into the current console width
-                    int widthUsed = rowIndent.Length;
+                    int widthUsed = RowIndent.Length;
                     int endCol = startCol;
 
                     while (endCol < n)
@@ -110,7 +110,7 @@ namespace UMapx.Core
 
                     // Print rows for the chosen block
                     var line = new StringBuilder();
-                    line.Append(rowIndent);
+                    line.Append(RowIndent);
 
                     for (int j = startCol; j < endCol; j++)
                     {
@@ -166,7 +166,7 @@ namespace UMapx.Core
             while (startCol < n)
             {
                 // Choose how many columns fit into the current console width
-                int widthUsed = rowIndent.Length;
+                int widthUsed = RowIndent.Length;
                 int endCol = startCol;
 
                 while (endCol < n)
@@ -194,7 +194,7 @@ namespace UMapx.Core
                 for (int i = 0; i < m; i++)
                 {
                     var line = new StringBuilder();
-                    line.Append(rowIndent);
+                    line.Append(RowIndent);
                     for (int j = startCol; j < endCol; j++)
                     {
                         if (j > startCol) line.Append(' ', Gap);
