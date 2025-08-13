@@ -8,6 +8,10 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the Wiener filter for local noise reduction.
+    /// <remarks>
+    /// More information can be found on the website:
+    /// https://en.wikipedia.org/wiki/Wiener_filter
+    /// </remarks>
     /// </summary>
     [Serializable]
     public class Wiener : IBitmapFilter2, IBitmapFilter
@@ -22,8 +26,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Wiener filter with square window.
         /// </summary>
-        /// <param name="radius">Window radius.</param>
-        /// <param name="noise">Noise variance.</param>
+        /// <param name="radius">Window radius</param>
+        /// <param name="noise">Noise variance</param>
         public Wiener(int radius = 3, float noise = 400f)
         {
             Size = new SizeInt(radius, radius);
@@ -32,9 +36,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Wiener filter.
         /// </summary>
-        /// <param name="width">Window width.</param>
-        /// <param name="height">Window height.</param>
-        /// <param name="noise">Noise variance.</param>
+        /// <param name="width">Window width</param>
+        /// <param name="height">Window height</param>
+        /// <param name="noise">Noise variance</param>
         public Wiener(int width, int height, float noise = 400f)
         {
             Size = new SizeInt(width, height);
@@ -43,8 +47,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Wiener filter.
         /// </summary>
-        /// <param name="size">Window size.</param>
-        /// <param name="noise">Noise variance.</param>
+        /// <param name="size">Window size</param>
+        /// <param name="noise">Noise variance</param>
         public Wiener(SizeInt size, float noise = 400f)
         {
             Size = size;

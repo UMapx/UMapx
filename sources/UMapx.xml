@@ -23420,29 +23420,33 @@
         <member name="T:UMapx.Imaging.Wiener">
             <summary>
             Defines the Wiener filter for local noise reduction.
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Wiener_filter
+            </remarks>
             </summary>
         </member>
         <member name="M:UMapx.Imaging.Wiener.#ctor(System.Int32,System.Single)">
             <summary>
             Initializes the Wiener filter with square window.
             </summary>
-            <param name="radius">Window radius.</param>
-            <param name="noise">Noise variance.</param>
+            <param name="radius">Window radius</param>
+            <param name="noise">Noise variance</param>
         </member>
         <member name="M:UMapx.Imaging.Wiener.#ctor(System.Int32,System.Int32,System.Single)">
             <summary>
             Initializes the Wiener filter.
             </summary>
-            <param name="width">Window width.</param>
-            <param name="height">Window height.</param>
-            <param name="noise">Noise variance.</param>
+            <param name="width">Window width</param>
+            <param name="height">Window height</param>
+            <param name="noise">Noise variance</param>
         </member>
         <member name="M:UMapx.Imaging.Wiener.#ctor(UMapx.Core.SizeInt,System.Single)">
             <summary>
             Initializes the Wiener filter.
             </summary>
-            <param name="size">Window size.</param>
-            <param name="noise">Noise variance.</param>
+            <param name="size">Window size</param>
+            <param name="noise">Noise variance</param>
         </member>
         <member name="P:UMapx.Imaging.Wiener.Size">
             <summary>
