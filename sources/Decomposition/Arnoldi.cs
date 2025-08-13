@@ -73,7 +73,6 @@ namespace UMapx.Decomposition
             this.h = new float[n, m];
             float[,] p = new float[n, m + 1];
             float[] v, w;
-            float alpha = 0, beta = 0;
             int i, j, k;
 
             // random 0-vector and norm:
@@ -92,7 +91,7 @@ namespace UMapx.Decomposition
                 {
                     // calculating α:
                     w = Matrice.GetCol(p, j);
-                    alpha = Matrice.Dot(w, v);
+                    float alpha = Matrice.Dot(w, v);
                     h[j, k - 1] = alpha;
 
                     // finding k-vector:
@@ -106,7 +105,7 @@ namespace UMapx.Decomposition
                 if (k < m)
                 {
                     // calculating β:
-                    beta = Matrice.Norm(v);
+                    float beta = Matrice.Norm(v);
                     p = Matrice.SetCol(p, Matrice.Div(v, beta), k);
                     h[k, k - 1] = beta;
                 }

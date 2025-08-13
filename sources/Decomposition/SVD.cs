@@ -82,6 +82,9 @@ namespace UMapx.Decomposition
         }
         /// <summary>
         /// Gets the pseudoinverse matrix.
+        /// <remarks>
+        /// NOT RECOMMENDED.
+        /// </remarks>
         /// </summary>
         public float[,] P
         {

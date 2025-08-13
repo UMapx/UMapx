@@ -29,7 +29,10 @@ namespace UMapx.Decomposition
         public Polar(float[,] A, int iterations = 10)
         {
             svd = new SVD(A, iterations);
-            float[,] U = svd.U, V = svd.V, H = V.Transponate();
+
+            float[,] U = svd.U;
+            float[,] V = svd.V;
+            float[,] H = V.Transponate();
             float[] S = svd.S;
 
             u = U.Dot(H); p = V.Dot(S).Dot(H);

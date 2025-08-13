@@ -12012,6 +12012,16 @@
             Checks whether one of the matrices is singular or not.
             </summary>
         </member>
+        <member name="M:UMapx.Decomposition.GEVD.qzdecomp(System.Single[][],System.Single[][],System.Single,System.Single[][],System.Int32@)">
+            <summary>
+            Performs the QZ reduction of matrices A and B.
+            </summary>
+            <param name="a">Matrix A (will be overwritten by the quasi-triangular form S)</param>
+            <param name="b">Matrix B (will be overwritten by the upper triangular form T)</param>
+            <param name="eps">Epsilon [0, 1]</param>
+            <param name="z">Matrix that accumulates the right orthogonal transformations</param>
+            <param name="ierr">Convergence flag</param>
+        </member>
         <member name="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Single[][],System.Single[][],System.Boolean,System.Single[][])">
              <summary>
                Adaptation of the original Fortran QZHES routine from EISPACK.
@@ -12575,6 +12585,51 @@
             </summary>
             <param name="A"></param>
         </member>
+        <member name="T:UMapx.Decomposition.QZ">
+            <summary>
+            Defines QZ decomposition (generalized Schur decomposition).
+            <remarks>
+            This is a matrix representation for a pair of matrices A and B such that
+            A = Q * S * Z' and B = Q * T * Z', where Q and Z are orthogonal and
+            S and T are upper (quasi) triangular matrices.
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/QZ_decomposition
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.QZ.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
+            <summary>
+            Initializes QZ decomposition.
+            </summary>
+            <param name="A">Matrix A</param>
+            <param name="B">Matrix B</param>
+            <param name="eps">Epsilon [0, 1]</param>
+        </member>
+        <member name="P:UMapx.Decomposition.QZ.Q">
+            <summary>
+            Gets the orthogonal matrix Q.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.QZ.Z">
+            <summary>
+            Gets the orthogonal matrix Z.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.QZ.S">
+            <summary>
+            Gets the quasi upper triangular matrix S.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.QZ.T">
+            <summary>
+            Gets the upper triangular matrix T.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.QZ.InvertUpperTriangular(System.Single[0:,0:])">
+            <summary>
+            Inverts an upper triangular matrix.
+            </summary>
+        </member>
         <member name="T:UMapx.Decomposition.RQ">
             <summary>
             Defines RQ decomposition.
@@ -12670,6 +12725,9 @@
         <member name="P:UMapx.Decomposition.SVD.P">
             <summary>
             Gets the pseudoinverse matrix.
+            <remarks>
+            NOT RECOMMENDED.
+            </remarks>
             </summary>
         </member>
         <member name="M:UMapx.Decomposition.SVD.svdcmp(System.Single[0:,0:])">
