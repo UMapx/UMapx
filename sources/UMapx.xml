@@ -12653,15 +12653,17 @@
         </member>
         <member name="M:UMapx.Decomposition.Householder.hmatx(System.Single[])">
             <summary>
-            
+            Builds a full Householder reflector matrix for the input vector.
             </summary>
-            <param name="v"></param>
+            <param name="v">Vector</param>
         </member>
         <member name="M:UMapx.Decomposition.Householder.tred2(System.Single[0:,0:])">
             <summary>
-            
+            Symmetric Householder reduction to tridiagonal form.
+            This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson, 
+            Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
             </summary>
-            <param name="a"></param>
+            <param name="a">Matrix</param>
         </member>
         <member name="T:UMapx.Decomposition.Lanczos">
             <summary>

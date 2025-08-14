@@ -102,9 +102,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Builds a full Householder reflector matrix for the input vector.
         /// </summary>
-        /// <param name="v"></param>
+        /// <param name="v">Vector</param>
         private void hmatx(float[] v)
         {
             // [1] Alston S. Householder, "Unitary Triangularization of a Nonsymmetric Matrix", 
@@ -135,17 +135,16 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// 
+        /// Symmetric Householder reduction to tridiagonal form.
+        /// This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson, 
+        /// Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
         /// </summary>
-        /// <param name="a"></param>
+        /// <param name="a">Matrix</param>
         private void tred2(float[,] a)
         {
             int i, j, k;
             this.matrices = Jagged.ToJagged(a);
 
-            // Symmetric Householder reduction to tridiagonal form.
-            // This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson, 
-            // Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
             for (j = 0; j < n; j++)
             {
                 Re[j] = matrices[n - 1][j];
