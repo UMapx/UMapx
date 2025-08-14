@@ -29,9 +29,8 @@ namespace UMapx.Core
         /// <summary>
         /// Prints a value to console.
         /// </summary>
-        /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Value</param>
-        public static void Print<T>(this T A)
+        public static void Print(this object A)
         {
             Console.WriteLine(A);
             Console.WriteLine();

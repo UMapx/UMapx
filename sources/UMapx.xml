@@ -3746,11 +3746,10 @@
             Private tic.
             </summary>
         </member>
-        <member name="M:UMapx.Core.Debugger.Print``1(``0)">
+        <member name="M:UMapx.Core.Debugger.Print(System.Object)">
             <summary>
             Prints a value to console.
             </summary>
-            <typeparam name="T">Type</typeparam>
             <param name="A">Value</param>
         </member>
         <member name="M:UMapx.Core.Debugger.Print``1(``0[],System.Boolean)">
