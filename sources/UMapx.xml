@@ -7877,6 +7877,42 @@
             <param name="b">Array</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.GramProj(System.Single[],System.Single[])">
+            <summary>
+            Returns the projection of horizontal vectors.
+            proj[e, a]' = (e * a') / (e * e') .* e
+            </summary>
+            <param name="e">Array</param>
+            <param name="a">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.GramProj(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns the projection of horizontal vectors.
+            proj[e, a]' = (e * a') / (e * e') .* e
+            </summary>
+            <param name="e">Array</param>
+            <param name="a">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.GramProj(System.Single[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns the projection of horizontal vectors.
+            proj[e, a]' = (e * a') / (e * e') .* e
+            </summary>
+            <param name="e">Array</param>
+            <param name="a">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.GramProj(UMapx.Core.Complex32[],System.Single[])">
+            <summary>
+            Returns the projection of horizontal vectors.
+            proj[e, a]' = (e * a') / (e * e') .* e
+            </summary>
+            <param name="e">Array</param>
+            <param name="a">Array</param>
+            <returns>Array</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Cosines(System.Single[])">
             <summary>
             Returns the direction cosines of a vector.
@@ -12561,24 +12597,6 @@
             <summary>
             Gets the orthogonal matrix Q.
             </summary>
-        </member>
-        <member name="M:UMapx.Decomposition.GramSchmidt.Proj(System.Single[],System.Single[])">
-            <summary>
-            Returns the projection of horizontal vectors.
-            proj[e, a]' = (e * a') / (e * e') .* e
-            </summary>
-            <param name="e">Array</param>
-            <param name="a">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Decomposition.GramSchmidt.Proj(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
-            <summary>
-            Returns the projection of horizontal vectors.
-            proj[e, a]' = (e * a') / (e * e') .* e
-            </summary>
-            <param name="e">Array</param>
-            <param name="a">Array</param>
-            <returns>Array</returns>
         </member>
         <member name="T:UMapx.Decomposition.Hessenberg">
             <summary>

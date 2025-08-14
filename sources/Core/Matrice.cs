@@ -3623,6 +3623,125 @@ namespace UMapx.Core
             return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
 
+        #region Static voids
+        /// <summary>
+        /// Returns the projection of horizontal vectors.
+        /// proj[e, a]' = (e * a') / (e * e') .* e
+        /// </summary>
+        /// <param name="e">Array</param>
+        /// <param name="a">Array</param>
+        /// <returns>Array</returns>
+        public static float[] GramProj(this float[] e, float[] a)
+        {
+            int length = e.Length;
+            float[] proj = new float[length];
+            int i;
+            float ea = 0, ee = 0;
+
+            for (i = 0; i < length; i++)
+            {
+                ea += e[i] * a[i];
+                ee += e[i] * e[i];
+            }
+
+            float div = ea / ee;
+
+            for (i = 0; i < length; i++)
+            {
+                proj[i] = e[i] * div;
+            }
+
+            return proj;
+        }
+        /// <summary>
+        /// Returns the projection of horizontal vectors.
+        /// proj[e, a]' = (e * a') / (e * e') .* e
+        /// </summary>
+        /// <param name="e">Array</param>
+        /// <param name="a">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] GramProj(this Complex32[] e, Complex32[] a)
+        {
+            int length = e.Length;
+            Complex32[] proj = new Complex32[length];
+            int i;
+            Complex32 ea = 0, ee = 0;
+
+            for (i = 0; i < length; i++)
+            {
+                ea += e[i] * a[i].Conjugate;
+                ee += e[i] * e[i].Conjugate;
+            }
+
+            Complex32 div = ea / ee;
+
+            for (i = 0; i < length; i++)
+            {
+                proj[i] = e[i] * div;
+            }
+
+            return proj;
+        }
+        /// <summary>
+        /// Returns the projection of horizontal vectors.
+        /// proj[e, a]' = (e * a') / (e * e') .* e
+        /// </summary>
+        /// <param name="e">Array</param>
+        /// <param name="a">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] GramProj(this float[] e, Complex32[] a)
+        {
+            int length = e.Length;
+            Complex32[] proj = new Complex32[length];
+            int i;
+            Complex32 ea = 0, ee = 0;
+
+            for (i = 0; i < length; i++)
+            {
+                ea += e[i] * a[i].Conjugate;
+                ee += e[i] * e[i];
+            }
+
+            Complex32 div = ea / ee;
+
+            for (i = 0; i < length; i++)
+            {
+                proj[i] = e[i] * div;
+            }
+
+            return proj;
+        }
+        /// <summary>
+        /// Returns the projection of horizontal vectors.
+        /// proj[e, a]' = (e * a') / (e * e') .* e
+        /// </summary>
+        /// <param name="e">Array</param>
+        /// <param name="a">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] GramProj(this Complex32[] e, float[] a)
+        {
+            int length = e.Length;
+            Complex32[] proj = new Complex32[length];
+            int i;
+            Complex32 ea = 0, ee = 0;
+
+            for (i = 0; i < length; i++)
+            {
+                ea += e[i] * a[i];
+                ee += e[i] * e[i].Conjugate;
+            }
+
+            Complex32 div = ea / ee;
+
+            for (i = 0; i < length; i++)
+            {
+                proj[i] = e[i] * div;
+            }
+
+            return proj;
+        }
+        #endregion
+
         /// <summary>
         /// Returns the direction cosines of a vector.
         /// </summary>

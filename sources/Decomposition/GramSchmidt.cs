@@ -46,7 +46,7 @@ namespace UMapx.Decomposition
                 for (i = 0; i < j; i++)
                 {
                     v1 = Matrice.GetCol(q, i); // get i-column of matrix Q
-                    u = Matrice.Sub(u, GramSchmidt.Proj(v1, v2)); // calculate: u - proj'<v1, v2>, 
+                    u = Matrice.Sub(u, Matrice.GramProj(v1, v2)); // calculate: u - proj'<v1, v2>, 
                     // where ' - means transponate operator for projection.
                 }
 
@@ -62,67 +62,6 @@ namespace UMapx.Decomposition
         public float[,] Q
         {
             get { return q; }
-        }
-        #endregion
-
-        #region Static voids
-        /// <summary>
-        /// Returns the projection of horizontal vectors.
-        /// proj[e, a]' = (e * a') / (e * e') .* e
-        /// </summary>
-        /// <param name="e">Array</param>
-        /// <param name="a">Array</param>
-        /// <returns>Array</returns>
-        public static float[] Proj(float[] e, float[] a)
-        {
-            int length = e.Length;
-            float[] proj = new float[length];
-            int i;
-            float ea = 0, ee = 0;
-
-            for (i = 0; i < length; i++)
-            {
-                ea += e[i] * a[i];
-                ee += e[i] * e[i];
-            }
-
-            float div = ea / ee;
-
-            for (i = 0; i < length; i++)
-            {
-                proj[i] = e[i] * div;
-            }
-
-            return proj;
-        }
-        /// <summary>
-        /// Returns the projection of horizontal vectors.
-        /// proj[e, a]' = (e * a') / (e * e') .* e
-        /// </summary>
-        /// <param name="e">Array</param>
-        /// <param name="a">Array</param>
-        /// <returns>Array</returns>
-        public static Complex32[] Proj(Complex32[] e, Complex32[] a)
-        {
-            int length = e.Length;
-            Complex32[] proj = new Complex32[length];
-            int i;
-            Complex32 ea = 0, ee = 0;
-
-            for (i = 0; i < length; i++)
-            {
-                ea += e[i] * (a[i].Conjugate);
-                ee += e[i] * (e[i].Conjugate);
-            }
-
-            Complex32 div = ea / ee;
-
-            for (i = 0; i < length; i++)
-            {
-                proj[i] = e[i] * div;
-            }
-
-            return proj;
         }
         #endregion
     }
