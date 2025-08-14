@@ -11,7 +11,6 @@ namespace UMapx.Imaging
     {
         #region Private data
         private Color color = Color.White;
-        private Bitmap bitmap = new Bitmap(256, 256);
         private int width = 256, height = 256;
         #endregion
 
@@ -78,9 +77,9 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public Bitmap Create()
         {
-            bitmap = new Bitmap(width, height);
-            Graphics graphics = Graphics.FromImage(bitmap);
-            SolidBrush brush = new SolidBrush(color);
+            var bitmap = new Bitmap(width, height);
+            using var graphics = Graphics.FromImage(bitmap);
+            using var brush = new SolidBrush(color);
             graphics.FillRectangle(brush, 0, 0, width, height);
             graphics.Dispose();
             brush.Dispose();

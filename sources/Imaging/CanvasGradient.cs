@@ -13,7 +13,6 @@ namespace UMapx.Imaging
         #region Private data
         private Color color1 = Color.White;
         private Color color2 = Color.Black;
-        private Bitmap bitmap = new Bitmap(256, 256);
         private int width = 256, height = 256;
         private double angle = 0;
         #endregion
@@ -111,10 +110,10 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public Bitmap Create()
         {
-            bitmap = new Bitmap(width, height);
-            Graphics graphics = Graphics.FromImage(bitmap);
-            Rectangle rectangle = new Rectangle(0, 0, width, height);
-            LinearGradientBrush brush = new LinearGradientBrush(rectangle, color1, color2, (float)angle);
+            var bitmap = new Bitmap(width, height);
+            var rectangle = new Rectangle(0, 0, width, height);
+            using var graphics = Graphics.FromImage(bitmap);
+            using var brush = new LinearGradientBrush(rectangle, color1, color2, (float)angle);
             graphics.FillRectangle(brush, rectangle);
             graphics.Dispose();
             brush.Dispose();
