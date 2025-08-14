@@ -294,7 +294,7 @@ namespace UMapx.Core
             tic = Environment.TickCount;
         }
         /// <summary>
-        /// Returns elapsed time in miliseconds.
+        /// Prints elapsed time in miliseconds.
         /// </summary>
         /// <returns>Int</returns>
         public static void Toc()

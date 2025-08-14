@@ -3799,7 +3799,7 @@
         </member>
         <member name="M:UMapx.Core.Debugger.Toc">
             <summary>
-            Returns elapsed time in miliseconds.
+            Prints elapsed time in miliseconds.
             </summary>
             <returns>Int</returns>
         </member>
