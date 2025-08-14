@@ -3139,9 +3139,9 @@ namespace UMapx.Core
 
         #region Sequences of numbers
         /// <summary>
-        /// 
+        /// Sequence A027641.
         /// </summary>
-        private static double[] A027641 = new double[]
+        private static readonly double[] A027641 = new double[]
         {
             0.166666666666666666666666666666666666666666666666666666666667,
            -0.0333333333333333333333333333333333333333333333333333333333333,
@@ -3274,9 +3274,9 @@ namespace UMapx.Core
             1.33527841873546293819631624429361412259570631983417101322206e306,
         };
         /// <summary>
-        /// 
+        /// Sequence A000142.
         /// </summary>
-        private static double[] A000142 = new double[]
+        private static readonly double[] A000142 = new double[]
         {
             1.0,
             1.0,
@@ -3451,9 +3451,9 @@ namespace UMapx.Core
             7.2574156153079940453996357155895914678961841172423e306,
         };
         /// <summary>
-        /// 
+        /// Sequence A122045.
         /// </summary>
-        private static double[] A122045 = new double[]
+        private static readonly double[] A122045 = new double[]
         {
             -1.0,
              5.0,
