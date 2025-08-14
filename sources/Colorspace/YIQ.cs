@@ -14,7 +14,7 @@ namespace UMapx.Colorspace
         private float q;
         #endregion
 
-        #region Stucture components
+        #region Structure components
         /// <summary>
         /// Creates an instance of the structure YIQ.
         /// </summary>

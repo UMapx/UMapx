@@ -44,7 +44,7 @@ namespace UMapx.Decomposition
         }
         #endregion
 
-        #region Standart voids
+        #region Standard voids
         /// <summary>
         /// Gets the left matrix.
         /// </summary>

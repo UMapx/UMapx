@@ -20,7 +20,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float SingleScaleRetinex(float x, float xlow, float nbase, float a, float b)
         {
-            // Singe scale retinex modified algorithm
+            // Single scale retinex modified algorithm
             // by Valery Asiryan
             // 
             return a * (float)Math.Log(x / xlow, nbase) + b;

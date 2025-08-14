@@ -255,7 +255,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Matrix tranform
+        #region Matrix transform
         /// <summary>
         /// Implements the matrix inversion operation.
         /// </summary>
@@ -6437,7 +6437,7 @@ namespace UMapx.Core
 
                         for (int n = -1; n < 3; n++)
                         {
-                            // get Y cooefficient
+                            // get Y coefficient
                             k1 = Kernel.Bicubic((float)(dy - n));
 
                             oy2 = oy1 + n;
@@ -6448,7 +6448,7 @@ namespace UMapx.Core
 
                             for (int m = -1; m < 3; m++)
                             {
-                                // get X cooefficient
+                                // get X coefficient
                                 k2 = k1 * Kernel.Bicubic((float)(m - dx));
 
                                 ox2 = ox1 + m;
@@ -6831,7 +6831,7 @@ namespace UMapx.Core
 
                         for (int n = -1; n < 3; n++)
                         {
-                            // get Y cooefficient
+                            // get Y coefficient
                             k1 = Kernel.Bicubic((float)(dy - n));
 
                             oy2 = oy1 + n;
@@ -6842,7 +6842,7 @@ namespace UMapx.Core
 
                             for (int m = -1; m < 3; m++)
                             {
-                                // get X cooefficient
+                                // get X coefficient
                                 k2 = k1 * Kernel.Bicubic((float)(m - dx));
 
                                 ox2 = ox1 + m;
@@ -6946,7 +6946,7 @@ namespace UMapx.Core
 
                     for (int n = -1; n < 3; n++)
                     {
-                        // get Y cooefficient
+                        // get Y coefficient
                         k1 = Kernel.Bicubic((float)(dy - n));
 
                         oy2 = oy1 + n;
@@ -6957,7 +6957,7 @@ namespace UMapx.Core
 
                         for (int m = -1; m < 3; m++)
                         {
-                            // get X cooefficient
+                            // get X coefficient
                             k2 = k1 * Kernel.Bicubic((float)(m - dx));
 
                             ox2 = ox1 + m;
@@ -7152,7 +7152,7 @@ namespace UMapx.Core
 
                     for (int n = -1; n < 3; n++)
                     {
-                        // get Y cooefficient
+                        // get Y coefficient
                         k1 = Kernel.Bicubic((float)(dy - n));
 
                         oy2 = oy1 + n;
@@ -7163,7 +7163,7 @@ namespace UMapx.Core
 
                         for (int m = -1; m < 3; m++)
                         {
-                            // get X cooefficient
+                            // get X coefficient
                             k2 = k1 * Kernel.Bicubic((float)(m - dx));
 
                             ox2 = ox1 + m;
@@ -7346,7 +7346,7 @@ namespace UMapx.Core
 
                 for (int n = -1; n < 3; n++)
                 {
-                    // get Y cooefficient
+                    // get Y coefficient
                     k1 = Kernel.Bicubic((float)(dy - n));
 
                     oy2 = oy1 + n;
@@ -7502,7 +7502,7 @@ namespace UMapx.Core
 
                 for (int n = -1; n < 3; n++)
                 {
-                    // get Y cooefficient
+                    // get Y coefficient
                     k1 = Kernel.Bicubic((float)(dy - n));
 
                     oy2 = oy1 + n;
@@ -9155,7 +9155,7 @@ namespace UMapx.Core
                     a[z, j] = temp;
                 }
             }
-            // by rows and colums
+            // by rows and columns
             else
             {
                 // rows:
@@ -9165,7 +9165,7 @@ namespace UMapx.Core
                     a[i, z] = a[j, z];
                     a[j, z] = temp;
                 }
-                // colums:
+                // columns:
                 for (z = 0; z < row; z++)
                 {
                     temp = a[z, i];
@@ -9209,7 +9209,7 @@ namespace UMapx.Core
                     a[z, j] = temp;
                 }
             }
-            // by rows and colums
+            // by rows and columns
             else
             {
                 // rows:
@@ -9219,7 +9219,7 @@ namespace UMapx.Core
                     a[i, z] = a[j, z];
                     a[j, z] = temp;
                 }
-                // colums:
+                // columns:
                 for (z = 0; z < row; z++)
                 {
                     temp = a[z, i];
@@ -9273,7 +9273,7 @@ namespace UMapx.Core
             int row = a.GetLength(1);
             int z, y;
 
-            // by colums:
+            // by columns:
             if (direction == Direction.Vertical)
             {
                 H = new float[col, length];
@@ -9332,7 +9332,7 @@ namespace UMapx.Core
             int row = a.GetLength(1);
             int z, y;
 
-            // by colums:
+            // by columns:
             if (direction == Direction.Vertical)
             {
                 H = new Complex32[col, length];

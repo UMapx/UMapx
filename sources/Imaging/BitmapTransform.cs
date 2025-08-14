@@ -332,7 +332,7 @@ namespace UMapx.Imaging
         }
         #endregion
 
-        #region Transparecy
+        #region Transparency
         /// <summary>
         /// Sets the transparency of the bitmap. 
         /// </summary>

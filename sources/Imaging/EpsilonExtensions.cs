@@ -3,7 +3,7 @@
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Using for epsilon extenions.
+    /// Using for epsilon extensions.
     /// </summary>
     internal static class EpsilonExtensions
     {

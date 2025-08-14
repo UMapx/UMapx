@@ -98,7 +98,7 @@ namespace UMapx.Imaging
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
             byte* dst = (byte*)bmData.Scan0.ToPointer();
-            double strenght = this.depth * 255.0;
+            double strength = this.depth * 255.0;
             double strenghtGlobal = this.depth / 3.0;
             #endregion
 
@@ -148,7 +148,7 @@ namespace UMapx.Imaging
                     #endregion
 
                     #region Frequent intensity
-                    for (n = 0; n < strenght; n++)
+                    for (n = 0; n < strength; n++)
                     {
                         if (Intensity[n] > max)
                         {

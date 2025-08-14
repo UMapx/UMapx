@@ -181,7 +181,7 @@ namespace UMapx.Imaging
                 ptr[jP + 0] = Maths.Byte(edB);
             }
 
-            // do error diffusion to bottom neigbors
+            // do error diffusion to bottom neighbors
             for (i = 1, n = length; i < n; i++)
             {
                 if (y + i >= height)

@@ -78,7 +78,7 @@ namespace UMapx.Decomposition
 
             // Mathematics in science and engineering, v.128,
             // Factorization methods for discrete sequential estimation, Gerald J. Bierman.
-            // UDU* factorization aglorithm.
+            // UDU* factorization algorithm.
             // 
             for (j = n - 1; j >= 1; j--)
             {

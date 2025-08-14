@@ -184,7 +184,7 @@ namespace UMapx.Imaging
         /// <param name="width">Image width</param>
         /// <param name="height">Image height</param>
         /// <param name="value">Value [0, 100]</param>
-        /// <param name="thickness">Tickness (>0)</param>
+        /// <param name="thickness">Thickness (>0)</param>
         /// <returns>Array of ordered pairs of X and Y</returns>
         public static PointInt[,] Grid(int width, int height, int value, int thickness = 1)
         {

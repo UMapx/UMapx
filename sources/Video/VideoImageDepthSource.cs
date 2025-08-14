@@ -45,7 +45,7 @@ namespace UMapx.Video
         }
 
         /// <summary>
-        /// Elasped frame timer.
+        /// Elapsed frame timer.
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">e</param>

@@ -73,7 +73,7 @@ namespace UMapx.Decomposition
         }
         #endregion
 
-        #region Standart voids
+        #region Standard voids
         /// <summary>
         /// Returns vector α.
         /// </summary>
@@ -182,7 +182,7 @@ namespace UMapx.Decomposition
         /// <remarks>
         ///   This subroutine is the first step of the qz algorithm
         ///   for solving generalized matrix eigenvalue problems,
-        ///   Siam J. Numer. anal. 10, 241-256(1973) by Moler and Stewart.
+        ///   Siam J. Number. anal. 10, 241-256(1973) by Moler and Stewart.
         ///
         ///   This subroutine accepts a pair of real general matrices and
         ///   reduces one of them to upper Hessenberg form and the other
@@ -340,7 +340,7 @@ namespace UMapx.Decomposition
         /// <remarks>
         ///   This subroutine is the second step of the qz algorithm
         ///   for solving generalized matrix eigenvalue problems,
-        ///   Siam J. Numer. anal. 10, 241-256(1973) by Moler and Stewart,
+        ///   Siam J. Number. anal. 10, 241-256(1973) by Moler and Stewart,
         ///   as modified in technical note nasa tn d-7305(1973) by ward.
         ///   
         ///   This subroutine accepts a pair of real matrices, one of them
@@ -749,7 +749,7 @@ namespace UMapx.Decomposition
         /// <remarks>
         ///   This subroutine is the third step of the qz algorithm
         ///   for solving generalized matrix eigenvalue problems,
-        ///   Siam J. Numer. anal. 10, 241-256(1973) by Moler and Stewart.
+        ///   Siam J. Number. anal. 10, 241-256(1973) by Moler and Stewart.
         ///   
         ///   This subroutine accepts a pair of real matrices, one of them
         ///   in quasi-triangular form and the other in upper triangular form.
@@ -1067,7 +1067,7 @@ namespace UMapx.Decomposition
         /// <remarks>
         ///   This subroutine is the optional fourth step of the qz algorithm
         ///   for solving generalized matrix eigenvalue problems,
-        ///   Siam J. Numer. anal. 10, 241-256(1973) by Moler and Stewart.
+        ///   Siam J. Number. anal. 10, 241-256(1973) by Moler and Stewart.
         ///   
         ///   This subroutine accepts a pair of real matrices, one of them in
         ///   quasi-triangular form (in which each 2-by-2 block corresponds to

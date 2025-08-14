@@ -56,7 +56,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Appy filter.
+        /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
@@ -82,7 +82,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Appy filter.
+        /// Apply filter.
         /// </summary>
         /// <param name="Data">Bitmap</param>
         public void Apply(Bitmap Data)
@@ -95,7 +95,7 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// Appy filter.
+        /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyRGB(BitmapData bmData)
@@ -109,7 +109,7 @@ namespace UMapx.Imaging
             BitmapMatrix.FromRGB(rgb, bmData);
         }
         /// <summary>
-        /// Appy filter.
+        /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyHSB(BitmapData bmData)
@@ -119,7 +119,7 @@ namespace UMapx.Imaging
             BitmapMatrix.FromHSB(hsb, bmData);
         }
         /// <summary>
-        /// Appy filter.
+        /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyHSL(BitmapData bmData)
@@ -129,7 +129,7 @@ namespace UMapx.Imaging
             BitmapMatrix.FromHSL(hsl, bmData);
         }
         /// <summary>
-        /// Appy filter.
+        /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyYCbCr(BitmapData bmData)
@@ -139,7 +139,7 @@ namespace UMapx.Imaging
             BitmapMatrix.FromYCbCr(ycbcr, bmData);
         }
         /// <summary>
-        /// Appy filter.
+        /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         private unsafe void ApplyGrayscale(BitmapData bmData)

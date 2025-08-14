@@ -55,7 +55,7 @@ namespace UMapx.Decomposition
         }
         #endregion
 
-        #region Standart voids
+        #region Standard voids
         /// <summary>
         /// Gets the orthogonal matrix Q.
         /// </summary>

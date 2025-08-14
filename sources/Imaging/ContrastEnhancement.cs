@@ -23,7 +23,7 @@ namespace UMapx.Imaging
             Space = space; Contrast = contrast;
         }
         /// <summary>
-        /// Gets or sets the contrast coefficent value [-1, 1].
+        /// Gets or sets the contrast coefficient value [-1, 1].
         /// </summary>
         public float Contrast
         {

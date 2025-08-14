@@ -93,7 +93,7 @@ namespace UMapx.Video
         /// Get hash code of the object.
         /// </summary>
         /// 
-        /// <returns>Returns hash code ot the object </returns>
+        /// <returns>Returns hash code of the object </returns>
         public override int GetHashCode()
         {
             return FrameSize.GetHashCode() ^ BitCount;

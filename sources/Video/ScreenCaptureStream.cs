@@ -345,7 +345,7 @@
                         // get download duration
                         span = DateTime.Now.Subtract( start );
 
-                        // miliseconds to sleep
+                        // milliseconds to sleep
                         int msec = frameInterval - (int) span.TotalMilliseconds;
 
                         if ( ( msec > 0 ) && ( stopEvent.WaitOne( msec, false ) ) )

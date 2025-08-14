@@ -15,7 +15,7 @@ namespace UMapx.Wavelet
         private float fc;
         #endregion
 
-        #region Wavelet compoents
+        #region Wavelet components
         /// <summary>
         /// Initializes the continuous complex frequency B-spline wavelet.
         /// </summary>

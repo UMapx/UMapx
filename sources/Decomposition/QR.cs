@@ -35,7 +35,7 @@ namespace UMapx.Decomposition
         }
         #endregion
 
-        #region Standart voids
+        #region Standard voids
         /// <summary>
         /// Returns a matrix containing Householder reflection vectors.
         /// </summary>

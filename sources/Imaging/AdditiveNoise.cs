@@ -34,7 +34,7 @@ namespace UMapx.Imaging
             Amount = amount;
         }
         /// <summary>
-        /// Gets or sets the amout value [0, 100].
+        /// Gets or sets the amount value [0, 100].
         /// </summary>
         public int Amount
         {

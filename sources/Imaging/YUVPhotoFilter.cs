@@ -23,7 +23,7 @@ namespace UMapx.Imaging
         /// Initializes the color filter based on the YUV structure.
         /// </summary>
         /// <param name="color">Color</param>
-        /// <param name="strength">Strenght [0, 1]</param>
+        /// <param name="strength">Strength [0, 1]</param>
         public YUVPhotoFilter(Color color, float strength = 0.5f)
         {
             Color = color; Strength = strength;

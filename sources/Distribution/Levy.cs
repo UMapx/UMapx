@@ -13,7 +13,7 @@ namespace UMapx.Distribution
     [Serializable]
     public class Levy : IDistribution
     {
-        #region Prviate data
+        #region Private data
         private float mu = 0;
         private float scale = 1;
         #endregion

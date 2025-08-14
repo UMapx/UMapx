@@ -148,7 +148,7 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region AHSL covnert
+        #region AHSL convert
         /// <summary>
         /// Converts a color model RGB in model AHSL.
         /// </summary>
