@@ -3768,6 +3768,30 @@
             <typeparam name="T">Type</typeparam>
             <param name="A">Matrix</param>
         </member>
+        <member name="M:UMapx.Core.Debugger.Info(System.Object,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Prints a simple reflection-based summary of an object's public properties and methods.
+            </summary>
+            <param name="T">
+            The target instance. (Note: parameter name is uppercase by design here; typically it's named <c>obj</c>.)
+            </param>
+            <param name="includeInherited">
+            If <c>true</c>, include members inherited from base types; otherwise, only members declared on the object's exact type are included.
+            </param>
+            <param name="includeStatic">
+            If <c>true</c>, include static members in addition to instance members; otherwise, include instance members only.
+            </param>
+            <param name="withSignatures">
+            If <c>true</c>, print method signatures (method name + parameter types); otherwise, print method names only and collapse overloads by name.
+            </param>
+            <remarks>
+            This method writes to the console:
+            1) The runtime type of the object,
+            2) A comma-separated list of public property names,
+            3) A comma-separated list of public method names (or signatures).
+            Special-name methods (property accessors, event add/remove, operators) and constructors are excluded.
+            </remarks>
+        </member>
         <member name="M:UMapx.Core.Debugger.Tic">
             <summary>
             Starts elapsing time.

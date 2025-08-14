@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace UMapx.Core
@@ -29,7 +31,7 @@ namespace UMapx.Core
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Value</param>
-        public static void Print<T>(T A)
+        public static void Print<T>(this T A)
         {
             Console.WriteLine(A);
             Console.WriteLine();
@@ -40,7 +42,7 @@ namespace UMapx.Core
         /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Array</param>
         /// <param name="vertical">Vertical or not</param>
-        public static void Print<T>(T[] A, bool vertical = false)
+        public static void Print<T>(this T[] A, bool vertical = false)
         {
             int n = A?.Length ?? 0;
 
@@ -140,7 +142,7 @@ namespace UMapx.Core
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Matrix</param>
-        public static void Print<T>(T[,] A)
+        public static void Print<T>(this T[,] A)
         {
             int m = A?.GetLength(0) ?? 0, n = A?.GetLength(1) ?? 0;
 
@@ -219,6 +221,66 @@ namespace UMapx.Core
                 // Next block
                 startCol = endCol;
             }
+            Console.WriteLine();
+        }
+        #endregion
+
+        #region Info methods
+        /// <summary>
+        /// Prints a simple reflection-based summary of an object's public properties and methods.
+        /// </summary>
+        /// <param name="T">
+        /// The target instance. (Note: parameter name is uppercase by design here; typically it's named <c>obj</c>.)
+        /// </param>
+        /// <param name="includeInherited">
+        /// If <c>true</c>, include members inherited from base types; otherwise, only members declared on the object's exact type are included.
+        /// </param>
+        /// <param name="includeStatic">
+        /// If <c>true</c>, include static members in addition to instance members; otherwise, include instance members only.
+        /// </param>
+        /// <param name="withSignatures">
+        /// If <c>true</c>, print method signatures (method name + parameter types); otherwise, print method names only and collapse overloads by name.
+        /// </param>
+        /// <remarks>
+        /// This method writes to the console:
+        /// 1) The runtime type of the object,
+        /// 2) A comma-separated list of public property names,
+        /// 3) A comma-separated list of public method names (or signatures).
+        /// Special-name methods (property accessors, event add/remove, operators) and constructors are excluded.
+        /// </remarks>
+        public static void Info(this object T, bool includeInherited = false, bool includeStatic = false, bool withSignatures = false)
+        {
+            // No-op if the target is null
+            if (T is null) return;
+
+            var t = T.GetType();
+
+            // Build BindingFlags based on options:
+            // - Always include Public members
+            // - Include instance members; optionally include static ones
+            // - Optionally restrict to members declared only on this type (exclude inherited)
+            var flags = BindingFlags.Public;
+            flags |= includeStatic ? BindingFlags.Instance | BindingFlags.Static
+                                   : BindingFlags.Instance;
+            if (!includeInherited) flags |= BindingFlags.DeclaredOnly;
+
+            // Collect property names
+            var props = t.GetProperties(flags).Select(p => p.Name);
+
+            // Collect methods excluding special-name helpers (get_/set_, add_/remove_) and constructors
+            var methodsQuery = t.GetMethods(flags)
+                .Where(m => !m.IsSpecialName && !m.IsConstructor);
+
+            // Either print full signatures or just method names (distinct to collapse overloads)
+            var methods = withSignatures
+                ? methodsQuery.Select(m =>
+                    $"{m.Name}({string.Join(", ", m.GetParameters().Select(p => p.ParameterType.Name))})")
+                : methodsQuery.Select(m => m.Name).Distinct();
+
+            // Output
+            Console.WriteLine($"{T.GetType()}");
+            Console.WriteLine($"Properties: {string.Join(", ", props)}");
+            Console.WriteLine($"Methods: {string.Join(", ", methods)}");
             Console.WriteLine();
         }
         #endregion
