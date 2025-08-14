@@ -16,7 +16,7 @@ namespace UMapx.Analysis
         private Differential.Method method;
         #endregion
 
-        #region Diferentiation components
+        #region Differentiation components
         /// <summary>
         /// Initializes a class that implements the solution of a differential equation.
         /// </summary>

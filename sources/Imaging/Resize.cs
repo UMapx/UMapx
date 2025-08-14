@@ -256,7 +256,7 @@ namespace UMapx.Imaging
 
                     for (int n = -1; n < 3; n++)
                     {
-                        // get Y cooefficient
+                        // get Y coefficient
                         k1 = Kernel.Bicubic(dy - n);
 
                         oy2 = oy1 + n;
@@ -267,7 +267,7 @@ namespace UMapx.Imaging
 
                         for (int m = -1; m < 3; m++)
                         {
-                            // get X cooefficient
+                            // get X coefficient
                             k2 = k1 * Kernel.Bicubic(m - dx);
 
                             ox2 = ox1 + m;

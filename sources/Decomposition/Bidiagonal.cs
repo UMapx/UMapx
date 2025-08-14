@@ -33,7 +33,7 @@ namespace UMapx.Decomposition
         }
         #endregion
 
-        #region Standart voids
+        #region Standard voids
         /// <summary>
         /// Gets the orthogonal matrix U.
         /// </summary>
@@ -142,7 +142,7 @@ namespace UMapx.Decomposition
 
                         float w0 = b[k][k + 1];
 
-                        // Apply to B on the right: B[i,:] += t * w^T, t = -(B[i,:]·w) / w0
+                        // Apply to B on the right: B[i,:] += t * w^T, t = -(B[i,:]Â·w) / w0
                         for (int i = k + 1; i < m; i++)
                         {
                             float s = 0f;

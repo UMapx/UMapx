@@ -725,7 +725,7 @@ namespace UMapx.Window
         /// Fast Fourier transform.
         /// </summary>
         /// <param name="a">Input</param>
-        /// <param name="inverse">Iverse or not</param>
+        /// <param name="inverse">Inverse or not</param>
         private static void FFT(Complex32[] a, bool inverse)
         {
             var n = a.Length;

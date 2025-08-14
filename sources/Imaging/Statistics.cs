@@ -381,13 +381,13 @@ namespace UMapx.Imaging
                 hits = values[i];
                 // accumulate mean
                 mean += i * hits;
-                // accumalate total
+                // accumulate total
                 total += hits;
             }
             return (total == 0) ? 0 : mean / total;
         }
         /// <summary>
-        /// Returns the standart deviation of a histogram.
+        /// Returns the standard deviation of a histogram.
         /// </summary>
         /// <param name="values">Histogram</param>
         /// <returns>Value</returns>
@@ -396,7 +396,7 @@ namespace UMapx.Imaging
             return StdDev(values, Mean(values));
         }
         /// <summary>
-        /// Returns the standart deviation of a histogram.
+        /// Returns the standard deviation of a histogram.
         /// </summary>
         /// <param name="values">Histogram</param>
         /// <param name="mean">Mean</param>
@@ -415,7 +415,7 @@ namespace UMapx.Imaging
                 diff = (float)i - mean;
                 // accumulate std.dev.
                 stddev += diff * diff * hits;
-                // accumalate total
+                // accumulate total
                 total += hits;
             }
 
@@ -433,7 +433,7 @@ namespace UMapx.Imaging
             // for all values
             for (int i = 0; i < n; i++)
             {
-                // accumalate total
+                // accumulate total
                 total += values[i];
             }
 
@@ -463,7 +463,7 @@ namespace UMapx.Imaging
             // for all values
             for (int i = 0; i < n; i++)
             {
-                // accumalate total
+                // accumulate total
                 total += values[i];
             }
 

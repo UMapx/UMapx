@@ -25,7 +25,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="blendf">Blend function</param>
         /// <param name="color">Color</param>
-        /// <param name="strength">Strenght [0, 1]</param>
+        /// <param name="strength">Strength [0, 1]</param>
         public PhotoFilter(IFloatMesh blendf, Color color, float strength = 0.5f)
         {
             BlendFunction = blendf;
@@ -36,7 +36,7 @@ namespace UMapx.Imaging
         /// Initializes the color photo filter.
         /// </summary>
         /// <param name="color">Color</param>
-        /// <param name="strength">Strenght [0, 1]</param>
+        /// <param name="strength">Strength [0, 1]</param>
         public PhotoFilter(Color color, float strength = 0.5f)
         {
             BlendFunction = BlendMode.Pegtop;
@@ -81,7 +81,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Gets or sets filter strenght [0, 1].
+        /// Gets or sets filter strength [0, 1].
         /// </summary>
         public float Strength
         {

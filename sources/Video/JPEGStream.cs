@@ -141,7 +141,7 @@ namespace UMapx.Video
         /// Frame interval.
         /// </summary>
         /// 
-        /// <remarks>The property sets the interval in milliseconds betwen frames. If the property is
+        /// <remarks>The property sets the interval in milliseconds between frames. If the property is
         /// set to 100, then the desired frame rate will be 10 frames per second. Default value is 0 -
         /// get new frames as fast as possible.</remarks>
         /// 
@@ -426,7 +426,7 @@ namespace UMapx.Video
 			byte[] buffer = new byte[bufferSize];
             // HTTP web request
 			HttpWebRequest request = null;
-            // web responce
+            // web response
 			WebResponse response = null;
             // stream for JPEG downloading
 			Stream stream = null;
@@ -525,7 +525,7 @@ namespace UMapx.Video
 					{
 						// get download duration
 						span = DateTime.Now.Subtract( start );
-						// miliseconds to sleep
+						// milliseconds to sleep
 						int msec = frameInterval - (int) span.TotalMilliseconds;
 
                         if ( ( msec > 0 ) && ( stopEvent.WaitOne( msec, false ) ) )

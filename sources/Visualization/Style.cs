@@ -228,9 +228,9 @@ namespace UMapx.Visualization
             }
         }
         /// <summary>
-        /// Returns standart style.
+        /// Returns standard style.
         /// </summary>
-        public static Style Standart
+        public static Style Standard
         {
             get
             {

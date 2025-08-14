@@ -66,7 +66,7 @@ namespace UMapx.Imaging
             {
                 if (Frame == null)
                 {
-                    // create initial backgroung image
+                    // create initial background image
                     Frame = (Bitmap)Data.Clone();
 
                     // just return for the first time

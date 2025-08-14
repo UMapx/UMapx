@@ -174,7 +174,7 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public static float[] GetPacket(IWindow window, int length)
         {
-            // exeption by length
+            // exception by length
             if (window.FrameSize > length)
                 return WeylHeisenbergTransform.NSymmetry(window, length);
 
@@ -207,7 +207,7 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         private static float[] NSymmetry(IWindow window, int length)
         {
-            // creaing window function
+            // creating window function
             float[] g = window.GetWindow(length + 1);
             float[] w = new float[length];
 

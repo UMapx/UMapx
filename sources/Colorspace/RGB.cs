@@ -455,7 +455,7 @@ namespace UMapx.Colorspace
             // Designed by Valery Asiryan, 2018
 
             float r = 0, g, b = 0;           // color channels,
-            float x = temperature / 1000.0f; // normalize temerature,
+            float x = temperature / 1000.0f; // normalize temperature,
             float y = x * x, z = y * x;      // variables.
 
             // Approximate red channel:
@@ -473,7 +473,7 @@ namespace UMapx.Colorspace
             g = -50.1667f + 99.9846f * x - 7.7844f * y - 0.1175f * z;
             // ************************************************************************
 
-            // Aproximate blue channel:
+            // Approximate blue channel:
             if (x > 6)
             {
                 b = 255;
@@ -593,7 +593,7 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Completed shemes
+        #region Completed schemes
         /// <summary>
         /// Returns the color scheme.
         /// </summary>

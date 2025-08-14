@@ -406,7 +406,7 @@ namespace UMapx.Core
                 {
                     return 1.0f;
                 }
-                throw new ArgumentOutOfRangeException("Invalid argument value, beacause the value must belong to the interval [0, 1]");
+                throw new ArgumentOutOfRangeException("Invalid argument value, because the value must belong to the interval [0, 1]");
             }
 
             flag = false;
@@ -512,7 +512,7 @@ namespace UMapx.Core
         {
             float xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
             float k1, k2, k3, k4, k5, k6, k7, k8;
-            float r, t, ans, thresh;
+            float r, t, and, thresh;
             int n;
             float big = 4.503599627370496e15f;
             float biginv = 2.22044604925031308085e-16f;
@@ -530,7 +530,7 @@ namespace UMapx.Core
             qkm2 = 1.0f;
             pkm1 = 1.0f;
             qkm1 = 1.0f;
-            ans = 1.0f;
+            and = 1.0f;
             r = 1.0f;
             n = 0;
             thresh = 3.0f * float.Epsilon;
@@ -556,13 +556,13 @@ namespace UMapx.Core
                 if (qk != 0) r = pk / qk;
                 if (r != 0)
                 {
-                    t = System.Math.Abs((ans - r) / r);
-                    ans = r;
+                    t = System.Math.Abs((and - r) / r);
+                    and = r;
                 }
                 else
                     t = 1.0f;
 
-                if (t < thresh) return ans;
+                if (t < thresh) return and;
 
                 k1 += 1.0f;
                 k2 += 1.0f;
@@ -589,7 +589,7 @@ namespace UMapx.Core
                 }
             } while (++n < 300);
 
-            return ans;
+            return and;
         }
         /// <summary>
         /// 
@@ -602,7 +602,7 @@ namespace UMapx.Core
         {
             float xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
             float k1, k2, k3, k4, k5, k6, k7, k8;
-            float r, t, ans, z, thresh;
+            float r, t, and, z, thresh;
             int n;
             float big = 4.503599627370496e15f;
             float biginv = 2.22044604925031308085e-16f;
@@ -622,7 +622,7 @@ namespace UMapx.Core
             pkm1 = 1.0f;
             qkm1 = 1.0f;
             z = x / (1.0f - x);
-            ans = 1.0f;
+            and = 1.0f;
             r = 1.0f;
             n = 0;
             thresh = 3.0f * float.Epsilon;
@@ -647,13 +647,13 @@ namespace UMapx.Core
                 if (qk != 0) r = pk / qk;
                 if (r != 0)
                 {
-                    t = System.Math.Abs((ans - r) / r);
-                    ans = r;
+                    t = System.Math.Abs((and - r) / r);
+                    and = r;
                 }
                 else
                     t = 1.0f;
 
-                if (t < thresh) return ans;
+                if (t < thresh) return and;
 
                 k1 += 1.0f;
                 k2 -= 1.0f;
@@ -680,7 +680,7 @@ namespace UMapx.Core
                 }
             } while (++n < 300);
 
-            return ans;
+            return and;
         }
         /// <summary>
         /// 
@@ -1039,7 +1039,7 @@ namespace UMapx.Core
         {
             const float big = 4.503599627370496e15f;
             const float biginv = 2.22044604925031308085e-16f;
-            float ans, ax, c, yc, r, t, y, z;
+            float and, ax, c, yc, r, t, y, z;
             float pk, pkm1, pkm2, qk, qkm1, qkm2;
 
             if (x <= 0 || s <= 0)
@@ -1066,7 +1066,7 @@ namespace UMapx.Core
             qkm2 = x;
             pkm1 = x + 1.0f;
             qkm1 = z * x;
-            ans = pkm1 / qkm1;
+            and = pkm1 / qkm1;
 
             do
             {
@@ -1079,8 +1079,8 @@ namespace UMapx.Core
                 if (qk != 0)
                 {
                     r = pk / qk;
-                    t = Math.Abs((ans - r) / r);
-                    ans = r;
+                    t = Math.Abs((and - r) / r);
+                    and = r;
                 }
                 else
                     t = 1.0f;
@@ -1098,7 +1098,7 @@ namespace UMapx.Core
                 }
             } while (t > float.Epsilon);
 
-            return ans * ax;
+            return and * ax;
         }
         /// <summary>
         /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
@@ -1126,16 +1126,16 @@ namespace UMapx.Core
 
             float r = s;
             float c = 1.0f;
-            float ans = 1.0f;
+            float and = 1.0f;
 
             do
             {
                 r += 1.0f;
                 c *= x / r;
-                ans += c;
-            } while (c / ans > float.Epsilon);
+                and += c;
+            } while (c / and > float.Epsilon);
 
-            return ans * ax / s;
+            return and * ax / s;
         }
         /// <summary>
         /// Returns the value of an incomplete Gamma function: γ(s, x).
@@ -1145,7 +1145,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float GammaIncomplete(float s, float x)
         {
-            float ans, ax, c, r;
+            float and, ax, c, r;
 
             if (x <= 0 || s <= 0) return 0.0f;
 
@@ -1160,16 +1160,16 @@ namespace UMapx.Core
             /* power series */
             r = s;
             c = 1.0f;
-            ans = 1.0f;
+            and = 1.0f;
 
             do
             {
                 r += 1.0f;
                 c *= x / r;
-                ans += c;
-            } while (c / ans > float.Epsilon);
+                and += c;
+            } while (c / and > float.Epsilon);
 
-            return (ans * ax / s);
+            return (and * ax / s);
 
         }
         /// <summary>
@@ -1187,7 +1187,7 @@ namespace UMapx.Core
 
             float big = 4.503599627370496e15f;
             float biginv = 2.22044604925031308085e-16f;
-            float ans, ax, c, yc, r, t, y, z;
+            float and, ax, c, yc, r, t, y, z;
             float pk, pkm1, pkm2, qk, qkm1, qkm2;
 
             if (x <= 0 || s <= 0) return 1.0f;
@@ -1207,7 +1207,7 @@ namespace UMapx.Core
             qkm2 = x;
             pkm1 = x + 1.0f;
             qkm1 = z * x;
-            ans = pkm1 / qkm1;
+            and = pkm1 / qkm1;
 
             do
             {
@@ -1220,8 +1220,8 @@ namespace UMapx.Core
                 if (qk != 0)
                 {
                     r = pk / qk;
-                    t = Math.Abs((ans - r) / r);
-                    ans = r;
+                    t = Math.Abs((and - r) / r);
+                    and = r;
                 }
                 else
                     t = 1.0f;
@@ -1239,7 +1239,7 @@ namespace UMapx.Core
                 }
             } while (t > float.Epsilon);
 
-            return ans * ax;
+            return and * ax;
         }
 
         #region Gamma approximations
@@ -1554,10 +1554,10 @@ namespace UMapx.Core
                 ans2 = 0.04687499995f + y * (-0.2002690873e-3f
                     + y * (0.8449199096e-5f + y * (-0.88228987e-6f
                     + y * 0.105787412e-6f)));
-                float ans = (float)Math.Sqrt(0.636619772 / ax) *
+                float and = (float)Math.Sqrt(0.636619772 / ax) *
                     ((float)Math.Cos(xx) * ans1 - z * (float)Math.Sin(xx) * ans2);
-                if (x < 0.0) ans = -ans;
-                return ans;
+                if (x < 0.0) and = -and;
+                return and;
             }
         }
         /// <summary>
@@ -1573,7 +1573,7 @@ namespace UMapx.Core
             if (a == 1) return J1(x);
 
             int j, m;
-            float ax, bj, bjm, bjp, sum, tox, ans;
+            float ax, bj, bjm, bjp, sum, tox, and;
             bool jsum;
             float ACC = 40.0f;
             float BIGNO = 1.0e+10f;
@@ -1592,14 +1592,14 @@ namespace UMapx.Core
                     bjm = bj;
                     bj = bjp;
                 }
-                ans = bj;
+                and = bj;
             }
             else
             {
                 tox = 2.0f / ax;
                 m = 2 * ((a + (int)System.Math.Sqrt(ACC * a)) / 2);
                 jsum = false;
-                bjp = ans = sum = 0.0f;
+                bjp = and = sum = 0.0f;
                 bj = 1.0f;
                 for (j = m; j > 0; j--)
                 {
@@ -1610,18 +1610,18 @@ namespace UMapx.Core
                     {
                         bj *= BIGNI;
                         bjp *= BIGNI;
-                        ans *= BIGNI;
+                        and *= BIGNI;
                         sum *= BIGNI;
                     }
                     if (jsum) sum += bj;
                     jsum = !jsum;
-                    if (j == a) ans = bjp;
+                    if (j == a) and = bjp;
                 }
                 sum = 2.0f * sum - bj;
-                ans /= sum;
+                and /= sum;
             }
 
-            return x < 0.0 && a % 2 == 1 ? -ans : ans;
+            return x < 0.0 && a % 2 == 1 ? -and : and;
         }
         /// <summary>
         /// Returns the value of the Bessel function of the second kind at a = 0.
@@ -1719,26 +1719,26 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         private static float I0(float x)
         {
-            float ans;
+            float and;
             float ax = Math.Abs(x);
 
             if (ax < 3.75)
             {
                 float y = x / 3.75f;
                 y = y * y;
-                ans = 1.0f + y * (3.5156229f + y * (3.0899424f + y * (1.2067492f
+                and = 1.0f + y * (3.5156229f + y * (3.0899424f + y * (1.2067492f
                    + y * (0.2659732f + y * (0.360768e-1f + y * 0.45813e-2f)))));
             }
             else
             {
                 float y = 3.75f / ax;
-                ans = (float)Math.Exp(ax) / (float)Math.Sqrt(ax) * (0.39894228f + y * (0.1328592e-1f
+                and = (float)Math.Exp(ax) / (float)Math.Sqrt(ax) * (0.39894228f + y * (0.1328592e-1f
                    + y * (0.225319e-2f + y * (-0.157565e-2f + y * (0.916281e-2f
                    + y * (-0.2057706e-1f + y * (0.2635537e-1f + y * (-0.1647633e-1f
                    + y * 0.392377e-2f))))))));
             }
 
-            return ans;
+            return and;
         }
         /// <summary>
         /// Returns the value of the modified Bessel function of the first kind at a = 1.
@@ -1747,7 +1747,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         private static float I1(float x)
         {
-            float ans;
+            float and;
 
             float ax = Math.Abs(x);
 
@@ -1755,17 +1755,17 @@ namespace UMapx.Core
             {
                 float y = x / 3.75f;
                 y = y * y;
-                ans = ax * (0.5f + y * (0.87890594f + y * (0.51498869f + y * (0.15084934f
+                and = ax * (0.5f + y * (0.87890594f + y * (0.51498869f + y * (0.15084934f
                    + y * (0.2658733e-1f + y * (0.301532e-2f + y * 0.32411e-3f))))));
             }
             else
             {
                 float y = 3.75f / ax;
-                ans = 0.2282967e-1f + y * (-0.2895312e-1f + y * (0.1787654e-1f - y * 0.420059e-2f));
-                ans = 0.39894228f + y * (-0.3988024e-1f + y * (-0.362018e-2f + y * (0.163801e-2f + y * (-0.1031555e-1f + y * ans))));
-                ans *= (float)Math.Exp(ax) / (float)Math.Sqrt(ax);
+                and = 0.2282967e-1f + y * (-0.2895312e-1f + y * (0.1787654e-1f - y * 0.420059e-2f));
+                and = 0.39894228f + y * (-0.3988024e-1f + y * (-0.362018e-2f + y * (0.163801e-2f + y * (-0.1031555e-1f + y * and))));
+                and *= (float)Math.Exp(ax) / (float)Math.Sqrt(ax);
             }
-            return x < 0.0 ? -ans : ans;
+            return x < 0.0 ? -and : and;
         }
         /// <summary>
         /// Returns the value of the modified Bessel function of the first kind.
@@ -1783,7 +1783,7 @@ namespace UMapx.Core
             float BIGNO = 1.0e+10f;
             float BIGNI = 1.0e-10f;
             float tox = 2.0f / Math.Abs(x);
-            float bip = 0, ans = 0.0f;
+            float bip = 0, and = 0.0f;
             float bi = 1.0f;
 
             for (int j = 2 * (a + (int)Math.Sqrt(ACC * a)); j > 0; j--)
@@ -1794,17 +1794,17 @@ namespace UMapx.Core
 
                 if (Math.Abs(bi) > BIGNO)
                 {
-                    ans *= BIGNI;
+                    and *= BIGNI;
                     bi *= BIGNI;
                     bip *= BIGNI;
                 }
 
                 if (j == a)
-                    ans = bip;
+                    and = bip;
             }
 
-            ans *= I0(x) / bi;
-            return x < 0.0 && a % 2 == 1 ? -ans : ans;
+            and *= I0(x) / bi;
+            return x < 0.0 && a % 2 == 1 ? -and : and;
         }
         /// <summary>
         /// Returns the value of the modified Bessel function of the second kind at a = 0.
@@ -1813,23 +1813,23 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         private static float K0(float x)
         {
-            float y, ans;
+            float y, and;
 
             if (x <= 2.0)
             {
                 y = x * x / 4.0f;
-                ans = (-(float)Math.Log(x / 2.0) * I0(x)) + (-0.57721566f + y * (0.42278420f
+                and = (-(float)Math.Log(x / 2.0) * I0(x)) + (-0.57721566f + y * (0.42278420f
                    + y * (0.23069756f + y * (0.3488590e-1f + y * (0.262698e-2f
                    + y * (0.10750e-3f + y * 0.74e-5f))))));
             }
             else
             {
                 y = 2.0f / x;
-                ans = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (-0.7832358e-1f
+                and = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (-0.7832358e-1f
                    + y * (0.2189568e-1f + y * (-0.1062446e-1f + y * (0.587872e-2f
                    + y * (-0.251540e-2f + y * 0.53208e-3f))))));
             }
-            return ans;
+            return and;
         }
         /// <summary>
         /// Returns the value of the modified Bessel function of the second kind at a = 1.
@@ -1838,23 +1838,23 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         private static float K1(float x)
         {
-            float y, ans;
+            float y, and;
 
             if (x <= 2.0)
             {
                 y = x * x / 4.0f;
-                ans = ((float)Math.Log(x / 2.0) * I1(x)) + (1.0f / x) * (1.0f + y * (0.15443144f
+                and = ((float)Math.Log(x / 2.0) * I1(x)) + (1.0f / x) * (1.0f + y * (0.15443144f
                    + y * (-0.67278579f + y * (-0.18156897f + y * (-0.1919402e-1f
                    + y * (-0.110404e-2f + y * (-0.4686e-4f)))))));
             }
             else
             {
                 y = 2.0f / x;
-                ans = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (0.23498619f
+                and = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (0.23498619f
                    + y * (-0.3655620e-1f + y * (0.1504268e-1f + y * (-0.780353e-2f
                    + y * (0.325614e-2f + y * (-0.68245e-3f)))))));
             }
-            return ans;
+            return and;
         }
         /// <summary>
         /// Returns the value of the modified Bessel function of the second kind.

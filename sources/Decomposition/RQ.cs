@@ -38,7 +38,7 @@ namespace UMapx.Decomposition
         }
         #endregion
 
-        #region Standart voids
+        #region Standard voids
         /// <summary>
         /// Returns the lower triangular matrix R.
         /// </summary>
