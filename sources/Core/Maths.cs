@@ -1656,54 +1656,121 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static int[] Sieve(int limit)
         {
-            if (limit <= 2)
-            {
-                // first prime
-                return new int[] { 2 };
-            }
-            else
-            {
-                // recursion
-                int beta = (int)(Math.Pow(limit, 1.0 / 2)) + 1;
-                int[] prime = Sieve(beta);
-                bool[] mark;
-                int length = prime.Length;
-                int start, low, high;
-                int i, j, p;
-                List<int> list = prime.ToList();
+            if (limit < 2) return Array.Empty<int>();
+            if (limit == 2) return new[] { 2 };
 
-                // do job
-                for (low = beta, high = beta + beta; low < limit; low += beta, high += beta)
+            // 1) Base primes up to floor(sqrt(limit)) using odd-only sieve
+            int sqrt = (int)Math.Sqrt((double)limit);
+            var basePrimes = BuildBasePrimes(sqrt); // includes 2
+
+            // Reserve output capacity using π(n) ~ n/(ln n - 1.08366)
+            int cap = limit >= 17 ? (int)(limit / (Math.Log(limit) - 1.08366)) : 8;
+            var primes = new List<int>(Math.Max(8, cap))
+            {
+                2 // we sieve only odds below
+            };
+
+            // 2) Segmented sieve over [3..limit], odd-only with bitset
+            const int defaultSegmentOddCount = 1 << 20; // how many odds per segment (~128 KiB bitset)
+            int segmentOddCount = defaultSegmentOddCount;
+
+            // Pre-allocate bitset for the largest segment: 1 bit per odd
+            ulong[] bits = new ulong[(segmentOddCount + 63) >> 6];
+
+            // Use long for exclusive upper bound to avoid overflow at int.MaxValue
+            long limitPlus1 = (long)limit + 1;
+
+            // Iterate segments, [low, high), low/high are integers; we mark only odds inside
+            for (int low = 3; low <= limit;)
+            {
+                long highL = (long)low + ((long)segmentOddCount << 1); // convert odd-count→integers
+                if (highL > limitPlus1) highL = limitPlus1;
+                int high = (int)highL; // exclusive
+
+                // First odd ≥ low
+                int firstOdd = (low | 1);
+
+                // Number of odd integers in [firstOdd, high):
+                // count = ceil((high - firstOdd)/2) = (high - firstOdd + 1) >> 1, clamped to ≥0
+                int oddCount = high > firstOdd ? ((high - firstOdd + 1) >> 1) : 0;
+
+                // Clear only the slice we use
+                int words = (oddCount + 63) >> 6;
+                if (words > 0) Array.Clear(bits, 0, words);
+
+                // Mark composites using base primes (skip 2; we only store odds)
+                for (int t = 0; t < basePrimes.Length; t++)
                 {
-                    high = Math.Min(high, limit);
-                    mark = new bool[beta];
+                    int p = basePrimes[t];
+                    if (p == 2) continue;
 
-                    for (i = 0; i < length; i++)
+                    long pp = 1L * p * p;
+                    if (pp >= high) break; // nothing to mark in this segment
+
+                    // First multiple of p inside [firstOdd, high)
+                    long start = pp > firstOdd ? pp : ((long)firstOdd + p - 1) / p * (long)p;
+                    if ((start & 1L) == 0) start += p;        // ensure odd composite
+                    int step = p << 1;                         // jump between odd multiples
+
+                    for (long j = start; j < high; j += step)
                     {
-                        p = prime[i];
-                        start = (int)((float)low / p) * p;
-
-                        if (start < low)
-                            start += p;
-
-                        for (j = start; j < high; j += p)
-                        {
-                            mark[j - low] = true;
-                        }
-                    }
-
-
-                    for (i = low; i < high; i++)
-                    {
-                        if (!mark[i - low])
-                        {
-                            list.Add(i);
-                        }
+                        int idx = (int)((j - firstOdd) >> 1);  // 0 ≤ idx < oddCount
+                        bits[idx >> 6] |= 1UL << (idx & 63);
                     }
                 }
 
-                return list.ToArray();
+                // Emit primes from this segment
+                for (int i = 0; i < oddCount; i++)
+                {
+                    if ((bits[i >> 6] & (1UL << (i & 63))) == 0)
+                    {
+                        int n = firstOdd + (i << 1);
+                        if (n <= limit) primes.Add(n);
+                    }
+                }
+
+                // Next segment starts at high (exclusive)
+                low = high;
             }
+
+            return primes.ToArray();
+        }
+        /// <summary>
+        /// Odd-only sieve up to n (inclusive). Returns base primes incl. 2.
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <returns>Array</returns>
+        private static int[] BuildBasePrimes(int n)
+        {
+            if (n < 2) return Array.Empty<int>();
+            if (n == 2) return new[] { 2 };
+
+            // Odd candidates: 3,5,7,...,n
+            int m = (n - 1) >> 1; // index i ↦ value (2*i+3)
+            ulong[] bits = new ulong[(m + 63) >> 6];
+
+            int sqrt = (int)Math.Sqrt((double)n);
+            int maxI = (sqrt - 1) >> 1; // (2*maxI+3) ≤ sqrt(n)
+
+            for (int i = 0; i <= maxI; i++)
+            {
+                if ((bits[i >> 6] & (1UL << (i & 63))) == 0)
+                {
+                    int p = (i << 1) + 3;
+                    long start = 1L * p * p;         // first composite
+                    int j = (int)((start - 3) >> 1); // index for odd number (2*j+3)
+                    for (; j < m; j += p)
+                        bits[j >> 6] |= 1UL << (j & 63);
+                }
+            }
+
+            var res = new List<int>(m / 2 + 1) { 2 };
+
+            for (int i = 0; i < m; i++)
+                if ((bits[i >> 6] & (1UL << (i & 63))) == 0)
+                    res.Add((i << 1) + 3);
+
+            return res.ToArray();
         }
 
         /// <summary>

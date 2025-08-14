@@ -6318,6 +6318,13 @@
             <param name="limit">Number</param>
             <returns>Array</returns>
         </member>
+        <member name="M:UMapx.Core.Maths.BuildBasePrimes(System.Int32)">
+            <summary>
+            Odd-only sieve up to n (inclusive). Returns base primes incl. 2.
+            </summary>
+            <param name="n">Number</param>
+            <returns>Array</returns>
+        </member>
         <member name="M:UMapx.Core.Maths.Radical(System.Int32)">
             <summary>
             Returns the radical of an integer.
