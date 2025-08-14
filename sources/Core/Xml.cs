@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace UMapx.Core
 {
     /// <summary>
-    /// Used for Xml serialization of objects.
+    /// Used to work with xml serialization of objects.
     /// </summary>
     public static class Xml
     {

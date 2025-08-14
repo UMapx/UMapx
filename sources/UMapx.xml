@@ -11756,7 +11756,7 @@
         </member>
         <member name="T:UMapx.Core.Xml">
             <summary>
-            Used for Xml serialization of objects.
+            Used to work with xml serialization of objects.
             </summary>
         </member>
         <member name="M:UMapx.Core.Xml.Save(System.IO.Stream,System.Object)">
@@ -16635,7 +16635,7 @@
         </member>
         <member name="T:UMapx.Imaging.BitmapTransform">
             <summary>
-            Used for editing and transforming images using GDI+.
+            Used to edit and transform images using GDI+.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,UMapx.Core.RotationMode)">
