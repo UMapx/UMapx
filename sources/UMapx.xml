@@ -13040,6 +13040,7 @@
             Inverts an upper triangular matrix.
             </summary>
             <param name="m">Matix</param>
+            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Decomposition.RQ">
             <summary>
