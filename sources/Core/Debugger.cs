@@ -297,9 +297,10 @@ namespace UMapx.Core
         /// Returns elapsed time in miliseconds.
         /// </summary>
         /// <returns>Int</returns>
-        public static int Toc()
+        public static void Toc()
         {
-            return Environment.TickCount - tic;
+            Console.WriteLine($"Elapsed time is {Environment.TickCount - tic} milliseconds");
+            Console.WriteLine();
         }
         #endregion
     }
