@@ -3874,6 +3874,22 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Distance.Euclidean(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Euclidean(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Distance.Chebyshev(System.Single[],System.Single[])">
             <summary>
             Returns distance value. 
@@ -3883,6 +3899,22 @@
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Chebyshev(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Chebyshev(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Chebyshev(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
             <summary>
             Returns distance value. 
             </summary>
@@ -3906,6 +3938,22 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Distance.Manhattan(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Manhattan(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Distance.Angular(System.Single[],System.Single[])">
             <summary>
             Returns distance value. 
@@ -3915,6 +3963,22 @@
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Angular(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Angular(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Angular(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
             <summary>
             Returns distance value. 
             </summary>
@@ -3938,6 +4002,22 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Distance.BrayCurtis(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.BrayCurtis(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Distance.Canberra(System.Single[],System.Single[])">
             <summary>
             Returns distance value.
@@ -3947,6 +4027,22 @@
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Canberra(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Canberra(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Canberra(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
             <summary>
             Returns distance value. 
             </summary>
@@ -3970,6 +4066,22 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Distance.Dice(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Dice(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Distance.Hellinger(System.Single[],System.Single[])">
             <summary>
             Returns distance value.
@@ -3979,6 +4091,22 @@
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Hellinger(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Hellinger(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Hellinger(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
             <summary>
             Returns distance value. 
             </summary>
@@ -4002,6 +4130,22 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Distance.Jaccard(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value".
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Jaccard(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Distance.Kulczynski(System.Single[],System.Single[])">
             <summary>
             Returns distance value.
@@ -4011,6 +4155,22 @@
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Kulczynski(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Kulczynski(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Kulczynski(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
             <summary>
             Returns distance value. 
             </summary>
@@ -4036,6 +4196,24 @@
             <param name="order">Order</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Distance.Minkowski(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Single)">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <param name="order">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Minkowski(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Single)">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <param name="order">Order</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Distance.RusselRao(System.Single[],System.Single[])">
             <summary>
             Returns distance value.
@@ -4045,6 +4223,22 @@
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.RusselRao(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.RusselRao(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.RusselRao(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
             <summary>
             Returns distance value. 
             </summary>
@@ -4068,6 +4262,22 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Distance.SokalMichener(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.SokalMichener(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Distance.SokalSneath(System.Single[],System.Single[])">
             <summary>
             Returns distance value.
@@ -4077,6 +4287,22 @@
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.SokalSneath(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.SokalSneath(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.SokalSneath(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
             <summary>
             Returns distance value. 
             </summary>
@@ -4100,6 +4326,22 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Distance.Yule(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Yule(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Distance.SquareEuclidian(System.Single[],System.Single[])">
             <summary>
             Returns distance value.
@@ -4116,6 +4358,22 @@
             <param name="q">Matrix</param>
             <returns>Vector</returns>
         </member>
+        <member name="M:UMapx.Core.Distance.SquareEuclidian(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns distance value.
+            </summary>
+            <param name="p">Array</param>
+            <param name="q">Array</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.SquareEuclidian(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
         <member name="M:UMapx.Core.Distance.Cosine(System.Single[],System.Single[])">
             <summary>
             Returns similarity function of two vectors.
@@ -4125,6 +4383,22 @@
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Cosine(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            Returns distance value. 
+            </summary>
+            <param name="p">Matrix</param>
+            <param name="q">Matrix</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Cosine(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns similarity function of two vectors.
+            </summary>
+            <param name="p">Vector</param>
+            <param name="b">Vector</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Distance.Cosine(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
             <summary>
             Returns distance value. 
             </summary>
