@@ -58,7 +58,7 @@ namespace UMapx.Core
                 f *= k * (k - 1);
 
                 // sign and value:
-                p *= (-1);
+                p *= -1;
                 m *= z;
                 t = p * m / (f * k);
 
@@ -100,7 +100,7 @@ namespace UMapx.Core
                 f *= j * (k - 1);
 
                 // sign and value:
-                p *= (-1);
+                p *= -1;
                 m *= z;
                 t = p / f / k * m;
 
@@ -2294,7 +2294,7 @@ namespace UMapx.Core
                 return 1;
             }
             float ax = a * x;
-            return (float)Math.Sin(ax) / (ax);
+            return (float)Math.Sin(ax) / ax;
         }
         #endregion
 
@@ -2840,7 +2840,7 @@ namespace UMapx.Core
 
                 // value:
                 m *= z / i;
-                t = (pa * pb * m) / pc;
+                t = pa * pb * m / pc;
 
                 // stop point:
                 if (Math.Abs(t) < eps)
@@ -2981,7 +2981,7 @@ namespace UMapx.Core
                 float p = 1.0f / n;
                 float w = 1.0f / sqrtPI;
                 float v = Gamma(p) - GammaIncomplete(p, (float)Math.Pow(x, n), true);
-                return w * Gamma(n) * (v);
+                return w * Gamma(n) * v;
             }
             return float.NaN;
         }
@@ -3052,7 +3052,7 @@ namespace UMapx.Core
             }
 
             // last step and result:
-            float a = (t * y / i);
+            float a = t * y / i;
             return a / (a + b);
         }
         #endregion
@@ -3081,7 +3081,7 @@ namespace UMapx.Core
                 v = w;
                 e = (float)Math.Exp(w);
                 f = w * e - x;  // Iterate to make this quantity zero
-                w = w - f / ((e * (w + 1) - (w + 2) * f / (2 * w + 2)));
+                w = w - f / (e * (w + 1) - (w + 2) * f / (2 * w + 2));
             }
             return w;
         }
@@ -3112,7 +3112,7 @@ namespace UMapx.Core
             long p = (long)x, q = 1, r = p + 1, s = 1, m, n;
             float d = 1, y = p;
 
-            if (x < (float)p || (p < 0) ^ (r <= 0))
+            if (x < p || (p < 0) ^ (r <= 0))
             {
                 return x;
             }
