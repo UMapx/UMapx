@@ -13,15 +13,15 @@ namespace UMapx.Core
     {
         #region Private data
         /// <summary>
-        /// 
+        /// Log max.
         /// </summary>
         private const float LogMax = 7.09782712893383996732E2f;
         /// <summary>
-        /// 
+        /// Log min.
         /// </summary>
         private const float LogMin = -7.451332191019412076235E2f;
         /// <summary>
-        /// 
+        /// Square PI.
         /// </summary>
         private const float sqrtPI = 1.7724538509055160272981674833411f;
         #endregion

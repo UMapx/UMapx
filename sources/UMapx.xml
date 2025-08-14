@@ -11243,17 +11243,17 @@
         </member>
         <member name="F:UMapx.Core.Special.LogMax">
             <summary>
-            
+            Log max.
             </summary>
         </member>
         <member name="F:UMapx.Core.Special.LogMin">
             <summary>
-            
+            Log min.
             </summary>
         </member>
         <member name="F:UMapx.Core.Special.sqrtPI">
             <summary>
-            
+            Square PI.
             </summary>
         </member>
         <member name="M:UMapx.Core.Special.Ci(System.Single)">
