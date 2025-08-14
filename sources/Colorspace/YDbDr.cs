@@ -124,7 +124,7 @@ namespace UMapx.Colorspace
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
-            return Y.ToString() + "\n" + Db.ToString() + "\n" + Dr.ToString();
+            return Y.ToString() + Environment.NewLine + Db.ToString() + Environment.NewLine + Dr.ToString();
         }
         #endregion
 
