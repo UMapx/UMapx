@@ -2116,16 +2116,6 @@ namespace UMapx.Core
         /// <param name="magnitude">Magnitude</param>
         /// <param name="sign">Sign</param>
         /// <returns>Value</returns>
-        public static int CopySign(int magnitude, int sign)
-        {
-            return Math.Abs(magnitude) * Math.Sign(sign);
-        }
-        /// <summary>
-        /// Copies sign.
-        /// </summary>
-        /// <param name="magnitude">Magnitude</param>
-        /// <param name="sign">Sign</param>
-        /// <returns>Value</returns>
         public static float CopySign(float magnitude, float sign)
         {
             return Math.Abs(magnitude) * Math.Sign(sign);

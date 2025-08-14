@@ -6458,14 +6458,6 @@
             <param name="b">Value providing the sign</param>
             <returns><c>|a|</c> if <paramref name="b"/> ≥ 0; otherwise <c>-|a|</c></returns>
         </member>
-        <member name="M:UMapx.Core.Maths.CopySign(System.Int32,System.Int32)">
-            <summary>
-            Copies sign.
-            </summary>
-            <param name="magnitude">Magnitude</param>
-            <param name="sign">Sign</param>
-            <returns>Value</returns>
-        </member>
         <member name="M:UMapx.Core.Maths.CopySign(System.Single,System.Single)">
             <summary>
             Copies sign.
