@@ -6938,6 +6938,38 @@
             <param name="a">Number</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Single[0:,0:],System.Single[])">
+            <summary>
+            Implements matrix multiplication.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="v">Vector</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[])">
+            <summary>
+            Implements matrix multiplication.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="v">Vector</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32[0:,0:],System.Single[])">
+            <summary>
+            Implements matrix multiplication.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="v">Vector</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Mul(System.Single[0:,0:],UMapx.Core.Complex32[])">
+            <summary>
+            Implements matrix multiplication.
+            </summary>
+            <param name="m">Matrix</param>
+            <param name="v">Vector</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
             Implements matrix multiplication.

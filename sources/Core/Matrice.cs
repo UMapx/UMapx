@@ -1310,6 +1310,94 @@ namespace UMapx.Core
         /// Implements matrix multiplication.
         /// </summary>
         /// <param name="m">Matrix</param>
+        /// <param name="v">Vector</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Mul(this float[,] m, float[] v)
+        {
+            int mr = m.GetLength(0), ml = m.GetLength(1);
+            var H = new float[mr, ml];
+
+            for (int j = 0; j < ml; j++)
+            {
+                var s = v[j];
+                for (int i = 0; i < mr; i++)
+                {
+                    var a = m[i, j];
+                    H[i, j] = a * s;
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Implements matrix multiplication.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Vector</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Mul(this Complex32[,] m, Complex32[] v)
+        {
+            int mr = m.GetLength(0), ml = m.GetLength(1);
+            var H = new Complex32[mr, ml];
+
+            for (int j = 0; j < ml; j++)
+            {
+                var s = v[j];
+                for (int i = 0; i < mr; i++)
+                {
+                    var a = m[i, j];
+                    H[i, j] = a * s;
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Implements matrix multiplication.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Vector</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Mul(this Complex32[,] m, float[] v)
+        {
+            int mr = m.GetLength(0), ml = m.GetLength(1);
+            var H = new Complex32[mr, ml];
+
+            for (int j = 0; j < ml; j++)
+            {
+                var s = v[j];
+                for (int i = 0; i < mr; i++)
+                {
+                    var a = m[i, j];
+                    H[i, j] = a * s;
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Implements matrix multiplication.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="v">Vector</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Mul(this float[,] m, Complex32[] v)
+        {
+            int mr = m.GetLength(0), ml = m.GetLength(1);
+            var H = new Complex32[mr, ml];
+
+            for (int j = 0; j < ml; j++)
+            {
+                var s = v[j];
+                for (int i = 0; i < mr; i++)
+                {
+                    var a = m[i, j];
+                    H[i, j] = a * s;
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Implements matrix multiplication.
+        /// </summary>
+        /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
         public static float[,] Mul(this float[,] m, float[,] n)
