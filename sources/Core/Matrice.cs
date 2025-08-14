@@ -3623,7 +3623,6 @@ namespace UMapx.Core
             return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
 
-        #region Static voids
         /// <summary>
         /// Returns the projection of horizontal vectors.
         /// proj[e, a]' = (e * a') / (e * e') .* e
@@ -3740,7 +3739,6 @@ namespace UMapx.Core
 
             return proj;
         }
-        #endregion
 
         /// <summary>
         /// Returns the direction cosines of a vector.
