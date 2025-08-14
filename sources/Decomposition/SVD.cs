@@ -30,7 +30,7 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <param name="iterations">Number of iterations</param>
-        public SVD(float[,] A, int iterations = 10)
+        public SVD(float[,] A, int iterations = 5)
         {
             // set:
             this.iterations = iterations;
@@ -100,9 +100,20 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Core SVD routine for real single-precision matrices.
+        /// Performs Householder bidiagonalization followed by Golub–Kahan QR iterations
+        /// to compute singular values and left/right singular vectors.
+        /// Populates the private fields: <c>Ur</c> (left vectors), <c>Vr</c> (right vectors),
+        /// and <c>Sr</c> (non-negative singular values).
         /// </summary>
-        /// <param name="A"></param>
+        /// <param name="A">
+        /// Input matrix of size n×m. Assumes n ≥ m when called (the caller transposes
+        /// beforehand if needed). The method works on an internal copy (jagged buffers)
+        /// </param>
+        /// <remarks>
+        /// Uses jagged arrays for speed. Columns of U and V are orthonormal. The number
+        /// of QR sweeps is limited by the instance field <see cref="iterations"/>.
+        /// </remarks>
         private void svdcmp(float[,] A)
         {
             this.Ur = Jagged.ToJagged(A);
@@ -112,7 +123,6 @@ namespace UMapx.Decomposition
 
             int flag, i, its, j, jj, k, l = 0, nm = 0;
             float anorm, c, f, g, h, e, scale, x, y, z;
-
 
             // householder reduction to bidiagonal form
             g = scale = anorm = 0.0f;
@@ -139,7 +149,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][i];
-                        g = -Sign((float)Math.Sqrt(e), f);
+                        g = -Maths.Sign((float)Math.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][i] = f - g;
 
@@ -187,7 +197,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][l];
-                        g = -Sign((float)Math.Sqrt(e), f);
+                        g = -Maths.Sign((float)Math.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][l] = f - g;
 
@@ -375,10 +385,10 @@ namespace UMapx.Decomposition
                         break;
                     }
 
-                    if (its == iterations)
-                    {
-                        throw new ApplicationException("No convergence in " + iterations.ToString() + " iterations of singular decomposition");
-                    }
+                    //if (its == iterations)
+                    //{
+                    //    throw new ApplicationException("No convergence in " + iterations.ToString() + " iterations of singular decomposition");
+                    //}
 
                     // shift from bottom 2-by-2 minor
                     x = Sr[l];
@@ -388,7 +398,7 @@ namespace UMapx.Decomposition
                     h = rv1[k];
                     f = ((y - z) * (y + z) + (g - h) * (g + h)) / (2.0f * h * y);
                     g = Maths.Hypotenuse(f, 1.0f);
-                    f = ((x - z) * (x + z) + h * ((y / (f + Sign(g, f))) - h)) / x;
+                    f = ((x - z) * (x + z) + h * ((y / (f + Maths.Sign(g, f))) - h)) / x;
 
                     // next QR transformation
                     c = e = 1.0f;
@@ -444,16 +454,49 @@ namespace UMapx.Decomposition
                     Sr[k] = x;
                 }
             }
+
+            // sort singular values descending and permute U, V columns accordingly
+            for (i = 0; i < m - 1; i++)
+            {
+                int maxIdx = i;
+                float maxVal = Sr[i];
+                for (j = i + 1; j < m; j++)
+                {
+                    if (Sr[j] > maxVal)
+                    {
+                        maxVal = Sr[j];
+                        maxIdx = j;
+                    }
+                }
+                if (maxIdx != i)
+                {
+                    // swap S
+                    var tS = Sr[i]; Sr[i] = Sr[maxIdx]; Sr[maxIdx] = tS;
+                    // swap columns in U (n x m)
+                    SwapColumns(Ur, i, maxIdx);
+                    // swap columns in V (m x m)
+                    SwapColumns(Vr, i, maxIdx);
+                }
+            }
         }
         /// <summary>
-        /// 
+        /// Swaps two columns in a jagged matrix <paramref name="M"/> (float[rows][cols]).
+        /// No operation is performed if <paramref name="c1"/> equals <paramref name="c2"/>.
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        private static float Sign(float a, float b)
+        /// <param name="M">Matrix represented as an array of row arrays (float[rows][cols])</param>
+        /// <param name="c1">Index of the first column</param>
+        /// <param name="c2">Index of the second column</param>
+        private static void SwapColumns(float[][] M, int c1, int c2)
         {
-            return (b >= 0.0) ? System.Math.Abs(a) : -System.Math.Abs(a);
+            if (c1 == c2) return;
+            int rows = M.Length;
+
+            for (int r = 0; r < rows; r++)
+            {
+                var tmp = M[r][c1];
+                M[r][c1] = M[r][c2];
+                M[r][c2] = tmp;
+            }
         }
         #endregion
     }

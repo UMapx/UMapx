@@ -6443,6 +6443,14 @@
             <param name="b">Number</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Core.Maths.Sign(System.Single,System.Single)">
+            <summary>
+            Returns the value of <c>|a|</c> with the sign of <paramref name="b"/> (copysign).
+            </summary>
+            <param name="a">Value providing the magnitude</param>
+            <param name="b">Value providing the sign</param>
+            <returns><c>|a|</c> if <paramref name="b"/> ≥ 0; otherwise <c>-|a|</c></returns>
+        </member>
         <member name="M:UMapx.Core.Maths.CopySign(System.Int32,System.Int32)">
             <summary>
             Copies sign.
@@ -13097,17 +13105,29 @@
         </member>
         <member name="M:UMapx.Decomposition.SVD.svdcmp(System.Single[0:,0:])">
             <summary>
-            
+            Core SVD routine for real single-precision matrices.
+            Performs Householder bidiagonalization followed by Golub–Kahan QR iterations
+            to compute singular values and left/right singular vectors.
+            Populates the private fields: <c>Ur</c> (left vectors), <c>Vr</c> (right vectors),
+            and <c>Sr</c> (non-negative singular values).
             </summary>
-            <param name="A"></param>
+            <param name="A">
+            Input matrix of size n×m. Assumes n ≥ m when called (the caller transposes
+            beforehand if needed). The method works on an internal copy (jagged buffers)
+            </param>
+            <remarks>
+            Uses jagged arrays for speed. Columns of U and V are orthonormal. The number
+            of QR sweeps is limited by the instance field <see cref="F:UMapx.Decomposition.SVD.iterations"/>.
+            </remarks>
         </member>
-        <member name="M:UMapx.Decomposition.SVD.Sign(System.Single,System.Single)">
+        <member name="M:UMapx.Decomposition.SVD.SwapColumns(System.Single[][],System.Int32,System.Int32)">
             <summary>
-            
+            Swaps two columns in a jagged matrix <paramref name="M"/> (float[rows][cols]).
+            No operation is performed if <paramref name="c1"/> equals <paramref name="c2"/>.
             </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <returns></returns>
+            <param name="M">Matrix represented as an array of row arrays (float[rows][cols])</param>
+            <param name="c1">Index of the first column</param>
+            <param name="c2">Index of the second column</param>
         </member>
         <member name="T:UMapx.Decomposition.UDL">
             <summary>

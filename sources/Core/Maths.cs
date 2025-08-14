@@ -2034,6 +2034,16 @@ namespace UMapx.Core
 
         #region Other
         /// <summary>
+        /// Returns the value of <c>|a|</c> with the sign of <paramref name="b"/> (copysign).
+        /// </summary>
+        /// <param name="a">Value providing the magnitude</param>
+        /// <param name="b">Value providing the sign</param>
+        /// <returns><c>|a|</c> if <paramref name="b"/> ≥ 0; otherwise <c>-|a|</c></returns>
+        public static float Sign(float a, float b)
+        {
+            return (b >= 0.0) ? Math.Abs(a) : -Math.Abs(a);
+        }
+        /// <summary>
         /// Copies sign.
         /// </summary>
         /// <param name="magnitude">Magnitude</param>
