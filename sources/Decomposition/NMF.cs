@@ -63,11 +63,11 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Computes non-negative matrix factorization for input matrix.
         /// </summary>
-        /// <param name="A"></param>
-        /// <param name="iterations"></param>
-        private void nnmf(float[,] A, int iterations)
+        /// <param name="A">Matrix</param>
+        /// <param name="iterations">Iterations</param>
+        private void nnmf(float[,] A, int iterations = 100)
         {
             // chose W and H randomly, W with unit norm
             w = Matrice.Rand(m, r);

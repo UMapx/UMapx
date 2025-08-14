@@ -12200,11 +12200,11 @@
         </member>
         <member name="M:UMapx.Decomposition.Arnoldi.arnoldi(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
-            
+            Computes Arnoldi transform for the input matrix.
             </summary>
-            <param name="a"></param>
-            <param name="n"></param>
-            <param name="m"></param>
+            <param name="a">Matrix</param>
+            <param name="n">Dimension</param>
+            <param name="m">Dimension</param>
         </member>
         <member name="T:UMapx.Decomposition.Bidiagonal">
             <summary>
@@ -12873,10 +12873,10 @@
         </member>
         <member name="M:UMapx.Decomposition.NMF.nnmf(System.Single[0:,0:],System.Int32)">
             <summary>
-            
+            Computes non-negative matrix factorization for input matrix.
             </summary>
-            <param name="A"></param>
-            <param name="iterations"></param>
+            <param name="A">Matrix</param>
+            <param name="iterations">Iterations</param>
         </member>
         <member name="T:UMapx.Decomposition.Polar">
             <summary>

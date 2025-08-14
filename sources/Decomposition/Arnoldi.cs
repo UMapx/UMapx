@@ -61,11 +61,11 @@ namespace UMapx.Decomposition
 
         #region Private data
         /// <summary>
-        /// 
+        /// Computes Arnoldi transform for the input matrix.
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="n"></param>
-        /// <param name="m"></param>
+        /// <param name="a">Matrix</param>
+        /// <param name="n">Dimension</param>
+        /// <param name="m">Dimension</param>
         private void arnoldi(float[,] a, int n, int m)
         {
             // vectors and matrices:
