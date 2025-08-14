@@ -138,7 +138,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Helvetica", 10, FontStyle.Regular),
                     FontText = new Font("Helvetica", 12, FontStyle.Regular),
@@ -152,7 +152,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         /// <summary>
@@ -162,7 +161,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Arial", 10, FontStyle.Regular),
                     FontText = new Font("Arial", 12, FontStyle.Regular),
@@ -176,7 +175,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         /// <summary>
@@ -186,7 +184,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Arial", 10, FontStyle.Regular),
                     FontText = new Font("Arial", 12, FontStyle.Regular),
@@ -200,7 +198,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         /// <summary>
@@ -210,7 +207,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Arial Cyr", 10, FontStyle.Regular),
                     FontText = new Font("Arial Cyr", 12, FontStyle.Regular),
@@ -224,7 +221,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         /// <summary>
@@ -234,7 +230,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -248,7 +244,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         /// <summary>
@@ -258,7 +253,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -272,7 +267,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         /// <summary>
@@ -282,7 +276,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -296,7 +290,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         /// <summary>
@@ -306,7 +299,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -320,7 +313,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         /// <summary>
@@ -330,7 +322,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -344,7 +336,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         /// <summary>
@@ -354,7 +345,7 @@ namespace UMapx.Visualization
         {
             get
             {
-                Style style = new Style
+                return new Style
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -368,7 +359,6 @@ namespace UMapx.Visualization
                     GridX = true,
                     GridY = true
                 };
-                return style;
             }
         }
         #endregion
