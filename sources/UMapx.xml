@@ -3748,14 +3748,14 @@
         </member>
         <member name="M:UMapx.Core.Debugger.Print``1(``0)">
             <summary>
-            Print value to console.
+            Prints a value to console.
             </summary>
             <typeparam name="T">Type</typeparam>
             <param name="A">Value</param>
         </member>
         <member name="M:UMapx.Core.Debugger.Print``1(``0[],System.Boolean)">
             <summary>
-            Print vector to console.
+            Prints a vector to console.
             </summary>
             <typeparam name="T">Type</typeparam>
             <param name="A">Array</param>
@@ -3763,7 +3763,7 @@
         </member>
         <member name="M:UMapx.Core.Debugger.Print``1(``0[0:,0:])">
             <summary>
-            Print matrix to console.
+            Prints a matrix to console.
             </summary>
             <typeparam name="T">Type</typeparam>
             <param name="A">Matrix</param>

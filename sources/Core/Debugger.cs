@@ -27,7 +27,7 @@ namespace UMapx.Core
 
         #region Print methods
         /// <summary>
-        /// Print value to console.
+        /// Prints a value to console.
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Value</param>
@@ -37,7 +37,7 @@ namespace UMapx.Core
             Console.WriteLine();
         }
         /// <summary>
-        /// Print vector to console.
+        /// Prints a vector to console.
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Array</param>
@@ -138,7 +138,7 @@ namespace UMapx.Core
             Console.WriteLine();
         }
         /// <summary>
-        /// Print matrix to console.
+        /// Prints a matrix to console.
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Matrix</param>
