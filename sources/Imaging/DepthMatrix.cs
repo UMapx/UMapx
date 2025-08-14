@@ -6,7 +6,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses to work with depth matrices.
+    /// Used to work with depth matrices.
     /// </summary>
     public static class DepthMatrix
     {

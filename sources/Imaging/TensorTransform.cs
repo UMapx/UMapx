@@ -1,7 +1,7 @@
 ﻿namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses for editing and transforming tensors.
+    /// Used to edit and transform tensors.
     /// </summary>
     public static class TensorTransform
     {

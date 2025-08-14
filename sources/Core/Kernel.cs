@@ -3,7 +3,7 @@
 namespace UMapx.Core
 {
     /// <summary>
-    /// Uses to work with kernel functions.
+    /// Used to work with kernel functions.
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Kernel_(statistics)

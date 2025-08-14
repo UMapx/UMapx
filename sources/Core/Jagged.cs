@@ -3,7 +3,7 @@
 namespace UMapx.Core
 {
     /// <summary>
-    /// Uses to work with jagged arrays.
+    /// Used to work with jagged arrays.
     /// </summary>
     public static class Jagged
     {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace UMapx.Core
 {
     /// <summary>
-    /// Uses to implement standard algebraic operations on matrices and vectors.
+    /// Used to implement standard algebraic operations on matrices and vectors.
     /// </summary>
     public static class Matrice
     {

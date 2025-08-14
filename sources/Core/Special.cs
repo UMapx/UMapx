@@ -3,7 +3,7 @@
 namespace UMapx.Core
 {
     /// <summary>
-    /// Uses to implement special mathematical functions.
+    /// Used to implement special mathematical functions.
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Special_functions

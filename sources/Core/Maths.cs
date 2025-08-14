@@ -5,7 +5,7 @@ using System.Linq;
 namespace UMapx.Core
 {
     /// <summary>
-    /// Uses to implement basic algebraic, trigonometric and hyperbolic operations.
+    /// Used to implement basic algebraic, trigonometric and hyperbolic operations.
     /// </summary>
     public static class Maths
     {

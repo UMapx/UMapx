@@ -7,7 +7,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses to work with the statistical characteristics of the image.
+    /// Used to work with the statistical characteristics of the image.
     /// </summary>
     public static class Statistics
     {

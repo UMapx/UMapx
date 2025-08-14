@@ -3,7 +3,7 @@
 namespace UMapx.Visualization
 {
     /// <summary>
-    /// Uses for points operations.
+    /// Used to work with points.
     /// </summary>
     internal static class Points
     {

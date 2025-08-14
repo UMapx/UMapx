@@ -3728,7 +3728,7 @@
         </member>
         <member name="T:UMapx.Core.Debugger">
             <summary>
-            Uses to debug data such as matrices and vectors.
+            Used to debug data such as matrices and vectors.
             </summary>
         </member>
         <member name="F:UMapx.Core.Debugger.Gap">
@@ -3855,7 +3855,7 @@
         </member>
         <member name="T:UMapx.Core.Distance">
             <summary>
-            Uses to calculate distances.
+            Used to calculate distances.
             </summary>
         </member>
         <member name="M:UMapx.Core.Distance.Euclidean(System.Single[],System.Single[])">
@@ -4269,7 +4269,7 @@
         </member>
         <member name="T:UMapx.Core.Jagged">
             <summary>
-            Uses to work with jagged arrays.
+            Used to work with jagged arrays.
             </summary>
         </member>
         <member name="M:UMapx.Core.Jagged.ToJagged(System.Single[0:,0:])">
@@ -4453,7 +4453,7 @@
         </member>
         <member name="T:UMapx.Core.Kernel">
             <summary>
-            Uses to work with kernel functions.
+            Used to work with kernel functions.
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Kernel_(statistics)
@@ -5058,7 +5058,7 @@
         </member>
         <member name="T:UMapx.Core.Maths">
             <summary>
-            Uses to implement basic algebraic, trigonometric and hyperbolic operations.
+            Used to implement basic algebraic, trigonometric and hyperbolic operations.
             </summary>
         </member>
         <member name="F:UMapx.Core.Maths.E">
@@ -6199,7 +6199,7 @@
         </member>
         <member name="T:UMapx.Core.Matrice">
             <summary>
-            Uses to implement standard algebraic operations on matrices and vectors.
+            Used to implement standard algebraic operations on matrices and vectors.
             </summary>
         </member>
         <member name="M:UMapx.Core.Matrice.IsEquals(System.Single[0:,0:],System.Single[0:,0:])">
@@ -10041,7 +10041,7 @@
         </member>
         <member name="T:UMapx.Core.Operator">
             <summary>
-            Uses to implement convolutional operators. 
+            Used to implement convolutional operators. 
             </summary>
         </member>
         <member name="M:UMapx.Core.Operator.Roberts">
@@ -10850,7 +10850,7 @@
         </member>
         <member name="T:UMapx.Core.Special">
             <summary>
-            Uses to implement special mathematical functions.
+            Used to implement special mathematical functions.
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Special_functions
@@ -11756,7 +11756,7 @@
         </member>
         <member name="T:UMapx.Core.Xml">
             <summary>
-            Uses for Xml serialization of objects.
+            Used for Xml serialization of objects.
             </summary>
         </member>
         <member name="M:UMapx.Core.Xml.Save(System.IO.Stream,System.Object)">
@@ -16348,7 +16348,7 @@
         </member>
         <member name="T:UMapx.Imaging.BitmapFormat">
             <summary>
-            Uses to work with bitmap formats.
+            Used to work with bitmap formats.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.BitmapFormat.ToIco(System.Drawing.Bitmap,System.Int32)">
@@ -16447,7 +16447,7 @@
         </member>
         <member name="T:UMapx.Imaging.BitmapMatrix">
             <summary>
-            Uses to work with bitmap matrices.
+            Used to work with bitmap matrices.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.BitmapMatrix.ToRGB(System.Drawing.Bitmap,System.Boolean)">
@@ -16635,7 +16635,7 @@
         </member>
         <member name="T:UMapx.Imaging.BitmapTransform">
             <summary>
-            Uses for editing and transforming images using GDI+.
+            Used for editing and transforming images using GDI+.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Rotate(System.Drawing.Bitmap,UMapx.Core.RotationMode)">
@@ -18071,7 +18071,7 @@
         </member>
         <member name="T:UMapx.Imaging.DepthMatrix">
             <summary>
-            Uses to work with depth matrices.
+            Used to work with depth matrices.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.DepthMatrix.ToDepth(System.Drawing.Bitmap)">
@@ -18104,7 +18104,7 @@
         </member>
         <member name="T:UMapx.Imaging.DepthTransform">
             <summary>
-            Uses for editing and transforming depth maps.
+            Used to edit and transform depth maps.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.DepthTransform.Rotate(System.UInt16[0:,0:],UMapx.Core.RotationMode)">
@@ -19500,7 +19500,7 @@
         </member>
         <member name="T:UMapx.Imaging.Intensity">
             <summary>
-            Uses to work with brightness represented as a value belonging to the interval [0, 1].
+            Used to work with brightness represented as a value belonging to the interval [0, 1].
             </summary>
         </member>
         <member name="M:UMapx.Imaging.Intensity.SingleScaleRetinex(System.Single,System.Single,System.Single,System.Single,System.Single)">
@@ -21555,7 +21555,7 @@
         </member>
         <member name="T:UMapx.Imaging.PointMatrix">
             <summary>
-            Uses to work with point matrices.
+            Used to work with point matrices.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.PointMatrix.FlipY(System.Int32,System.Int32)">
@@ -22661,7 +22661,7 @@
         </member>
         <member name="T:UMapx.Imaging.Statistics">
             <summary>
-            Uses to work with the statistical characteristics of the image.
+            Used to work with the statistical characteristics of the image.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.Statistics.Histogram(System.Drawing.Imaging.BitmapData)">
@@ -23034,7 +23034,7 @@
         </member>
         <member name="T:UMapx.Imaging.TensorMatrix">
             <summary>
-            Uses to work with tensor matrices.
+            Used to work with tensor matrices.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.TensorMatrix.ToByteTensor(System.Drawing.Bitmap,System.Boolean)">
@@ -23107,7 +23107,7 @@
         </member>
         <member name="T:UMapx.Imaging.TensorTransform">
             <summary>
-            Uses for editing and transforming tensors.
+            Used to edit and transform tensors.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.TensorTransform.Merge(System.Byte[][],System.Boolean)">
@@ -29105,7 +29105,7 @@
         </member>
         <member name="T:UMapx.Visualization.Points">
             <summary>
-            Uses for points operations.
+            Used to work with points.
             </summary>
         </member>
         <member name="M:UMapx.Visualization.Points.Point2X(System.Single,System.Single,System.Single,System.Single)">

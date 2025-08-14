@@ -5,7 +5,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses for editing and transforming depth maps.
+    /// Used to edit and transform depth maps.
     /// </summary>
     public static class DepthTransform
     {

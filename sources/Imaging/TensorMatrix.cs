@@ -5,7 +5,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses to work with tensor matrices.
+    /// Used to work with tensor matrices.
     /// </summary>
     public static class TensorMatrix
     {

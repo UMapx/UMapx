@@ -3,7 +3,7 @@
 namespace UMapx.Core
 {
     /// <summary>
-    /// Uses to implement convolutional operators. 
+    /// Used to implement convolutional operators. 
     /// </summary>
     public static class Operator
     {

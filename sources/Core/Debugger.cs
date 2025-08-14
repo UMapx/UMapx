@@ -6,7 +6,7 @@ using System.Text;
 namespace UMapx.Core
 {
     /// <summary>
-    /// Uses to debug data such as matrices and vectors.
+    /// Used to debug data such as matrices and vectors.
     /// </summary>
     public static class Debugger
     {

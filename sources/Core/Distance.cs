@@ -3,7 +3,7 @@
 namespace UMapx.Core
 {
     /// <summary>
-    /// Uses to calculate distances.
+    /// Used to calculate distances.
     /// </summary>
     public static class Distance
     {

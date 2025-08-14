@@ -6,7 +6,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses for editing and transforming images using GDI+.
+    /// Used for editing and transforming images using GDI+.
     /// </summary>
     public static class BitmapTransform
     {

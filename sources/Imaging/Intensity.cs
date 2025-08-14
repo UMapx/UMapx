@@ -4,7 +4,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses to work with brightness represented as a value belonging to the interval [0, 1].
+    /// Used to work with brightness represented as a value belonging to the interval [0, 1].
     /// </summary>
     public static class Intensity
     {

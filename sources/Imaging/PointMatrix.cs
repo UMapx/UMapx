@@ -5,7 +5,7 @@ using UMapx.Core;
 namespace UMapx.Imaging
 {
     /// <summary>
-    /// Uses to work with point matrices.
+    /// Used to work with point matrices.
     /// </summary>
     public static class PointMatrix
     {
