@@ -1660,7 +1660,7 @@ namespace UMapx.Core
             if (limit == 2) return new[] { 2 };
 
             // 1) Base primes up to floor(sqrt(limit)) using odd-only sieve
-            int sqrt = (int)Math.Sqrt((double)limit);
+            int sqrt = (int)Math.Sqrt(limit);
             var basePrimes = BuildBasePrimes(sqrt); // includes 2
 
             // Reserve output capacity using π(n) ~ n/(ln n - 1.08366)
@@ -1683,7 +1683,7 @@ namespace UMapx.Core
             // Iterate segments, [low, high), low/high are integers; we mark only odds inside
             for (int low = 3; low <= limit;)
             {
-                long highL = (long)low + ((long)segmentOddCount << 1); // convert odd-count→integers
+                long highL = low + ((long)segmentOddCount << 1); // convert odd-count→integers
                 if (highL > limitPlus1) highL = limitPlus1;
                 int high = (int)highL; // exclusive
 
@@ -1708,7 +1708,7 @@ namespace UMapx.Core
                     if (pp >= high) break; // nothing to mark in this segment
 
                     // First multiple of p inside [firstOdd, high)
-                    long start = pp > firstOdd ? pp : ((long)firstOdd + p - 1) / p * (long)p;
+                    long start = pp > firstOdd ? pp : (firstOdd + p - 1) / p * p;
                     if ((start & 1L) == 0) start += p;        // ensure odd composite
                     int step = p << 1;                         // jump between odd multiples
 
