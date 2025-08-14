@@ -117,7 +117,7 @@ namespace UMapx.Colorspace
         /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
-            return Hue.GetHashCode() ^ Saturation.GetHashCode() ^ Brightness.GetHashCode();
+            return h.GetHashCode() ^ s.GetHashCode() ^ b.GetHashCode();
         }
         /// <summary>
         /// Returns a System.String object that represents the current object.
@@ -125,7 +125,7 @@ namespace UMapx.Colorspace
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
-            return Hue.ToString() + Environment.NewLine + Saturation.ToString() + Environment.NewLine + Brightness.ToString();
+            return $"{h}{Environment.NewLine}{s}{Environment.NewLine}{b}";
         }
         #endregion
 
@@ -136,7 +136,7 @@ namespace UMapx.Colorspace
         /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
-            return new HSB(this.Hue, this.Saturation, this.Brightness);
+            return new HSB(this.h, this.s, this.b);
         }
         /// <summary>
         /// Creates a copy of the color model.
@@ -144,7 +144,7 @@ namespace UMapx.Colorspace
         /// <returns>Structure</returns>
         public HSB Clone()
         {
-            return new HSB(this.Hue, this.Saturation, this.Brightness);
+            return new HSB(this.h, this.s, this.b);
         }
         #endregion
 

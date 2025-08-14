@@ -130,7 +130,7 @@ namespace UMapx.Colorspace
         /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
-            return Red.GetHashCode() ^ Green.GetHashCode() ^ Blue.GetHashCode();
+            return r.GetHashCode() ^ g.GetHashCode() ^ b.GetHashCode();
         }
         /// <summary>
         /// Returns a System.String object that represents the current object.
@@ -138,7 +138,7 @@ namespace UMapx.Colorspace
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
-            return Red.ToString() + Environment.NewLine + Green.ToString() + Environment.NewLine + Blue.ToString();
+            return $"{r}{Environment.NewLine}{g}{Environment.NewLine}{b}";
         }
         #endregion
 
@@ -149,7 +149,7 @@ namespace UMapx.Colorspace
         /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
-            return new RGB(this.Red, this.Green, this.Blue);
+            return new RGB(this.r, this.g, this.b);
         }
         /// <summary>
         /// Creates a copy of the color model.
@@ -157,7 +157,7 @@ namespace UMapx.Colorspace
         /// <returns>Structure</returns>
         public RGB Clone()
         {
-            return new RGB(this.Red, this.Green, this.Blue);
+            return new RGB(this.r, this.g, this.b);
         }
         #endregion
 

@@ -135,7 +135,7 @@ namespace UMapx.Colorspace
         /// <returns>Integer number</returns>
         public override int GetHashCode()
         {
-            return Cyan.GetHashCode() ^ Magenta.GetHashCode() ^ Yellow.GetHashCode() ^ Keycolor.GetHashCode();
+            return c.GetHashCode() ^ m.GetHashCode() ^ y.GetHashCode() ^ k.GetHashCode();
         }
         /// <summary>
         /// Returns a System.String object that represents the current object.
@@ -143,7 +143,7 @@ namespace UMapx.Colorspace
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
-            return Cyan.ToString() + Environment.NewLine + Magenta.ToString() + Environment.NewLine + Yellow.ToString() + Environment.NewLine + Keycolor.ToString();
+            return $"{c}{Environment.NewLine}{m}{Environment.NewLine}{y}{Environment.NewLine}{k}";
         }
         #endregion
 
@@ -154,7 +154,7 @@ namespace UMapx.Colorspace
         /// <returns>Structure</returns>
         object ICloneable.Clone()
         {
-            return new CMYK(this.Cyan, this.Magenta, this.Yellow, this.Keycolor);
+            return new CMYK(this.c, this.m, this.y, this.k);
         }
         /// <summary>
         /// Creates a copy of the color model.
@@ -162,7 +162,7 @@ namespace UMapx.Colorspace
         /// <returns>Structure</returns>
         public CMYK Clone()
         {
-            return new CMYK(this.Cyan, this.Magenta, this.Yellow, this.Keycolor);
+            return new CMYK(this.c, this.m, this.y, this.k);
         }
         #endregion
 
