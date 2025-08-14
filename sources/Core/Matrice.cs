@@ -368,6 +368,60 @@ namespace UMapx.Core
 
             return H;
         }
+        /// <summary>
+        /// Returns a Gram (Hermitian) matrix.
+        /// </summary>
+        /// <param name="A">Matrix</param>
+        /// <returns></returns>
+        public static Complex32[,] Gram(this Complex32[,] A)
+        {
+            int n = A.GetLength(0), m = A.GetLength(1);
+            var H = new Complex32[m, m];
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = i; j < m; j++)
+                {
+                    float re = 0f, im = 0f;
+                    for (int k = 0; k < n; k++)
+                    {
+                        var ai = A[k, i];  // a = x + i y
+                        var aj = A[k, j];  // b = u + i v
+                        // conj(a)*b = (x - i y)(u + i v) = (x u + y v) + i (x v - y u)
+                        re += ai.Real * aj.Real + ai.Imag * aj.Imag;
+                        im += ai.Real * aj.Imag - ai.Imag * aj.Real;
+                    }
+                    H[i, j] = new Complex32(re, im);
+                    if (i != j) H[j, i] = new Complex32(re, -im);
+                }
+            }
+            return H;
+        }
+        /// <summary>
+        /// Returns a Gram matrix.
+        /// </summary>
+        /// <param name="A">Matrix</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Gram(this float[,] A)
+        {
+            int n = A.GetLength(0), m = A.GetLength(1);
+            var G = new float[m, m];
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = i; j < m; j++)
+                {
+                    double sum = 0.0; // accumulate in double for better numeric stability
+                    for (int k = 0; k < n; k++)
+                        sum += (double)A[k, i] * A[k, j];
+
+                    float v = (float)sum;
+                    G[i, j] = v;
+                    if (i != j) G[j, i] = v; // mirror to keep symmetry
+                }
+            }
+            return G;
+        }
         #endregion
 
         #region Matrix properties
@@ -3101,6 +3155,44 @@ namespace UMapx.Core
         #endregion
 
         // Vector voids
+
+        #region Vector transform
+        /// <summary>
+        /// Implements the diagonal vector inversion operation.
+        /// </summary>
+        /// <param name="v">Vector</param>
+        /// <returns>Vector</returns>
+        public static float[] Invert(this float[] v)
+        {
+            var inv = new float[v.Length];
+
+            for (int i = 0; i < v.Length; i++) 
+                inv[i] = (v[i] > 0f) ? 1f / v[i] : 0f;
+
+            return inv;
+        }
+        /// <summary>
+        /// Implements the diagonal vector inversion operation.
+        /// </summary>
+        /// <param name="v">Vector</param>
+        /// <returns>Vector</returns>
+        public static Complex32[] Invert(this Complex32[] v)
+        {
+            var inv = new Complex32[v.Length];
+
+            for (int i = 0; i < v.Length; i++)
+            {
+                float x = v[i].Real;
+                float y = v[i].Imag;
+                float den = x * x + y * y; // |z|^2
+
+                inv[i] = (den != 0f)
+                    ? new Complex32(x / den, -y / den) // conj(z) / |z|^2
+                    : Complex32.Zero;
+            }
+            return inv;
+        }
+        #endregion
 
         #region Vector booleans
         /// <summary>

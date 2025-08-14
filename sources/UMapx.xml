@@ -6386,8 +6386,15 @@
             <summary>
             Returns the value of the hypotenuse.
             </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.Hypotenuse(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the hypotenuse.
+            </summary>
+            <param name="z">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Cubic(System.Single,System.Single,System.Single)">
@@ -6608,6 +6615,20 @@
             Implements the Hermitian-conjugation operation of the matrix.
             </summary>
             <param name="m">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Gram(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns a Gram (Hermitian) matrix.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns></returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Gram(System.Single[0:,0:])">
+            <summary>
+            Returns a Gram matrix.
+            </summary>
+            <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Trace(System.Single[0:,0:])">
@@ -7634,6 +7655,20 @@
             <param name="w">Matrix</param>
             <param name="r0">Height radius</param>
             <param name="r1">Width radius</param>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Invert(System.Single[])">
+            <summary>
+            Implements the diagonal vector inversion operation.
+            </summary>
+            <param name="v">Vector</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Invert(UMapx.Core.Complex32[])">
+            <summary>
+            Implements the diagonal vector inversion operation.
+            </summary>
+            <param name="v">Vector</param>
+            <returns>Vector</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.IsEquals(System.Single[],System.Single[])">
             <summary>

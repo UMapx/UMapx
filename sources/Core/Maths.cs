@@ -1845,8 +1845,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the hypotenuse.
         /// </summary>
-        /// <param name="a">Number</param>
-        /// <param name="b">Number</param>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
         /// <returns>Value</returns>
         public static float Hypotenuse(float a, float b)
         {
@@ -1867,6 +1867,13 @@ namespace UMapx.Core
 
             return r;
         }
+        /// <summary>
+        /// Returns the value of the hypotenuse.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Hypotenuse(Complex32 z) => Maths.Hypotenuse(z.Real, z.Imag);
+
         /// <summary>
         /// Implements the solution of a cubic equation of the form:
         /// x^3 + a*x^2 + b*x + c = 0.
