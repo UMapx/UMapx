@@ -53,9 +53,11 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Nonsymmetric reduction to Hessenberg form.
+        /// This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson, 
+        /// Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutines in EISPACK.
         /// </summary>
-        /// <param name="A"></param>
+        /// <param name="A">Matrix</param>
         private void orthes(float[,] A)
         {
             // Properties
@@ -64,9 +66,6 @@ namespace UMapx.Decomposition
             this.hessenberg = Jagged.ToJagged(A);
             float[] orthogonal = new float[n];
 
-            // Nonsymmetric reduction to Hessenberg form.
-            // This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson, 
-            // Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutines in EISPACK.
             int low = 0;
             int high = n - 1;
             int m, i, j;

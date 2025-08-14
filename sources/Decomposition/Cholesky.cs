@@ -52,9 +52,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Computes Cholesky decomposition for the matrix A.
         /// </summary>
-        /// <param name="a"></param>
+        /// <param name="a">Matrix</param>
         private void chol(float[][] a)
         {
             // Cholesky decomposition

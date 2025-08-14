@@ -12236,9 +12236,9 @@
         </member>
         <member name="M:UMapx.Decomposition.Cholesky.chol(System.Single[][])">
             <summary>
-            
+            Computes Cholesky decomposition for the matrix A.
             </summary>
-            <param name="a"></param>
+            <param name="a">Matrix</param>
         </member>
         <member name="T:UMapx.Decomposition.Diagonal">
             <summary>
@@ -12307,34 +12307,47 @@
         </member>
         <member name="M:UMapx.Decomposition.EVD.tred2">
             <summary>
-            
+            Symmetric Householder reduction to tridiagonal form.
+            This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson, 
+            Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK. 
             </summary>
         </member>
         <member name="M:UMapx.Decomposition.EVD.tql2">
             <summary>
-            
+            Symmetric tridiagonal QL algorithm.
+            This is derived from the Algol procedures tql2, by Bowdler, Martin, Reinsch, and Wilkinson, 
+            Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
             </summary>
         </member>
         <member name="M:UMapx.Decomposition.EVD.orthes">
             <summary>
-            
+            Nonsymmetric reduction to Hessenberg form.
+            This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson, 
+            Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutines in EISPACK.
             </summary>
         </member>
         <member name="M:UMapx.Decomposition.EVD.hqr2">
             <summary>
-            
+            Nonsymmetric reduction from Hessenberg to real Schur form.   
+            This is derived from the Algol procedure hqr2, by Martin and Wilkinson, Handbook for Auto. Comp.,
+            Vol.ii-Linear Algebra, and the corresponding  Fortran subroutine in EISPACK.
             </summary>
         </member>
         <member name="M:UMapx.Decomposition.EVD.cdiv(System.Single,System.Single,System.Single,System.Single,System.Single@,System.Single@)">
             <summary>
-            
+            Complex scalar division using a numerically stable branch (Smith’s method).
+            Computes (xr + i·xi) / (yr + i·yi) and stores the real/imag parts in <paramref name="cdivr"/> / <paramref name="cdivi"/>.
             </summary>
-            <param name="xr"></param>
-            <param name="xi"></param>
-            <param name="yr"></param>
-            <param name="yi"></param>
-            <param name="cdivr"></param>
-            <param name="cdivi"></param>
+            <param name="xr">Real part of the numerator.</param>
+            <param name="xi">Imag part of the numerator.</param>
+            <param name="yr">Real part of the denominator.</param>
+            <param name="yi">Imag part of the denominator.</param>
+            <param name="cdivr">[out] Real part of the quotient.</param>
+            <param name="cdivi">[out] Imag part of the quotient.</param>
+            <remarks>
+            Chooses the scaling branch by comparing |yr| and |yi| to avoid overflow/underflow.
+            If both <paramref name="yr"/> and <paramref name="yi"/> are zero, the result follows IEEE-754 (Inf/NaN).
+            </remarks>
         </member>
         <member name="T:UMapx.Decomposition.GEVD">
             <summary>
@@ -12595,9 +12608,11 @@
         </member>
         <member name="M:UMapx.Decomposition.Hessenberg.orthes(System.Single[0:,0:])">
             <summary>
-            
+            Nonsymmetric reduction to Hessenberg form.
+            This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson, 
+            Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutines in EISPACK.
             </summary>
-            <param name="A"></param>
+            <param name="A">Matrix</param>
         </member>
         <member name="T:UMapx.Decomposition.Householder">
             <summary>
@@ -12678,11 +12693,14 @@
         </member>
         <member name="M:UMapx.Decomposition.Lanczos.lanczos(System.Single[0:,0:],System.Int32,System.Boolean)">
             <summary>
-            
+            This function uses the Lanczos algorithm with full
+            re-orthogonalization to compute k x k symmetric tridiagonal
+            matrix T that approximates mat up to rank k with respect to
+            transformation Q. That is, A = Q * T * Q'.
             </summary>
-            <param name="a"></param>
-            <param name="n"></param>
-            <param name="full"></param>
+            <param name="a">Marix</param>
+            <param name="n">Dimension</param>
+            <param name="full">Full or not</param>
         </member>
         <member name="T:UMapx.Decomposition.LDL">
             <summary>
@@ -12953,9 +12971,9 @@
         </member>
         <member name="M:UMapx.Decomposition.QR.qrdecomp(System.Single[0:,0:])">
             <summary>
-            
+            Computes a QR decomposition for the matrix A.
             </summary>
-            <param name="A"></param>
+            <param name="A">Matrix</param>
         </member>
         <member name="T:UMapx.Decomposition.QZ">
             <summary>
@@ -13001,6 +13019,7 @@
             <summary>
             Inverts an upper triangular matrix.
             </summary>
+            <param name="m">Matix</param>
         </member>
         <member name="T:UMapx.Decomposition.RQ">
             <summary>
@@ -13161,9 +13180,9 @@
         </member>
         <member name="M:UMapx.Decomposition.UDL.udldecomp(System.Single[0:,0:])">
             <summary>
-            
+            UDU* factorization algorithm.
             </summary>
-            <param name="a"></param>
+            <param name="a">Matrix</param>
         </member>
         <member name="T:UMapx.Distribution.Arcsine">
             <summary>

@@ -133,14 +133,14 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Symmetric Householder reduction to tridiagonal form.
+        /// This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson, 
+        /// Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK. 
         /// </summary>
         private void tred2()
         {
             int i, j, k;
-            // Symmetric Householder reduction to tridiagonal form.
-            // This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson, 
-            // Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
+
             for (j = 0; j < n; j++)
             {
                 Re[j] = matrices[n - 1][j];
@@ -155,7 +155,7 @@ namespace UMapx.Decomposition
                 scale = 0;
                 h = 0;
                 for (k = 0; k < i; k++)
-                    scale = scale + System.Math.Abs(Re[k]);
+                    scale = scale + Math.Abs(Re[k]);
 
                 if (scale == 0)
                 {
@@ -260,7 +260,9 @@ namespace UMapx.Decomposition
             Im[0] = 0;
         }
         /// <summary>
-        /// 
+        /// Symmetric tridiagonal QL algorithm.
+        /// This is derived from the Algol procedures tql2, by Bowdler, Martin, Reinsch, and Wilkinson, 
+        /// Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
         /// </summary>
         private void tql2()
         {
@@ -270,9 +272,6 @@ namespace UMapx.Decomposition
             float g, p, r, dl1, h;
             float c, c2, c3, el1, s, s2;
 
-            // Symmetric tridiagonal QL algorithm.
-            // This is derived from the Algol procedures tql2, by Bowdler, Martin, Reinsch, and Wilkinson, 
-            // Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
             for (i = 1; i < n; i++)
                 Im[i - 1] = Im[i];
 
@@ -390,13 +389,12 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// 
+        /// Nonsymmetric reduction to Hessenberg form.
+        /// This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson, 
+        /// Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutines in EISPACK.
         /// </summary>
         private void orthes()
         {
-            // Nonsymmetric reduction to Hessenberg form.
-            // This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson, 
-            // Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutines in EISPACK.
             int low = 0;
             int high = n - 1;
             int m, i, j;
@@ -482,13 +480,12 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// 
+        /// Nonsymmetric reduction from Hessenberg to real Schur form.   
+        /// This is derived from the Algol procedure hqr2, by Martin and Wilkinson, Handbook for Auto. Comp.,
+        /// Vol.ii-Linear Algebra, and the corresponding  Fortran subroutine in EISPACK.
         /// </summary>
         private void hqr2()
         {
-            // Nonsymmetric reduction from Hessenberg to real Schur form.   
-            // This is derived from the Algol procedure hqr2, by Martin and Wilkinson, Handbook for Auto. Comp.,
-            // Vol.ii-Linear Algebra, and the corresponding  Fortran subroutine in EISPACK.
             int nn = this.n;
             int n = nn - 1;
             int low = 0;
@@ -928,14 +925,19 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// 
+        /// Complex scalar division using a numerically stable branch (Smith’s method).
+        /// Computes (xr + i·xi) / (yr + i·yi) and stores the real/imag parts in <paramref name="cdivr"/> / <paramref name="cdivi"/>.
         /// </summary>
-        /// <param name="xr"></param>
-        /// <param name="xi"></param>
-        /// <param name="yr"></param>
-        /// <param name="yi"></param>
-        /// <param name="cdivr"></param>
-        /// <param name="cdivi"></param>
+        /// <param name="xr">Real part of the numerator.</param>
+        /// <param name="xi">Imag part of the numerator.</param>
+        /// <param name="yr">Real part of the denominator.</param>
+        /// <param name="yi">Imag part of the denominator.</param>
+        /// <param name="cdivr">[out] Real part of the quotient.</param>
+        /// <param name="cdivi">[out] Imag part of the quotient.</param>
+        /// <remarks>
+        /// Chooses the scaling branch by comparing |yr| and |yi| to avoid overflow/underflow.
+        /// If both <paramref name="yr"/> and <paramref name="yi"/> are zero, the result follows IEEE-754 (Inf/NaN).
+        /// </remarks>
         private static void cdiv(float xr, float xi, float yr, float yi, ref float cdivr, ref float cdivi)
         {
             // Complex scalar division.
@@ -957,6 +959,7 @@ namespace UMapx.Decomposition
                 cdivi = (r * xi - xr) / d;
             }
         }
+
         #endregion
     }
 }

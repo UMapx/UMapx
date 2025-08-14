@@ -64,9 +64,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// UDU* factorization algorithm.
         /// </summary>
-        /// <param name="a"></param>
+        /// <param name="a">Matrix</param>
         private void udldecomp(float[,] a)
         {
             int i, j, k;

@@ -70,9 +70,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Computes a QR decomposition for the matrix A.
         /// </summary>
-        /// <param name="A"></param>
+        /// <param name="A">Matrix</param>
         private void qrdecomp(float[,] A)
         {
             // params

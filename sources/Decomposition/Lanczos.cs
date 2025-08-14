@@ -60,18 +60,16 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// This function uses the Lanczos algorithm with full
+        /// re-orthogonalization to compute k x k symmetric tridiagonal
+        /// matrix T that approximates mat up to rank k with respect to
+        /// transformation Q. That is, A = Q * T * Q'.
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="n"></param>
-        /// <param name="full"></param>
+        /// <param name="a">Marix</param>
+        /// <param name="n">Dimension</param>
+        /// <param name="full">Full or not</param>
         private void lanczos(float[,] a, int n, bool full)
         {
-            // This function uses the Lanczos algorithm with full
-            // re-orthogonalization to compute k x k symmetric tridiagonal
-            // matrix T that approximates mat up to rank k with respect to
-            // transformation Q. That is, A = Q * T * Q'.
-
             // params
             int i, j, y, k = n - 1;
             float[] v = Matrice.Rand(n), z;

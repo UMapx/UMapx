@@ -15,9 +15,9 @@ namespace UMapx.Decomposition
     public class Polar
     {
         #region Private data
-        private SVD svd;
-        float[,] u;
-        float[,] p;
+        private readonly SVD svd;
+        readonly float[,] u;
+        readonly float[,] p;
         #endregion
 
         #region Initialize
