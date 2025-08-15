@@ -16,8 +16,8 @@ namespace UMapx.Imaging
     public class MotionDetector : IDisposable
     {
         #region Private data
+        private readonly object locker = new object();
         private Bitmap Frame;
-        private object locker = new object();
         #endregion
 
         #region Class components
