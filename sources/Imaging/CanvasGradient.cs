@@ -115,8 +115,6 @@ namespace UMapx.Imaging
             using var graphics = Graphics.FromImage(bitmap);
             using var brush = new LinearGradientBrush(rectangle, color1, color2, (float)angle);
             graphics.FillRectangle(brush, rectangle);
-            graphics.Dispose();
-            brush.Dispose();
             return bitmap;
         }
         #endregion

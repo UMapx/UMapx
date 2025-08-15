@@ -81,8 +81,6 @@ namespace UMapx.Imaging
             using var graphics = Graphics.FromImage(bitmap);
             using var brush = new SolidBrush(color);
             graphics.FillRectangle(brush, 0, 0, width, height);
-            graphics.Dispose();
-            brush.Dispose();
             return bitmap;
         }
         #endregion
