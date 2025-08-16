@@ -17,7 +17,7 @@ namespace UMapx.Window
     {
         #region Initialize
         /// <summary>
-        /// Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
+        /// Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
         /// </summary>
         /// <param name="window">Windows function</param>
         /// <param name="m">Number of frequency shifts [4, N]</param>

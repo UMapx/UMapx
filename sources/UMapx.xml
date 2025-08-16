@@ -31309,6 +31309,80 @@
             <param name="frameSize">Window size</param>
             <returns>Factor</returns>
         </member>
+        <member name="T:UMapx.Window.FastRealWeylHeisenbergTransform">
+            <summary>
+            Defines fast real Weyl-Heisenberg transform.
+            <remarks>
+            This implementation reuses the fast complex Weyl-Heisenberg transform
+            and maps real signals to the complex domain using the relation between
+            real and complex Weyl-Heisenberg bases.
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes fast real Weyl-Heisenberg transform.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="m">Number of frequency shifts [4, N]</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(System.Single[])">
+            <summary>
+            Forward real Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(System.Single[])">
+            <summary>
+            Backward real Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward real Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward real Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward real Weyl-Heisenberg transform for complex input.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward real Weyl-Heisenberg transform for complex input.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward real Weyl-Heisenberg transform for complex matrices.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward real Weyl-Heisenberg transform for complex matrices.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="T:UMapx.Window.FastShortTimeFourierTransform">
             <summary>
             Defines fast short-time Fourier transform.
@@ -32023,7 +32097,7 @@
         </member>
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
             <summary>
-            Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
+            Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
             </summary>
             <param name="window">Windows function</param>
             <param name="m">Number of frequency shifts [4, N]</param>
