@@ -2101,24 +2101,86 @@ namespace UMapx.Core
 
         #region Other
         /// <summary>
-        /// Returns the value of <c>|a|</c> with the sign of <paramref name="b"/> (copysign).
+        /// Returns the value of <c>|a|</c> with the sign of <paramref name="sign"/> (copysign).
         /// </summary>
-        /// <param name="a">Value providing the magnitude</param>
-        /// <param name="b">Value providing the sign</param>
-        /// <returns><c>|a|</c> if <paramref name="b"/> ≥ 0; otherwise <c>-|a|</c></returns>
-        public static float Sign(float a, float b)
+        /// <param name="magnitude">Value providing the magnitude</param>
+        /// <param name="sign">Value providing the sign</param>
+        /// <returns>Value</returns>
+        public static float Sign(float magnitude, float sign)
         {
-            return (b >= 0.0) ? Math.Abs(a) : -Math.Abs(a);
+            return (sign >= 0.0) ? Math.Abs(magnitude) : -Math.Abs(magnitude);
         }
+        /// <summary>
+        /// Complex signum: returns z / |z| (unit complex) or 0 for z == 0.
+        /// </summary>
+        /// <param name="z">Complex value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Sign(Complex32 z)
+        {
+            float re = z.Real, im = z.Imag;
+            float r = (float)Math.Sqrt(re * re + im * im);
+            if (r == 0f) return new Complex32(0f, 0f);
+            return new Complex32(re / r, im / r);
+        }
+
         /// <summary>
         /// Copies sign.
         /// </summary>
-        /// <param name="magnitude">Magnitude</param>
-        /// <param name="sign">Sign</param>
+        /// <param name="magnitude">Value providing the magnitude</param>
+        /// <param name="sign">Value providing the sign</param>
         /// <returns>Value</returns>
         public static float CopySign(float magnitude, float sign)
         {
             return Math.Abs(magnitude) * Math.Sign(sign);
+        }
+        /// <summary>
+        /// Copy phase from 'sign' to a real magnitude |magnitude|.
+        /// If sign == 0, returns +|magnitude| on the real axis.
+        /// </summary>
+        /// <param name="magnitude">Value providing the magnitude</param>
+        /// <param name="sign">Value providing the sign</param>
+        /// <returns>Value</returns>
+        public static Complex32 CopySign(float magnitude, Complex32 sign)
+        {
+            float mag = Math.Abs(magnitude);
+            float re = sign.Real, im = sign.Imag;
+            float r = (float)Math.Sqrt(re * re + im * im);
+            if (r == 0f) return new Complex32(mag, 0f);
+            float s = mag / r;
+            return new Complex32(re * s, im * s);
+        }
+        /// <summary>
+        /// Copy phase from 'sign' to the magnitude |magnitude| of a complex number.
+        /// If sign == 0, returns +|magnitude| on the real axis.
+        /// </summary>
+        /// <param name="magnitude">Value providing the magnitude</param>
+        /// <param name="sign">Value providing the sign</param>
+        /// <returns>Value</returns>
+        public static Complex32 CopySign(Complex32 magnitude, Complex32 sign)
+        {
+            float mag = (float)Math.Sqrt(magnitude.Real * magnitude.Real + magnitude.Imag * magnitude.Imag);
+            float re = sign.Real, im = sign.Imag;
+            float r = (float)Math.Sqrt(re * re + im * im);
+            if (r == 0f) return new Complex32(mag, 0f);
+            float s = mag / r;
+            return new Complex32(re * s, im * s);
+        }
+        /// <summary>
+        /// Copy phase from 'sign' to the magnitude |magnitude| of a complex number.
+        /// If sign == 0, returns +|magnitude| on the real axis.
+        /// </summary>
+        /// <param name="magnitude">Value providing the magnitude</param>
+        /// <param name="sign">Value providing the sign</param>
+        /// <returns>Value</returns>
+        public static Complex32 CopySign(Complex32 magnitude, float sign)
+        {
+            if (float.IsNaN(sign))
+                return new Complex32(float.NaN, float.NaN);
+
+            int s = Math.Sign(sign);
+            if (s > 0) return magnitude;
+            if (s < 0) return -magnitude;
+            return Complex32.Zero;
         }
 
         /// <summary>

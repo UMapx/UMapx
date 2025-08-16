@@ -5173,31 +5173,6 @@
             <param name="r0">Size</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MorphHorizontal(System.Single[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Implements local average of matrices (horizontal).
-            </summary>
-            <param name="A">Jagged array</param>
-            <param name="r1">Size</param>
-            <param name="threshold">Threshold</param>
-            <returns>Jagged array</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.MorphVertical(System.Single[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Implements local average of matrices (vertical).
-            </summary>
-            <param name="A">Jagged array</param>
-            <param name="r0">Size</param>
-            <param name="threshold">Threshold</param>
-            <returns>Jagged array</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.FastSort(System.Single[]@,System.Int32)">
-            <summary>
-            O(N) sort algorithm.
-            </summary>
-            <param name="s">Array</param>
-            <param name="index">Index</param>
-        </member>
         <member name="T:UMapx.Core.LinealgOptions.MorphologyFilter">
             <summary>
             Defines a morphology filter class for basic implementation.
@@ -6452,18 +6427,52 @@
         </member>
         <member name="M:UMapx.Core.Maths.Sign(System.Single,System.Single)">
             <summary>
-            Returns the value of <c>|a|</c> with the sign of <paramref name="b"/> (copysign).
+            Returns the value of <c>|a|</c> with the sign of <paramref name="sign"/> (copysign).
             </summary>
-            <param name="a">Value providing the magnitude</param>
-            <param name="b">Value providing the sign</param>
-            <returns><c>|a|</c> if <paramref name="b"/> ≥ 0; otherwise <c>-|a|</c></returns>
+            <param name="magnitude">Value providing the magnitude</param>
+            <param name="sign">Value providing the sign</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.Sign(UMapx.Core.Complex32)">
+            <summary>
+            Complex signum: returns z / |z| (unit complex) or 0 for z == 0.
+            </summary>
+            <param name="z">Complex value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.CopySign(System.Single,System.Single)">
             <summary>
             Copies sign.
             </summary>
-            <param name="magnitude">Magnitude</param>
-            <param name="sign">Sign</param>
+            <param name="magnitude">Value providing the magnitude</param>
+            <param name="sign">Value providing the sign</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.CopySign(System.Single,UMapx.Core.Complex32)">
+            <summary>
+            Copy phase from 'sign' to a real magnitude |magnitude|.
+            If sign == 0, returns +|magnitude| on the real axis.
+            </summary>
+            <param name="magnitude">Value providing the magnitude</param>
+            <param name="sign">Value providing the sign</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.CopySign(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Copy phase from 'sign' to the magnitude |magnitude| of a complex number.
+            If sign == 0, returns +|magnitude| on the real axis.
+            </summary>
+            <param name="magnitude">Value providing the magnitude</param>
+            <param name="sign">Value providing the sign</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.CopySign(UMapx.Core.Complex32,System.Single)">
+            <summary>
+            Copy phase from 'sign' to the magnitude |magnitude| of a complex number.
+            If sign == 0, returns +|magnitude| on the real axis.
+            </summary>
+            <param name="magnitude">Value providing the magnitude</param>
+            <param name="sign">Value providing the sign</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Normalize(System.Int32,System.Int32,System.Int32)">
