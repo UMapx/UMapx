@@ -8,8 +8,8 @@ namespace UMapx.Window
     /// <summary>
     /// Defines fast real Weyl-Heisenberg transform.
     /// <remarks>
-    /// This implementation reuses the fast complex Weyl-Heisenberg transform and maps real signals to the complex domain using the relation between
-    /// real and complex Weyl-Heisenberg bases. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
+    /// The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete real orthogonal
+    /// Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
     /// </remarks>
     /// </summary>
     [Serializable]
