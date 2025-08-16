@@ -344,6 +344,7 @@ namespace UMapx.Window
             // As in float[] Forward: take only the real part of FWHT outputs;
             // combine (Re-channel, Im-channel) back into Complex32
             var B = new Complex32[N2];
+
             for (int i = 0; i < N2; i++)
             {
                 B[i] = new Complex32(trRe[i].Real, trIm[i].Real);
@@ -383,6 +384,7 @@ namespace UMapx.Window
 
             // Unpack: (top half <- Real parts, bottom half <- Imag parts)
             var A = new Complex32[N2];
+
             for (int i = 0; i < N; i++)
             {
                 A[i] = new Complex32(invRe[i].Real, invIm[i].Real);
