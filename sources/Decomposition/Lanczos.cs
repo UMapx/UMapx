@@ -65,7 +65,7 @@ namespace UMapx.Decomposition
         /// matrix T that approximates mat up to rank k with respect to
         /// transformation Q. That is, A = Q * T * Q'.
         /// </summary>
-        /// <param name="a">Marix</param>
+        /// <param name="a">Matrix</param>
         /// <param name="n">Dimension</param>
         /// <param name="full">Full or not</param>
         private void lanczos(float[,] a, int n, bool full)
