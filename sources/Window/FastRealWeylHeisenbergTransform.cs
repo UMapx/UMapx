@@ -119,11 +119,18 @@ namespace UMapx.Window
                 Parallel.For(0, cols2, j =>
                 {
                     var col = new Complex32[rows];
+
                     for (int i = 0; i < rows; i++)
+                    {
                         col[i] = new Complex32(A[i, j], A[i + rows, j]);
+                    }
+
                     var tr = FastWeylHeisenbergTransform.FWHT(col, cacheCols);
+
                     for (int i = 0; i < rows2; i++)
+                    {
                         tmp[i, j] = tr[i].Real;
+                    }
                 });
 
                 var B = new float[rows2, cols2];
@@ -131,11 +138,18 @@ namespace UMapx.Window
                 Parallel.For(0, rows2, i =>
                 {
                     var row = new Complex32[cols];
+
                     for (int j = 0; j < cols; j++)
+                    {
                         row[j] = new Complex32(tmp[i, j], tmp[i, j + cols]);
+                    }
+
                     var tr = FastWeylHeisenbergTransform.FWHT(row, cacheRows);
+
                     for (int j = 0; j < cols2; j++)
+                    {
                         B[i, j] = tr[j].Real;
+                    }
                 });
 
                 return B;
@@ -147,11 +161,18 @@ namespace UMapx.Window
                 Parallel.For(0, cols2, j =>
                 {
                     var col = new Complex32[rows];
+
                     for (int i = 0; i < rows; i++)
+                    {
                         col[i] = new Complex32(A[i, j], A[i + rows, j]);
+                    }
+
                     var tr = FastWeylHeisenbergTransform.FWHT(col, cacheCols);
+
                     for (int i = 0; i < rows2; i++)
+                    {
                         B[i, j] = tr[i].Real;
+                    }
                 });
                 return B;
             }
@@ -161,11 +182,18 @@ namespace UMapx.Window
                 Parallel.For(0, rows2, i =>
                 {
                     var row = new Complex32[cols];
+
                     for (int j = 0; j < cols; j++)
+                    {
                         row[j] = new Complex32(A[i, j], A[i, j + cols]);
+                    }
+                    
                     var tr = FastWeylHeisenbergTransform.FWHT(row, cacheRows);
+
                     for (int j = 0; j < cols2; j++)
+                    {
                         B[i, j] = tr[j].Real;
+                    }
                 });
                 return B;
             }
