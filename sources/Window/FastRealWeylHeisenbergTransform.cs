@@ -234,7 +234,7 @@ namespace UMapx.Window
                         col[i] = new Complex32(B[i, j], 0);
                     }
 
-                    var inv = FastWeylHeisenbergTransform.IFWHT(col, cacheCols);
+                    var inv = FastWeylHeisenbergTransform.IFWHT(col, cacheCols).Mul(2);
 
                     for (int i = 0; i < rows; i++)
                     {
@@ -254,7 +254,7 @@ namespace UMapx.Window
                         row[j] = new Complex32(tmp[i, j], 0);
                     }
 
-                    var inv = FastWeylHeisenbergTransform.IFWHT(row, cacheRows);
+                    var inv = FastWeylHeisenbergTransform.IFWHT(row, cacheRows).Mul(2);
 
                     for (int j = 0; j < cols; j++)
                     {
@@ -278,7 +278,7 @@ namespace UMapx.Window
                         col[i] = new Complex32(B[i, j], 0);
                     }
 
-                    var inv = FastWeylHeisenbergTransform.IFWHT(col, cacheCols);
+                    var inv = FastWeylHeisenbergTransform.IFWHT(col, cacheCols).Mul(2);
                     
                     for (int i = 0; i < rows; i++)
                     {
@@ -300,7 +300,7 @@ namespace UMapx.Window
                         row[j] = new Complex32(B[i, j], 0);
                     }
 
-                    var inv = FastWeylHeisenbergTransform.IFWHT(row, cacheRows);
+                    var inv = FastWeylHeisenbergTransform.IFWHT(row, cacheRows).Mul(2);
                     
                     for (int j = 0; j < cols; j++)
                     {
@@ -318,23 +318,35 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public override Complex32[] Forward(Complex32[] A)
         {
-            float[] real = new float[A.Length];
-            float[] imag = new float[A.Length];
+            int N2 = A.Length;
+            int N = N2 / 2;
 
-            for (int i = 0; i < A.Length; i++)
+            if (N == this.m)
+                throw new ArgumentException("M could not be equal N/2");
+
+            // Build cache for length N (since FWHT(N) -> length 2N)
+            var cache = FastWeylHeisenbergTransform.PolyphaseCache.Build(N, this.m, this.window);
+
+            // Pack real and imaginary parts separately (top half -> Re, bottom half -> Im)
+            var packRe = new Complex32[N];
+            var packIm = new Complex32[N];
+
+            for (int i = 0; i < N; i++)
             {
-                real[i] = A[i].Real;
-                imag[i] = A[i].Imag;
+                packRe[i] = new Complex32(A[i].Real, A[i + N].Real);
+                packIm[i] = new Complex32(A[i].Imag, A[i + N].Imag);
             }
 
-            var re = Forward(real);
-            var im = Forward(imag);
+            // Transform both channels
+            var trRe = FastWeylHeisenbergTransform.FWHT(packRe, cache); // length = 2N
+            var trIm = FastWeylHeisenbergTransform.FWHT(packIm, cache); // length = 2N
 
-            var B = new Complex32[A.Length];
-
-            for (int i = 0; i < A.Length; i++)
+            // As in float[] Forward: take only the real part of FWHT outputs;
+            // combine (Re-channel, Im-channel) back into Complex32
+            var B = new Complex32[N2];
+            for (int i = 0; i < N2; i++)
             {
-                B[i] = new Complex32(re[i], im[i]);
+                B[i] = new Complex32(trRe[i].Real, trIm[i].Real);
             }
 
             return B;
@@ -346,23 +358,41 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public override Complex32[] Backward(Complex32[] B)
         {
-            float[] real = new float[B.Length];
-            float[] imag = new float[B.Length];
+            int N2 = B.Length;
+            int N = N2 / 2;
 
-            for (int i = 0; i < B.Length; i++)
+            if (N == this.m)
+                throw new ArgumentException("M could not be equal N/2");
+
+            // Build cache for length N (since IFWHT(2N) -> length N)
+            var cache = FastWeylHeisenbergTransform.PolyphaseCache.Build(N, this.m, this.window);
+
+            // Prepare two "real-only" inputs (Re and Im channels)
+            var inRe = new Complex32[N2];
+            var inIm = new Complex32[N2];
+
+            for (int i = 0; i < N2; i++)
             {
-                real[i] = B[i].Real;
-                imag[i] = B[i].Imag;
+                inRe[i] = new Complex32(B[i].Real, 0.0f);
+                inIm[i] = new Complex32(B[i].Imag, 0.0f);
             }
 
-            var re = Backward(real);
-            var im = Backward(imag);
+            // Invert both channels
+            var invRe = FastWeylHeisenbergTransform.IFWHT(inRe, cache); // length = N
+            var invIm = FastWeylHeisenbergTransform.IFWHT(inIm, cache); // length = N
 
-            var A = new Complex32[B.Length];
-
-            for (int i = 0; i < B.Length; i++)
+            // Unpack: (top half <- Real parts, bottom half <- Imag parts)
+            var A = new Complex32[N2];
+            for (int i = 0; i < N; i++)
             {
-                A[i] = new Complex32(re[i], im[i]);
+                A[i] = new Complex32(invRe[i].Real, invIm[i].Real);
+                A[i + N] = new Complex32(invRe[i].Imag, invIm[i].Imag);
+            }
+
+            // Match the float[] Backward scaling (returns A * 2)
+            for (int i = 0; i < N2; i++)
+            {
+                A[i] = new Complex32(A[i].Real * 2.0f, A[i].Imag * 2.0f);
             }
 
             return A;
@@ -405,8 +435,8 @@ namespace UMapx.Window
                         colIm[i] = new Complex32(A[i, j].Imag, A[i + rows, j].Imag);
                     }
 
-                    var trRe = FastWeylHeisenbergTransform.FWHT(colRe, cacheCols);
-                    var trIm = FastWeylHeisenbergTransform.FWHT(colIm, cacheCols);
+                    var trRe = FastWeylHeisenbergTransform.FWHT(colRe, cacheCols).Mul(2);
+                    var trIm = FastWeylHeisenbergTransform.FWHT(colIm, cacheCols).Mul(2);
 
                     for (int i = 0; i < rows2; i++)
                     {
@@ -427,8 +457,8 @@ namespace UMapx.Window
                         rowIm[j] = new Complex32(tmp[i, j].Imag, tmp[i, j + cols].Imag);
                     }
 
-                    var trRe = FastWeylHeisenbergTransform.FWHT(rowRe, cacheRows);
-                    var trIm = FastWeylHeisenbergTransform.FWHT(rowIm, cacheRows);
+                    var trRe = FastWeylHeisenbergTransform.FWHT(rowRe, cacheRows).Mul(2);
+                    var trIm = FastWeylHeisenbergTransform.FWHT(rowIm, cacheRows).Mul(2);
 
                     for (int j = 0; j < cols2; j++)
                     {
@@ -454,8 +484,8 @@ namespace UMapx.Window
                         colIm[i] = new Complex32(A[i, j].Imag, A[i + rows, j].Imag);
                     }
 
-                    var trRe = FastWeylHeisenbergTransform.FWHT(colRe, cacheCols);
-                    var trIm = FastWeylHeisenbergTransform.FWHT(colIm, cacheCols);
+                    var trRe = FastWeylHeisenbergTransform.FWHT(colRe, cacheCols).Mul(2);
+                    var trIm = FastWeylHeisenbergTransform.FWHT(colIm, cacheCols).Mul(2);
 
                     for (int i = 0; i < rows2; i++)
                     {
@@ -480,8 +510,8 @@ namespace UMapx.Window
                         rowIm[j] = new Complex32(A[i, j].Imag, A[i, j + cols].Imag);
                     }
 
-                    var trRe = FastWeylHeisenbergTransform.FWHT(rowRe, cacheRows);
-                    var trIm = FastWeylHeisenbergTransform.FWHT(rowIm, cacheRows);
+                    var trRe = FastWeylHeisenbergTransform.FWHT(rowRe, cacheRows).Mul(2);
+                    var trIm = FastWeylHeisenbergTransform.FWHT(rowIm, cacheRows).Mul(2);
 
                     for (int j = 0; j < cols2; j++)
                     {
