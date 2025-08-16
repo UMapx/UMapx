@@ -56,7 +56,7 @@ namespace UMapx.Window
             set
             {
                 if (value <= 2 || !Maths.IsEven(value))
-                    throw new Exception("Invalid argument value");
+                    throw new Exception("M must be even and greater than 2");
 
                 this.m = value;
             }
