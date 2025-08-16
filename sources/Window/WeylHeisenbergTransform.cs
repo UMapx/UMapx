@@ -35,7 +35,7 @@ namespace UMapx.Window
         /// Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
         /// </summary>
         /// <param name="window">Windows function</param>
-        /// <param name="m">Number of frequency shifts [4, N]</param>
+        /// <param name="m">Number of frequency shifts [4, N/2]</param>
         /// <param name="direction">Processing direction</param>
         public WeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical)
         {
@@ -141,7 +141,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="window">Windows function</param>
         /// <param name="N">Number of samples</param>
-        /// <param name="M">Number of frequency shifts</param>
+        /// <param name="M">Number of frequency shifts [4, N/2]</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
@@ -155,7 +155,7 @@ namespace UMapx.Window
         /// </remarks>
         /// </summary>
         /// <param name="g0">Function</param>
-        /// <param name="M">Number of frequency shifts</param>
+        /// <param name="M">Number of frequency shifts [4, N/2]</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Matrix(float[] g0, int M, bool orthogonalize = true)

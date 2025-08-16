@@ -31332,7 +31332,7 @@
             Initializes fast real Weyl-Heisenberg transform.
             </summary>
             <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N]</param>
+            <param name="m">Number of frequency shifts [4, N/4]</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(System.Single[])">
@@ -31493,7 +31493,7 @@
             Initializes fast Weyl-Heisenberg transform.
             </summary>
             <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N]</param>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
@@ -32108,7 +32108,7 @@
             Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
             </summary>
             <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N]</param>
+            <param name="m">Number of frequency shifts [4, N/4]</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32)">
@@ -32119,7 +32119,7 @@
             </remarks>
             </summary>
             <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts</param>
+            <param name="M">Number of frequency shifts [4, N/4]</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
@@ -32131,7 +32131,7 @@
             </summary>
             <param name="window">Windows function</param>
             <param name="N">Number of samples</param>
-            <param name="M">Number of frequency shifts</param>
+            <param name="M">Number of frequency shifts [4, N/4]</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
             <returns>Matrix</returns>
         </member>
@@ -32143,7 +32143,7 @@
             </remarks>
             </summary>
             <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts</param>
+            <param name="M">Number of frequency shifts [4, N/4]</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
             <returns>Matrix</returns>
         </member>
@@ -32410,7 +32410,7 @@
             Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
             </summary>
             <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N]</param>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="P:UMapx.Window.WeylHeisenbergTransform.M">
@@ -32451,7 +32451,7 @@
             </summary>
             <param name="window">Windows function</param>
             <param name="N">Number of samples</param>
-            <param name="M">Number of frequency shifts</param>
+            <param name="M">Number of frequency shifts [4, N/2]</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
             <returns>Matrix</returns>
         </member>
@@ -32463,7 +32463,7 @@
             </remarks>
             </summary>
             <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts</param>
+            <param name="M">Number of frequency shifts [4, N/2]</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
             <returns>Matrix</returns>
         </member>

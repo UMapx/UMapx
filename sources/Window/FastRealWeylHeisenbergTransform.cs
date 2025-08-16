@@ -20,7 +20,7 @@ namespace UMapx.Window
         /// Initializes fast real Weyl-Heisenberg transform.
         /// </summary>
         /// <param name="window">Windows function</param>
-        /// <param name="m">Number of frequency shifts [4, N]</param>
+        /// <param name="m">Number of frequency shifts [4, N/4]</param>
         /// <param name="direction">Processing direction</param>
         public FastRealWeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical) : base(window, m, direction) { }
         #endregion
