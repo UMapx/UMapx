@@ -31697,11 +31697,11 @@
             <summary>
             Initializes the fast Zak transform.
             </summary>
-            <param name="m">Number of frequency shifts [4, N]</param>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
         </member>
         <member name="P:UMapx.Window.FastZakTransform.M">
             <summary>
-            Gets or sets number of frequency shifts [4, N].
+            Gets or sets number of frequency shifts [4, N/2].
             <remarks>
             Even number.
             </remarks>
@@ -32610,11 +32610,11 @@
             <summary>
             Initializes the Zak transform.
             </summary>
-            <param name="m">Number of frequency shifts [4, N]</param>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
         </member>
         <member name="P:UMapx.Window.ZakTransform.M">
             <summary>
-            Gets or sets number of frequency shifts [4, N].
+            Gets or sets number of frequency shifts [4, N/2].
             <remarks>
             Even number.
             </remarks>

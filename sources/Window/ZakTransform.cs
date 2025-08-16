@@ -18,13 +18,13 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes the Zak transform.
         /// </summary>
-        /// <param name="m">Number of frequency shifts [4, N]</param>
+        /// <param name="m">Number of frequency shifts [4, N/2]</param>
         public ZakTransform(int m)
         {
             M = m;
         }
         /// <summary>
-        /// Gets or sets number of frequency shifts [4, N].
+        /// Gets or sets number of frequency shifts [4, N/2].
         /// <remarks>
         /// Even number.
         /// </remarks>
