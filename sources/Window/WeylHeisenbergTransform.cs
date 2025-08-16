@@ -89,7 +89,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the complex Weyl-Heisenberg basis matrix.
         /// <remarks>
-        /// Matrix dimension[N, N], where N = M * L.
+        /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
         /// </summary>
         /// <param name="g0">Function</param>
@@ -102,7 +102,7 @@ namespace UMapx.Window
             if (L <= 0)
                 throw new Exception("Number of frequency shifts not defined correctly");
 
-            Complex32[,] G = new Complex32[N, N * 2];
+            Complex32[,] G = new Complex32[N, 2 * N];
             Complex32 c = 2 * Maths.Pi * Maths.I;
             float a = M / 2.0f;
 
@@ -122,6 +122,9 @@ namespace UMapx.Window
                         i = Maths.Mod(n - l * M, N);
                         j = Maths.Mod(n + M / 2 - l * M, N);
 
+                        // implements the [N, 2N] WH matrix
+                        // https://github.com/asiryan/Weyl-Heisenberg-Toolbox/blob/master/matlab/toolbox_scripts/weylhzf.m
+
                         G[n, u + 0] =           g0[i] * exp;
                         G[n, u + N] = Maths.I * g0[j] * exp;
                     }
@@ -133,7 +136,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the complex Weyl-Heisenberg basis matrix.
         /// <remarks>
-        /// Matrix dimension[N, N], where N = M * L.
+        /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
         /// </summary>
         /// <param name="window">Windows function</param>
@@ -143,12 +146,12 @@ namespace UMapx.Window
         /// <returns>Matrix</returns>
         public static Complex32[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
         {
-            return WeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.GetPacket(window, N), M, orthogonalize);
+            return WeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.Packet(window, N), M, orthogonalize);
         }
         /// <summary>
         /// Returns the complex Weyl-Heisenberg basis matrix.
         /// <remarks>
-        /// Matrix dimension[N, N], where N = M * L.
+        /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
         /// </summary>
         /// <param name="g0">Function</param>
@@ -172,7 +175,7 @@ namespace UMapx.Window
         /// <param name="window">Windows function</param>
         /// <param name="length">Number of samples</param>
         /// <returns>Array</returns>
-        public static float[] GetPacket(IWindow window, int length)
+        public static float[] Packet(IWindow window, int length)
         {
             // exception by length
             if (window.FrameSize > length)
@@ -205,7 +208,7 @@ namespace UMapx.Window
         /// <param name="window">Windows function</param>
         /// <param name="length">Number of samples</param>
         /// <returns>Array</returns>
-        private static float[] NSymmetry(IWindow window, int length)
+        public static float[] NSymmetry(IWindow window, int length)
         {
             // creating window function
             float[] g = window.GetWindow(length + 1);

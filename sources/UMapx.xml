@@ -32012,6 +32012,115 @@
             </summary>
             <returns>Array</returns>
         </member>
+        <member name="T:UMapx.Window.RealWeylHeisenbergTransform">
+            <summary>
+            Defines a group of real orthogonal bases and discrete Weyl-Heisenberg transforms.
+            <remarks>
+            More information can be found on the website:
+            https://ieeexplore.ieee.org/document/8711969/
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="m">Number of frequency shifts [4, N]</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32)">
+            <summary>
+            Returns the real Weyl-Heisenberg basis matrix.
+            <remarks>
+            Matrix dimension [2N, 2N], where N = M * L.
+            </remarks>
+            </summary>
+            <param name="g0">Function</param>
+            <param name="M">Number of frequency shifts</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Returns the real Weyl-Heisenberg basis matrix.
+            <remarks>
+            Matrix dimension [2N, 2N], where N = M * L.
+            </remarks>
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="N">Number of samples</param>
+            <param name="M">Number of frequency shifts</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
+            <summary>
+            Returns the real Weyl-Heisenberg basis matrix.
+            <remarks>
+            Matrix dimension [2N, 2N], where N = M * L.
+            </remarks>
+            </summary>
+            <param name="g0">Function</param>
+            <param name="M">Number of frequency shifts</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(System.Single[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(System.Single[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="T:UMapx.Window.ShortTimeFourierTransform">
             <summary>
             Defines short-time Fourier transform.
@@ -32244,7 +32353,7 @@
             <summary>
             Returns the complex Weyl-Heisenberg basis matrix.
             <remarks>
-            Matrix dimension[N, N], where N = M * L.
+            Matrix dimension [N, 2N], where N = M * L.
             </remarks>
             </summary>
             <param name="g0">Function</param>
@@ -32255,7 +32364,7 @@
             <summary>
             Returns the complex Weyl-Heisenberg basis matrix.
             <remarks>
-            Matrix dimension[N, N], where N = M * L.
+            Matrix dimension [N, 2N], where N = M * L.
             </remarks>
             </summary>
             <param name="window">Windows function</param>
@@ -32268,7 +32377,7 @@
             <summary>
             Returns the complex Weyl-Heisenberg basis matrix.
             <remarks>
-            Matrix dimension[N, N], where N = M * L.
+            Matrix dimension [N, 2N], where N = M * L.
             </remarks>
             </summary>
             <param name="g0">Function</param>
@@ -32276,7 +32385,7 @@
             <param name="orthogonalize">Orthogonalized matrix or not</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.GetPacket(UMapx.Window.IWindow,System.Int32)">
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Packet(UMapx.Window.IWindow,System.Int32)">
             <summary>
             Returns a vector of window function values.
             </summary>
