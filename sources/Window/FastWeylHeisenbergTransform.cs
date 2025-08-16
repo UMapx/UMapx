@@ -75,10 +75,18 @@ namespace UMapx.Window
                 Parallel.For(0, M, j =>
                 {
                     var col = new Complex32[N];
-                    for (int i = 0; i < N; i++) col[i] = A[i, j];
+
+                    for (int i = 0; i < N; i++)
+                    {
+                        col[i] = A[i, j];
+                    }
 
                     var tr = FWHT(col, cacheCols); // length 2N
-                    for (int i = 0; i < 2 * N; i++) tmp[i, j] = tr[i];
+
+                    for (int i = 0; i < 2 * N; i++)
+                    {
+                        tmp[i, j] = tr[i];
+                    }
                 });
 
                 // 2) Right-multiply by V via conjugation trick:
@@ -88,10 +96,18 @@ namespace UMapx.Window
                 Parallel.For(0, 2 * N, i =>
                 {
                     var row = new Complex32[M];
-                    for (int j = 0; j < M; j++) row[j] = tmp[i, j];
+
+                    for (int j = 0; j < M; j++)
+                    {
+                        row[j] = tmp[i, j];
+                    }
 
                     // conj → FWHT → conj
-                    for (int j = 0; j < M; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag);
+                    for (int j = 0; j < M; j++)
+                    {
+                        row[j] = new Complex32(row[j].Real, -row[j].Imag);
+                    }
+
                     var tr = FWHT(row, cacheRows); // V^H * conj(row)
 
                     for (int j = 0; j < 2 * M; j++)
@@ -112,10 +128,18 @@ namespace UMapx.Window
                 Parallel.For(0, M, j =>
                 {
                     var col = new Complex32[N];
-                    for (int i = 0; i < N; i++) col[i] = A[i, j];
+
+                    for (int i = 0; i < N; i++)
+                    {
+                        col[i] = A[i, j];
+                    }
 
                     var tr = FWHT(col, cacheCols); // 2N
-                    for (int i = 0; i < 2 * N; i++) B[i, j] = tr[i];
+
+                    for (int i = 0; i < 2 * N; i++)
+                    {
+                        B[i, j] = tr[i];
+                    }
                 });
 
                 return B;
@@ -128,9 +152,17 @@ namespace UMapx.Window
                 Parallel.For(0, N, i =>
                 {
                     var row = new Complex32[M];
-                    for (int j = 0; j < M; j++) row[j] = A[i, j];
 
-                    for (int j = 0; j < M; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag);
+                    for (int j = 0; j < M; j++)
+                    {
+                        row[j] = A[i, j];
+                    }
+
+                    for (int j = 0; j < M; j++)
+                    {
+                        row[j] = new Complex32(row[j].Real, -row[j].Imag);
+                    }
+
                     var tr = FWHT(row, cacheRows); // V^H * conj(row)
 
                     for (int j = 0; j < 2 * M; j++)
@@ -172,9 +204,17 @@ namespace UMapx.Window
                 Parallel.For(0, N2, i =>
                 {
                     var row = new Complex32[M2];
-                    for (int j = 0; j < M2; j++) row[j] = B[i, j];
 
-                    for (int j = 0; j < M2; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
+                    for (int j = 0; j < M2; j++)
+                    {
+                        row[j] = B[i, j];
+                    }
+
+                    for (int j = 0; j < M2; j++)
+                    {
+                        row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
+                    }
+
                     var inv = IFWHT(row, cacheRows); // length M2/2
 
                     for (int j = 0; j < M2 / 2; j++)
@@ -190,10 +230,18 @@ namespace UMapx.Window
                 Parallel.For(0, M2 / 2, j =>
                 {
                     var col = new Complex32[N2];
-                    for (int i = 0; i < N2; i++) col[i] = tmp[i, j];
+
+                    for (int i = 0; i < N2; i++)
+                    {
+                        col[i] = tmp[i, j];
+                    }
 
                     var inv = IFWHT(col, cacheCols); // length N2/2
-                    for (int i = 0; i < N2 / 2; i++) A[i, j] = inv[i];
+
+                    for (int i = 0; i < N2 / 2; i++)
+                    {
+                        A[i, j] = inv[i];
+                    }
                 });
 
                 return A;
@@ -207,10 +255,18 @@ namespace UMapx.Window
                 Parallel.For(0, M2, j =>
                 {
                     var col = new Complex32[N2];
-                    for (int i = 0; i < N2; i++) col[i] = B[i, j];
+
+                    for (int i = 0; i < N2; i++)
+                    {
+                        col[i] = B[i, j];
+                    }
 
                     var inv = IFWHT(col, cacheCols); // N2/2
-                    for (int i = 0; i < N2 / 2; i++) A[i, j] = inv[i];
+                    
+                    for (int i = 0; i < N2 / 2; i++)
+                    {
+                        A[i, j] = inv[i];
+                    }
                 });
 
                 return A;
@@ -223,9 +279,17 @@ namespace UMapx.Window
                 Parallel.For(0, N2, i =>
                 {
                     var row = new Complex32[M2];
-                    for (int j = 0; j < M2; j++) row[j] = B[i, j];
 
-                    for (int j = 0; j < M2; j++) row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
+                    for (int j = 0; j < M2; j++)
+                    {
+                        row[j] = B[i, j];
+                    }
+
+                    for (int j = 0; j < M2; j++)
+                    {
+                        row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
+                    }
+
                     var inv = IFWHT(row, cacheRows); // M2/2
 
                     for (int j = 0; j < M2 / 2; j++)
