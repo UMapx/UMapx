@@ -86,7 +86,7 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Inverts an upper triangular matrix.
         /// </summary>
-        /// <param name="m">Matix</param>
+        /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
         private static float[,] InvertUpperTriangular(float[,] m)
         {
