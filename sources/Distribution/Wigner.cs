@@ -4,7 +4,7 @@ using UMapx.Core;
 namespace UMapx.Distribution
 {
     /// <summary>
-    /// Defines the Wiener semicircular distribution.
+    /// Defines the Wigner semicircular distribution.
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wigner_semicircle_distribution
@@ -19,7 +19,7 @@ namespace UMapx.Distribution
 
         #region Wigner components
         /// <summary>
-        /// Initializes the Wiener semicircular distribution.
+        /// Initializes the Wigner semicircular distribution.
         /// </summary>
         /// <param name="r">Radius</param>
         public Wigner(float r)

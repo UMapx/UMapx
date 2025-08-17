@@ -16477,7 +16477,7 @@
         </member>
         <member name="T:UMapx.Distribution.Wigner">
             <summary>
-            Defines the Wiener semicircular distribution.
+            Defines the Wigner semicircular distribution.
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wigner_semicircle_distribution
@@ -16486,7 +16486,7 @@
         </member>
         <member name="M:UMapx.Distribution.Wigner.#ctor(System.Single)">
             <summary>
-            Initializes the Wiener semicircular distribution.
+            Initializes the Wigner semicircular distribution.
             </summary>
             <param name="r">Radius</param>
         </member>
