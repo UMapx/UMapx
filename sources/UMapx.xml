@@ -29683,12 +29683,13 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.#ctor(System.Single,System.Single)">
+        <member name="M:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.#ctor(System.Single,System.Single,System.Int32)">
             <summary>
             Initializes the edge-avoiding wavelet decomposition.
             </summary>
             <param name="sigmaSpatial">Spatial smoothing factor</param>
             <param name="sigmaRange">Range smoothing factor</param>
+            <param name="levels">Levels</param>
         </member>
         <member name="P:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.SigmaSpatial">
             <summary>
@@ -29698,6 +29699,11 @@
         <member name="P:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.SigmaRange">
             <summary>
             Gets or sets range smoothing factor.
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.Levels">
+            <summary>
+            Gets or sets the number of pyramid levels (>=1), including the base level.
             </summary>
         </member>
         <member name="M:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.Forward(System.Single[])">

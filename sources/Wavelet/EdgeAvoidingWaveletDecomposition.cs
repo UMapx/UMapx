@@ -15,8 +15,9 @@ namespace UMapx.Wavelet
     public class EdgeAvoidingWaveletDecomposition : IPyramidTransform
     {
         #region Private data
-        private float sigmaSpatial = 4f;
-        private float sigmaRange = 0.1f;
+        private float sigmaSpatial;
+        private float sigmaRange;
+        private int levels;
         #endregion
 
         #region Initialize
@@ -25,10 +26,12 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="sigmaSpatial">Spatial smoothing factor</param>
         /// <param name="sigmaRange">Range smoothing factor</param>
-        public EdgeAvoidingWaveletDecomposition(float sigmaSpatial = 4f, float sigmaRange = 0.1f)
+        /// <param name="levels">Levels</param>
+        public EdgeAvoidingWaveletDecomposition(float sigmaSpatial = 4f, float sigmaRange = 0.1f, int levels = 3)
         {
             SigmaSpatial = sigmaSpatial;
             SigmaRange = sigmaRange;
+            Levels = levels;
         }
         /// <summary>
         /// Gets or sets spatial smoothing factor.
@@ -58,6 +61,20 @@ namespace UMapx.Wavelet
                 sigmaRange = value; 
             }
         }
+        /// <summary>
+        /// Gets or sets the number of pyramid levels (>=1), including the base level.
+        /// </summary>
+        public int Levels
+        {
+            get
+            {
+                return levels;
+            }
+            set
+            {
+                levels = (value < 1) ? 1 : value;
+            }
+        }
         #endregion
 
         #region Private voids
@@ -68,15 +85,20 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public float[][] Forward(float[] input)
         {
-            var base1 = (float[])input.Clone();
-            BilateralGridFilter.bilateralgridfilter(base1, sigmaSpatial, sigmaRange);
-            var detail1 = input.Sub(base1);
+            var current = (float[])input.Clone();
+            var output = new float[levels][];
+            output[0] = current;
 
-            var base2 = (float[])base1.Clone();
-            BilateralGridFilter.bilateralgridfilter(base2, sigmaSpatial, sigmaRange);
-            var detail2 = base1.Sub(base2);
+            for (int i = 0; i < levels - 1; i++)
+            {
+                var baseI = (float[])current.Clone();
+                BilateralGridFilter.bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
+                var detailI = current.Sub(baseI);
+                output[i + 1] = detailI;
+                current = baseI;
+            }
 
-            return new float[][] { base2, detail2, detail1 };
+            return output;
         }
         /// <summary>
         /// Reconstructs array from base and detail layers.
@@ -85,7 +107,10 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public float[] Backward(float[][] input)
         {
-            return input[0].Add(input[1]).Add(input[2]);
+            var result = (float[])input[0].Clone();
+            for (int i = 1; i < input.Length; i++)
+                result = result.Add(input[i]);
+            return result;
         }
         /// <summary>
         /// Decomposes matrix into base and detail layers.
@@ -94,15 +119,20 @@ namespace UMapx.Wavelet
         /// <returns>Matrix</returns>
         public float[][,] Forward(float[,] input)
         {
-            var base1 = (float[,])input.Clone();
-            BilateralGridFilter.bilateralgridfilter(base1, sigmaSpatial, sigmaRange);
-            var detail1 = input.Sub(base1);
+            var current = (float[,])input.Clone();
+            var output = new float[levels][,];
+            output[0] = current;
 
-            var base2 = (float[,])base1.Clone();
-            BilateralGridFilter.bilateralgridfilter(base2, sigmaSpatial, sigmaRange);
-            var detail2 = base1.Sub(base2);
+            for (int i = 0; i < levels - 1; i++)
+            {
+                var baseI = (float[,])current.Clone();
+                BilateralGridFilter.bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
+                var detailI = current.Sub(baseI);
+                output[i + 1] = detailI;
+                current = baseI;
+            }
 
-            return new float[][,] { base2, detail2, detail1 };
+            return output;
         }
         /// <summary>
         /// Reconstructs matrix from base and detail layers.
@@ -111,7 +141,10 @@ namespace UMapx.Wavelet
         /// <returns>Matrix</returns>
         public float[,] Backward(float[][,] input)
         {
-            return input[0].Add(input[1]).Add(input[2]);
+            var result = (float[,])input[0].Clone();
+            for (int i = 1; i < input.Length; i++)
+                result = result.Add(input[i]);
+            return result;
         }
         /// <summary>
         /// Decomposes array into base and detail layers.
@@ -120,15 +153,20 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public Complex32[][] Forward(Complex32[] input)
         {
-            var base1 = (Complex32[])input.Clone();
-            BilateralGridFilter.bilateralgridfilter(base1, sigmaSpatial, sigmaRange);
-            var detail1 = input.Sub(base1);
+            var current = (Complex32[])input.Clone();
+            var output = new Complex32[levels][];
+            output[0] = current;
 
-            var base2 = (Complex32[])base1.Clone();
-            BilateralGridFilter.bilateralgridfilter(base2, sigmaSpatial, sigmaRange);
-            var detail2 = base1.Sub(base2);
+            for (int i = 0; i < levels - 1; i++)
+            {
+                var baseI = (Complex32[])current.Clone();
+                BilateralGridFilter.bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
+                var detailI = current.Sub(baseI);
+                output[i + 1] = detailI;
+                current = baseI;
+            }
 
-            return new Complex32[][] { base2, detail2, detail1 };
+            return output;
         }
         /// <summary>
         /// Reconstructs array from base and detail layers.
@@ -137,7 +175,10 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public Complex32[] Backward(Complex32[][] input)
         {
-            return input[0].Add(input[1]).Add(input[2]);
+            var result = (Complex32[])input[0].Clone();
+            for (int i = 1; i < input.Length; i++)
+                result = result.Add(input[i]);
+            return result;
         }
         /// <summary>
         /// Decomposes matrix into base and detail layers.
@@ -146,15 +187,20 @@ namespace UMapx.Wavelet
         /// <returns>Matrix</returns>
         public Complex32[][,] Forward(Complex32[,] input)
         {
-            var base1 = (Complex32[,])input.Clone();
-            BilateralGridFilter.bilateralgridfilter(base1, sigmaSpatial, sigmaRange);
-            var detail1 = input.Sub(base1);
+            var current = (Complex32[,])input.Clone();
+            var output = new Complex32[levels][,];
+            output[0] = current;
 
-            var base2 = (Complex32[,])base1.Clone();
-            BilateralGridFilter.bilateralgridfilter(base2, sigmaSpatial, sigmaRange);
-            var detail2 = base1.Sub(base2);
+            for (int i = 0; i < levels - 1; i++)
+            {
+                var baseI = (Complex32[,])current.Clone();
+                BilateralGridFilter.bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
+                var detailI = current.Sub(baseI);
+                output[i + 1] = detailI;
+                current = baseI;
+            }
 
-            return new Complex32[][,] { base2, detail2, detail1 };
+            return output;
         }
         /// <summary>
         /// Reconstructs matrix from base and detail layers.
@@ -163,7 +209,10 @@ namespace UMapx.Wavelet
         /// <returns>Matrix</returns>
         public Complex32[,] Backward(Complex32[][,] input)
         {
-            return input[0].Add(input[1]).Add(input[2]);
+            var result = (Complex32[,])input[0].Clone();
+            for (int i = 1; i < input.Length; i++)
+                result = result.Add(input[i]);
+            return result;
         }
         #endregion
     }

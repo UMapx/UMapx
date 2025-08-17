@@ -68,9 +68,12 @@ namespace UMapx.Wavelet
         public void Apply(float[] input)
         {
             var dcmp = waveletDecomposition.Forward(input);
+            var levels = dcmp.Length;
 
-            dcmp[1] = dcmp[1].Mul(1 + factor);
-            dcmp[2] = dcmp[2].Mul(1 + factor);
+            for (int i = 1; i < levels; i++)
+            {
+                dcmp[i] = dcmp[i].Mul(1 + factor);
+            }
 
             var reconstruction = waveletDecomposition.Backward(dcmp);
 
@@ -84,9 +87,12 @@ namespace UMapx.Wavelet
         public void Apply(float[,] input)
         {
             var dcmp = waveletDecomposition.Forward(input);
+            var levels = dcmp.Length;
 
-            dcmp[1] = dcmp[1].Mul(1 + factor);
-            dcmp[2] = dcmp[2].Mul(1 + factor);
+            for (int i = 1; i < levels; i++)
+            {
+                dcmp[i] = dcmp[i].Mul(1 + factor);
+            }
 
             var reconstruction = waveletDecomposition.Backward(dcmp);
 
@@ -101,9 +107,12 @@ namespace UMapx.Wavelet
         public void Apply(Complex32[] input)
         {
             var dcmp = waveletDecomposition.Forward(input);
+            var levels = dcmp.Length;
 
-            dcmp[1] = dcmp[1].Mul(1 + factor);
-            dcmp[2] = dcmp[2].Mul(1 + factor);
+            for (int i = 1; i < levels; i++)
+            {
+                dcmp[i] = dcmp[i].Mul(1 + factor);
+            }
 
             var reconstruction = waveletDecomposition.Backward(dcmp);
 
@@ -117,9 +126,12 @@ namespace UMapx.Wavelet
         public void Apply(Complex32[,] input)
         {
             var dcmp = waveletDecomposition.Forward(input);
+            var levels = dcmp.Length;
 
-            dcmp[1] = dcmp[1].Mul(1 + factor);
-            dcmp[2] = dcmp[2].Mul(1 + factor);
+            for (int i = 1; i < levels; i++)
+            {
+                dcmp[i] = dcmp[i].Mul(1 + factor);
+            }
 
             var reconstruction = waveletDecomposition.Backward(dcmp);
 
