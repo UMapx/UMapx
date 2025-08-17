@@ -31,7 +31,7 @@ namespace UMapx.Wavelet
         public WaveletTransform WaveletTransform { get; set; }
         #endregion
 
-        #region Wavelet transform
+        #region Wavelet decomposition
         /// <summary>
         /// Forward wavelet decomposition.
         /// </summary>
