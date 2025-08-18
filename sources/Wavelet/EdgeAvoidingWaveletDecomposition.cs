@@ -72,7 +72,10 @@ namespace UMapx.Wavelet
             }
             set
             {
-                levels = (value < 1) ? 1 : value;
+                if (value < 1)
+                    throw new Exception("Number of levels cannot be less than 1");
+
+                this.levels = value;
             }
         }
         #endregion
