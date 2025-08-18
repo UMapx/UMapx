@@ -19,9 +19,9 @@
 
 ### Includes special toolboxes:
 * **Wavelet Toolbox**. Provides wide functionality for the study of discrete and continuous wavelets. The toolbox also includes algorithms for discrete one-dimensional and two-dimensional wavelet transforms of real and complex signals.
-* **Window Toolbox**. Includes a set of tools to synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier and Weyl-Heisenberg transforms for real and complex signals.
-* **Image Processing Toolbox**. Contains efficient algorithms to processing, correcting and analyzing 32-bit images.
-* **Video Processing Toolbox**. Includes a set of tools to video streaming and processing.
+* **Window Toolbox**. Includes a set of tools for synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier and Weyl-Heisenberg transforms for real and complex signals.
+* **Image Processing Toolbox**. Contains efficient algorithms for processing, correcting, and analyzing 32-bit images.
+* **Video Processing Toolbox**. Includes a set of tools for video streaming and processing.
 
 # Namespaces
 ```c#

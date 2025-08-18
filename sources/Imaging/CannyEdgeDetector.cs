@@ -287,7 +287,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Non-max suppression.
         /// </summary>
-        /// <param name="mag">Magnitute</param>
+        /// <param name="mag">Magnitude</param>
         /// <param name="dir">Dir</param>
         /// <param name="output">Output</param>
         private void NonMaximumSuppression(float[,] mag, float[,] dir, float[,] output)
