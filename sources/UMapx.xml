@@ -29354,6 +29354,11 @@
             Defines the graph pane.
             </summary>
         </member>
+        <member name="M:UMapx.Visualization.GraphPane.#ctor">
+            <summary>
+            Initializes the graph pane.
+            </summary>
+        </member>
         <member name="P:UMapx.Visualization.GraphPane.X">
             <summary>
             Gets or sets argument array.
