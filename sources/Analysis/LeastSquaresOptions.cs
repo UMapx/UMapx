@@ -53,7 +53,6 @@ namespace UMapx.Analysis
         public static float[] Coefficients(float[] x, float[] y, int iterations)
         {
             int i, j;
-            int n = x.Length;
             int m = iterations < 1 ? 1 : iterations;
             float[,] matrix = new float[m, m + 1];
 
@@ -133,9 +132,9 @@ namespace UMapx.Analysis
 
             for (int i = 0; i < length; i++)
             {
-                equation += (Convert.ToString(p[i]) +
+                equation += Convert.ToString(p[i]) +
                             (i == 0 ? "" : (" * X^" + Convert.ToString(i))) +
-                            (i < length - 1 ? (p[i + 1] < 0 ? " " : " + ") : ""));
+                            (i < length - 1 ? (p[i + 1] < 0 ? " " : " + ") : "");
             }
 
             return equation;
@@ -153,9 +152,9 @@ namespace UMapx.Analysis
 
             for (int i = 0; i < length; i++)
             {
-                equation += (Convert.ToString(p[i]) +
+                equation += Convert.ToString(p[i]) +
                             (i == 0 ? "" : (function + Convert.ToString(i))) +
-                            (i < length - 1 ? (p[i + 1] < 0 ? " " : " + ") : ""));
+                            (i < length - 1 ? (p[i + 1] < 0 ? " " : " + ") : "");
             }
 
             return equation;
@@ -207,7 +206,6 @@ namespace UMapx.Analysis
         public static Complex32[] Coefficients(Complex32[] x, Complex32[] y, int iterations)
         {
             int i, j;
-            int n = x.Length;
             int m = iterations < 1 ? 1 : iterations;
             Complex32[,] matrix = new Complex32[m, m + 1];
 
@@ -287,9 +285,9 @@ namespace UMapx.Analysis
 
             for (int i = 0; i < length; i++)
             {
-                equation += ("(" + Convert.ToString(p[i]) + ")" +
+                equation += "(" + Convert.ToString(p[i]) + ")" +
                             (i == 0 ? "" : (" * X^" + Convert.ToString(i))) +
-                            (i < length - 1 ? (p[i + 1].Abs < 0 ? " " : " + ") : ""));
+                            (i < length - 1 ? (p[i + 1].Abs < 0 ? " " : " + ") : "");
             }
 
             return equation;
@@ -307,9 +305,9 @@ namespace UMapx.Analysis
 
             for (int i = 0; i < length; i++)
             {
-                equation += ("(" + Convert.ToString(p[i]) + ")" +
+                equation += "(" + Convert.ToString(p[i]) + ")" +
                             (i == 0 ? "" : (function + Convert.ToString(i))) +
-                            (i < length - 1 ? (p[i + 1].Abs < 0 ? " " : " + ") : ""));
+                            (i < length - 1 ? (p[i + 1].Abs < 0 ? " " : " + ") : "");
             }
 
             return equation;
