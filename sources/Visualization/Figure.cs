@@ -11,6 +11,14 @@ namespace UMapx.Visualization
     [Serializable]
     public class Figure : IDisposable
     {
+        #region Private data
+        private Style _style = new Style();
+        private int figure_width, figure_height;
+        private int canvas_width, canvas_height;
+        private float xmin = -5, xmax = 5, ymin = -5, ymax = 5;
+        private int xscale = 10, yscale = 10;
+        #endregion
+
         #region Panes
         /// <summary>
         /// Plot panes.
@@ -43,14 +51,6 @@ namespace UMapx.Visualization
         {
             Style = style;
         }
-        #endregion
-
-        #region Private data
-        private Style _style = new Style();
-        private int figure_width, figure_height;
-        private int canvas_width, canvas_height;
-        private float xmin = -5, xmax = 5, ymin = -5, ymax = 5;
-        private int xscale = 10, yscale = 10;
         #endregion
 
         #region Figure properties
