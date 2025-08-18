@@ -14,21 +14,21 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Approximation.#ctor(System.Int32,UMapx.Analysis.ApproximationMode)">
+        <member name="M:UMapx.Analysis.Approximation.#ctor(System.Int32,UMapx.Analysis.ApproximationMethod)">
             <summary>
             Initializes the least squares approximation class.
             </summary>
             <param name="power">Polynomial degree</param>
-            <param name="mode">Approximation mode</param>
+            <param name="method">Approximation method</param>
         </member>
         <member name="P:UMapx.Analysis.Approximation.Power">
             <summary>
             Gets or sets the degree of the polynomial.
             </summary>
         </member>
-        <member name="P:UMapx.Analysis.Approximation.Mode">
+        <member name="P:UMapx.Analysis.Approximation.MethodType">
             <summary>
-            Gets or sets the approximation mode.
+            Gets or sets the approximation method.
             </summary>
         </member>
         <member name="M:UMapx.Analysis.Approximation.Compute(System.Single[],System.Single[])">
@@ -203,27 +203,27 @@
             <param name="equation"></param>
             <returns></returns>
         </member>
-        <member name="T:UMapx.Analysis.ApproximationMode">
+        <member name="T:UMapx.Analysis.ApproximationMethod">
             <summary>
             Approximation method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.ApproximationMode.Polynomial">
+        <member name="F:UMapx.Analysis.ApproximationMethod.Polynomial">
             <summary>
             Polynomial approximation.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.ApproximationMode.Logarithmic">
+        <member name="F:UMapx.Analysis.ApproximationMethod.Logarithmic">
             <summary>
             Logarithmic approximation.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.ApproximationMode.Exponential">
+        <member name="F:UMapx.Analysis.ApproximationMethod.Exponential">
             <summary>
             Exponential approximation.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.ApproximationMode.Power">
+        <member name="F:UMapx.Analysis.ApproximationMethod.Power">
             <summary>
             Power approximation.
             </summary>
@@ -299,7 +299,7 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Differential.#ctor(UMapx.Analysis.Differential.Method)">
+        <member name="M:UMapx.Analysis.Differential.#ctor(UMapx.Analysis.DifferentialMethod)">
             <summary>
             Initializes a class that implements the solution of a differential equation.
             </summary>
@@ -427,27 +427,27 @@
             <param name="y0"></param>
             <returns></returns>
         </member>
-        <member name="T:UMapx.Analysis.Differential.Method">
+        <member name="T:UMapx.Analysis.DifferentialMethod">
             <summary>
             Differentiation method
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Differential.Method.Euler">
+        <member name="F:UMapx.Analysis.DifferentialMethod.Euler">
             <summary>
             Euler method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Differential.Method.RungeKutta2">
+        <member name="F:UMapx.Analysis.DifferentialMethod.RungeKutta2">
             <summary>
             The second-order Runge-Kutta method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Differential.Method.RungeKutta4">
+        <member name="F:UMapx.Analysis.DifferentialMethod.RungeKutta4">
             <summary>
             Fourth-order Runge-Kutta method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Differential.Method.Fehlberg">
+        <member name="F:UMapx.Analysis.DifferentialMethod.Fehlberg">
             <summary>
             Felberg's method.
             </summary>
@@ -460,7 +460,7 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Integration.#ctor(UMapx.Analysis.Integration.Method)">
+        <member name="M:UMapx.Analysis.Integration.#ctor(UMapx.Analysis.IntegrationMethod)">
             <summary>
             Initializes a class that implements numerical integration.
             </summary>
@@ -693,32 +693,32 @@
             <param name="eps"></param>
             <returns></returns>
         </member>
-        <member name="T:UMapx.Analysis.Integration.Method">
+        <member name="T:UMapx.Analysis.IntegrationMethod">
             <summary>
             Integration method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Integration.Method.Rectangle">
+        <member name="F:UMapx.Analysis.IntegrationMethod.Rectangle">
             <summary>
             Rectangle method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Integration.Method.Midpoint">
+        <member name="F:UMapx.Analysis.IntegrationMethod.Midpoint">
             <summary>
             Midpoint method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Integration.Method.Trapezoidal">
+        <member name="F:UMapx.Analysis.IntegrationMethod.Trapezoidal">
             <summary>
             Trapezoidal method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Integration.Method.Simpson">
+        <member name="F:UMapx.Analysis.IntegrationMethod.Simpson">
             <summary>
             Simpson method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Integration.Method.Romberg">
+        <member name="F:UMapx.Analysis.IntegrationMethod.Romberg">
             <summary>
             Romberg method.
             </summary>
@@ -731,7 +731,7 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Interpolation.#ctor(UMapx.Analysis.Interpolation.Method)">
+        <member name="M:UMapx.Analysis.Interpolation.#ctor(UMapx.Analysis.InterpolationMethod)">
             <summary>
             Initializes a class that implements interpolation.
             </summary>
@@ -848,27 +848,27 @@
             <param name="xval"></param>
             <returns></returns>
         </member>
-        <member name="T:UMapx.Analysis.Interpolation.Method">
+        <member name="T:UMapx.Analysis.InterpolationMethod">
             <summary>
             Interpolation method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Interpolation.Method.Linear">
+        <member name="F:UMapx.Analysis.InterpolationMethod.Linear">
             <summary>
             Linear method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Interpolation.Method.Lagrange">
+        <member name="F:UMapx.Analysis.InterpolationMethod.Lagrange">
             <summary>
             Lagrange's method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Interpolation.Method.Newton">
+        <member name="F:UMapx.Analysis.InterpolationMethod.Newton">
             <summary>
             Newton's method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Interpolation.Method.Barycentric">
+        <member name="F:UMapx.Analysis.InterpolationMethod.Barycentric">
             <summary>
             Barycentric method.
             </summary>
@@ -1020,7 +1020,7 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Nonlinear.#ctor(System.Single,UMapx.Analysis.Nonlinear.Method)">
+        <member name="M:UMapx.Analysis.Nonlinear.#ctor(System.Single,UMapx.Analysis.NonlinearMethod)">
             <summary>
             Initializes a class that implements the solution of a nonlinear equation.
             </summary>
@@ -1125,27 +1125,27 @@
             <param name="eps"></param>
             <returns></returns>
         </member>
-        <member name="T:UMapx.Analysis.Nonlinear.Method">
+        <member name="T:UMapx.Analysis.NonlinearMethod">
             <summary>
             Method for solving a nonlinear equation.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Nonlinear.Method.Bisection">
+        <member name="F:UMapx.Analysis.NonlinearMethod.Bisection">
             <summary>
             Bisection method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Nonlinear.Method.Chord">
+        <member name="F:UMapx.Analysis.NonlinearMethod.Chord">
             <summary>
             Chord method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Nonlinear.Method.Secant">
+        <member name="F:UMapx.Analysis.NonlinearMethod.Secant">
             <summary>
             Secant method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Nonlinear.Method.FalsePosition">
+        <member name="F:UMapx.Analysis.NonlinearMethod.FalsePosition">
             <summary>
             False position method.
             </summary>

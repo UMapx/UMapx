@@ -15,7 +15,7 @@ namespace UMapx.Analysis
     public class Approximation
     {
         #region Private data
-        private ApproximationMode mode;
+        private ApproximationMethod method;
         private int power;
         #endregion
 
@@ -24,11 +24,11 @@ namespace UMapx.Analysis
         /// Initializes the least squares approximation class.
         /// </summary>
         /// <param name="power">Polynomial degree</param>
-        /// <param name="mode">Approximation mode</param>
-        public Approximation(int power = 1, ApproximationMode mode = ApproximationMode.Polynomial)
+        /// <param name="method">Approximation method</param>
+        public Approximation(int power = 1, ApproximationMethod method = ApproximationMethod.Polynomial)
         {
             this.Power = power;
-            this.mode = mode;
+            this.method = method;
         }
         /// <summary>
         /// Gets or sets the degree of the polynomial.
@@ -48,17 +48,17 @@ namespace UMapx.Analysis
             }
         }
         /// <summary>
-        /// Gets or sets the approximation mode.
+        /// Gets or sets the approximation method.
         /// </summary>
-        public ApproximationMode Mode
+        public ApproximationMethod MethodType
         {
             get
             {
-                return this.mode;
+                return this.method;
             }
             set
             {
-                this.mode = value;
+                this.method = value;
             }
         }
         #endregion
@@ -73,15 +73,15 @@ namespace UMapx.Analysis
         public float[] Compute(float[] x, float[] y)
         {
             // chose method of approximation
-            switch (mode)
+            switch (method)
             {
-                case ApproximationMode.Polynomial:
+                case ApproximationMethod.Polynomial:
                     return Approximation.poly(x, y, power, out _, out _, out _);
 
-                case ApproximationMode.Logarithmic:
+                case ApproximationMethod.Logarithmic:
                     return Approximation.logc(x, y, power, out _, out _, out _);
 
-                case ApproximationMode.Exponential:
+                case ApproximationMethod.Exponential:
                     return Approximation.expn(x, y, power, out _, out _, out _);
 
                 default:
@@ -98,15 +98,15 @@ namespace UMapx.Analysis
         public float[] Compute(float[] x, float[] y, out float[] cf)
         {
             // chose method of approximation
-            switch (mode)
+            switch (method)
             {
-                case ApproximationMode.Polynomial:
+                case ApproximationMethod.Polynomial:
                     return Approximation.poly(x, y, power, out cf, out _, out _);
 
-                case ApproximationMode.Logarithmic:
+                case ApproximationMethod.Logarithmic:
                     return Approximation.logc(x, y, power, out cf, out _, out _);
 
-                case ApproximationMode.Exponential:
+                case ApproximationMethod.Exponential:
                     return Approximation.expn(x, y, power, out cf, out _, out _);
 
                 default:
@@ -124,15 +124,15 @@ namespace UMapx.Analysis
         public float[] Compute(float[] x, float[] y, out float[] cf, out float similarity)
         {
             // chose method of approximation
-            switch (mode)
+            switch (method)
             {
-                case ApproximationMode.Polynomial:
+                case ApproximationMethod.Polynomial:
                     return Approximation.poly(x, y, power, out cf, out similarity, out _);
 
-                case ApproximationMode.Logarithmic:
+                case ApproximationMethod.Logarithmic:
                     return Approximation.logc(x, y, power, out cf, out similarity, out _);
 
-                case ApproximationMode.Exponential:
+                case ApproximationMethod.Exponential:
                     return Approximation.expn(x, y, power, out cf, out similarity, out _);
 
                 default:
@@ -151,15 +151,15 @@ namespace UMapx.Analysis
         public float[] Compute(float[] x, float[] y, out float[] cf, out float similarity, out string equation)
         {
             // chose method of approximation
-            switch (mode)
+            switch (method)
             {
-                case ApproximationMode.Polynomial:
+                case ApproximationMethod.Polynomial:
                     return Approximation.poly(x, y, power, out cf, out similarity, out equation);
 
-                case ApproximationMode.Logarithmic:
+                case ApproximationMethod.Logarithmic:
                     return Approximation.logc(x, y, power, out cf, out similarity, out equation);
 
-                case ApproximationMode.Exponential:
+                case ApproximationMethod.Exponential:
                     return Approximation.expn(x, y, power, out cf, out similarity, out equation);
 
                 default:
@@ -176,15 +176,15 @@ namespace UMapx.Analysis
         public Complex32[] Compute(Complex32[] x, Complex32[] y)
         {
             // chose method of approximation
-            switch (mode)
+            switch (method)
             {
-                case ApproximationMode.Polynomial:
+                case ApproximationMethod.Polynomial:
                     return Approximation.poly(x, y, power, out _, out _, out _);
 
-                case ApproximationMode.Logarithmic:
+                case ApproximationMethod.Logarithmic:
                     return Approximation.logc(x, y, power, out _, out _, out _);
 
-                case ApproximationMode.Exponential:
+                case ApproximationMethod.Exponential:
                     return Approximation.expn(x, y, power, out _, out _, out _);
 
                 default:
@@ -201,15 +201,15 @@ namespace UMapx.Analysis
         public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf)
         {
             // chose method of approximation
-            switch (mode)
+            switch (method)
             {
-                case ApproximationMode.Polynomial:
+                case ApproximationMethod.Polynomial:
                     return Approximation.poly(x, y, power, out cf, out _, out _);
 
-                case ApproximationMode.Logarithmic:
+                case ApproximationMethod.Logarithmic:
                     return Approximation.logc(x, y, power, out cf, out _, out _);
 
-                case ApproximationMode.Exponential:
+                case ApproximationMethod.Exponential:
                     return Approximation.expn(x, y, power, out cf, out _, out _);
 
                 default:
@@ -227,15 +227,15 @@ namespace UMapx.Analysis
         public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf, out Complex32 similarity)
         {
             // chose method of approximation
-            switch (mode)
+            switch (method)
             {
-                case ApproximationMode.Polynomial:
+                case ApproximationMethod.Polynomial:
                     return Approximation.poly(x, y, power, out cf, out similarity, out _);
 
-                case ApproximationMode.Logarithmic:
+                case ApproximationMethod.Logarithmic:
                     return Approximation.logc(x, y, power, out cf, out similarity, out _);
 
-                case ApproximationMode.Exponential:
+                case ApproximationMethod.Exponential:
                     return Approximation.expn(x, y, power, out cf, out similarity, out _);
 
                 default:
@@ -254,15 +254,15 @@ namespace UMapx.Analysis
         public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf, out Complex32 similarity, out string equation)
         {
             // chose method of approximation
-            switch (mode)
+            switch (method)
             {
-                case ApproximationMode.Polynomial:
+                case ApproximationMethod.Polynomial:
                     return Approximation.poly(x, y, power, out cf, out similarity, out equation);
 
-                case ApproximationMode.Logarithmic:
+                case ApproximationMethod.Logarithmic:
                     return Approximation.logc(x, y, power, out cf, out similarity, out equation);
 
-                case ApproximationMode.Exponential:
+                case ApproximationMethod.Exponential:
                     return Approximation.expn(x, y, power, out cf, out similarity, out equation);
 
                 default:

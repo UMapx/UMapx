@@ -13,7 +13,7 @@ namespace UMapx.Analysis
     public class Differential
     {
         #region Private data
-        private Differential.Method method;
+        private DifferentialMethod method;
         #endregion
 
         #region Differentiation components
@@ -21,14 +21,14 @@ namespace UMapx.Analysis
         /// Initializes a class that implements the solution of a differential equation.
         /// </summary>
         /// <param name="method">Differentiation method</param>
-        public Differential(Differential.Method method = Method.RungeKutta4)
+        public Differential(DifferentialMethod method = DifferentialMethod.RungeKutta4)
         {
             this.method = method;
         }
         /// <summary>
         /// Gets or sets the differentiation method.
         /// </summary>
-        public Differential.Method MethodType
+        public DifferentialMethod MethodType
         {
             get
             {
@@ -51,13 +51,13 @@ namespace UMapx.Analysis
             // chose method of differentiation
             switch (method)
             {
-                case Method.Euler:
+                case DifferentialMethod.Euler:
                     return Differential.euler(function, x, y0);
 
-                case Method.Fehlberg:
+                case DifferentialMethod.Fehlberg:
                     return Differential.fehlberg(function, x, y0);
 
-                case Method.RungeKutta4:
+                case DifferentialMethod.RungeKutta4:
                     return Differential.rungeKutta4(function, x, y0);
 
                 default:
@@ -76,13 +76,13 @@ namespace UMapx.Analysis
             // chose method of differentiation
             switch (method)
             {
-                case Method.Euler:
+                case DifferentialMethod.Euler:
                     return Differential.euler(function, x, y0);
 
-                case Method.Fehlberg:
+                case DifferentialMethod.Fehlberg:
                     return Differential.fehlberg(function, x, y0);
 
-                case Method.RungeKutta4:
+                case DifferentialMethod.RungeKutta4:
                     return Differential.rungeKutta4(function, x, y0);
 
                 default:
@@ -435,33 +435,6 @@ namespace UMapx.Analysis
                 result[i] = ynew;
             }
             return result;
-        }
-        #endregion
-
-        #region Enums
-        /// <summary>
-        /// Differentiation method
-        /// </summary>
-        public enum Method
-        {
-            #region Methods
-            /// <summary>
-            /// Euler method.
-            /// </summary>
-            Euler,
-            /// <summary>
-            /// The second-order Runge-Kutta method.
-            /// </summary>
-            RungeKutta2,
-            /// <summary>
-            /// Fourth-order Runge-Kutta method.
-            /// </summary>
-            RungeKutta4,
-            /// <summary>
-            /// Felberg's method.
-            /// </summary>
-            Fehlberg,
-            #endregion
         }
         #endregion
     }

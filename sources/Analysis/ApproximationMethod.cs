@@ -1,11 +1,13 @@
-﻿namespace UMapx.Analysis
+﻿using System;
+
+namespace UMapx.Analysis
 {
     /// <summary>
     /// Approximation method.
     /// </summary>
-    public enum ApproximationMode
+    [Serializable]
+    public enum ApproximationMethod
     {
-        #region Methods
         /// <summary>
         /// Polynomial approximation.
         /// </summary>
@@ -22,6 +24,5 @@
         /// Power approximation.
         /// </summary>
         Power,
-        #endregion
     }
 }

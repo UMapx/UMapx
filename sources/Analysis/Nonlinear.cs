@@ -13,7 +13,7 @@ namespace UMapx.Analysis
     public class Nonlinear
     {
         #region Private data
-        private Nonlinear.Method method;
+        private NonlinearMethod method;
         private float eps;
         #endregion
 
@@ -23,7 +23,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="eps">Epsilon [0, 1]</param>
         /// <param name="method">Method for solving a nonlinear equation</param>
-        public Nonlinear(float eps = 1e-8f, Nonlinear.Method method = Method.Secant)
+        public Nonlinear(float eps = 1e-8f, NonlinearMethod method = NonlinearMethod.Secant)
         {
             this.method = method;
             this.Eps = eps;
@@ -31,7 +31,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Gets or sets the method for solving the nonlinear equation.
         /// </summary>
-        public Nonlinear.Method MethodType
+        public NonlinearMethod MethodType
         {
             get
             {
@@ -68,11 +68,11 @@ namespace UMapx.Analysis
             // chose method of nonlinear
             switch (method)
             {
-                case Method.Chord:
+                case NonlinearMethod.Chord:
                     return Nonlinear.chord(function, a, b, this.eps);
-                case Method.FalsePosition:
+                case NonlinearMethod.FalsePosition:
                     return Nonlinear.falpo(function, a, b, this.eps);
-                case Method.Secant:
+                case NonlinearMethod.Secant:
                     return Nonlinear.secan(function, a, b, this.eps);
 
                 default:
@@ -91,9 +91,9 @@ namespace UMapx.Analysis
             // chose method of nonlinear
             switch (method)
             {
-                case Method.Chord:
+                case NonlinearMethod.Chord:
                     return Nonlinear.chord(function, a, b, this.eps);
-                case Method.FalsePosition:
+                case NonlinearMethod.FalsePosition:
                     return Nonlinear.falpo(function, a, b, this.eps);
 
                 default:
@@ -286,33 +286,6 @@ namespace UMapx.Analysis
                 n++;
             }
             return x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
-        }
-        #endregion
-
-        #region Enums
-        /// <summary>
-        /// Method for solving a nonlinear equation.
-        /// </summary>
-        public enum Method
-        {
-            #region Methods
-            /// <summary>
-            /// Bisection method.
-            /// </summary>
-            Bisection,
-            /// <summary>
-            /// Chord method.
-            /// </summary>
-            Chord,
-            /// <summary>
-            /// Secant method.
-            /// </summary>
-            Secant,
-            /// <summary>
-            /// False position method.
-            /// </summary>
-            FalsePosition,
-            #endregion
         }
         #endregion
     }

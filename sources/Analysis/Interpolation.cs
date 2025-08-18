@@ -13,7 +13,7 @@ namespace UMapx.Analysis
     public class Interpolation
     {
         #region Private data
-        private Interpolation.Method method;
+        private InterpolationMethod method;
         #endregion
 
         #region Class components
@@ -21,14 +21,14 @@ namespace UMapx.Analysis
         /// Initializes a class that implements interpolation.
         /// </summary>
         /// <param name="method">Interpolation method</param>
-        public Interpolation(Interpolation.Method method = Method.Lagrange)
+        public Interpolation(InterpolationMethod method = InterpolationMethod.Lagrange)
         {
             this.method = method;
         }
         /// <summary>
         /// Gets or sets the interpolation method.
         /// </summary>
-        public Interpolation.Method MethodType
+        public InterpolationMethod MethodType
         {
             get
             {
@@ -67,13 +67,13 @@ namespace UMapx.Analysis
             // chose method of interpolation
             switch (method)
             {
-                case Method.Lagrange:
+                case InterpolationMethod.Lagrange:
                     return Interpolation.lagra(x, y, xl);
 
-                case Method.Newton:
+                case InterpolationMethod.Newton:
                     return Interpolation.newto(x, y, xl);
 
-                case Method.Barycentric:
+                case InterpolationMethod.Barycentric:
                     return Interpolation.baryc(x, y, xl);
 
                 default:
@@ -92,10 +92,10 @@ namespace UMapx.Analysis
             // chose method of interpolation
             switch (method)
             {
-                case Method.Newton:
+                case InterpolationMethod.Newton:
                     return Interpolation.newto(x, y, xl);
 
-                case Method.Barycentric:
+                case InterpolationMethod.Barycentric:
                     return Interpolation.baryc(x, y, xl);
 
                 default:
@@ -351,33 +351,6 @@ namespace UMapx.Analysis
                 bc2 += deltaX;
             }
             return bc1 / bc2;
-        }
-        #endregion
-
-        #region Enums
-        /// <summary>
-        /// Interpolation method.
-        /// </summary>
-        public enum Method
-        {
-            #region Methods
-            /// <summary>
-            /// Linear method.
-            /// </summary>
-            Linear,
-            /// <summary>
-            /// Lagrange's method.
-            /// </summary>
-            Lagrange,
-            /// <summary>
-            /// Newton's method.
-            /// </summary>
-            Newton,
-            /// <summary>
-            /// Barycentric method.
-            /// </summary>
-            Barycentric,
-            #endregion
         }
         #endregion
     }

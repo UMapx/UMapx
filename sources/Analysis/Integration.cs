@@ -13,7 +13,7 @@ namespace UMapx.Analysis
     public class Integration
     {
         #region Private data
-        private Integration.Method method;
+        private IntegrationMethod method;
         #endregion
 
         #region Class components
@@ -21,14 +21,14 @@ namespace UMapx.Analysis
         /// Initializes a class that implements numerical integration.
         /// </summary>
         /// <param name="method">Integration method</param>
-        public Integration(Integration.Method method = Method.Rectangle)
+        public Integration(IntegrationMethod method = IntegrationMethod.Rectangle)
         {
             this.method = method;
         }
         /// <summary>
         /// Gets or sets the integration method.
         /// </summary>
-        public Integration.Method MethodType
+        public IntegrationMethod MethodType
         {
             get
             {
@@ -52,16 +52,16 @@ namespace UMapx.Analysis
             // chose method of integration
             switch (method)
             {
-                case Method.Midpoint:
+                case IntegrationMethod.Midpoint:
                     return Integration.midp(function, a, b, n);
 
-                case Method.Trapezoidal:
+                case IntegrationMethod.Trapezoidal:
                     return Integration.trap(function, a, b, n);
 
-                case Method.Simpson:
+                case IntegrationMethod.Simpson:
                     return Integration.simp(function, a, b, n);
 
-                case Method.Romberg:
+                case IntegrationMethod.Romberg:
                     return Integration.romb(function, a, b, n);
 
                 default:
@@ -81,13 +81,13 @@ namespace UMapx.Analysis
             // chose method of integration
             switch (method)
             {
-                case Method.Midpoint:
+                case IntegrationMethod.Midpoint:
                     return Integration.midp(y, a, b, n);
 
-                case Method.Trapezoidal:
+                case IntegrationMethod.Trapezoidal:
                     return Integration.trap(y, a, b, n);
 
-                case Method.Simpson:
+                case IntegrationMethod.Simpson:
                     return Integration.simp(y, a, b, n);
 
                 default:
@@ -107,16 +107,16 @@ namespace UMapx.Analysis
             // chose method of integration
             switch (method)
             {
-                case Method.Midpoint:
+                case IntegrationMethod.Midpoint:
                     return Integration.midp(function, a, b, n);
 
-                case Method.Trapezoidal:
+                case IntegrationMethod.Trapezoidal:
                     return Integration.trap(function, a, b, n);
 
-                case Method.Simpson:
+                case IntegrationMethod.Simpson:
                     return Integration.simp(function, a, b, n);
 
-                case Method.Romberg:
+                case IntegrationMethod.Romberg:
                     return Integration.romb(function, a, b, n);
 
                 default:
@@ -136,13 +136,13 @@ namespace UMapx.Analysis
             // chose method of integration
             switch (method)
             {
-                case Method.Midpoint:
+                case IntegrationMethod.Midpoint:
                     return Integration.midp(y, a, b, n);
 
-                case Method.Trapezoidal:
+                case IntegrationMethod.Trapezoidal:
                     return Integration.trap(y, a, b, n);
 
-                case Method.Simpson:
+                case IntegrationMethod.Simpson:
                     return Integration.simp(y, a, b, n);
 
                 default:
@@ -590,37 +590,6 @@ namespace UMapx.Analysis
             }
             sum = R[n, n];
             return sum;
-        }
-        #endregion
-
-        #region Enums
-        /// <summary>
-        /// Integration method.
-        /// </summary>
-        public enum Method
-        {
-            #region Methods
-            /// <summary>
-            /// Rectangle method.
-            /// </summary>
-            Rectangle,
-            /// <summary>
-            /// Midpoint method.
-            /// </summary>
-            Midpoint,
-            /// <summary>
-            /// Trapezoidal method.
-            /// </summary>
-            Trapezoidal,
-            /// <summary>
-            /// Simpson method.
-            /// </summary>
-            Simpson,
-            /// <summary>
-            /// Romberg method.
-            /// </summary>
-            Romberg,
-            #endregion
         }
         #endregion
     }
