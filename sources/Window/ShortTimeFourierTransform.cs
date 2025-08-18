@@ -37,7 +37,7 @@ namespace UMapx.Window
             Window = function;
 
             // sampling window function:
-            this.coefs = function.GetWindow().Add(1e-64f);
+            this.coefs = function.GetWindow().Add(1e-16f);
         }
         /// <summary>
         /// Normalized transform or not.
