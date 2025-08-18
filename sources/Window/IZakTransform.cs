@@ -8,6 +8,7 @@ namespace UMapx.Window
     /// </summary>
     public interface IZakTransform
     {
+        #region Interface
         /// <summary>
         /// Forward Zak transform.
         /// </summary>
@@ -29,5 +30,6 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         /// <exception cref="ArgumentException">Exception</exception>
         Complex32[] Backward(Complex32[,] matrix);
+        #endregion
     }
 }
