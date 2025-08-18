@@ -3192,7 +3192,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Morph(this float[,] m, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
         {
-            return LinealgOptions.MorphologyFilter.Apply(m, r0 / 2, r1 / 2, mode);
+            return LinealgOptions.MorphologySortFilter.Apply(m, r0 / 2, r1 / 2, mode);
         }
         #endregion
 
@@ -6327,7 +6327,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Morph(this float[] v, int r, MorphologyMode mode = MorphologyMode.Median)
         {
-            return LinealgOptions.MorphologyFilter.Apply(v, r / 2, mode);
+            return LinealgOptions.MorphologySortFilter.Apply(v, r / 2, mode);
         }
         #endregion
 

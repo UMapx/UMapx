@@ -5087,7 +5087,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanHorizontal(System.Single[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrix (horizontal).
+            Implements local average of matrice (horizontal).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r1">Size</param>
@@ -5095,7 +5095,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanVertical(System.Single[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrix (vertical).
+            Implements local average of matrice (vertical).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r0">Size</param>
@@ -5103,7 +5103,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanHorizontal(UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrix (horizontal).
+            Implements local average of matrice (horizontal).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r1">Size</param>
@@ -5111,7 +5111,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanVertical(UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrix (vertical).
+            Implements local average of matrice (vertical).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r0">Size</param>
@@ -5137,7 +5137,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanHorizontalWeighted(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
             <summary>
-            Implements local weighted average of matrix (horizontal).
+            Implements local weighted average of matrice (horizontal).
             </summary>
             <param name="A">Jagged array</param>
             <param name="weights">Weights</param>
@@ -5147,7 +5147,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanVerticalWeighted(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
             <summary>
-            Implements local weighted average of matrix (vertical).
+            Implements local weighted average of matrice (vertical).
             </summary>
             <param name="A">Jagged array</param>
             <param name="weights">Weights</param>
@@ -5156,7 +5156,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanHorizontalWeighted(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
-            Implements local weighted average of matrix (horizontal).
+            Implements local weighted average of matrice (horizontal).
             </summary>
             <param name="A">Jagged array</param>
             <param name="weights">Weights</param>
@@ -5166,12 +5166,60 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanVerticalWeighted(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
-            Implements local weighted average of matrix (vertical).
+            Implements local weighted average of matrice (vertical).
             </summary>
             <param name="A">Jagged array</param>
             <param name="weights">Weights</param>
             <param name="r0">Size</param>
             <returns>Jagged array</returns>
+        </member>
+        <member name="T:UMapx.Core.LinealgOptions.MorphologySortFilter">
+            <summary>
+            Defines a morphology filter class for fast sort implementation.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologySortFilter.Apply(System.Single[0:,0:],System.Int32,System.Int32,UMapx.Core.MorphologyMode)">
+            <summary>
+            Applies morphology filter to 2D array.
+            </summary>
+            <param name="data">Array</param>
+            <param name="r0">Radius</param>
+            <param name="r1">Radius</param>
+            <param name="mode">Mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologySortFilter.Apply(System.Single[],System.Int32,UMapx.Core.MorphologyMode)">
+            <summary>
+            Applies morphology filter to 1D array.
+            </summary>
+            <param name="data">Array</param>
+            <param name="r">Radius</param>
+            <param name="mode">Mode</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologySortFilter.RemoveOneFromSorted(System.Single[],System.Int32,System.Single)">
+            <summary>
+            Removes one occurrence of x from a sorted array a of length K, shifting the elements left. 
+            After the call, the first K-1 elements remain sorted; the last element can be overwritten.
+            </summary>
+            <param name="a">Array</param>
+            <param name="K">Dimension</param>
+            <param name="x">Value</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologySortFilter.FastSort(System.Single[]@,System.Int32)">
+            <summary>
+            O(N) sort algorithm.
+            </summary>
+            <param name="s">Array</param>
+            <param name="index">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MorphologySortFilter.GetFilterRank(UMapx.Core.MorphologyMode,System.Int32)">
+            <summary>
+            Gets filter rank.
+            </summary>
+            <param name="mode">Mode</param>
+            <param name="windowSize">Window size</param>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Core.LinealgOptions.MorphologyFilter">
             <summary>

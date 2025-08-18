@@ -1800,7 +1800,7 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Implements local average of matrix (horizontal).
+        /// Implements local average of matrice (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
@@ -1848,7 +1848,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements local average of matrix (vertical).
+        /// Implements local average of matrice (vertical).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
@@ -1897,7 +1897,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements local average of matrix (horizontal).
+        /// Implements local average of matrice (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
@@ -1945,7 +1945,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements local average of matrix (vertical).
+        /// Implements local average of matrice (vertical).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
@@ -2132,7 +2132,7 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Implements local weighted average of matrix (horizontal).
+        /// Implements local weighted average of matrice (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="weights">Weights</param>
@@ -2205,7 +2205,7 @@ namespace UMapx.Core
             return result;
         }
         /// <summary>
-        /// Implements local weighted average of matrix (vertical).
+        /// Implements local weighted average of matrice (vertical).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="weights">Weights</param>
@@ -2277,7 +2277,7 @@ namespace UMapx.Core
             return result;
         }
         /// <summary>
-        /// Implements local weighted average of matrix (horizontal).
+        /// Implements local weighted average of matrice (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="weights">Weights</param>
@@ -2350,7 +2350,7 @@ namespace UMapx.Core
             return result;
         }
         /// <summary>
-        /// Implements local weighted average of matrix (vertical).
+        /// Implements local weighted average of matrice (vertical).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="weights">Weights</param>
@@ -2424,6 +2424,212 @@ namespace UMapx.Core
         #endregion
 
         #region Morphology
+
+        /// <summary>
+        /// Defines a morphology filter class for fast sort implementation.
+        /// </summary>
+        public static class MorphologySortFilter
+        {
+            /// <summary>
+            /// Applies morphology filter to 2D array.
+            /// </summary>
+            /// <param name="data">Array</param>
+            /// <param name="r0">Radius</param>
+            /// <param name="r1">Radius</param>
+            /// <param name="mode">Mode</param>
+            /// <returns>Array</returns>
+            public static float[,] Apply(float[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
+            {
+                int height = data.GetLength(0);
+                int width = data.GetLength(1);
+
+                int hW = 2 * r0 + 1;
+                int wW = 2 * r1 + 1;
+                int K = hW * wW;
+
+                int rank1 = GetFilterRank(mode, K);
+                int rankIndex = Math.Max(0, Math.Min(K - 1, rank1 - 1));
+
+                var result = new float[height, width];
+
+                Parallel.For(0, height, i =>
+                {
+                    float[] win = new float[K];
+
+                    int t = 0;
+                    for (int di = -r0; di <= r0; di++)
+                    {
+                        int ni = Maths.Range(i + di, 0, height - 1);
+                        for (int dj = -r1; dj <= r1; dj++)
+                        {
+                            int nj = Maths.Range(0 + dj, 0, width - 1);
+                            win[t++] = data[ni, nj];
+                        }
+                    }
+
+                    for (int k = 1; k < K; k++)
+                        FastSort(ref win, k);
+
+                    result[i, 0] = win[rankIndex];
+
+                    for (int j = 1; j < width; j++)
+                    {
+                        int outCol = Maths.Range(j - r1 - 1, 0, width - 1);
+                        int inCol = Maths.Range(j + r1, 0, width - 1);
+
+                        for (int di = -r0; di <= r0; di++)
+                        {
+                            int ni = Maths.Range(i + di, 0, height - 1);
+
+                            float outVal = data[ni, outCol];
+                            float inVal = data[ni, inCol];
+
+                            RemoveOneFromSorted(win, K, outVal);
+
+                            win[K - 1] = inVal;
+                            FastSort(ref win, K - 1);
+                        }
+
+                        result[i, j] = win[rankIndex];
+                    }
+                });
+
+                return result;
+            }
+            /// <summary>
+            /// Applies morphology filter to 1D array.
+            /// </summary>
+            /// <param name="data">Array</param>
+            /// <param name="r">Radius</param>
+            /// <param name="mode">Mode</param>
+            /// <returns>Array</returns>
+            public static float[] Apply(float[] data, int r, MorphologyMode mode = MorphologyMode.Median)
+            {
+                if (data == null) throw new ArgumentNullException(nameof(data));
+                int n = data.Length;
+                if (n == 0) return Array.Empty<float>();
+                if (r < 0) throw new ArgumentOutOfRangeException(nameof(r));
+
+                int K = 2 * r + 1;
+                int rank1 = GetFilterRank(mode, K);
+                int rankIndex = Math.Max(0, Math.Min(K - 1, rank1 - 1));
+
+                var result = new float[n];
+                var win = new float[K];
+
+                int t = 0;
+                for (int off = -r; off <= r; off++)
+                {
+                    int idx = Maths.Range(0 + off, 0, n - 1);
+                    win[t++] = data[idx];
+                }
+
+                for (int k = 1; k < K; k++)
+                    FastSort(ref win, k);
+
+                result[0] = win[rankIndex];
+
+                for (int i = 1; i < n; i++)
+                {
+                    int outIdx = Maths.Range(i - r - 1, 0, n - 1);
+                    int inIdx = Maths.Range(i + r, 0, n - 1);
+
+                    float outVal = data[outIdx];
+                    float inVal = data[inIdx];
+
+                    RemoveOneFromSorted(win, K, outVal);
+
+                    win[K - 1] = inVal;
+                    FastSort(ref win, K - 1);
+
+                    result[i] = win[rankIndex];
+                }
+
+                return result;
+            }
+            /// <summary>
+            /// Removes one occurrence of x from a sorted array a of length K, shifting the elements left. 
+            /// After the call, the first K-1 elements remain sorted; the last element can be overwritten.
+            /// </summary>
+            /// <param name="a">Array</param>
+            /// <param name="K">Dimension</param>
+            /// <param name="x">Value</param>
+            public static void RemoveOneFromSorted(float[] a, int K, float x)
+            {
+                int lo = 0, hi = K - 1, pos = K;
+
+                while (lo <= hi)
+                {
+                    int mid = (lo + hi) >> 1;
+                    if (a[mid] >= x) { pos = mid; hi = mid - 1; }
+                    else { lo = mid + 1; }
+                }
+
+                int idx = pos;
+
+                if (idx >= K || a[idx] != x)
+                {
+                    idx = -1;
+                    for (int t = 0; t < K; t++)
+                    {
+                        if (a[t] == x) { idx = t; break; }
+                    }
+                    if (idx == -1) idx = Math.Min(pos, K - 1);
+                }
+
+                for (int t = idx; t < K - 1; t++)
+                    a[t] = a[t + 1];
+            }
+            /// <summary>
+            /// O(N) sort algorithm.
+            /// </summary>
+            /// <param name="s">Array</param>
+            /// <param name="index">Index</param>
+            public static void FastSort(ref float[] s, int index)
+            {
+                int length = s.Length - 1;
+
+                for (int i = index; i < length; i++)
+                {
+                    if (s[i] > s[i + 1])
+                    {
+                        var t = s[i + 1];
+                        s[i + 1] = s[i];
+                        s[i] = t;
+                    }
+                    else
+                        break;
+                }
+
+                for (int i = index; i > 0; i--)
+                {
+                    if (s[i] < s[i - 1])
+                    {
+                        var t = s[i - 1];
+                        s[i - 1] = s[i];
+                        s[i] = t;
+                    }
+                    else
+                        break;
+                }
+            }
+            /// <summary>
+            /// Gets filter rank.
+            /// </summary>
+            /// <param name="mode">Mode</param>
+            /// <param name="windowSize">Window size</param>
+            /// <returns>Value</returns>
+            public static int GetFilterRank(MorphologyMode mode, int windowSize)
+            {
+                return mode switch
+                {
+                    MorphologyMode.Erosion => 0,
+                    MorphologyMode.Median => windowSize / 2,
+                    _ => windowSize - 1
+                };
+            }
+        }
+
         /// <summary>
         /// Defines a morphology filter class for basic implementation.
         /// </summary>
@@ -2473,7 +2679,6 @@ namespace UMapx.Core
 
                 return result;
             }
-
             /// <summary>
             /// Applies morphology filter to 1D array.
             /// </summary>
@@ -2507,7 +2712,6 @@ namespace UMapx.Core
 
                 return result;
             }
-
             /// <summary>
             /// Gets filter rank.
             /// </summary>
@@ -2588,7 +2792,6 @@ namespace UMapx.Core
 
                 return result;
             }
-
             /// <summary>
             /// Applies morphology filter to 1D array.
             /// </summary>
@@ -2634,7 +2837,6 @@ namespace UMapx.Core
 
                 return result;
             }
-
             /// <summary>
             /// Gets filter rank.
             /// </summary>
@@ -2716,7 +2918,6 @@ namespace UMapx.Core
 
                 return result;
             }
-
             /// <summary>
             /// Applies morphology filter to 1D array.
             /// </summary>
@@ -2756,7 +2957,6 @@ namespace UMapx.Core
 
                 return result;
             }
-
             /// <summary>
             /// Gets filter rank.
             /// </summary>
@@ -2772,7 +2972,6 @@ namespace UMapx.Core
                     _ => windowSize,
                 };
             }
-
             /// <summary>
             /// Gets histogram rank.
             /// </summary>
