@@ -8,10 +8,10 @@ namespace UMapx.Window
     /// Defines the Zak transform.
     /// </summary>
     [Serializable]
-    public class ZakTransform
+    public class ZakTransform : IZakTransform
     {
         #region Private data
-        private readonly FourierTransform DFT = new FourierTransform(false, Direction.Vertical);
+        private protected ITransform DFT = new FourierTransform(false, Direction.Vertical);
         #endregion
 
         #region Initialize
@@ -42,29 +42,29 @@ namespace UMapx.Window
         public Complex32[,] Forward(Complex32[] input)
         {
             int N = input.Length;
-            if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
+            if (N % M != 0)
+                throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
             var result = new Complex32[N, L];
 
+            Complex32[] buffer = new Complex32[L];
+
             for (int m = 0; m < N; m++)
             {
+                for (int k = 0; k < L; k++)
+                {
+                    int index = (m - M * k) % N;
+                    if (index < 0) index += N;
+
+                    buffer[k] = input[index];
+                }
+
+                buffer = DFT.Forward(buffer);
+
                 for (int n = 0; n < L; n++)
                 {
-                    Complex32 sum = Complex32.Zero;
-
-                    for (int k = 0; k < L; k++)
-                    {
-                        int index = (m - M * k) % N;
-                        if (index < 0) index += N;
-
-                        float angle = 2 * Maths.Pi * n * k / L;
-                        Complex32 w = Maths.Exp(new Complex32(0, angle)); // e^{i*angle}
-
-                        sum += input[index] * w;
-                    }
-
-                    result[m, n] = sum;
+                    result[m, n] = buffer[n];
                 }
             }
 
@@ -79,29 +79,29 @@ namespace UMapx.Window
         public Complex32[,] Forward(float[] input)
         {
             int N = input.Length;
-            if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
+            if (N % M != 0)
+                throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
             var result = new Complex32[N, L];
 
+            Complex32[] buffer = new Complex32[L];
+
             for (int m = 0; m < N; m++)
             {
+                for (int k = 0; k < L; k++)
+                {
+                    int index = (m - M * k) % N;
+                    if (index < 0) index += N;
+
+                    buffer[k] = input[index];
+                }
+
+                buffer = DFT.Forward(buffer);
+
                 for (int n = 0; n < L; n++)
                 {
-                    Complex32 sum = Complex32.Zero;
-
-                    for (int k = 0; k < L; k++)
-                    {
-                        int index = (m - M * k) % N;
-                        if (index < 0) index += N;
-
-                        float angle = 2 * Maths.Pi * n * k / L;
-                        Complex32 w = Maths.Exp(new Complex32(0, angle)); // e^{i*angle}
-
-                        sum += input[index] * w;
-                    }
-
-                    result[m, n] = sum;
+                    result[m, n] = buffer[n];
                 }
             }
 
@@ -144,16 +144,16 @@ namespace UMapx.Window
         /// <summary>
         /// Zak orthogonalization.
         /// </summary>
-        /// <param name="A">Array</param>
+        /// <param name="input">Array</param>
         /// <returns>Array</returns>
-        public float[] Orthogonalize(float[] A)
+        public float[] Orthogonalize(float[] input)
         {
             // Fast shaping orthogonalization algorithm
             // WH functions using a discrete Zak transform.
             // V.P. Volchkov, D.A. Petrov and V.M. Asiryan.
             // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
 
-            int N = A.Length;
+            int N = input.Length;
             float[] vort = new float[N];
             int L = N / M, L2 = L * 2, i, j;
             Complex32[,] G = new Complex32[L2, N];
@@ -163,7 +163,7 @@ namespace UMapx.Window
             {
                 for (j = 0; j < N; j++)
                 {
-                    G[i, j] = A[Maths.Mod(j + M / 2 * i, N)];
+                    G[i, j] = input[Maths.Mod(j + M / 2 * i, N)];
                 }
             }
 
@@ -205,16 +205,16 @@ namespace UMapx.Window
         /// <summary>
         /// Zak orthogonalization.
         /// </summary>
-        /// <param name="A">Array</param>
+        /// <param name="input">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Orthogonalize(Complex32[] A)
+        public Complex32[] Orthogonalize(Complex32[] input)
         {
             // Fast shaping orthogonalization algorithm
             // WH functions using a discrete Zak transform.
             // V.P. Volchkov, D.A. Petrov and V.M. Asiryan.
             // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
 
-            int N = A.Length;
+            int N = input.Length;
             Complex32[] vort = new Complex32[N];
             int L = N / M, L2 = L * 2, i, j;
             Complex32[,] G = new Complex32[L2, N];
@@ -224,7 +224,7 @@ namespace UMapx.Window
             {
                 for (j = 0; j < N; j++)
                 {
-                    G[i, j] = A[Maths.Mod(j + M / 2 * i, N)];
+                    G[i, j] = input[Maths.Mod(j + M / 2 * i, N)];
                 }
             }
 
