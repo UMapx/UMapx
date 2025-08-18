@@ -277,8 +277,8 @@ namespace UMapx.Analysis
 
             const float eps = 1e-12f;
 
-            string num = FormatPolynomial(numeratorCoeffs, "X", eps);
-            string den = FormatPolynomial(denominatorCoeffs, "X", eps);
+            string num = FormatPolynomial(numeratorCoeffs, "x", eps);
+            string den = FormatPolynomial(denominatorCoeffs, "x", eps);
 
             if (string.IsNullOrEmpty(num)) num = "0";
             if (string.IsNullOrEmpty(den)) den = "0";
@@ -351,8 +351,8 @@ namespace UMapx.Analysis
 
             const float eps = 1e-12f;
 
-            string num = FormatPolynomial(numeratorCoeffs, "X", eps);
-            string den = FormatPolynomial(denominatorCoeffs, "X", eps);
+            string num = FormatPolynomial(numeratorCoeffs, "x", eps);
+            string den = FormatPolynomial(denominatorCoeffs, "x", eps);
 
             if (string.IsNullOrEmpty(num)) num = "0";
             if (string.IsNullOrEmpty(den)) den = "0";

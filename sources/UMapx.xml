@@ -14,21 +14,21 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Approximation.#ctor(System.Int32,UMapx.Analysis.Approximation.Method)">
+        <member name="M:UMapx.Analysis.Approximation.#ctor(System.Int32,UMapx.Analysis.ApproximationMode)">
             <summary>
             Initializes the least squares approximation class.
             </summary>
             <param name="power">Polynomial degree</param>
-            <param name="method">Approximation method</param>
+            <param name="mode">Approximation mode</param>
         </member>
         <member name="P:UMapx.Analysis.Approximation.Power">
             <summary>
             Gets or sets the degree of the polynomial.
             </summary>
         </member>
-        <member name="P:UMapx.Analysis.Approximation.MethodType">
+        <member name="P:UMapx.Analysis.Approximation.Mode">
             <summary>
-            Gets or sets the approximation method.
+            Gets or sets the approximation mode.
             </summary>
         </member>
         <member name="M:UMapx.Analysis.Approximation.Compute(System.Single[],System.Single[])">
@@ -203,27 +203,27 @@
             <param name="equation"></param>
             <returns></returns>
         </member>
-        <member name="T:UMapx.Analysis.Approximation.Method">
+        <member name="T:UMapx.Analysis.ApproximationMode">
             <summary>
             Approximation method.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Approximation.Method.Polynomial">
+        <member name="F:UMapx.Analysis.ApproximationMode.Polynomial">
             <summary>
             Polynomial approximation.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Approximation.Method.Logarithmic">
+        <member name="F:UMapx.Analysis.ApproximationMode.Logarithmic">
             <summary>
             Logarithmic approximation.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Approximation.Method.Exponential">
+        <member name="F:UMapx.Analysis.ApproximationMode.Exponential">
             <summary>
             Exponential approximation.
             </summary>
         </member>
-        <member name="F:UMapx.Analysis.Approximation.Method.Power">
+        <member name="F:UMapx.Analysis.ApproximationMode.Power">
             <summary>
             Power approximation.
             </summary>
