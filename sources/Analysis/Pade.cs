@@ -291,16 +291,16 @@ namespace UMapx.Analysis
         /// <param name="c">Polynomial</param>
         /// <param name="var">Variable</param>
         /// <param name="eps">Epsilon</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         private static string FormatPolynomial(float[] c, string var, float eps)
         {
             var sb = new StringBuilder();
 
-            // find highest non-negligible power
             int kmax = -1;
             for (int k = c.Length - 1; k >= 0; k--)
                 if (Math.Abs(c[k]) > eps) { kmax = k; break; }
 
-            if (kmax < 0) return string.Empty; // all ~zero
+            if (kmax < 0) return string.Empty;
 
             for (int k = kmax; k >= 0; k--)
             {
@@ -309,34 +309,23 @@ namespace UMapx.Analysis
 
                 bool firstTerm = sb.Length == 0;
 
-                // sign
                 if (!firstTerm)
-                {
                     sb.Append(a >= 0 ? " + " : " - ");
-                }
-                else
-                {
-                    if (a < 0) sb.Append("-");
-                }
+                else if (a < 0)
+                    sb.Append("-");
 
                 float absA = Math.Abs(a);
 
-                // build term
                 if (k == 0)
                 {
-                    // constant term: always print coefficient
                     sb.Append(absA.ToString());
                 }
                 else
                 {
-                    // coefficient (hide 1)
-                    if (absA > 1 + 1e-12 || absA < 1 - 1e-12)
-                    {
+                    if (!(absA > 1 - 1e-12f && absA < 1 + 1e-12f))
                         sb.Append(absA.ToString());
-                    }
 
                     sb.Append(var);
-
                     if (k >= 2)
                     {
                         sb.Append("^");
@@ -376,16 +365,16 @@ namespace UMapx.Analysis
         /// <param name="c">Polynomial</param>
         /// <param name="var">Variable</param>
         /// <param name="eps">Epsilon</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         private static string FormatPolynomial(Complex32[] c, string var, float eps)
         {
             var sb = new StringBuilder();
 
-            // highest non-negligible power
             int kmax = -1;
             for (int k = c.Length - 1; k >= 0; k--)
                 if (!IsZero(c[k], eps)) { kmax = k; break; }
 
-            if (kmax < 0) return string.Empty; // all ~zero
+            if (kmax < 0) return string.Empty;
 
             for (int k = kmax; k >= 0; k--)
             {
@@ -400,38 +389,23 @@ namespace UMapx.Analysis
                 bool isRealish = Math.Abs(im) <= eps;
                 bool isImagOnly = Math.Abs(re) <= eps && Math.Abs(im) > eps;
 
-                // ---------- SIGN handling between terms ----------
                 if (!first)
                 {
-                    if (isRealish)
-                    {
-                        sb.Append(re >= 0 ? " + " : " - ");
-                    }
-                    else if (isImagOnly)
-                    {
-                        sb.Append(im >= 0 ? " + " : " - ");
-                    }
-                    else
-                    {
-                        // general complex: keep '+' and let the coefficient carry inner sign
-                        sb.Append(" + ");
-                    }
+                    if (isRealish) sb.Append(re >= 0 ? " + " : " - ");
+                    else if (isImagOnly) sb.Append(im >= 0 ? " + " : " - ");
+                    else sb.Append(" + ");
                 }
                 else
                 {
                     if (isRealish && re < 0) sb.Append("-");
                     if (isImagOnly && im < 0) sb.Append("-");
-                    // for general complex first term, no leading sign; it will be inside parentheses if needed
                 }
 
-                // ---------- TERM body ----------
-                // absolute value (for printing when we already emitted a sign)
                 float absRe = Math.Abs(re);
                 float absIm = Math.Abs(im);
 
                 if (k == 0)
                 {
-                    // constant term: print full coefficient (with magnitude already signed above if pure real/imag)
                     if (isRealish)
                     {
                         sb.Append(absRe.ToString());
@@ -439,42 +413,36 @@ namespace UMapx.Analysis
                     else if (isImagOnly)
                     {
                         if (NearlyOne(absIm, eps)) sb.Append("i");
-                        else { sb.Append(absIm.ToString()).Append("i"); }
+                        else sb.Append(absIm.ToString()).Append("i");
                     }
                     else
                     {
-                        sb.Append(a);
+                        sb.Append(FormatComplex(a, eps)); // (a ± b·i)
                     }
                 }
                 else
                 {
-                    // non-constant: may hide ±1 (only when imag≈0)
                     bool isPlusMinusOneReal = isRealish && NearlyOne(absRe, eps);
 
                     if (isPlusMinusOneReal)
                     {
-                        // coefficient is ±1 (imag≈0):
-                        // we already printed a sign; so just the variable/power
                         sb.Append(var);
                         if (k >= 2) sb.Append("^").Append(k.ToString());
                     }
                     else if (isImagOnly && NearlyOne(absIm, eps))
                     {
-                        // pure ±i: we printed sign already; just "ix^k"
                         sb.Append("i").Append(var);
                         if (k >= 2) sb.Append("^").Append(k.ToString());
                     }
                     else
                     {
-                        // general coefficient (real, pure imag with |im|!=1, or complex)
                         string coeffText;
-
                         if (isRealish)
                             coeffText = absRe.ToString();
                         else if (isImagOnly)
                             coeffText = absIm.ToString() + "i";
                         else
-                            coeffText = a.ToString();
+                            coeffText = FormatComplex(a, eps);
 
                         sb.Append(coeffText).Append(var);
                         if (k >= 2) sb.Append("^").Append(k.ToString());
@@ -483,6 +451,34 @@ namespace UMapx.Analysis
             }
 
             return sb.ToString();
+        }
+        /// <summary>
+        /// Formats a complex number.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <param name="eps">Epsilon</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
+        private static string FormatComplex(Complex32 z, float eps)
+        {
+            float re = z.Real;
+            float im = z.Imag;
+
+            bool isRealish = Math.Abs(im) <= eps;
+            bool isImagOnly = Math.Abs(re) <= eps && Math.Abs(im) > eps;
+
+            if (isRealish)
+                return re.ToString();
+
+            if (isImagOnly)
+            {
+                float absIm = Math.Abs(im);
+                return NearlyOne(absIm, eps) ? "i" : absIm.ToString() + "i";
+            }
+
+            string reS = re.ToString();
+            string imS = Math.Abs(im).ToString();
+            string sign = im >= 0 ? " + " : " - ";
+            return $"({reS}{sign}{imS}i)";
         }
         /// <summary>
         /// True if |z|≈0 (both parts small).

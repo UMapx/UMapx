@@ -1298,6 +1298,7 @@
             <param name="c">Polynomial</param>
             <param name="var">Variable</param>
             <param name="eps">Epsilon</param>
+            <returns>Text as a sequence of Unicode characters</returns>
         </member>
         <member name="M:UMapx.Analysis.Pade.Equation(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
@@ -1316,6 +1317,15 @@
             <param name="c">Polynomial</param>
             <param name="var">Variable</param>
             <param name="eps">Epsilon</param>
+            <returns>Text as a sequence of Unicode characters</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.FormatComplex(UMapx.Core.Complex32,System.Single)">
+            <summary>
+            Formats a complex number.
+            </summary>
+            <param name="z">Value</param>
+            <param name="eps">Epsilon</param>
+            <returns>Text as a sequence of Unicode characters</returns>
         </member>
         <member name="M:UMapx.Analysis.Pade.IsZero(UMapx.Core.Complex32,System.Single)">
             <summary>
