@@ -421,6 +421,7 @@ namespace UMapx.Visualization
         /// <param name="bitmap">Bitmap</param>
         public void Image(Bitmap bitmap)
         {
+            ImagePane?.Dispose();
             ImagePane = (Bitmap)bitmap.Clone();
         }
         /// <summary>
