@@ -541,6 +541,8 @@ namespace UMapx.Visualization
         }
         #endregion
 
+        #region Private voids
+
         #region Plot function voids
         /// <summary>
         /// 
@@ -1041,6 +1043,8 @@ namespace UMapx.Visualization
 
             return numerics;
         }
+        #endregion
+
         #endregion
 
         #region IDisposable
