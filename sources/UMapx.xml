@@ -31709,6 +31709,52 @@
             </summary>
             <param name="m">Number of frequency shifts [4, N/2]</param>
         </member>
+        <member name="P:UMapx.Window.FastZakTransform.M">
+            <summary>
+            Gets or sets number of frequency shifts [4, N/2].
+            <remarks>
+            Even number.
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Forward(System.Single[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Zak transform.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <returns>Array</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Orthogonalize(System.Single[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Orthogonalize(UMapx.Core.Complex32[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Array</returns>
+        </member>
         <member name="T:UMapx.Window.FlatTop">
             <summary>
             Defines the "Flat-Top" window function.
