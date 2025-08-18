@@ -77,7 +77,7 @@ namespace UMapx.Wavelet
         }
         #endregion
 
-        #region Private voids
+        #region Public voids
         /// <summary>
         /// Decomposes array into base and detail layers.
         /// </summary>
@@ -86,17 +86,22 @@ namespace UMapx.Wavelet
         public float[][] Forward(float[] input)
         {
             var current = (float[])input.Clone();
-            var output = new float[levels][];
-            output[0] = current;
+            var details = new float[levels - 1][];
 
             for (int i = 0; i < levels - 1; i++)
             {
                 var baseI = (float[])current.Clone();
                 BilateralGridFilter.bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
                 var detailI = current.Sub(baseI);
-                output[i + 1] = detailI;
+                details[i] = detailI;
                 current = baseI;
             }
+
+            var output = new float[levels][];
+            output[0] = current;
+
+            for (int i = 0; i < details.Length; i++)
+                output[i + 1] = details[details.Length - 1 - i];
 
             return output;
         }
@@ -120,17 +125,22 @@ namespace UMapx.Wavelet
         public float[][,] Forward(float[,] input)
         {
             var current = (float[,])input.Clone();
-            var output = new float[levels][,];
-            output[0] = current;
+            var details = new float[levels - 1][,];
 
             for (int i = 0; i < levels - 1; i++)
             {
                 var baseI = (float[,])current.Clone();
                 BilateralGridFilter.bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
                 var detailI = current.Sub(baseI);
-                output[i + 1] = detailI;
+                details[i] = detailI;
                 current = baseI;
             }
+
+            var output = new float[levels][,];
+            output[0] = current;
+
+            for (int i = 0; i < details.Length; i++)
+                output[i + 1] = details[details.Length - 1 - i];
 
             return output;
         }
@@ -154,17 +164,22 @@ namespace UMapx.Wavelet
         public Complex32[][] Forward(Complex32[] input)
         {
             var current = (Complex32[])input.Clone();
-            var output = new Complex32[levels][];
-            output[0] = current;
+            var details = new Complex32[levels - 1][];
 
             for (int i = 0; i < levels - 1; i++)
             {
                 var baseI = (Complex32[])current.Clone();
                 BilateralGridFilter.bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
                 var detailI = current.Sub(baseI);
-                output[i + 1] = detailI;
+                details[i] = detailI;
                 current = baseI;
             }
+
+            var output = new Complex32[levels][];
+            output[0] = current;
+
+            for (int i = 0; i < details.Length; i++)
+                output[i + 1] = details[details.Length - 1 - i];
 
             return output;
         }
@@ -188,17 +203,22 @@ namespace UMapx.Wavelet
         public Complex32[][,] Forward(Complex32[,] input)
         {
             var current = (Complex32[,])input.Clone();
-            var output = new Complex32[levels][,];
-            output[0] = current;
+            var details = new Complex32[levels - 1][,];
 
             for (int i = 0; i < levels - 1; i++)
             {
                 var baseI = (Complex32[,])current.Clone();
                 BilateralGridFilter.bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
                 var detailI = current.Sub(baseI);
-                output[i + 1] = detailI;
+                details[i] = detailI;
                 current = baseI;
             }
+
+            var output = new Complex32[levels][,];
+            output[0] = current;
+
+            for (int i = 0; i < details.Length; i++)
+                output[i + 1] = details[details.Length - 1 - i];
 
             return output;
         }
