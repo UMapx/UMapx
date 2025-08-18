@@ -90,7 +90,7 @@ namespace UMapx.Visualization
             set
             {
                 if (value.Min == value.Max)
-                    throw new Exception("Start and end points cannot be the same");
+                    throw new ArgumentOutOfRangeException("Start and end points cannot be the same");
 
                 xmin = value.Min; xmax = value.Max;
             }
@@ -107,7 +107,7 @@ namespace UMapx.Visualization
             set
             {
                 if (value.Min == value.Max)
-                    throw new Exception("Start and end points cannot be the same");
+                    throw new ArgumentOutOfRangeException("Start and end points cannot be the same");
 
                 ymin = value.Min; ymax = value.Max;
             }
@@ -434,7 +434,7 @@ namespace UMapx.Visualization
         public void Plot(float[] x, float[] y, float depth, Color color, Symbol type)
         {
             if (x.Length != y.Length)
-                throw new Exception("Vectors must be of the same length");
+                throw new ArgumentException("Vectors must be of the same length");
 
             var pane = new GraphPane()
             {
@@ -454,7 +454,7 @@ namespace UMapx.Visualization
         public void Plot(GraphPane pane)
         {
             if (pane.X.Length != pane.Y.Length)
-                throw new Exception("Vectors must be of the same length");
+                throw new ArgumentException("Vectors must be of the same length");
 
             PlotPanes.Add(pane);
         }
@@ -469,7 +469,7 @@ namespace UMapx.Visualization
         public void Stem(float[] x, float[] y, float depth, Color color, Symbol type)
         {
             if (x.Length != y.Length)
-                throw new Exception("Vectors must be of the same length");
+                throw new ArgumentException("Vectors must be of the same length");
 
             var pane = new GraphPane()
             {
@@ -489,7 +489,7 @@ namespace UMapx.Visualization
         public void Stem(GraphPane pane)
         {
             if (pane.X.Length != pane.Y.Length)
-                throw new Exception("Vectors must be of the same length");
+                throw new ArgumentException("Vectors must be of the same length");
 
             StemPanes.Add(pane);
         }
@@ -504,7 +504,7 @@ namespace UMapx.Visualization
         public void Scatter(float[] x, float[] y, float depth, Color color, Symbol type)
         {
             if (x.Length != y.Length)
-                throw new Exception("Vectors must be of the same length");
+                throw new ArgumentException("Vectors must be of the same length");
 
             var pane = new GraphPane()
             {
@@ -524,7 +524,7 @@ namespace UMapx.Visualization
         public void Scatter(GraphPane pane)
         {
             if (pane.X.Length != pane.Y.Length)
-                throw new Exception("Vectors must be of the same length");
+                throw new ArgumentException("Vectors must be of the same length");
 
             ScatterPanes.Add(pane);
         }

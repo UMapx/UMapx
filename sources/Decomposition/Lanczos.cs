@@ -30,7 +30,7 @@ namespace UMapx.Decomposition
         {
             // exception
             if (!Matrice.IsSymmetric(A))
-                throw new Exception("The matrix must be symmetrical");
+                throw new ArgumentException("The matrix must be symmetrical");
 
             // lanczos decomposition
             int n = A.GetLength(0);

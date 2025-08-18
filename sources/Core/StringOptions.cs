@@ -100,7 +100,7 @@ namespace UMapx.Core
                 // get new string:
                 return Regex.Split(match.Result("${matrice}").Replace(" ", "|"), ";");
             }
-            throw new Exception("The input string was in the wrong format");
+            throw new ArgumentException("The input string was in the wrong format");
         }
         /// <summary>
         /// Translates the original string to complex number.

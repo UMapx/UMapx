@@ -339,15 +339,15 @@ namespace UMapx.Window
         internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
         {
             int N = A.Length;
-            if (!Maths.IsPower(N, 2)) throw new Exception("Dimension of the signal must be a power of 2");
+            if (!Maths.IsPower(N, 2)) throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             var B = new Complex32[2 * N];
 
             int Mloc = C.M;
-            if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
+            if (!Maths.IsEven(Mloc)) throw new ArgumentException("M must be even");
 
             int L = N / Mloc;
-            if (L * Mloc != N) throw new Exception("N must be divisible by M");
+            if (L * Mloc != N) throw new ArgumentException("N must be divisible by M");
 
             // Cached FFT_L spectra of window polyphase components (built from orthonormalized g):
             //   S_hat[n0,q] = FFT_L{ g[r*M + n0] }_r
@@ -487,14 +487,14 @@ namespace UMapx.Window
         internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
         {
             int N = C.N;
-            if (!Maths.IsPower(N, 2)) throw new Exception("Dimension of the signal must be a power of 2");
-            if (B.Length != 2 * N) throw new Exception("Expect 2N coefficients (main + half)");
+            if (!Maths.IsPower(N, 2)) throw new ArgumentException("Dimension of the signal must be a power of 2");
+            if (B.Length != 2 * N) throw new ArgumentException("Expect 2N coefficients (main + half)");
 
             int Mloc = C.M;
-            if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
+            if (!Maths.IsEven(Mloc)) throw new ArgumentException("M must be even");
 
             int L = N / Mloc;
-            if (L * Mloc != N) throw new Exception("N must be divisible by M");
+            if (L * Mloc != N) throw new ArgumentException("N must be divisible by M");
 
             // Cached FFT_L spectra of window polyphase components:
             var S_hat = C.S_hat; // [M, L]
@@ -695,10 +695,10 @@ namespace UMapx.Window
             public static PolyphaseCache Build(int N, int Mloc, IWindow window)
             {
                 // If cache for the given N is already computed, reuse it
-                if (!Maths.IsPower(N, 2)) throw new Exception("Dimension of the signal must be a power of 2");
-                if (!Maths.IsEven(Mloc)) throw new Exception("M must be even");
+                if (!Maths.IsPower(N, 2)) throw new ArgumentException("Dimension of the signal must be a power of 2");
+                if (!Maths.IsEven(Mloc)) throw new ArgumentException("M must be even");
                 int L = N / Mloc;
-                if (L * Mloc != N) throw new Exception("N must be divisible by M");
+                if (L * Mloc != N) throw new ArgumentException("N must be divisible by M");
 
                 // Step 1: Generate the initial WH analysis window g0 of length N
                 //         from the current IWindow object (e.g., Gaussian, Hanning, etc.)

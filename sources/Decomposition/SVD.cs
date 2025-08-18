@@ -387,7 +387,7 @@ namespace UMapx.Decomposition
 
                     //if (its == iterations)
                     //{
-                    //    throw new ApplicationException("No convergence in " + iterations.ToString() + " iterations of singular decomposition");
+                    //    throw new Exception("No convergence in " + iterations.ToString() + " iterations of singular decomposition");
                     //}
 
                     // shift from bottom 2-by-2 minor

@@ -2816,7 +2816,7 @@ namespace UMapx.Core
         {
             // catch exception:
             if (float.IsNaN(a) || float.IsNaN(b) || float.IsNaN(c))
-                throw new Exception("For this function, all input parameters must be correctly defined");
+                throw new ArgumentException("For this function, all input parameters must be correctly defined");
 
             // for all z = 0:
             if (z == 0)

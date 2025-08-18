@@ -48,7 +48,7 @@ namespace UMapx.Decomposition
         public Householder(float[,] A)
         {
             if (!Matrice.IsSymmetric(A))
-                throw new Exception("The matrix must be symmetric");
+                throw new ArgumentException("The matrix must be symmetric");
 
             // properties:
             this.n = A.GetLength(0);

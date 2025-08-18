@@ -45,7 +45,7 @@ namespace UMapx.Analysis
             set
             {
                 if (value < 1)
-                    throw new Exception("Invalid argument value");
+                    throw new ArgumentException("Invalid argument value");
 
                 this.m = value;
             }
@@ -62,7 +62,7 @@ namespace UMapx.Analysis
             set
             {
                 if (value < 1)
-                    throw new Exception("Invalid argument value");
+                    throw new ArgumentException("Invalid argument value");
 
                 this.n = value;
             }

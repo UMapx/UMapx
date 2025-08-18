@@ -433,7 +433,7 @@ namespace UMapx.Core
         public static float Trace(this float[,] m)
         {
             if (!Matrice.IsSquare(m))
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             int d = m.GetLength(0);
             int i;
@@ -455,7 +455,7 @@ namespace UMapx.Core
             int ml = m.GetLength(0), mr = m.GetLength(1);
 
             if (mr != ml)
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             unsafe
             {
@@ -528,7 +528,7 @@ namespace UMapx.Core
         public static float[,] Permutation(this float[,] m)
         {
             if (!Matrice.IsSquare(m))
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             int i, j, r, n = m.GetLength(0);
             float[] temp; float diagonal;
@@ -563,7 +563,7 @@ namespace UMapx.Core
         public static Complex32 Trace(this Complex32[,] m)
         {
             if (!Matrice.IsSquare(m))
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             int d = m.GetLength(0);
             int i;
@@ -585,7 +585,7 @@ namespace UMapx.Core
             int ml = m.GetLength(0), mr = m.GetLength(1);
 
             if (mr != ml)
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             unsafe
             {
@@ -9725,8 +9725,8 @@ namespace UMapx.Core
             int height = m.GetLength(0), width = m.GetLength(1);
 
             // errors:
-            if (height != width) throw new Exception("The matrix must be square");
-            if (n >= height || n < 0) throw new Exception("Row and column number specified is invalid");
+            if (height != width) throw new ArgumentException("The matrix must be square");
+            if (n >= height || n < 0) throw new ArgumentException("Row and column number specified is invalid");
 
             // new matrix:
             float[,] H = new float[height - 1, width - 1];
@@ -9764,8 +9764,8 @@ namespace UMapx.Core
             int height = m.GetLength(0), width = m.GetLength(1);
 
             // errors:
-            if (height != width) throw new Exception("The matrix must be square");
-            if (n >= height || n < 0) throw new Exception("Row and column number specified is invalid");
+            if (height != width) throw new ArgumentException("The matrix must be square");
+            if (n >= height || n < 0) throw new ArgumentException("Row and column number specified is invalid");
 
             // new matrix:
             Complex32[,] H = new Complex32[height - 1, width - 1];
@@ -10907,7 +10907,7 @@ namespace UMapx.Core
         public static float[,] Magic(int n)
         {
             if (Maths.Mod(n, 2) != 1)
-                throw new Exception("Dimension of the matrix must be an odd number");
+                throw new ArgumentException("Dimension of the matrix must be an odd number");
 
             float[,] m = new float[n, n];
             int i, j;
@@ -11279,7 +11279,7 @@ namespace UMapx.Core
             }
             else
             {
-                throw new Exception("The input string was in the wrong format");
+                throw new ArgumentException("The input string was in the wrong format");
             }
         }
         /// <summary>
@@ -11332,7 +11332,7 @@ namespace UMapx.Core
             }
             else
             {
-                throw new Exception("The input string was in the wrong format");
+                throw new ArgumentException("The input string was in the wrong format");
             }
         }
         /// <summary>
@@ -11392,13 +11392,13 @@ namespace UMapx.Core
         {
             // Input data
             if (!IsSquare(A))
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             int M = A.GetLength(0);
             int N = b.GetLength(0);
 
             if (N != M)
-                throw new Exception("Vector length should be equal to the height of the matrix");
+                throw new ArgumentException("Vector length should be equal to the height of the matrix");
 
             float[][] a = Jagged.ToJagged(A);
             float[] q = (float[])b.Clone();
@@ -11480,13 +11480,13 @@ namespace UMapx.Core
         {
             // Input data
             if (!IsSquare(A))
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             int M = A.GetLength(0);
             int N = b.GetLength(0);
 
             if (N != M)
-                throw new Exception("Vector length should be equal to the height of the matrix");
+                throw new ArgumentException("Vector length should be equal to the height of the matrix");
 
             Complex32[][] a = Jagged.ToJagged(A);
             Complex32[] q = (Complex32[])b.Clone();

@@ -109,7 +109,7 @@ namespace UMapx.Transform
             int N = A.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
@@ -132,7 +132,7 @@ namespace UMapx.Transform
             int N = B.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
@@ -155,7 +155,7 @@ namespace UMapx.Transform
             int N = A.GetLength(0), M = A.GetLength(1);
 
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[,] U = WalshHadamardTransform.Matrix((int)Maths.Log2(N));
             float[,] V = WalshHadamardTransform.Matrix((int)Maths.Log2(M));
@@ -189,7 +189,7 @@ namespace UMapx.Transform
             int N = B.GetLength(0), M = B.GetLength(1);
 
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[,] U = WalshHadamardTransform.Matrix((int)Maths.Log2(N));
             float[,] V = WalshHadamardTransform.Matrix((int)Maths.Log2(M));
@@ -223,7 +223,7 @@ namespace UMapx.Transform
             int N = A.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
@@ -246,7 +246,7 @@ namespace UMapx.Transform
             int N = B.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             int n = (int)Maths.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
@@ -269,7 +269,7 @@ namespace UMapx.Transform
             int N = A.GetLength(0), M = A.GetLength(1);
 
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[,] U = WalshHadamardTransform.Matrix((int)Maths.Log2(N));
             float[,] V = WalshHadamardTransform.Matrix((int)Maths.Log2(M));
@@ -303,7 +303,7 @@ namespace UMapx.Transform
             int N = B.GetLength(0), M = B.GetLength(1);
 
             if (!Maths.IsPower(N, 2) || !Maths.IsPower(M, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[,] U = WalshHadamardTransform.Matrix((int)Maths.Log2(N));
             float[,] V = WalshHadamardTransform.Matrix((int)Maths.Log2(M));

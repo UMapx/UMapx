@@ -102,7 +102,7 @@ namespace UMapx.Imaging
             set
             {
                 if (value <= 0)
-                    throw new Exception("Logarithm base should be greater than 0");
+                    throw new ArgumentException("Logarithm base should be greater than 0");
 
                 this.nbase = value;
                 this.rebuild = true;

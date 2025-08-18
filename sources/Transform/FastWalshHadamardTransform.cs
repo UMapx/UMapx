@@ -75,7 +75,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[] B = (float[])A.Clone();
             FWHT(B);
@@ -96,7 +96,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[] A = (float[])B.Clone();
             FWHT(A);
@@ -331,7 +331,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             Complex32[] B = (Complex32[])A.Clone();
             FWHT(B);
@@ -352,7 +352,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             Complex32[] A = (Complex32[])B.Clone();
             FWHT(A);
@@ -590,7 +590,7 @@ namespace UMapx.Transform
             int N = data.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             int log2N = (int)Maths.Log2(N);
             float x_even, x_odd;
@@ -628,7 +628,7 @@ namespace UMapx.Transform
             int N = data.Length;
 
             if (!Maths.IsPower(N, 2))
-                throw new Exception("Dimension of the signal must be a power of 2");
+                throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             int log2N = (int)Maths.Log2(N);
             Complex32 x_even, x_odd;

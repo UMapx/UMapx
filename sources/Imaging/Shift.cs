@@ -83,7 +83,7 @@ namespace UMapx.Imaging
             // exception!
             if (bmData.Width != width ||
                 bmData.Height != height)
-                throw new Exception("Input image sizes must be the same");
+                throw new ArgumentException("Input image sizes must be the same");
 
             // applying only for X:
             if (x != 0 && y == 0)

@@ -41,7 +41,7 @@ namespace UMapx.Distribution
             set
             {
                 if (value <= 0)
-                    throw new Exception("Invalid argument value");
+                    throw new ArgumentException("Invalid argument value");
 
                 this.a = value;
             }
@@ -58,7 +58,7 @@ namespace UMapx.Distribution
             set
             {
                 if (value <= 0)
-                    throw new Exception("Invalid argument value");
+                    throw new ArgumentException("Invalid argument value");
 
                 this.b = value;
             }

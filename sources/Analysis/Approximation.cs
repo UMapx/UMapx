@@ -42,7 +42,7 @@ namespace UMapx.Analysis
             set
             {
                 if (value < 1)
-                    throw new Exception("Invalid argument value");
+                    throw new ArgumentException("Invalid argument value");
 
                 this.power = value;
             }
@@ -328,7 +328,7 @@ namespace UMapx.Analysis
             int n = x.Length, i;
             int m = (power < 1) ? 2 : power + 1;
             float[] xa = new float[n];
-            float[] ya = new float[n];
+            float[] ya;
 
             // log-scale:
             for (i = 0; i < n; i++)
@@ -359,7 +359,7 @@ namespace UMapx.Analysis
             int n = x.Length, i;
             int m = (power < 1) ? 2 : power + 1;
             Complex32[] xa = new Complex32[n];
-            Complex32[] ya = new Complex32[n];
+            Complex32[] ya;
 
             // log-scale:
             for (i = 0; i < n; i++)
@@ -408,7 +408,7 @@ namespace UMapx.Analysis
             }
 
             error = LeastSquaresOptions.Error(ya, y);
-            equation = "EXP" + '(' + LeastSquaresOptions.Equation(cf) + ')';
+            equation = $"EXP({LeastSquaresOptions.Equation(cf)})";
             return ya;
         }
         /// <summary>
@@ -445,7 +445,7 @@ namespace UMapx.Analysis
             }
 
             error = LeastSquaresOptions.Error(ya, y);
-            equation = "EXP" + '(' + LeastSquaresOptions.Equation(cf) + ')';
+            equation = $"EXP({LeastSquaresOptions.Equation(cf)})";
             return ya;
         }
         /// <summary>
@@ -484,7 +484,7 @@ namespace UMapx.Analysis
             }
 
             error = LeastSquaresOptions.Error(ya, y);
-            equation = "EXP" + '(' + LeastSquaresOptions.Equation(cf, " * LN(X)^") + ')';
+            equation = $"EXP({LeastSquaresOptions.Equation(cf, " * LN(X)^")})";
             return ya;
         }
         /// <summary>
@@ -523,7 +523,7 @@ namespace UMapx.Analysis
             }
 
             error = LeastSquaresOptions.Error(ya, y);
-            equation = "EXP" + '(' + LeastSquaresOptions.Equation(cf, " * LN(X)^") + ')';
+            equation = $"EXP({LeastSquaresOptions.Equation(cf, " * LN(X)^")})";
             return ya;
         }
         #endregion

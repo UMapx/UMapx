@@ -34,7 +34,7 @@ namespace UMapx.Analysis
             set
             {
                 if (value < 0)
-                    throw new Exception("Invalid argument value");
+                    throw new ArgumentException("Invalid argument value");
 
                 this.points = value;
             }
@@ -51,9 +51,9 @@ namespace UMapx.Analysis
         {
             // exception
             if (order > this.points)
-                throw new Exception("The order of the derivative cannot be greater than the number of interpolation points");
+                throw new ArgumentException("The order of the derivative cannot be greater than the number of interpolation points");
             if (order < 0)
-                throw new Exception("The derivative order cannot be less than 0");
+                throw new ArgumentException("The derivative order cannot be less than 0");
 
             // Create the interpolation points
             int length = this.points + 1;
@@ -82,9 +82,9 @@ namespace UMapx.Analysis
         {
             // exception
             if (order > this.points)
-                throw new Exception("The order of the derivative cannot be greater than the number of interpolation points");
+                throw new ArgumentException("The order of the derivative cannot be greater than the number of interpolation points");
             if (order < 0)
-                throw new Exception("The derivative order cannot be less than 0");
+                throw new ArgumentException("The derivative order cannot be less than 0");
 
             // Create the interpolation points
             int length = this.points + 1;
@@ -113,9 +113,9 @@ namespace UMapx.Analysis
         {
             // exception
             if (order > this.points)
-                throw new Exception("The order of the derivative cannot be greater than the number of interpolation points");
+                throw new ArgumentException("The order of the derivative cannot be greater than the number of interpolation points");
             if (order < 0)
-                throw new Exception("The derivative order cannot be less than 0");
+                throw new ArgumentException("The derivative order cannot be less than 0");
 
             // Create the interpolation points
             int length = this.points + 1;
@@ -144,9 +144,9 @@ namespace UMapx.Analysis
         {
             // exception
             if (order > this.points)
-                throw new Exception("The order of the derivative cannot be greater than the number of interpolation points");
+                throw new ArgumentException("The order of the derivative cannot be greater than the number of interpolation points");
             if (order < 0)
-                throw new Exception("The derivative order cannot be less than 0");
+                throw new ArgumentException("The derivative order cannot be less than 0");
 
             // Create the interpolation points
             int length = this.points + 1;

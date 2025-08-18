@@ -86,7 +86,7 @@ namespace UMapx.Imaging
             set
             {
                 if (value <= 0)
-                    throw new Exception("Invalid argument value");
+                    throw new ArgumentException("Invalid argument value");
 
                 this.b = value;
                 this.rebuild = true;

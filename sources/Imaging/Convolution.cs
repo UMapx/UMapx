@@ -103,7 +103,7 @@ namespace UMapx.Imaging
         {
             #region Data
             if (this.l0 != this.l1 && this.bilateral == true)
-                throw new Exception("Matrix must be squared");
+                throw new ArgumentException("Matrix must be squared");
 
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* src = (byte*)bmSrc.Scan0.ToPointer();

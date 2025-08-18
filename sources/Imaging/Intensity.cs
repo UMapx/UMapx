@@ -789,7 +789,7 @@ namespace UMapx.Imaging
         public static float[] Quantize(int levels, int length)
         {
             if (levels > length)
-                throw new Exception("Number of levels cannot be greater than length");
+                throw new ArgumentException("Number of levels cannot be greater than length");
 
             int interval = length / levels + 1;
             float[] table = new float[length];

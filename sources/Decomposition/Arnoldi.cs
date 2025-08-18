@@ -32,7 +32,7 @@ namespace UMapx.Decomposition
             int m = A.GetLength(1);
 
             if (n != m)
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             // arnoldi decomposition
             arnoldi(A, n, m);

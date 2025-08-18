@@ -56,7 +56,7 @@ namespace UMapx.Window
             set
             {
                 if (value <= 2 || !Maths.IsEven(value))
-                    throw new Exception("M must be even and greater than 2");
+                    throw new ArgumentException("M must be even and greater than 2");
 
                 this.m = value;
             }
@@ -100,7 +100,7 @@ namespace UMapx.Window
             int N = g0.Length, L = N / M;
 
             if (L <= 0)
-                throw new Exception("Number of frequency shifts not defined correctly");
+                throw new ArgumentException("Number of frequency shifts not defined correctly");
 
             Complex32[,] G = new Complex32[N, 2 * N];
             Complex32 c = 2 * Maths.Pi * Maths.I;

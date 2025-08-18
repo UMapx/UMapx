@@ -26,7 +26,7 @@ namespace UMapx.Decomposition
         public Power(float[,] A, int iterations = 10)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             // eigenvalue power algorithm:
             int n = A.GetLength(0);

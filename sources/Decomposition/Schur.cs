@@ -32,7 +32,7 @@ namespace UMapx.Decomposition
         public Schur(float[,] A, float eps = 1e-16f)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             this.n = A.GetLength(0);
             this.Re = new float[n];

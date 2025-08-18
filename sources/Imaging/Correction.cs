@@ -59,7 +59,7 @@ namespace UMapx.Imaging
             set
             {
                 if (value.Length != 256)
-                    throw new Exception("Mask size should be  256");
+                    throw new ArgumentException("Mask size should be 256");
 
                 this.values = value;
             }

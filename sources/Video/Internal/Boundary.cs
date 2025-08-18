@@ -134,7 +134,7 @@
             }
             else if (!IsOctetStream(contentType))
             {
-                throw new Exception("Invalid content type.");
+                throw new ArgumentException("Invalid content type.");
             }
 
             return boundary;

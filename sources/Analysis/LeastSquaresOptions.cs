@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using UMapx.Core;
 
 namespace UMapx.Analysis
@@ -121,43 +122,40 @@ namespace UMapx.Analysis
             return varb / vara;
         }
         /// <summary>
-        /// Returns the equation of a polynomial represented as a string.
+        /// Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
         /// </summary>
-        /// <param name="p">Polynomial coefficients</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
-        public static string Equation(float[] p)
-        {
-            string equation = "";
-            int length = p.Length;
+        /// <param name="p">Polynomial coefficients.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
+        public static string Equation(float[] p) => Equation(p, " * X^");
 
-            for (int i = 0; i < length; i++)
-            {
-                equation += Convert.ToString(p[i]) +
-                            (i == 0 ? "" : (" * X^" + Convert.ToString(i))) +
-                            (i < length - 1 ? (p[i + 1] < 0 ? " " : " + ") : "");
-            }
-
-            return equation;
-        }
         /// <summary>
         /// Returns the equation of a polynomial represented as a string.
+        /// The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
         /// </summary>
-        /// <param name="p">Polynomial coefficients</param>
-        /// <param name="function">Function</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="p">Polynomial coefficients.</param>
+        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string Equation(float[] p, string function)
         {
-            string equation = "";
-            int length = p.Length;
+            if (p == null) throw new ArgumentNullException(nameof(p));
+            if (function == null) throw new ArgumentNullException(nameof(function));
 
-            for (int i = 0; i < length; i++)
+            int n = p.Length;
+            if (n == 0) return string.Empty;
+
+            // Preallocate roughly: coeff + token + digits + separators
+            var sb = new StringBuilder(n * (function.Length + 8));
+
+            for (int i = 0; i < n; i++)
             {
-                equation += Convert.ToString(p[i]) +
-                            (i == 0 ? "" : (function + Convert.ToString(i))) +
-                            (i < length - 1 ? (p[i + 1] < 0 ? " " : " + ") : "");
+                sb.Append(p[i].ToString());                // keep current-culture formatting (same as original)
+                if (i > 0) sb.Append(function).Append(i);  // append "function + exponent" for i>0
+
+                if (i < n - 1)
+                    sb.Append(p[i + 1] < 0f ? " " : " + "); // same sign/spacing rule as original
             }
 
-            return equation;
+            return sb.ToString();
         }
         #endregion
 
@@ -274,43 +272,40 @@ namespace UMapx.Analysis
             return (varb / vara).Real;
         }
         /// <summary>
-        /// Returns the equation of a polynomial represented as a string.
+        /// Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
         /// </summary>
-        /// <param name="p">Polynomial coefficients</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
-        public static string Equation(Complex32[] p)
-        {
-            string equation = "";
-            int length = p.Length;
+        /// <param name="p">Polynomial coefficients.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
+        public static string Equation(Complex32[] p) => Equation(p, " * X^");
 
-            for (int i = 0; i < length; i++)
-            {
-                equation += "(" + Convert.ToString(p[i]) + ")" +
-                            (i == 0 ? "" : (" * X^" + Convert.ToString(i))) +
-                            (i < length - 1 ? (p[i + 1].Abs < 0 ? " " : " + ") : "");
-            }
-
-            return equation;
-        }
         /// <summary>
         /// Returns the equation of a polynomial represented as a string.
+        /// The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
         /// </summary>
-        /// <param name="p">Polynomial coefficients</param>
-        /// <param name="function">Function</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="p">Polynomial coefficients.</param>
+        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string Equation(Complex32[] p, string function)
         {
-            string equation = "";
-            int length = p.Length;
+            if (p == null) throw new ArgumentNullException(nameof(p));
+            if (function == null) throw new ArgumentNullException(nameof(function));
 
-            for (int i = 0; i < length; i++)
+            int n = p.Length;
+            if (n == 0) return string.Empty;
+
+            // Preallocate roughly: coeff + token + digits + separators
+            var sb = new StringBuilder(n * (function.Length + 8));
+
+            for (int i = 0; i < n; i++)
             {
-                equation += "(" + Convert.ToString(p[i]) + ")" +
-                            (i == 0 ? "" : (function + Convert.ToString(i))) +
-                            (i < length - 1 ? (p[i + 1].Abs < 0 ? " " : " + ") : "");
+                sb.Append(p[i].ToString());                // keep current-culture formatting (same as original)
+                if (i > 0) sb.Append(function).Append(i);  // append "function + exponent" for i>0
+
+                if (i < n - 1)
+                    sb.Append(p[i + 1].Abs < 0f ? " " : " + "); // same sign/spacing rule as original
             }
 
-            return equation;
+            return sb.ToString();
         }
         #endregion
     }

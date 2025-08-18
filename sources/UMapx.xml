@@ -931,18 +931,19 @@
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Equation(System.Single[])">
             <summary>
-            Returns the equation of a polynomial represented as a string.
+            Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
             </summary>
-            <param name="p">Polynomial coefficients</param>
-            <returns>Text as a sequence of Unicode characters</returns>
+            <param name="p">Polynomial coefficients.</param>
+            <returns>Text as a sequence of Unicode characters.</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Equation(System.Single[],System.String)">
             <summary>
             Returns the equation of a polynomial represented as a string.
+            The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
             </summary>
-            <param name="p">Polynomial coefficients</param>
-            <param name="function">Function</param>
-            <returns>Text as a sequence of Unicode characters</returns>
+            <param name="p">Polynomial coefficients.</param>
+            <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
+            <returns>Text as a sequence of Unicode characters.</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Polynomial(UMapx.Core.Complex32,UMapx.Core.Complex32[])">
             <summary>
@@ -997,18 +998,19 @@
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Equation(UMapx.Core.Complex32[])">
             <summary>
-            Returns the equation of a polynomial represented as a string.
+            Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
             </summary>
-            <param name="p">Polynomial coefficients</param>
-            <returns>Text as a sequence of Unicode characters</returns>
+            <param name="p">Polynomial coefficients.</param>
+            <returns>Text as a sequence of Unicode characters.</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Equation(UMapx.Core.Complex32[],System.String)">
             <summary>
             Returns the equation of a polynomial represented as a string.
+            The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
             </summary>
-            <param name="p">Polynomial coefficients</param>
-            <param name="function">Function</param>
-            <returns>Text as a sequence of Unicode characters</returns>
+            <param name="p">Polynomial coefficients.</param>
+            <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
+            <returns>Text as a sequence of Unicode characters.</returns>
         </member>
         <member name="T:UMapx.Analysis.Nonlinear">
             <summary>

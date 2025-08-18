@@ -26,7 +26,7 @@ namespace UMapx.Decomposition
         public Cholesky(float[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             // Cholesky decomposition:
             chol(Jagged.ToJagged(A));

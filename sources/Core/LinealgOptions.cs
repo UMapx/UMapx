@@ -405,7 +405,7 @@ namespace UMapx.Core
             public static float[][] Mul(float[][] A, float[][] B)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
-                    throw new Exception(exception);
+                    throw new ArgumentException(exception);
 
                 int height = A.GetLength(0);
                 int width = B[0].GetLength(0);
@@ -428,7 +428,7 @@ namespace UMapx.Core
             public static Complex32[][] Mul(Complex32[][] A, Complex32[][] B)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
-                    throw new Exception(exception);
+                    throw new ArgumentException(exception);
 
                 int height = A.GetLength(0);
                 int width = B[0].GetLength(0);
@@ -451,7 +451,7 @@ namespace UMapx.Core
             public static Complex32[][] Mul(Complex32[][] A, float[][] B)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
-                    throw new Exception(exception);
+                    throw new ArgumentException(exception);
 
                 int height = A.GetLength(0);
                 int width = B[0].GetLength(0);
@@ -474,7 +474,7 @@ namespace UMapx.Core
             public static Complex32[][] Mul(float[][] A, Complex32[][] B)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
-                    throw new Exception(exception);
+                    throw new ArgumentException(exception);
 
                 int height = A.GetLength(0);
                 int width = B[0].GetLength(0);

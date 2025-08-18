@@ -34,7 +34,7 @@ namespace UMapx.Wavelet
             set
             {
                 if (value < 1 || value > 3)
-                    throw new Exception("Invalid argument value");
+                    throw new ArgumentException("Invalid argument value");
 
                 derivative = value;
             }

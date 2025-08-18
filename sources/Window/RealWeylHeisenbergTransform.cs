@@ -40,7 +40,7 @@ namespace UMapx.Window
             int N = g0.Length, L = N / M;
 
             if (L <= 0)
-                throw new Exception("Number of frequency shifts not defined correctly");
+                throw new ArgumentException("Number of frequency shifts not defined correctly");
 
             float[,] G = new float[2 * N, 2 * N];
             Complex32 c = 2 * Maths.Pi * Maths.I;

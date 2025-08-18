@@ -48,7 +48,7 @@ namespace UMapx.Wavelet
             set
             {
                 if (value < 1)
-                    throw new Exception("Number of levels cannot be less than 1");
+                    throw new ArgumentException("Number of levels cannot be less than 1");
 
                 this.levels = value;
             }

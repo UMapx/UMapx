@@ -26,7 +26,7 @@ namespace UMapx.Decomposition
         public Diagonal(float[,] A)
         {
             if (!Matrice.IsSquare(A))
-                throw new Exception("The matrix must be square");
+                throw new ArgumentException("The matrix must be square");
 
             int n = A.GetLength(0), i;
             this.diag = new float[n];

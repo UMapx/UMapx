@@ -467,7 +467,7 @@ namespace UMapx.Core
             string[] nums = cols[0].Split('|');
 
             if (cols.Length > 1 || nums.Length != 4)
-                throw new Exception("The input string was in the wrong format");
+                throw new ArgumentException("The input string was in the wrong format");
 
             return new Quaternion32(float.Parse(nums[0]),
                                   float.Parse(nums[1]),
