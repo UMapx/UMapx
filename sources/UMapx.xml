@@ -18748,20 +18748,6 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="T:UMapx.Imaging.EpsilonExtensions">
-            <summary>
-            Using for epsilon extensions.
-            </summary>
-        </member>
-        <member name="M:UMapx.Imaging.EpsilonExtensions.EpsilonEquals(System.Single,System.Single,System.Single)">
-            <summary>
-            Epsilon equals method.
-            </summary>
-            <param name="f">Value</param>
-            <param name="other">Value</param>
-            <param name="epsilon">Value</param>
-            <returns>True or false</returns>
-        </member>
         <member name="T:UMapx.Imaging.EqualizeChannel">
             <summary>
             Defines the channel equalization filter.

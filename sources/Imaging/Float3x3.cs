@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using UMapx.Core;
 
 namespace UMapx.Imaging
@@ -41,7 +42,7 @@ namespace UMapx.Imaging
 
         #endregion
 
-        #region Methods
+        #region Public methods
 
         public static Float3x3 Perspective(Rectangle rectangle, PointFloat t1, PointFloat t2, PointFloat t3, PointFloat t4)
         {
@@ -76,9 +77,10 @@ namespace UMapx.Imaging
                 var dy1 = t_y2 - t_y4;
                 var dy2 = t_y3 - t_y4;
                 var dy3 = t_y1 - t_y2 + t_y4 - t_y3;
+
                 /*  Is the mapping affine?  */
                 var epsilon = 1e-4f;
-                if ((dx3.EpsilonEquals(0, epsilon)) && (dy3.EpsilonEquals(0, epsilon)))
+                if (EpsilonEquals(dx3, 0, epsilon) && EpsilonEquals(dy3, 0, epsilon))
                 {
                     trafo.coefficients[0][0] = t_x2 - t_x1;
                     trafo.coefficients[0][1] = t_x4 - t_x2;
@@ -94,11 +96,11 @@ namespace UMapx.Imaging
                     var det1 = dx3 * dy2 - dy3 * dx2;
                     var det2 = dx1 * dy2 - dy1 * dx2;
 
-                    trafo.coefficients[2][0] = det2.EpsilonEquals(0, epsilon) ? 1.0f : det1 / det2;
+                    trafo.coefficients[2][0] = EpsilonEquals(det2, 0, epsilon) ? 1.0f : det1 / det2;
 
                     det1 = dx1 * dy3 - dy1 * dx3;
 
-                    trafo.coefficients[2][1] = det2.EpsilonEquals(0, epsilon) ? 1.0f : det1 / det2;
+                    trafo.coefficients[2][1] = EpsilonEquals(det2, 0, epsilon) ? 1.0f : det1 / det2;
 
                     trafo.coefficients[0][0] = t_x2 - t_x1 + trafo.coefficients[2][0] * t_x2;
                     trafo.coefficients[0][1] = t_x3 - t_x1 + trafo.coefficients[2][1] * t_x3;
@@ -134,7 +136,7 @@ namespace UMapx.Imaging
 
             var det = Determinant();
 
-            if (det.EpsilonEquals(0, 1e-5f))
+            if (EpsilonEquals(det, 0, 1e-5f))
                 det = 1.0f / det;
 
             inv.coefficients[0][0] = (matrix.coefficients[1][1] * matrix.coefficients[2][2] -
@@ -252,6 +254,15 @@ namespace UMapx.Imaging
                 }
             }
             return tmp;
+        }
+
+        #endregion
+
+        #region Private methods
+
+        internal static bool EpsilonEquals(float f, float other, float epsilon)
+        {
+            return Math.Abs(f - other) <= epsilon;
         }
 
         #endregion
