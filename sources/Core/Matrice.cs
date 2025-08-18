@@ -11147,7 +11147,7 @@ namespace UMapx.Core
         public static float[,] Parse(this float[,] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
-            string[] nums = rows[0].Split('|');
+            string[] nums = rows[0].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             int r = rows.Length, n = nums.Length, k;
             float[,] H = new float[r, n];
             int i, j;
@@ -11161,7 +11161,7 @@ namespace UMapx.Core
             // other rows
             for (i = 1; i < r; i++)
             {
-                nums = rows[i].Split('|');
+                nums = rows[i].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                 k = Math.Min(n, nums.Length);
 
                 for (j = 0; j < k; j++)
@@ -11203,7 +11203,7 @@ namespace UMapx.Core
         public static Complex32[,] Parse(this Complex32[,] a, string s)
         {
             string[] rows = StringOptions.Matpar(s);
-            string[] nums = rows[0].Split('|');
+            string[] nums = rows[0].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             int r = rows.Length, n = nums.Length, k;
             Complex32[,] H = new Complex32[r, n];
             int i, j;
@@ -11217,7 +11217,7 @@ namespace UMapx.Core
             // other rows
             for (i = 1; i < r; i++)
             {
-                nums = rows[i].Split('|');
+                nums = rows[i].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                 k = Math.Min(n, nums.Length);
 
                 for (j = 0; j < k; j++)
@@ -11266,7 +11266,7 @@ namespace UMapx.Core
             // vector?
             if (r < 2)
             {
-                string[] nums = rows[0].Split('|');
+                string[] nums = rows[0].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                 int n = nums.Length, i;
                 float[] H = new float[n];
 
@@ -11319,7 +11319,7 @@ namespace UMapx.Core
             // vector?
             if (r < 2)
             {
-                string[] nums = rows[0].Split('|');
+                string[] nums = rows[0].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                 int n = nums.Length, i;
                 Complex32[] H = new Complex32[n];
 

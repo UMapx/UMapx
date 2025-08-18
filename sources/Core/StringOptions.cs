@@ -78,9 +78,9 @@ namespace UMapx.Core
             }
             else if (v < 0)
             {
-                return (s) ? "-" + (-v).ToString(format) + symbol : " - " + (-v).ToString(format) + symbol;
+                return s ? "-" + (-v).ToString(format) + symbol : " - " + (-v).ToString(format) + symbol;
             }
-            return (s) ? v.ToString(format) + symbol : " + " + v.ToString(format) + symbol;
+            return s ? v.ToString(format) + symbol : " + " + v.ToString(format) + symbol;
         }
         /// <summary>
         /// Defines a general method for casting the original row to the matrix form.
@@ -89,7 +89,7 @@ namespace UMapx.Core
         /// <returns>String array</returns>
         public static string[] Matpar(string s)
         {
-            // example: s = "[1,2,3,4]".
+            // example: s = "[1 2 3 4]".
             // Regex options:
             Regex regex = new Regex(@"\[(?<matrice>.*)]", RegexOptions.None);
             Match match = regex.Match(s);
@@ -98,7 +98,7 @@ namespace UMapx.Core
             if (match.Success)
             {
                 // get new string:
-                return Regex.Split(match.Result("${matrice}").Replace(",", "|"), ";");
+                return Regex.Split(match.Result("${matrice}").Replace(" ", "|"), ";");
             }
             throw new Exception("The input string was in the wrong format");
         }
