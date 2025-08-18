@@ -1800,7 +1800,7 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Implements local average of matrice (horizontal).
+        /// Implements local average of matrix (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
@@ -1848,7 +1848,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements local average of matrice (vertical).
+        /// Implements local average of matrix (vertical).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>
@@ -1897,7 +1897,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements local average of matrice (horizontal).
+        /// Implements local average of matrix (horizontal).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r1">Size</param>
@@ -1945,7 +1945,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements local average of matrice (vertical).
+        /// Implements local average of matrix (vertical).
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <param name="r0">Size</param>

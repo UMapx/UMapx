@@ -5087,7 +5087,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanHorizontal(System.Single[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrice (horizontal).
+            Implements local average of matrix (horizontal).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r1">Size</param>
@@ -5095,7 +5095,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanVertical(System.Single[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrice (vertical).
+            Implements local average of matrix (vertical).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r0">Size</param>
@@ -5103,7 +5103,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanHorizontal(UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrice (horizontal).
+            Implements local average of matrix (horizontal).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r1">Size</param>
@@ -5111,7 +5111,7 @@
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanVertical(UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
-            Implements local average of matrice (vertical).
+            Implements local average of matrix (vertical).
             </summary>
             <param name="A">Jagged array</param>
             <param name="r0">Size</param>
