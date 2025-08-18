@@ -9,2417 +9,2482 @@ namespace UMapx.Core
     /// </summary>
     internal static class LinealgOptions
     {
-        #region Private data
+        #region Operation
         /// <summary>
-        /// Exception message.
+        /// Defines matrix operation class. 
         /// </summary>
-        private static readonly string exception = "The length of the row of matrix A must be equal to the length of the column of matrix B";
-        #endregion
-
-        #region Determinant
-        /// <summary>
-        /// Iterative calculation of the determinant.
-        /// </summary>
-        /// <param name="element">"Element</param>
-        /// <param name="n">Radius</param>
-        /// <returns>Value</returns>
-        public unsafe static float Determinant(float* element, int n)
+        public static class MatrixOperation
         {
-            float* mtx_u_ii, mtx_ii_j;
-            float* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
-            float val, det = 1;
-            int d = 0;
+            #region Private data
+            /// <summary>
+            /// Exception message.
+            /// </summary>
+            private static readonly string exception = "The length of the row of matrix A must be equal to the length of the column of matrix B";
+            #endregion
 
-            for (float* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
+            #region Determinant
+            /// <summary>
+            /// Iterative calculation of the determinant.
+            /// </summary>
+            /// <param name="element">"Element</param>
+            /// <param name="n">Radius</param>
+            /// <returns>Value</returns>
+            public unsafe static float Determinant(float* element, int n)
             {
+                float* mtx_u_ii, mtx_ii_j;
+                float* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
+                float val, det = 1;
+                int d = 0;
+
+                for (float* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
                 {
-                    val = Math.Abs(*(mtx_ii_j = element));
-                    for (mtx_u_ii = element + n; mtx_u_ii < mtx_end; mtx_u_ii += n)
                     {
-                        if (val < Math.Abs(*mtx_u_ii))
-                            val = Math.Abs(*(mtx_ii_j = mtx_u_ii));
-                    }
-
-                    if (Math.Abs(val - 0) < float.Epsilon) return float.NaN;
-
-                    if (mtx_ii_j != element)
-                    {
-                        det = -det;
-                        for (mtx_u_ii = element; mtx_u_ii < mtx_ii_end; mtx_ii_j++, mtx_u_ii++)
+                        val = Math.Abs(*(mtx_ii_j = element));
+                        for (mtx_u_ii = element + n; mtx_u_ii < mtx_end; mtx_u_ii += n)
                         {
-                            val = *mtx_u_ii;
-                            *mtx_u_ii = *mtx_ii_j;
-                            *mtx_ii_j = val;
+                            if (val < Math.Abs(*mtx_u_ii))
+                                val = Math.Abs(*(mtx_ii_j = mtx_u_ii));
+                        }
+
+                        if (Math.Abs(val - 0) < float.Epsilon) return float.NaN;
+
+                        if (mtx_ii_j != element)
+                        {
+                            det = -det;
+                            for (mtx_u_ii = element; mtx_u_ii < mtx_ii_end; mtx_ii_j++, mtx_u_ii++)
+                            {
+                                val = *mtx_u_ii;
+                                *mtx_u_ii = *mtx_ii_j;
+                                *mtx_ii_j = val;
+                            }
                         }
                     }
-                }
 
-                for (mtx_u_ii = element + n, mtx_u_ii_j = mtx_end + n; mtx_u_ii < mtx_u_ii_j; mtx_u_ii += d)
-                {
-                    val = *(mtx_u_ii++) / *element;
-                    for (mtx_ii_j = element + 1; mtx_ii_j < mtx_ii_end; mtx_u_ii++, mtx_ii_j++)
-                        *mtx_u_ii -= *mtx_ii_j * val;
-                }
-                det *= *element;
-            }
-            return det * *element;
-        }
-        /// <summary>
-        /// Iterative calculation of the determinant.
-        /// </summary>
-        /// <param name="element">"Element</param>
-        /// <param name="n">Radius</param>
-        /// <returns>Complex number</returns>
-        public unsafe static Complex32 Determinant(Complex32* element, int n)
-        {
-            Complex32* mtx_u_ii, mtx_ii_j;
-            Complex32* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
-            Complex32 val, det = (Complex32)1;
-            int d = 0;
-
-            for (Complex32* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
-            {
-                {
-
-                    val = (Complex32)Maths.Abs(*(mtx_ii_j = element));
-                    for (mtx_u_ii = element + n; mtx_u_ii < mtx_end; mtx_u_ii += n)
+                    for (mtx_u_ii = element + n, mtx_u_ii_j = mtx_end + n; mtx_u_ii < mtx_u_ii_j; mtx_u_ii += d)
                     {
-                        if (val.Abs < (Maths.Abs(*mtx_u_ii)))
-                            val = (Complex32)Maths.Abs(*(mtx_ii_j = mtx_u_ii));
+                        val = *(mtx_u_ii++) / *element;
+                        for (mtx_ii_j = element + 1; mtx_ii_j < mtx_ii_end; mtx_u_ii++, mtx_ii_j++)
+                            *mtx_u_ii -= *mtx_ii_j * val;
                     }
+                    det *= *element;
+                }
+                return det * *element;
+            }
+            /// <summary>
+            /// Iterative calculation of the determinant.
+            /// </summary>
+            /// <param name="element">"Element</param>
+            /// <param name="n">Radius</param>
+            /// <returns>Complex number</returns>
+            public unsafe static Complex32 Determinant(Complex32* element, int n)
+            {
+                Complex32* mtx_u_ii, mtx_ii_j;
+                Complex32* mtx_end = element + n * (n - 1), mtx_u_ii_j = null;
+                Complex32 val, det = (Complex32)1;
+                int d = 0;
 
-                    if (Maths.Abs(val - 0) < float.Epsilon) return (Complex32)float.NaN;
-
-                    if (mtx_ii_j != element)
+                for (Complex32* mtx_ii_end = element + n; element < mtx_end; element += n + 1, mtx_ii_end += n, d++)
+                {
                     {
-                        det = -det;
-                        for (mtx_u_ii = element; mtx_u_ii < mtx_ii_end; mtx_ii_j++, mtx_u_ii++)
+
+                        val = (Complex32)Maths.Abs(*(mtx_ii_j = element));
+                        for (mtx_u_ii = element + n; mtx_u_ii < mtx_end; mtx_u_ii += n)
                         {
-                            val = *mtx_u_ii;
-                            *mtx_u_ii = *mtx_ii_j;
-                            *mtx_ii_j = val;
+                            if (val.Abs < (Maths.Abs(*mtx_u_ii)))
+                                val = (Complex32)Maths.Abs(*(mtx_ii_j = mtx_u_ii));
+                        }
+
+                        if (Maths.Abs(val - 0) < float.Epsilon) return (Complex32)float.NaN;
+
+                        if (mtx_ii_j != element)
+                        {
+                            det = -det;
+                            for (mtx_u_ii = element; mtx_u_ii < mtx_ii_end; mtx_ii_j++, mtx_u_ii++)
+                            {
+                                val = *mtx_u_ii;
+                                *mtx_u_ii = *mtx_ii_j;
+                                *mtx_ii_j = val;
+                            }
                         }
                     }
-                }
 
-                for (mtx_u_ii = element + n, mtx_u_ii_j = mtx_end + n; mtx_u_ii < mtx_u_ii_j; mtx_u_ii += d)
-                {
-                    val = *(mtx_u_ii++) / *element;
-                    for (mtx_ii_j = element + 1; mtx_ii_j < mtx_ii_end; mtx_u_ii++, mtx_ii_j++)
-                        *mtx_u_ii -= *mtx_ii_j * val;
+                    for (mtx_u_ii = element + n, mtx_u_ii_j = mtx_end + n; mtx_u_ii < mtx_u_ii_j; mtx_u_ii += d)
+                    {
+                        val = *(mtx_u_ii++) / *element;
+                        for (mtx_ii_j = element + 1; mtx_ii_j < mtx_ii_end; mtx_u_ii++, mtx_ii_j++)
+                            *mtx_u_ii -= *mtx_ii_j * val;
+                    }
+                    det *= *element;
                 }
-                det *= *element;
+                return det * *element;
             }
-            return det * *element;
-        }
-        #endregion
+            #endregion
 
-        #region Inversion
-        /// <summary>
-        /// Implements the matrix inversion operation.
-        /// </summary>
-        /// <param name="working">Square matrix</param>
-        /// <returns>Matrix</returns>
-        public static float[][] Invert(float[][] working)
-        {
-            // There are faster ways to do this, but for simplicity
-            // and to get something working quickly, I'll just write a 
-            // simple Gaussian-elimination matrix inverter here, and look 
-            // at speeding things up later.
-            // https://gswce.net/?p=585
-
-            float epsilon = 1e-32f;
-
-            // This routine destroys the matrix it's working on, so I'll first 
-            // make a copy of it, as well as setting up the output matrix invA 
-            // as a unit matrix of the appropriate size:
-            int dimension = working.GetLength(0);
-            float[][] inverse = Jagged.Zero(dimension, dimension);
-            // C# will set the initial values to zero, so to create a unit
-            // matrix, I just need to fill in the diagonal elements:
-            for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = 1.0f;
-
-            // OK, first convert working to upper triangular form:
-            for (int loop = 0; loop < dimension; loop++) // for each row
+            #region Inversion
+            /// <summary>
+            /// Implements the matrix inversion operation.
+            /// </summary>
+            /// <param name="working">Square matrix</param>
+            /// <returns>Matrix</returns>
+            public static float[][] Invert(float[][] working)
             {
-                int currentRow = loop;
+                // There are faster ways to do this, but for simplicity
+                // and to get something working quickly, I'll just write a 
+                // simple Gaussian-elimination matrix inverter here, and look 
+                // at speeding things up later.
+                // https://gswce.net/?p=585
 
-                // First step is pivoting: make sure the biggest element
-                // remaining in any column is on the next row.  First, find
-                // the biggest element remaining in the current column:
-                float biggestSoFar = 0.0f; int biggestRow = currentRow;
-                for (int x = currentRow; x < dimension; x++)
+                float epsilon = 1e-32f;
+
+                // This routine destroys the matrix it's working on, so I'll first 
+                // make a copy of it, as well as setting up the output matrix invA 
+                // as a unit matrix of the appropriate size:
+                int dimension = working.GetLength(0);
+                float[][] inverse = Jagged.Zero(dimension, dimension);
+                // C# will set the initial values to zero, so to create a unit
+                // matrix, I just need to fill in the diagonal elements:
+                for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = 1.0f;
+
+                // OK, first convert working to upper triangular form:
+                for (int loop = 0; loop < dimension; loop++) // for each row
                 {
-                    float sizeOfThis = (float)Maths.Abs(working[x][currentRow]);
-                    if (sizeOfThis > biggestSoFar)
+                    int currentRow = loop;
+
+                    // First step is pivoting: make sure the biggest element
+                    // remaining in any column is on the next row.  First, find
+                    // the biggest element remaining in the current column:
+                    float biggestSoFar = 0.0f; int biggestRow = currentRow;
+                    for (int x = currentRow; x < dimension; x++)
                     {
-                        biggestSoFar = sizeOfThis;
-                        biggestRow = x;
+                        float sizeOfThis = (float)Maths.Abs(working[x][currentRow]);
+                        if (sizeOfThis > biggestSoFar)
+                        {
+                            biggestSoFar = sizeOfThis;
+                            biggestRow = x;
+                        }
                     }
+
+                    // and if this is not at the top, swop the rows of working
+                    // and inverse around until it is:
+                    if (biggestRow != currentRow)
+                    {
+                        float temp;
+                        for (int lop = currentRow; lop < dimension; lop++)
+                        {
+                            temp = working[currentRow][lop];
+                            working[currentRow][lop] = working[biggestRow][lop];
+                            working[biggestRow][lop] = temp;
+                        }
+                        for (int lop = 0; lop < dimension; lop++)
+                        {
+                            temp = inverse[currentRow][lop];
+                            inverse[currentRow][lop] = inverse[biggestRow][lop];
+                            inverse[biggestRow][lop] = temp;
+                        }
+                    }
+
+                    // Then, go down the matrix subtracting as necessary
+                    // to get rid of the lower-triangular elements:
+                    for (int lop = currentRow + 1; lop < dimension; lop++)
+                    {
+                        // Matrix might be ill-conditioned.  I should check:
+                        if (working[currentRow][currentRow] == 0)
+                        {
+                            working[currentRow][currentRow] = epsilon;
+                        }
+                        float factor = working[lop][currentRow] / working[currentRow][currentRow];
+
+                        // If the matrix is fairly sparse (quite common for this
+                        // application), it might make sense to check that the 
+                        // lower elements are not already zero before doing all
+                        // the scaling and replacing:
+                        if (factor != 0.0)
+                        {
+                            // Only have to do from current row on in working, but due
+                            // to pivoting, might have to do the entire row in inverse:
+                            for (int lp = currentRow; lp < dimension; lp++)
+                                working[lop][lp] -= factor * working[currentRow][lp];
+                            for (int lp = 0; lp < dimension; lp++)
+                                inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                        }
+                    }
+                    // That's it for this row, now on to the next one...
                 }
 
-                // and if this is not at the top, swop the rows of working
-                // and inverse around until it is:
-                if (biggestRow != currentRow)
+                // Now with the working matrix in upper-triangular form, continue the same
+                // process amongst the upper-triangular elements to convert working into
+                // diagonal form:
+                for (int loop = dimension - 1; loop >= 0; loop--) // for each row
                 {
-                    float temp;
-                    for (int lop = currentRow; lop < dimension; lop++)
-                    {
-                        temp = working[currentRow][lop];
-                        working[currentRow][lop] = working[biggestRow][lop];
-                        working[biggestRow][lop] = temp;
-                    }
-                    for (int lop = 0; lop < dimension; lop++)
-                    {
-                        temp = inverse[currentRow][lop];
-                        inverse[currentRow][lop] = inverse[biggestRow][lop];
-                        inverse[biggestRow][lop] = temp;
-                    }
-                }
+                    int currentRow = loop;
 
-                // Then, go down the matrix subtracting as necessary
-                // to get rid of the lower-triangular elements:
-                for (int lop = currentRow + 1; lop < dimension; lop++)
-                {
                     // Matrix might be ill-conditioned.  I should check:
                     if (working[currentRow][currentRow] == 0)
                     {
                         working[currentRow][currentRow] = epsilon;
                     }
-                    float factor = working[lop][currentRow] / working[currentRow][currentRow];
 
-                    // If the matrix is fairly sparse (quite common for this
-                    // application), it might make sense to check that the 
-                    // lower elements are not already zero before doing all
-                    // the scaling and replacing:
-                    if (factor != 0.0)
+                    // Then, go up the matrix subtracting as necessary to get 
+                    // rid of the remaining upper-triangular elements:
+                    for (int lop = currentRow - 1; lop >= 0; lop--)
                     {
-                        // Only have to do from current row on in working, but due
-                        // to pivoting, might have to do the entire row in inverse:
-                        for (int lp = currentRow; lp < dimension; lp++)
-                            working[lop][lp] -= factor * working[currentRow][lp];
-                        for (int lp = 0; lp < dimension; lp++)
-                            inverse[lop][lp] -= factor * inverse[currentRow][lp];
-                    }
-                }
-                // That's it for this row, now on to the next one...
-            }
+                        float factor = working[lop][currentRow] / working[currentRow][currentRow];
 
-            // Now with the working matrix in upper-triangular form, continue the same
-            // process amongst the upper-triangular elements to convert working into
-            // diagonal form:
-            for (int loop = dimension - 1; loop >= 0; loop--) // for each row
-            {
-                int currentRow = loop;
+                        // There's only one element in working to change (the other elements
+                        // in the row of working are all zero), and that will always be set
+                        // to zero; but you might have to do the entire row in inverse:
+                        working[lop][currentRow] = 0.0f;
 
-                // Matrix might be ill-conditioned.  I should check:
-                if (working[currentRow][currentRow] == 0)
-                {
-                    working[currentRow][currentRow] = epsilon;
-                }
-
-                // Then, go up the matrix subtracting as necessary to get 
-                // rid of the remaining upper-triangular elements:
-                for (int lop = currentRow - 1; lop >= 0; lop--)
-                {
-                    float factor = working[lop][currentRow] / working[currentRow][currentRow];
-
-                    // There's only one element in working to change (the other elements
-                    // in the row of working are all zero), and that will always be set
-                    // to zero; but you might have to do the entire row in inverse:
-                    working[lop][currentRow] = 0.0f;
-
-                    if (factor != 0.0f)
-                    {
-                        for (int lp = 0; lp < dimension; lp++)
+                        if (factor != 0.0f)
                         {
-                            inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                            for (int lp = 0; lp < dimension; lp++)
+                            {
+                                inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                            }
                         }
                     }
+                    // That's it for this row, now on to the next one...
                 }
-                // That's it for this row, now on to the next one...
+
+                // Should now have working as a diagonal matrix.  Final thing is 
+                // to scale all the rows:
+                for (int loop = 0; loop < dimension; loop++)
+                {
+                    float scale = working[loop][loop];
+                    for (int lop = 0; lop < dimension; lop++) inverse[loop][lop] /= scale;
+                }
+
+                // That's it.  inverse should now be the inverse of the original matrix.
+                return inverse;
             }
-
-            // Should now have working as a diagonal matrix.  Final thing is 
-            // to scale all the rows:
-            for (int loop = 0; loop < dimension; loop++)
+            /// <summary>
+            /// Implements the matrix inversion operation.
+            /// </summary>
+            /// <param name="working">Square matrix</param>
+            /// <returns>Matrix</returns>
+            public static Complex32[][] Invert(Complex32[][] working)
             {
-                float scale = working[loop][loop];
-                for (int lop = 0; lop < dimension; lop++) inverse[loop][lop] /= scale;
-            }
+                // There are faster ways to do this, but for simplicity
+                // and to get something working quickly, I'll just write a 
+                // simple Gaussian-elimination matrix inverter here, and look 
+                // at speeding things up later.
+                // https://gswce.net/?p=585
 
-            // That's it.  inverse should now be the inverse of the original matrix.
-            return inverse;
-        }
-        /// <summary>
-        /// Implements the matrix inversion operation.
-        /// </summary>
-        /// <param name="working">Square matrix</param>
-        /// <returns>Matrix</returns>
-        public static Complex32[][] Invert(Complex32[][] working)
-        {
-            // There are faster ways to do this, but for simplicity
-            // and to get something working quickly, I'll just write a 
-            // simple Gaussian-elimination matrix inverter here, and look 
-            // at speeding things up later.
-            // https://gswce.net/?p=585
+                float epsilon = 1e-32f;
 
-            float epsilon = 1e-32f;
+                // This routine destroys the matrix it's working on, so I'll first 
+                // make a copy of it, as well as setting up the output matrix invA 
+                // as a unit matrix of the appropriate size:
+                int dimension = working.GetLength(0);
+                Complex32[][] inverse = Jagged.ToComplex(Jagged.Zero(dimension, dimension));
+                // C# will set the initial values to zero, so to create a unit
+                // matrix, I just need to fill in the diagonal elements:
+                for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = new Complex32(1.0f, 0);
 
-            // This routine destroys the matrix it's working on, so I'll first 
-            // make a copy of it, as well as setting up the output matrix invA 
-            // as a unit matrix of the appropriate size:
-            int dimension = working.GetLength(0);
-            Complex32[][] inverse = Jagged.ToComplex(Jagged.Zero(dimension, dimension));
-            // C# will set the initial values to zero, so to create a unit
-            // matrix, I just need to fill in the diagonal elements:
-            for (int loop = 0; loop < dimension; loop++) inverse[loop][loop] = new Complex32(1.0f, 0);
-
-            // OK, first convert working to upper triangular form:
-            for (int loop = 0; loop < dimension; loop++) // for each row
-            {
-                int currentRow = loop;
-
-                // First step is pivoting: make sure the biggest element
-                // remaining in any column is on the next row.  First, find
-                // the biggest element remaining in the current column:
-                float biggestSoFar = 0.0f; int biggestRow = currentRow;
-                for (int x = currentRow; x < dimension; x++)
+                // OK, first convert working to upper triangular form:
+                for (int loop = 0; loop < dimension; loop++) // for each row
                 {
-                    float sizeOfThis = working[x][currentRow].Abs;
-                    if (sizeOfThis > biggestSoFar)
+                    int currentRow = loop;
+
+                    // First step is pivoting: make sure the biggest element
+                    // remaining in any column is on the next row.  First, find
+                    // the biggest element remaining in the current column:
+                    float biggestSoFar = 0.0f; int biggestRow = currentRow;
+                    for (int x = currentRow; x < dimension; x++)
                     {
-                        biggestSoFar = sizeOfThis;
-                        biggestRow = x;
+                        float sizeOfThis = working[x][currentRow].Abs;
+                        if (sizeOfThis > biggestSoFar)
+                        {
+                            biggestSoFar = sizeOfThis;
+                            biggestRow = x;
+                        }
                     }
+
+                    // and if this is not at the top, swop the rows of working
+                    // and inverse around until it is:
+                    if (biggestRow != currentRow)
+                    {
+                        Complex32 temp;
+                        for (int lop = currentRow; lop < dimension; lop++)
+                        {
+                            temp = working[currentRow][lop];
+                            working[currentRow][lop] = working[biggestRow][lop];
+                            working[biggestRow][lop] = temp;
+                        }
+                        for (int lop = 0; lop < dimension; lop++)
+                        {
+                            temp = inverse[currentRow][lop];
+                            inverse[currentRow][lop] = inverse[biggestRow][lop];
+                            inverse[biggestRow][lop] = temp;
+                        }
+                    }
+
+                    // Then, go down the matrix subtracting as necessary
+                    // to get rid of the lower-triangular elements:
+                    for (int lop = currentRow + 1; lop < dimension; lop++)
+                    {
+                        // Matrix might be ill-conditioned.  I should check:
+                        if (working[currentRow][currentRow] == new Complex32(0, 0))
+                        {
+                            working[currentRow][currentRow] = new Complex32(epsilon, 0);
+                        }
+                        Complex32 factor = working[lop][currentRow] / working[currentRow][currentRow];
+
+                        // If the matrix is fairly sparse (quite common for this
+                        // application), it might make sense to check that the 
+                        // lower elements are not already zero before doing all
+                        // the scaling and replacing:
+                        if (factor != new Complex32(0, 0))
+                        {
+                            // Only have to do from current row on in working, but due
+                            // to pivoting, might have to do the entire row in inverse:
+                            for (int lp = currentRow; lp < dimension; lp++)
+                                working[lop][lp] -= factor * working[currentRow][lp];
+                            for (int lp = 0; lp < dimension; lp++)
+                                inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                        }
+                    }
+                    // That's it for this row, now on to the next one...
                 }
 
-                // and if this is not at the top, swop the rows of working
-                // and inverse around until it is:
-                if (biggestRow != currentRow)
+                // Now with the working matrix in upper-triangular form, continue the same
+                // process amongst the upper-triangular elements to convert working into
+                // diagonal form:
+                for (int loop = dimension - 1; loop >= 0; loop--) // for each row
                 {
-                    Complex32 temp;
-                    for (int lop = currentRow; lop < dimension; lop++)
-                    {
-                        temp = working[currentRow][lop];
-                        working[currentRow][lop] = working[biggestRow][lop];
-                        working[biggestRow][lop] = temp;
-                    }
-                    for (int lop = 0; lop < dimension; lop++)
-                    {
-                        temp = inverse[currentRow][lop];
-                        inverse[currentRow][lop] = inverse[biggestRow][lop];
-                        inverse[biggestRow][lop] = temp;
-                    }
-                }
+                    int currentRow = loop;
 
-                // Then, go down the matrix subtracting as necessary
-                // to get rid of the lower-triangular elements:
-                for (int lop = currentRow + 1; lop < dimension; lop++)
-                {
                     // Matrix might be ill-conditioned.  I should check:
                     if (working[currentRow][currentRow] == new Complex32(0, 0))
                     {
                         working[currentRow][currentRow] = new Complex32(epsilon, 0);
                     }
-                    Complex32 factor = working[lop][currentRow] / working[currentRow][currentRow];
 
-                    // If the matrix is fairly sparse (quite common for this
-                    // application), it might make sense to check that the 
-                    // lower elements are not already zero before doing all
-                    // the scaling and replacing:
-                    if (factor != new Complex32(0, 0))
+                    // Then, go up the matrix subtracting as necessary to get 
+                    // rid of the remaining upper-triangular elements:
+                    for (int lop = currentRow - 1; lop >= 0; lop--)
                     {
-                        // Only have to do from current row on in working, but due
-                        // to pivoting, might have to do the entire row in inverse:
-                        for (int lp = currentRow; lp < dimension; lp++)
-                            working[lop][lp] -= factor * working[currentRow][lp];
-                        for (int lp = 0; lp < dimension; lp++)
-                            inverse[lop][lp] -= factor * inverse[currentRow][lp];
-                    }
-                }
-                // That's it for this row, now on to the next one...
-            }
+                        Complex32 factor = working[lop][currentRow] / working[currentRow][currentRow];
 
-            // Now with the working matrix in upper-triangular form, continue the same
-            // process amongst the upper-triangular elements to convert working into
-            // diagonal form:
-            for (int loop = dimension - 1; loop >= 0; loop--) // for each row
-            {
-                int currentRow = loop;
+                        // There's only one element in working to change (the other elements
+                        // in the row of working are all zero), and that will always be set
+                        // to zero; but you might have to do the entire row in inverse:
+                        working[lop][currentRow] = new Complex32(0, 0);
 
-                // Matrix might be ill-conditioned.  I should check:
-                if (working[currentRow][currentRow] == new Complex32(0, 0))
-                {
-                    working[currentRow][currentRow] = new Complex32(epsilon, 0);
-                }
-
-                // Then, go up the matrix subtracting as necessary to get 
-                // rid of the remaining upper-triangular elements:
-                for (int lop = currentRow - 1; lop >= 0; lop--)
-                {
-                    Complex32 factor = working[lop][currentRow] / working[currentRow][currentRow];
-
-                    // There's only one element in working to change (the other elements
-                    // in the row of working are all zero), and that will always be set
-                    // to zero; but you might have to do the entire row in inverse:
-                    working[lop][currentRow] = new Complex32(0, 0);
-
-                    if (factor != new Complex32(0, 0))
-                    {
-                        for (int lp = 0; lp < dimension; lp++)
+                        if (factor != new Complex32(0, 0))
                         {
-                            inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                            for (int lp = 0; lp < dimension; lp++)
+                            {
+                                inverse[lop][lp] -= factor * inverse[currentRow][lp];
+                            }
                         }
                     }
+                    // That's it for this row, now on to the next one...
                 }
-                // That's it for this row, now on to the next one...
-            }
 
-            // Should now have working as a diagonal matrix.  Final thing is 
-            // to scale all the rows:
-            for (int loop = 0; loop < dimension; loop++)
-            {
-                Complex32 scale = working[loop][loop];
-                for (int lop = 0; lop < dimension; lop++) inverse[loop][lop] /= scale;
-            }
-
-            // That's it.  inverse should now be the inverse of the original matrix.
-            return inverse;
-        }
-        #endregion
-
-        #region Multiplication
-        /// <summary>
-        /// Implements the multiplication of matrices presented in the form of jagged arrays.
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <returns>Jagged array</returns>
-        public static float[][] Mul(float[][] A, float[][] B)
-        {
-            if (A[0].GetLength(0) != B.GetLength(0))
-                throw new Exception(exception);
-
-            int height = A.GetLength(0);
-            int width = B[0].GetLength(0);
-            int length = B.GetLength(0);
-            float[][] C = Jagged.Zero(height, width);
-
-            Parallel.For(0, height, i =>
-            {
-                LinealgOptions.Whittle_Mul(A, B, C, length, width, i);
-            });
-
-            return C;
-        }
-        /// <summary>
-        /// Implements the multiplication of matrices presented in the form of jagged arrays.
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[][] Mul(Complex32[][] A, Complex32[][] B)
-        {
-            if (A[0].GetLength(0) != B.GetLength(0))
-                throw new Exception(exception);
-
-            int height = A.GetLength(0);
-            int width = B[0].GetLength(0);
-            int length = B.GetLength(0);
-            Complex32[][] C = Jagged.Zero(height, width).ToComplex();
-
-            Parallel.For(0, height, i =>
-            {
-                LinealgOptions.Whittle_Mul(A, B, C, length, width, i);
-            });
-
-            return C;
-        }
-        /// <summary>
-        /// Implements the multiplication of matrices presented in the form of jagged arrays.
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[][] Mul(Complex32[][] A, float[][] B)
-        {
-            if (A[0].GetLength(0) != B.GetLength(0))
-                throw new Exception(exception);
-
-            int height = A.GetLength(0);
-            int width = B[0].GetLength(0);
-            int length = B.GetLength(0);
-            Complex32[][] C = Jagged.Zero(height, width).ToComplex();
-
-            Parallel.For(0, height, i =>
-            {
-                LinealgOptions.Whittle_Mul(A, B, C, length, width, i);
-            });
-
-            return C;
-        }
-        /// <summary>
-        /// Implements the multiplication of matrices presented in the form of jagged arrays.
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[][] Mul(float[][] A, Complex32[][] B)
-        {
-            if (A[0].GetLength(0) != B.GetLength(0))
-                throw new Exception(exception);
-
-            int height = A.GetLength(0);
-            int width = B[0].GetLength(0);
-            int length = B.GetLength(0);
-            Complex32[][] C = Jagged.Zero(height, width).ToComplex();
-
-            Parallel.For(0, height, i =>
-            {
-                LinealgOptions.Whittle_Mul(A, B, C, length, width, i);
-            });
-
-            return C;
-        }
-
-        #region Modified Whittle matrix multiplication
-        /// <summary>
-        /// Implements matrix multiplication using modified Whittle optimization.
-        /// </summary>
-        /// <param name="A">Row of A</param>
-        /// <param name="B">Matrix B</param>
-        /// <param name="C">Row of C</param>
-        /// <param name="length">Length</param>
-        /// <param name="width">Width</param>
-        /// <param name="i">Index</param>
-        private static void Whittle_Mul(float[][] A, float[][] B, float[][] C, int length, int width, int i)
-        {
-            float[] iRowA = A[i];
-            float[] iRowC = C[i];
-            int k, j;
-
-            for (k = 0; k < length; k++)
-            {
-                float[] kRowB = B[k];
-                float ikA = iRowA[k];
-
-                for (j = 0; j < width; j++)
+                // Should now have working as a diagonal matrix.  Final thing is 
+                // to scale all the rows:
+                for (int loop = 0; loop < dimension; loop++)
                 {
-                    iRowC[j] += ikA * kRowB[j];
+                    Complex32 scale = working[loop][loop];
+                    for (int lop = 0; lop < dimension; lop++) inverse[loop][lop] /= scale;
                 }
-            }
-        }
-        /// <summary>
-        /// Implements matrix multiplication using modified Whittle optimization.
-        /// </summary>
-        /// <param name="A">Row of A</param>
-        /// <param name="B">Matrix B</param>
-        /// <param name="C">Row of C</param>
-        /// <param name="length">Length</param>
-        /// <param name="width">Width</param>
-        /// <param name="i">Index</param>
-        private static void Whittle_Mul(Complex32[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
-        {
-            Complex32[] iRowA = A[i];
-            Complex32[] iRowC = C[i];
-            int k, j;
 
-            for (k = 0; k < length; k++)
+                // That's it.  inverse should now be the inverse of the original matrix.
+                return inverse;
+            }
+            #endregion
+
+            #region Multiplication
+            /// <summary>
+            /// Implements the multiplication of matrices presented in the form of jagged arrays.
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <returns>Jagged array</returns>
+            public static float[][] Mul(float[][] A, float[][] B)
             {
-                Complex32[] kRowB = B[k];
-                Complex32 ikA = iRowA[k];
+                if (A[0].GetLength(0) != B.GetLength(0))
+                    throw new Exception(exception);
 
-                for (j = 0; j < width; j++)
+                int height = A.GetLength(0);
+                int width = B[0].GetLength(0);
+                int length = B.GetLength(0);
+                float[][] C = Jagged.Zero(height, width);
+
+                Parallel.For(0, height, i =>
                 {
-                    iRowC[j] += ikA * kRowB[j];
-                }
-            }
-        }
-        /// <summary>
-        /// Implements matrix multiplication using modified Whittle optimization.
-        /// </summary>
-        /// <param name="A">Row of A</param>
-        /// <param name="B">Matrix B</param>
-        /// <param name="C">Row of C</param>
-        /// <param name="length">Length</param>
-        /// <param name="width">Width</param>
-        /// <param name="i">Index</param>
-        private static void Whittle_Mul(Complex32[][] A, float[][] B, Complex32[][] C, int length, int width, int i)
-        {
-            Complex32[] iRowA = A[i];
-            Complex32[] iRowC = C[i];
-            int k, j;
+                    LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                });
 
-            for (k = 0; k < length; k++)
+                return C;
+            }
+            /// <summary>
+            /// Implements the multiplication of matrices presented in the form of jagged arrays.
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[][] Mul(Complex32[][] A, Complex32[][] B)
             {
-                float[] kRowB = B[k];
-                Complex32 ikA = iRowA[k];
+                if (A[0].GetLength(0) != B.GetLength(0))
+                    throw new Exception(exception);
 
-                for (j = 0; j < width; j++)
+                int height = A.GetLength(0);
+                int width = B[0].GetLength(0);
+                int length = B.GetLength(0);
+                Complex32[][] C = Jagged.Zero(height, width).ToComplex();
+
+                Parallel.For(0, height, i =>
                 {
-                    iRowC[j] += ikA * kRowB[j];
-                }
-            }
-        }
-        /// <summary>
-        /// Implements matrix multiplication using modified Whittle optimization.
-        /// </summary>
-        /// <param name="A">Row of A</param>
-        /// <param name="B">Matrix B</param>
-        /// <param name="C">Row of C</param>
-        /// <param name="length">Length</param>
-        /// <param name="width">Width</param>
-        /// <param name="i">Index</param>
-        private static void Whittle_Mul(float[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
-        {
-            float[] iRowA = A[i];
-            Complex32[] iRowC = C[i];
-            int k, j;
+                    LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                });
 
-            for (k = 0; k < length; k++)
+                return C;
+            }
+            /// <summary>
+            /// Implements the multiplication of matrices presented in the form of jagged arrays.
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[][] Mul(Complex32[][] A, float[][] B)
             {
-                Complex32[] kRowB = B[k];
-                Complex32 ikA = iRowA[k];
+                if (A[0].GetLength(0) != B.GetLength(0))
+                    throw new Exception(exception);
 
-                for (j = 0; j < width; j++)
+                int height = A.GetLength(0);
+                int width = B[0].GetLength(0);
+                int length = B.GetLength(0);
+                Complex32[][] C = Jagged.Zero(height, width).ToComplex();
+
+                Parallel.For(0, height, i =>
                 {
-                    iRowC[j] += ikA * kRowB[j];
+                    LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                });
+
+                return C;
+            }
+            /// <summary>
+            /// Implements the multiplication of matrices presented in the form of jagged arrays.
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[][] Mul(float[][] A, Complex32[][] B)
+            {
+                if (A[0].GetLength(0) != B.GetLength(0))
+                    throw new Exception(exception);
+
+                int height = A.GetLength(0);
+                int width = B[0].GetLength(0);
+                int length = B.GetLength(0);
+                Complex32[][] C = Jagged.Zero(height, width).ToComplex();
+
+                Parallel.For(0, height, i =>
+                {
+                    LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                });
+
+                return C;
+            }
+
+            #region Modified Whittle matrix multiplication
+            /// <summary>
+            /// Implements matrix multiplication using modified Whittle optimization.
+            /// </summary>
+            /// <param name="A">Row of A</param>
+            /// <param name="B">Matrix B</param>
+            /// <param name="C">Row of C</param>
+            /// <param name="length">Length</param>
+            /// <param name="width">Width</param>
+            /// <param name="i">Index</param>
+            private static void Whittle_Mul(float[][] A, float[][] B, float[][] C, int length, int width, int i)
+            {
+                float[] iRowA = A[i];
+                float[] iRowC = C[i];
+                int k, j;
+
+                for (k = 0; k < length; k++)
+                {
+                    float[] kRowB = B[k];
+                    float ikA = iRowA[k];
+
+                    for (j = 0; j < width; j++)
+                    {
+                        iRowC[j] += ikA * kRowB[j];
+                    }
                 }
             }
-        }
-        #endregion
+            /// <summary>
+            /// Implements matrix multiplication using modified Whittle optimization.
+            /// </summary>
+            /// <param name="A">Row of A</param>
+            /// <param name="B">Matrix B</param>
+            /// <param name="C">Row of C</param>
+            /// <param name="length">Length</param>
+            /// <param name="width">Width</param>
+            /// <param name="i">Index</param>
+            private static void Whittle_Mul(Complex32[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+            {
+                Complex32[] iRowA = A[i];
+                Complex32[] iRowC = C[i];
+                int k, j;
 
+                for (k = 0; k < length; k++)
+                {
+                    Complex32[] kRowB = B[k];
+                    Complex32 ikA = iRowA[k];
+
+                    for (j = 0; j < width; j++)
+                    {
+                        iRowC[j] += ikA * kRowB[j];
+                    }
+                }
+            }
+            /// <summary>
+            /// Implements matrix multiplication using modified Whittle optimization.
+            /// </summary>
+            /// <param name="A">Row of A</param>
+            /// <param name="B">Matrix B</param>
+            /// <param name="C">Row of C</param>
+            /// <param name="length">Length</param>
+            /// <param name="width">Width</param>
+            /// <param name="i">Index</param>
+            private static void Whittle_Mul(Complex32[][] A, float[][] B, Complex32[][] C, int length, int width, int i)
+            {
+                Complex32[] iRowA = A[i];
+                Complex32[] iRowC = C[i];
+                int k, j;
+
+                for (k = 0; k < length; k++)
+                {
+                    float[] kRowB = B[k];
+                    Complex32 ikA = iRowA[k];
+
+                    for (j = 0; j < width; j++)
+                    {
+                        iRowC[j] += ikA * kRowB[j];
+                    }
+                }
+            }
+            /// <summary>
+            /// Implements matrix multiplication using modified Whittle optimization.
+            /// </summary>
+            /// <param name="A">Row of A</param>
+            /// <param name="B">Matrix B</param>
+            /// <param name="C">Row of C</param>
+            /// <param name="length">Length</param>
+            /// <param name="width">Width</param>
+            /// <param name="i">Index</param>
+            private static void Whittle_Mul(float[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+            {
+                float[] iRowA = A[i];
+                Complex32[] iRowC = C[i];
+                int k, j;
+
+                for (k = 0; k < length; k++)
+                {
+                    Complex32[] kRowB = B[k];
+                    Complex32 ikA = iRowA[k];
+
+                    for (j = 0; j < width; j++)
+                    {
+                        iRowC[j] += ikA * kRowB[j];
+                    }
+                }
+            }
+            #endregion
+
+            #endregion
+
+            #region Copy
+            /// <summary>
+            /// Copies matrix.
+            /// </summary>
+            /// <param name="src">Source</param>
+            /// <param name="dst">Destination</param>
+            /// <param name="r0">R0</param>
+            /// <param name="c0">C0</param>
+            public static void Copy(float[,] src, float[,] dst, int r0, int c0)
+            {
+                int rows = src.GetLength(0), cols = src.GetLength(1);
+                for (int i = 0; i < rows; i++)
+                    for (int j = 0; j < cols; j++)
+                        dst[r0 + i, c0 + j] = src[i, j];
+            }
+            /// <summary>
+            /// Copies matrix.
+            /// </summary>
+            /// <param name="src">Source</param>
+            /// <param name="dst">Destination</param>
+            /// <param name="r0">R0</param>
+            /// <param name="c0">C0</param>
+            public static void Copy(Complex32[,] src, Complex32[,] dst, int r0, int c0)
+            {
+                int rows = src.GetLength(0), cols = src.GetLength(1);
+                for (int i = 0; i < rows; i++)
+                    for (int j = 0; j < cols; j++)
+                        dst[r0 + i, c0 + j] = src[i, j];
+            }
+            /// <summary>
+            /// Copies matrix.
+            /// </summary>
+            /// <param name="src">Source</param>
+            /// <param name="dst">Destination</param>
+            /// <param name="r0">R0</param>
+            /// <param name="c0">C0</param>
+            public static void Copy(float[,] src, Complex32[,] dst, int r0, int c0)
+            {
+                int rows = src.GetLength(0), cols = src.GetLength(1);
+                for (int i = 0; i < rows; i++)
+                    for (int j = 0; j < cols; j++)
+                        dst[r0 + i, c0 + j] = new Complex32(src[i, j], 0f);
+            }
+
+            #endregion
+        }
         #endregion
 
         #region Convolution
         /// <summary>
-        /// Implements discrete convolution of matrices.
+        /// Defines a convolution filter class.
         /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static float[,] Conv(float[,] A, float[,] B, bool normalize = true)
+        public static class ConvolutionFilter
         {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            float[,] H = new float[height, width];
-            int r0 = B.GetLength(0), r1 = B.GetLength(1);
-            int r0p = r0 / 2, r1p = r1 / 2;
-
-            if (normalize)
+            /// <summary>
+            /// Implements discrete convolution of matrices.
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static float[,] Conv(float[,] A, float[,] B, bool normalize = true)
             {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
+                int height = A.GetLength(0), width = A.GetLength(1);
+                float[,] H = new float[height, width];
+                int r0 = B.GetLength(0), r1 = B.GetLength(1);
+                int r0p = r0 / 2, r1p = r1 / 2;
+
+                if (normalize)
                 {
-                    float k, s, div;
-                    int i, j, x;
-                    int xr, yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = 0; div = 0;
-                        xr = x - r1p;
+                        float k, s, div;
+                        int i, j, x;
+                        int xr, yr = y - r0p;
+                        int ir, jr;
 
-                        for (i = 0; i < r0; i++)
+                        for (x = 0; x < width; x++)
                         {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
+                            s = 0; div = 0;
+                            xr = x - r1p;
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                for (j = 0; j < r1; j++)
+                                {
+                                    jr = xr + j;
+                                    if (jr < 0) continue; if (jr >= width) break;
+
+                                    k = B[i, j];
+
+                                    if (k != 0)
+                                    {
+                                        s += A[ir, jr] * k;
+                                        div += k;
+                                    }
+                                }
+                            }
+
+                            if (div != 0)
+                            {
+                                s /= div;
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
+                {
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        float k, s;
+                        int i, j, x;
+                        int xr, yr = y - r0p;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
+                        {
+                            s = 0;
+                            xr = x - r1p;
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                for (j = 0; j < r1; j++)
+                                {
+                                    jr = xr + j;
+                                    if (jr < 0) continue; if (jr >= width) break;
+
+                                    k = B[i, j];
+
+                                    if (k != 0)
+                                    {
+                                        s += A[ir, jr] * k;
+                                    }
+                                }
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+
+                return H;
+            }
+            /// <summary>
+            /// Implements discrete convolution of matrices.
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] Conv(Complex32[,] A, Complex32[,] B, bool normalize = true)
+            {
+                int height = A.GetLength(0), width = A.GetLength(1);
+                Complex32[,] H = new Complex32[height, width];
+                int r0 = B.GetLength(0), r1 = B.GetLength(1);
+                int r0p = r0 / 2, r1p = r1 / 2;
+
+                if (normalize)
+                {
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        Complex32 k, s, div;
+                        int i, j, x;
+                        int xr, yr = y - r0p;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
+                        {
+                            s = new Complex32(0, 0); div = new Complex32(0, 0);
+                            xr = x - r1p;
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                for (j = 0; j < r1; j++)
+                                {
+                                    jr = xr + j;
+                                    if (jr < 0) continue; if (jr >= width) break;
+
+                                    k = B[i, j];
+
+                                    if (k != new Complex32(0, 0))
+                                    {
+                                        s += A[ir, jr] * k;
+                                        div += k;
+                                    }
+                                }
+                            }
+
+                            if (div != new Complex32(0, 0))
+                            {
+                                s /= div;
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
+                {
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        Complex32 k, s;
+                        int i, j, x;
+                        int xr, yr = y - r0p;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
+                        {
+                            s = new Complex32(0, 0);
+                            xr = x - r1p;
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                for (j = 0; j < r1; j++)
+                                {
+                                    jr = xr + j;
+                                    if (jr < 0) continue; if (jr >= width) break;
+
+                                    k = B[i, j];
+
+                                    if (k != new Complex32(0, 0))
+                                    {
+                                        s += A[ir, jr] * k;
+                                    }
+                                }
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+
+                return H;
+            }
+            /// <summary>
+            /// Implements discrete convolution of matrices.
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] Conv(float[,] A, Complex32[,] B, bool normalize = true)
+            {
+                int height = A.GetLength(0), width = A.GetLength(1);
+                Complex32[,] H = new Complex32[height, width];
+                int r0 = B.GetLength(0), r1 = B.GetLength(1);
+                int r0p = r0 / 2, r1p = r1 / 2;
+
+                if (normalize)
+                {
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        Complex32 k, s, div;
+                        int i, j, x;
+                        int xr, yr = y - r0p;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
+                        {
+                            s = new Complex32(0, 0); div = new Complex32(0, 0);
+                            xr = x - r1p;
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                for (j = 0; j < r1; j++)
+                                {
+                                    jr = xr + j;
+                                    if (jr < 0) continue; if (jr >= width) break;
+
+                                    k = B[i, j];
+
+                                    if (k != new Complex32(0, 0))
+                                    {
+                                        s += A[ir, jr] * k;
+                                        div += k;
+                                    }
+                                }
+                            }
+
+                            if (div != new Complex32(0, 0))
+                            {
+                                s /= div;
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
+                {
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        Complex32 k, s;
+                        int i, j, x;
+                        int xr, yr = y - r0p;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
+                        {
+                            s = new Complex32(0, 0);
+                            xr = x - r1p;
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                for (j = 0; j < r1; j++)
+                                {
+                                    jr = xr + j;
+                                    if (jr < 0) continue; if (jr >= width) break;
+
+                                    k = B[i, j];
+
+                                    if (k != new Complex32(0, 0))
+                                    {
+                                        s += A[ir, jr] * k;
+                                    }
+                                }
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+
+                return H;
+            }
+            /// <summary>
+            /// Implements discrete convolution of matrices.
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] Conv(Complex32[,] A, float[,] B, bool normalize = true)
+            {
+                int height = A.GetLength(0), width = A.GetLength(1);
+                Complex32[,] H = new Complex32[height, width];
+                int r0 = B.GetLength(0), r1 = B.GetLength(1);
+                int r0p = r0 / 2, r1p = r1 / 2;
+
+                if (normalize)
+                {
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        float k;
+                        Complex32 s, div;
+                        int i, j, x;
+                        int xr, yr = y - r0p;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
+                        {
+                            s = new Complex32(0, 0); div = new Complex32(0, 0);
+                            xr = x - r1p;
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                for (j = 0; j < r1; j++)
+                                {
+                                    jr = xr + j;
+                                    if (jr < 0) continue; if (jr >= width) break;
+
+                                    k = B[i, j];
+
+                                    if (k != 0f)
+                                    {
+                                        s += A[ir, jr] * k;
+                                        div += k;
+                                    }
+                                }
+                            }
+
+                            if (div != new Complex32(0, 0))
+                            {
+                                s /= div;
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
+                {
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        float k;
+                        Complex32 s;
+                        int i, j, x;
+                        int xr, yr = y - r0p;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
+                        {
+                            s = new Complex32(0, 0);
+                            xr = x - r1p;
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                for (j = 0; j < r1; j++)
+                                {
+                                    jr = xr + j;
+                                    if (jr < 0) continue; if (jr >= width) break;
+
+                                    k = B[i, j];
+
+                                    if (k != 0f)
+                                    {
+                                        s += A[ir, jr] * k;
+                                    }
+                                }
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+
+                return H;
+            }
+
+            /// <summary>
+            /// Implements discrete convolution of matrices (horizontal).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static float[,] ConvHorizontal(float[,] A, float[] B, bool normalize = true)
+            {
+                int height = A.GetLength(0), width = A.GetLength(1);
+                float[,] H = new float[height, width];
+                int r1 = B.GetLength(0);
+                int r1p = r1 / 2;
+
+                if (normalize)
+                {
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        float k, s, div;
+                        int j, x;
+                        int xr, yr = y;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
+                        {
+                            s = 0; div = 0;
+                            xr = x - r1p;
+                            ir = yr;
 
                             for (j = 0; j < r1; j++)
                             {
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i,j];
+                                k = B[j];
 
                                 if (k != 0)
                                 {
-                                    s += A[ir,jr] * k;
+                                    s += A[ir, jr] * k;
                                     div += k;
                                 }
                             }
-                        }
 
-                        if (div != 0)
-                        {
-                            s /= div;
-                        }
+                            if (div != 0)
+                            {
+                                s /= div;
+                            }
 
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
                 {
-                    float k, s;
-                    int i, j, x;
-                    int xr, yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = 0;
-                        xr = x - r1p;
+                        float k, s;
+                        int j, x;
+                        int xr, yr = y;
+                        int ir, jr;
 
-                        for (i = 0; i < r0; i++)
+                        for (x = 0; x < width; x++)
                         {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
+                            s = 0;
+                            xr = x - r1p;
+                            ir = yr;
 
                             for (j = 0; j < r1; j++)
                             {
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i,j];
+                                k = B[j];
 
                                 if (k != 0)
                                 {
-                                    s += A[ir,jr] * k;
+                                    s += A[ir, jr] * k;
                                 }
                             }
+
+                            H[y, x] = s;
                         }
+                    });
+                }
 
-                        H[y,x] = s;
-                    }
-                });
+                return H;
             }
-
-            return H;
-        }
-        /// <summary>
-        /// Implements discrete convolution of matrices.
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] Conv(Complex32[,] A, Complex32[,] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            Complex32[,] H = new Complex32[height, width];
-            int r0 = B.GetLength(0), r1 = B.GetLength(1);
-            int r0p = r0 / 2, r1p = r1 / 2;
-
-            if (normalize)
+            /// <summary>
+            /// Implements discrete convolution of matrices (vertical).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static float[,] ConvVertical(float[,] A, float[] B, bool normalize = true)
             {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
+                int height = A.GetLength(0), width = A.GetLength(1);
+                float[,] H = new float[height, width];
+                int r0 = B.GetLength(0);
+                int r0p = r0 / 2;
+
+                if (normalize)
                 {
-                    Complex32 k, s, div;
-                    int i, j, x;
-                    int xr, yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
-                        xr = x - r1p;
+                        float k, s, div;
+                        int i, x;
+                        int yr = y - r0p;
+                        int ir, jr;
 
-                        for (i = 0; i < r0; i++)
+                        for (x = 0; x < width; x++)
                         {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
+                            s = 0; div = 0;
 
-                            for (j = 0; j < r1; j++)
+                            for (i = 0; i < r0; i++)
                             {
-                                jr = xr + j;
-                                if (jr < 0) continue; if (jr >= width) break;
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
 
-                                k = B[i,j];
+                                jr = x;
 
-                                if (k != new Complex32(0, 0))
+                                k = B[i];
+
+                                if (k != 0)
                                 {
-                                    s += A[ir,jr] * k;
+                                    s += A[ir, jr] * k;
                                     div += k;
                                 }
                             }
-                        }
 
-                        if (div != new Complex32(0, 0))
-                        {
-                            s /= div;
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s;
-                    int i, j, x;
-                    int xr, yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0);
-                        xr = x - r1p;
-
-                        for (i = 0; i < r0; i++)
-                        {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
-
-                            for (j = 0; j < r1; j++)
+                            if (div != 0)
                             {
-                                jr = xr + j;
-                                if (jr < 0) continue; if (jr >= width) break;
+                                s /= div;
+                            }
 
-                                k = B[i,j];
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
+                {
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        float k, s;
+                        int i, x;
+                        int yr = y - r0p;
+                        int ir, jr;
 
-                                if (k != new Complex32(0, 0))
+                        for (x = 0; x < width; x++)
+                        {
+                            s = 0;
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                jr = x;
+
+                                k = B[i];
+
+                                if (k != 0)
                                 {
-                                    s += A[ir,jr] * k;
+                                    s += A[ir, jr] * k;
                                 }
                             }
-                        }
 
-                        H[y,x] = s;
-                    }
-                });
+                            H[y, x] = s;
+                        }
+                    });
+                }
+
+                return H;
             }
 
-            return H;
-        }
-        /// <summary>
-        /// Implements discrete convolution of matrices.
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] Conv(float[,] A, Complex32[,] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            Complex32[,] H = new Complex32[height, width];
-            int r0 = B.GetLength(0), r1 = B.GetLength(1);
-            int r0p = r0 / 2, r1p = r1 / 2;
-
-            if (normalize)
+            /// <summary>
+            /// Implements discrete convolution of matrices (horizontal).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] ConvHorizontal(float[,] A, Complex32[] B, bool normalize = true)
             {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
+                int height = A.GetLength(0), width = A.GetLength(1);
+                Complex32[,] H = new Complex32[height, width];
+                int r1 = B.GetLength(0);
+                int r1p = r1 / 2;
+
+                if (normalize)
                 {
-                    Complex32 k, s, div;
-                    int i, j, x;
-                    int xr, yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
-                        xr = x - r1p;
+                        Complex32 k, s, div;
+                        int j, x;
+                        int xr, yr = y;
+                        int ir, jr;
 
-                        for (i = 0; i < r0; i++)
+                        for (x = 0; x < width; x++)
                         {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
+                            s = new Complex32(0, 0); div = new Complex32(0, 0);
+                            xr = x - r1p;
+                            ir = yr;
 
                             for (j = 0; j < r1; j++)
                             {
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i,j];
+                                k = B[j];
 
                                 if (k != new Complex32(0, 0))
                                 {
-                                    s += A[ir,jr] * k;
+                                    s += A[ir, jr] * k;
                                     div += k;
                                 }
                             }
-                        }
 
-                        if (div != new Complex32(0, 0))
-                        {
-                            s /= div;
-                        }
+                            if (div != new Complex32(0, 0))
+                            {
+                                s /= div;
+                            }
 
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
                 {
-                    Complex32 k, s;
-                    int i, j, x;
-                    int xr, yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = new Complex32(0, 0);
-                        xr = x - r1p;
+                        Complex32 k, s;
+                        int j, x;
+                        int xr, yr = y;
+                        int ir, jr;
 
-                        for (i = 0; i < r0; i++)
+                        for (x = 0; x < width; x++)
                         {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
+                            s = new Complex32(0, 0);
+                            xr = x - r1p;
+                            ir = yr;
 
                             for (j = 0; j < r1; j++)
                             {
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i,j];
+                                k = B[j];
 
                                 if (k != new Complex32(0, 0))
                                 {
-                                    s += A[ir,jr] * k;
+                                    s += A[ir, jr] * k;
                                 }
                             }
+
+                            H[y, x] = s;
                         }
+                    });
+                }
 
-                        H[y,x] = s;
-                    }
-                });
+                return H;
             }
-
-            return H;
-        }
-        /// <summary>
-        /// Implements discrete convolution of matrices.
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] Conv(Complex32[,] A, float[,] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            Complex32[,] H = new Complex32[height, width];
-            int r0 = B.GetLength(0), r1 = B.GetLength(1);
-            int r0p = r0 / 2, r1p = r1 / 2;
-
-            if (normalize)
+            /// <summary>
+            /// Implements discrete convolution of matrices (vertical).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] ConvVertical(float[,] A, Complex32[] B, bool normalize = true)
             {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
+                int height = A.GetLength(0), width = A.GetLength(1);
+                Complex32[,] H = new Complex32[height, width];
+                int r0 = B.GetLength(0);
+                int r0p = r0 / 2;
+
+                if (normalize)
                 {
-                    float k;
-                    Complex32 s, div;
-                    int i, j, x;
-                    int xr, yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
-                        xr = x - r1p;
+                        Complex32 k, s, div;
+                        int i, x;
+                        int yr = y - r0p;
+                        int ir, jr;
 
-                        for (i = 0; i < r0; i++)
+                        for (x = 0; x < width; x++)
                         {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
+                            s = new Complex32(0, 0); div = new Complex32(0, 0);
 
-                            for (j = 0; j < r1; j++)
+                            for (i = 0; i < r0; i++)
                             {
-                                jr = xr + j;
-                                if (jr < 0) continue; if (jr >= width) break;
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
 
-                                k = B[i,j];
+                                jr = x;
 
-                                if (k != 0f)
+                                k = B[i];
+
+                                if (k != new Complex32(0, 0))
                                 {
-                                    s += A[ir,jr] * k;
+                                    s += A[ir, jr] * k;
                                     div += k;
                                 }
                             }
-                        }
 
-                        if (div != new Complex32(0, 0))
-                        {
-                            s /= div;
-                        }
+                            if (div != new Complex32(0, 0))
+                            {
+                                s /= div;
+                            }
 
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
                 {
-                    float k;
-                    Complex32 s;
-                    int i, j, x;
-                    int xr, yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = new Complex32(0, 0);
-                        xr = x - r1p;
+                        Complex32 k, s;
+                        int i, x;
+                        int yr = y - r0p;
+                        int ir, jr;
 
-                        for (i = 0; i < r0; i++)
+                        for (x = 0; x < width; x++)
                         {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
+                            s = new Complex32(0, 0);
+
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                jr = x;
+
+                                k = B[i];
+
+                                if (k != new Complex32(0, 0))
+                                {
+                                    s += A[ir, jr] * k;
+                                }
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+
+                return H;
+            }
+
+            /// <summary>
+            /// Implements discrete convolution of matrices (horizontal).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] ConvHorizontal(Complex32[,] A, Complex32[] B, bool normalize = true)
+            {
+                int height = A.GetLength(0), width = A.GetLength(1);
+                Complex32[,] H = new Complex32[height, width];
+                int r1 = B.GetLength(0);
+                int r1p = r1 / 2;
+
+                if (normalize)
+                {
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        Complex32 k, s, div;
+                        int j, x;
+                        int xr, yr = y;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
+                        {
+                            s = new Complex32(0, 0); div = new Complex32(0, 0);
+                            xr = x - r1p;
+                            ir = yr;
 
                             for (j = 0; j < r1; j++)
                             {
                                 jr = xr + j;
                                 if (jr < 0) continue; if (jr >= width) break;
 
-                                k = B[i,j];
+                                k = B[j];
 
-                                if (k != 0f)
+                                if (k != new Complex32(0, 0))
                                 {
-                                    s += A[ir,jr] * k;
+                                    s += A[ir, jr] * k;
+                                    div += k;
                                 }
                             }
-                        }
 
-                        H[y,x] = s;
-                    }
-                });
-            }
-
-            return H;
-        }
-        #endregion
-
-        #region Convolution (separable)
-        /// <summary>
-        /// Implements discrete convolution of matrices (horizontal).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static float[,] ConvHorizontal(float[,] A, float[] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            float[,] H = new float[height, width];
-            int r1 = B.GetLength(0);
-            int r1p = r1 / 2;
-
-            if (normalize)
-            {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    float k, s, div;
-                    int j, x;
-                    int xr, yr = y;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = 0; div = 0;
-                        xr = x - r1p;
-                        ir = yr;
-
-                        for (j = 0; j < r1; j++)
-                        {
-                            jr = xr + j;
-                            if (jr < 0) continue; if (jr >= width) break;
-
-                            k = B[j];
-
-                            if (k != 0)
+                            if (div != new Complex32(0, 0))
                             {
-                                s += A[ir,jr] * k;
-                                div += k;
+                                s /= div;
                             }
-                        }
 
-                        if (div != 0)
-                        {
-                            s /= div;
+                            H[y, x] = s;
                         }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
+                    });
+                }
+                else
                 {
-                    float k, s;
-                    int j, x;
-                    int xr, yr = y;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = 0;
-                        xr = x - r1p;
-                        ir = yr;
+                        Complex32 k, s;
+                        int j, x;
+                        int xr, yr = y;
+                        int ir, jr;
 
-                        for (j = 0; j < r1; j++)
+                        for (x = 0; x < width; x++)
                         {
-                            jr = xr + j;
-                            if (jr < 0) continue; if (jr >= width) break;
+                            s = new Complex32(0, 0);
+                            xr = x - r1p;
+                            ir = yr;
 
-                            k = B[j];
-
-                            if (k != 0)
+                            for (j = 0; j < r1; j++)
                             {
-                                s += A[ir,jr] * k;
+                                jr = xr + j;
+                                if (jr < 0) continue; if (jr >= width) break;
+
+                                k = B[j];
+
+                                if (k != new Complex32(0, 0))
+                                {
+                                    s += A[ir, jr] * k;
+                                }
                             }
+
+                            H[y, x] = s;
                         }
+                    });
+                }
 
-                        H[y,x] = s;
-                    }
-                });
+                return H;
             }
-
-            return H;
-        }
-        /// <summary>
-        /// Implements discrete convolution of matrices (vertical).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static float[,] ConvVertical(float[,] A, float[] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            float[,] H = new float[height, width];
-            int r0 = B.GetLength(0);
-            int r0p = r0 / 2;
-
-            if (normalize)
+            /// <summary>
+            /// Implements discrete convolution of matrices (vertical).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] ConvVertical(Complex32[,] A, Complex32[] B, bool normalize = true)
             {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
+                int height = A.GetLength(0), width = A.GetLength(1);
+                Complex32[,] H = new Complex32[height, width];
+                int r0 = B.GetLength(0);
+                int r0p = r0 / 2;
+
+                if (normalize)
                 {
-                    float k, s, div;
-                    int i, x;
-                    int yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = 0; div = 0;
+                        Complex32 k, s, div;
+                        int i, x;
+                        int yr = y - r0p;
+                        int ir, jr;
 
-                        for (i = 0; i < r0; i++)
+                        for (x = 0; x < width; x++)
                         {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
+                            s = new Complex32(0, 0); div = new Complex32(0, 0);
 
-                            jr = x;
-
-                            k = B[i];
-
-                            if (k != 0)
+                            for (i = 0; i < r0; i++)
                             {
-                                s += A[ir,jr] * k;
-                                div += k;
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                jr = x;
+
+                                k = B[i];
+
+                                if (k != new Complex32(0, 0))
+                                {
+                                    s += A[ir, jr] * k;
+                                    div += k;
+                                }
                             }
-                        }
 
-                        if (div != 0)
+                            if (div != new Complex32(0, 0))
+                            {
+                                s /= div;
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
+                {
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        Complex32 k, s;
+                        int i, x;
+                        int yr = y - r0p;
+                        int ir, jr;
+
+                        for (x = 0; x < width; x++)
                         {
-                            s /= div;
-                        }
+                            s = new Complex32(0, 0);
 
-                        H[y,x] = s;
-                    }
-                });
+                            for (i = 0; i < r0; i++)
+                            {
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                jr = x;
+
+                                k = B[i];
+
+                                if (k != new Complex32(0, 0))
+                                {
+                                    s += A[ir, jr] * k;
+                                }
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+
+                return H;
             }
-            else
+
+            /// <summary>
+            /// Implements discrete convolution of matrices (horizontal).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] ConvHorizontal(Complex32[,] A, float[] B, bool normalize = true)
             {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
+                int height = A.GetLength(0), width = A.GetLength(1);
+                Complex32[,] H = new Complex32[height, width];
+                int r1 = B.GetLength(0);
+                int r1p = r1 / 2;
+
+                if (normalize)
                 {
-                    float k, s;
-                    int i, x;
-                    int yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = 0;
+                        Complex32 k, s, div;
+                        int j, x;
+                        int xr, yr = y;
+                        int ir, jr;
 
-                        for (i = 0; i < r0; i++)
+                        for (x = 0; x < width; x++)
                         {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
+                            s = new Complex32(0, 0); div = new Complex32(0, 0);
+                            xr = x - r1p;
+                            ir = yr;
 
-                            jr = x;
-
-                            k = B[i];
-
-                            if (k != 0)
+                            for (j = 0; j < r1; j++)
                             {
-                                s += A[ir,jr] * k;
+                                jr = xr + j;
+                                if (jr < 0) continue; if (jr >= width) break;
+
+                                k = new Complex32(B[j], 0);
+
+                                if (k != new Complex32(0, 0))
+                                {
+                                    s += A[ir, jr] * k;
+                                    div += k;
+                                }
                             }
+
+                            if (div != new Complex32(0, 0))
+                            {
+                                s /= div;
+                            }
+
+                            H[y, x] = s;
                         }
+                    });
+                }
+                else
+                {
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
+                    {
+                        Complex32 k, s;
+                        int j, x;
+                        int xr, yr = y;
+                        int ir, jr;
 
-                        H[y,x] = s;
-                    }
-                });
+                        for (x = 0; x < width; x++)
+                        {
+                            s = new Complex32(0, 0);
+                            xr = x - r1p;
+                            ir = yr;
+
+                            for (j = 0; j < r1; j++)
+                            {
+                                jr = xr + j;
+                                if (jr < 0) continue; if (jr >= width) break;
+
+                                k = new Complex32((float)B[j], 0);
+
+                                if (k != new Complex32(0, 0))
+                                {
+                                    s += A[ir, jr] * k;
+                                }
+                            }
+
+                            H[y, x] = s;
+                        }
+                    });
+                }
+
+                return H;
             }
-
-            return H;
-        }
-
-        /// <summary>
-        /// Implements discrete convolution of matrices (horizontal).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] ConvHorizontal(float[,] A, Complex32[] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            Complex32[,] H = new Complex32[height, width];
-            int r1 = B.GetLength(0);
-            int r1p = r1 / 2;
-
-            if (normalize)
+            /// <summary>
+            /// Implements discrete convolution of matrices (vertical).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="B">Jagged array</param>
+            /// <param name="normalize">Normalized convolution or not</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] ConvVertical(Complex32[,] A, float[] B, bool normalize = true)
             {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
+                int height = A.GetLength(0), width = A.GetLength(1);
+                Complex32[,] H = new Complex32[height, width];
+                int r0 = B.GetLength(0);
+                int r0p = r0 / 2;
+
+                if (normalize)
                 {
-                    Complex32 k, s, div;
-                    int j, x;
-                    int xr, yr = y;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
-                        xr = x - r1p;
-                        ir = yr;
+                        Complex32 k, s, div;
+                        int i, x;
+                        int yr = y - r0p;
+                        int ir, jr;
 
-                        for (j = 0; j < r1; j++)
+                        for (x = 0; x < width; x++)
                         {
-                            jr = xr + j;
-                            if (jr < 0) continue; if (jr >= width) break;
+                            s = new Complex32(0, 0); div = new Complex32(0, 0);
 
-                            k = B[j];
-
-                            if (k != new Complex32(0, 0))
+                            for (i = 0; i < r0; i++)
                             {
-                                s += A[ir,jr] * k;
-                                div += k;
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                jr = x;
+
+                                k = new Complex32(B[i], 0);
+
+                                if (k != new Complex32(0, 0))
+                                {
+                                    s += A[ir, jr] * k;
+                                    div += k;
+                                }
                             }
-                        }
 
-                        if (div != new Complex32(0, 0))
-                        {
-                            s /= div;
-                        }
+                            if (div != new Complex32(0, 0))
+                            {
+                                s /= div;
+                            }
 
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
+                            H[y, x] = s;
+                        }
+                    });
+                }
+                else
                 {
-                    Complex32 k, s;
-                    int j, x;
-                    int xr, yr = y;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
+                    // non-normalize convolution:
+                    Parallel.For(0, height, y =>
                     {
-                        s = new Complex32(0, 0);
-                        xr = x - r1p;
-                        ir = yr;
+                        Complex32 k, s;
+                        int i, x;
+                        int yr = y - r0p;
+                        int ir, jr;
 
-                        for (j = 0; j < r1; j++)
+                        for (x = 0; x < width; x++)
                         {
-                            jr = xr + j;
-                            if (jr < 0) continue; if (jr >= width) break;
+                            s = new Complex32(0, 0);
 
-                            k = B[j];
-
-                            if (k != new Complex32(0, 0))
+                            for (i = 0; i < r0; i++)
                             {
-                                s += A[ir,jr] * k;
+                                ir = yr + i;
+                                if (ir < 0) continue; if (ir >= height) break;
+
+                                jr = x;
+
+                                k = new Complex32(B[i], 0);
+
+                                if (k != new Complex32(0, 0))
+                                {
+                                    s += A[ir, jr] * k;
+                                }
                             }
-                        }
 
-                        H[y,x] = s;
-                    }
-                });
+                            H[y, x] = s;
+                        }
+                    });
+                }
+
+                return H;
             }
-
-            return H;
-        }
-        /// <summary>
-        /// Implements discrete convolution of matrices (vertical).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] ConvVertical(float[,] A, Complex32[] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            Complex32[,] H = new Complex32[height, width];
-            int r0 = B.GetLength(0);
-            int r0p = r0 / 2;
-
-            if (normalize)
-            {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s, div;
-                    int i, x;
-                    int yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
-
-                        for (i = 0; i < r0; i++)
-                        {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
-
-                            jr = x;
-
-                            k = B[i];
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                                div += k;
-                            }
-                        }
-
-                        if (div != new Complex32(0, 0))
-                        {
-                            s /= div;
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s;
-                    int i, x;
-                    int yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0);
-
-                        for (i = 0; i < r0; i++)
-                        {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
-
-                            jr = x;
-
-                            k = B[i];
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                            }
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-
-            return H;
-        }
-
-        /// <summary>
-        /// Implements discrete convolution of matrices (horizontal).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] ConvHorizontal(Complex32[,] A, Complex32[] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            Complex32[,] H = new Complex32[height, width];
-            int r1 = B.GetLength(0);
-            int r1p = r1 / 2;
-
-            if (normalize)
-            {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s, div;
-                    int j, x;
-                    int xr, yr = y;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
-                        xr = x - r1p;
-                        ir = yr;
-
-                        for (j = 0; j < r1; j++)
-                        {
-                            jr = xr + j;
-                            if (jr < 0) continue; if (jr >= width) break;
-
-                            k = B[j];
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                                div += k;
-                            }
-                        }
-
-                        if (div != new Complex32(0, 0))
-                        {
-                            s /= div;
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s;
-                    int j, x;
-                    int xr, yr = y;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0);
-                        xr = x - r1p;
-                        ir = yr;
-
-                        for (j = 0; j < r1; j++)
-                        {
-                            jr = xr + j;
-                            if (jr < 0) continue; if (jr >= width) break;
-
-                            k = B[j];
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                            }
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Implements discrete convolution of matrices (vertical).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] ConvVertical(Complex32[,] A, Complex32[] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            Complex32[,] H = new Complex32[height, width];
-            int r0 = B.GetLength(0);
-            int r0p = r0 / 2;
-
-            if (normalize)
-            {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s, div;
-                    int i, x;
-                    int yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
-
-                        for (i = 0; i < r0; i++)
-                        {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
-
-                            jr = x;
-
-                            k = B[i];
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                                div += k;
-                            }
-                        }
-
-                        if (div != new Complex32(0, 0))
-                        {
-                            s /= div;
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s;
-                    int i, x;
-                    int yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0);
-
-                        for (i = 0; i < r0; i++)
-                        {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
-
-                            jr = x;
-
-                            k = B[i];
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                            }
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-
-            return H;
-        }
-
-        /// <summary>
-        /// Implements discrete convolution of matrices (horizontal).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] ConvHorizontal(Complex32[,] A, float[] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            Complex32[,] H = new Complex32[height, width];
-            int r1 = B.GetLength(0);
-            int r1p = r1 / 2;
-
-            if (normalize)
-            {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s, div;
-                    int j, x;
-                    int xr, yr = y;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
-                        xr = x - r1p;
-                        ir = yr;
-
-                        for (j = 0; j < r1; j++)
-                        {
-                            jr = xr + j;
-                            if (jr < 0) continue; if (jr >= width) break;
-
-                            k = new Complex32(B[j], 0);
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                                div += k;
-                            }
-                        }
-
-                        if (div != new Complex32(0, 0))
-                        {
-                            s /= div;
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s;
-                    int j, x;
-                    int xr, yr = y;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0);
-                        xr = x - r1p;
-                        ir = yr;
-
-                        for (j = 0; j < r1; j++)
-                        {
-                            jr = xr + j;
-                            if (jr < 0) continue; if (jr >= width) break;
-
-                            k = new Complex32((float)B[j], 0);
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                            }
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-
-            return H;
-        }
-        /// <summary>
-        /// Implements discrete convolution of matrices (vertical).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="B">Jagged array</param>
-        /// <param name="normalize">Normalized convolution or not</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] ConvVertical(Complex32[,] A, float[] B, bool normalize = true)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-            Complex32[,] H = new Complex32[height, width];
-            int r0 = B.GetLength(0);
-            int r0p = r0 / 2;
-
-            if (normalize)
-            {
-                // normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s, div;
-                    int i, x;
-                    int yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0); div = new Complex32(0, 0);
-
-                        for (i = 0; i < r0; i++)
-                        {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
-
-                            jr = x;
-
-                            k = new Complex32(B[i], 0);
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                                div += k;
-                            }
-                        }
-
-                        if (div != new Complex32(0, 0))
-                        {
-                            s /= div;
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-            else
-            {
-                // non-normalize convolution:
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 k, s;
-                    int i, x;
-                    int yr = y - r0p;
-                    int ir, jr;
-
-                    for (x = 0; x < width; x++)
-                    {
-                        s = new Complex32(0, 0);
-
-                        for (i = 0; i < r0; i++)
-                        {
-                            ir = yr + i;
-                            if (ir < 0) continue; if (ir >= height) break;
-
-                            jr = x;
-
-                            k = new Complex32(B[i], 0);
-
-                            if (k != new Complex32(0, 0))
-                            {
-                                s += A[ir,jr] * k;
-                            }
-                        }
-
-                        H[y,x] = s;
-                    }
-                });
-            }
-
-            return H;
         }
         #endregion
 
         #region Mean (separable)
-        /// <summary>
-        ///  Implements local average of vector.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="r">Radius</param>
-        public static float[] Mean(float[] v, int r)
-        {
-            int l = v.Length;
-
-            if (l < 2 || r < 2)
-                return v;
-
-            float[] output = new float[l];
-            int h = r >= l ? l - 1 : r;
-            int w = r >> 1;
-            int dl = l - w;
-            float s = 0;
-            int x;
-
-            for (x = 0; x < h; x++)
-            {
-                s += v[x];
-            }
-
-            for (x = 0; x < w; x++)
-            {
-                output[x] = s / h;
-            }
-
-            for (x = w; x < dl; x++)
-            {
-                s = s - v[x - w] + v[x + w];
-                output[x] = s / h;
-            }
-
-            for (x = dl; x < l; x++)
-            {
-                s = s - v[x - w] + v[x];
-                output[x] = s / h;
-            }
-
-            return output;
-        }
-        /// <summary>
-        ///  Implements local average of vector.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="r">Radius</param>
-        public static Complex32[] Mean(Complex32[] v, int r)
-        {
-            int l = v.Length;
-
-            if (l < 2 || r < 2)
-                return v;
-
-            Complex32[] output = new Complex32[l];
-            int h = r >= l ? l - 1 : r;
-            int w = r >> 1;
-            int dl = l - w;
-            Complex32 s = 0;
-            int x;
-
-            for (x = 0; x < h; x++)
-            {
-                s += v[x];
-            }
-
-            for (x = 0; x < w; x++)
-            {
-                output[x] = s / h;
-            }
-
-            for (x = w; x < dl; x++)
-            {
-                s = s - v[x - w] + v[x + w];
-                output[x] = s / h;
-            }
-
-            for (x = dl; x < l; x++)
-            {
-                s = s - v[x - w] + v[x];
-                output[x] = s / h;
-            }
-
-            return output;
-        }
 
         /// <summary>
-        /// Implements local average of matrix (horizontal).
+        /// Defines a fast mean filter class.
         /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="r1">Size</param>
-        /// <returns>Jagged array</returns>
-        public static float[,] MeanHorizontal(float[,] A, int r1)
+        public static class MeanFilter
         {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (width < 2 || r1 < 2)
-                return A;
-
-            float[,] H = new float[height, width];
-            int h = r1 >= width ? width - 1 : r1;
-            int v = h >> 1;
-            int dl = width - v;
-
-            Parallel.For(0, height, y =>
+            /// <summary>
+            ///  Implements local average of vector.
+            /// </summary>
+            /// <param name="v">Array</param>
+            /// <param name="r">Radius</param>
+            public static float[] Mean(float[] v, int r)
             {
+                int l = v.Length;
+
+                if (l < 2 || r < 2)
+                    return v;
+
+                float[] output = new float[l];
+                int h = r >= l ? l - 1 : r;
+                int w = r >> 1;
+                int dl = l - w;
                 float s = 0;
                 int x;
 
                 for (x = 0; x < h; x++)
                 {
-                    s += A[y, x];
+                    s += v[x];
                 }
 
-                for (x = 0; x < v; x++)
+                for (x = 0; x < w; x++)
                 {
-                    H[y, x] = s / h;
+                    output[x] = s / h;
                 }
 
-                for (x = v; x < dl; x++)
+                for (x = w; x < dl; x++)
                 {
-                    s = s - A[y, x - v] + A[y, x + v];
-                    H[y, x] = s / h;
+                    s = s - v[x - w] + v[x + w];
+                    output[x] = s / h;
                 }
 
-                for (x = dl; x < width; x++)
+                for (x = dl; x < l; x++)
                 {
-                    s = s - A[y, x - v] + A[y, x];
-                    H[y, x] = s / h;
+                    s = s - v[x - w] + v[x];
+                    output[x] = s / h;
                 }
-            });
 
-            return H;
-        }
-        /// <summary>
-        /// Implements local average of matrix (vertical).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="r0">Size</param>
-        /// <returns>Jagged array</returns>
-        public static float[,] MeanVertical(float[,] A, int r0)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (height < 2 || r0 < 2)
-                return A;
-
-            float[,] H = new float[height, width];
-            int h = r0 >= height ? height - 1 : r0;
-            int v = h >> 1;
-            int dl = height - v;
-
-            Parallel.For(0, width, x =>
+                return output;
+            }
+            /// <summary>
+            ///  Implements local average of vector.
+            /// </summary>
+            /// <param name="v">Array</param>
+            /// <param name="r">Radius</param>
+            public static Complex32[] Mean(Complex32[] v, int r)
             {
-                float s = 0;
-                int y;
+                int l = v.Length;
 
-                for (y = 0; y < h; y++)
-                {
-                    s += A[y, x];
-                }
+                if (l < 2 || r < 2)
+                    return v;
 
-                for (y = 0; y < v; y++)
-                {
-                    H[y, x] = s / h;
-                }
-
-                for (y = v; y < dl; y++)
-                {
-                    s = s - A[y - v, x] + A[y + v, x];
-                    H[y, x] = s / h;
-                }
-
-                for (y = dl; y < height; y++)
-                {
-                    s = s - A[y - v, x] + A[y, x];
-                    H[y, x] = s / h;
-                }
-
-            });
-
-            return H;
-        }
-        /// <summary>
-        /// Implements local average of matrix (horizontal).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="r1">Size</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] MeanHorizontal(Complex32[,] A, int r1)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (width < 2 || r1 < 2)
-                return A;
-
-            Complex32[,] H = new Complex32[height, width];
-            int h = r1 >= width ? width - 1 : r1;
-            int v = h >> 1;
-            int dl = width - v;
-
-            Parallel.For(0, height, y =>
-            {
+                Complex32[] output = new Complex32[l];
+                int h = r >= l ? l - 1 : r;
+                int w = r >> 1;
+                int dl = l - w;
                 Complex32 s = 0;
                 int x;
 
                 for (x = 0; x < h; x++)
                 {
-                    s += A[y, x];
+                    s += v[x];
                 }
 
-                for (x = 0; x < v; x++)
+                for (x = 0; x < w; x++)
                 {
-                    H[y, x] = s / h;
+                    output[x] = s / h;
                 }
 
-                for (x = v; x < dl; x++)
+                for (x = w; x < dl; x++)
                 {
-                    s = s - A[y, x - v] + A[y, x + v];
-                    H[y, x] = s / h;
+                    s = s - v[x - w] + v[x + w];
+                    output[x] = s / h;
                 }
 
-                for (x = dl; x < width; x++)
+                for (x = dl; x < l; x++)
                 {
-                    s = s - A[y, x - v] + A[y, x];
-                    H[y, x] = s / h;
-                }
-            });
-
-            return H;
-        }
-        /// <summary>
-        /// Implements local average of matrix (vertical).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="r0">Size</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] MeanVertical(Complex32[,] A, int r0)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (height < 2 || r0 < 2)
-                return A;
-
-            Complex32[,] H = new Complex32[height, width];
-            int h = r0 >= height ? height - 1 : r0;
-            int v = h >> 1;
-            int dl = height - v;
-
-            Parallel.For(0, width, x =>
-            {
-                Complex32 s = 0;
-                int y;
-
-                for (y = 0; y < h; y++)
-                {
-                    s += A[y, x];
+                    s = s - v[x - w] + v[x];
+                    output[x] = s / h;
                 }
 
-                for (y = 0; y < v; y++)
-                {
-                    H[y, x] = s / h;
-                }
-
-                for (y = v; y < dl; y++)
-                {
-                    s = s - A[y - v, x] + A[y + v, x];
-                    H[y, x] = s / h;
-                }
-
-                for (y = dl; y < height; y++)
-                {
-                    s = s - A[y - v, x] + A[y, x];
-                    H[y, x] = s / h;
-                }
-
-            });
-
-            return H;
-        }
-
-        /// <summary>
-        /// Implements weighted local average of vector.
-        /// </summary>
-        /// <param name="values">Array of values</param>
-        /// <param name="weights">Array of weights (same length as values)</param>
-        /// <param name="r">Radius</param>
-        /// <returns>Weighted blurred array</returns>
-        public static float[] MeanWeighted(float[] values, float[] weights, int r)
-        {
-            int l = values.Length;
-
-            if (l < 2 || r < 2)
-                return values;
-
-            float[] output = new float[l];
-            int h = r >= l ? l - 1 : r;
-            int w = r >> 1;
-            int dl = l - w;
-
-            float sumVal = 0;
-            float sumW = 0;
-            int x;
-
-            for (x = 0; x < h; x++)
-            {
-                sumVal += values[x] * weights[x];
-                sumW += weights[x];
+                return output;
             }
 
-            for (x = 0; x < w; x++)
+            /// <summary>
+            /// Implements local average of matrix (horizontal).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="r1">Size</param>
+            /// <returns>Jagged array</returns>
+            public static float[,] MeanHorizontal(float[,] A, int r1)
             {
-                output[x] = sumVal / (sumW + 1e-8f);
-            }
+                int height = A.GetLength(0), width = A.GetLength(1);
 
-            for (x = w; x < dl; x++)
-            {
-                int xAdd = x + w;
-                int xSub = x - w - 1;
+                if (width < 2 || r1 < 2)
+                    return A;
 
-                if (xAdd < l)
+                float[,] H = new float[height, width];
+                int h = r1 >= width ? width - 1 : r1;
+                int v = h >> 1;
+                int dl = width - v;
+
+                Parallel.For(0, height, y =>
                 {
-                    sumVal += values[xAdd] * weights[xAdd];
-                    sumW += weights[xAdd];
-                }
-                if (xSub >= 0)
+                    float s = 0;
+                    int x;
+
+                    for (x = 0; x < h; x++)
+                    {
+                        s += A[y, x];
+                    }
+
+                    for (x = 0; x < v; x++)
+                    {
+                        H[y, x] = s / h;
+                    }
+
+                    for (x = v; x < dl; x++)
+                    {
+                        s = s - A[y, x - v] + A[y, x + v];
+                        H[y, x] = s / h;
+                    }
+
+                    for (x = dl; x < width; x++)
+                    {
+                        s = s - A[y, x - v] + A[y, x];
+                        H[y, x] = s / h;
+                    }
+                });
+
+                return H;
+            }
+            /// <summary>
+            /// Implements local average of matrix (vertical).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="r0">Size</param>
+            /// <returns>Jagged array</returns>
+            public static float[,] MeanVertical(float[,] A, int r0)
+            {
+                int height = A.GetLength(0), width = A.GetLength(1);
+
+                if (height < 2 || r0 < 2)
+                    return A;
+
+                float[,] H = new float[height, width];
+                int h = r0 >= height ? height - 1 : r0;
+                int v = h >> 1;
+                int dl = height - v;
+
+                Parallel.For(0, width, x =>
                 {
-                    sumVal -= values[xSub] * weights[xSub];
-                    sumW -= weights[xSub];
-                }
+                    float s = 0;
+                    int y;
 
-                output[x] = sumVal / (sumW + 1e-8f);
+                    for (y = 0; y < h; y++)
+                    {
+                        s += A[y, x];
+                    }
+
+                    for (y = 0; y < v; y++)
+                    {
+                        H[y, x] = s / h;
+                    }
+
+                    for (y = v; y < dl; y++)
+                    {
+                        s = s - A[y - v, x] + A[y + v, x];
+                        H[y, x] = s / h;
+                    }
+
+                    for (y = dl; y < height; y++)
+                    {
+                        s = s - A[y - v, x] + A[y, x];
+                        H[y, x] = s / h;
+                    }
+
+                });
+
+                return H;
             }
-
-            for (x = dl; x < l; x++)
+            /// <summary>
+            /// Implements local average of matrix (horizontal).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="r1">Size</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] MeanHorizontal(Complex32[,] A, int r1)
             {
-                int xSub = x - w - 1;
+                int height = A.GetLength(0), width = A.GetLength(1);
 
-                if (xSub >= 0)
+                if (width < 2 || r1 < 2)
+                    return A;
+
+                Complex32[,] H = new Complex32[height, width];
+                int h = r1 >= width ? width - 1 : r1;
+                int v = h >> 1;
+                int dl = width - v;
+
+                Parallel.For(0, height, y =>
                 {
-                    sumVal -= values[xSub] * weights[xSub];
-                    sumW -= weights[xSub];
-                }
+                    Complex32 s = 0;
+                    int x;
 
-                output[x] = sumVal / (sumW + 1e-8f);
+                    for (x = 0; x < h; x++)
+                    {
+                        s += A[y, x];
+                    }
+
+                    for (x = 0; x < v; x++)
+                    {
+                        H[y, x] = s / h;
+                    }
+
+                    for (x = v; x < dl; x++)
+                    {
+                        s = s - A[y, x - v] + A[y, x + v];
+                        H[y, x] = s / h;
+                    }
+
+                    for (x = dl; x < width; x++)
+                    {
+                        s = s - A[y, x - v] + A[y, x];
+                        H[y, x] = s / h;
+                    }
+                });
+
+                return H;
             }
-
-            return output;
-        }
-        /// <summary>
-        /// Implements weighted local average of vector.
-        /// </summary>
-        /// <param name="values">Array of values</param>
-        /// <param name="weights">Array of weights (same length as values)</param>
-        /// <param name="r">Radius</param>
-        /// <returns>Weighted blurred array</returns>
-        public static Complex32[] MeanWeighted(Complex32[] values, Complex32[] weights, int r)
-        {
-            int l = values.Length;
-
-            if (l < 2 || r < 2)
-                return values;
-
-            Complex32[] output = new Complex32[l];
-            int h = r >= l ? l - 1 : r;
-            int w = r >> 1;
-            int dl = l - w;
-
-            Complex32 sumVal = 0;
-            Complex32 sumW = 0;
-            int x;
-
-            for (x = 0; x < h; x++)
+            /// <summary>
+            /// Implements local average of matrix (vertical).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="r0">Size</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] MeanVertical(Complex32[,] A, int r0)
             {
-                sumVal += values[x] * weights[x];
-                sumW += weights[x];
-            }
+                int height = A.GetLength(0), width = A.GetLength(1);
 
-            for (x = 0; x < w; x++)
-            {
-                output[x] = sumVal / (sumW + 1e-8f);
-            }
+                if (height < 2 || r0 < 2)
+                    return A;
 
-            for (x = w; x < dl; x++)
-            {
-                int xAdd = x + w;
-                int xSub = x - w - 1;
+                Complex32[,] H = new Complex32[height, width];
+                int h = r0 >= height ? height - 1 : r0;
+                int v = h >> 1;
+                int dl = height - v;
 
-                if (xAdd < l)
+                Parallel.For(0, width, x =>
                 {
-                    sumVal += values[xAdd] * weights[xAdd];
-                    sumW += weights[xAdd];
-                }
-                if (xSub >= 0)
-                {
-                    sumVal -= values[xSub] * weights[xSub];
-                    sumW -= weights[xSub];
-                }
+                    Complex32 s = 0;
+                    int y;
 
-                output[x] = sumVal / (sumW + 1e-8f);
+                    for (y = 0; y < h; y++)
+                    {
+                        s += A[y, x];
+                    }
+
+                    for (y = 0; y < v; y++)
+                    {
+                        H[y, x] = s / h;
+                    }
+
+                    for (y = v; y < dl; y++)
+                    {
+                        s = s - A[y - v, x] + A[y + v, x];
+                        H[y, x] = s / h;
+                    }
+
+                    for (y = dl; y < height; y++)
+                    {
+                        s = s - A[y - v, x] + A[y, x];
+                        H[y, x] = s / h;
+                    }
+
+                });
+
+                return H;
             }
 
-            for (x = dl; x < l; x++)
+            /// <summary>
+            /// Implements weighted local average of vector.
+            /// </summary>
+            /// <param name="values">Array of values</param>
+            /// <param name="weights">Array of weights (same length as values)</param>
+            /// <param name="r">Radius</param>
+            /// <returns>Weighted blurred array</returns>
+            public static float[] MeanWeighted(float[] values, float[] weights, int r)
             {
-                int xSub = x - w - 1;
+                int l = values.Length;
 
-                if (xSub >= 0)
-                {
-                    sumVal -= values[xSub] * weights[xSub];
-                    sumW -= weights[xSub];
-                }
+                if (l < 2 || r < 2)
+                    return values;
 
-                output[x] = sumVal / (sumW + 1e-8f);
-            }
+                float[] output = new float[l];
+                int h = r >= l ? l - 1 : r;
+                int w = r >> 1;
+                int dl = l - w;
 
-            return output;
-        }
-
-        /// <summary>
-        /// Implements local weighted average of matrice (horizontal).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="weights">Weights</param>
-        /// <param name="r1">Size</param>
-        /// <returns>Jagged array</returns>
-        /// <returns></returns>
-        public static float[,] MeanHorizontalWeighted(float[,] A, float[,] weights, int r1)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (width < 2 || r1 < 2)
-                return A;
-
-            float[,] result = new float[height, width];
-            int h = r1 >= width ? width - 1 : r1;
-            int v = h >> 1;
-            int dl = width - v;
-
-            Parallel.For(0, height, y =>
-            {
                 float sumVal = 0;
                 float sumW = 0;
                 int x;
 
                 for (x = 0; x < h; x++)
                 {
-                    sumVal += A[y, x] * weights[y, x];
-                    sumW += weights[y, x];
+                    sumVal += values[x] * weights[x];
+                    sumW += weights[x];
                 }
 
-                for (x = 0; x < v; x++)
+                for (x = 0; x < w; x++)
                 {
-                    result[y, x] = sumVal / (sumW + 1e-8f);
+                    output[x] = sumVal / (sumW + 1e-8f);
                 }
 
-                for (x = v; x < dl; x++)
+                for (x = w; x < dl; x++)
                 {
-                    int xAdd = x + v;
-                    int xSub = x - v - 1;
+                    int xAdd = x + w;
+                    int xSub = x - w - 1;
 
-                    if (xAdd < width)
+                    if (xAdd < l)
                     {
-                        sumVal += A[y, xAdd] * weights[y, xAdd];
-                        sumW += weights[y, xAdd];
+                        sumVal += values[xAdd] * weights[xAdd];
+                        sumW += weights[xAdd];
                     }
+                    if (xSub >= 0)
+                    {
+                        sumVal -= values[xSub] * weights[xSub];
+                        sumW -= weights[xSub];
+                    }
+
+                    output[x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (x = dl; x < l; x++)
+                {
+                    int xSub = x - w - 1;
 
                     if (xSub >= 0)
                     {
-                        sumVal -= A[y, xSub] * weights[y, xSub];
-                        sumW -= weights[y, xSub];
+                        sumVal -= values[xSub] * weights[xSub];
+                        sumW -= weights[xSub];
                     }
 
-                    result[y, x] = sumVal / (sumW + 1e-8f);
+                    output[x] = sumVal / (sumW + 1e-8f);
                 }
 
-                for (x = dl; x < width; x++)
-                {
-                    int xSub = x - v - 1;
-
-                    if (xSub >= 0)
-                    {
-                        sumVal -= A[y, xSub] * weights[y, xSub];
-                        sumW -= weights[y, xSub];
-                    }
-
-                    result[y, x] = sumVal / (sumW + 1e-8f);
-                }
-            });
-
-            return result;
-        }
-        /// <summary>
-        /// Implements local weighted average of matrice (vertical).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="weights">Weights</param>
-        /// <param name="r0">Size</param>
-        /// <returns>Jagged array</returns>
-        public static float[,] MeanVerticalWeighted(float[,] A, float[,] weights, int r0)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (height < 2 || r0 < 2)
-                return A;
-
-            float[,] result = new float[height, width];
-            int h = r0 >= height ? height - 1 : r0;
-            int v = h >> 1;
-            int dl = height - v;
-
-            Parallel.For(0, width, x =>
+                return output;
+            }
+            /// <summary>
+            /// Implements weighted local average of vector.
+            /// </summary>
+            /// <param name="values">Array of values</param>
+            /// <param name="weights">Array of weights (same length as values)</param>
+            /// <param name="r">Radius</param>
+            /// <returns>Weighted blurred array</returns>
+            public static Complex32[] MeanWeighted(Complex32[] values, Complex32[] weights, int r)
             {
-                float sumVal = 0;
-                float sumW = 0;
-                int y;
+                int l = values.Length;
 
-                for (y = 0; y < h; y++)
-                {
-                    sumVal += A[y, x] * weights[y, x];
-                    sumW += weights[y, x];
-                }
+                if (l < 2 || r < 2)
+                    return values;
 
-                for (y = 0; y < v; y++)
-                {
-                    result[y, x] = sumVal / (sumW + 1e-8f);
-                }
+                Complex32[] output = new Complex32[l];
+                int h = r >= l ? l - 1 : r;
+                int w = r >> 1;
+                int dl = l - w;
 
-                for (y = v; y < dl; y++)
-                {
-                    int yAdd = y + v;
-                    int ySub = y - v - 1;
-
-                    if (yAdd < height)
-                    {
-                        sumVal += A[yAdd, x] * weights[yAdd, x];
-                        sumW += weights[yAdd, x];
-                    }
-
-                    if (ySub >= 0)
-                    {
-                        sumVal -= A[ySub, x] * weights[ySub, x];
-                        sumW -= weights[ySub, x];
-                    }
-
-                    result[y, x] = sumVal / (sumW + 1e-8f);
-                }
-
-                for (y = dl; y < height; y++)
-                {
-                    int ySub = y - v - 1;
-
-                    if (ySub >= 0)
-                    {
-                        sumVal -= A[ySub, x] * weights[ySub, x];
-                        sumW -= weights[ySub, x];
-                    }
-
-                    result[y, x] = sumVal / (sumW + 1e-8f);
-                }
-            });
-
-            return result;
-        }
-        /// <summary>
-        /// Implements local weighted average of matrice (horizontal).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="weights">Weights</param>
-        /// <param name="r1">Size</param>
-        /// <returns>Jagged array</returns>
-        /// <returns></returns>
-        public static Complex32[,] MeanHorizontalWeighted(Complex32[,] A, Complex32[,] weights, int r1)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (width < 2 || r1 < 2)
-                return A;
-
-            Complex32[,] result = new Complex32[height, width];
-            int h = r1 >= width ? width - 1 : r1;
-            int v = h >> 1;
-            int dl = width - v;
-
-            Parallel.For(0, height, y =>
-            {
                 Complex32 sumVal = 0;
                 Complex32 sumW = 0;
                 int x;
 
                 for (x = 0; x < h; x++)
                 {
-                    sumVal += A[y, x] * weights[y, x];
-                    sumW += weights[y, x];
+                    sumVal += values[x] * weights[x];
+                    sumW += weights[x];
                 }
 
-                for (x = 0; x < v; x++)
+                for (x = 0; x < w; x++)
                 {
-                    result[y, x] = sumVal / (sumW + 1e-8f);
+                    output[x] = sumVal / (sumW + 1e-8f);
                 }
 
-                for (x = v; x < dl; x++)
+                for (x = w; x < dl; x++)
                 {
-                    int xAdd = x + v;
-                    int xSub = x - v - 1;
+                    int xAdd = x + w;
+                    int xSub = x - w - 1;
 
-                    if (xAdd < width)
+                    if (xAdd < l)
                     {
-                        sumVal += A[y, xAdd] * weights[y, xAdd];
-                        sumW += weights[y, xAdd];
+                        sumVal += values[xAdd] * weights[xAdd];
+                        sumW += weights[xAdd];
                     }
+                    if (xSub >= 0)
+                    {
+                        sumVal -= values[xSub] * weights[xSub];
+                        sumW -= weights[xSub];
+                    }
+
+                    output[x] = sumVal / (sumW + 1e-8f);
+                }
+
+                for (x = dl; x < l; x++)
+                {
+                    int xSub = x - w - 1;
 
                     if (xSub >= 0)
                     {
-                        sumVal -= A[y, xSub] * weights[y, xSub];
-                        sumW -= weights[y, xSub];
+                        sumVal -= values[xSub] * weights[xSub];
+                        sumW -= weights[xSub];
                     }
 
-                    result[y, x] = sumVal / (sumW + 1e-8f);
+                    output[x] = sumVal / (sumW + 1e-8f);
                 }
 
-                for (x = dl; x < width; x++)
-                {
-                    int xSub = x - v - 1;
+                return output;
+            }
 
-                    if (xSub >= 0)
-                    {
-                        sumVal -= A[y, xSub] * weights[y, xSub];
-                        sumW -= weights[y, xSub];
-                    }
-
-                    result[y, x] = sumVal / (sumW + 1e-8f);
-                }
-            });
-
-            return result;
-        }
-        /// <summary>
-        /// Implements local weighted average of matrice (vertical).
-        /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <param name="weights">Weights</param>
-        /// <param name="r0">Size</param>
-        /// <returns>Jagged array</returns>
-        public static Complex32[,] MeanVerticalWeighted(Complex32[,] A, Complex32[,] weights, int r0)
-        {
-            int height = A.GetLength(0), width = A.GetLength(1);
-
-            if (height < 2 || r0 < 2)
-                return A;
-
-            Complex32[,] result = new Complex32[height, width];
-            int h = r0 >= height ? height - 1 : r0;
-            int v = h >> 1;
-            int dl = height - v;
-
-            Parallel.For(0, width, x =>
+            /// <summary>
+            /// Implements local weighted average of matrice (horizontal).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="weights">Weights</param>
+            /// <param name="r1">Size</param>
+            /// <returns>Jagged array</returns>
+            /// <returns></returns>
+            public static float[,] MeanHorizontalWeighted(float[,] A, float[,] weights, int r1)
             {
-                Complex32 sumVal = 0;
-                Complex32 sumW = 0;
-                int y;
+                int height = A.GetLength(0), width = A.GetLength(1);
 
-                for (y = 0; y < h; y++)
+                if (width < 2 || r1 < 2)
+                    return A;
+
+                float[,] result = new float[height, width];
+                int h = r1 >= width ? width - 1 : r1;
+                int v = h >> 1;
+                int dl = width - v;
+
+                Parallel.For(0, height, y =>
                 {
-                    sumVal += A[y, x] * weights[y, x];
-                    sumW += weights[y, x];
-                }
+                    float sumVal = 0;
+                    float sumW = 0;
+                    int x;
 
-                for (y = 0; y < v; y++)
-                {
-                    result[y, x] = sumVal / (sumW + 1e-8f);
-                }
-
-                for (y = v; y < dl; y++)
-                {
-                    int yAdd = y + v;
-                    int ySub = y - v - 1;
-
-                    if (yAdd < height)
+                    for (x = 0; x < h; x++)
                     {
-                        sumVal += A[yAdd, x] * weights[yAdd, x];
-                        sumW += weights[yAdd, x];
+                        sumVal += A[y, x] * weights[y, x];
+                        sumW += weights[y, x];
                     }
 
-                    if (ySub >= 0)
+                    for (x = 0; x < v; x++)
                     {
-                        sumVal -= A[ySub, x] * weights[ySub, x];
-                        sumW -= weights[ySub, x];
+                        result[y, x] = sumVal / (sumW + 1e-8f);
                     }
 
-                    result[y, x] = sumVal / (sumW + 1e-8f);
-                }
+                    for (x = v; x < dl; x++)
+                    {
+                        int xAdd = x + v;
+                        int xSub = x - v - 1;
 
-                for (y = dl; y < height; y++)
+                        if (xAdd < width)
+                        {
+                            sumVal += A[y, xAdd] * weights[y, xAdd];
+                            sumW += weights[y, xAdd];
+                        }
+
+                        if (xSub >= 0)
+                        {
+                            sumVal -= A[y, xSub] * weights[y, xSub];
+                            sumW -= weights[y, xSub];
+                        }
+
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+
+                    for (x = dl; x < width; x++)
+                    {
+                        int xSub = x - v - 1;
+
+                        if (xSub >= 0)
+                        {
+                            sumVal -= A[y, xSub] * weights[y, xSub];
+                            sumW -= weights[y, xSub];
+                        }
+
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+                });
+
+                return result;
+            }
+            /// <summary>
+            /// Implements local weighted average of matrice (vertical).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="weights">Weights</param>
+            /// <param name="r0">Size</param>
+            /// <returns>Jagged array</returns>
+            public static float[,] MeanVerticalWeighted(float[,] A, float[,] weights, int r0)
+            {
+                int height = A.GetLength(0), width = A.GetLength(1);
+
+                if (height < 2 || r0 < 2)
+                    return A;
+
+                float[,] result = new float[height, width];
+                int h = r0 >= height ? height - 1 : r0;
+                int v = h >> 1;
+                int dl = height - v;
+
+                Parallel.For(0, width, x =>
                 {
-                    int ySub = y - v - 1;
+                    float sumVal = 0;
+                    float sumW = 0;
+                    int y;
 
-                    if (ySub >= 0)
+                    for (y = 0; y < h; y++)
                     {
-                        sumVal -= A[ySub, x] * weights[ySub, x];
-                        sumW -= weights[ySub, x];
+                        sumVal += A[y, x] * weights[y, x];
+                        sumW += weights[y, x];
                     }
 
-                    result[y, x] = sumVal / (sumW + 1e-8f);
-                }
-            });
+                    for (y = 0; y < v; y++)
+                    {
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
 
-            return result;
+                    for (y = v; y < dl; y++)
+                    {
+                        int yAdd = y + v;
+                        int ySub = y - v - 1;
+
+                        if (yAdd < height)
+                        {
+                            sumVal += A[yAdd, x] * weights[yAdd, x];
+                            sumW += weights[yAdd, x];
+                        }
+
+                        if (ySub >= 0)
+                        {
+                            sumVal -= A[ySub, x] * weights[ySub, x];
+                            sumW -= weights[ySub, x];
+                        }
+
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+
+                    for (y = dl; y < height; y++)
+                    {
+                        int ySub = y - v - 1;
+
+                        if (ySub >= 0)
+                        {
+                            sumVal -= A[ySub, x] * weights[ySub, x];
+                            sumW -= weights[ySub, x];
+                        }
+
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+                });
+
+                return result;
+            }
+            /// <summary>
+            /// Implements local weighted average of matrice (horizontal).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="weights">Weights</param>
+            /// <param name="r1">Size</param>
+            /// <returns>Jagged array</returns>
+            /// <returns></returns>
+            public static Complex32[,] MeanHorizontalWeighted(Complex32[,] A, Complex32[,] weights, int r1)
+            {
+                int height = A.GetLength(0), width = A.GetLength(1);
+
+                if (width < 2 || r1 < 2)
+                    return A;
+
+                Complex32[,] result = new Complex32[height, width];
+                int h = r1 >= width ? width - 1 : r1;
+                int v = h >> 1;
+                int dl = width - v;
+
+                Parallel.For(0, height, y =>
+                {
+                    Complex32 sumVal = 0;
+                    Complex32 sumW = 0;
+                    int x;
+
+                    for (x = 0; x < h; x++)
+                    {
+                        sumVal += A[y, x] * weights[y, x];
+                        sumW += weights[y, x];
+                    }
+
+                    for (x = 0; x < v; x++)
+                    {
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+
+                    for (x = v; x < dl; x++)
+                    {
+                        int xAdd = x + v;
+                        int xSub = x - v - 1;
+
+                        if (xAdd < width)
+                        {
+                            sumVal += A[y, xAdd] * weights[y, xAdd];
+                            sumW += weights[y, xAdd];
+                        }
+
+                        if (xSub >= 0)
+                        {
+                            sumVal -= A[y, xSub] * weights[y, xSub];
+                            sumW -= weights[y, xSub];
+                        }
+
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+
+                    for (x = dl; x < width; x++)
+                    {
+                        int xSub = x - v - 1;
+
+                        if (xSub >= 0)
+                        {
+                            sumVal -= A[y, xSub] * weights[y, xSub];
+                            sumW -= weights[y, xSub];
+                        }
+
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+                });
+
+                return result;
+            }
+            /// <summary>
+            /// Implements local weighted average of matrice (vertical).
+            /// </summary>
+            /// <param name="A">Jagged array</param>
+            /// <param name="weights">Weights</param>
+            /// <param name="r0">Size</param>
+            /// <returns>Jagged array</returns>
+            public static Complex32[,] MeanVerticalWeighted(Complex32[,] A, Complex32[,] weights, int r0)
+            {
+                int height = A.GetLength(0), width = A.GetLength(1);
+
+                if (height < 2 || r0 < 2)
+                    return A;
+
+                Complex32[,] result = new Complex32[height, width];
+                int h = r0 >= height ? height - 1 : r0;
+                int v = h >> 1;
+                int dl = height - v;
+
+                Parallel.For(0, width, x =>
+                {
+                    Complex32 sumVal = 0;
+                    Complex32 sumW = 0;
+                    int y;
+
+                    for (y = 0; y < h; y++)
+                    {
+                        sumVal += A[y, x] * weights[y, x];
+                        sumW += weights[y, x];
+                    }
+
+                    for (y = 0; y < v; y++)
+                    {
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+
+                    for (y = v; y < dl; y++)
+                    {
+                        int yAdd = y + v;
+                        int ySub = y - v - 1;
+
+                        if (yAdd < height)
+                        {
+                            sumVal += A[yAdd, x] * weights[yAdd, x];
+                            sumW += weights[yAdd, x];
+                        }
+
+                        if (ySub >= 0)
+                        {
+                            sumVal -= A[ySub, x] * weights[ySub, x];
+                            sumW -= weights[ySub, x];
+                        }
+
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+
+                    for (y = dl; y < height; y++)
+                    {
+                        int ySub = y - v - 1;
+
+                        if (ySub >= 0)
+                        {
+                            sumVal -= A[ySub, x] * weights[ySub, x];
+                            sumW -= weights[ySub, x];
+                        }
+
+                        result[y, x] = sumVal / (sumW + 1e-8f);
+                    }
+                });
+
+                return result;
+            }
         }
         #endregion
 
@@ -2993,52 +3058,6 @@ namespace UMapx.Core
                 }
                 return 0; // fallback (should not happen if rank valid)
             }
-        }
-
-        #endregion
-
-        #region Copy
-        /// <summary>
-        /// Copies matrix.
-        /// </summary>
-        /// <param name="src">Source</param>
-        /// <param name="dst">Destination</param>
-        /// <param name="r0">R0</param>
-        /// <param name="c0">C0</param>
-        public static void Copy(float[,] src, float[,] dst, int r0, int c0)
-        {
-            int rows = src.GetLength(0), cols = src.GetLength(1);
-            for (int i = 0; i < rows; i++)
-                for (int j = 0; j < cols; j++)
-                    dst[r0 + i, c0 + j] = src[i, j];
-        }
-        /// <summary>
-        /// Copies matrix.
-        /// </summary>
-        /// <param name="src">Source</param>
-        /// <param name="dst">Destination</param>
-        /// <param name="r0">R0</param>
-        /// <param name="c0">C0</param>
-        public static void Copy(Complex32[,] src, Complex32[,] dst, int r0, int c0)
-        {
-            int rows = src.GetLength(0), cols = src.GetLength(1);
-            for (int i = 0; i < rows; i++)
-                for (int j = 0; j < cols; j++)
-                    dst[r0 + i, c0 + j] = src[i, j];
-        }
-        /// <summary>
-        /// Copies matrix.
-        /// </summary>
-        /// <param name="src">Source</param>
-        /// <param name="dst">Destination</param>
-        /// <param name="r0">R0</param>
-        /// <param name="c0">C0</param>
-        public static void Copy(float[,] src, Complex32[,] dst, int r0, int c0)
-        {
-            int rows = src.GetLength(0), cols = src.GetLength(1);
-            for (int i = 0; i < rows; i++)
-                for (int j = 0; j < cols; j++)
-                    dst[r0 + i, c0 + j] = new Complex32(src[i, j], 0f);
         }
 
         #endregion

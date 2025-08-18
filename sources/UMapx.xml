@@ -4852,12 +4852,17 @@
             Defines the class of optimizations of matrix operations.
             </summary>
         </member>
-        <member name="F:UMapx.Core.LinealgOptions.exception">
+        <member name="T:UMapx.Core.LinealgOptions.MatrixOperation">
+            <summary>
+            Defines matrix operation class. 
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.LinealgOptions.MatrixOperation.exception">
             <summary>
             Exception message.
             </summary>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Determinant(System.Single*,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Determinant(System.Single*,System.Int32)">
             <summary>
             Iterative calculation of the determinant.
             </summary>
@@ -4865,7 +4870,7 @@
             <param name="n">Radius</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Determinant(UMapx.Core.Complex32*,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Determinant(UMapx.Core.Complex32*,System.Int32)">
             <summary>
             Iterative calculation of the determinant.
             </summary>
@@ -4873,21 +4878,21 @@
             <param name="n">Radius</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Invert(System.Single[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Invert(System.Single[][])">
             <summary>
             Implements the matrix inversion operation.
             </summary>
             <param name="working">Square matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Invert(UMapx.Core.Complex32[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Invert(UMapx.Core.Complex32[][])">
             <summary>
             Implements the matrix inversion operation.
             </summary>
             <param name="working">Square matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Mul(System.Single[][],System.Single[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(System.Single[][],System.Single[][])">
             <summary>
             Implements the multiplication of matrices presented in the form of jagged arrays.
             </summary>
@@ -4895,7 +4900,7 @@
             <param name="B">Jagged array</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][])">
             <summary>
             Implements the multiplication of matrices presented in the form of jagged arrays.
             </summary>
@@ -4903,7 +4908,7 @@
             <param name="B">Jagged array</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Mul(UMapx.Core.Complex32[][],System.Single[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(UMapx.Core.Complex32[][],System.Single[][])">
             <summary>
             Implements the multiplication of matrices presented in the form of jagged arrays.
             </summary>
@@ -4911,7 +4916,7 @@
             <param name="B">Jagged array</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Mul(System.Single[][],UMapx.Core.Complex32[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(System.Single[][],UMapx.Core.Complex32[][])">
             <summary>
             Implements the multiplication of matrices presented in the form of jagged arrays.
             </summary>
@@ -4919,7 +4924,7 @@
             <param name="B">Jagged array</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[][],System.Single[][],System.Single[][],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Whittle_Mul(System.Single[][],System.Single[][],System.Single[][],System.Int32,System.Int32,System.Int32)">
             <summary>
             Implements matrix multiplication using modified Whittle optimization.
             </summary>
@@ -4930,7 +4935,7 @@
             <param name="width">Width</param>
             <param name="i">Index</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Whittle_Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
             <summary>
             Implements matrix multiplication using modified Whittle optimization.
             </summary>
@@ -4941,7 +4946,7 @@
             <param name="width">Width</param>
             <param name="i">Index</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(UMapx.Core.Complex32[][],System.Single[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Whittle_Mul(UMapx.Core.Complex32[][],System.Single[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
             <summary>
             Implements matrix multiplication using modified Whittle optimization.
             </summary>
@@ -4952,7 +4957,7 @@
             <param name="width">Width</param>
             <param name="i">Index</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Whittle_Mul(System.Single[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Whittle_Mul(System.Single[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
             <summary>
             Implements matrix multiplication using modified Whittle optimization.
             </summary>
@@ -4963,7 +4968,39 @@
             <param name="width">Width</param>
             <param name="i">Index</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Conv(System.Single[0:,0:],System.Single[0:,0:],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Copy(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Copies matrix.
+            </summary>
+            <param name="src">Source</param>
+            <param name="dst">Destination</param>
+            <param name="r0">R0</param>
+            <param name="c0">C0</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Copy(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Copies matrix.
+            </summary>
+            <param name="src">Source</param>
+            <param name="dst">Destination</param>
+            <param name="r0">R0</param>
+            <param name="c0">C0</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Copy(System.Single[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Copies matrix.
+            </summary>
+            <param name="src">Source</param>
+            <param name="dst">Destination</param>
+            <param name="r0">R0</param>
+            <param name="c0">C0</param>
+        </member>
+        <member name="T:UMapx.Core.LinealgOptions.ConvolutionFilter">
+            <summary>
+            Defines a convolution filter class.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.Conv(System.Single[0:,0:],System.Single[0:,0:],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices.
             </summary>
@@ -4972,7 +5009,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Conv(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.Conv(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices.
             </summary>
@@ -4981,7 +5018,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Conv(System.Single[0:,0:],UMapx.Core.Complex32[0:,0:],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.Conv(System.Single[0:,0:],UMapx.Core.Complex32[0:,0:],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices.
             </summary>
@@ -4990,7 +5027,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Conv(UMapx.Core.Complex32[0:,0:],System.Single[0:,0:],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.Conv(UMapx.Core.Complex32[0:,0:],System.Single[0:,0:],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices.
             </summary>
@@ -4999,7 +5036,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.ConvHorizontal(System.Single[0:,0:],System.Single[],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.ConvHorizontal(System.Single[0:,0:],System.Single[],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices (horizontal).
             </summary>
@@ -5008,7 +5045,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.ConvVertical(System.Single[0:,0:],System.Single[],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.ConvVertical(System.Single[0:,0:],System.Single[],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices (vertical).
             </summary>
@@ -5017,7 +5054,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.ConvHorizontal(System.Single[0:,0:],UMapx.Core.Complex32[],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.ConvHorizontal(System.Single[0:,0:],UMapx.Core.Complex32[],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices (horizontal).
             </summary>
@@ -5026,7 +5063,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.ConvVertical(System.Single[0:,0:],UMapx.Core.Complex32[],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.ConvVertical(System.Single[0:,0:],UMapx.Core.Complex32[],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices (vertical).
             </summary>
@@ -5035,7 +5072,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.ConvHorizontal(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.ConvHorizontal(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices (horizontal).
             </summary>
@@ -5044,7 +5081,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.ConvVertical(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.ConvVertical(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices (vertical).
             </summary>
@@ -5053,7 +5090,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.ConvHorizontal(UMapx.Core.Complex32[0:,0:],System.Single[],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.ConvHorizontal(UMapx.Core.Complex32[0:,0:],System.Single[],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices (horizontal).
             </summary>
@@ -5062,7 +5099,7 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.ConvVertical(UMapx.Core.Complex32[0:,0:],System.Single[],System.Boolean)">
+        <member name="M:UMapx.Core.LinealgOptions.ConvolutionFilter.ConvVertical(UMapx.Core.Complex32[0:,0:],System.Single[],System.Boolean)">
             <summary>
             Implements discrete convolution of matrices (vertical).
             </summary>
@@ -5071,21 +5108,26 @@
             <param name="normalize">Normalized convolution or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Mean(System.Single[],System.Int32)">
+        <member name="T:UMapx.Core.LinealgOptions.MeanFilter">
+            <summary>
+            Defines a fast mean filter class.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.Mean(System.Single[],System.Int32)">
             <summary>
              Implements local average of vector.
             </summary>
             <param name="v">Array</param>
             <param name="r">Radius</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.Mean(UMapx.Core.Complex32[],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.Mean(UMapx.Core.Complex32[],System.Int32)">
             <summary>
              Implements local average of vector.
             </summary>
             <param name="v">Array</param>
             <param name="r">Radius</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanHorizontal(System.Single[0:,0:],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanHorizontal(System.Single[0:,0:],System.Int32)">
             <summary>
             Implements local average of matrix (horizontal).
             </summary>
@@ -5093,7 +5135,7 @@
             <param name="r1">Size</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanVertical(System.Single[0:,0:],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanVertical(System.Single[0:,0:],System.Int32)">
             <summary>
             Implements local average of matrix (vertical).
             </summary>
@@ -5101,7 +5143,7 @@
             <param name="r0">Size</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanHorizontal(UMapx.Core.Complex32[0:,0:],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanHorizontal(UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
             Implements local average of matrix (horizontal).
             </summary>
@@ -5109,7 +5151,7 @@
             <param name="r1">Size</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanVertical(UMapx.Core.Complex32[0:,0:],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanVertical(UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
             Implements local average of matrix (vertical).
             </summary>
@@ -5117,7 +5159,7 @@
             <param name="r0">Size</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanWeighted(System.Single[],System.Single[],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanWeighted(System.Single[],System.Single[],System.Int32)">
             <summary>
             Implements weighted local average of vector.
             </summary>
@@ -5126,7 +5168,7 @@
             <param name="r">Radius</param>
             <returns>Weighted blurred array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanWeighted(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanWeighted(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32)">
             <summary>
             Implements weighted local average of vector.
             </summary>
@@ -5135,7 +5177,7 @@
             <param name="r">Radius</param>
             <returns>Weighted blurred array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanHorizontalWeighted(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanHorizontalWeighted(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
             <summary>
             Implements local weighted average of matrice (horizontal).
             </summary>
@@ -5145,7 +5187,7 @@
             <returns>Jagged array</returns>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanVerticalWeighted(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanVerticalWeighted(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
             <summary>
             Implements local weighted average of matrice (vertical).
             </summary>
@@ -5154,7 +5196,7 @@
             <param name="r0">Size</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanHorizontalWeighted(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanHorizontalWeighted(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
             Implements local weighted average of matrice (horizontal).
             </summary>
@@ -5164,7 +5206,7 @@
             <returns>Jagged array</returns>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MeanVerticalWeighted(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanVerticalWeighted(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32)">
             <summary>
             Implements local weighted average of matrice (vertical).
             </summary>
@@ -5324,33 +5366,6 @@
             <param name="histogram">Histogram</param>
             <param name="rank">Rank</param>
             <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.Copy(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Copies matrix.
-            </summary>
-            <param name="src">Source</param>
-            <param name="dst">Destination</param>
-            <param name="r0">R0</param>
-            <param name="c0">C0</param>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.Copy(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Copies matrix.
-            </summary>
-            <param name="src">Source</param>
-            <param name="dst">Destination</param>
-            <param name="r0">R0</param>
-            <param name="c0">C0</param>
-        </member>
-        <member name="M:UMapx.Core.LinealgOptions.Copy(System.Single[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Copies matrix.
-            </summary>
-            <param name="src">Source</param>
-            <param name="dst">Destination</param>
-            <param name="r0">R0</param>
-            <param name="c0">C0</param>
         </member>
         <member name="T:UMapx.Core.Maths">
             <summary>
