@@ -124,17 +124,17 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
         /// </summary>
-        /// <param name="p">Polynomial coefficients.</param>
-        /// <returns>Text as a sequence of Unicode characters.</returns>
+        /// <param name="p">Polynomial coefficients</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Equation(float[] p) => Equation(p, " * X^");
 
         /// <summary>
         /// Returns the equation of a polynomial represented as a string.
         /// The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
         /// </summary>
-        /// <param name="p">Polynomial coefficients.</param>
-        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
-        /// <returns>Text as a sequence of Unicode characters.</returns>
+        /// <param name="p">Polynomial coefficients</param>
+        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^")</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Equation(float[] p, string function)
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
@@ -274,17 +274,17 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
         /// </summary>
-        /// <param name="p">Polynomial coefficients.</param>
-        /// <returns>Text as a sequence of Unicode characters.</returns>
+        /// <param name="p">Polynomial coefficients</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Equation(Complex32[] p) => Equation(p, " * X^");
 
         /// <summary>
         /// Returns the equation of a polynomial represented as a string.
         /// The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
         /// </summary>
-        /// <param name="p">Polynomial coefficients.</param>
-        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
-        /// <returns>Text as a sequence of Unicode characters.</returns>
+        /// <param name="p">Polynomial coefficients</param>
+        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^")</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
         public static string Equation(Complex32[] p, string function)
         {
             if (p == null) throw new ArgumentNullException(nameof(p));

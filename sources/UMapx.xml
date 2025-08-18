@@ -933,17 +933,17 @@
             <summary>
             Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
             </summary>
-            <param name="p">Polynomial coefficients.</param>
-            <returns>Text as a sequence of Unicode characters.</returns>
+            <param name="p">Polynomial coefficients</param>
+            <returns>Text as a sequence of Unicode characters</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Equation(System.Single[],System.String)">
             <summary>
             Returns the equation of a polynomial represented as a string.
             The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
             </summary>
-            <param name="p">Polynomial coefficients.</param>
-            <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
-            <returns>Text as a sequence of Unicode characters.</returns>
+            <param name="p">Polynomial coefficients</param>
+            <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^")</param>
+            <returns>Text as a sequence of Unicode characters</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Polynomial(UMapx.Core.Complex32,UMapx.Core.Complex32[])">
             <summary>
@@ -1000,17 +1000,17 @@
             <summary>
             Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
             </summary>
-            <param name="p">Polynomial coefficients.</param>
-            <returns>Text as a sequence of Unicode characters.</returns>
+            <param name="p">Polynomial coefficients</param>
+            <returns>Text as a sequence of Unicode characters</returns>
         </member>
         <member name="M:UMapx.Analysis.LeastSquaresOptions.Equation(UMapx.Core.Complex32[],System.String)">
             <summary>
             Returns the equation of a polynomial represented as a string.
             The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
             </summary>
-            <param name="p">Polynomial coefficients.</param>
-            <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
-            <returns>Text as a sequence of Unicode characters.</returns>
+            <param name="p">Polynomial coefficients</param>
+            <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^")</param>
+            <returns>Text as a sequence of Unicode characters</returns>
         </member>
         <member name="T:UMapx.Analysis.Nonlinear">
             <summary>
@@ -1280,6 +1280,58 @@
             <param name="numeratorCoeffs">Numerator coeffs</param>
             <param name="denominatorCoeffs">Denominator coeffs</param>
             <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.Equation(System.Single[],System.Single[])">
+            <summary>
+            Returns the equation of a Pade approximant represented as a string.
+            </summary>
+            <param name="numeratorCoeffs">Numerator coeffs</param>
+            <param name="denominatorCoeffs">Denominator coeffs</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Exception</exception>
+            <returns>Text as a sequence of Unicode characters</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.FormatPolynomial(System.Single[],System.String,System.Single)">
+            <summary>
+            Formats polynomial c0 + c1*x + ... + cK*x^K as a readable string.
+            </summary>
+            <param name="c">Polynomial</param>
+            <param name="var">Variable</param>
+            <param name="eps">Epsilon</param>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.Equation(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns the equation of a Pade approximant represented as a string.
+            </summary>
+            <param name="numeratorCoeffs">Numerator coeffs</param>
+            <param name="denominatorCoeffs">Denominator coeffs</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Exception</exception>
+            <returns>Text as a sequence of Unicode characters</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.FormatPolynomial(UMapx.Core.Complex32[],System.String,System.Single)">
+            <summary>
+            Formats polynomial c0 + c1*x + ... + cK*x^K as a readable string.
+            </summary>
+            <param name="c">Polynomial</param>
+            <param name="var">Variable</param>
+            <param name="eps">Epsilon</param>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.IsZero(UMapx.Core.Complex32,System.Single)">
+            <summary>
+            True if |z|≈0 (both parts small).
+            </summary>
+            <param name="z">Value</param>
+            <param name="eps">Epsilon</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Pade.NearlyOne(System.Single,System.Single)">
+            <summary>
+            True if |x - 1| ≤ eps.
+            </summary>
+            <param name="x">Value</param>
+            <param name="eps">Epsilon</param>
+            <returns>Boolean</returns>
         </member>
         <member name="T:UMapx.Analysis.Roots">
             <summary>
