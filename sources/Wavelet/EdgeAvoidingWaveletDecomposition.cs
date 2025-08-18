@@ -26,7 +26,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="sigmaSpatial">Spatial smoothing factor</param>
         /// <param name="sigmaRange">Range smoothing factor</param>
-        /// <param name="levels">Levels</param>
+        /// <param name="levels">Number of pyramid levels (>=1), including the base level</param>
         public EdgeAvoidingWaveletDecomposition(float sigmaSpatial = 4f, float sigmaRange = 0.1f, int levels = 3)
         {
             SigmaSpatial = sigmaSpatial;
@@ -34,7 +34,7 @@ namespace UMapx.Wavelet
             Levels = levels;
         }
         /// <summary>
-        /// Gets or sets spatial smoothing factor.
+        /// Gets or sets the spatial smoothing factor.
         /// </summary>
         public float SigmaSpatial
         {
@@ -48,7 +48,7 @@ namespace UMapx.Wavelet
             }
         }
         /// <summary>
-        /// Gets or sets range smoothing factor.
+        /// Gets or sets the range smoothing factor.
         /// </summary>
         public float SigmaRange
         {

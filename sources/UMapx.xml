@@ -29689,16 +29689,16 @@
             </summary>
             <param name="sigmaSpatial">Spatial smoothing factor</param>
             <param name="sigmaRange">Range smoothing factor</param>
-            <param name="levels">Levels</param>
+            <param name="levels">Number of pyramid levels (>=1), including the base level</param>
         </member>
         <member name="P:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.SigmaSpatial">
             <summary>
-            Gets or sets spatial smoothing factor.
+            Gets or sets the spatial smoothing factor.
             </summary>
         </member>
         <member name="P:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.SigmaRange">
             <summary>
-            Gets or sets range smoothing factor.
+            Gets or sets the range smoothing factor.
             </summary>
         </member>
         <member name="P:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.Levels">
