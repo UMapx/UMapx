@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using UMapx.Core;
 
 namespace UMapx.Visualization
@@ -14,30 +12,13 @@ namespace UMapx.Visualization
     public class Figure : IDisposable
     {
         #region Private data
-        private Style _style = new Style();
         private int figure_width, figure_height;
         private int canvas_width, canvas_height;
         private float xmin = -5, xmax = 5, ymin = -5, ymax = 5;
         private int xscale = 10, yscale = 10;
-        #endregion
-
-        #region Panes
-        /// <summary>
-        /// Plot panes.
-        /// </summary>
-        protected List<GraphPane> PlotPanes = new List<GraphPane>();
-        /// <summary>
-        /// Stem panes.
-        /// </summary>
-        protected List<GraphPane> StemPanes = new List<GraphPane>();
-        /// <summary>
-        /// Scatter panes.
-        /// </summary>
-        protected List<GraphPane> ScatterPanes = new List<GraphPane>();
-        /// <summary>
-        /// Image pane.
-        /// </summary>
-        protected Bitmap ImagePane;
+        private Style _style = new Style();
+        private readonly List<GraphPane> _panes = new List<GraphPane>();
+        private Bitmap _imagePane;
         #endregion
 
         #region Control voids and overrides
@@ -61,7 +42,10 @@ namespace UMapx.Visualization
         /// </summary>
         public Style Style
         {
-            get { return _style; }
+            get
+            { 
+                return _style; 
+            }
             set
             {
                 _style?.Dispose();
@@ -80,6 +64,10 @@ namespace UMapx.Visualization
         /// Gets or sets X title.
         /// </summary>
         public string Title { get; set; } = "Title";
+        /// <summary>
+        /// Gets or sets the legend.
+        /// </summary>
+        public Legend Legend { get; set; } = new Legend();
         /// <summary>
         /// Gets or sets X range [min, max].
         /// </summary>
@@ -167,16 +155,10 @@ namespace UMapx.Visualization
             // encapsulation of figure and canvas graphics
             using var figure = new Bitmap(figure_width, figure_height);
             using Graphics figure_graphics = Graphics.FromImage(figure);
-            figure_graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            figure_graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            figure_graphics.PixelOffsetMode = PixelOffsetMode.Half;
             figure_graphics.Clear(Style.ColorFrame);
 
             using var canvas = new Bitmap(canvas_width, canvas_height);
             using Graphics canvas_grpahics = Graphics.FromImage(canvas);
-            canvas_grpahics.SmoothingMode = SmoothingMode.AntiAlias;
-            canvas_grpahics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            canvas_grpahics.PixelOffsetMode = PixelOffsetMode.Half;
             canvas_grpahics.Clear(Style.ColorBack);
 
             // offsets
@@ -188,7 +170,7 @@ namespace UMapx.Visualization
 
             #region Autorange
             //autorange or not?
-            if (ImagePane is object)
+            if (_imagePane is object)
             {
                 xmin = ymin = 0;
                 xmax = size.Width;
@@ -199,23 +181,7 @@ namespace UMapx.Visualization
                 xmin = ymin = float.MaxValue;
                 xmax = ymax = float.MinValue;
 
-                foreach (var pane in PlotPanes)
-                {
-                    xmin = Math.Min(xmin, pane.X.Min());
-                    xmax = Math.Max(xmax, pane.X.Max());
-                    ymin = Math.Min(ymin, pane.Y.Min());
-                    ymax = Math.Max(ymax, pane.Y.Max());
-                }
-
-                foreach (var pane in StemPanes)
-                {
-                    xmin = Math.Min(xmin, pane.X.Min());
-                    xmax = Math.Max(xmax, pane.X.Max());
-                    ymin = Math.Min(ymin, pane.Y.Min());
-                    ymax = Math.Max(ymax, pane.Y.Max());
-                }
-
-                foreach (var pane in ScatterPanes)
+                foreach (var pane in _panes)
                 {
                     xmin = Math.Min(xmin, pane.X.Min());
                     xmax = Math.Max(xmax, pane.X.Max());
@@ -297,11 +263,11 @@ namespace UMapx.Visualization
             #endregion
 
             #region Graph painting
-            if (ImagePane is object)
+            if (_imagePane is object)
             {
                 // 2D plotting
                 Rectangle rectangle = new Rectangle(0, 0, canvas_width, canvas_height);
-                canvas_grpahics.DrawImage(ImagePane, rectangle);
+                canvas_grpahics.DrawImage(_imagePane, rectangle);
             }
             //else
             {
@@ -310,87 +276,84 @@ namespace UMapx.Visualization
                 float radius;
 
                 // Plotting:
-                foreach (var current in PlotPanes)
+                foreach (var current in _panes)
                 {
                     radius = (current.Depth + r0) * 2;
 
-                    switch (current.Type)
+                    if (current.Pane == Pane.Plot)
                     {
-                        case Symbol.None:
-                            PlotLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
-                            break;
+                        switch (current.Symbol)
+                        {
+                            case Symbol.None:
+                                PlotLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
+                                break;
 
-                        case Symbol.Circle:
-                            PlotCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
-                            break;
+                            case Symbol.Circle:
+                                PlotCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                break;
 
-                        case Symbol.Ball:
-                            PlotCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
-                            break;
+                            case Symbol.Ball:
+                                PlotCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                break;
 
-                        case Symbol.Rectangle:
-                            PlotRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
-                            break;
+                            case Symbol.Rectangle:
+                                PlotRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                break;
 
-                        case Symbol.Polygon:
-                            PlotRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
-                            break;
+                            case Symbol.Polygon:
+                                PlotRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                break;
+                        }
                     }
-                }
-                // Stemming:
-                foreach (var current in StemPanes)
-                {
-                    radius = (current.Depth + r0) * 2;
-
-                    switch (current.Type)
+                    else if (current.Pane == Pane.Stem)
                     {
-                        case Symbol.None:
-                            StemLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
-                            break;
+                        switch (current.Symbol)
+                        {
+                            case Symbol.None:
+                                StemLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
+                                break;
 
-                        case Symbol.Circle:
-                            StemCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
-                            break;
+                            case Symbol.Circle:
+                                StemCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                break;
 
-                        case Symbol.Ball:
-                            StemCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
-                            break;
+                            case Symbol.Ball:
+                                StemCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                break;
 
-                        case Symbol.Rectangle:
-                            StemRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
-                            break;
+                            case Symbol.Rectangle:
+                                StemRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                break;
 
-                        case Symbol.Polygon:
-                            StemRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
-                            break;
+                            case Symbol.Polygon:
+                                StemRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                break;
+                        }
                     }
-                }
-                // Scattering:
-                foreach (var current in ScatterPanes)
-                {
-                    radius = (current.Depth + r0) * 2;
-
-                    switch (current.Type)
+                    else
                     {
-                        case Symbol.None:
-                            ScatterLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
-                            break;
+                        switch (current.Symbol)
+                        {
+                            case Symbol.None:
+                                ScatterLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
+                                break;
 
-                        case Symbol.Circle:
-                            ScatterCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
-                            break;
+                            case Symbol.Circle:
+                                ScatterCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                break;
 
-                        case Symbol.Ball:
-                            ScatterCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
-                            break;
+                            case Symbol.Ball:
+                                ScatterCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                break;
 
-                        case Symbol.Rectangle:
-                            ScatterRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
-                            break;
+                            case Symbol.Rectangle:
+                                ScatterRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                break;
 
-                        case Symbol.Polygon:
-                            ScatterRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
-                            break;
+                            case Symbol.Polygon:
+                                ScatterRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                break;
+                        }
                     }
                 }
             }
@@ -423,6 +386,13 @@ namespace UMapx.Visualization
             canvas_grpahics.DrawRectangle(pen2, 0, 0, canvas_width - 1, canvas_height - 1);
             #endregion
 
+            #region Legend
+            if (Legend != null && Legend.Show)
+            {
+                Paint_Legend(canvas_grpahics);
+            }
+            #endregion
+
             #region Merging
             graphics.DrawImage(figure, new Point(0, 0));
             graphics.DrawImage(canvas, new Point(dw, dh));
@@ -434,127 +404,82 @@ namespace UMapx.Visualization
         /// <param name="bitmap">Bitmap</param>
         public void Image(Bitmap bitmap)
         {
-            ImagePane?.Dispose();
-            ImagePane = (Bitmap)bitmap.Clone();
+            _imagePane?.Dispose();
+            _imagePane = (Bitmap)bitmap.Clone();
         }
         /// <summary>
-        /// Adds graph pane to continuous plot.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="y">Function</param>
-        /// <param name="depth">Depth</param>
-        /// <param name="color">Color</param>
-        /// <param name="type">Symbol type</param>
-        public void Plot(float[] x, float[] y, float depth, Color color, Symbol type)
-        {
-            if (x.Length != y.Length)
-                throw new ArgumentException("Vectors must be of the same length");
-
-            var pane = new GraphPane()
-            {
-                X = x,
-                Y = y,
-                Depth = depth,
-                Color = color,
-                Type = type,
-            };
-
-            PlotPanes.Add(pane);
-        }
-        /// <summary>
-        /// Adds graph pane to continuous plot.
+        /// Adds a graph pane.
         /// </summary>
         /// <param name="pane">Graph pane</param>
-        public void Plot(GraphPane pane)
+        public void Graph(GraphPane pane)
         {
             if (pane.X.Length != pane.Y.Length)
                 throw new ArgumentException("Vectors must be of the same length");
 
-            PlotPanes.Add(pane);
-        }
-        /// <summary>
-        /// Adds graph pane to stem plot.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="y">Function</param>
-        /// <param name="depth">Depth</param>
-        /// <param name="color">Color</param>
-        /// <param name="type">Symbol type</param>
-        public void Stem(float[] x, float[] y, float depth, Color color, Symbol type)
-        {
-            if (x.Length != y.Length)
-                throw new ArgumentException("Vectors must be of the same length");
-
-            var pane = new GraphPane()
-            {
-                X = x,
-                Y = y,
-                Depth = depth,
-                Color = color,
-                Type = type,
-            };
-
-            StemPanes.Add(pane);
-        }
-        /// <summary>
-        /// Adds graph pane to stem plot.
-        /// </summary>
-        /// <param name="pane">Graph pane</param>
-        public void Stem(GraphPane pane)
-        {
-            if (pane.X.Length != pane.Y.Length)
-                throw new ArgumentException("Vectors must be of the same length");
-
-            StemPanes.Add(pane);
-        }
-        /// <summary>
-        /// Add graph pane to scatter plot.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="y">Function</param>
-        /// <param name="depth">Depth</param>
-        /// <param name="color">Color</param>
-        /// <param name="type">Symbol type</param>
-        public void Scatter(float[] x, float[] y, float depth, Color color, Symbol type)
-        {
-            if (x.Length != y.Length)
-                throw new ArgumentException("Vectors must be of the same length");
-
-            var pane = new GraphPane()
-            {
-                X = x,
-                Y = y,
-                Depth = depth,
-                Color = color,
-                Type = type,
-            };
-
-            ScatterPanes.Add(pane);
-        }
-        /// <summary>
-        /// Adds graph pane to scatter plot.
-        /// </summary>
-        /// <param name="pane">Graph pane</param>
-        public void Scatter(GraphPane pane)
-        {
-            if (pane.X.Length != pane.Y.Length)
-                throw new ArgumentException("Vectors must be of the same length");
-
-            ScatterPanes.Add(pane);
+            _panes.Add(pane);
         }
         /// <summary>
         /// Removes all graphs from the figure. 
         /// </summary>
         public void Clear()
         {
-            PlotPanes.Clear();
-            StemPanes.Clear();
-            ScatterPanes.Clear();
-            ImagePane?.Dispose();
+            _panes.Clear();
+            _imagePane?.Dispose();
         }
         #endregion
 
         #region Private voids
+
+        #region Legend voids
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="cx"></param>
+        /// <param name="cy"></param>
+        /// <param name="size"></param>
+        /// <param name="color"></param>
+        /// <param name="type"></param>
+        /// <param name="depth"></param>
+        private void DrawLegendMarker(Graphics g, int cx, int cy, int size, Color color, Symbol type, float depth)
+        {
+            int half = size / 2;
+            var rect = new Rectangle(cx, cy - half, size, size);
+
+            using var pen = new Pen(color, Math.Max(1f, depth));
+            using var br = new SolidBrush(color);
+
+            switch (type)
+            {
+                case Symbol.None:
+                    g.DrawLine(pen, cx, cy, cx + size, cy);
+                    var r2 = new Rectangle(cx + size / 2 - 2, cy - 2, 4, 4);
+                    g.FillRectangle(br, r2);
+                    break;
+
+                case Symbol.Circle:
+                case Symbol.Ball:
+                    if (IsFilled(type)) g.FillEllipse(br, rect);
+                    else g.DrawEllipse(pen, rect);
+                    break;
+
+                case Symbol.Rectangle:
+                case Symbol.Polygon:
+                    if (IsFilled(type)) g.FillRectangle(br, rect);
+                    else g.DrawRectangle(pen, rect);
+                    break;
+
+                default:
+                    g.DrawLine(pen, cx, cy, cx + size, cy);
+                    break;
+            }
+
+            bool IsFilled(Symbol type)
+            {
+                return type == Symbol.Ball || type == Symbol.Polygon;
+            }
+        }
+        #endregion
 
         #region Plot function voids
         /// <summary>
@@ -966,6 +891,76 @@ namespace UMapx.Visualization
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="g"></param>
+        private void Paint_Legend(Graphics g)
+        {
+            if (_panes.Count == 0) return;
+
+            using var textBrush = new SolidBrush(Style.ColorText);
+            using var font = Style.FontMarks;
+            int marker = Legend.MarkerSize;
+            int rowH = Math.Max(Legend.RowHeight, marker);
+            int maxTextW = 0;
+
+            foreach (var it in _panes)
+            {
+                var sz = g.MeasureString(it.Label, font);
+                if (sz.Width > maxTextW) maxTextW = (int)Math.Ceiling(sz.Width);
+            }
+
+            int innerPad = 8;
+            int contentW = marker + Legend.MarkerGap + maxTextW;
+            int contentH = _panes.Count * rowH;
+            int boxW = contentW + innerPad * 2;
+            int boxH = contentH + innerPad * 2;
+
+            int x, y;
+
+            switch (Legend.Anchor)
+            {
+                default:
+                case LegendAnchor.TopRight:
+                    x = canvas_width - Legend.Padding - boxW;
+                    y = Legend.Padding;
+                    break;
+                case LegendAnchor.TopLeft:
+                    x = Legend.Padding;
+                    y = Legend.Padding;
+                    break;
+                case LegendAnchor.BottomRight:
+                    x = canvas_width - Legend.Padding - boxW;
+                    y = canvas_height - Legend.Padding - boxH;
+                    break;
+                case LegendAnchor.BottomLeft:
+                    x = Legend.Padding;
+                    y = canvas_height - Legend.Padding - boxH;
+                    break;
+            }
+
+            var back = Color.FromArgb((int)(Legend.Opacity * 255), Style.ColorBack);
+            using var backBrush = new SolidBrush(back);
+            using var borderPen = new Pen(Style.ColorShapes, 1f);
+
+            g.FillRectangle(backBrush, x, y, boxW, boxH);
+
+            if (Legend.Border)
+                g.DrawRectangle(borderPen, x, y, boxW, boxH);
+
+            int cx = x + innerPad;
+            int cy = y + innerPad;
+
+            for (int idx = 0; idx < _panes.Count; idx++)
+            {
+                var it = _panes[idx];
+                int my = cy + idx * rowH + rowH / 2;
+
+                DrawLegendMarker(g, cx, my, marker, it.Color, it.Symbol, it.Depth);
+                g.DrawString(it.Label, font, textBrush, cx + marker + Legend.MarkerGap, my - rowH / 2 + 1);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="graphics"></param>
         /// <param name="title"></param>
         /// <param name="sizeX"></param>
@@ -1078,7 +1073,8 @@ namespace UMapx.Visualization
             {
                 if (disposing)
                 {
-                    ImagePane?.Dispose();
+                    _panes.Clear();
+                    _imagePane?.Dispose();
                     _style?.Dispose();
                 }
                 _disposed = true;

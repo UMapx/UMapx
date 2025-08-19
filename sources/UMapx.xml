@@ -29047,26 +29047,6 @@
             Defines the figure to plotting in a Cartesian coordinate system.
             </summary>
         </member>
-        <member name="F:UMapx.Visualization.Figure.PlotPanes">
-            <summary>
-            Plot panes.
-            </summary>
-        </member>
-        <member name="F:UMapx.Visualization.Figure.StemPanes">
-            <summary>
-            Stem panes.
-            </summary>
-        </member>
-        <member name="F:UMapx.Visualization.Figure.ScatterPanes">
-            <summary>
-            Scatter panes.
-            </summary>
-        </member>
-        <member name="F:UMapx.Visualization.Figure.ImagePane">
-            <summary>
-            Image pane.
-            </summary>
-        </member>
         <member name="M:UMapx.Visualization.Figure.#ctor">
             <summary>
             Initializes the figure.
@@ -29096,6 +29076,11 @@
         <member name="P:UMapx.Visualization.Figure.Title">
             <summary>
             Gets or sets X title.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Figure.Legend">
+            <summary>
+            Gets or sets the legend.
             </summary>
         </member>
         <member name="P:UMapx.Visualization.Figure.RangeX">
@@ -29145,51 +29130,9 @@
             </summary>
             <param name="bitmap">Bitmap</param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Plot(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Symbol)">
+        <member name="M:UMapx.Visualization.Figure.Graph(UMapx.Visualization.GraphPane)">
             <summary>
-            Adds graph pane to continuous plot.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="y">Function</param>
-            <param name="depth">Depth</param>
-            <param name="color">Color</param>
-            <param name="type">Symbol type</param>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.Plot(UMapx.Visualization.GraphPane)">
-            <summary>
-            Adds graph pane to continuous plot.
-            </summary>
-            <param name="pane">Graph pane</param>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.Stem(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Symbol)">
-            <summary>
-            Adds graph pane to stem plot.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="y">Function</param>
-            <param name="depth">Depth</param>
-            <param name="color">Color</param>
-            <param name="type">Symbol type</param>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.Stem(UMapx.Visualization.GraphPane)">
-            <summary>
-            Adds graph pane to stem plot.
-            </summary>
-            <param name="pane">Graph pane</param>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.Scatter(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Symbol)">
-            <summary>
-            Add graph pane to scatter plot.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="y">Function</param>
-            <param name="depth">Depth</param>
-            <param name="color">Color</param>
-            <param name="type">Symbol type</param>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.Scatter(UMapx.Visualization.GraphPane)">
-            <summary>
-            Adds graph pane to scatter plot.
+            Adds a graph pane.
             </summary>
             <param name="pane">Graph pane</param>
         </member>
@@ -29197,6 +29140,18 @@
             <summary>
             Removes all graphs from the figure. 
             </summary>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.DrawLegendMarker(System.Drawing.Graphics,System.Int32,System.Int32,System.Int32,System.Drawing.Color,UMapx.Visualization.Symbol,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="g"></param>
+            <param name="cx"></param>
+            <param name="cy"></param>
+            <param name="size"></param>
+            <param name="color"></param>
+            <param name="type"></param>
+            <param name="depth"></param>
         </member>
         <member name="M:UMapx.Visualization.Figure.PlotLine(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color)">
             <summary>
@@ -29300,6 +29255,12 @@
             <param name="radius"></param>
             <param name="fill"></param>
         </member>
+        <member name="M:UMapx.Visualization.Figure.Paint_Legend(System.Drawing.Graphics)">
+            <summary>
+            
+            </summary>
+            <param name="g"></param>
+        </member>
         <member name="M:UMapx.Visualization.Figure.Paint_Title(System.Drawing.Graphics,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             
@@ -29354,10 +29315,17 @@
             Defines the graph pane.
             </summary>
         </member>
-        <member name="M:UMapx.Visualization.GraphPane.#ctor">
+        <member name="M:UMapx.Visualization.GraphPane.#ctor(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Symbol,System.String,UMapx.Visualization.Pane)">
             <summary>
             Initializes the graph pane.
             </summary>
+            <param name="x">Argument</param>
+            <param name="y">Function</param>
+            <param name="depth">Depth</param>
+            <param name="color">Color</param>
+            <param name="symbol">Symbol type</param>
+            <param name="label">Label</param>
+            <param name="pane">Pane type</param>
         </member>
         <member name="P:UMapx.Visualization.GraphPane.X">
             <summary>
@@ -29379,9 +29347,94 @@
             Gets or sets color.
             </summary>
         </member>
-        <member name="P:UMapx.Visualization.GraphPane.Type">
+        <member name="P:UMapx.Visualization.GraphPane.Symbol">
             <summary>
-            Gets or sets type.
+            Gets or sets symbol type.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.GraphPane.Label">
+            <summary>
+            Gets or sets label.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.GraphPane.Pane">
+            <summary>
+            Gets or sets pane type.
+            </summary>
+        </member>
+        <member name="T:UMapx.Visualization.Legend">
+            <summary>
+            Defines a legend.
+            </summary>
+        </member>
+        <member name="M:UMapx.Visualization.Legend.#ctor">
+            <summary>
+            Initializes the legend.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Legend.Show">
+            <summary>
+            Show legend panel or not.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Legend.Anchor">
+            <summary>
+            Gets or sets legend anchor inside the canvas.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Legend.Padding">
+            <summary>
+            Gets or sets outer padding inside canvas (px).
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Legend.MarkerGap">
+            <summary>
+            Gets or sets spacing between marker and text (px).
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Legend.RowHeight">
+            <summary>
+            Gets or sets row height for each legend item (px).
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Legend.MarkerSize">
+            <summary>
+            Gets or sets marker nominal size (px).
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Legend.Opacity">
+            <summary>
+            Gets or sets background opacity [0, 1].
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Legend.Border">
+            <summary>
+            Gets or sets draw legend border.
+            </summary>
+        </member>
+        <member name="T:UMapx.Visualization.LegendAnchor">
+            <summary>
+            Defines the legend anchor type.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.LegendAnchor.TopLeft">
+            <summary>
+            Top left.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.LegendAnchor.TopRight">
+            <summary>
+            Top right.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.LegendAnchor.BottomLeft">
+            <summary>
+            Bottom left.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.LegendAnchor.BottomRight">
+            <summary>
+            Bottom right.
             </summary>
         </member>
         <member name="T:UMapx.Visualization.PaintData">
@@ -29503,6 +29556,26 @@
         </member>
         <member name="M:UMapx.Visualization.Painter.Finalize">
             <inheritdoc/>
+        </member>
+        <member name="T:UMapx.Visualization.Pane">
+            <summary>
+            Defines the pane type.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.Pane.Plot">
+            <summary>
+            Plot.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.Pane.Stem">
+            <summary>
+            Stem.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.Pane.Scatter">
+            <summary>
+            Scatter.
+            </summary>
         </member>
         <member name="T:UMapx.Visualization.Points">
             <summary>
