@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using UMapx.Core;
 
 namespace UMapx.Visualization
@@ -164,13 +166,24 @@ namespace UMapx.Visualization
 
             // encapsulation of figure and canvas graphics
             using var figure = new Bitmap(figure_width, figure_height);
+            using Graphics figure_graphics = Graphics.FromImage(figure);
+            figure_graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            figure_graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            figure_graphics.PixelOffsetMode = PixelOffsetMode.Half;
+            figure_graphics.Clear(Style.ColorFrame);
+
             using var canvas = new Bitmap(canvas_width, canvas_height);
-            using Graphics figure_graphics = Graphics.FromImage(figure); figure_graphics.Clear(Style.ColorFrame);
-            using Graphics canvas_grpahics = Graphics.FromImage(canvas); canvas_grpahics.Clear(Style.ColorBack);
+            using Graphics canvas_grpahics = Graphics.FromImage(canvas);
+            canvas_grpahics.SmoothingMode = SmoothingMode.AntiAlias;
+            canvas_grpahics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            canvas_grpahics.PixelOffsetMode = PixelOffsetMode.Half;
+            canvas_grpahics.Clear(Style.ColorBack);
 
             // offsets
-            int dx = (canvas_width / xscale),           dy = (canvas_height / yscale);
-            int dw = (figure_width - canvas_width) / 2, dh = (figure_height - canvas_height) / 2;
+            int dx = canvas_width / xscale;
+            int dy = canvas_height / yscale;
+            int dw = (figure_width - canvas_width) / 2;
+            int dh = (figure_height - canvas_height) / 2;
             #endregion
 
             #region Autorange
