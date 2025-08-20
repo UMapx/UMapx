@@ -5831,6 +5831,14 @@
             <param name="b">Power</param>
             <returns>Complex number</returns>
         </member>
+        <member name="M:UMapx.Core.Maths.Pow(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the number raised to the power.
+            </summary>
+            <param name="a">Complex number</param>
+            <param name="b">Power</param>
+            <returns>Complex number</returns>
+        </member>
         <member name="M:UMapx.Core.Maths.Sqrt(UMapx.Core.Complex32)">
             <summary>
             Returns the square root of a number.
@@ -5839,6 +5847,14 @@
             <returns>Complex number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sqrt(UMapx.Core.Complex32,System.Single)">
+            <summary>
+            Returns the root of a number.
+            </summary>
+            <param name="a">Complex number</param>
+            <param name="b">Power</param>
+            <returns>Complex number</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.Sqrt(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Returns the root of a number.
             </summary>
@@ -11465,6 +11481,74 @@
             <param name="theta">Theta</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Rademacher(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Radamecher function.
+            </summary>
+            <param name="t">Argument [0, 1]</param>
+            <param name="n">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Rademacher(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Radamecher function.
+            </summary>
+            <param name="z">Argument</param>
+            <param name="n">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Heaviside(System.Single,System.Single)">
+            <summary>
+            Returns the value of the Heaviside delta function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="k">Smoothing factor</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Heaviside(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Heaviside delta function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="k">Smoothing factor</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Mahler(System.Single,System.Single)">
+            <summary>
+            Returns the value of the Mahler function.
+            </summary>
+            <param name="x">Number</param>
+            <param name="t">Parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Mahler(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Mahler function.
+            </summary>
+            <param name="x">Number</param>
+            <param name="t">Parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gompertz(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Gets the value of the Gompertz function.
+            </summary>
+            <param name="t">Argument</param>
+            <param name="a">Upper asymptote</param>
+            <param name="b">Growth parameter</param>
+            <param name="c">Growth rate</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gompertz(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Gets the value of the Gompertz function.
+            </summary>
+            <param name="t">Argument</param>
+            <param name="a">Upper asymptote</param>
+            <param name="b">Growth parameter</param>
+            <param name="c">Growth rate</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Ci(System.Single)">
             <summary>
             Returns the value of the integral cosine.
@@ -12105,32 +12189,6 @@
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Mahler(System.Single,System.Single)">
-            <summary>
-            Returns the value of the Mahler polynomial.
-            </summary>
-            <param name="x">Number</param>
-            <param name="t">Parameter</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Gompertz(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Gets the value of the Gompertz function.
-            </summary>
-            <param name="t">Argument</param>
-            <param name="a">Upper asymptote</param>
-            <param name="b">Growth parameter</param>
-            <param name="c">Growth rate</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Heaviside(System.Single,System.Single)">
-            <summary>
-            Returns the value of the Heaviside delta function.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="k">Smoothing factor</param>
-            <returns>Value</returns>
-        </member>
         <member name="M:UMapx.Core.Special.Logistic(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Returns the value of a logistic function.
@@ -12221,14 +12279,6 @@
             Returns the value of the generalized error function.
             </summary>
             <param name="x">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Rademacher(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the Radamecher function.
-            </summary>
-            <param name="t">Argument [0, 1]</param>
-            <param name="n">Order</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32,System.Single)">

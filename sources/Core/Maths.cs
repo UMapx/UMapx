@@ -601,6 +601,16 @@ namespace UMapx.Core
             return Math.Pow(a.Abs, b) * new Complex32((float)Math.Cos(b * a.Angle), (float)Math.Sin(b * a.Angle));
         }
         /// <summary>
+        /// Returns the number raised to the power.
+        /// </summary>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Power</param>
+        /// <returns>Complex number</returns>
+        public static Complex32 Pow(Complex32 a, Complex32 b)
+        {
+            return Maths.Exp(b * Maths.Log(a));
+        }
+        /// <summary>
         /// Returns the square root of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
@@ -618,6 +628,16 @@ namespace UMapx.Core
         public static Complex32 Sqrt(Complex32 a, float b)
         {
             return Maths.FromPolar((float)Math.Sqrt(a.Abs), a.Angle / b);
+        }
+        /// <summary>
+        /// Returns the root of a number.
+        /// </summary>
+        /// <param name="a">Complex number</param>
+        /// <param name="b">Power</param>
+        /// <returns>Complex number</returns>
+        public static Complex32 Sqrt(Complex32 a, Complex32 b)
+        {
+            return Maths.Exp(Maths.Log(a) / b);
         }
         /// <summary>
         /// Returns complex number.

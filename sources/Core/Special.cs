@@ -71,7 +71,7 @@ namespace UMapx.Core
             var ax = a * x;
 
             if (ax == Complex32.Zero)
-                return 1;
+                return Complex32.One;
 
             return Maths.Sin(ax) / ax;
         }
@@ -133,6 +133,118 @@ namespace UMapx.Core
             return Maths.Cos(theta) + Maths.Sin(theta);
         }
         #endregion
+
+        #region Rademacher function
+        /// <summary>
+        /// Returns the value of the Radamecher function.
+        /// </summary>
+        /// <param name="t">Argument [0, 1]</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float Rademacher(float t, int n)
+        {
+            float p = (float)Math.Pow(2, n);
+            float v = p * Maths.Pi * t;
+            return Math.Sign(Math.Sin(v));
+        }
+        /// <summary>
+        /// Returns the value of the Radamecher function.
+        /// </summary>
+        /// <param name="z">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Rademacher(Complex32 z, int n)
+        {
+            float p = (float)Math.Pow(2.0, n);
+            Complex32 v = new Complex32(p * Maths.Pi, 0f) * z;
+            Complex32 s = Maths.Sin(v);
+
+            float mag = Maths.Abs(s);
+            if (mag == 0f) return Complex32.Zero;  // zeros at z = k / 2^n for real z
+
+            return s / mag; // complex signum
+        }
+        #endregion
+
+        #region Heavyside delta-function
+        /// <summary>
+        /// Returns the value of the Heaviside delta function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="k">Smoothing factor</param>
+        /// <returns>Value</returns>
+        public static float Heaviside(float x, float k)
+        {
+            return 0.5f + 0.5f * Maths.Tanh(k * x);
+        }
+        /// <summary>
+        /// Returns the value of the Heaviside delta function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="k">Smoothing factor</param>
+        /// <returns>Value</returns>
+        public static Complex32 Heaviside(Complex32 x, Complex32 k)
+        {
+            return 0.5f + 0.5f * Maths.Tanh(k * x);
+        }
+        #endregion
+
+        #region Mahler function
+        /// <summary>
+        /// Returns the value of the Mahler function.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="t">Parameter</param>
+        /// <returns>Value</returns>
+        public static float Mahler(float x, float t)
+        {
+            return Maths.Exp(x * (1.0f + t - Maths.Pow(Maths.E, t)));
+        }
+        /// <summary>
+        /// Returns the value of the Mahler function.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="t">Parameter</param>
+        /// <returns>Value</returns>
+        public static Complex32 Mahler(Complex32 x, Complex32 t)
+        {
+            return Maths.Exp(x * (1.0f + t - Maths.Pow(Maths.E, t)));
+        }
+        #endregion
+
+        #region Gompertz function
+        /// <summary>
+        /// Gets the value of the Gompertz function.
+        /// </summary>
+        /// <param name="t">Argument</param>
+        /// <param name="a">Upper asymptote</param>
+        /// <param name="b">Growth parameter</param>
+        /// <param name="c">Growth rate</param>
+        /// <returns>Value</returns>
+        public static float Gompertz(float t, float a, float b, float c)
+        {
+            float x = -c * t;
+            float y = -b * Maths.E;
+            float z = a * Maths.E;
+            return (float)Math.Pow(z, Math.Pow(y, x));
+        }
+        /// <summary>
+        /// Gets the value of the Gompertz function.
+        /// </summary>
+        /// <param name="t">Argument</param>
+        /// <param name="a">Upper asymptote</param>
+        /// <param name="b">Growth parameter</param>
+        /// <param name="c">Growth rate</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gompertz(Complex32 t, Complex32 a, Complex32 b, Complex32 c)
+        {
+            Complex32 x = -c * t;
+            Complex32 y = -b * Maths.E;
+            Complex32 z = a * Maths.E;
+            return Maths.Pow(z, Maths.Pow(y, x));
+        }
+        #endregion
+
 
         #region Integral functions
         /// <summary>
@@ -499,6 +611,7 @@ namespace UMapx.Core
             return s;
         }
         #endregion
+
 
 
 
@@ -2709,7 +2822,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Chebyshev polynomials
+        #region Chebyshev polynomial
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the first kind.
         /// </summary>
@@ -2733,7 +2846,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Abel polynomials
+        #region Abel polynomial
         /// <summary>
         /// Returns the value of the Abel polynomial.
         /// </summary>
@@ -2839,50 +2952,6 @@ namespace UMapx.Core
             // Laguerre polynomials recurrence relation for any k ≥ 1:
             float psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
             return psi / n;
-        }
-        #endregion
-
-        #region Mahlerpolynom function
-        /// <summary>
-        /// Returns the value of the Mahler polynomial.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="t">Parameter</param>
-        /// <returns>Value</returns>
-        public static float Mahler(float x, float t)
-        {
-            return (float)Math.Exp(x * (1 + t - Math.Pow(Math.E, t)));
-        }
-        #endregion
-
-        #region Gompertz function
-        /// <summary>
-        /// Gets the value of the Gompertz function.
-        /// </summary>
-        /// <param name="t">Argument</param>
-        /// <param name="a">Upper asymptote</param>
-        /// <param name="b">Growth parameter</param>
-        /// <param name="c">Growth rate</param>
-        /// <returns>Value</returns>
-        public static float Gompertz(float t, float a, float b, float c)
-        {
-            float x = -c * t;
-            float y = -b * Maths.E;
-            float z = a * Maths.E;
-            return (float)Math.Pow(z, Math.Pow(y, x));
-        }
-        #endregion
-
-        #region Heavyside delta-function
-        /// <summary>
-        /// Returns the value of the Heaviside delta function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="k">Smoothing factor</param>
-        /// <returns>Value</returns>
-        public static float Heaviside(float x, float k)
-        {
-            return 0.5f + 0.5f * (float)Math.Tanh(k * x);
         }
         #endregion
 
@@ -3163,21 +3232,6 @@ namespace UMapx.Core
         public static float Gerf(float x)
         {
             return Gerf(x, 2);
-        }
-        #endregion
-
-        #region Rademacher function
-        /// <summary>
-        /// Returns the value of the Radamecher function.
-        /// </summary>
-        /// <param name="t">Argument [0, 1]</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
-        public static float Rademacher(float t, int n)
-        {
-            float p = (float)Math.Pow(2, n);
-            float v = p * Maths.Pi * t;
-            return Math.Sign(Math.Sin(v));
         }
         #endregion
 
