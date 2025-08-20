@@ -20,7 +20,7 @@ namespace UMapx.Visualization
         /// <param name="symbol">Symbol type</param>
         /// <param name="label">Label</param>
         /// <param name="pane">Pane type</param>
-        public GraphPane(float[] x, float[] y, float depth, Color color, Symbol symbol, string label, Pane pane)
+        public GraphPane(float[] x, float[] y, float depth, Color color, Pane pane, Symbol symbol, string label)
         {
             X = x;
             Y = y;

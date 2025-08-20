@@ -29187,6 +29187,15 @@
             <param name="radius"></param>
             <param name="fill"></param>
         </member>
+        <member name="M:UMapx.Visualization.Figure.DrawPolylineSkipInvalid(System.Drawing.Graphics,System.Drawing.Pen,System.Single[],System.Single[])">
+            <summary>
+            
+            </summary>
+            <param name="graphics"></param>
+            <param name="pen"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
         <member name="M:UMapx.Visualization.Figure.StemLine(System.Drawing.Graphics,System.Single[],System.Single[],System.Single,System.Drawing.Color)">
             <summary>
             
@@ -29315,7 +29324,7 @@
             Defines the graph pane.
             </summary>
         </member>
-        <member name="M:UMapx.Visualization.GraphPane.#ctor(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Symbol,System.String,UMapx.Visualization.Pane)">
+        <member name="M:UMapx.Visualization.GraphPane.#ctor(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Pane,UMapx.Visualization.Symbol,System.String)">
             <summary>
             Initializes the graph pane.
             </summary>

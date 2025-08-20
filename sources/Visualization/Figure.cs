@@ -492,23 +492,8 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         private void PlotLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
-            int i, length = y.Length;
-            Point[] points = new Point[x.Length];
-            using Pen pen = new Pen(color, depth);
-            float xi, yi;
-
-            for (i = 0; i < length; i++)
-            {
-                xi = Points.ClipPoint(x[i], xmin, xmax);
-                yi = Points.ClipPoint(y[i], ymin, ymax);
-
-                if (Points.IsSingularPoint(xi)) continue;
-                if (Points.IsSingularPoint(yi)) continue;
-
-                points[i].X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                points[i].Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
-            }
-            graphics.DrawLines(pen, points);
+            using var pen = new Pen(color, depth);
+            DrawPolylineSkipInvalid(graphics, pen, x, y);
         }
         /// <summary>
         /// 
@@ -522,48 +507,25 @@ namespace UMapx.Visualization
         /// <param name="fill"></param>
         private void PlotCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
-            int i, length = y.Length;
-            Point[] points = new Point[x.Length];
-            Point point = new Point();
-            using SolidBrush br = new SolidBrush(color);
-            using Pen pen = new Pen(color, depth);
-            float xi, yi;
+            using var br = new SolidBrush(color);
+            using var pen = new Pen(color, depth);
 
-            if (fill == true)
+            int length = y.Length;
+            for (int i = 0; i < length; i++)
             {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], xmin, xmax);
+                float yi = Points.ClipPoint(y[i], ymin, ymax);
 
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
+                if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi)) continue;
 
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
-                    points[i] = point;
+                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
+                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
 
-                    graphics.FillEllipse(br, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                }
+                if (fill) graphics.FillEllipse(br, px - radius / 2, py - radius / 2, radius, radius);
+                else graphics.DrawEllipse(pen, px - radius / 2, py - radius / 2, radius, radius);
             }
-            else
-            {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
 
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
-
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
-                    points[i] = point;
-
-                    graphics.DrawEllipse(pen, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                }
-            }
-            graphics.DrawLines(pen, points);
+            DrawPolylineSkipInvalid(graphics, pen, x, y);
         }
         /// <summary>
         /// 
@@ -577,48 +539,55 @@ namespace UMapx.Visualization
         /// <param name="fill"></param>
         private void PlotRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
-            int i, length = y.Length;
-            Point[] points = new Point[x.Length];
-            Point point = new Point();
-            using SolidBrush br = new SolidBrush(color);
-            using Pen pen = new Pen(color, depth);
-            float xi, yi;
+            using var br = new SolidBrush(color);
+            using var pen = new Pen(color, depth);
 
-            if (fill == true)
+            int length = y.Length;
+            for (int i = 0; i < length; i++)
             {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], xmin, xmax);
+                float yi = Points.ClipPoint(y[i], ymin, ymax);
 
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
+                if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi)) continue;
 
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
-                    points[i] = point;
+                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
+                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
 
-                    graphics.FillRectangle(br, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                }
+                if (fill) graphics.FillRectangle(br, px - radius / 2, py - radius / 2, radius, radius);
+                else graphics.DrawRectangle(pen, px - radius / 2, py - radius / 2, radius, radius);
             }
-            else
+
+            DrawPolylineSkipInvalid(graphics, pen, x, y);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="graphics"></param>
+        /// <param name="pen"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        private void DrawPolylineSkipInvalid(Graphics graphics, Pen pen, float[] x, float[] y)
+        {
+            var seg = new List<Point>(Math.Min(x.Length, y.Length));
+
+            for (int i = 0; i < y.Length; i++)
             {
-                for (i = 0; i < length; i++)
+                float xi = Points.ClipPoint(x[i], xmin, xmax);
+                float yi = Points.ClipPoint(y[i], ymin, ymax);
+
+                if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi))
                 {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
-
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
-
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
-                    points[i] = point;
-
-                    graphics.DrawRectangle(pen, point.X - radius / 2, point.Y - radius / 2, radius, radius);
+                    if (seg.Count > 1) graphics.DrawLines(pen, seg.ToArray());
+                    seg.Clear();
+                    continue;
                 }
+
+                seg.Add(new Point(
+                    (int)Points.X2Point(xi, xmin, xmax, canvas_width),
+                    (int)Points.Y2Point(yi, ymin, ymax, canvas_height)));
             }
-            graphics.DrawLines(pen, points);
+
+            if (seg.Count > 1) graphics.DrawLines(pen, seg.ToArray());
         }
         #endregion
 
@@ -891,8 +860,8 @@ namespace UMapx.Visualization
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="g"></param>
-        private void Paint_Legend(Graphics g)
+        /// <param name="graphics"></param>
+        private void Paint_Legend(Graphics graphics)
         {
             if (_panes.Count == 0) return;
 
@@ -904,7 +873,7 @@ namespace UMapx.Visualization
 
             foreach (var it in _panes)
             {
-                var sz = g.MeasureString(it.Label, font);
+                var sz = graphics.MeasureString(it.Label, font);
                 if (sz.Width > maxTextW) maxTextW = (int)Math.Ceiling(sz.Width);
             }
 
@@ -941,10 +910,10 @@ namespace UMapx.Visualization
             using var backBrush = new SolidBrush(back);
             using var borderPen = new Pen(Style.ColorShapes, 1f);
 
-            g.FillRectangle(backBrush, x, y, boxW, boxH);
+            graphics.FillRectangle(backBrush, x, y, boxW, boxH);
 
             if (Legend.Border)
-                g.DrawRectangle(borderPen, x, y, boxW, boxH);
+                graphics.DrawRectangle(borderPen, x, y, boxW, boxH);
 
             int cx = x + innerPad;
             int cy = y + innerPad;
@@ -954,8 +923,8 @@ namespace UMapx.Visualization
                 var it = _panes[idx];
                 int my = cy + idx * rowH + rowH / 2;
 
-                DrawLegendMarker(g, cx, my, marker, it.Color, it.Symbol, it.Depth);
-                g.DrawString(it.Label, font, textBrush, cx + marker + Legend.MarkerGap, my - rowH / 2 + 1);
+                DrawLegendMarker(graphics, cx, my, marker, it.Color, it.Symbol, it.Depth);
+                graphics.DrawString(it.Label, font, textBrush, cx + marker + Legend.MarkerGap, my - rowH / 2 + 1);
             }
         }
         /// <summary>
