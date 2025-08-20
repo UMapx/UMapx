@@ -456,9 +456,16 @@ namespace UMapx.Core
         /// <summary>
         /// Returns a value that indicates whether the specified value is not a number.
         /// </summary>
-        /// <param name="z">Complex value</param>
+        /// <param name="z">Value</param>
         /// <returns>Boolean</returns>
         public static bool IsNaN(Complex32 z) => float.IsNaN(z.Real) || float.IsNaN(z.Imag);
+
+        /// <summary>
+        /// Returns a value indicating whether the specified number evaluates to negative or positive infinity.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Boolean</returns>
+        public static bool IsInfinity(Complex32 z) => float.IsInfinity(z.Real) || float.IsInfinity(z.Imag);
 
         #endregion
 

@@ -3772,6 +3772,20 @@
             <param name="magnitude">Magnitude (radius)</param>
             <param name="phase">Phase (angle in radians)</param>
         </member>
+        <member name="M:UMapx.Core.Complex32.IsNaN(UMapx.Core.Complex32)">
+            <summary>
+            Returns a value that indicates whether the specified value is not a number.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:UMapx.Core.Complex32.IsInfinity(UMapx.Core.Complex32)">
+            <summary>
+            Returns a value indicating whether the specified number evaluates to negative or positive infinity.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Boolean</returns>
+        </member>
         <member name="P:UMapx.Core.Complex32.I">
             <summary>
             Returns the imaginary one.
@@ -12045,6 +12059,68 @@
             <param name="a">Second argument</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Hypergeometric_function
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="c">Parameter</param>
+            <param name="z">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Hypergeometric_function
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="c">Parameter</param>
+            <param name="z">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            The hypergeometric function can be used in several variations:
+            F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+            Instead of the “~” sign, use the float.NaN value.
+            More information can be found on the website:
+            https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="z">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            The hypergeometric function can be used in several variations:
+            F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+            Instead of the “~” sign, use the float.NaN value.
+            More information can be found on the website:
+            https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="z">Argument</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
             <summary>
             Returns the value of the Struve function.
@@ -12369,37 +12445,6 @@
             </summary>
             <param name="n">Number</param>
             <param name="k">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of a hypergeometric function.
-            <remarks>
-            This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
-            More information can be found on the website:
-            https://en.wikipedia.org/wiki/Hypergeometric_function
-            </remarks>
-            </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
-            <param name="c">Parameter</param>
-            <param name="z">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of a hypergeometric function.
-            <remarks>
-            The hypergeometric function can be used in several variations:
-            F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
-            Instead of the “~” sign, use the float.NaN value.
-            More information can be found on the website:
-            https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
-            </remarks>
-            </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
-            <param name="z">Argument</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gerf(System.Single,System.Int32)">
