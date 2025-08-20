@@ -72,6 +72,39 @@ namespace UMapx.Core
             return Maths.Gamma + (float)Math.Log(x) + s;
         }
         /// <summary>
+        /// Returns the value of the integral cosine.
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Ci(Complex32 z)
+        {
+            // Singular at z = 0 due to log(z)
+            if (z.Real == 0f && z.Imag == 0f)
+                return new Complex32(float.NegativeInfinity, 0f);
+
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 s = Complex32.Zero;
+            Complex32 z2 = z * z;
+            Complex32 m = Complex32.One; // will hold z^(2i)
+            float f = 1f;                 // factorial accumulator for (2i)!
+            int sign = 1;
+
+            for (int i = 1; i < maxIter; i++)
+            {
+                int k = 2 * i;           // 2i
+                f *= k * (k - 1);        // (2i)! from (2(i-1))! * (2i)(2i-1)
+                sign = -sign;
+                m *= z2;                 // z^(2i)
+
+                Complex32 t = sign * m / (f * k);
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+
+            return Maths.Gamma + Maths.Log(z) + s;
+        }
+        /// <summary>
         /// Returns the value of the integral sine.
         /// </summary>
         /// <param name="x">Number</param>
@@ -114,6 +147,37 @@ namespace UMapx.Core
             return s;
         }
         /// <summary>
+        /// Returns the value of the integral sine.
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Si(Complex32 z)
+        {
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 s = z;             // start with n=0 term
+            Complex32 z2 = z * z;
+            Complex32 m = z;             // z^(2n+1)
+            float f = 1f;                // (2n+1)! accumulator via recurrence below
+            int sign = 1;
+            int j = 1;
+
+            for (int i = 1; i < maxIter; i++)
+            {
+                int k = 2 * i + 1;       // 2n+1
+                j += 2;                  // grows as 3,5,7,...
+                f *= j * (k - 1);        // (2n+1)! from (2(n-1)+1)! * (2n)(2n+1)
+                sign = -sign;
+                m *= z2;                 // z^(2n+1)
+
+                Complex32 t = sign * m / (f * k);
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+
+            return s;
+        }
+        /// <summary>
         /// Returns the value of an integral exponential function.
         /// </summary>
         /// <param name="x">Number</param>
@@ -152,6 +216,34 @@ namespace UMapx.Core
             return r + (float)Math.Log(x);
         }
         /// <summary>
+        /// Returns the value of an integral exponential function.
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Ei(Complex32 z)
+        {
+            // Singular at z = 0 due to log(z)
+            if (z.Real == 0f && z.Imag == 0f)
+                return new Complex32(float.NegativeInfinity, 0f);
+
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 s = Complex32.Zero;
+            Complex32 m = Complex32.One; // z^k
+            float fact = 1f;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                fact *= k;               // k!
+                m *= z;                  // z^k
+                Complex32 t = m / (fact * k);
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+
+            return Maths.Gamma + Maths.Log(z) + s;
+        }
+        /// <summary>
         /// Returns the value of the integral logarithm.
         /// </summary>
         /// <param name="x">Number</param>
@@ -166,6 +258,16 @@ namespace UMapx.Core
                 return float.NaN;
             }
             return Ei(Maths.Log(x));
+        }
+        /// <summary>
+        /// Returns the value of the integral logarithm.
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Li(Complex32 z)
+        {
+            // Map via Ei(log z). Principal branches handle the standard cuts.
+            return Ei(Maths.Log(z));
         }
         #endregion
 
