@@ -14,7 +14,7 @@ namespace UMapx.Visualization
         #region Private data
         private int figure_width, figure_height;
         private int canvas_width, canvas_height;
-        private float xmin = -5, xmax = 5, ymin = -5, ymax = 5;
+        private float xmin, xmax, ymin, ymax;
         private int xscale = 10, yscale = 10;
         private Style _style;
         private readonly List<GraphPane> _panes = new List<GraphPane>();
@@ -170,6 +170,11 @@ namespace UMapx.Visualization
                 xmin = ymin = 0;
                 xmax = _imagePane.Width;
                 ymax = _imagePane.Height;
+            }
+            else if (!AutoRange || _panes.Count == 0)
+            {
+                xmin = -5; xmax = 5;
+                ymin = -5; ymax = 5;
             }
             else if (AutoRange)
             {
@@ -418,6 +423,7 @@ namespace UMapx.Visualization
         public void Clear()
         {
             _panes.Clear();
+            _imagePane = null;
         }
         #endregion
 
@@ -916,7 +922,7 @@ namespace UMapx.Visualization
             if (Points.IsSingularPoint(v))
                 return string.Empty;
 
-            if (Maths.Abs(v) < 1e-8f)
+            if (Maths.Abs(v) < 1e-6f)
                 return "0";
 
             float a = Maths.Abs(v);
