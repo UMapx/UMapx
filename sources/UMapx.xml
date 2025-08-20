@@ -11399,6 +11399,16 @@
             </remarks>
             </summary>
         </member>
+        <member name="F:UMapx.Core.Special.INV_2PI">
+            <summary>
+            1 / ( 2 * PI ).
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Special.SQRT_PI">
+            <summary>
+            Sqrt( PI ).
+            </summary>
+        </member>
         <member name="F:UMapx.Core.Special.LogMax">
             <summary>
             Log max.
@@ -11407,11 +11417,6 @@
         <member name="F:UMapx.Core.Special.LogMin">
             <summary>
             Log min.
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.sqrtPI">
-            <summary>
-            Square PI.
             </summary>
         </member>
         <member name="M:UMapx.Core.Special.ChebyshevT(System.Single,System.Int32)">
@@ -12024,6 +12029,22 @@
             <param name="inverse">Inverse function or not</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Owen(System.Single,System.Single)">
+            <summary>
+            Returns the value of the Owen T function.
+            </summary>
+            <param name="h">First argument</param>
+            <param name="a">Second argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Owen(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Owen T function.
+            </summary>
+            <param name="h">First argument</param>
+            <param name="a">Second argument</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
             <summary>
             Returns the value of the Struve function.
@@ -12303,63 +12324,6 @@
             <param name="x">Number</param>
             <param name="a">Number</param>
             <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Owen(System.Single,System.Single)">
-            <summary>
-            Returns the value of the Owen T function.
-            </summary>
-            <param name="h">First argument</param>
-            <param name="a">Second argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.owenhaah(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of the Owen T function.
-            </summary>
-            <param name="h">First argument</param>
-            <param name="a">Second argument</param>
-            <param name="ah">h * a</param>
-            <returns>Value</returns>
-        </member>
-        <member name="F:UMapx.Core.Special.arange">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.coefT">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.hrange">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.meth">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.ord">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.pts">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.select">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.wts">
-            <summary>
-            
-            </summary>
         </member>
         <member name="M:UMapx.Core.Special.Binomial(System.Single,System.Single)">
             <summary>

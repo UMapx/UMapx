@@ -13,6 +13,14 @@ namespace UMapx.Core
     {
         #region Private data
         /// <summary>
+        /// 1 / ( 2 * PI ).
+        /// </summary>
+        private const float INV_2PI = 0.15915494309189533576888376337251f;
+        /// <summary>
+        /// Sqrt( PI ).
+        /// </summary>
+        private const float SQRT_PI = 1.7724538509055160272981674833411f;
+        /// <summary>
         /// Log max.
         /// </summary>
         private const float LogMax = 7.09782712893383996732E2f;
@@ -20,10 +28,6 @@ namespace UMapx.Core
         /// Log min.
         /// </summary>
         private const float LogMin = -7.451332191019412076235E2f;
-        /// <summary>
-        /// Square PI.
-        /// </summary>
-        private const float sqrtPI = 1.7724538509055160272981674833411f;
         #endregion
 
         #region Chebyshev polynomial
@@ -1298,7 +1302,7 @@ namespace UMapx.Core
             float z = x * x;
             int k, iterations = 930;
             float eps = 1e-16f;
-            float p = 2.0f / Special.sqrtPI;
+            float p = 2.0f / Special.SQRT_PI;
 
             // Taylor series:
             for (int i = 1; i < iterations; i++)
@@ -1438,14 +1442,14 @@ namespace UMapx.Core
             if (positive)
             {
                 // D+ function:
-                float p = Special.sqrtPI / 2.0f;
+                float p = Special.SQRT_PI / 2.0f;
                 float v = Maths.Exp(-x * x);
                 float erfi = Special.Erfi(x);
                 return p * v * erfi;
             }
             // D- function:
             float y = x * x;
-            float g = sqrtPI / 2.0f;
+            float g = SQRT_PI / 2.0f;
             float e = Special.Erf(x);
             float d = Maths.Exp(y);
             return g * d * e;
@@ -1461,14 +1465,14 @@ namespace UMapx.Core
             if (positive)
             {
                 // D+ function:
-                Complex32 p = Special.sqrtPI / 2.0f;
+                Complex32 p = Special.SQRT_PI / 2.0f;
                 Complex32 v = Maths.Exp(-x * x);
                 Complex32 erfi = Special.Erfi(x);
                 return p * v * erfi;
             }
             // D- function:
             Complex32 y = x * x;
-            Complex32 g = sqrtPI / 2.0f;
+            Complex32 g = SQRT_PI / 2.0f;
             Complex32 e = Special.Erf(x);
             Complex32 d = Maths.Exp(y);
             return g * d * e;
@@ -1504,6 +1508,84 @@ namespace UMapx.Core
             }
             return 0.5f * Special.Erfc(x / Maths.Sqrt2);
         }
+        #endregion
+
+        #region Owen's T-function
+        /// <summary>
+        /// Returns the value of the Owen T function.
+        /// </summary>
+        /// <param name="h">First argument</param>
+        /// <param name="a">Second argument</param>
+        /// <returns>Value</returns>
+        public static float Owen(float h, float a)
+        {
+            if (float.IsNaN(h) || float.IsNaN(a)) return float.NaN;
+            if (a == 0f) return 0f;
+            if (h == 0f) return INV_2PI * (float)Math.Atan(a);
+
+            float sign = a >= 0f ? 1f : -1f;
+            float L = Math.Abs(a);
+
+            int n = 1024;
+            float hstep = L / n;
+
+            float f(float t)
+            {
+                float t2 = t * t;
+                return (float)Math.Exp(-0.5f * h * h * (1f + t2)) / (1f + t2);
+            }
+
+            float sum = f(0f) + f(L);
+            float s4 = 0f, s2 = 0f;
+            for (int i = 1; i < n; i++)
+            {
+                float ti = i * hstep;
+                if ((i & 1) == 1) s4 += f(ti); else s2 += f(ti);
+            }
+            float integral = hstep / 3f * (sum + 4f * s4 + 2f * s2);
+            return sign * INV_2PI * integral;
+        }
+        /// <summary>
+        /// Returns the value of the Owen T function.
+        /// </summary>
+        /// <param name="h">First argument</param>
+        /// <param name="a">Second argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 Owen(Complex32 h, Complex32 a)
+        {
+            if (float.IsNaN(h.Real) || float.IsNaN(h.Imag) ||
+                float.IsNaN(a.Real) || float.IsNaN(a.Imag))
+                return Complex32.NaN;
+
+            if (a.Real == 0f && a.Imag == 0f) return Complex32.Zero;
+            if (h.Real == 0f && h.Imag == 0f)
+            {
+                return INV_2PI * Maths.Atan(a);
+            }
+
+            int n = 1024;
+            float ds = 1f / n;
+
+            Complex32 F(float s)
+            {
+                Complex32 sa = s * a;
+                Complex32 denom = Complex32.One + sa * sa;
+                Complex32 expo = Maths.Exp(-0.5f * h * h * denom);
+                return a * (expo / denom); // dt = a ds
+            }
+
+            Complex32 sum = F(0f) + F(1f);
+            Complex32 s4 = Complex32.Zero;
+            Complex32 s2 = Complex32.Zero;
+            for (int i = 1; i < n; i++)
+            {
+                float si = i * ds;
+                if ((i & 1) == 1) s4 += F(si); else s2 += F(si);
+            }
+            Complex32 integral = ds / 3f * (sum + 4f * s4 + 2f * s2);
+            return INV_2PI * integral;
+        }
+
         #endregion
 
 
@@ -2971,364 +3053,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Owen's T-function components
-        /// <summary>
-        /// Returns the value of the Owen T function.
-        /// </summary>
-        /// <param name="h">First argument</param>
-        /// <param name="a">Second argument</param>
-        /// <returns>Value</returns>
-        public static float Owen(float h, float a)
-        {
-            float absa;
-            float absh;
-            float ah;
-            float cut = 0.67f;
-            float normah;
-            float normh;
-            float value;
-
-            absh = Math.Abs(h);
-            absa = Math.Abs(a);
-            ah = absa * absh;
-
-            if (absa <= 1.0)
-            {
-                value = Special.owenhaah(absh, absa, ah);
-            }
-            else if (absh <= cut)
-            {
-                value = 0.25f - (-0.5f + Special.Q(-absh)) * (-0.5f + Special.Q(-ah))
-                  - Special.owenhaah(ah, 1.0f / absa, absh);
-            }
-            else
-            {
-                normh = Special.Q(absh);
-                normah = Special.Q(ah);
-                value = 0.5f * (normh + normah) - normh * normah
-                - Special.owenhaah(ah, 1.0f / absa, absh);
-            }
-
-            if (a < 0.0)
-            {
-                value = -value;
-            }
-
-            return value;
-        }
-        #region Private data
-        /// <summary>
-        /// Returns the value of the Owen T function.
-        /// </summary>
-        /// <param name="h">First argument</param>
-        /// <param name="a">Second argument</param>
-        /// <param name="ah">h * a</param>
-        /// <returns>Value</returns>
-        private static float owenhaah(float h, float a, float ah)
-        {
-            float ai;
-            float aj;
-            float AS;
-            float dhs;
-            float dj;
-            float gj;
-
-            float hs;
-            int i;
-            int iaint;
-            int icode;
-            int ihint;
-            int ii;
-            int j;
-            int jj;
-            int m;
-            int maxii;
-            float normh;
-
-            float r;
-            const float rrtpi = 0.39894228040143267794f;
-            const float rtwopi = 0.15915494309189533577f;
-
-            float y;
-            float yi;
-            float z;
-            float zi;
-
-            float value = 0;
-            float vi;
-
-
-            /*
-              Determine appropriate method from t1...t6
-            */
-            ihint = 15;
-
-            for (i = 1; i <= 14; i++)
-            {
-                if (h <= hrange[i - 1])
-                {
-                    ihint = i;
-                    break;
-                }
-            }
-
-            iaint = 8;
-
-            for (i = 1; i <= 7; i++)
-            {
-                if (a <= arange[i - 1])
-                {
-                    iaint = i;
-                    break;
-                }
-            }
-
-            icode = select[ihint - 1 + (iaint - 1) * 15];
-            m = ord[icode - 1];
-
-            /*
-              t1(h, a, m) ; m = 2, 3, 4, 5, 7, 10, 12 or 18
-              jj = 2j - 1 ; gj = exp(-h*h/2) * (-h*h/2)**j / j
-              aj = a**(2j-1) / (2*pi)
-            */
-
-            if (meth[icode - 1] == 1)
-            {
-                hs = -0.5f * h * h;
-                dhs = (float)Math.Exp(hs);
-                AS = a * a;
-                j = 1;
-                jj = 1;
-                aj = rtwopi * a;
-                value = rtwopi * (float)Math.Atan(a);
-                dj = dhs - 1.0f;
-                gj = hs * dhs;
-
-                for (; ; )
-                {
-                    value = value + dj * aj / (float)(jj);
-
-                    if (m <= j)
-                    {
-                        return value;
-                    }
-                    j = j + 1;
-                    jj = jj + 2;
-                    aj = aj * AS;
-                    dj = gj - dj;
-                    gj = gj * hs / (float)(j);
-                }
-            }
-
-            /*
-              t2(h, a, m) ; m = 10, 20 or 30
-              z = (-1)^(i-1) * zi ; ii = 2i - 1
-              vi = (-1)^(i-1) * a^(2i-1) * exp[-(a*h)^2/2] / sqrt(2*pi)
-            */
-            else if (meth[icode - 1] == 2)
-            {
-                maxii = m + m + 1;
-                ii = 1;
-                value = 0.0f;
-                hs = h * h;
-                AS = -a * a;
-                vi = rrtpi * a * (float)Math.Exp(-0.5 * ah * ah);
-                z = 0.5f * (-0.5f + Special.Q(-ah)) / h;
-                y = 1.0f / hs;
-
-                for (; ; )
-                {
-                    value = value + z;
-
-                    if (maxii <= ii)
-                    {
-                        value = value * rrtpi * (float)Math.Exp(-0.5 * hs);
-                        return value;
-                    }
-                    z = y * (vi - (float)(ii) * z);
-                    vi = AS * vi;
-                    ii = ii + 2;
-                }
-            }
-            /*
-              t3(h, a, m) ; m = 20
-              ii = 2i - 1
-              vi = a**(2i-1) * exp[-(a*h)**2/2] / sqrt(2*pi)
-            */
-            else if (meth[icode - 1] == 3)
-            {
-                i = 1;
-                ii = 1;
-                value = 0.0f;
-                hs = h * h;
-                AS = a * a;
-                vi = rrtpi * a * (float)Math.Exp(-0.5 * ah * ah);
-                zi = 0.5f * (-0.5f + Special.Q(-ah)) / h;
-                y = 1.0f / hs;
-
-                for (; ; )
-                {
-                    value = value + zi * coefT[i - 1];
-
-                    if (m < i)
-                    {
-                        value = value * rrtpi * (float)Math.Exp(-0.5 * hs);
-                        return value;
-                    }
-                    zi = y * ((float)(ii) * zi - vi);
-                    vi = AS * vi;
-                    i = i + 1;
-                    ii = ii + 2;
-                }
-            }
-            /*
-              t4(h, a, m) ; m = 4, 7, 8 or 20;  ii = 2i + 1
-              ai = a * exp[-h*h*(1+a*a)/2] * (-a*a)**i / (2*pi)
-            */
-            else if (meth[icode - 1] == 4)
-            {
-                maxii = m + m + 1;
-                ii = 1;
-                hs = h * h;
-                AS = -a * a;
-                value = 0.0f;
-                ai = rtwopi * a * (float)Math.Exp(-0.5 * hs * (1.0 - AS));
-                yi = 1.0f;
-
-                for (; ; )
-                {
-                    value = value + ai * yi;
-
-                    if (maxii <= ii)
-                        return value;
-
-                    ii = ii + 2;
-                    yi = (1.0f - hs * yi) / (float)(ii);
-                    ai = ai * AS;
-                }
-            }
-            /*
-              t5(h, a, m) ; m = 13
-              2m - point gaussian quadrature
-            */
-            else if (meth[icode - 1] == 5)
-            {
-                value = 0.0f;
-                AS = a * a;
-                hs = -0.5f * h * h;
-                for (i = 1; i <= m; i++)
-                {
-                    r = 1.0f + AS * pts[i - 1];
-                    value = value + wts[i - 1] * (float)Math.Exp(hs * r) / r;
-                }
-                value = a * value;
-            }
-            /*
-              t6(h, a);  approximation for a near 1, (a<=1)
-            */
-            else if (meth[icode - 1] == 6)
-            {
-                normh = Special.Q(h);
-                value = 0.5f * normh * (1.0f - normh);
-                y = 1.0f - a;
-                r = (float)Math.Atan(y / (1.0f + a));
-
-                if (r != 0.0)
-                    value = value - rtwopi * r * (float)Math.Exp(-0.5 * y * h * h / r);
-            }
-
-            return value;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] arange =
-        {
-            0.025f, 0.09f, 0.15f, 0.36f, 0.5f, 0.9f, 0.99999f
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] coefT =
-        {
-                                          0.99999999999999987510f,
-            -0.99999999999988796462f,      0.99999999998290743652f,
-            -0.99999999896282500134f,      0.99999996660459362918f,
-            -0.99999933986272476760f,      0.99999125611136965852f,
-            -0.99991777624463387686f,      0.99942835555870132569f,
-            -0.99697311720723000295f,      0.98751448037275303682f,
-            -0.95915857980572882813f,      0.89246305511006708555f,
-            -0.76893425990463999675f,      0.58893528468484693250f,
-            -0.38380345160440256652f,      0.20317601701045299653f,
-            -0.82813631607004984866E-01f,  0.24167984735759576523E-01f,
-            -0.44676566663971825242E-02f,  0.39141169402373836468E-03f
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] hrange =
-        {
-            0.02f, 0.06f, 0.09f, 0.125f, 0.26f,
-            0.4f,  0.6f,  1.6f,  1.7f,   2.33f,
-            2.4f,  3.36f, 3.4f,  4.8f
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly int[] meth =
-        {
-            1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 6
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly int[] ord =
-        {
-            2, 3, 4, 5, 7,10,12,18,10,20,30,20, 4, 7, 8,20,13, 0
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] pts =
-        {
-                                         0.35082039676451715489E-02f,
-            0.31279042338030753740E-01f,  0.85266826283219451090E-01f,
-            0.16245071730812277011f,      0.25851196049125434828f,
-            0.36807553840697533536f,      0.48501092905604697475f,
-            0.60277514152618576821f,      0.71477884217753226516f,
-            0.81475510988760098605f,      0.89711029755948965867f,
-            0.95723808085944261843f,      0.99178832974629703586f
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly int[] select =
-        {
-            1, 1, 2,13,13,13,13,13,13,13,13,16,16,16, 9,
-            1, 2, 2, 3, 3, 5, 5,14,14,15,15,16,16,16, 9,
-            2, 2, 3, 3, 3, 5, 5,15,15,15,15,16,16,16,10,
-            2, 2, 3, 5, 5, 5, 5, 7, 7,16,16,16,16,16,10,
-            2, 3, 3, 5, 5, 6, 6, 8, 8,17,17,17,12,12,11,
-            2, 3, 5, 5, 5, 6, 6, 8, 8,17,17,17,12,12,12,
-            2, 3, 4, 4, 6, 6, 8, 8,17,17,17,17,17,12,12,
-            2, 3, 4, 4, 6, 6,18,18,18,18,17,17,17,12,12
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] wts =
-        {
-                                         0.18831438115323502887E-01f,
-            0.18567086243977649478E-01f,  0.18042093461223385584E-01f,
-            0.17263829606398753364E-01f,  0.16243219975989856730E-01f,
-            0.14994592034116704829E-01f,  0.13535474469662088392E-01f,
-            0.11886351605820165233E-01f,  0.10070377242777431897E-01f,
-            0.81130545742299586629E-02f,  0.60419009528470238773E-02f,
-            0.38862217010742057883E-02f,  0.16793031084546090448E-02f
-        };
-        #endregion
-        #endregion
-
         #region Binomial function
         /// <summary>
         /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
@@ -3580,10 +3304,10 @@ namespace UMapx.Core
                 return float.NaN; // singular values
 
             else if (n == 0)
-                return x / (float)Math.E / sqrtPI; // E0(x)
+                return x / (float)Math.E / SQRT_PI; // E0(x)
 
             else if (n == 1)
-                return (1 - (float)Math.Exp(-x)) / sqrtPI; // E1(x)
+                return (1 - (float)Math.Exp(-x)) / SQRT_PI; // E1(x)
 
             else if (n == 2)
                 return Erf(x); // E2(x) = erf(x)
@@ -3592,7 +3316,7 @@ namespace UMapx.Core
             if (x > 0)
             {
                 float p = 1.0f / n;
-                float w = 1.0f / sqrtPI;
+                float w = 1.0f / SQRT_PI;
                 float v = Gamma(p) - GammaIncomplete(p, (float)Math.Pow(x, n), true);
                 return w * Gamma(n) * v;
             }
