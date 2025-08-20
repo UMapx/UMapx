@@ -273,44 +273,61 @@ namespace UMapx.Core
 
         #region Fresnel integral functions
         /// <summary>
-        /// Returns the value of the Fresnel integral C (x).
+        /// Returns the value of the Fresnel integral C(x).
         /// </summary>
         /// <param name="x">Number</param>
         /// <returns>Value</returns>
         public static float Fresnelc(float x)
         {
-            // special case:
-            if (Math.Abs(x) > 6)
-                return float.NaN;
+            if (x == 0f) return 0;
 
-            // properties:
+            // term_0 = z / ((2*0)! * (4*0+1)) = z
+            float eps = 1e-16f;
+            int maxIter = 120;
             float s = x;
-            float f = 1.0f;
-            float t, m = x, eps = 1e-16f;
-            float z = x * x * x * x;
-            int k, i, j, iterations = 120;
-            int p = 1;
+            float term = x;
+            float z4 = x * x * x * x;
 
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
+            // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
+            for (int n = 0; n < maxIter; n++)
             {
-                // factorial:
-                j = 2 * i;
-                k = 2 * j + 1;
-                f *= j * (j - 1);
+                float a = -(4 * n + 1);
+                float b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
+                term *= a / b * z4;
 
-                // sign and value:
-                p = -p;
-                m *= z;
-                t = p * m / (f * k);
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
+                if (Maths.Abs(term) < eps) break;
+                s += term;
             }
 
-            // construction:
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of the Fresnel integral C(x).
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Fresnelc(Complex32 z)
+        {
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
+
+            // term_0 = z / ((2*0)! * (4*0+1)) = z
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 s = z;
+            Complex32 term = z;
+            Complex32 z4 = z * z * z * z;
+
+            // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
+            for (int n = 0; n < maxIter; n++)
+            {
+                float a = -(4 * n + 1);
+                float b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
+                term *= a / b * z4;
+
+                if (Maths.Abs(term) < eps) break;
+                s += term;
+            }
+
             return s;
         }
         /// <summary>
@@ -320,38 +337,57 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Fresnels(float x)
         {
-            // special case:
-            if (Math.Abs(x) > 6)
-                return float.NaN;
+            if (x == 0f) return 0;
 
-            // properties:
-            float s = x * x * x / 3;
-            float f = 1.0f;
-            float t, m = 3.0f * s, eps = 1e-16f;
-            float z = x * x * x * x;
-            int k, i, j = 1, iterations = 120;
-            int p = 1;
+            // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
+            float eps = 1e-16f;
+            int maxIter = 120;
+            float z2 = x * x;
+            float s = z2 * x / 3f;
+            float term = s;
+            float z4 = z2 * z2;
 
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
+            // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
+            for (int n = 0; n < maxIter; n++)
             {
-                // factorial:
-                k = 4 * i + 3;
-                j = 2 * i;
-                f *= j * (j + 1);
+                float a = -(4 * n + 3);
+                float b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
+                term *= a / b * z4;
 
-                // sign and value:
-                p = -p;
-                m *= z;
-                t = p * m / f / k;
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
+                if (Maths.Abs(term) < eps) break;
+                s += term;
             }
 
-            // construction:
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of the Fresnel integral S(x).
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Fresnels(Complex32 z)
+        {
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
+
+            // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 z2 = z * z;
+            Complex32 s = z2 * z / 3f;
+            Complex32 term = s;
+            Complex32 z4 = z2 * z2;
+
+            // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
+            for (int n = 0; n < maxIter; n++)
+            {
+                float a = -(4 * n + 3);
+                float b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
+                term *= a / b * z4;
+
+                if (Maths.Abs(term) < eps) break;
+                s += term;
+            }
+
             return s;
         }
         #endregion

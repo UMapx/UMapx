@@ -11451,9 +11451,16 @@
         </member>
         <member name="M:UMapx.Core.Special.Fresnelc(System.Single)">
             <summary>
-            Returns the value of the Fresnel integral C (x).
+            Returns the value of the Fresnel integral C(x).
             </summary>
             <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Fresnelc(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Fresnel integral C(x).
+            </summary>
+            <param name="z">Number</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Fresnels(System.Single)">
@@ -11461,6 +11468,13 @@
             Returns the value of the Fresnel integral S(x).
             </summary>
             <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Fresnels(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Fresnel integral S(x).
+            </summary>
+            <param name="z">Number</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
