@@ -1266,9 +1266,10 @@ namespace UMapx.Core
             Complex32 a = Complex32.One;             // accumulator for y^n / n!
             Complex32 b = x;                         // sum starts with n=0 term: x
             float eps = 1e-16f;
+            int iterations = 120;
             int k = 3;
 
-            for (int i = 1; i < 120; i++, k += 2)
+            for (int i = 1; i < iterations; i++, k += 2)
             {
                 a *= y / i;                          // a ← a * (y / i)
                 Complex32 c = a * x / k;             // term: (±)^n x^{2n+1} / (n!(2n+1))
@@ -1330,8 +1331,9 @@ namespace UMapx.Core
             Complex32 m = x;
             Complex32 z2 = x * x;
             float eps = 1e-16f;
+            int iterations = 930;
 
-            for (int i = 1; i < 930; i++)
+            for (int i = 1; i < iterations; i++)
             {
                 int k = 2 * i + 1;
                 m *= z2 / i;                         // m ← x^{2i+1} / i!
