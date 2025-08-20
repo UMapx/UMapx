@@ -61,46 +61,6 @@ namespace UMapx.Core
                 return (float)Math.Atan2(Imag, Real);
             }
         }
-        /// <summary>
-        /// Returns the imaginary one.
-        /// </summary>
-        public static Complex32 I
-        {
-            get
-            {
-                return new Complex32(0, 1);
-            }
-        }
-        /// <summary>
-        /// Returns the real one.
-        /// </summary>
-        public static Complex32 One
-        {
-            get
-            {
-                return new Complex32(1, 0);
-            }
-        }
-        /// <summary>
-        /// Returns the complex zero.
-        /// </summary>
-        public static Complex32 Zero
-        {
-            get
-            {
-                return new Complex32(0, 0);
-            }
-        }
-        /// <summary>
-        /// Returns the complex conjugate number.
-        /// </summary>
-        public Complex32 Conjugate
-        {
-            get
-            {
-                return new Complex32(this.Real, -this.Imag);
-            }
-        }
         #endregion
 
         #region Overrides
@@ -491,6 +451,61 @@ namespace UMapx.Core
                 magnitude * (float)Math.Cos(phase),
                 magnitude * (float)Math.Sin(phase)
             );
+        }
+
+        #endregion
+
+        #region Static properties
+
+        /// <summary>
+        /// Returns the imaginary one.
+        /// </summary>
+        public static Complex32 I
+        {
+            get
+            {
+                return new Complex32(0, 1);
+            }
+        }
+        /// <summary>
+        /// Returns the real one.
+        /// </summary>
+        public static Complex32 One
+        {
+            get
+            {
+                return new Complex32(1, 0);
+            }
+        }
+        /// <summary>
+        /// Returns the complex zero.
+        /// </summary>
+        public static Complex32 Zero
+        {
+            get
+            {
+                return new Complex32(0, 0);
+            }
+        }
+        /// <summary>
+        /// Returns the complex conjugate number.
+        /// </summary>
+        public Complex32 Conjugate
+        {
+            get
+            {
+                return new Complex32(this.Real, -this.Imag);
+            }
+        }
+        /// <summary>
+        /// Returns the not number.
+        /// </summary>
+        public static Complex32 NaN
+        {
+            get
+            {
+                return new Complex32(float.NaN, float.NaN);
+            }
         }
 
         #endregion

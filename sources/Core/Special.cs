@@ -1131,7 +1131,7 @@ namespace UMapx.Core
             if (z.Real == 0f && z.Imag == 0f)
             {
                 if (k == 0) return Complex32.Zero;           // W_0(0)=0
-                return new Complex32(float.NaN, float.NaN);  // other branches not defined at 0
+                return Complex32.NaN;  // other branches not defined at 0
             }
 
             // Initial guess:
@@ -3641,10 +3641,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Value</returns>
-        public static float Minkowski(float x)
+        public static float Minkowski(long x)
         {
             // Minkowski function:
-            long p = (long)x, q = 1, r = p + 1, s = 1, m, n;
+            long p = x, q = 1, r = p + 1, s = 1, m, n;
             float d = 1, y = p;
 
             if (x < p || (p < 0) ^ (r <= 0))

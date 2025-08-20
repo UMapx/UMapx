@@ -12444,7 +12444,7 @@
             <param name="x">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Minkowski(System.Single)">
+        <member name="M:UMapx.Core.Special.Minkowski(System.Int64)">
             <summary>
             Returns the value of the Minkowski function.
             </summary>
