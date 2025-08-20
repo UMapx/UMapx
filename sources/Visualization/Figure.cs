@@ -14,8 +14,9 @@ namespace UMapx.Visualization
         #region Private data
         private int figure_width, figure_height;
         private int canvas_width, canvas_height;
-        private float xmin, xmax, ymin, ymax;
         private int xscale = 10, yscale = 10;
+        private float xmin = -5, xmax = 5;
+        private float ymin = -5, ymax = 5;
         private Style _style;
         private readonly List<GraphPane> _panes = new List<GraphPane>();
         private Bitmap _imagePane;
@@ -171,12 +172,7 @@ namespace UMapx.Visualization
                 xmax = _imagePane.Width;
                 ymax = _imagePane.Height;
             }
-            else if (!AutoRange || _panes.Count == 0)
-            {
-                xmin = -5; xmax = 5;
-                ymin = -5; ymax = 5;
-            }
-            else if (AutoRange)
+            else if (AutoRange && _panes.Count != 0)
             {
                 xmin = ymin = float.MaxValue;
                 xmax = ymax = float.MinValue;
@@ -424,6 +420,9 @@ namespace UMapx.Visualization
         {
             _panes.Clear();
             _imagePane = null;
+
+            xmin = -5; xmax = 5;
+            ymin = -5; ymax = 5;
         }
         #endregion
 
