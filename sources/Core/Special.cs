@@ -85,7 +85,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Agd(float x)
         {
-            return 0.5f * Maths.Log((1.0f + Maths.Sin(x)) / (1.0f - Maths.Sin(x)));
+            return Maths.Atan(Maths.Sin(x));
         }
         /// <summary>
         /// Returns the value of the inverse Guderman function.
@@ -94,7 +94,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Agd(Complex32 x)
         {
-            return 0.5f * Maths.Log((1.0f + Maths.Sin(x)) / (1.0f - Maths.Sin(x)));
+            return Maths.Atan(Maths.Sin(x));
         }
         /// <summary>
         /// Returns the value of the Guderman function.
@@ -103,7 +103,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Gd(float x)
         {
-            return 2 * Maths.Atg(Maths.Exp(x)) - 1.57079632679f;
+            return 2 * Maths.Atan(Maths.Exp(x)) - 1.57079632679f;
         }
         /// <summary>
         /// Returns the value of the Guderman function.
@@ -112,7 +112,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Gd(Complex32 x)
         {
-            return 2 * Maths.Atg(Maths.Exp(x)) - 1.57079632679f;
+            return 2 * Maths.Atan(Maths.Exp(x)) - 1.57079632679f;
         }
         /// <summary>
         /// Returns the value of the function Cas(x).
@@ -121,7 +121,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Cas(float theta)
         {
-            return 1.414f * Maths.Sin(theta + 0.78539f);
+            return Maths.Cos(theta) + Maths.Sin(theta);
         }
         /// <summary>
         /// Returns the value of the function Cas(x).
@@ -130,7 +130,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Cas(Complex32 theta)
         {
-            return 1.414f * Maths.Sin(theta + 0.78539f);
+            return Maths.Cos(theta) + Maths.Sin(theta);
         }
         #endregion
 

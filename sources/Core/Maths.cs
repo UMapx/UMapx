@@ -676,7 +676,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Angle in radians</param>
         /// <returns>Value</returns>
-        public static float Tg(float a)
+        public static float Tan(float a)
         {
             return (float)Math.Sin(a) / (float)Math.Cos(a);
         }
@@ -685,7 +685,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Angle in radians</param>
         /// <returns>Value</returns>
-        public static float Ctg(float a)
+        public static float Ctan(float a)
         {
             return (float)Math.Cos(a) / (float)Math.Sin(a);
         }
@@ -730,7 +730,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <returns>Value</returns>
-        public static float Atg(float a)
+        public static float Atan(float a)
         {
             return (float)Math.Atan(a);
         }
@@ -739,7 +739,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Number</param>
         /// <returns>Value</returns>
-        public static float Actg(float a)
+        public static float Actan(float a)
         {
             return Pi / 2 - (float)Math.Atan(a);
         }
@@ -787,7 +787,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex32 Tg(Complex32 a)
+        public static Complex32 Tan(Complex32 a)
         {
             return Maths.Sin(a) / Maths.Cos(a);
         }
@@ -796,7 +796,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex32 Ctg(Complex32 a)
+        public static Complex32 Ctan(Complex32 a)
         {
             return Maths.Cos(a) / Maths.Sin(a);
         }
@@ -841,7 +841,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex32 Atg(Complex32 a)
+        public static Complex32 Atan(Complex32 a)
         {
             return I / 2.0 * (Maths.Log(1.0 - I * a) - Maths.Log(1.0 + I * a));
         }
@@ -850,7 +850,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static Complex32 Actg(Complex32 a)
+        public static Complex32 Actan(Complex32 a)
         {
             return I / 2.0 * (Maths.Log((a - I) / a) - Maths.Log((a + I) / a));
         }

@@ -5883,14 +5883,14 @@
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Tg(System.Single)">
+        <member name="M:UMapx.Core.Maths.Tan(System.Single)">
             <summary>
             Returns the tangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ctg(System.Single)">
+        <member name="M:UMapx.Core.Maths.Ctan(System.Single)">
             <summary>
             Returns the cotangent of an angle.
             </summary>
@@ -5925,14 +5925,14 @@
             <param name="a">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Atg(System.Single)">
+        <member name="M:UMapx.Core.Maths.Atan(System.Single)">
             <summary>
             Returns the arctangent of a number.
             </summary>
             <param name="a">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Actg(System.Single)">
+        <member name="M:UMapx.Core.Maths.Actan(System.Single)">
             <summary>
             Returns the arccotangent of a number.
             </summary>
@@ -5967,14 +5967,14 @@
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Tg(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Tan(UMapx.Core.Complex32)">
             <summary>
             Returns the tangent of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ctg(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Ctan(UMapx.Core.Complex32)">
             <summary>
             Returns the cotangent of an angle.
             </summary>
@@ -6009,14 +6009,14 @@
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Atg(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Atan(UMapx.Core.Complex32)">
             <summary>
             Returns the arctangent of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Actg(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Actan(UMapx.Core.Complex32)">
             <summary>
             Returns the arccotangent of a number.
             </summary>
@@ -11423,6 +11423,48 @@
             <param name="a">Parameter</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Agd(System.Single)">
+            <summary>
+            Returns the value of the inverse Guderman function.
+            </summary>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Agd(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the inverse Guderman function.
+            </summary>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gd(System.Single)">
+            <summary>
+            Returns the value of the Guderman function.
+            </summary>
+            <param name="x">Angle in radians</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gd(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Guderman function.
+            </summary>
+            <param name="x">Angle in radians</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Cas(System.Single)">
+            <summary>
+            Returns the value of the function Cas(x).
+            </summary>
+            <param name="theta">Theta</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Cas(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the function Cas(x).
+            </summary>
+            <param name="theta">Theta</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Ci(System.Single)">
             <summary>
             Returns the value of the integral cosine.
@@ -11898,27 +11940,6 @@
             <summary>
             
             </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.Agd(System.Single)">
-            <summary>
-            Returns the value of the inverse Guderman function.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Gd(System.Single)">
-            <summary>
-            Returns the value of the Guderman function.
-            </summary>
-            <param name="x">Angle in radians</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Cas(System.Single)">
-            <summary>
-            Returns the value of the function Cas(x).
-            </summary>
-            <param name="theta">Theta</param>
-            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Binomial(System.Single,System.Single)">
             <summary>
