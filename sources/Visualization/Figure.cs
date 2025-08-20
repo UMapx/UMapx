@@ -910,6 +910,9 @@ namespace UMapx.Visualization
             graphics.DrawString(ylabel, Style.FontText, br, PointF.Empty, fmt);
             graphics.Restore(state);
         }
+        #endregion
+
+        #region Helper voids
         /// <summary>
         /// 
         /// </summary>
@@ -917,10 +920,10 @@ namespace UMapx.Visualization
         /// <returns></returns>
         private string GetNumString(float v)
         {
-            if (Points.IsSingularPoint(v)) 
+            if (Points.IsSingularPoint(v))
                 return string.Empty;
 
-            if (Maths.Abs(v) < 1e-4f) 
+            if (Maths.Abs(v) < 1e-4f)
                 return "0";
 
             float a = Maths.Abs(v);
