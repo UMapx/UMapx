@@ -158,8 +158,8 @@ namespace UMapx.Visualization
             figure_graphics.Clear(Style.ColorFrame);
 
             using var canvas = new Bitmap(canvas_width, canvas_height);
-            using Graphics canvas_grpaphics = Graphics.FromImage(canvas);
-            canvas_grpaphics.Clear(Style.ColorBack);
+            using Graphics canvas_graphics = Graphics.FromImage(canvas);
+            canvas_graphics.Clear(Style.ColorBack);
 
             // offsets
             int dx = canvas_width / xscale;
@@ -242,7 +242,7 @@ namespace UMapx.Visualization
                 {
                     numX = X[i];
                     xpoint = (int)Points.X2Point(numX, xmin, xmax, canvas_width);
-                    canvas_grpaphics.DrawLine(pen1, xpoint, 0, xpoint, canvas_height);
+                    canvas_graphics.DrawLine(pen1, xpoint, 0, xpoint, canvas_height);
                 }
 
                 ylength = Y.Length;
@@ -251,7 +251,7 @@ namespace UMapx.Visualization
                 {
                     numY = Y[i];
                     ypoint = (int)Points.Y2Point(numY, ymin, ymax, canvas_height);
-                    canvas_grpaphics.DrawLine(pen1, 0, ypoint, canvas_width, ypoint);
+                    canvas_graphics.DrawLine(pen1, 0, ypoint, canvas_width, ypoint);
                 }
             }
             #endregion
@@ -267,7 +267,7 @@ namespace UMapx.Visualization
             {
                 // 2D plotting
                 var rectangle = new Rectangle(0, 0, canvas_width, canvas_height);
-                canvas_grpaphics.DrawImage(_imagePane, rectangle);
+                canvas_graphics.DrawImage(_imagePane, rectangle);
             }
             //else
             {
@@ -285,23 +285,23 @@ namespace UMapx.Visualization
                         switch (current.Symbol)
                         {
                             case Symbol.None:
-                                PlotLine(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color);
+                                PlotLine(canvas_graphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
                             case Symbol.Circle:
-                                PlotCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                PlotCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Ball:
-                                PlotCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                PlotCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
                             case Symbol.Rectangle:
-                                PlotRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                PlotRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Polygon:
-                                PlotRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                PlotRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
@@ -310,23 +310,23 @@ namespace UMapx.Visualization
                         switch (current.Symbol)
                         {
                             case Symbol.None:
-                                StemLine(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color);
+                                StemLine(canvas_graphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
                             case Symbol.Circle:
-                                StemCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                StemCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Ball:
-                                StemCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                StemCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
                             case Symbol.Rectangle:
-                                StemRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                StemRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Polygon:
-                                StemRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                StemRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
@@ -335,23 +335,23 @@ namespace UMapx.Visualization
                         switch (current.Symbol)
                         {
                             case Symbol.None:
-                                ScatterLine(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color);
+                                ScatterLine(canvas_graphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
                             case Symbol.Circle:
-                                ScatterCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                ScatterCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Ball:
-                                ScatterCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                ScatterCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
                             case Symbol.Rectangle:
-                                ScatterRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                ScatterRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Polygon:
-                                ScatterRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                ScatterRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
@@ -368,8 +368,8 @@ namespace UMapx.Visualization
                 {
                     numX = X[i];
                     xpoint = (int)Points.X2Point(numX, xmin, xmax, canvas_width);
-                    canvas_grpaphics.DrawLine(pen2, xpoint, canvas_height, xpoint, canvas_height - s);
-                    canvas_grpaphics.DrawLine(pen2, xpoint, 0, xpoint, s);
+                    canvas_graphics.DrawLine(pen2, xpoint, canvas_height, xpoint, canvas_height - s);
+                    canvas_graphics.DrawLine(pen2, xpoint, 0, xpoint, s);
                 }
 
                 ylength = Y.Length;
@@ -378,18 +378,18 @@ namespace UMapx.Visualization
                 {
                     numY = Y[i];
                     ypoint = (int)Points.Y2Point(numY, ymin, ymax, canvas_height);
-                    canvas_grpaphics.DrawLine(pen2, 0, ypoint, s, ypoint);
-                    canvas_grpaphics.DrawLine(pen2, canvas_width, ypoint, canvas_width - s, ypoint);
+                    canvas_graphics.DrawLine(pen2, 0, ypoint, s, ypoint);
+                    canvas_graphics.DrawLine(pen2, canvas_width, ypoint, canvas_width - s, ypoint);
                 }
             }
 
-            canvas_grpaphics.DrawRectangle(pen2, 0, 0, canvas_width - 1, canvas_height - 1);
+            canvas_graphics.DrawRectangle(pen2, 0, 0, canvas_width - 1, canvas_height - 1);
             #endregion
 
             #region Legend
             if (Legend != null && Legend.Show)
             {
-                Paint_Legend(canvas_grpaphics);
+                Paint_Legend(canvas_graphics);
             }
             #endregion
 
@@ -969,7 +969,7 @@ namespace UMapx.Visualization
         /// <param name="dh"></param>
         private void Paint_Title(Graphics graphics, string title, int sizeX, int sizeY, int dw, int dh)
         {
-            StringFormat format = new StringFormat
+            using var format = new StringFormat
             {
                 LineAlignment = StringAlignment.Center,
                 Alignment = StringAlignment.Center
@@ -977,7 +977,6 @@ namespace UMapx.Visualization
 
             using var br = new SolidBrush(Style.ColorText);
             graphics.DrawString(title, Style.FontText, br, new PointF(sizeX / 2, dh / 2), format);
-            format.Dispose();
         }
         /// <summary>
         /// 
@@ -990,16 +989,15 @@ namespace UMapx.Visualization
         /// <param name="dh"></param>
         private void Paint_LabelX(Graphics graphics, string xlabel, int sizeX, int sizeY, int dw, int dh)
         {
-            StringFormat format = new StringFormat
+            using var format = new StringFormat
             {
                 LineAlignment = StringAlignment.Center,
                 Alignment = StringAlignment.Center
             };
 
-            SizeF size = graphics.MeasureString(xlabel, Style.FontText);
+            var size = graphics.MeasureString(xlabel, Style.FontText);
             using var br = new SolidBrush(Style.ColorText);
             graphics.DrawString(xlabel, Style.FontText, br, new PointF(sizeX / 2, sizeY - dh / 2 + size.Height / 4), format);
-            format.Dispose();
         }
         /// <summary>
         /// 
@@ -1012,20 +1010,22 @@ namespace UMapx.Visualization
         /// <param name="dh"></param>
         private void Paint_LabelY(Graphics graphics, string ylabel, int sizeX, int sizeY, int dw, int dh)
         {
-            StringFormat format = new StringFormat(StringFormatFlags.DirectionVertical)
+            using var fmt = new StringFormat
             {
-                LineAlignment = StringAlignment.Center,
-                Alignment = StringAlignment.Center
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
             };
 
-            graphics.TranslateTransform(sizeX / 2, sizeY / 2);
-            graphics.RotateTransform(180);
-            graphics.TranslateTransform(-sizeX / 2, -sizeY / 2);
+            var state = graphics.Save();
 
-            SizeF size = graphics.MeasureString(ylabel, Style.FontText);
+            float cx = dw / 2f;
+            float cy = sizeY / 2f;
+
             using var br = new SolidBrush(Style.ColorText);
-            graphics.DrawString(ylabel, Style.FontText, br, new PointF(sizeX - dw / 2 + size.Height / 4, sizeY / 2), format);
-            format.Dispose();
+            graphics.TranslateTransform(cx, cy);
+            graphics.RotateTransform(-90f);
+            graphics.DrawString(ylabel, Style.FontText, br, PointF.Empty, fmt);
+            graphics.Restore(state);
         }
         /// <summary>
         /// 
