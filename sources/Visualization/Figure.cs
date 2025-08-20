@@ -173,8 +173,8 @@ namespace UMapx.Visualization
             if (_imagePane is object)
             {
                 xmin = ymin = 0;
-                xmax = size.Width;
-                ymax = size.Height;
+                xmax = _imagePane.Width;
+                ymax = _imagePane.Height;
             }
             else if (AutoRange)
             {
@@ -1032,25 +1032,7 @@ namespace UMapx.Visualization
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        private string GetNumString(float num)
-        {
-            string numerics = num.ToString("0.00");
-            int l1 = numerics.Length - 1;
-
-            if (numerics[l1] == '0')
-            {
-                numerics = numerics.Substring(0, l1);
-                int l2 = l1 - 1;
-
-                if (numerics[l2] == '0')
-                {
-                    numerics = numerics.Substring(0, l2 - 1);
-                }
-                return numerics;
-            }
-
-            return numerics;
-        }
+        private string GetNumString(float num) => num.ToString("0.##");
         #endregion
 
         #endregion
