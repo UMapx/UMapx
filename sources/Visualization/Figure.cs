@@ -266,7 +266,7 @@ namespace UMapx.Visualization
             if (_imagePane is object)
             {
                 // 2D plotting
-                Rectangle rectangle = new Rectangle(0, 0, canvas_width, canvas_height);
+                var rectangle = new Rectangle(0, 0, canvas_width, canvas_height);
                 canvas_grpahics.DrawImage(_imagePane, rectangle);
             }
             //else

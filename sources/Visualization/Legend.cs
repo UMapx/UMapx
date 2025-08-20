@@ -8,6 +8,7 @@ namespace UMapx.Visualization
     [Serializable]
     public class Legend
     {
+        #region Class components
         /// <summary>
         /// Initializes the legend.
         /// </summary>
@@ -44,5 +45,6 @@ namespace UMapx.Visualization
         /// Gets or sets draw legend border.
         /// </summary>
         public bool Border { get; set; } = true;
+        #endregion
     }
 }
