@@ -602,25 +602,22 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         private void StemLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
-            Point point = new Point();
-            using Pen pen = new Pen(color, depth);
-            int i, length = y.Length;
-            float dy = (ymax - ymin) / canvas_height;
-            int zero = (int)(canvas_height + ymin / dy);
-            float xi, yi;
+            using var pen = new Pen(color, depth);
+            int zero = (int)Points.Y2Point(0f, ymin, ymax, canvas_height);
 
-            for (i = 0; i < length; i++)
+            int n = y.Length;
+            for (int i = 0; i < n; i++)
             {
-                xi = Points.ClipPoint(x[i], xmin, xmax);
-                yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], xmin, xmax);
+                float yi = Points.ClipPoint(y[i], ymin, ymax);
 
-                if (Points.IsSingularPoint(xi)) continue;
-                if (Points.IsSingularPoint(yi)) continue;
+                if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi))
+                    continue;
 
-                point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
+                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
 
-                graphics.DrawLine(pen, point.X, zero, point.X, point.Y);
+                graphics.DrawLine(pen, px, zero, px, py);
             }
         }
         /// <summary>
@@ -635,47 +632,27 @@ namespace UMapx.Visualization
         /// <param name="fill"></param>
         private void StemCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
-            Point point = new Point();
-            using SolidBrush br = new SolidBrush(color);
-            using Pen pen = new Pen(color, depth);
-            int i, length = y.Length;
-            float dy = (ymax - ymin) / canvas_height;
-            int zero = (int)(canvas_height + ymin / dy);
-            float xi, yi;
+            using var br = new SolidBrush(color);
+            using var pen = new Pen(color, depth);
+            int zero = (int)Points.Y2Point(0f, ymin, ymax, canvas_height);
+            float r2 = radius / 2f;
 
-            if (fill == true)
+            int n = y.Length;
+            for (int i = 0; i < n; i++)
             {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], xmin, xmax);
+                float yi = Points.ClipPoint(y[i], ymin, ymax);
 
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
+                if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi))
+                    continue;
 
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
+                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
 
-                    graphics.FillEllipse(br, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                    graphics.DrawLine(pen, point.X, zero, point.X, point.Y);
-                }
-            }
-            else
-            {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
+                if (fill) graphics.FillEllipse(br, px - r2, py - r2, radius, radius);
+                else graphics.DrawEllipse(pen, px - r2, py - r2, radius, radius);
 
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
-
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
-
-                    graphics.DrawEllipse(pen, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                    graphics.DrawLine(pen, point.X, zero, point.X, point.Y);
-                }
+                graphics.DrawLine(pen, px, zero, px, py);
             }
         }
         /// <summary>
@@ -690,47 +667,27 @@ namespace UMapx.Visualization
         /// <param name="fill"></param>
         private void StemRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill = false)
         {
-            Point point = new Point();
-            using SolidBrush br = new SolidBrush(color);
-            using Pen pen = new Pen(color, depth);
-            int i, length = y.Length;
-            float dy = (ymax - ymin) / canvas_height;
-            int zero = (int)(canvas_height + ymin / dy);
-            float xi, yi;
+            using var br = new SolidBrush(color);
+            using var pen = new Pen(color, depth);
+            int zero = (int)Points.Y2Point(0f, ymin, ymax, canvas_height);
+            float r2 = radius / 2f;
 
-            if (fill == true)
+            int n = y.Length;
+            for (int i = 0; i < n; i++)
             {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], xmin, xmax);
+                float yi = Points.ClipPoint(y[i], ymin, ymax);
 
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
+                if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi))
+                    continue;
 
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
+                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
 
-                    graphics.FillRectangle(br, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                    graphics.DrawLine(pen, point.X, zero, point.X, point.Y);
-                }
-            }
-            else
-            {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
+                if (fill) graphics.FillRectangle(br, px - r2, py - r2, radius, radius);
+                else graphics.DrawRectangle(pen, px - r2, py - r2, radius, radius);
 
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
-
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
-
-                    graphics.DrawRectangle(pen, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                    graphics.DrawLine(pen, point.X, zero, point.X, point.Y);
-                }
+                graphics.DrawLine(pen, px, zero, px, py);
             }
         }
         #endregion
@@ -746,7 +703,8 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         private void ScatterLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
-            throw new NotSupportedException();
+            using var pen = new Pen(color, depth);
+            DrawPolylineSkipInvalid(graphics, pen, x, y);
         }
         /// <summary>
         /// 
@@ -760,45 +718,23 @@ namespace UMapx.Visualization
         /// <param name="fill"></param>
         private void ScatterCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
-            Point point = new Point();
-            using SolidBrush br = new SolidBrush(color);
-            using Pen pen = new Pen(color, depth);
-            int i, length = y.Length;
-            float dy = (ymax - ymin) / canvas_height;
-            int zero = (int)(canvas_height + ymin / dy);
-            float xi, yi;
+            using var br = new SolidBrush(color);
+            using var pen = new Pen(color, depth);
+            float r2 = radius / 2f;
 
-            if (fill == true)
+            int n = y.Length;
+            for (int i = 0; i < n; i++)
             {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], xmin, xmax);
+                float yi = Points.ClipPoint(y[i], ymin, ymax);
 
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
+                if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi)) continue;
 
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
+                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
 
-                    graphics.FillEllipse(br, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                }
-            }
-            else
-            {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
-
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
-
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
-
-                    graphics.DrawEllipse(pen, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                }
+                if (fill) graphics.FillEllipse(br, px - r2, py - r2, radius, radius);
+                else graphics.DrawEllipse(pen, px - r2, py - r2, radius, radius);
             }
         }
         /// <summary>
@@ -813,45 +749,23 @@ namespace UMapx.Visualization
         /// <param name="fill"></param>
         private void ScatterRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill = false)
         {
-            Point point = new Point();
-            using SolidBrush br = new SolidBrush(color);
-            using Pen pen = new Pen(color, depth);
-            int i, length = y.Length;
-            float dy = (ymax - ymin) / canvas_height;
-            int zero = (int)(canvas_height + ymin / dy);
-            float xi, yi;
+            using var br = new SolidBrush(color);
+            using var pen = new Pen(color, depth);
+            float r2 = radius / 2f;
 
-            if (fill == true)
+            int n = y.Length;
+            for (int i = 0; i < n; i++)
             {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], xmin, xmax);
+                float yi = Points.ClipPoint(y[i], ymin, ymax);
 
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
+                if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi)) continue;
 
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
+                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
 
-                    graphics.FillRectangle(br, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                }
-            }
-            else
-            {
-                for (i = 0; i < length; i++)
-                {
-                    xi = Points.ClipPoint(x[i], xmin, xmax);
-                    yi = Points.ClipPoint(y[i], ymin, ymax);
-
-                    if (Points.IsSingularPoint(xi)) continue;
-                    if (Points.IsSingularPoint(yi)) continue;
-
-                    point.X = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                    point.Y = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
-
-                    graphics.DrawRectangle(pen, point.X - radius / 2, point.Y - radius / 2, radius, radius);
-                }
+                if (fill) graphics.FillRectangle(br, px - r2, py - r2, radius, radius);
+                else graphics.DrawRectangle(pen, px - r2, py - r2, radius, radius);
             }
         }
         #endregion

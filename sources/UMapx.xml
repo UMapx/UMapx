@@ -29268,7 +29268,7 @@
             <summary>
             
             </summary>
-            <param name="g"></param>
+            <param name="graphics"></param>
         </member>
         <member name="M:UMapx.Visualization.Figure.Paint_Title(System.Drawing.Graphics,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
