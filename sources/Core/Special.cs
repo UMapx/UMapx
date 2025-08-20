@@ -26,6 +26,254 @@ namespace UMapx.Core
         private const float sqrtPI = 1.7724538509055160272981674833411f;
         #endregion
 
+        #region Chebyshev polynomial
+        /// <summary>
+        /// Returns the value of the Chebyshev polynomial of the first kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float ChebyshevT(float x, int n)
+        {
+            return Maths.Cos(n * Maths.Acos(x));
+        }
+        /// <summary>
+        /// Returns the value of the Chebyshev polynomial of the first kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 ChebyshevT(Complex32 x, int n)
+        {
+            return Maths.Cos(n * Maths.Acos(x));
+        }
+        /// <summary>
+        /// Returns the value of the Chebyshev polynomial of the second kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float ChebyshevU(float x, int n)
+        {
+            float z = Maths.Acos(x);
+            return Maths.Sin((n + 1) * z) / Maths.Sin(z);
+        }
+        /// <summary>
+        /// Returns the value of the Chebyshev polynomial of the second kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 ChebyshevU(Complex32 x, int n)
+        {
+            Complex32 z = Maths.Acos(x);
+            return Maths.Sin((n + 1) * z) / Maths.Sin(z);
+        }
+        #endregion
+
+        #region Abel polynomial
+        /// <summary>
+        /// Returns the value of the Abel polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float Abel(float x, float a, int n)
+        {
+            if (n == 0)
+                return 1;
+            if (n == 1)
+                return x;
+
+            // Generalized formula
+            // Abel polynomials recurrence relation for any n ≥ 1:
+            return x * Maths.Pow(x - a * n, n - 1);
+        }
+        /// <summary>
+        /// Returns the value of the Abel polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Abel(Complex32 x, float a, int n)
+        {
+            if (n == 0)
+                return 1;
+            if (n == 1)
+                return x;
+
+            // Generalized formula
+            // Abel polynomials recurrence relation for any n ≥ 1:
+            return x * Maths.Pow(x - a * n, n - 1);
+        }
+        #endregion
+
+        #region Laguerre polynomial
+        /// <summary>
+        /// Returns the value of the Laguerre polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="k">Order</param>
+        /// <returns>Value</returns>
+        public static float Laguerre(float x, float a, int k)
+        {
+            if (k == 0)
+                return 1;
+            if (k == 1)
+                return 1 + a - x;
+
+            // Generalized formula
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            float psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
+            float ksi = k + 1;
+            return psi / ksi;
+        }
+        /// <summary>
+        /// Returns the value of the Laguerre polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="k">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Laguerre(Complex32 x, Complex32 a, int k)
+        {
+            if (k == 0)
+                return 1;
+            if (k == 1)
+                return 1 + a - x;
+
+            // Generalized formula
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            Complex32 psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
+            Complex32 ksi = k + 1;
+            return psi / ksi;
+        }
+        #endregion
+
+        #region Legendre polynomial
+        /// <summary>
+        /// Returns the value of the Legendre polynomial of the first kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Value</returns>
+        public static float Legendre(float x, int m)
+        {
+            if (m == 0)
+                return 1;
+            if (m == 1)
+                return x;
+
+            // legendre function
+            // More info: https://pdfs.semanticscholar.org/be30/38b3aafed73d33fe78a701ee096471d16fa1.pdf
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            float ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
+            float psi = m + 1;
+            return ksi / psi;
+        }
+        /// <summary>
+        /// Returns the value of the Legendre polynomial of the first kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Legendre(Complex32 x, int m)
+        {
+            if (m == 0)
+                return 1;
+            if (m == 1)
+                return x;
+
+            // legendre function
+            // More info: https://pdfs.semanticscholar.org/be30/38b3aafed73d33fe78a701ee096471d16fa1.pdf
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            Complex32 ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
+            Complex32 psi = m + 1;
+            return ksi / psi;
+        }
+        #endregion
+
+        #region Hermite polynomial
+        /// <summary>
+        /// Returns the value of the Hermite polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Value</returns>
+        public static float Hermite(float x, int m)
+        {
+            if (m == 0)
+                return 1;
+            if (m == 1)
+                return x;
+
+            // recursion formula for Hermite polynomials
+            float ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
+            return 2 * ksi;
+        }
+        /// <summary>
+        /// Returns the value of the Hermite polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Hermite(Complex32 x, int m)
+        {
+            if (m == 0)
+                return 1;
+            if (m == 1)
+                return x;
+
+            // recursion formula for Hermite polynomials
+            Complex32 ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
+            return 2 * ksi;
+        }
+        #endregion
+
+        #region Gegenbauer polynomial
+        /// <summary>
+        /// Returns the value of the Gegenbauer polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float Gegenbauer(float x, float a, int n)
+        {
+            if (n == 0)
+                return 1;
+            if (n == 1)
+                return 2 * a * x;
+
+            // Generalized formula
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            float psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
+            return psi / n;
+        }
+        /// <summary>
+        /// Returns the value of the Gegenbauer polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gegenbauer(Complex32 x, Complex32 a, int n)
+        {
+            if (n == 0)
+                return 1;
+            if (n == 1)
+                return 2 * a * x;
+
+            // Generalized formula
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            Complex32 psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
+            return psi / n;
+        }
+        #endregion
+
         #region Sinc function
         /// <summary>
         /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
@@ -3028,139 +3276,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Chebyshev polynomial
-        /// <summary>
-        /// Returns the value of the Chebyshev polynomial of the first kind.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
-        public static float ChebyshevT(float x, int n)
-        {
-            return (float)Math.Cos(n * Math.Acos(x));
-        }
-        /// <summary>
-        /// Returns the value of the Chebyshev polynomial of the second kind.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
-        public static float ChebyshevU(float x, int n)
-        {
-            float z = (float)Math.Acos(x);
-            return (float)Math.Sin((n + 1) * z) / (float)Math.Sin(z);
-        }
-        #endregion
-
-        #region Abel polynomial
-        /// <summary>
-        /// Returns the value of the Abel polynomial.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Power</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
-        public static float Abel(float x, float a, int n)
-        {
-            if (n == 0)
-                return 1;
-            if (n == 1)
-                return x;
-
-            // Generalized formula
-            // Abel polynomials recurrence relation for any n ≥ 1:
-            return x * (float)Math.Pow(x - a * n, n - 1);
-        }
-        #endregion
-
-        #region Laguerre polynomial
-        /// <summary>
-        /// Returns the value of the Laguerre polynomial.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Power</param>
-        /// <param name="k">Order</param>
-        /// <returns>Value</returns>
-        public static float Laguerre(float x, float a, int k)
-        {
-            if (k == 0)
-                return 1;
-            if (k == 1)
-                return 1 + a - x;
-
-            // Generalized formula
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            float psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
-            float ksi = k + 1;
-            return psi / ksi;
-        }
-        #endregion
-
-        #region Legendre polynomial
-        /// <summary>
-        /// Returns the value of the Legendre polynomial of the first kind.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="m">Order</param>
-        /// <returns>Value</returns>
-        public static float Legendre(float x, int m)
-        {
-            if (m == 0)
-                return 1;
-            if (m == 1)
-                return x;
-
-            // legendre function
-            // More info: https://pdfs.semanticscholar.org/be30/38b3aafed73d33fe78a701ee096471d16fa1.pdf
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            float ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
-            float psi = m + 1;
-            return ksi / psi;
-        }
-        #endregion
-
-        #region Hermite polynomial
-        /// <summary>
-        /// Returns the value of the Hermite polynomial.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="m">Order</param>
-        /// <returns>Value</returns>
-        public static float Hermite(float x, int m)
-        {
-            if (m == 0)
-                return 1;
-            if (m == 1)
-                return x;
-
-            // recursion formula for Hermite polynomials
-            float ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
-            return 2 * ksi;
-        }
-        #endregion
-
-        #region Gegenbauer polynomial
-        /// <summary>
-        /// Returns the value of the Gegenbauer polynomial.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Power</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
-        public static float Gegenbauer(float x, float a, int n)
-        {
-            if (n == 0)
-                return 1;
-            if (n == 1)
-                return 2 * a * x;
-
-            // Generalized formula
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            float psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
-            return psi / n;
-        }
-        #endregion
-
         #region Hypergeometric functions
         /// <summary>
         /// Returns the value of a hypergeometric function.
@@ -3358,6 +3473,7 @@ namespace UMapx.Core
             return Gerf(x, 2);
         }
         #endregion
+
 
 
         #region Fibonacci & Lucas numbers
