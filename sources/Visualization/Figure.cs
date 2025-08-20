@@ -137,7 +137,7 @@ namespace UMapx.Visualization
         public bool AutoRange { get; set; } = true;
         #endregion
 
-        #region Figure options and graph options
+        #region Figure methods
         /// <summary>
         /// Draws figure to graphics object.
         /// </summary>
@@ -158,8 +158,8 @@ namespace UMapx.Visualization
             figure_graphics.Clear(Style.ColorFrame);
 
             using var canvas = new Bitmap(canvas_width, canvas_height);
-            using Graphics canvas_grpahics = Graphics.FromImage(canvas);
-            canvas_grpahics.Clear(Style.ColorBack);
+            using Graphics canvas_grpaphics = Graphics.FromImage(canvas);
+            canvas_grpaphics.Clear(Style.ColorBack);
 
             // offsets
             int dx = canvas_width / xscale;
@@ -242,7 +242,7 @@ namespace UMapx.Visualization
                 {
                     numX = X[i];
                     xpoint = (int)Points.X2Point(numX, xmin, xmax, canvas_width);
-                    canvas_grpahics.DrawLine(pen1, xpoint, 0, xpoint, canvas_height);
+                    canvas_grpaphics.DrawLine(pen1, xpoint, 0, xpoint, canvas_height);
                 }
 
                 ylength = Y.Length;
@@ -251,7 +251,7 @@ namespace UMapx.Visualization
                 {
                     numY = Y[i];
                     ypoint = (int)Points.Y2Point(numY, ymin, ymax, canvas_height);
-                    canvas_grpahics.DrawLine(pen1, 0, ypoint, canvas_width, ypoint);
+                    canvas_grpaphics.DrawLine(pen1, 0, ypoint, canvas_width, ypoint);
                 }
             }
             #endregion
@@ -267,7 +267,7 @@ namespace UMapx.Visualization
             {
                 // 2D plotting
                 var rectangle = new Rectangle(0, 0, canvas_width, canvas_height);
-                canvas_grpahics.DrawImage(_imagePane, rectangle);
+                canvas_grpaphics.DrawImage(_imagePane, rectangle);
             }
             //else
             {
@@ -285,23 +285,23 @@ namespace UMapx.Visualization
                         switch (current.Symbol)
                         {
                             case Symbol.None:
-                                PlotLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
+                                PlotLine(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
                             case Symbol.Circle:
-                                PlotCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                PlotCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Ball:
-                                PlotCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                PlotCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
                             case Symbol.Rectangle:
-                                PlotRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                PlotRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Polygon:
-                                PlotRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                PlotRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
@@ -310,23 +310,23 @@ namespace UMapx.Visualization
                         switch (current.Symbol)
                         {
                             case Symbol.None:
-                                StemLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
+                                StemLine(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
                             case Symbol.Circle:
-                                StemCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                StemCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Ball:
-                                StemCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                StemCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
                             case Symbol.Rectangle:
-                                StemRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                StemRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Polygon:
-                                StemRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                StemRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
@@ -335,23 +335,23 @@ namespace UMapx.Visualization
                         switch (current.Symbol)
                         {
                             case Symbol.None:
-                                ScatterLine(canvas_grpahics, current.X, current.Y, current.Depth, current.Color);
+                                ScatterLine(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
                             case Symbol.Circle:
-                                ScatterCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                ScatterCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Ball:
-                                ScatterCircle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                ScatterCircle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
                             case Symbol.Rectangle:
-                                ScatterRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, false);
+                                ScatterRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
                             case Symbol.Polygon:
-                                ScatterRectangle(canvas_grpahics, current.X, current.Y, current.Depth, current.Color, radius, true);
+                                ScatterRectangle(canvas_grpaphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
@@ -368,8 +368,8 @@ namespace UMapx.Visualization
                 {
                     numX = X[i];
                     xpoint = (int)Points.X2Point(numX, xmin, xmax, canvas_width);
-                    canvas_grpahics.DrawLine(pen2, xpoint, canvas_height, xpoint, canvas_height - s);
-                    canvas_grpahics.DrawLine(pen2, xpoint, 0, xpoint, s);
+                    canvas_grpaphics.DrawLine(pen2, xpoint, canvas_height, xpoint, canvas_height - s);
+                    canvas_grpaphics.DrawLine(pen2, xpoint, 0, xpoint, s);
                 }
 
                 ylength = Y.Length;
@@ -378,18 +378,18 @@ namespace UMapx.Visualization
                 {
                     numY = Y[i];
                     ypoint = (int)Points.Y2Point(numY, ymin, ymax, canvas_height);
-                    canvas_grpahics.DrawLine(pen2, 0, ypoint, s, ypoint);
-                    canvas_grpahics.DrawLine(pen2, canvas_width, ypoint, canvas_width - s, ypoint);
+                    canvas_grpaphics.DrawLine(pen2, 0, ypoint, s, ypoint);
+                    canvas_grpaphics.DrawLine(pen2, canvas_width, ypoint, canvas_width - s, ypoint);
                 }
             }
 
-            canvas_grpahics.DrawRectangle(pen2, 0, 0, canvas_width - 1, canvas_height - 1);
+            canvas_grpaphics.DrawRectangle(pen2, 0, 0, canvas_width - 1, canvas_height - 1);
             #endregion
 
             #region Legend
             if (Legend != null && Legend.Show)
             {
-                Paint_Legend(canvas_grpahics);
+                Paint_Legend(canvas_grpaphics);
             }
             #endregion
 
@@ -897,7 +897,7 @@ namespace UMapx.Visualization
             if (_panes.Count == 0) return;
 
             using var textBrush = new SolidBrush(Style.ColorText);
-            using var font = Style.FontMarks;
+            var font = Style.FontMarks;
             int marker = Legend.MarkerSize;
             int rowH = Math.Max(Legend.RowHeight, marker);
             int maxTextW = 0;
