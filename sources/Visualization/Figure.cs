@@ -12,11 +12,11 @@ namespace UMapx.Visualization
     public class Figure
     {
         #region Private data
-        private int figure_width, figure_height;
-        private int canvas_width, canvas_height;
-        private int xscale = 10, yscale = 10;
-        private float xmin = -5, xmax = 5;
-        private float ymin = -5, ymax = 5;
+        private int _figure_width, _figure_height;
+        private int _canvas_width, _canvas_height;
+        private int _xscale = 10, _yscale = 10;
+        private float _xmin = -5, _xmax = 5;
+        private float _ymin = -5, _ymax = 5;
         private Style _style;
         private readonly List<GraphPane> _panes = new List<GraphPane>();
         private Bitmap _imagePane;
@@ -71,14 +71,14 @@ namespace UMapx.Visualization
         {
             get
             {
-                return new RangeFloat(xmin, xmax);
+                return new RangeFloat(_xmin, _xmax);
             }
             set
             {
                 if (value.Min == value.Max)
                     throw new ArgumentOutOfRangeException("Start and end points cannot be the same");
 
-                xmin = value.Min; xmax = value.Max;
+                _xmin = value.Min; _xmax = value.Max;
             }
         }
         /// <summary>
@@ -88,14 +88,14 @@ namespace UMapx.Visualization
         {
             get
             {
-                return new RangeFloat(ymin, ymax);
+                return new RangeFloat(_ymin, _ymax);
             }
             set
             {
                 if (value.Min == value.Max)
                     throw new ArgumentOutOfRangeException("Start and end points cannot be the same");
 
-                ymin = value.Min; ymax = value.Max;
+                _ymin = value.Min; _ymax = value.Max;
             }
         }
         /// <summary>
@@ -105,14 +105,14 @@ namespace UMapx.Visualization
         {
             get
             {
-                return new PointInt(xscale, yscale);
+                return new PointInt(_xscale, _yscale);
             }
             set
             {
                 if (value.X < 1 || value.Y < 1)
                     throw new ArgumentException("The range of marks cannot be less than 1");
 
-                xscale = value.X; yscale = value.Y;
+                _xscale = value.X; _yscale = value.Y;
             }
         }
         /// <summary>
@@ -143,46 +143,46 @@ namespace UMapx.Visualization
             #region Figure data
             // figure and canvas options
             var size = graphics.VisibleClipBounds.Size;
-            figure_width  = (int)size.Width;
-            figure_height = (int)size.Height;
-            canvas_width  = (int)(figure_width * Scaling);
-            canvas_height = (int)(figure_height * Scaling);
+            _figure_width  = (int)size.Width;
+            _figure_height = (int)size.Height;
+            _canvas_width  = (int)(_figure_width * Scaling);
+            _canvas_height = (int)(_figure_height * Scaling);
 
             // encapsulation of figure and canvas graphics
-            using var figure = new Bitmap(figure_width, figure_height);
+            using var figure = new Bitmap(_figure_width, _figure_height);
             using Graphics figure_graphics = Graphics.FromImage(figure);
             figure_graphics.Clear(Style.ColorFrame);
 
-            using var canvas = new Bitmap(canvas_width, canvas_height);
+            using var canvas = new Bitmap(_canvas_width, _canvas_height);
             using Graphics canvas_graphics = Graphics.FromImage(canvas);
             canvas_graphics.Clear(Style.ColorBack);
 
             // offsets
-            int dx = canvas_width / xscale;
-            int dy = canvas_height / yscale;
-            int dw = (figure_width - canvas_width) / 2;
-            int dh = (figure_height - canvas_height) / 2;
+            int dx = _canvas_width / _xscale;
+            int dy = _canvas_height / _yscale;
+            int dw = (_figure_width - _canvas_width) / 2;
+            int dh = (_figure_height - _canvas_height) / 2;
             #endregion
 
             #region Autorange
             //autorange or not?
             if (_imagePane is object)
             {
-                xmin = ymin = 0;
-                xmax = _imagePane.Width;
-                ymax = _imagePane.Height;
+                _xmin = _ymin = 0;
+                _xmax = _imagePane.Width;
+                _ymax = _imagePane.Height;
             }
             else if (AutoRange && _panes.Count != 0)
             {
-                xmin = ymin = float.MaxValue;
-                xmax = ymax = float.MinValue;
+                _xmin = _ymin = float.MaxValue;
+                _xmax = _ymax = float.MinValue;
 
                 foreach (var pane in _panes)
                 {
-                    xmin = Math.Min(xmin, pane.X.Min());
-                    xmax = Math.Max(xmax, pane.X.Max());
-                    ymin = Math.Min(ymin, pane.Y.Min());
-                    ymax = Math.Max(ymax, pane.Y.Max());
+                    _xmin = Math.Min(_xmin, pane.X.Min());
+                    _xmax = Math.Max(_xmax, pane.X.Max());
+                    _ymin = Math.Min(_ymin, pane.Y.Min());
+                    _ymax = Math.Max(_ymax, pane.Y.Max());
                 }
             }
             else
@@ -193,8 +193,8 @@ namespace UMapx.Visualization
 
             #region Numeric marks
             // points:
-            float[] X = Points.GetPoints(xmin, xmax, xscale);
-            float[] Y = Points.GetPoints(ymin, ymax, yscale);
+            float[] X = Points.GetPoints(_xmin, _xmax, _xscale);
+            float[] Y = Points.GetPoints(_ymin, _ymax, _yscale);
 
             using SolidBrush br = new SolidBrush(Style.ColorMarks);
             using Pen pen1 = new Pen(Style.ColorGrid, Style.DepthShapes);
@@ -212,8 +212,8 @@ namespace UMapx.Visualization
             {
                 numX = X[i];
                 numerics = GetNumString(numX);
-                xpoint = (int)Points.X2Point(numX, xmin, xmax, canvas_width);
-                figure_graphics.DrawString(numerics, Style.FontMarks, br, xpoint + dw - 5, canvas_height + dh + 5);
+                xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
+                figure_graphics.DrawString(numerics, Style.FontMarks, br, xpoint + dw - 5, _canvas_height + dh + 5);
             }
 
             ylength = Y.Length;
@@ -224,7 +224,7 @@ namespace UMapx.Visualization
                 numY = Y[i];
                 numerics = GetNumString(numY);
                 numsize = figure_graphics.MeasureString(numerics, Style.FontMarks);
-                ypoint = (int)Points.Y2Point(numY, ymin, ymax, canvas_height);
+                ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
                 figure_graphics.DrawString(numerics, Style.FontMarks, br, dw - numsize.Width - 5, ypoint + dh - 10);
             }
             #endregion
@@ -237,8 +237,8 @@ namespace UMapx.Visualization
                 for (i = 0; i < xlength; i++)
                 {
                     numX = X[i];
-                    xpoint = (int)Points.X2Point(numX, xmin, xmax, canvas_width);
-                    canvas_graphics.DrawLine(pen1, xpoint, 0, xpoint, canvas_height);
+                    xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
+                    canvas_graphics.DrawLine(pen1, xpoint, 0, xpoint, _canvas_height);
                 }
 
                 ylength = Y.Length;
@@ -246,23 +246,23 @@ namespace UMapx.Visualization
                 for (i = 0; i < ylength; i++)
                 {
                     numY = Y[i];
-                    ypoint = (int)Points.Y2Point(numY, ymin, ymax, canvas_height);
-                    canvas_graphics.DrawLine(pen1, 0, ypoint, canvas_width, ypoint);
+                    ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
+                    canvas_graphics.DrawLine(pen1, 0, ypoint, _canvas_width, ypoint);
                 }
             }
             #endregion
 
             #region Title and labels
-            Paint_Title(figure_graphics, Title, figure_width, figure_height, dw, dh);
-            Paint_LabelX(figure_graphics, LabelX, figure_width, figure_height, dw, dh);
-            Paint_LabelY(figure_graphics, LabelY, figure_width, figure_height, dw, dh);
+            Paint_Title(figure_graphics, Title, _figure_width, _figure_height, dw, dh);
+            Paint_LabelX(figure_graphics, LabelX, _figure_width, _figure_height, dw, dh);
+            Paint_LabelY(figure_graphics, LabelY, _figure_width, _figure_height, dw, dh);
             #endregion
 
             #region Graph painting
             if (_imagePane is object)
             {
                 // 2D plotting
-                var rectangle = new Rectangle(0, 0, canvas_width, canvas_height);
+                var rectangle = new Rectangle(0, 0, _canvas_width, _canvas_height);
                 canvas_graphics.DrawImage(_imagePane, rectangle);
             }
             //else
@@ -363,8 +363,8 @@ namespace UMapx.Visualization
                 for (i = 0; i < xlength; i++)
                 {
                     numX = X[i];
-                    xpoint = (int)Points.X2Point(numX, xmin, xmax, canvas_width);
-                    canvas_graphics.DrawLine(pen2, xpoint, canvas_height, xpoint, canvas_height - s);
+                    xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
+                    canvas_graphics.DrawLine(pen2, xpoint, _canvas_height, xpoint, _canvas_height - s);
                     canvas_graphics.DrawLine(pen2, xpoint, 0, xpoint, s);
                 }
 
@@ -373,13 +373,13 @@ namespace UMapx.Visualization
                 for (i = 0; i < ylength; i++)
                 {
                     numY = Y[i];
-                    ypoint = (int)Points.Y2Point(numY, ymin, ymax, canvas_height);
+                    ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
                     canvas_graphics.DrawLine(pen2, 0, ypoint, s, ypoint);
-                    canvas_graphics.DrawLine(pen2, canvas_width, ypoint, canvas_width - s, ypoint);
+                    canvas_graphics.DrawLine(pen2, _canvas_width, ypoint, _canvas_width - s, ypoint);
                 }
             }
 
-            canvas_graphics.DrawRectangle(pen2, 0, 0, canvas_width - 1, canvas_height - 1);
+            canvas_graphics.DrawRectangle(pen2, 0, 0, _canvas_width - 1, _canvas_height - 1);
             #endregion
 
             #region Legend
@@ -420,9 +420,8 @@ namespace UMapx.Visualization
         {
             _panes.Clear();
             _imagePane = null;
-
-            xmin = -5; xmax = 5;
-            ymin = -5; ymax = 5;
+            _xmin = -5; _xmax = 5;
+            _ymin = -5; _ymax = 5;
         }
         #endregion
 
@@ -511,13 +510,13 @@ namespace UMapx.Visualization
             int length = y.Length;
             for (int i = 0; i < length; i++)
             {
-                float xi = Points.ClipPoint(x[i], xmin, xmax);
-                float yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], _xmin, _xmax);
+                float yi = Points.ClipPoint(y[i], _ymin, _ymax);
 
                 if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi)) continue;
 
-                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, _xmin, _xmax, _canvas_width);
+                int py = (int)Points.Y2Point(yi, _ymin, _ymax, _canvas_height);
 
                 if (fill) graphics.FillEllipse(br, px - radius / 2, py - radius / 2, radius, radius);
                 else graphics.DrawEllipse(pen, px - radius / 2, py - radius / 2, radius, radius);
@@ -543,13 +542,13 @@ namespace UMapx.Visualization
             int length = y.Length;
             for (int i = 0; i < length; i++)
             {
-                float xi = Points.ClipPoint(x[i], xmin, xmax);
-                float yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], _xmin, _xmax);
+                float yi = Points.ClipPoint(y[i], _ymin, _ymax);
 
                 if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi)) continue;
 
-                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, _xmin, _xmax, _canvas_width);
+                int py = (int)Points.Y2Point(yi, _ymin, _ymax, _canvas_height);
 
                 if (fill) graphics.FillRectangle(br, px - radius / 2, py - radius / 2, radius, radius);
                 else graphics.DrawRectangle(pen, px - radius / 2, py - radius / 2, radius, radius);
@@ -570,8 +569,8 @@ namespace UMapx.Visualization
 
             for (int i = 0; i < y.Length; i++)
             {
-                float xi = Points.ClipPoint(x[i], xmin, xmax);
-                float yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], _xmin, _xmax);
+                float yi = Points.ClipPoint(y[i], _ymin, _ymax);
 
                 if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi))
                 {
@@ -581,8 +580,8 @@ namespace UMapx.Visualization
                 }
 
                 seg.Add(new Point(
-                    (int)Points.X2Point(xi, xmin, xmax, canvas_width),
-                    (int)Points.Y2Point(yi, ymin, ymax, canvas_height)));
+                    (int)Points.X2Point(xi, _xmin, _xmax, _canvas_width),
+                    (int)Points.Y2Point(yi, _ymin, _ymax, _canvas_height)));
             }
 
             if (seg.Count > 1) graphics.DrawLines(pen, seg.ToArray());
@@ -601,19 +600,19 @@ namespace UMapx.Visualization
         private void StemLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
             using var pen = new Pen(color, depth);
-            int zero = (int)Points.Y2Point(0f, ymin, ymax, canvas_height);
+            int zero = (int)Points.Y2Point(0f, _ymin, _ymax, _canvas_height);
 
             int n = y.Length;
             for (int i = 0; i < n; i++)
             {
-                float xi = Points.ClipPoint(x[i], xmin, xmax);
-                float yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], _xmin, _xmax);
+                float yi = Points.ClipPoint(y[i], _ymin, _ymax);
 
                 if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi))
                     continue;
 
-                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, _xmin, _xmax, _canvas_width);
+                int py = (int)Points.Y2Point(yi, _ymin, _ymax, _canvas_height);
 
                 graphics.DrawLine(pen, px, zero, px, py);
             }
@@ -632,20 +631,20 @@ namespace UMapx.Visualization
         {
             using var br = new SolidBrush(color);
             using var pen = new Pen(color, depth);
-            int zero = (int)Points.Y2Point(0f, ymin, ymax, canvas_height);
+            int zero = (int)Points.Y2Point(0f, _ymin, _ymax, _canvas_height);
             float r2 = radius / 2f;
 
             int n = y.Length;
             for (int i = 0; i < n; i++)
             {
-                float xi = Points.ClipPoint(x[i], xmin, xmax);
-                float yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], _xmin, _xmax);
+                float yi = Points.ClipPoint(y[i], _ymin, _ymax);
 
                 if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi))
                     continue;
 
-                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, _xmin, _xmax, _canvas_width);
+                int py = (int)Points.Y2Point(yi, _ymin, _ymax, _canvas_height);
 
                 if (fill) graphics.FillEllipse(br, px - r2, py - r2, radius, radius);
                 else graphics.DrawEllipse(pen, px - r2, py - r2, radius, radius);
@@ -667,20 +666,20 @@ namespace UMapx.Visualization
         {
             using var br = new SolidBrush(color);
             using var pen = new Pen(color, depth);
-            int zero = (int)Points.Y2Point(0f, ymin, ymax, canvas_height);
+            int zero = (int)Points.Y2Point(0f, _ymin, _ymax, _canvas_height);
             float r2 = radius / 2f;
 
             int n = y.Length;
             for (int i = 0; i < n; i++)
             {
-                float xi = Points.ClipPoint(x[i], xmin, xmax);
-                float yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], _xmin, _xmax);
+                float yi = Points.ClipPoint(y[i], _ymin, _ymax);
 
                 if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi))
                     continue;
 
-                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, _xmin, _xmax, _canvas_width);
+                int py = (int)Points.Y2Point(yi, _ymin, _ymax, _canvas_height);
 
                 if (fill) graphics.FillRectangle(br, px - r2, py - r2, radius, radius);
                 else graphics.DrawRectangle(pen, px - r2, py - r2, radius, radius);
@@ -723,13 +722,13 @@ namespace UMapx.Visualization
             int n = y.Length;
             for (int i = 0; i < n; i++)
             {
-                float xi = Points.ClipPoint(x[i], xmin, xmax);
-                float yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], _xmin, _xmax);
+                float yi = Points.ClipPoint(y[i], _ymin, _ymax);
 
                 if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi)) continue;
 
-                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, _xmin, _xmax, _canvas_width);
+                int py = (int)Points.Y2Point(yi, _ymin, _ymax, _canvas_height);
 
                 if (fill) graphics.FillEllipse(br, px - r2, py - r2, radius, radius);
                 else graphics.DrawEllipse(pen, px - r2, py - r2, radius, radius);
@@ -754,13 +753,13 @@ namespace UMapx.Visualization
             int n = y.Length;
             for (int i = 0; i < n; i++)
             {
-                float xi = Points.ClipPoint(x[i], xmin, xmax);
-                float yi = Points.ClipPoint(y[i], ymin, ymax);
+                float xi = Points.ClipPoint(x[i], _xmin, _xmax);
+                float yi = Points.ClipPoint(y[i], _ymin, _ymax);
 
                 if (Points.IsSingularPoint(xi) || Points.IsSingularPoint(yi)) continue;
 
-                int px = (int)Points.X2Point(xi, xmin, xmax, canvas_width);
-                int py = (int)Points.Y2Point(yi, ymin, ymax, canvas_height);
+                int px = (int)Points.X2Point(xi, _xmin, _xmax, _canvas_width);
+                int py = (int)Points.Y2Point(yi, _ymin, _ymax, _canvas_height);
 
                 if (fill) graphics.FillRectangle(br, px - r2, py - r2, radius, radius);
                 else graphics.DrawRectangle(pen, px - r2, py - r2, radius, radius);
@@ -801,7 +800,7 @@ namespace UMapx.Visualization
             {
                 default:
                 case LegendAnchor.TopRight:
-                    x = canvas_width - Legend.Padding - boxW;
+                    x = _canvas_width - Legend.Padding - boxW;
                     y = Legend.Padding;
                     break;
                 case LegendAnchor.TopLeft:
@@ -809,12 +808,12 @@ namespace UMapx.Visualization
                     y = Legend.Padding;
                     break;
                 case LegendAnchor.BottomRight:
-                    x = canvas_width - Legend.Padding - boxW;
-                    y = canvas_height - Legend.Padding - boxH;
+                    x = _canvas_width - Legend.Padding - boxW;
+                    y = _canvas_height - Legend.Padding - boxH;
                     break;
                 case LegendAnchor.BottomLeft:
                     x = Legend.Padding;
-                    y = canvas_height - Legend.Padding - boxH;
+                    y = _canvas_height - Legend.Padding - boxH;
                     break;
             }
 
