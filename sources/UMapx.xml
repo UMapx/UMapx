@@ -3506,26 +3506,6 @@
             Gets the value of the phase.
             </summary>
         </member>
-        <member name="P:UMapx.Core.Complex32.I">
-            <summary>
-            Returns the imaginary one.
-            </summary>
-        </member>
-        <member name="P:UMapx.Core.Complex32.One">
-            <summary>
-            Returns the real one.
-            </summary>
-        </member>
-        <member name="P:UMapx.Core.Complex32.Zero">
-            <summary>
-            Returns the complex zero.
-            </summary>
-        </member>
-        <member name="P:UMapx.Core.Complex32.Conjugate">
-            <summary>
-            Returns the complex conjugate number.
-            </summary>
-        </member>
         <member name="M:UMapx.Core.Complex32.GetHashCode">
             <summary>
             Returns the hash code for this object.
@@ -3791,6 +3771,31 @@
             </summary>
             <param name="magnitude">Magnitude (radius)</param>
             <param name="phase">Phase (angle in radians)</param>
+        </member>
+        <member name="P:UMapx.Core.Complex32.I">
+            <summary>
+            Returns the imaginary one.
+            </summary>
+        </member>
+        <member name="P:UMapx.Core.Complex32.One">
+            <summary>
+            Returns the real one.
+            </summary>
+        </member>
+        <member name="P:UMapx.Core.Complex32.Zero">
+            <summary>
+            Returns the complex zero.
+            </summary>
+        </member>
+        <member name="P:UMapx.Core.Complex32.Conjugate">
+            <summary>
+            Returns the complex conjugate number.
+            </summary>
+        </member>
+        <member name="P:UMapx.Core.Complex32.NaN">
+            <summary>
+            Returns the not number.
+            </summary>
         </member>
         <member name="T:UMapx.Core.Debugger">
             <summary>
@@ -11893,6 +11898,132 @@
             <param name="k">Branch</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Boolean)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="inverse">Reverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32,System.Boolean)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="inverse">Reverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfi(System.Single)">
+            <summary>
+            Returns the value of the imaginary error function.
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfi(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the imaginary error function.
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
+            <summary>
+            Returns the value of the D- / D + Dawson function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="positive">D- или D+</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Dawson(UMapx.Core.Complex32,System.Boolean)">
+            <summary>
+            Returns the value of the D- / D + Dawson function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="positive">D- или D+</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
+            <summary>
+            Returns the value of a Q function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="inverse">Inverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Q(UMapx.Core.Complex32,System.Boolean)">
+            <summary>
+            Returns the value of a Q function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="inverse">Inverse function or not</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
             <summary>
             Returns the value of the Struve function.
@@ -12084,69 +12215,6 @@
             </summary>
             <param name="z"></param>
             <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Boolean)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="inverse">Reverse function or not</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfi(System.Single)">
-            <summary>
-            Returns the value of the imaginary error function.
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="a">The lower boundary of the normalization</param>
-            <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="a">The lower boundary of the normalization</param>
-            <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
-            <summary>
-            Returns the value of the D- / D + Dawson function.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="positive">D- или D+</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
-            <summary>
-            Returns the value of a Q function.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="inverse">Inverse function or not</param>
-            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.J0(System.Single)">
             <summary>

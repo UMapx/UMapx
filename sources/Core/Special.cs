@@ -1199,6 +1199,311 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Laplace function
+        /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="inverse">Reverse function or not</param>
+        /// <returns>Value</returns>
+        public static float Erf(float x, bool inverse)
+        {
+            // exception
+            if (x == 0.0)
+                return 0.0f;
+
+            // params
+            int s = inverse ? 1 : -1;
+            float y = s * x * x;
+            float z = 2 / (float)Math.Sqrt(Math.PI);
+            float a = 1, b = x, c;
+            float eps = 1e-16f;
+            int i, iterations = 120, k = 3;
+
+            // Taylor series:
+            for (i = 1; i < iterations; i++, k += 2)
+            {
+                // series:
+                a *= y / i;
+                c = a * x / k;
+
+                // stop point:
+                if (Math.Abs(c) < eps)
+                {
+                    break;
+                }
+                else
+                {
+                    b += c;
+                }
+            }
+
+            // erf(x)
+            float erf = z * b;
+            if (!inverse)
+            {
+                if (Math.Abs(erf) > 1.0)
+                    return Math.Sign(erf);
+            }
+
+            return erf;
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="inverse">Reverse function or not</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erf(Complex32 x, bool inverse)
+        {
+            // series converges ∀ x, removable singularity at 0
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
+
+            float sgn = inverse ? 1f : -1f;          // +1 → erfi, -1 → erf
+            Complex32 y = sgn * x * x;               // y = ± x^2
+            float coef = 2f / (float)Math.Sqrt(System.Math.PI);
+            
+            Complex32 a = Complex32.One;             // accumulator for y^n / n!
+            Complex32 b = x;                         // sum starts with n=0 term: x
+            float eps = 1e-16f;
+            int k = 3;
+
+            for (int i = 1; i < 120; i++, k += 2)
+            {
+                a *= y / i;                          // a ← a * (y / i)
+                Complex32 c = a * x / k;             // term: (±)^n x^{2n+1} / (n!(2n+1))
+                if (Maths.Abs(c) < eps) break;
+                b += c;
+            }
+
+            return b * coef;                         // 2/√π * Σ …
+        }
+        /// <summary>
+        /// Returns the value of the imaginary error function.
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static float Erfi(float x)
+        {
+            // special cases:
+            if (x > 26.658987628)
+                return float.PositiveInfinity;
+            if (x < -26.658987628)
+                return float.NegativeInfinity;
+
+            // properties:
+            float s = x;
+            float m = x, t;
+            float z = x * x;
+            int k, iterations = 930;
+            float eps = 1e-16f;
+            float p = 2.0f / Special.sqrtPI;
+
+            // Taylor series:
+            for (int i = 1; i < iterations; i++)
+            {
+                // value:
+                k = 2 * i + 1;
+                m *= z / i;
+                t = m / k;
+
+                // stop point:
+                if (Math.Abs(t) < eps)
+                { break; }
+                else { s += t; }
+            }
+
+            // construction:
+            return p * s;
+        }
+        /// <summary>
+        /// Returns the value of the imaginary error function.
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erfi(Complex32 x)
+        {
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
+
+            float coef = 2f / (float)System.Math.Sqrt(System.Math.PI);
+            Complex32 s = x;                         // start with n=0: x
+            Complex32 m = x;
+            Complex32 z2 = x * x;
+            float eps = 1e-16f;
+
+            for (int i = 1; i < 930; i++)
+            {
+                int k = 2 * i + 1;
+                m *= z2 / i;                         // m ← x^{2i+1} / i!
+                Complex32 t = m / k;                 // term: x^{2i+1} / (i! (2i+1))
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+
+            return s * coef;                          // 2/√π * Σ …
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static float Erf(float x)
+        {
+            return Erf(x, false);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erf(Complex32 x)
+        {
+            return Erf(x, false);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="a">The lower boundary of the normalization</param>
+        /// <param name="b">The upper limit of the normalization</param>
+        /// <returns>Value</returns>
+        public static float Erf(float x, float a, float b)
+        {
+            return Erf((x - a) / b);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="a">The lower boundary of the normalization</param>
+        /// <param name="b">The upper limit of the normalization</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erf(Complex32 x, Complex32 a, Complex32 b)
+        {
+            return Erf((x - a) / b);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (an additional error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static float Erfc(float x)
+        {
+            return 1.0f - Erf(x);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (an additional error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erfc(Complex32 x)
+        {
+            return 1.0f - Erf(x);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (an additional error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="a">The lower boundary of the normalization</param>
+        /// <param name="b">The upper limit of the normalization</param>
+        /// <returns>Value</returns>
+        public static float Erfc(float x, float a, float b)
+        {
+            return 1.0f - Erf(x, a, b);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (an additional error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="a">The lower boundary of the normalization</param>
+        /// <param name="b">The upper limit of the normalization</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erfc(Complex32 x, Complex32 a, Complex32 b)
+        {
+            return 1.0f - Erf(x, a, b);
+        }
+        #endregion
+
+        #region Dawson function
+        /// <summary>
+        /// Returns the value of the D- / D + Dawson function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="positive">D- или D+</param>
+        /// <returns>Value</returns>
+        public static float Dawson(float x, bool positive)
+        {
+            if (positive)
+            {
+                // D+ function:
+                float p = Special.sqrtPI / 2.0f;
+                float v = Maths.Exp(-x * x);
+                float erfi = Special.Erfi(x);
+                return p * v * erfi;
+            }
+            // D- function:
+            float y = x * x;
+            float g = sqrtPI / 2.0f;
+            float e = Special.Erf(x);
+            float d = Maths.Exp(y);
+            return g * d * e;
+        }
+        /// <summary>
+        /// Returns the value of the D- / D + Dawson function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="positive">D- или D+</param>
+        /// <returns>Value</returns>
+        public static Complex32 Dawson(Complex32 x, bool positive)
+        {
+            if (positive)
+            {
+                // D+ function:
+                Complex32 p = Special.sqrtPI / 2.0f;
+                Complex32 v = Maths.Exp(-x * x);
+                Complex32 erfi = Special.Erfi(x);
+                return p * v * erfi;
+            }
+            // D- function:
+            Complex32 y = x * x;
+            Complex32 g = sqrtPI / 2.0f;
+            Complex32 e = Special.Erf(x);
+            Complex32 d = Maths.Exp(y);
+            return g * d * e;
+        }
+        #endregion
+
+        #region Q-function
+        /// <summary>
+        /// Returns the value of a Q function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="inverse">Inverse function or not</param>
+        /// <returns>Value</returns>
+        public static float Q(float x, bool inverse = false)
+        {
+            if (inverse)
+            {
+                return Maths.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+            }
+            return 0.5f * Special.Erfc(x / Maths.Sqrt2);
+        }
+        /// <summary>
+        /// Returns the value of a Q function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="inverse">Inverse function or not</param>
+        /// <returns>Value</returns>
+        public static Complex32 Q(Complex32 x, bool inverse = false)
+        {
+            if (inverse)
+            {
+                return Maths.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+            }
+            return 0.5f * Special.Erfc(x / Maths.Sqrt2);
+        }
+        #endregion
+
 
 
 
@@ -2269,178 +2574,6 @@ namespace UMapx.Core
         #endregion
         #endregion
 
-        #region Laplace function
-        /// <summary>
-        /// Returns the value of the Laplace integral (error function).
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="inverse">Reverse function or not</param>
-        /// <returns>Value</returns>
-        public static float Erf(float x, bool inverse)
-        {
-            // exception
-            if (x == 0.0)
-                return 0.0f;
-
-            // params
-            int s = inverse ? 1 : -1;
-            float y = s * x * x;
-            float z = 2 / (float)Math.Sqrt(Math.PI);
-            float a = 1, b = x, c;
-            float eps = 1e-16f;
-            int i, iterations = 120, k = 3;
-
-            // Taylor series:
-            for (i = 1; i < iterations; i++, k += 2)
-            {
-                // series:
-                a *= y / i;
-                c = a * x / k;
-
-                // stop point:
-                if (Math.Abs(c) < eps)
-                {
-                    break;
-                }
-                else
-                {
-                    b += c;
-                }
-            }
-
-            // erf(x)
-            float erf = z * b;
-            if (!inverse)
-            {
-                if (Math.Abs(erf) > 1.0)
-                    return Math.Sign(erf);
-            }
-
-            return erf;
-        }
-        /// <summary>
-        /// Returns the value of the imaginary error function.
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
-        public static float Erfi(float x)
-        {
-            // special cases:
-            if (x > 26.658987628)
-                return float.PositiveInfinity;
-            if (x < -26.658987628)
-                return float.NegativeInfinity;
-
-            // properties:
-            float s = x;
-            float m = x, t;
-            float z = x * x;
-            int k, iterations = 930;
-            float eps = 1e-16f;
-            float p = 2.0f / Special.sqrtPI;
-
-            // Taylor series:
-            for (int i = 1; i < iterations; i++)
-            {
-                // value:
-                k = 2 * i + 1;
-                m *= z / i;
-                t = m / k;
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
-            }
-
-            // construction:
-            return p * s;
-        }
-        /// <summary>
-        /// Returns the value of the Laplace integral (error function).
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
-        public static float Erf(float x)
-        {
-            return Erf(x, false);
-        }
-        /// <summary>
-        /// Returns the value of the Laplace integral (error function).
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="a">The lower boundary of the normalization</param>
-        /// <param name="b">The upper limit of the normalization</param>
-        /// <returns>Value</returns>
-        public static float Erf(float x, float a, float b)
-        {
-            return Erf((x - a) / b);
-        }
-        /// <summary>
-        /// Returns the value of the Laplace integral (an additional error function).
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
-        public static float Erfc(float x)
-        {
-            return 1.0f - Erf(x);
-        }
-        /// <summary>
-        /// Returns the value of the Laplace integral (an additional error function).
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="a">The lower boundary of the normalization</param>
-        /// <param name="b">The upper limit of the normalization</param>
-        /// <returns>Value</returns>
-        public static float Erfc(float x, float a, float b)
-        {
-            return 1.0f - Erf(x, a, b);
-        }
-        #endregion
-
-        #region Dawson function
-        /// <summary>
-        /// Returns the value of the D- / D + Dawson function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="positive">D- или D+</param>
-        /// <returns>Value</returns>
-        public static float Dawson(float x, bool positive)
-        {
-            if (positive)
-            {
-                // D+ function:
-                float p = Special.sqrtPI / 2.0f;
-                float v = Maths.Exp(-x * x);
-                float erfi = Special.Erfi(x);
-                return p * v * erfi;
-            }
-            // D- function:
-            float y = x * x;
-            float g = sqrtPI / 2.0f;
-            float e = Special.Erf(x);
-            float d = (float)Math.Exp(y);
-            return g * d * e;
-        }
-        #endregion
-
-        #region Q-function
-        /// <summary>
-        /// Returns the value of a Q function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="inverse">Inverse function or not</param>
-        /// <returns>Value</returns>
-        public static float Q(float x, bool inverse = false)
-        {
-            if (inverse)
-            {
-                return (float)Math.Sqrt(2) * Special.Erf(1 - 2 * x, true);
-            }
-            return 0.5f * Special.Erfc(x / Maths.Sqrt2);
-        }
-        #endregion
-
         #region Bessel functions
         /// <summary>
         /// Returns the value of the Bessel function of the first kind at a = 0.
@@ -3276,7 +3409,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Hypergeometric functions
+        #region Hypergeometric function
         /// <summary>
         /// Returns the value of a hypergeometric function.
         /// <remarks>
