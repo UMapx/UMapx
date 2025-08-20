@@ -351,7 +351,6 @@ namespace UMapx.Core
         }
         #endregion
 
-
         #region Integral functions
         /// <summary>
         /// Returns the value of the integral cosine.
@@ -715,6 +714,94 @@ namespace UMapx.Core
             }
 
             return s;
+        }
+        #endregion
+
+        #region Elrang B and C functions
+        /// <summary>
+        /// Returns the value of the Erlang C-function.
+        /// </summary>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <param name="t">Time parameter</param>
+        /// <returns>Value</returns>
+        public static float Erlang(float y, int v, float t)
+        {
+            float e = Special.Erlang(y, v);
+            float a = v * e;
+            float b = v - y + y * e;
+            float c = (v - y) * t;
+            return a / b * Maths.Exp(-c);
+        }
+        /// <summary>
+        /// Returns the value of the Erlang C-function.
+        /// </summary>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <param name="t">Time parameter</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erlang(Complex32 y, int v, Complex32 t)
+        {
+            Complex32 e = Special.Erlang(y, v);             // Erlang-B (blocking)
+            Complex32 a = v * e;                    // v * B
+            Complex32 b = v - y + y * e;            // v - y + y B = v(1-ρ) + ρ v B
+            Complex32 c = (v - y) * t;              // (v - y) t
+            return a / b * Maths.Exp(-c);           // C * exp( - (v - y) t )
+        }
+        /// <summary>
+        /// Returns the value of the Erlang B-function.
+        /// </summary>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <returns>Value</returns>
+        public static float Erlang(float y, int v)
+        {
+            // special cases:
+            if (v == 0)
+                return 1;
+            if (v < 0)
+                return float.NaN;
+
+            // set:
+            float t = 1, b = 1; int i;
+
+            //series:
+            for (i = 1; i < v; i++)
+            {
+                t *= y / i;
+                b += t;
+            }
+
+            // last step and result:
+            float a = t * y / i;
+            return a / (a + b);
+        }
+        /// <summary>
+        /// Returns the value of the Erlang B-function.
+        /// </summary>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erlang(Complex32 y, int v)
+        {
+            // Special cases match your real version
+            if (v == 0) return Complex32.One;
+            if (v < 0) return new Complex32(float.NaN, float.NaN);
+
+            Complex32 t = Complex32.One;  // term for k=0
+            Complex32 b = Complex32.One;  // partial sum Σ_{k=0}^{v-1}
+            int i;
+
+            // Build sum up to k = v-1:  t = y^k / k!,  b += t
+            for (i = 1; i < v; i++)
+            {
+                t *= y / i;               // next term
+                b += t;
+            }
+
+            // Last term k = v:  a = y^v / v!
+            Complex32 a = t * y / i;      // here i == v
+            return a / (a + b);
         }
         #endregion
 
@@ -3282,52 +3369,6 @@ namespace UMapx.Core
         public static float Gerf(float x)
         {
             return Gerf(x, 2);
-        }
-        #endregion
-
-        #region Elrang B and C functions
-        /// <summary>
-        /// Returns the value of the Erlang C-function.
-        /// </summary>
-        /// <param name="y">Firset parameter</param>
-        /// <param name="v">Second parameter</param>
-        /// <param name="t">Time parameter</param>
-        /// <returns>Value</returns>
-        public static float Erlang(float y, int v, float t)
-        {
-            float e = Special.Erlang(y, v);
-            float a = v * e;
-            float b = v - y + y * e;
-            float c = (v - y) * t;
-            return a / b * (float)Math.Exp(-c);
-        }
-        /// <summary>
-        /// Returns the value of the Erlang B-function.
-        /// </summary>
-        /// <param name="y">Firset parameter</param>
-        /// <param name="v">Second parameter</param>
-        /// <returns>Value</returns>
-        public static float Erlang(float y, int v)
-        {
-            // special cases:
-            if (v == 0)
-                return 1;
-            if (v < 0)
-                return float.NaN;
-
-            // set:
-            float t = 1, b = 1; int i;
-
-            //series:
-            for (i = 1; i < v; i++)
-            {
-                t *= y / i;
-                b += t;
-            }
-
-            // last step and result:
-            float a = t * y / i;
-            return a / (a + b);
         }
         #endregion
 

@@ -11549,6 +11549,82 @@
             <param name="c">Growth rate</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Dirac(System.Single,System.Single)">
+            <summary>
+            Returns the value of the Dirac delta function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Coefficient</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Dirac(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Dirac delta function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Coefficient</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Logistic(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a logistic function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Lower asymptote</param>
+            <param name="k">Upper asymptote</param>
+            <param name="b">Growth rate</param>
+            <param name="v">Affect</param>
+            <param name="q">Central moment</param>
+            <param name="c">Offset</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Logistic(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a logistic function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Lower asymptote</param>
+            <param name="k">Upper asymptote</param>
+            <param name="b">Growth rate</param>
+            <param name="v">Affect</param>
+            <param name="q">Central moment</param>
+            <param name="c">Offset</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Logistic(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a logistic function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Lower asymptote</param>
+            <param name="k">Upper asymptote</param>
+            <param name="b">Growth rate</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Logistic(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a logistic function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Lower asymptote</param>
+            <param name="k">Upper asymptote</param>
+            <param name="b">Growth rate</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Logistic(System.Single)">
+            <summary>
+            Returns the value of a logistic function.
+            </summary>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Logistic(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a logistic function.
+            </summary>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Ci(System.Single)">
             <summary>
             Returns the value of the integral cosine.
@@ -11631,6 +11707,40 @@
             Returns the value of the Fresnel integral S(x).
             </summary>
             <param name="z">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32,System.Single)">
+            <summary>
+            Returns the value of the Erlang C-function.
+            </summary>
+            <param name="y">Firset parameter</param>
+            <param name="v">Second parameter</param>
+            <param name="t">Time parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erlang(UMapx.Core.Complex32,System.Int32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Erlang C-function.
+            </summary>
+            <param name="y">Firset parameter</param>
+            <param name="v">Second parameter</param>
+            <param name="t">Time parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Erlang B-function.
+            </summary>
+            <param name="y">Firset parameter</param>
+            <param name="v">Second parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erlang(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Erlang B-function.
+            </summary>
+            <param name="y">Firset parameter</param>
+            <param name="v">Second parameter</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
@@ -12189,44 +12299,6 @@
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Logistic(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of a logistic function.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="a">Lower asymptote</param>
-            <param name="k">Upper asymptote</param>
-            <param name="b">Growth rate</param>
-            <param name="v">Affect</param>
-            <param name="q">Central moment</param>
-            <param name="c">Offset</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Logistic(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of a logistic function.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="a">Lower asymptote</param>
-            <param name="k">Upper asymptote</param>
-            <param name="b">Growth rate</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Logistic(System.Single)">
-            <summary>
-            Returns the value of a logistic function.
-            </summary>
-            <param name="x">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Dirac(System.Single,System.Single)">
-            <summary>
-            Returns the value of the Dirac delta function.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="a">Coefficient</param>
-            <returns>Value</returns>
-        </member>
         <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
             <summary>
             Returns the value of the D- / D + Dawson function.
@@ -12279,23 +12351,6 @@
             Returns the value of the generalized error function.
             </summary>
             <param name="x">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32,System.Single)">
-            <summary>
-            Returns the value of the Erlang C-function.
-            </summary>
-            <param name="y">Firset parameter</param>
-            <param name="v">Second parameter</param>
-            <param name="t">Time parameter</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the Erlang B-function.
-            </summary>
-            <param name="y">Firset parameter</param>
-            <param name="v">Second parameter</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.LambertW(System.Single,System.Boolean)">
