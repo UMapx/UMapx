@@ -805,6 +805,152 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Lambert W-function
+        /// <summary>
+        /// Returns the value of the Lambert W-function.
+        /// </summary>
+        /// <param name="x">Argument [-1/e,+inf)</param>
+        /// <param name="k">Branch</param>
+        /// <returns>Value</returns>
+        public static float LambertW(float x, int k = 0)
+        {
+            // Only real branches supported here
+            if (k != 0 && k != -1)
+                return float.NaN;
+
+            const float xm = -0.36787944117144233f; // -1/e
+
+            // Domain checks on R
+            if (k == 0)
+            {
+                if (x < xm) return float.NaN;   // W0 real only for x ≥ -1/e
+                if (x == 0f) return 0f;
+                if (x == xm) return -1f;
+            }
+            else // k == -1
+            {
+                if (x < xm || x >= 0f) return float.NaN; // W_{-1} real only for -1/e ≤ x < 0
+                if (x == xm) return -1f;
+            }
+
+            // Halley's method
+            const float eps = 1e-8f;
+            const int maxIter = 100;
+
+            // Initial guess (simple and robust for real case)
+            float w = (k == 0) ? 1f : -2f;
+            // Better near the branch point x ≈ -1/e:
+            if (x < -0.2f)
+            {
+                // w ≈ -1 ± sqrt(2 (e x + 1))
+                float q = Maths.E * x + 1f;
+                if (q >= 0f)
+                {
+                    float s = Maths.Sqrt(2f * q);
+                    w = (k == 0) ? (-1f + s) : (-1f - s);
+                }
+            }
+
+            for (int it = 0; it < maxIter; it++)
+            {
+                float e = Maths.Exp(w);
+                float f = w * e - x;                  // f(w) = w e^w - x
+                float wp1 = w + 1f;
+
+                // Halley denominator: e*(w+1) - (w+2)*f/(2*(w+1))
+                float denom = e * wp1 - (w + 2f) * f / (2f * wp1);
+                if (!float.IsInfinity(denom) || denom == 0f)
+                    denom = e * wp1;                  // Newton fallback
+
+                var v = w;
+                w = w - f / denom;
+
+                if (Maths.Abs(w - v) <= eps * Maths.Abs(w))
+                    break;
+            }
+
+            return w;
+        }
+        /// <summary>
+        /// Returns the value of the Lambert W-function.
+        /// </summary>
+        /// <param name="z">Argument</param>
+        /// <param name="k">Branch</param>
+        /// <returns>Value</returns>
+        public static Complex32 LambertW(Complex32 z, int k = 0)
+        {
+            // Special cases
+            if (z.Real == 0f && z.Imag == 0f)
+            {
+                if (k == 0) return Complex32.Zero;           // W_0(0)=0
+                return new Complex32(float.NaN, float.NaN);  // other branches not defined at 0
+            }
+
+            // Initial guess:
+            // w0 ≈ L - Log(L), where L = Log(z) + i*2πk (multi-valued log).
+            Complex32 I2Pi = new Complex32(0f, 2f * Maths.Pi);
+            Complex32 L = Maths.Log(z) + k * I2Pi;
+            Complex32 w = (Maths.Abs(L) < 1e-3f) ? Maths.Log(z) : (L - Maths.Log(L));
+
+            float tol = 1e-8f;
+            int maxIter = 64;
+
+            // Halley's iteration for f(w)=w e^w - z
+            for (int i = 0; i < maxIter; i++)
+            {
+                Complex32 ew = Maths.Exp(w);
+                Complex32 f = w * ew - z;
+                Complex32 wp1 = w + Complex32.One;
+
+                // If denominator near zero (w ≈ -1), fall back to Newton
+                Complex32 denom = ew * wp1 - (w + 2f) * f / (2f * wp1);  // Halley denominator
+                if (Maths.Abs(denom) == 0f)
+                    denom = ew * wp1; // Newton fallback
+
+                Complex32 wNext = w - f / denom;
+                if (Maths.Abs(wNext - w) <= tol * (1f + Maths.Abs(wNext)))
+                    return wNext;
+                w = wNext;
+            }
+            return w; // last iterate (should be within tol in normal cases)
+        }
+        /// <summary>
+        /// Returns the value of the square super-root.
+        /// </summary>
+        /// <param name="x">Argument [1,+inf)</param>
+        /// <param name="k">Branch</param>
+        /// <returns>Value</returns>
+        public static float Ssqrt(float x, int k = 0)
+        {
+            // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
+            // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
+            float log = (float)Math.Log(x);
+            return log / LambertW(log, k);
+        }
+        /// <summary>
+        /// Returns the value of the square super-root.
+        /// </summary>
+        /// <param name="z">Argument</param>
+        /// <param name="k">Branch</param>
+        /// <returns>Value</returns>
+        public static Complex32 Ssqrt(Complex32 z, int k = 0)
+        {
+            // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
+            // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
+
+            // z = 1 → Log(z)=0 → W_0(0)=0 → y=exp(0)=1 on principal branch
+            if (z.Real == 0f && z.Imag == 0f)
+                return Complex32.Zero; // y^y = 0 has solution y=0 (principal choice)
+
+            Complex32 Lz = Maths.Log(z);  // principal log
+            if (Lz.Real == 0f && Lz.Imag == 0f && k == 0)
+                return Complex32.One;
+
+            Complex32 W = LambertW(Lz, k);
+            return Maths.Exp(W);
+        }
+        #endregion
+
 
 
 
@@ -2004,6 +2150,32 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Dawson function
+        /// <summary>
+        /// Returns the value of the D- / D + Dawson function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="positive">D- или D+</param>
+        /// <returns>Value</returns>
+        public static float Dawson(float x, bool positive)
+        {
+            if (positive)
+            {
+                // D+ function:
+                float p = Special.sqrtPI / 2.0f;
+                float v = Maths.Exp(-x * x);
+                float erfi = Special.Erfi(x);
+                return p * v * erfi;
+            }
+            // D- function:
+            float y = x * x;
+            float g = sqrtPI / 2.0f;
+            float e = Special.Erf(x);
+            float d = (float)Math.Exp(y);
+            return g * d * e;
+        }
+        #endregion
+
         #region Q-function
         /// <summary>
         /// Returns the value of a Q function.
@@ -2856,165 +3028,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Fibonacci & Lucas numbers
-        /// <summary>
-        /// Returns the value of the Fibonacci number.
-        /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <returns>Integer number</returns>
-        public static int Fibonacci(int n)
-        {
-            float r = 2.2360679774997896964f;
-            float phi = (1.0f + r) / 2.0f;
-            float psi = (1.0f - r) / 2.0f;
-            float num = (float)Math.Pow(phi, n) - (float)Math.Pow(psi, n);
-            return (int)(num / r);
-        }
-        /// <summary>
-        /// Returns the value of the Luca number.
-        /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <returns>Integer number</returns>
-        public static int Lucas(int n)
-        {
-            float r = 2.2360679774997896964f;
-            float phi = (1.0f + r) / 2.0f;
-            float psi = (1.0f - r) / 2.0f;
-            float num = (float)Math.Pow(phi, n) + (float)Math.Pow(psi, n);
-            return (int)(num);
-        }
-        #endregion
-
-        #region Bernoulli function
-        /// <summary>
-        /// Returns the Bernoulli number.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <returns>Value</returns>
-        public static float Bernoulli(int n)
-        {
-            // special cases:
-            if (n < 0)
-                return float.NaN;
-            else if (n == 0)
-                return 1;
-            else if (n == 1)
-                return -0.5f;
-
-            // for even number:
-            else if (Maths.Mod(n, 2) == 0)
-            {
-                // get it from memory
-                if (n <= 258)
-                {
-                    return (float)Special.A027641[n / 2 - 1];
-                }
-                return float.NaN;
-            }
-            // for odd number:
-            return 0;
-        }
-        /// <summary>
-        /// Returns the value of the Bernoulli polynomial.
-        /// </summary>
-        /// <param name="n">Order</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float Bernoulli(int n, float x)
-        {
-            // properties:
-            float p = 1, s = 0;
-
-            // series:
-            for (int k = 0; k <= n; k++)
-            {
-                s += Special.Binomial(n, k) * Special.Bernoulli(n - k) * p; p *= x;
-            }
-
-            // result:
-            return s;
-        }
-        #endregion
-
-        #region Euler function
-        /// <summary>
-        /// Returns the Euler number.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <returns>Value</returns>
-        public static float Euler(int n)
-        {
-            // special cases:
-            if (n < 0)
-                return float.NaN;
-            else if (n == 0)
-                return 1;
-
-            // for even number:
-            else if (Maths.Mod(n, 2) == 0)
-            {
-                // get it from memory
-                if (n <= 186)
-                {
-                    return (float)Special.A122045[n / 2 - 1];
-                }
-                return float.NaN;
-            }
-            // for odd number:
-            return 0;
-        }
-        /// <summary>
-        /// Returns the value of the Euler polynomial.
-        /// </summary>
-        /// <param name="n">Order</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float Euler(int n, float x)
-        {
-            // properties:
-            float p = 1, s = 0;
-            float v = x - 0.5f;
-            float u = (float)Math.Pow(v, n);
-
-            // series:
-            for (int k = 0; k <= n; k++)
-            {
-                s += Special.Binomial(n, k) * Special.Euler(k) / p * u; p *= 2; u /= v;
-            }
-
-            // result:
-            return s;
-        }
-        #endregion
-
-        #region Harmonic number
-        /// <summary>
-        /// Returns the harmonic number.
-        /// </summary>
-        /// <param name="n">Argument</param>
-        /// <returns>Value</returns>
-        public static float Harm(int n)
-        {
-            return Special.DiGamma(n) + 1.0f / n + Maths.Gamma;
-        }
-        /// <summary>
-        /// Returns the harmonic number.
-        /// </summary>
-        /// <param name="n">Order</param>
-        /// <param name="m">Argument</param>
-        /// <returns>Value</returns>
-        public static float Harm(int n, float m)
-        {
-            float sum = 0;
-            for (int i = 0; i < n; i++)
-            {
-                sum += (float)Math.Pow(i + 1, -m);
-            }
-
-            return sum;
-        }
-        #endregion
-
         #region Chebyshev polynomial
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the first kind.
@@ -3145,32 +3158,6 @@ namespace UMapx.Core
             // Laguerre polynomials recurrence relation for any k ≥ 1:
             float psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
             return psi / n;
-        }
-        #endregion
-
-        #region Dawson function
-        /// <summary>
-        /// Returns the value of the D- / D + Dawson function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="positive">D- или D+</param>
-        /// <returns>Value</returns>
-        public static float Dawson(float x, bool positive)
-        {
-            if (positive)
-            {
-                // D+ function:
-                float p = Special.sqrtPI / 2.0f;
-                float v = Maths.Exp(-x * x);
-                float erfi = Special.Erfi(x);
-                return p * v * erfi;
-            }
-            // D- function:
-            float y = x * x;
-            float g = sqrtPI / 2.0f;
-            float e = Special.Erf(x);
-            float d = (float)Math.Exp(y);
-            return g * d * e;
         }
         #endregion
 
@@ -3372,46 +3359,163 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Lambert W-function
+
+        #region Fibonacci & Lucas numbers
         /// <summary>
-        /// Returns the value of the Lambert W-function.
+        /// Returns the value of the Fibonacci number.
         /// </summary>
-        /// <param name="x">Argument [-1/e,+inf)</param>
-        /// <param name="branch">Function branch</param>
-        /// <returns>Value</returns>
-        public static float LambertW(float x, bool branch = true)
+        /// <param name="n">Integer number</param>
+        /// <returns>Integer number</returns>
+        public static int Fibonacci(int n)
         {
-            // *****************************************************************
-            // Halley's method for calculating Lambert W-function.
-            // *****************************************************************
-            // Halley's method is a method for finding a zero of a real-valued 
-            // function with a continuous and easily computed second derivative.
-
-            float eps = 1e-8f, e, f;
-            float w = branch ? 1 : -2;
-            float v = float.PositiveInfinity * w;
-
-            while (Math.Abs(w - v) / Math.Abs(w) > eps)
-            {
-                v = w;
-                e = (float)Math.Exp(w);
-                f = w * e - x;  // Iterate to make this quantity zero
-                w = w - f / (e * (w + 1) - (w + 2) * f / (2 * w + 2));
-            }
-            return w;
+            float r = 2.2360679774997896964f;
+            float phi = (1.0f + r) / 2.0f;
+            float psi = (1.0f - r) / 2.0f;
+            float num = (float)Math.Pow(phi, n) - (float)Math.Pow(psi, n);
+            return (int)(num / r);
         }
         /// <summary>
-        /// Returns the value of the square super-root.
+        /// Returns the value of the Luca number.
         /// </summary>
-        /// <param name="x">Argument [1,+inf)</param>
-        /// <param name="branch">Function branch</param>
-        /// <returns>Value</returns>
-        public static float Ssqrt(float x, bool branch = true)
+        /// <param name="n">Integer number</param>
+        /// <returns>Integer number</returns>
+        public static int Lucas(int n)
         {
-            // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
-            // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
-            float log = (float)Math.Log(x);
-            return log / LambertW(log, branch);
+            float r = 2.2360679774997896964f;
+            float phi = (1.0f + r) / 2.0f;
+            float psi = (1.0f - r) / 2.0f;
+            float num = (float)Math.Pow(phi, n) + (float)Math.Pow(psi, n);
+            return (int)(num);
+        }
+        #endregion
+
+        #region Harmonic number
+        /// <summary>
+        /// Returns the harmonic number.
+        /// </summary>
+        /// <param name="n">Argument</param>
+        /// <returns>Value</returns>
+        public static float Harm(int n)
+        {
+            return Special.DiGamma(n) + 1.0f / n + Maths.Gamma;
+        }
+        /// <summary>
+        /// Returns the harmonic number.
+        /// </summary>
+        /// <param name="n">Order</param>
+        /// <param name="m">Argument</param>
+        /// <returns>Value</returns>
+        public static float Harm(int n, float m)
+        {
+            float sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum += (float)Math.Pow(i + 1, -m);
+            }
+
+            return sum;
+        }
+        #endregion
+
+        #region Euler function
+        /// <summary>
+        /// Returns the Euler number.
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <returns>Value</returns>
+        public static float Euler(int n)
+        {
+            // special cases:
+            if (n < 0)
+                return float.NaN;
+            else if (n == 0)
+                return 1;
+
+            // for even number:
+            else if (Maths.Mod(n, 2) == 0)
+            {
+                // get it from memory
+                if (n <= 186)
+                {
+                    return (float)Special.A122045[n / 2 - 1];
+                }
+                return float.NaN;
+            }
+            // for odd number:
+            return 0;
+        }
+        /// <summary>
+        /// Returns the value of the Euler polynomial.
+        /// </summary>
+        /// <param name="n">Order</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float Euler(int n, float x)
+        {
+            // properties:
+            float p = 1, s = 0;
+            float v = x - 0.5f;
+            float u = (float)Math.Pow(v, n);
+
+            // series:
+            for (int k = 0; k <= n; k++)
+            {
+                s += Special.Binomial(n, k) * Special.Euler(k) / p * u; p *= 2; u /= v;
+            }
+
+            // result:
+            return s;
+        }
+        #endregion
+
+        #region Bernoulli function
+        /// <summary>
+        /// Returns the Bernoulli number.
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <returns>Value</returns>
+        public static float Bernoulli(int n)
+        {
+            // special cases:
+            if (n < 0)
+                return float.NaN;
+            else if (n == 0)
+                return 1;
+            else if (n == 1)
+                return -0.5f;
+
+            // for even number:
+            else if (Maths.Mod(n, 2) == 0)
+            {
+                // get it from memory
+                if (n <= 258)
+                {
+                    return (float)Special.A027641[n / 2 - 1];
+                }
+                return float.NaN;
+            }
+            // for odd number:
+            return 0;
+        }
+        /// <summary>
+        /// Returns the value of the Bernoulli polynomial.
+        /// </summary>
+        /// <param name="n">Order</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float Bernoulli(int n, float x)
+        {
+            // properties:
+            float p = 1, s = 0;
+
+            // series:
+            for (int k = 0; k <= n; k++)
+            {
+                s += Special.Binomial(n, k) * Special.Bernoulli(n - k) * p; p *= x;
+            }
+
+            // result:
+            return s;
         }
         #endregion
 

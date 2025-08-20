@@ -11982,6 +11982,14 @@
             <param name="b">The upper limit of the normalization</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
+            <summary>
+            Returns the value of the D- / D + Dawson function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="positive">D- или D+</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
             <summary>
             Returns the value of a Q function.
@@ -12181,65 +12189,6 @@
             <param name="k">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Fibonacci(System.Int32)">
-            <summary>
-            Returns the value of the Fibonacci number.
-            </summary>
-            <param name="n">Integer number</param>
-            <returns>Integer number</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Lucas(System.Int32)">
-            <summary>
-            Returns the value of the Luca number.
-            </summary>
-            <param name="n">Integer number</param>
-            <returns>Integer number</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Bernoulli(System.Int32)">
-            <summary>
-            Returns the Bernoulli number.
-            </summary>
-            <param name="n">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Bernoulli(System.Int32,System.Single)">
-            <summary>
-            Returns the value of the Bernoulli polynomial.
-            </summary>
-            <param name="n">Order</param>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Euler(System.Int32)">
-            <summary>
-            Returns the Euler number.
-            </summary>
-            <param name="n">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Euler(System.Int32,System.Single)">
-            <summary>
-            Returns the value of the Euler polynomial.
-            </summary>
-            <param name="n">Order</param>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Harm(System.Int32)">
-            <summary>
-            Returns the harmonic number.
-            </summary>
-            <param name="n">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Harm(System.Int32,System.Single)">
-            <summary>
-            Returns the harmonic number.
-            </summary>
-            <param name="n">Order</param>
-            <param name="m">Argument</param>
-            <returns>Value</returns>
-        </member>
         <member name="M:UMapx.Core.Special.ChebyshevT(System.Single,System.Int32)">
             <summary>
             Returns the value of the Chebyshev polynomial of the first kind.
@@ -12299,14 +12248,6 @@
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
-            <summary>
-            Returns the value of the D- / D + Dawson function.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="positive">D- или D+</param>
-            <returns>Value</returns>
-        </member>
         <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Returns the value of a hypergeometric function.
@@ -12353,20 +12294,95 @@
             <param name="x">Argument</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.LambertW(System.Single,System.Boolean)">
+        <member name="M:UMapx.Core.Special.LambertW(System.Single,System.Int32)">
             <summary>
             Returns the value of the Lambert W-function.
             </summary>
             <param name="x">Argument [-1/e,+inf)</param>
-            <param name="branch">Function branch</param>
+            <param name="k">Branch</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Ssqrt(System.Single,System.Boolean)">
+        <member name="M:UMapx.Core.Special.LambertW(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Lambert W-function.
+            </summary>
+            <param name="z">Argument</param>
+            <param name="k">Branch</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ssqrt(System.Single,System.Int32)">
             <summary>
             Returns the value of the square super-root.
             </summary>
             <param name="x">Argument [1,+inf)</param>
-            <param name="branch">Function branch</param>
+            <param name="k">Branch</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ssqrt(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the square super-root.
+            </summary>
+            <param name="z">Argument</param>
+            <param name="k">Branch</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Fibonacci(System.Int32)">
+            <summary>
+            Returns the value of the Fibonacci number.
+            </summary>
+            <param name="n">Integer number</param>
+            <returns>Integer number</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Lucas(System.Int32)">
+            <summary>
+            Returns the value of the Luca number.
+            </summary>
+            <param name="n">Integer number</param>
+            <returns>Integer number</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Harm(System.Int32)">
+            <summary>
+            Returns the harmonic number.
+            </summary>
+            <param name="n">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Harm(System.Int32,System.Single)">
+            <summary>
+            Returns the harmonic number.
+            </summary>
+            <param name="n">Order</param>
+            <param name="m">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Euler(System.Int32)">
+            <summary>
+            Returns the Euler number.
+            </summary>
+            <param name="n">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Euler(System.Int32,System.Single)">
+            <summary>
+            Returns the value of the Euler polynomial.
+            </summary>
+            <param name="n">Order</param>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Bernoulli(System.Int32)">
+            <summary>
+            Returns the Bernoulli number.
+            </summary>
+            <param name="n">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Bernoulli(System.Int32,System.Single)">
+            <summary>
+            Returns the value of the Bernoulli polynomial.
+            </summary>
+            <param name="n">Order</param>
+            <param name="x">Number</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Minkowski(System.Single)">
