@@ -29307,7 +29307,7 @@
             <summary>
             
             </summary>
-            <param name="num"></param>
+            <param name="v"></param>
             <returns></returns>
         </member>
         <member name="M:UMapx.Visualization.Figure.Dispose">

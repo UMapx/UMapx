@@ -122,7 +122,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets the scale factor for the canvas [0.5, 0.8]. 
         /// </summary>
-        public float Scaling { get; set; } = 0.7f;
+        public float Scaling { get; set; } = 0.63f;
         /// <summary>
         /// Gets or sets shapes.
         /// </summary>
@@ -913,9 +913,23 @@ namespace UMapx.Visualization
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="num"></param>
+        /// <param name="v"></param>
         /// <returns></returns>
-        private string GetNumString(float num) => num.ToString("0.##");
+        private string GetNumString(float v)
+        {
+            if (Points.IsSingularPoint(v)) 
+                return string.Empty;
+
+            if (Maths.Abs(v) < 1e-4f) 
+                return "0";
+
+            float a = Maths.Abs(v);
+
+            if (a >= 1e4f || (a > 0f && a < 1e-4f))
+                return v.ToString("0.##E+0");
+
+            return v.ToString("0.##");
+        }
         #endregion
 
         #endregion
