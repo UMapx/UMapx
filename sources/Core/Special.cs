@@ -245,6 +245,112 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Dirac delta-function
+        /// <summary>
+        /// Returns the value of the Dirac delta function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Coefficient</param>
+        /// <returns>Value</returns>
+        public static float Dirac(float x, float a)
+        {
+            float s = (float)Math.Sqrt(Math.PI);
+            float b = 1.0f / Math.Abs(a) / s;
+            float c = (float)Math.Pow(x / a, 2);
+            float e = (float)Math.Exp(-c);
+            return b * e;
+        }
+        /// <summary>
+        /// Returns the value of the Dirac delta function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Coefficient</param>
+        /// <returns>Value</returns>
+        public static Complex32 Dirac(Complex32 x, Complex32 a)
+        {
+            Complex32 s = Maths.Sqrt(Maths.Pi);
+            Complex32 b = 1.0f / Maths.Abs(a) / s;
+            Complex32 c = Maths.Pow(x / a, 2);
+            Complex32 e = Maths.Exp(-c);
+            return b * e;
+        }
+        #endregion
+
+        #region Logistic function
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <param name="v">Affect</param>
+        /// <param name="q">Central moment</param>
+        /// <param name="c">Offset</param>
+        /// <returns>Value</returns>
+        public static float Logistic(float x, float a, float k, float b, float v, float q, float c)
+        {
+            return a + (k - a) / Maths.Pow(c + q * Maths.Exp(-b * x), 1.0f / v);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <param name="v">Affect</param>
+        /// <param name="q">Central moment</param>
+        /// <param name="c">Offset</param>
+        /// <returns>Value</returns>
+        public static Complex32 Logistic(Complex32 x, Complex32 a, Complex32 k, Complex32 b, Complex32 v, Complex32 q, Complex32 c)
+        {
+            return a + (k - a) / Maths.Pow(c + q * Maths.Exp(-b * x), 1.0f / v);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <returns>Value</returns>
+        public static float Logistic(float x, float a, float k, float b)
+        {
+            return Special.Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <returns>Value</returns>
+        public static Complex32 Logistic(Complex32 x, Complex32 a, Complex32 k, Complex32 b)
+        {
+            return Special.Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static float Logistic(float x)
+        {
+            return Special.Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 Logistic(Complex32 x)
+        {
+            return Special.Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+        }
+        #endregion
+
 
         #region Integral functions
         /// <summary>
@@ -2955,63 +3061,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Logistic function
-        /// <summary>
-        /// Returns the value of a logistic function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Lower asymptote</param>
-        /// <param name="k">Upper asymptote</param>
-        /// <param name="b">Growth rate</param>
-        /// <param name="v">Affect</param>
-        /// <param name="q">Central moment</param>
-        /// <param name="c">Offset</param>
-        /// <returns>Value</returns>
-        public static float Logistic(float x, float a, float k, float b, float v, float q, float c)
-        {
-            return a + (k - a) / (float)Math.Pow(c + q * (float)Math.Exp(-b * x), 1.0 / v);
-        }
-        /// <summary>
-        /// Returns the value of a logistic function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Lower asymptote</param>
-        /// <param name="k">Upper asymptote</param>
-        /// <param name="b">Growth rate</param>
-        /// <returns>Value</returns>
-        public static float Logistic(float x, float a, float k, float b)
-        {
-            return Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
-        }
-        /// <summary>
-        /// Returns the value of a logistic function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <returns>Value</returns>
-        public static float Logistic(float x)
-        {
-            return Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
-        }
-        #endregion
-
-        #region Dirac delta-function
-        /// <summary>
-        /// Returns the value of the Dirac delta function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Coefficient</param>
-        /// <returns>Value</returns>
-        public static float Dirac(float x, float a)
-        {
-            float s = (float)Math.Sqrt(Math.PI);
-            float b = 1.0f / Math.Abs(a) / s;
-            float c = (float)Math.Pow(x / a, 2);
-            float e = (float)Math.Exp(-c);
-            return b * e;
-        }
-        #endregion
-
-        #region Dawson functions
+        #region Dawson function
         /// <summary>
         /// Returns the value of the D- / D + Dawson function.
         /// </summary>
