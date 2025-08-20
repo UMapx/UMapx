@@ -21,7 +21,7 @@ namespace UMapx.Visualization
         private Bitmap _imagePane;
         #endregion
 
-        #region Control voids and overrides
+        #region Figure constructor
         /// <summary>
         /// Initializes the figure.
         /// </summary> 
