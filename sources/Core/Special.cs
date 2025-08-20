@@ -103,7 +103,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Gd(float x)
         {
-            return 2 * Maths.Atan(Maths.Exp(x)) - 1.57079632679f;
+            return Maths.Asin(Maths.Tanh(x));
         }
         /// <summary>
         /// Returns the value of the Guderman function.
@@ -112,7 +112,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Gd(Complex32 x)
         {
-            return 2 * Maths.Atan(Maths.Exp(x)) - 1.57079632679f;
+            return Maths.Asin(Maths.Tanh(x));
         }
         /// <summary>
         /// Returns the value of the function Cas(x).

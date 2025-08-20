@@ -6037,168 +6037,168 @@
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Sh(System.Single)">
+        <member name="M:UMapx.Core.Maths.Sinh(System.Single)">
             <summary>
             Returns the hyperbolic sine of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Cosh(System.Single)">
             <summary>
             Returns the hyperbolic cosine of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Th(System.Single)">
+        <member name="M:UMapx.Core.Maths.Tanh(System.Single)">
             <summary>
             Returns the hyperbolic tangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Cth(System.Single)">
+        <member name="M:UMapx.Core.Maths.Ctanh(System.Single)">
             <summary>
             Returns the hyperbolic cotangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Sch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Sech(System.Single)">
             <summary>
             Returns the hyperbolic secant of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Csch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Cosch(System.Single)">
             <summary>
             Returns the hyperbolic cosecant of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ash(System.Single)">
+        <member name="M:UMapx.Core.Maths.Asinh(System.Single)">
             <summary>
             Returns the hyperbolic arcsine of a number.
             </summary>
             <param name="a">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ach(System.Single)">
+        <member name="M:UMapx.Core.Maths.Acosh(System.Single)">
             <summary>
             Returns the hyperbolic arccosine of a number.
             </summary>
             <param name="a">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ath(System.Single)">
+        <member name="M:UMapx.Core.Maths.Atanh(System.Single)">
             <summary>
             Returns the hyperbolic arctangent of a number.
             </summary>
             <param name="a">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Acth(System.Single)">
+        <member name="M:UMapx.Core.Maths.Actanh(System.Single)">
             <summary>
             Returns the hyperbolic arccotangent of a number.
             </summary>
             <param name="a">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Asch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Asech(System.Single)">
             <summary>
             Returns the hyperbolic arcsecance of a number.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Acsch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Acosch(System.Single)">
             <summary>
             Returns the hyperbolic arccosecant of a number.
             </summary>
             <param name="a">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Sh(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Sinh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic sine of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Cosh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic cosine of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Th(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Tanh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic tangent of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Cth(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Ctanh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic cotangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Sch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Sech(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic secant of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Csch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Cosch(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic cosecant of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ash(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Asinh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arcsine of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ach(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Acosh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arccosine of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ath(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Atanh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arctangent of a number.
             </summary>
             <param name="a">Number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Acth(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Actanh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arccotangent of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Asch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Asech(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arcsecance of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Acsch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Acosch(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arccosecant of a number.
             </summary>
