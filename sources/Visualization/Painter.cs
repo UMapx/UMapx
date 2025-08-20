@@ -162,7 +162,7 @@ namespace UMapx.Visualization
 
                     if (!string.IsNullOrEmpty(title))
                     {
-                        var faceLabel = GetLabel(graphics, TextFont, rectangle, depth, title);
+                        var faceLabel = GetLabel(graphics, TextFont, rectangle, title);
                         var w = graphics.MeasureString(faceLabel, TextFont);
                         var t = new RectangleF(
                             rectangle.X - depth / 2,
@@ -231,7 +231,7 @@ namespace UMapx.Visualization
                     }
                     else
                     {
-                        var label = GetLabel(graphics, TextFont, rectangle, depth, labels[i]);
+                        var label = GetLabel(graphics, TextFont, rectangle, labels[i]);
 
                         if (!string.IsNullOrEmpty(label))
                         {
@@ -268,10 +268,9 @@ namespace UMapx.Visualization
         /// <param name="g">Graphics</param>
         /// <param name="font">Font</param>
         /// <param name="rectangle">Rectangle</param>
-        /// <param name="depth">Depth</param>
         /// <param name="unit">Unit string</param>
         /// <returns>String</returns>
-        private static string GetLabel(Graphics g, Font font, Rectangle rectangle, float depth, params string[] unit)
+        private static string GetLabel(Graphics g, Font font, Rectangle rectangle, params string[] unit)
         {
             var label = string.Empty;
             var count = unit.Length;

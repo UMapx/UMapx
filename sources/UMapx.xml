@@ -29537,14 +29537,13 @@
             <param name="rectangles">Rectangles</param>
             <param name="labels">Labels</param>
         </member>
-        <member name="M:UMapx.Visualization.Painter.GetLabel(System.Drawing.Graphics,System.Drawing.Font,System.Drawing.Rectangle,System.Single,System.String[])">
+        <member name="M:UMapx.Visualization.Painter.GetLabel(System.Drawing.Graphics,System.Drawing.Font,System.Drawing.Rectangle,System.String[])">
             <summary>
             Returns label string.
             </summary>
             <param name="g">Graphics</param>
             <param name="font">Font</param>
             <param name="rectangle">Rectangle</param>
-            <param name="depth">Depth</param>
             <param name="unit">Unit string</param>
             <returns>String</returns>
         </member>
