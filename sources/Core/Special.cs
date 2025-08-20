@@ -26,6 +26,114 @@ namespace UMapx.Core
         private const float sqrtPI = 1.7724538509055160272981674833411f;
         #endregion
 
+        #region Sinc function
+        /// <summary>
+        /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float Sinc(float x)
+        {
+            return Special.Sinc(x, Maths.Pi);
+        }
+        /// <summary>
+        /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Sinc(Complex32 x)
+        {
+            return Special.Sinc(x, Maths.Pi);
+        }
+        /// <summary>
+        /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Parameter</param>
+        /// <returns>Value</returns>
+        public static float Sinc(float x, float a)
+        {
+            var ax = a * x;
+
+            if (ax == 0)
+                return 1;
+
+            return (float)Math.Sin(ax) / ax;
+        }
+        /// <summary>
+        /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Parameter</param>
+        /// <returns>Value</returns>
+        public static Complex32 Sinc(Complex32 x, Complex32 a)
+        {
+            var ax = a * x;
+
+            if (ax == Complex32.Zero)
+                return 1;
+
+            return Maths.Sin(ax) / ax;
+        }
+        #endregion
+
+        #region Guderman & Hartley functions
+        /// <summary>
+        /// Returns the value of the inverse Guderman function.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float Agd(float x)
+        {
+            return 0.5f * Maths.Log((1.0f + Maths.Sin(x)) / (1.0f - Maths.Sin(x)));
+        }
+        /// <summary>
+        /// Returns the value of the inverse Guderman function.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Agd(Complex32 x)
+        {
+            return 0.5f * Maths.Log((1.0f + Maths.Sin(x)) / (1.0f - Maths.Sin(x)));
+        }
+        /// <summary>
+        /// Returns the value of the Guderman function.
+        /// </summary>
+        /// <param name="x">Angle in radians</param>
+        /// <returns>Value</returns>
+        public static float Gd(float x)
+        {
+            return 2 * Maths.Atg(Maths.Exp(x)) - 1.57079632679f;
+        }
+        /// <summary>
+        /// Returns the value of the Guderman function.
+        /// </summary>
+        /// <param name="x">Angle in radians</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gd(Complex32 x)
+        {
+            return 2 * Maths.Atg(Maths.Exp(x)) - 1.57079632679f;
+        }
+        /// <summary>
+        /// Returns the value of the function Cas(x).
+        /// </summary>
+        /// <param name="theta">Theta</param>
+        /// <returns>Value</returns>
+        public static float Cas(float theta)
+        {
+            return 1.414f * Maths.Sin(theta + 0.78539f);
+        }
+        /// <summary>
+        /// Returns the value of the function Cas(x).
+        /// </summary>
+        /// <param name="theta">Theta</param>
+        /// <returns>Value</returns>
+        public static Complex32 Cas(Complex32 theta)
+        {
+            return 1.414f * Maths.Sin(theta + 0.78539f);
+        }
+        #endregion
+
         #region Integral functions
         /// <summary>
         /// Returns the value of the integral cosine.
@@ -391,6 +499,8 @@ namespace UMapx.Core
             return s;
         }
         #endregion
+
+
 
         #region Struve function
         /// <summary>
@@ -1464,15 +1574,6 @@ namespace UMapx.Core
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
-        public static float Erf(float x)
-        {
-            return Erf(x, false);
-        }
-        /// <summary>
-        /// Returns the value of the Laplace integral (error function).
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
         /// <param name="inverse">Reverse function or not</param>
         /// <returns>Value</returns>
         public static float Erf(float x, bool inverse)
@@ -1559,6 +1660,15 @@ namespace UMapx.Core
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static float Erf(float x)
+        {
+            return Erf(x, false);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
         /// <param name="a">The lower boundary of the normalization</param>
         /// <param name="b">The upper limit of the normalization</param>
         /// <returns>Value</returns>
@@ -1566,17 +1676,6 @@ namespace UMapx.Core
         {
             return Erf((x - a) / b);
         }
-        /// <summary>
-        /// Returns the value of the Laplace integral (error function).
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="range">A pair of fractional numbers</param>
-        /// <returns>Value</returns>
-        public static float Erf(float x, RangeFloat range)
-        {
-            return Erf(x, range.Min, range.Max);
-        }
-
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
@@ -1596,16 +1695,6 @@ namespace UMapx.Core
         public static float Erfc(float x, float a, float b)
         {
             return 1.0f - Erf(x, a, b);
-        }
-        /// <summary>
-        /// Returns the value of the Laplace integral (an additional error function).
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="range">A pair of fractional numbers</param>
-        /// <returns>Value</returns>
-        public static float Erfc(float x, RangeFloat range)
-        {
-            return 1.0f - Erf(x, range.Min, range.Max);
         }
         #endregion
 
@@ -2377,63 +2466,6 @@ namespace UMapx.Core
             0.38862217010742057883E-02f,  0.16793031084546090448E-02f
         };
         #endregion
-        #endregion
-
-        #region Guderman & Hartley functions
-        /// <summary>
-        /// Returns the value of the inverse Guderman function.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float Agd(float x)
-        {
-            return 0.5f * (float)Math.Log((1.0 + Math.Sin(x)) / (1.0 - Math.Sin(x)));
-        }
-        /// <summary>
-        /// Returns the value of the Guderman function.
-        /// </summary>
-        /// <param name="x">Angle in radians</param>
-        /// <returns>Value</returns>
-        public static float Gd(float x)
-        {
-            return 2 * Maths.Atg(Maths.Exp(x)) - 1.57079632679f;
-        }
-        /// <summary>
-        /// Returns the value of the function Cas(x).
-        /// </summary>
-        /// <param name="theta">Theta</param>
-        /// <returns>Value</returns>
-        public static float Cas(float theta)
-        {
-            return 1.414f * (float)Math.Sin(theta + 0.78539);
-        }
-        #endregion
-
-        #region Sinc function
-        /// <summary>
-        /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float Sinc(float x)
-        {
-            return Special.Sinc(x, Maths.Pi);
-        }
-        /// <summary>
-        /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Parameter</param>
-        /// <returns>Value</returns>
-        public static float Sinc(float x, float a)
-        {
-            if (x == 0)
-            {
-                return 1;
-            }
-            float ax = a * x;
-            return (float)Math.Sin(ax) / ax;
-        }
         #endregion
 
         #region Binomial function

@@ -11393,6 +11393,36 @@
             Square PI.
             </summary>
         </member>
+        <member name="M:UMapx.Core.Special.Sinc(System.Single)">
+            <summary>
+            Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
+            </summary>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Sinc(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
+            </summary>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Sinc(System.Single,System.Single)">
+            <summary>
+            Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Sinc(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Parameter</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Ci(System.Single)">
             <summary>
             Returns the value of the integral cosine.
@@ -11669,13 +11699,6 @@
             <param name="z"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
         <member name="M:UMapx.Core.Special.Erf(System.Single,System.Boolean)">
             <summary>
             Returns the value of the Laplace integral (error function).
@@ -11691,6 +11714,13 @@
             <param name="x">The value of the upper limit of the integral</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Erf(System.Single,System.Single,System.Single)">
             <summary>
             Returns the value of the Laplace integral (error function).
@@ -11698,14 +11728,6 @@
             <param name="x">The value of the upper limit of the integral</param>
             <param name="a">The lower boundary of the normalization</param>
             <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single,UMapx.Core.RangeFloat)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="range">A pair of fractional numbers</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Erfc(System.Single)">
@@ -11722,14 +11744,6 @@
             <param name="x">The value of the upper limit of the integral</param>
             <param name="a">The lower boundary of the normalization</param>
             <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(System.Single,UMapx.Core.RangeFloat)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="range">A pair of fractional numbers</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
@@ -11904,21 +11918,6 @@
             Returns the value of the function Cas(x).
             </summary>
             <param name="theta">Theta</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Sinc(System.Single)">
-            <summary>
-            Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Sinc(System.Single,System.Single)">
-            <summary>
-            Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Parameter</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Binomial(System.Single,System.Single)">
