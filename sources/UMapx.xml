@@ -29047,11 +29047,6 @@
             Defines the figure to plotting in a Cartesian coordinate system.
             </summary>
         </member>
-        <member name="M:UMapx.Visualization.Figure.#ctor">
-            <summary>
-            Initializes the figure.
-            </summary> 
-        </member>
         <member name="M:UMapx.Visualization.Figure.#ctor(UMapx.Visualization.Style)">
             <summary>
             Initializes the figure.
@@ -29309,15 +29304,6 @@
             </summary>
             <param name="v"></param>
             <returns></returns>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.Dispose(System.Boolean)">
-            <inheritdoc/>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.Finalize">
-            <inheritdoc/>
         </member>
         <member name="T:UMapx.Visualization.GraphPane">
             <summary>

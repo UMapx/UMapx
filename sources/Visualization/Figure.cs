@@ -9,23 +9,19 @@ namespace UMapx.Visualization
     /// Defines the figure to plotting in a Cartesian coordinate system.
     /// </summary>
     [Serializable]
-    public class Figure : IDisposable
+    public class Figure
     {
         #region Private data
         private int figure_width, figure_height;
         private int canvas_width, canvas_height;
         private float xmin = -5, xmax = 5, ymin = -5, ymax = 5;
         private int xscale = 10, yscale = 10;
-        private Style _style = new Style();
+        private Style _style;
         private readonly List<GraphPane> _panes = new List<GraphPane>();
         private Bitmap _imagePane;
         #endregion
 
         #region Figure constructor
-        /// <summary>
-        /// Initializes the figure.
-        /// </summary> 
-        public Figure() { }
         /// <summary>
         /// Initializes the figure.
         /// </summary>
@@ -48,7 +44,6 @@ namespace UMapx.Visualization
             }
             set
             {
-                _style?.Dispose();
                 _style = value;
             }
         }
@@ -404,8 +399,7 @@ namespace UMapx.Visualization
         /// <param name="bitmap">Bitmap</param>
         public void Image(Bitmap bitmap)
         {
-            _imagePane?.Dispose();
-            _imagePane = (Bitmap)bitmap.Clone();
+            _imagePane = bitmap;
         }
         /// <summary>
         /// Adds a graph pane.
@@ -424,7 +418,6 @@ namespace UMapx.Visualization
         public void Clear()
         {
             _panes.Clear();
-            _imagePane?.Dispose();
         }
         #endregion
 
@@ -923,7 +916,7 @@ namespace UMapx.Visualization
             if (Points.IsSingularPoint(v))
                 return string.Empty;
 
-            if (Maths.Abs(v) < 1e-4f)
+            if (Maths.Abs(v) < 1e-8f)
                 return "0";
 
             float a = Maths.Abs(v);
@@ -934,40 +927,6 @@ namespace UMapx.Visualization
             return v.ToString("0.##");
         }
         #endregion
-
-        #endregion
-
-        #region IDisposable
-
-        private bool _disposed;
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <inheritdoc/>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    _panes.Clear();
-                    _imagePane?.Dispose();
-                    _style?.Dispose();
-                }
-                _disposed = true;
-            }
-        }
-
-        /// <inheritdoc/>
-        ~Figure()
-        {
-            Dispose(false);
-        }
 
         #endregion
     }
