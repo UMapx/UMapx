@@ -122,7 +122,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets the scale factor for the canvas [0.5, 0.8]. 
         /// </summary>
-        public float Scaling { get; set; } = 0.63f;
+        public float Scaling { get; set; } = 0.65f;
         /// <summary>
         /// Gets or sets shapes.
         /// </summary>
