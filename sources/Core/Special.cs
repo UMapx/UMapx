@@ -1857,6 +1857,644 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Bessel functions
+
+        /// <summary>
+        /// Returns the value of a Bessel function of the first kind.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Value</returns>
+        public static float J(float x, int a)
+        {
+            // special values at x=0
+            if (x == 0f) return (a == 0) ? 1f : 0f;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            // reduce to nonnegative order
+            int n = a < 0 ? -a : a;
+            float sign = (a < 0 && (n & 1) == 1) ? -1f : 1f;
+
+            // initial term: (x/2)^n / n! via recurrence
+            float halfx = 0.5f * x;
+            float term = 1f;
+            for (int k = 1; k <= n; k++)
+                term *= halfx / k;
+
+            float sum = term;
+
+            // common ratio factor for advancing m: q = -(x^2/4)
+            float q = -0.25f * x * x;
+
+            // iterate m = 0,1,2,...
+            for (int m = 0; m < maxIter; m++)
+            {
+                // term_{m+1} = term_m * q / ((m+1)(m+n+1))
+                float denom = (m + 1f) * (m + n + 1f);
+                term *= q / denom;
+                sum += term;
+
+                if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
+            }
+
+            return sign * sum;
+        }
+        /// <summary>
+        /// Returns the value of a Bessel function of the first kind.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 J(Complex32 x, int a)
+        {
+            // special values at x=0
+            if (x.Real == 0f && x.Imag == 0f)
+                return (a == 0) ? Complex32.One : Complex32.Zero;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            // reduce to nonnegative order
+            int n = a < 0 ? -a : a;
+            float sgn = (a < 0 && (n & 1) == 1) ? -1f : 1f;
+            Complex32 sign = new Complex32(sgn, 0f);
+
+            // initial term: (x/2)^n / n! via recurrence
+            Complex32 halfx = 0.5f * x;
+            Complex32 term = Complex32.One;
+            for (int k = 1; k <= n; k++)
+                term *= halfx / k;
+
+            Complex32 sum = term;
+
+            // common factor q = -(x^2/4)
+            Complex32 q = -0.25f * x * x;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                // term_{m+1} = term_m * q / ((m+1)(m+n+1))
+                float denom = (m + 1f) * (m + n + 1f);
+                term *= q / denom;
+                sum += term;
+
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return sign * sum;
+        }
+
+        /// <summary>
+        /// Returns the value of a Bessel function of the second kind.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Value</returns>
+        public static float Y(float x, int a)
+        {
+            if (x <= 0f) return float.NaN;              // Y_n(x) is real-defined only for x>0
+            if (a == 0) return Y0(x);
+            if (a == 1) return Y1(x);
+
+            int n = a < 0 ? -a : a;
+            float sgn = (a < 0 && ((n & 1) == 1)) ? -1f : 1f;
+
+            // upward recurrence from Y0,Y1
+            float Ym1 = Y0(x);            // Y_0
+            float Y0v = Y1(x);            // Y_1
+            float Yk = (n == 1) ? Y0v : 0f;
+
+            for (int k = 1; k < n; k++)
+            {
+                float Y1v = 2f * k / x * Y0v - Ym1;   // Y_{k+1}
+                Ym1 = Y0v;
+                Y0v = Y1v;
+                Yk = Y1v;
+            }
+            return sgn * Yk;
+        }
+        /// <summary>
+        /// Returns the value of a Bessel function of the second kind.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Y(Complex32 x, int a)
+        {
+            if (x.Real == 0f && x.Imag == 0f) return new Complex32(float.NaN, float.NaN); // singular at 0
+
+            if (a == 0) return Y0(x);
+            if (a == 1) return Y1(x);
+
+            int n = a < 0 ? -a : a;
+            float sgnf = (a < 0 && ((n & 1) == 1)) ? -1f : 1f;
+            Complex32 sgn = new Complex32(sgnf, 0f);
+
+            // upward recurrence from Y0,Y1
+            Complex32 Ym1 = Y0(x);        // Y_0
+            Complex32 Y0v = Y1(x);        // Y_1
+            Complex32 Yk = (n == 1) ? Y0v : Complex32.Zero;
+
+            for (int k = 1; k < n; k++)
+            {
+                Complex32 Y1v = 2f * k / x * Y0v - Ym1; // Y_{k+1}
+                Ym1 = Y0v;
+                Y0v = Y1v;
+                Yk = Y1v;
+            }
+            return sgn * Yk;
+        }
+
+        /// <summary>
+        /// Returns the value of the modified Bessel function of the first kind.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Value</returns>
+        public static float I(float x, int a)
+        {
+            // Special values at x = 0
+            if (x == 0f) return (a == 0) ? 1f : 0f;
+
+            // Reduce to nonnegative order (I_{-n} = I_n)
+            int n = a < 0 ? -a : a;
+
+            // Initial term: (x/2)^n / n! via recurrence
+            float halfx = 0.5f * x;
+            float term = 1f;
+            for (int k = 1; k <= n; k++)
+                term *= halfx / k;
+
+            float sum = term;
+
+            // Common ratio for m→m+1: q = (x^2/4) / ((m+1)(m+n+1))
+            float qBase = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                float denom = (m + 1f) * (m + n + 1f);
+                term *= qBase / denom;
+                sum += term;
+                if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
+            }
+
+            return sum;
+        }
+        /// <summary>
+        /// Returns the value of the modified Bessel function of the first kind.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 I(Complex32 x, int a)
+        {
+            // Special values at x = 0
+            if (x.Real == 0f && x.Imag == 0f)
+                return (a == 0) ? Complex32.One : Complex32.Zero;
+
+            // Reduce to nonnegative order (I_{-n} = I_n)
+            int n = a < 0 ? -a : a;
+
+            // Initial term: (x/2)^n / n! via recurrence
+            Complex32 halfx = 0.5f * x;
+            Complex32 term = Complex32.One;
+            for (int k = 1; k <= n; k++)
+                term *= halfx / k;
+
+            Complex32 sum = term;
+
+            // Common ratio for m→m+1: q = (x^2/4) / ((m+1)(m+n+1))
+            Complex32 qBase = 0.25f * x * x;
+            float eps = 1e-8f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                float denom = (m + 1f) * (m + n + 1f);
+                term *= qBase / denom;
+                sum += term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return sum;
+        }
+
+        /// <summary>
+        /// Returns the value of the modified Bessel function of the second kind.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Value</returns>
+        public static float K(float x, int a)
+        {
+            if (x <= 0f) return float.NaN;          // singular on non-positive real axis
+            int n = a < 0 ? -a : a;                 // K_{-n} = K_n
+
+            if (n == 0) return K0(x);
+            if (n == 1) return K1(x);
+
+            float km1 = K0(x);       // K_0
+            float k0 = K1(x);       // K_1
+            float kn = k0;
+
+            for (int k = 1; k < n; k++)
+            {
+                float k1 = km1 + 2f * k / x * k0; // K_{k+1}
+                km1 = k0;
+                k0 = k1;
+                kn = k1;
+            }
+            return kn;
+        }
+        /// <summary>
+        /// Returns the value of the modified Bessel function of the second kind.
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <param name="a">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 K(Complex32 x, int a)
+        {
+            if (x.Real == 0f && x.Imag == 0f) return new Complex32(float.NaN, float.NaN); // singular at 0
+            int n = a < 0 ? -a : a;                 // K_{-n} = K_n
+
+            if (n == 0) return K0(x);
+            if (n == 1) return K1(x);
+
+            Complex32 km1 = K0(x);   // K_0
+            Complex32 k0 = K1(x);   // K_1
+            Complex32 kn = k0;
+
+            for (int k = 1; k < n; k++)
+            {
+                Complex32 k1 = km1 + 2f * k / x * k0; // K_{k+1}
+                km1 = k0;
+                k0 = k1;
+                kn = k1;
+            }
+            return kn;
+        }
+
+        #region Private methods (helpers)
+
+        // ===================== Helpers: Y0, Y1 via canonical series =====================
+
+        private static float Y0(float x)
+        {
+            float j0 = J0(x);
+            float logt = (float)Math.Log(x * 0.5f) + Maths.Gamma;   // Euler–Mascheroni in Maths.Gamma
+            float sum = 0f;
+
+            float x2o4 = 0.25f * x * x;
+            float term = -x2o4;           // k=1: (-1)^1 (x/2)^2/(1!)^2
+            float H = 1f;                 // H_1
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                sum += H * term;
+                // next term: multiply by - (x^2/4) / (k+1)^2
+                float ratio = -x2o4 / ((k + 1f) * (k + 1f));
+                term *= ratio;
+                H += 1f / (k + 1f);
+                if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
+            }
+            return 2f / (float)Math.PI * (logt * j0 + sum);
+        }
+
+        private static float Y1(float x)
+        {
+            float j1 = J1(x);
+            float logt = (float)Math.Log(x * 0.5f) + Maths.Gamma;
+
+            float sum = 0f;
+            float x2o4 = 0.25f * x * x;
+
+            // k=1 base term: (-1)^1 (x/2)^3/(1!*2!) = - x^3 / 16
+            float term = -(x * x * x) * (1f / 16f);
+            float H = 1f; // H_1
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                float coeff = H - 1f / (2f * k + 1f);
+                sum += coeff * term;
+
+                // next term: multiply by - (x^2/4) / ((k+1)(k+2))
+                float ratio = -x2o4 / ((k + 1f) * (k + 2f));
+                term *= ratio;
+                H += 1f / (k + 1f);
+                if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
+            }
+
+            return 2f / (float)Math.PI * (logt * j1 - 1f / x + sum);
+        }
+
+        private static Complex32 Y0(Complex32 x)
+        {
+            Complex32 j0 = J0(x);
+            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+
+            Complex32 sum = Complex32.Zero;
+            Complex32 x2o4 = 0.25f * x * x;
+
+            Complex32 term = -x2o4;      // k=1
+            float H = 1f;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                sum += H * term;
+                Complex32 ratio = -x2o4 / ((k + 1f) * (k + 1f));
+                term *= ratio;
+                H += 1f / (k + 1f);
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            return 2f / (float)Math.PI * (logt * j0 + sum);
+        }
+
+        private static Complex32 Y1(Complex32 x)
+        {
+            Complex32 j1 = J1(x);
+            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+
+            Complex32 sum = Complex32.Zero;
+            Complex32 x2o4 = 0.25f * x * x;
+
+            Complex32 term = -(x * x * x) * (1f / 16f); // k=1
+            float H = 1f;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                float coeff = H - 1f / (2f * k + 1f);
+                sum += coeff * term;
+
+                Complex32 ratio = -x2o4 / ((k + 1f) * (k + 2f));
+                term *= ratio;
+                H += 1f / (k + 1f);
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return 2f / (float)Math.PI * (logt * j1 - Complex32.One / x + sum);
+        }
+
+        // ===================== Helpers: J0, J1 (series) =====================
+
+        private static float J0(float x)
+        {
+            float sum = 1f;
+            float term = 1f;
+            float q = -0.25f * x * x;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 1f)); // next (-1)^m (x/2)^{2m}/(m!)^2
+                sum += term;
+                if (Math.Abs(term) < eps * Math.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static float J1(float x)
+        {
+            float sum = 0.5f * x;  // m=0: (x/2)^{1}/(0!*1!)
+            float term = sum;
+            float q = -0.25f * x * x;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 2f)); // next (-1)^m (x/2)^{2m+1}/(m!(m+1)!)
+                sum += term;
+                if (Math.Abs(term) < eps * Math.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static Complex32 J0(Complex32 x)
+        {
+            Complex32 sum = Complex32.One;
+            Complex32 term = Complex32.One;
+            Complex32 q = -0.25f * x * x;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 1f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static Complex32 J1(Complex32 x)
+        {
+            Complex32 sum = 0.5f * x;
+            Complex32 term = sum;
+            Complex32 q = -0.25f * x * x;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 2f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        // ===================== K0 and K1 via canonical series =====================
+
+        private static float K0(float x)
+        {
+            float i0 = I0(x);
+            float logt = Maths.Log(0.5f * x) + Maths.Gamma;
+
+            float sum = 0f;
+            float x2o4 = 0.25f * x * x;
+            float term = x2o4;     // k=1
+            float H = 1f;       // H_1
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                sum += H * term;
+                term *= x2o4 / ((k + 1f) * (k + 1f)); // next term
+                H += 1f / (k + 1f);
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            return -logt * i0 + sum;
+        }
+
+        private static float K1(float x)
+        {
+            float i1 = I1(x);
+            float logt = Maths.Log(0.5f * x) + Maths.Gamma;
+
+            float sum = 0f;
+            float x2o4 = 0.25f * x * x;
+
+            float term = 0.5f * x;   // k=0: (x/2)^1/(0!*1!)
+            float Hk = 0f;         // H_0 = 0
+            float coeff0 = -0.5f;    // -(H_0 + H_1)/2 = -1/2
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            sum += coeff0 * term;
+
+            for (int k = 0; k < maxIter; k++)
+            {
+                term *= x2o4 / ((k + 1f) * (k + 2f));        // next term
+                Hk += 1f / (k + 1f);
+                float Hk1 = Hk + 1f / (k + 2f);
+                float coeff = -0.5f * (Hk + Hk1);
+                sum += coeff * term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return (1f / x) + logt * i1 + sum;
+        }
+
+        private static Complex32 K0(Complex32 x)
+        {
+            Complex32 i0 = I0(x);
+            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+
+            Complex32 sum = Complex32.Zero;
+            Complex32 x2o4 = 0.25f * x * x;
+            Complex32 term = x2o4;      // k=1
+            float H = 1f;        // H_1
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                sum += H * term;
+                term *= x2o4 / ((k + 1f) * (k + 1f));
+                H += 1f / (k + 1f);
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            return -logt * i0 + sum;
+        }
+
+        private static Complex32 K1(Complex32 x)
+        {
+            Complex32 i1 = I1(x);
+            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+
+            Complex32 sum = Complex32.Zero;
+            Complex32 x2o4 = 0.25f * x * x;
+
+            Complex32 term = 0.5f * x;  // k=0
+            float Hk = 0f;        // H_0 = 0
+            float coeff0 = -0.5f;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            sum += coeff0 * term;
+
+            for (int k = 0; k < maxIter; k++)
+            {
+                term *= x2o4 / ((k + 1f) * (k + 2f));
+                Hk += 1f / (k + 1f);
+                float Hk1 = Hk + 1f / (k + 2f);
+                float coeff = -0.5f * (Hk + Hk1);
+                sum += coeff * term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return Complex32.One / x + logt * i1 + sum;
+        }
+
+        // ===================== Modified Bessel I0 and I1 via series (used by K0, K1) =====================
+
+        private static float I0(float x)
+        {
+            float sum = 1f, term = 1f, q = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 1f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static float I1(float x)
+        {
+            float sum = 0.5f * x, term = sum, q = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 2f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static Complex32 I0(Complex32 x)
+        {
+            Complex32 sum = Complex32.One, term = Complex32.One, q = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 1f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static Complex32 I1(Complex32 x)
+        {
+            Complex32 sum = 0.5f * x, term = sum, q = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 2f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        // ================================================================================
+
+        #endregion
+
+        #endregion
 
 
         #region Struve function
@@ -2924,401 +3562,6 @@ namespace UMapx.Core
             y + (float)Math.Log(series / z));
         }
         #endregion
-        #endregion
-
-        #region Bessel functions
-        /// <summary>
-        /// Returns the value of the Bessel function of the first kind at a = 0.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float J0(float x)
-        {
-            float ax;
-
-            if ((ax = System.Math.Abs(x)) < 8.0)
-            {
-                float y = x * x;
-                float ans1 = 57568490574.0f + y * (-13362590354.0f + y * (651619640.7f
-                    + y * (-11214424.18f + y * (77392.33017f + y * (-184.9052456f)))));
-                float ans2 = 57568490411.0f + y * (1029532985.0f + y * (9494680.718f
-                    + y * (59272.64853f + y * (267.8532712f + y * 1.0f))));
-
-                return ans1 / ans2;
-            }
-            else
-            {
-                float z = 8.0f / ax;
-                float y = z * z;
-                float xx = ax - 0.785398164f;
-                float ans1 = 1.0f + y * (-0.1098628627e-2f + y * (0.2734510407e-4f
-                    + y * (-0.2073370639e-5f + y * 0.2093887211e-6f)));
-                float ans2 = -0.1562499995e-1f + y * (0.1430488765e-3f
-                    + y * (-0.6911147651e-5f + y * (0.7621095161e-6f
-                    - y * 0.934935152e-7f)));
-
-                return (float)Math.Sqrt(0.636619772f / ax) *
-                    ((float)Math.Cos(xx) * ans1 - z * (float)Math.Sin(xx) * ans2);
-            }
-        }
-        /// <summary>
-        /// Returns the value of the Bessel function of the first kind at a = 1.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float J1(float x)
-        {
-            float ax;
-            float y;
-            float ans1, ans2;
-
-            if ((ax = System.Math.Abs(x)) < 8.0)
-            {
-                y = x * x;
-                ans1 = x * (72362614232.0f + y * (-7895059235.0f + y * (242396853.1f
-                    + y * (-2972611.439f + y * (15704.48260f + y * (-30.16036606f))))));
-                ans2 = 144725228442.0f + y * (2300535178.0f + y * (18583304.74f
-                    + y * (99447.43394f + y * (376.9991397f + y * 1.0f))));
-                return ans1 / ans2;
-            }
-            else
-            {
-                float z = 8.0f / ax;
-                float xx = ax - 2.356194491f;
-                y = z * z;
-
-                ans1 = 1.0f + y * (0.183105e-2f + y * (-0.3516396496e-4f
-                    + y * (0.2457520174e-5f + y * (-0.240337019e-6f))));
-                ans2 = 0.04687499995f + y * (-0.2002690873e-3f
-                    + y * (0.8449199096e-5f + y * (-0.88228987e-6f
-                    + y * 0.105787412e-6f)));
-                float and = (float)Math.Sqrt(0.636619772 / ax) *
-                    ((float)Math.Cos(xx) * ans1 - z * (float)Math.Sin(xx) * ans2);
-                if (x < 0.0) and = -and;
-                return and;
-            }
-        }
-        /// <summary>
-        /// Returns the value of a Bessel function of the first kind.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Number</param>
-        /// <returns>Value</returns>
-        public static float J(float x, int a)
-        {
-            if (a < 0 || x == 0) return 0;
-            if (a == 0) return J0(x);
-            if (a == 1) return J1(x);
-
-            int j, m;
-            float ax, bj, bjm, bjp, sum, tox, and;
-            bool jsum;
-            float ACC = 40.0f;
-            float BIGNO = 1.0e+10f;
-            float BIGNI = 1.0e-10f;
-
-            ax = System.Math.Abs(x);
-            if (ax == 0.0) return 0.0f;
-            else if (ax > (float)a)
-            {
-                tox = 2.0f / ax;
-                bjm = J0(ax);
-                bj = J1(ax);
-                for (j = 1; j < a; j++)
-                {
-                    bjp = j * tox * bj - bjm;
-                    bjm = bj;
-                    bj = bjp;
-                }
-                and = bj;
-            }
-            else
-            {
-                tox = 2.0f / ax;
-                m = 2 * ((a + (int)System.Math.Sqrt(ACC * a)) / 2);
-                jsum = false;
-                bjp = and = sum = 0.0f;
-                bj = 1.0f;
-                for (j = m; j > 0; j--)
-                {
-                    bjm = j * tox * bj - bjp;
-                    bjp = bj;
-                    bj = bjm;
-                    if (System.Math.Abs(bj) > BIGNO)
-                    {
-                        bj *= BIGNI;
-                        bjp *= BIGNI;
-                        and *= BIGNI;
-                        sum *= BIGNI;
-                    }
-                    if (jsum) sum += bj;
-                    jsum = !jsum;
-                    if (j == a) and = bjp;
-                }
-                sum = 2.0f * sum - bj;
-                and /= sum;
-            }
-
-            return x < 0.0 && a % 2 == 1 ? -and : and;
-        }
-        /// <summary>
-        /// Returns the value of the Bessel function of the second kind at a = 0.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float Y0(float x)
-        {
-            if (x < 8.0)
-            {
-                float y = x * x;
-
-                float ans1 = -2957821389.0f + y * (7062834065.0f + y * (-512359803.6f
-                    + y * (10879881.29f + y * (-86327.92757f + y * 228.4622733f))));
-                float ans2 = 40076544269.0f + y * (745249964.8f + y * (7189466.438f
-                    + y * (47447.26470f + y * (226.1030244f + y * 1.0f))));
-
-                return (ans1 / ans2) + 0.636619772f * J0(x) * (float)Math.Log(x);
-            }
-            else
-            {
-                float z = 8.0f / x;
-                float y = z * z;
-                float xx = x - 0.785398164f;
-
-                float ans1 = 1.0f + y * (-0.1098628627e-2f + y * (0.2734510407e-4f
-                    + y * (-0.2073370639e-5f + y * 0.2093887211e-6f)));
-                float ans2 = -0.1562499995e-1f + y * (0.1430488765e-3f
-                    + y * (-0.6911147651e-5f + y * (0.7621095161e-6f
-                    + y * (-0.934945152e-7f))));
-                return (float)Math.Sqrt(0.636619772f / x) *
-                    ((float)Math.Sin(xx) * ans1 + z * (float)Math.Cos(xx) * ans2);
-            }
-        }
-        /// <summary>
-        /// Returns the value of the Bessel function of the second kind at a = 1.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float Y1(float x)
-        {
-            if (x < 8.0)
-            {
-                float y = x * x;
-                float ans1 = x * (-0.4900604943e13f + y * (0.1275274390e13f
-                    + y * (-0.5153438139e11f + y * (0.7349264551e9f
-                    + y * (-0.4237922726e7f + y * 0.8511937935e4f)))));
-                float ans2 = 0.2499580570e14f + y * (0.4244419664e12f
-                    + y * (0.3733650367e10f + y * (0.2245904002e8f
-                    + y * (0.1020426050e6f + y * (0.3549632885e3f + y)))));
-                return (ans1 / ans2) + 0.636619772f * (J1(x) * (float)Math.Log(x) - 1.0f / x);
-            }
-            else
-            {
-                float z = 8.0f / x;
-                float y = z * z;
-                float xx = x - 2.356194491f;
-                float ans1 = 1.0f + y * (0.183105e-2f + y * (-0.3516396496e-4f
-                    + y * (0.2457520174e-5f + y * (-0.240337019e-6f))));
-                float ans2 = 0.04687499995f + y * (-0.2002690873e-3f
-                    + y * (0.8449199096e-5f + y * (-0.88228987e-6f
-                    + y * 0.105787412e-6f)));
-                return (float)Math.Sqrt(0.636619772f / x) *
-                    ((float)Math.Sin(xx) * ans1 + z * (float)Math.Cos(xx) * ans2);
-            }
-        }
-        /// <summary>
-        /// Returns the value of a Bessel function of the second kind.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Number</param>
-        /// <returns>Value</returns>
-        public static float Y(float x, int a)
-        {
-            if (a < 0 || x == 0) return 0;
-            if (a == 0) return Y0(x);
-            if (a == 1) return Y1(x);
-
-            float by, bym, byp, tox;
-            tox = 2.0f / x;
-            by = Y1(x);
-            bym = Y0(x);
-            for (int j = 1; j < a; j++)
-            {
-                byp = j * tox * by - bym;
-                bym = by;
-                by = byp;
-            }
-            return by;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the first kind at a = 0.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float I0(float x)
-        {
-            float and;
-            float ax = Math.Abs(x);
-
-            if (ax < 3.75)
-            {
-                float y = x / 3.75f;
-                y = y * y;
-                and = 1.0f + y * (3.5156229f + y * (3.0899424f + y * (1.2067492f
-                   + y * (0.2659732f + y * (0.360768e-1f + y * 0.45813e-2f)))));
-            }
-            else
-            {
-                float y = 3.75f / ax;
-                and = (float)Math.Exp(ax) / (float)Math.Sqrt(ax) * (0.39894228f + y * (0.1328592e-1f
-                   + y * (0.225319e-2f + y * (-0.157565e-2f + y * (0.916281e-2f
-                   + y * (-0.2057706e-1f + y * (0.2635537e-1f + y * (-0.1647633e-1f
-                   + y * 0.392377e-2f))))))));
-            }
-
-            return and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the first kind at a = 1.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float I1(float x)
-        {
-            float and;
-
-            float ax = Math.Abs(x);
-
-            if (ax < 3.75)
-            {
-                float y = x / 3.75f;
-                y = y * y;
-                and = ax * (0.5f + y * (0.87890594f + y * (0.51498869f + y * (0.15084934f
-                   + y * (0.2658733e-1f + y * (0.301532e-2f + y * 0.32411e-3f))))));
-            }
-            else
-            {
-                float y = 3.75f / ax;
-                and = 0.2282967e-1f + y * (-0.2895312e-1f + y * (0.1787654e-1f - y * 0.420059e-2f));
-                and = 0.39894228f + y * (-0.3988024e-1f + y * (-0.362018e-2f + y * (0.163801e-2f + y * (-0.1031555e-1f + y * and))));
-                and *= (float)Math.Exp(ax) / (float)Math.Sqrt(ax);
-            }
-            return x < 0.0 ? -and : and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the first kind.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Number</param>
-        /// <returns>Value</returns>
-        public static float I(float x, int a)
-        {
-            if (a < 0 || x == 0) return 0;
-            if (a == 0) return I0(x);
-            if (a == 1) return I1(x);
-
-            float ACC = 40.0f;
-            float BIGNO = 1.0e+10f;
-            float BIGNI = 1.0e-10f;
-            float tox = 2.0f / Math.Abs(x);
-            float bip = 0, and = 0.0f;
-            float bi = 1.0f;
-
-            for (int j = 2 * (a + (int)Math.Sqrt(ACC * a)); j > 0; j--)
-            {
-                float bim = bip + j * tox * bi;
-                bip = bi;
-                bi = bim;
-
-                if (Math.Abs(bi) > BIGNO)
-                {
-                    and *= BIGNI;
-                    bi *= BIGNI;
-                    bip *= BIGNI;
-                }
-
-                if (j == a)
-                    and = bip;
-            }
-
-            and *= I0(x) / bi;
-            return x < 0.0 && a % 2 == 1 ? -and : and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the second kind at a = 0.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float K0(float x)
-        {
-            float y, and;
-
-            if (x <= 2.0)
-            {
-                y = x * x / 4.0f;
-                and = (-(float)Math.Log(x / 2.0) * I0(x)) + (-0.57721566f + y * (0.42278420f
-                   + y * (0.23069756f + y * (0.3488590e-1f + y * (0.262698e-2f
-                   + y * (0.10750e-3f + y * 0.74e-5f))))));
-            }
-            else
-            {
-                y = 2.0f / x;
-                and = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (-0.7832358e-1f
-                   + y * (0.2189568e-1f + y * (-0.1062446e-1f + y * (0.587872e-2f
-                   + y * (-0.251540e-2f + y * 0.53208e-3f))))));
-            }
-            return and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the second kind at a = 1.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float K1(float x)
-        {
-            float y, and;
-
-            if (x <= 2.0)
-            {
-                y = x * x / 4.0f;
-                and = ((float)Math.Log(x / 2.0) * I1(x)) + (1.0f / x) * (1.0f + y * (0.15443144f
-                   + y * (-0.67278579f + y * (-0.18156897f + y * (-0.1919402e-1f
-                   + y * (-0.110404e-2f + y * (-0.4686e-4f)))))));
-            }
-            else
-            {
-                y = 2.0f / x;
-                and = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (0.23498619f
-                   + y * (-0.3655620e-1f + y * (0.1504268e-1f + y * (-0.780353e-2f
-                   + y * (0.325614e-2f + y * (-0.68245e-3f)))))));
-            }
-            return and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the second kind.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Number</param>
-        /// <returns>Value</returns>
-        public static float K(float x, int a)
-        {
-            if (a < 0 || x == 0) return 0;
-            if (a == 0) return (K0(x));
-            if (a == 1) return (K1(x));
-
-            int j;
-            float bk, bkm, bkp, tox;
-            tox = 2.0f / x;
-            bkm = K0(x);
-            bk = K1(x);
-            for (j = 1; j < a; j++)
-            {
-                bkp = bkm + j * tox * bk;
-                bkm = bk;
-                bk = bkp;
-            }
-            return bk;
-        }
         #endregion
 
         #region Binomial function

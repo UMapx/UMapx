@@ -12121,6 +12121,70 @@
             <param name="z">Argument</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.J(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the first kind.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.J(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the first kind.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Y(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the second kind.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Y(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the second kind.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.I(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the first kind.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.I(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the first kind.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.K(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the second kind.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.K(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the second kind.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
             <summary>
             Returns the value of the Struve function.
@@ -12312,94 +12376,6 @@
             </summary>
             <param name="z"></param>
             <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.J0(System.Single)">
-            <summary>
-            Returns the value of the Bessel function of the first kind at a = 0.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.J1(System.Single)">
-            <summary>
-            Returns the value of the Bessel function of the first kind at a = 1.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.J(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a Bessel function of the first kind.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Y0(System.Single)">
-            <summary>
-            Returns the value of the Bessel function of the second kind at a = 0.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Y1(System.Single)">
-            <summary>
-            Returns the value of the Bessel function of the second kind at a = 1.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Y(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a Bessel function of the second kind.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.I0(System.Single)">
-            <summary>
-            Returns the value of the modified Bessel function of the first kind at a = 0.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.I1(System.Single)">
-            <summary>
-            Returns the value of the modified Bessel function of the first kind at a = 1.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.I(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the modified Bessel function of the first kind.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.K0(System.Single)">
-            <summary>
-            Returns the value of the modified Bessel function of the second kind at a = 0.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.K1(System.Single)">
-            <summary>
-            Returns the value of the modified Bessel function of the second kind at a = 1.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.K(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the modified Bessel function of the second kind.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Binomial(System.Single,System.Single)">
             <summary>
