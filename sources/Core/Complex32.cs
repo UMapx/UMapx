@@ -453,6 +453,13 @@ namespace UMapx.Core
             );
         }
 
+        /// <summary>
+        /// Returns a value that indicates whether the specified value is not a number.
+        /// </summary>
+        /// <param name="z">Complex value</param>
+        /// <returns>Boolean</returns>
+        public static bool IsNaN(Complex32 z) => float.IsNaN(z.Real) || float.IsNaN(z.Imag);
+
         #endregion
 
         #region Static properties

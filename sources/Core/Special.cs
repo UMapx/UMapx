@@ -1588,6 +1588,274 @@ namespace UMapx.Core
 
         #endregion
 
+        #region Hypergeometric function
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+        /// More information can be found on the website:
+        /// https://en.wikipedia.org/wiki/Hypergeometric_function
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="c">Parameter</param>
+        /// <param name="z">Argument</param>
+        /// <returns>Value</returns>
+        public static float Hypergeom(float a, float b, float c, float z)
+        {
+            // for all z = 0:
+            if (z == 0)
+                return 1;
+
+            // Properties:
+            float s = 1.0f;
+            float m = 1.0f;
+            float pa = 1, pb = 1, pc = 1;
+            float t, eps = 1e-32f;
+            int i, j, iterations = 140;
+
+            // Taylor series:
+            for (i = 1; i < iterations; i++)
+            {
+                // Pochhammer symbols:
+                j = i - 1;
+                pa *= a + j;
+                pb *= b + j;
+                pc *= c + j;
+
+                // value:
+                m *= z / i;
+                t = pa * pb * m / pc;
+
+                // stop point:
+                if (Math.Abs(t) < eps)
+                { break; }
+                else { s += t; }
+            }
+
+            // result:
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+        /// More information can be found on the website:
+        /// https://en.wikipedia.org/wiki/Hypergeometric_function
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="c">Parameter</param>
+        /// <param name="z">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 c, Complex32 z)
+        {
+            // z = 0 => 1
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
+
+            Complex32 s = Complex32.One;     // partial sum
+            Complex32 m = Complex32.One;     // z^n / n!
+            Complex32 pa = Complex32.One;    // (a)_n
+            Complex32 pb = Complex32.One;    // (b)_n
+            Complex32 pc = Complex32.One;    // (c)_n
+
+            float eps = 1e-32f;
+            int maxIter = 140;
+
+            for (int i = 1; i < maxIter; i++)
+            {
+                float jf = i - 1;
+                var j = new Complex32(jf, 0f);
+
+                pa *= a + j;
+                pb *= b + j;
+                pc *= c + j;
+
+                m *= z / i; // z^i / i!
+                Complex32 t = pa * pb * m / pc;
+
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// The hypergeometric function can be used in several variations:
+        /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+        /// Instead of the “~” sign, use the float.NaN value.
+        /// More information can be found on the website:
+        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="z">Argument</param>
+        /// <returns>Value</returns>
+        public static float Hypergeom(float a, float b, float z)
+        {
+            // for all z = 0:
+            if (z == 0)
+                return 1;
+
+            // Properties:
+            float s = 1.0f;
+            float m = 1.0f;
+            float pa = 1, pb = 1;
+            float t, eps = 1e-32f;
+            int i, j, iterations = 140;
+
+            if (float.IsNaN(a) && float.IsNaN(b) ||
+                a == b)
+            {
+                // s = e^z:
+                s = (float)Math.Exp(z);
+            }
+            else if (float.IsNaN(b))
+            {
+                // special case for complex
+                // values:
+                if (Math.Abs(z) > 1.0)
+                    return float.NaN;
+
+                // F(a,~,z):
+                for (i = 1; i < iterations; i++)
+                {
+                    // Pochhammer symbols:
+                    j = i - 1;
+                    pa *= a + j;
+
+                    // value:
+                    m *= z / i;
+                    t = pa * m;
+
+                    // stop point:
+                    if (Math.Abs(t) < eps)
+                    { break; }
+                    else { s += t; }
+                }
+            }
+            else if (float.IsNaN(a))
+            {
+                // F(~,b,z):
+                for (i = 1; i < iterations; i++)
+                {
+                    // Pochhammer symbols:
+                    j = i - 1;
+                    pb *= b + j;
+
+                    // value:
+                    m *= z / i;
+                    t = m / pb;
+
+                    // stop point:
+                    if (Math.Abs(t) < eps)
+                    { break; }
+                    else { s += t; }
+                }
+            }
+            else
+            {
+                // F(a,b,z):
+                for (i = 1; i < iterations; i++)
+                {
+                    // Pochhammer symbols:
+                    j = i - 1;
+                    pa *= a + j;
+                    pb *= b + j;
+
+                    // value:
+                    m *= z / i;
+                    t = (pa * m) / pb;
+
+                    // stop point:
+                    if (Math.Abs(t) < eps)
+                    { break; }
+                    else { s += t; }
+                }
+            }
+
+            // result:
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// The hypergeometric function can be used in several variations:
+        /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+        /// Instead of the “~” sign, use the float.NaN value.
+        /// More information can be found on the website:
+        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="z">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 z)
+        {
+            // z = 0 => 1
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
+
+            bool aNaN = Complex32.IsNaN(a);
+            bool bNaN = Complex32.IsNaN(b);
+
+            // 0F0(;;z) = exp(z)
+            if ((aNaN && bNaN) || (a.Real == b.Real && a.Imag == b.Imag))
+                return Maths.Exp(z);
+
+            // 1F0(a;;z) = (1 - z)^(-a)  (analytic continuation, principal log)
+            if (bNaN)
+                return Maths.Exp(-a * Maths.Log(Complex32.One - z));
+
+            // params
+            float eps = 1e-32f;
+            int maxIter = 140;
+            Complex32 s = Complex32.One;
+            Complex32 m = Complex32.One;
+            Complex32 pa = Complex32.One;
+            Complex32 pb = Complex32.One;
+
+            // 0F1(;b;z) = Σ z^n / ((b)_n n!)
+            if (aNaN)
+            {
+                for (int i = 1; i < maxIter; i++)
+                {
+                    float jf = i - 1;
+                    var j = new Complex32(jf, 0f);
+
+                    pb *= b + j;
+                    m *= z / i;
+
+                    Complex32 t = m / pb;
+                    if (Maths.Abs(t) < eps) break;
+                    s += t;
+                }
+            }
+            // 1F1(a;b;z) = Σ (a)_n z^n / ((b)_n n!)
+            else
+            {
+
+                for (int i = 1; i < maxIter; i++)
+                {
+                    float jf = i - 1;
+                    var j = new Complex32(jf, 0f);
+
+                    pa *= a + j;
+                    pb *= b + j;
+                    m *= z / i;
+
+                    Complex32 t = pa * m / pb;
+                    if (Maths.Abs(t) < eps) break;
+                    s += t;
+                }
+            }
+            return s;
+        }
+        #endregion
 
 
 
@@ -3132,161 +3400,6 @@ namespace UMapx.Core
                 return 1.0f;
             }
             return Special.Gamma(n + k) / Special.Gamma(n);
-        }
-        #endregion
-
-        #region Hypergeometric function
-        /// <summary>
-        /// Returns the value of a hypergeometric function.
-        /// <remarks>
-        /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
-        /// More information can be found on the website:
-        /// https://en.wikipedia.org/wiki/Hypergeometric_function
-        /// </remarks>
-        /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
-        /// <param name="c">Parameter</param>
-        /// <param name="z">Argument</param>
-        /// <returns>Value</returns>
-        public static float Hypergeom(float a, float b, float c, float z)
-        {
-            // catch exception:
-            if (float.IsNaN(a) || float.IsNaN(b) || float.IsNaN(c))
-                throw new ArgumentException("For this function, all input parameters must be correctly defined");
-
-            // for all z = 0:
-            if (z == 0)
-                return 1;
-
-            // Properties:
-            float s = 1.0f;
-            float m = 1.0f;
-            float pa = 1, pb = 1, pc = 1;
-            float t, eps = 1e-32f;
-            int i, j, iterations = 140;
-
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
-            {
-                // Pochhammer symbols:
-                j = i - 1;
-                pa *= (a + j);
-                pb *= (b + j);
-                pc *= (c + j);
-
-                // value:
-                m *= z / i;
-                t = pa * pb * m / pc;
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
-            }
-
-            // result:
-            return s;
-        }
-        /// <summary>
-        /// Returns the value of a hypergeometric function.
-        /// <remarks>
-        /// The hypergeometric function can be used in several variations:
-        /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
-        /// Instead of the “~” sign, use the float.NaN value.
-        /// More information can be found on the website:
-        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
-        /// </remarks>
-        /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
-        /// <param name="z">Argument</param>
-        /// <returns>Value</returns>
-        public static float Hypergeom(float a, float b, float z)
-        {
-            // for all z = 0:
-            if (z == 0)
-                return 1;
-
-            // Properties:
-            float s = 1.0f;
-            float m = 1.0f;
-            float pa = 1, pb = 1;
-            float t, eps = 1e-32f;
-            int i, j, iterations = 140;
-
-            if (float.IsNaN(a) && float.IsNaN(b) ||
-                a == b)
-            {
-                // s = e^z:
-                s = (float)Math.Exp(z);
-            }
-            else if (float.IsNaN(b))
-            {
-                // special case for complex
-                // values:
-                if (Math.Abs(z) > 1.0)
-                    return float.NaN;
-
-                // F(a,~,z):
-                for (i = 1; i < iterations; i++)
-                {
-                    // Pochhammer symbols:
-                    j = i - 1;
-                    pa *= (a + j);
-
-                    // value:
-                    m *= z / i;
-                    t = (pa * m);
-
-                    // stop point:
-                    if (Math.Abs(t) < eps)
-                    { break; }
-                    else { s += t; }
-                }
-            }
-            else if (float.IsNaN(a))
-            {
-                // F(~,b,z):
-                for (i = 1; i < iterations; i++)
-                {
-                    // Pochhammer symbols:
-                    j = i - 1;
-                    pb *= (b + j);
-
-                    // value:
-                    m *= z / i;
-                    t = m / pb;
-
-                    // stop point:
-                    if (Math.Abs(t) < eps)
-                    { break; }
-                    else { s += t; }
-                }
-            }
-            else
-            {
-                // F(a,b,z):
-                for (i = 1; i < iterations; i++)
-                {
-                    // Pochhammer symbols:
-                    j = i - 1;
-                    pa *= (a + j);
-                    pb *= (b + j);
-
-                    // value:
-                    m *= z / i;
-                    t = (pa * m) / pb;
-
-                    // stop point:
-                    if (Math.Abs(t) < eps)
-                    { break; }
-                    else { s += t; }
-                }
-            }
-
-            // result:
-            return s;
         }
         #endregion
 
