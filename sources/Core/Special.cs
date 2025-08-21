@@ -857,22 +857,22 @@ namespace UMapx.Core
             // term_0 = z / ((2*0)! * (4*0+1)) = z
             float eps = 1e-16f;
             int maxIter = 120;
-            float s = x;
-            float term = x;
-            float z4 = x * x * x * x;
+            double s = x;
+            double term = x;
+            double z4 = x * x * x * x;
 
             // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
             for (int n = 0; n < maxIter; n++)
             {
-                float a = -(4 * n + 1);
-                float b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
+                double a = -(4 * n + 1);
+                double b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
                 term *= a / b * z4;
 
                 if (Maths.Abs(term) < eps) break;
                 s += term;
             }
 
-            return s;
+            return (float)s;
         }
         /// <summary>
         /// Returns the value of the Fresnel integral C(x).
@@ -886,15 +886,15 @@ namespace UMapx.Core
             // term_0 = z / ((2*0)! * (4*0+1)) = z
             float eps = 1e-16f;
             int maxIter = 120;
-            Complex32 s = z;
-            Complex32 term = z;
-            Complex32 z4 = z * z * z * z;
+            Complex s = z;
+            Complex term = z;
+            Complex z4 = z * z * z * z;
 
             // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
             for (int n = 0; n < maxIter; n++)
             {
-                float a = -(4 * n + 1);
-                float b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
+                double a = -(4 * n + 1);
+                double b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
                 term *= a / b * z4;
 
                 if (Maths.Abs(term) < eps) break;
@@ -915,23 +915,23 @@ namespace UMapx.Core
             // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
             float eps = 1e-16f;
             int maxIter = 120;
-            float z2 = x * x;
-            float s = z2 * x / 3f;
-            float term = s;
-            float z4 = z2 * z2;
+            double z2 = x * x;
+            double s = z2 * x / 3f;
+            double term = s;
+            double z4 = z2 * z2;
 
             // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
             for (int n = 0; n < maxIter; n++)
             {
-                float a = -(4 * n + 3);
-                float b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
+                double a = -(4 * n + 3);
+                double b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
                 term *= a / b * z4;
 
                 if (Maths.Abs(term) < eps) break;
                 s += term;
             }
 
-            return s;
+            return (float)s;
         }
         /// <summary>
         /// Returns the value of the Fresnel integral S(x).
@@ -945,16 +945,16 @@ namespace UMapx.Core
             // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
             float eps = 1e-16f;
             int maxIter = 120;
-            Complex32 z2 = z * z;
-            Complex32 s = z2 * z / 3f;
-            Complex32 term = s;
-            Complex32 z4 = z2 * z2;
+            Complex z2 = z * z;
+            Complex s = z2 * (Complex)z / 3f;
+            Complex term = s;
+            Complex z4 = z2 * z2;
 
             // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
             for (int n = 0; n < maxIter; n++)
             {
-                float a = -(4 * n + 3);
-                float b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
+                double a = -(4 * n + 3);
+                double b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
                 term *= a / b * z4;
 
                 if (Maths.Abs(term) < eps) break;
