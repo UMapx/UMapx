@@ -11433,6 +11433,11 @@
             Log min.
             </summary>
         </member>
+        <member name="F:UMapx.Core.Special.GammaMax">
+            <summary>
+            Gamma max.
+            </summary>
+        </member>
         <member name="M:UMapx.Core.Special.ChebyshevT(System.Single,System.Int32)">
             <summary>
             Returns the value of the Chebyshev polynomial of the first kind.
@@ -12185,91 +12190,6 @@
             <param name="a">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the Struve function.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.L(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the modified Struve function.
-            </summary>
-            <param name="x">Number</param>
-            <param name="v">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
-            <summary>
-            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
-            </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(System.Int32,System.Int32)">
-            <summary>
-            Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
-            </summary>
-            <param name="m">Integer number</param>
-            <param name="n">Integer number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of an incomplete beta function: Bx(a, b).
-            </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
-            <param name="x">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.BetaDerivative(System.Single,System.Single)">
-            <summary>
-            Returns the value of a derivative beta function: B'(a, b).
-            </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.BetaIncomplete(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of a regularized incomplete beta function: Ix(a, b).
-            </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
-            <param name="x">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Incbcf(System.Single,System.Single,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="x"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Incbd(System.Single,System.Single,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="x"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Series(System.Single,System.Single,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="x"></param>
-            <returns></returns>
-        </member>
         <member name="M:UMapx.Core.Special.Gamma(System.Single)">
             <summary>
             Returns the value of the Euler Gamma function: Г(z).
@@ -12358,6 +12278,38 @@
             <param name="x">Number</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.GammaIncomplete(System.Single,System.Single)">
+            <summary>
+            Returns the value of an incomplete Gamma function: γ(s, x).
+            </summary>
+            <param name="s">Number</param>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaIncomplete(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an incomplete Gamma function: γ(s, x).
+            </summary>
+            <param name="s">Number</param>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaIncompleteComplemented(System.Single,System.Single)">
+            <summary>
+            Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
+            </summary>
+            <param name="s">Number</param>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaIncompleteComplemented(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
+            </summary>
+            <param name="s">Number</param>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.GammaLanczos(System.Double)">
             <summary>
             Lanczos approximation (real) valid for Re(z) > 0.5. Computes principal branch.
@@ -12378,49 +12330,119 @@
             Lanczos log-gamma for complex z with Re(z) ≥ 0.5 (principal branch).
             </summary>
         </member>
-        <member name="F:UMapx.Core.Special.GammaMax">
+        <member name="M:UMapx.Core.Special.Gerf(System.Single,System.Int32)">
             <summary>
-            
+            Returns the value of the generalized error function.
             </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.GammaIncomplete(System.Single,System.Single)">
-            <summary>
-            Returns the value of an incomplete Gamma function: γ(s, x).
-            </summary>
-            <param name="s">Number</param>
-            <param name="x">Number</param>
+            <param name="x">Argument (0, +inf)</param>
+            <param name="n">Order [0, +inf)</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.GammaIncomplete(System.Single,System.Single,System.Boolean)">
+        <member name="M:UMapx.Core.Special.Gerf(UMapx.Core.Complex32,System.Int32)">
             <summary>
-            Returns the value of an incomplete Gamma function: γ(s, x).
+            Returns the value of the generalized error function.
             </summary>
-            <param name="s">Number</param>
-            <param name="x">Number</param>
-            <param name="complemented">Additional function or not</param>
+            <param name="x">Argument (0, +inf)</param>
+            <param name="n">Order [0, +inf)</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Polynomials(System.Single,System.Single[],System.Int32)">
+        <member name="M:UMapx.Core.Special.Gerf(System.Single)">
+            <summary>
+            Returns the value of the generalized error function.
+            </summary>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gerf(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the generalized error function.
+            </summary>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Struve function.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.L(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the modified Struve function.
+            </summary>
+            <param name="x">Number</param>
+            <param name="v">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
+            <summary>
+            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+            </summary>
+            <param name="a">Number</param>
+            <param name="b">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Beta(System.Int32,System.Int32)">
+            <summary>
+            Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
+            </summary>
+            <param name="m">Integer number</param>
+            <param name="n">Integer number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of an incomplete beta function: Bx(a, b).
+            </summary>
+            <param name="a">Number</param>
+            <param name="b">Number</param>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaDerivative(System.Single,System.Single)">
+            <summary>
+            Returns the value of a derivative beta function: B'(a, b).
+            </summary>
+            <param name="a">Number</param>
+            <param name="b">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaIncomplete(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a regularized incomplete beta function: Ix(a, b).
+            </summary>
+            <param name="a">Number</param>
+            <param name="b">Number</param>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Incbcf(System.Single,System.Single,System.Single)">
             <summary>
             
             </summary>
+            <param name="a"></param>
+            <param name="b"></param>
             <param name="x"></param>
-            <param name="coef"></param>
-            <param name="N"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Core.Special.Stirling(System.Single)">
+        <member name="M:UMapx.Core.Special.Incbd(System.Single,System.Single,System.Single)">
             <summary>
             
             </summary>
+            <param name="a"></param>
+            <param name="b"></param>
             <param name="x"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Core.Special.GammaLogLanczos(System.Single)">
+        <member name="M:UMapx.Core.Special.Series(System.Single,System.Single,System.Single)">
             <summary>
             
             </summary>
-            <param name="z"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="x"></param>
             <returns></returns>
         </member>
         <member name="M:UMapx.Core.Special.Binomial(System.Single,System.Single)">
@@ -12467,21 +12489,6 @@
             </summary>
             <param name="n">Number</param>
             <param name="k">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Gerf(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the generalized error function.
-            </summary>
-            <param name="x">Argument (0, +inf)</param>
-            <param name="n">Order [0, +inf)</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Gerf(System.Single)">
-            <summary>
-            Returns the value of the generalized error function.
-            </summary>
-            <param name="x">Argument</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Fibonacci(System.Int32)">

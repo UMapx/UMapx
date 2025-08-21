@@ -2512,7 +2512,7 @@ namespace UMapx.Core
             if (float.IsNaN(x)) return float.NaN;
 
             // Poles on the real axis
-            if (x <= 0f && Maths.Abs(x - Maths.Round(x)) < 0f) // integer check
+            if (x <= 0f && x == Maths.Round(x)) // integer check
             {
                 int xi = (int)Maths.Round(x);
                 if (xi <= 0) return float.NaN;
@@ -3198,6 +3198,81 @@ namespace UMapx.Core
 
         #endregion
 
+        #region Generalized error function
+        /// <summary>
+        /// Returns the value of the generalized error function.
+        /// </summary>
+        /// <param name="x">Argument (0, +inf)</param>
+        /// <param name="n">Order [0, +inf)</param>
+        /// <returns>Value</returns>
+        public static float Gerf(float x, int n)
+        {
+            // Generalized error functions:
+            if (n < 0)
+                return float.NaN; // singular values
+
+            else if (n == 0)
+                return x / Maths.E / SQRT_PI; // E0(x)
+
+            else if (n == 1)
+                return (1 - Maths.Exp(-x)) / SQRT_PI; // E1(x)
+
+            else if (n == 2)
+                return Erf(x); // E2(x) = erf(x)
+
+            // En(x) for all x > 0
+            if (x > 0)
+            {
+                float p = 1.0f / n;
+                float w = 1.0f / SQRT_PI;
+                float v = Gamma(p) - GammaIncompleteComplemented(p, Maths.Pow(x, n));
+                return w * Gamma(n) * v;
+            }
+            return float.NaN;
+        }
+        /// <summary>
+        /// Returns the value of the generalized error function.
+        /// </summary>
+        /// <param name="x">Argument (0, +inf)</param>
+        /// <param name="n">Order [0, +inf)</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gerf(Complex32 x, int n)
+        {
+            if (n < 0)
+                return Complex32.NaN; // singular by your convention
+
+            // E0, E1, E2
+            if (n == 0)
+                return x / (Maths.E * SQRT_PI);
+            if (n == 1)
+                return (Complex32.One - Maths.Exp(-x)) / SQRT_PI;
+            if (n == 2)
+                return Erf(x); // your complex erf
+
+            // General case: En(x) = Γ(n)/√π * γ(1/n, x^n)
+            Complex32 xn = Maths.Pow(x, n);                       // x^n, integer power
+            Complex32 p = new Complex32(1f / n, 0f);          // 1/n
+            Complex32 lower = GammaIncomplete(p, xn);          // γ(1/n, x^n)
+            Complex32 gammaN = Gamma(new Complex32(n, 0f));    // Γ(n) = (n-1)!
+            return gammaN * lower / SQRT_PI;
+        }
+        /// <summary>
+        /// Returns the value of the generalized error function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static float Gerf(float x)
+        {
+            return Gerf(x, 2);
+        }
+        /// <summary>
+        /// Returns the value of the generalized error function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gerf(Complex32 x) => Gerf(x, 2);
+        #endregion
+
 
 
         #region Struve function
@@ -3754,49 +3829,6 @@ namespace UMapx.Core
                 return 1.0f;
             }
             return Special.Gamma(n + k) / Special.Gamma(n);
-        }
-        #endregion
-
-        #region Generalized error function
-        /// <summary>
-        /// Returns the value of the generalized error function.
-        /// </summary>
-        /// <param name="x">Argument (0, +inf)</param>
-        /// <param name="n">Order [0, +inf)</param>
-        /// <returns>Value</returns>
-        public static float Gerf(float x, int n)
-        {
-            // Generalized error functions:
-            if (n < 0)
-                return float.NaN; // singular values
-
-            else if (n == 0)
-                return x / (float)Math.E / SQRT_PI; // E0(x)
-
-            else if (n == 1)
-                return (1 - (float)Math.Exp(-x)) / SQRT_PI; // E1(x)
-
-            else if (n == 2)
-                return Erf(x); // E2(x) = erf(x)
-
-            // En(x) for all x > 0
-            if (x > 0)
-            {
-                float p = 1.0f / n;
-                float w = 1.0f / SQRT_PI;
-                float v = Gamma(p) - GammaIncompleteComplemented(p, (float)Math.Pow(x, n));
-                return w * Gamma(n) * v;
-            }
-            return float.NaN;
-        }
-        /// <summary>
-        /// Returns the value of the generalized error function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <returns>Value</returns>
-        public static float Gerf(float x)
-        {
-            return Gerf(x, 2);
         }
         #endregion
 
