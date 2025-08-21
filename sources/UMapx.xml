@@ -12565,6 +12565,22 @@
             <param name="x">Argument</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.LogBeta(System.Single,System.Single)">
+            <summary>
+            Returns the value of a log-beta function.
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogBeta(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a log-beta function.
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Fibonacci(System.Int32)">
             <summary>
             Returns the value of the Fibonacci number.

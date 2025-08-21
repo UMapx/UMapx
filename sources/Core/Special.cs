@@ -3887,7 +3887,26 @@ namespace UMapx.Core
         {
             return Special.BetaIncomplete(a, b, x) / Special.Beta(a, b);
         }
-
+        /// <summary>
+        /// Returns the value of a log-beta function.
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static float LogBeta(float a, float b)
+        {
+            return Special.LogGamma(a) + Special.LogGamma(b) - Special.LogGamma(a + b);
+        }
+        /// <summary>
+        /// Returns the value of a log-beta function.
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 LogBeta(Complex32 a, Complex32 b)
+        {
+            return Special.LogGamma(a) + Special.LogGamma(b) - Special.LogGamma(a + b);
+        }
         #endregion
 
         #region Fibonacci & Lucas numbers
