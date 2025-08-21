@@ -162,7 +162,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return Special.BetaIncomplete(alpha, beta, x / (1 + x));
+            return Special.BetaIncompleteRegularized(alpha, beta, x / (1 + x));
         }
         /// <summary>
         /// Returns the value of the probability density function.

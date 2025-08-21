@@ -164,7 +164,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return Special.Beta(a, b, x);
+            return Special.BetaIncomplete(a, b, x);
         }
         /// <summary>
         /// Returns the value of differential entropy.

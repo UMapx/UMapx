@@ -151,7 +151,7 @@ namespace UMapx.Distribution
             float v = degrees;
             float sqrt = (float)Math.Sqrt(x * x + v);
             float u = (x + sqrt) / (2 * sqrt);
-            return Special.BetaIncomplete(v / 2.0f, v / 2.0f, u);
+            return Special.BetaIncompleteRegularized(v / 2.0f, v / 2.0f, u);
         }
         /// <summary>
         /// Returns the value of the probability density function.

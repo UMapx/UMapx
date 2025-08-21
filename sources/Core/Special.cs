@@ -3597,7 +3597,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Riemann Zeta function
+        #region Riemann's Zeta function
         /// <summary>
         /// Returns the value of the Riemann zeta ζ(s) on the principal branch (real s).
         /// </summary>
@@ -3768,7 +3768,6 @@ namespace UMapx.Core
 
         #endregion
 
-
         #region Beta function
         /// <summary>
         /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
@@ -3777,6 +3776,16 @@ namespace UMapx.Core
         /// <param name="b">Value</param>
         /// <returns>Value</returns>
         public static float Beta(float a, float b)
+        {
+            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+        }
+        /// <summary>
+        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Beta(Complex32 a, Complex32 b)
         {
             return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
         }
@@ -3791,106 +3800,6 @@ namespace UMapx.Core
             return Special.Factorial(m - 1) * Special.Factorial(n - 1) / Special.Factorial(m + n - 1);
         }
         /// <summary>
-        /// Returns the value of an incomplete beta function: Bx(a, b).
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="x">Argument</param>
-        /// <returns>Value</returns>
-        public static float Beta(float a, float b, float x)
-        {
-            float aa, bb, t, xx, xc, w, y;
-            bool flag;
-
-            if (a <= 0.0)
-                throw new ArgumentOutOfRangeException("Invalid argument value: a <= 0");
-            if (b <= 0.0)
-                throw new ArgumentOutOfRangeException("Invalid argument value: b <= 0");
-
-            if ((x <= 0.0) || (x >= 1.0))
-            {
-                if (x == 0.0)
-                {
-                    return 0.0f;
-                }
-                if (x == 1.0)
-                {
-                    return 1.0f;
-                }
-                throw new ArgumentOutOfRangeException("Invalid argument value, because the value must belong to the interval [0, 1]");
-            }
-
-            flag = false;
-            if ((b * x) <= 1.0 && x <= 0.95)
-            {
-                t = Special.Series(a, b, x);
-                return t;
-            }
-
-            w = 1.0f - x;
-
-            if (x > (a / (a + b)))
-            {
-                flag = true;
-                aa = b;
-                bb = a;
-                xc = x;
-                xx = w;
-            }
-            else
-            {
-                aa = a;
-                bb = b;
-                xc = w;
-                xx = x;
-            }
-
-            if (flag && (bb * xx) <= 1.0 && xx <= 0.95)
-            {
-                t = Special.Series(aa, bb, xx);
-                if (t <= float.Epsilon) t = 1.0f - float.Epsilon;
-                else t = 1.0f - t;
-                return t;
-            }
-
-            y = xx * (aa + bb - 2.0f) - (aa - 1.0f);
-            if (y < 0.0)
-                w = Special.Incbcf(aa, bb, xx);
-            else
-                w = Special.Incbd(aa, bb, xx) / xc;
-
-            y = aa * (float)Math.Log(xx);
-            t = bb * (float)Math.Log(xc);
-            if ((aa + bb) < GammaMax && Math.Abs(y) < LogMax && Math.Abs(t) < LogMax)
-            {
-                t = (float)Math.Pow(xc, bb);
-                t *= (float)Math.Pow(xx, aa);
-                t /= aa;
-                t *= w;
-                t *= Special.Gamma(aa + bb) / (Special.Gamma(aa) * Special.Gamma(bb));
-                if (flag)
-                {
-                    if (t <= float.Epsilon) t = 1.0f - float.Epsilon;
-                    else t = 1.0f - t;
-                }
-                return t;
-            }
-
-            y += t + Special.LogGamma(aa + bb) - Special.LogGamma(aa) - Special.LogGamma(bb);
-            y += (float)Math.Log(w / aa);
-            if (y < LogMin)
-                t = 0.0f;
-            else
-                t = (float)Math.Exp(y);
-
-            if (flag)
-            {
-                if (t <= float.Epsilon) t = 1.0f - float.Epsilon;
-                else t = 1.0f - t;
-            }
-            return t;
-        }
-        /// <summary>
         /// Returns the value of a derivative beta function: B'(a, b).
         /// </summary>
         /// <param name="a">Value</param>
@@ -3901,7 +3810,17 @@ namespace UMapx.Core
             return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
         }
         /// <summary>
-        /// Returns the value of a regularized incomplete beta function: Ix(a, b).
+        /// Returns the value of a derivative beta function: B'(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 BetaDerivative(Complex32 a, Complex32 b)
+        {
+            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
+        }
+        /// <summary>
+        /// Returns the value of an incomplete beta function: Bx(a, b).
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
@@ -3909,238 +3828,67 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float BetaIncomplete(float a, float b, float x)
         {
-            return Special.Beta(a, b, x) / Special.Beta(a, b);
-        }
-        #region Private beta approximations
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private static float Incbcf(float a, float b, float x)
-        {
-            float xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
-            float k1, k2, k3, k4, k5, k6, k7, k8;
-            float r, t, and, thresh;
-            int n;
-            float big = 4.503599627370496e15f;
-            float biginv = 2.22044604925031308085e-16f;
+            if (float.IsNaN(a) || float.IsNaN(b) || float.IsNaN(x)) return float.NaN;
 
-            k1 = a;
-            k2 = a + b;
-            k3 = a;
-            k4 = a + 1.0f;
-            k5 = 1.0f;
-            k6 = b - 1.0f;
-            k7 = k4;
-            k8 = a + 2.0f;
-
-            pkm2 = 0.0f;
-            qkm2 = 1.0f;
-            pkm1 = 1.0f;
-            qkm1 = 1.0f;
-            and = 1.0f;
-            r = 1.0f;
-            n = 0;
-            thresh = 3.0f * float.Epsilon;
-
-            do
+            // Domain commonly assumed for the real-valued branch:
+            if (x <= 0f) return 0f;
+            if (x >= 1f)
             {
-                xk = -(x * k1 * k2) / (k3 * k4);
-                pk = pkm1 + pkm2 * xk;
-                qk = qkm1 + qkm2 * xk;
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
+                // Complete beta B(a,b)
+                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+            }
 
-                xk = (x * k5 * k6) / (k7 * k8);
-                pk = pkm1 + pkm2 * xk;
-                qk = qkm1 + qkm2 * xk;
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
+            // Poles of Beta when a or b is a non-positive integer
+            if ((a <= 0f && a == Maths.Round(a)) || (b <= 0f && b == Maths.Round(b)))
+                return float.NaN;
 
-                if (qk != 0) r = pk / qk;
-                if (r != 0)
-                {
-                    t = System.Math.Abs((and - r) / r);
-                    and = r;
-                }
-                else
-                    t = 1.0f;
+            // Optional symmetry to improve conditioning near x≈1:
+            // B_x(a,b) = B(a,b) - B_{1-x}(b,a)
+            if (x > 0.5f)
+            {
+                float B = Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+                return B - BetaIncomplete(b, a, 1f - x);
+            }
 
-                if (t < thresh) return and;
-
-                k1 += 1.0f;
-                k2 += 1.0f;
-                k3 += 2.0f;
-                k4 += 2.0f;
-                k5 += 1.0f;
-                k6 -= 1.0f;
-                k7 += 2.0f;
-                k8 += 2.0f;
-
-                if ((Math.Abs(qk) + Math.Abs(pk)) > big)
-                {
-                    pkm2 *= biginv;
-                    pkm1 *= biginv;
-                    qkm2 *= biginv;
-                    qkm1 *= biginv;
-                }
-                if ((Math.Abs(qk) < biginv) || (Math.Abs(pk) < biginv))
-                {
-                    pkm2 *= big;
-                    pkm1 *= big;
-                    qkm2 *= big;
-                    qkm1 *= big;
-                }
-            } while (++n < 300);
-
-            return and;
+            // Hypergeometric representation
+            float pref = Maths.Exp(a * Maths.Log(x)) / a;          // x^a / a
+            float hyp = Special.Hypergeom(a, 1f - b, a + 1f, x);  // 2F1(a,1-b; a+1; x)
+            return pref * hyp;
         }
         /// <summary>
-        /// 
+        /// Returns the value of an incomplete beta function: Bx(a, b).
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private static float Incbd(float a, float b, float x)
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 BetaIncomplete(Complex32 a, Complex32 b, Complex32 x)
         {
-            float xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
-            float k1, k2, k3, k4, k5, k6, k7, k8;
-            float r, t, and, z, thresh;
-            int n;
-            float big = 4.503599627370496e15f;
-            float biginv = 2.22044604925031308085e-16f;
+            // B_0(a,b) = 0
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
 
-            k1 = a;
-            k2 = b - 1.0f;
-            k3 = a;
-            k4 = a + 1.0f;
-            k5 = 1.0f;
-            k6 = a + b;
-            k7 = a + 1.0f;
-            ;
-            k8 = a + 2.0f;
+            // B_1(a,b) = B(a,b) = Γ(a)Γ(b)/Γ(a+b)
+            if (x.Imag == 0f && x.Real == 1f)
+                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
 
-            pkm2 = 0.0f;
-            qkm2 = 1.0f;
-            pkm1 = 1.0f;
-            qkm1 = 1.0f;
-            z = x / (1.0f - x);
-            and = 1.0f;
-            r = 1.0f;
-            n = 0;
-            thresh = 3.0f * float.Epsilon;
-            do
-            {
-                xk = -(z * k1 * k2) / (k3 * k4);
-                pk = pkm1 + pkm2 * xk;
-                qk = qkm1 + qkm2 * xk;
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-
-                xk = (z * k5 * k6) / (k7 * k8);
-                pk = pkm1 + pkm2 * xk;
-                qk = qkm1 + qkm2 * xk;
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-
-                if (qk != 0) r = pk / qk;
-                if (r != 0)
-                {
-                    t = System.Math.Abs((and - r) / r);
-                    and = r;
-                }
-                else
-                    t = 1.0f;
-
-                if (t < thresh) return and;
-
-                k1 += 1.0f;
-                k2 -= 1.0f;
-                k3 += 2.0f;
-                k4 += 2.0f;
-                k5 += 1.0f;
-                k6 += 1.0f;
-                k7 += 2.0f;
-                k8 += 2.0f;
-
-                if ((System.Math.Abs(qk) + System.Math.Abs(pk)) > big)
-                {
-                    pkm2 *= biginv;
-                    pkm1 *= biginv;
-                    qkm2 *= biginv;
-                    qkm1 *= biginv;
-                }
-                if ((System.Math.Abs(qk) < biginv) || (System.Math.Abs(pk) < biginv))
-                {
-                    pkm2 *= big;
-                    pkm1 *= big;
-                    qkm2 *= big;
-                    qkm1 *= big;
-                }
-            } while (++n < 300);
-
-            return and;
+            // Principal-branch power and Gauss 2F1
+            Complex32 pref = Maths.Exp(a * Maths.Log(x)) / a;                   // x^a / a
+            Complex32 hyp = Special.Hypergeom(a, Complex32.One - b, a + Complex32.One, x); // 2F1(a,1-b; a+1; x)
+            return pref * hyp;
         }
         /// <summary>
-        /// 
+        /// Returns the value of a regularized incomplete beta function: Ix(a, b).
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private static float Series(float a, float b, float x)
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static float BetaIncompleteRegularized(float a, float b, float x)
         {
-            float s, t, u, v, n, t1, z, ai;
-
-            ai = 1.0f / a;
-            u = (1.0f - b) * x;
-            v = u / (a + 1.0f);
-            t1 = v;
-            t = u;
-            n = 2.0f;
-            s = 0.0f;
-            z = float.Epsilon * ai;
-            while (System.Math.Abs(v) > z)
-            {
-                u = (n - b) * x / n;
-                t *= u;
-                v = t / (a + n);
-                s += v;
-                n += 1.0f;
-            }
-            s += t1;
-            s += ai;
-
-            u = a * (float)Math.Log(x);
-            if ((a + b) < GammaMax && (float)Math.Abs(u) < LogMax)
-            {
-                t = Gamma(a + b) / (Gamma(a) * Gamma(b));
-                s = s * t * (float)Math.Pow(x, a);
-            }
-            else
-            {
-                t = LogGamma(a + b) - LogGamma(a) - LogGamma(b) + u + (float)Math.Log(s);
-                if (t < LogMin) s = 0.0f;
-                else s = (float)Math.Exp(t);
-            }
-            return s;
+            return Special.BetaIncomplete(a, b, x) / Special.Beta(a, b);
         }
+
         #endregion
-        #endregion
-
-
 
         #region Fibonacci & Lucas numbers
         /// <summary>

@@ -12506,21 +12506,20 @@
             <param name="b">Value</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Beta(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Beta(System.Int32,System.Int32)">
             <summary>
             Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
             </summary>
             <param name="m">Integer number</param>
             <param name="n">Integer number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of an incomplete beta function: Bx(a, b).
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
-            <param name="x">Argument</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.BetaDerivative(System.Single,System.Single)">
@@ -12531,7 +12530,33 @@
             <param name="b">Value</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.BetaDerivative(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a derivative beta function: B'(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.BetaIncomplete(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of an incomplete beta function: Bx(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaIncomplete(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an incomplete beta function: Bx(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaIncompleteRegularized(System.Single,System.Single,System.Single)">
             <summary>
             Returns the value of a regularized incomplete beta function: Ix(a, b).
             </summary>
@@ -12539,33 +12564,6 @@
             <param name="b">Value</param>
             <param name="x">Argument</param>
             <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Incbcf(System.Single,System.Single,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="x"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Incbd(System.Single,System.Single,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="x"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Series(System.Single,System.Single,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="x"></param>
-            <returns></returns>
         </member>
         <member name="M:UMapx.Core.Special.Fibonacci(System.Int32)">
             <summary>
