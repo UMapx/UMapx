@@ -28,6 +28,10 @@ namespace UMapx.Core
         /// Log min.
         /// </summary>
         private const float LogMin = -7.451332191019412076235E2f;
+        /// <summary>
+        /// Gamma max.
+        /// </summary>
+        private const float GammaMax = 171.624376956302725f;
         #endregion
 
         #region Chebyshev polynomial
@@ -2496,6 +2500,705 @@ namespace UMapx.Core
 
         #endregion
 
+        #region Gamma function
+
+        /// <summary>
+        /// Returns the value of the Euler Gamma function: Г(z).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float Gamma(float x)
+        {
+            if (float.IsNaN(x)) return float.NaN;
+
+            // Poles on the real axis
+            if (x <= 0f && Maths.Abs(x - Maths.Round(x)) < 0f) // integer check
+            {
+                int xi = (int)Maths.Round(x);
+                if (xi <= 0) return float.NaN;
+            }
+
+            // Reflection for better accuracy and negative non-integers
+            if (x < 0.5f)
+            {
+                float sinpix = Maths.Sin(Maths.Pi * x);
+                if (sinpix == 0f) return float.NaN; // pole
+                return Maths.Pi / (sinpix * Gamma(1f - x));
+            }
+
+            return (float)GammaLanczos((double)x);
+        }
+        /// <summary>
+        /// Returns the value of the Euler Gamma function: Г(z).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gamma(Complex32 x)
+        {
+            // Detect real negative integer poles exactly
+            if (x.Imag == 0f)
+            {
+                float xr = x.Real;
+                if (xr <= 0f && xr == Maths.Round(xr)) return Complex32.NaN;
+            }
+
+            if (x.Real < 0.5f)
+            {
+                Complex32 sinpiz = Maths.Sin(new Complex32(Maths.Pi, 0f) * x);
+                if (Maths.Abs(sinpiz) == 0f) return Complex32.NaN;
+                return new Complex32(Maths.Pi, 0f) / (sinpiz * Gamma(Complex32.One - x));
+            }
+
+            return GammaLanczos(x);
+        }
+
+        /// <summary>
+        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float LogGamma(float x)
+        {
+            if (float.IsNaN(x)) return float.NaN;
+
+            // Poles on the real axis
+            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
+
+            if (x < 0.5f)
+            {
+                // log|Γ(x)| = log(π) - log|sin(πx)| - log|Γ(1-x)|
+                float sinpix = Maths.Sin(Maths.Pi * x);
+                if (sinpix == 0f) return float.NaN;
+                return Maths.Log(Maths.Pi) - Maths.Log(Maths.Abs(sinpix)) - LogGamma(1f - x);
+            }
+
+            return (float)LogGammaLanczos((double)x);
+        }
+        /// <summary>
+        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 LogGamma(Complex32 z)
+        {
+            // Real negative integers: simple poles
+            if (z.Imag == 0f)
+            {
+                float xr = z.Real;
+                if (xr <= 0f && xr == Maths.Round(xr))
+                    return Complex32.NaN;
+            }
+
+            if (z.Real < 0.5f)
+            {
+                // log Γ(z) = log π − log sin(πz) − log Γ(1−z)  (principal branches)
+                Complex32 sinpiz = Maths.Sin(new Complex32(Maths.Pi, 0f) * z);
+                if (Maths.Abs(sinpiz) == 0f) return Complex32.NaN;
+                return Maths.Log(new Complex32(Maths.Pi, 0f)) - Maths.Log(sinpiz) - LogGamma(Complex32.One - z);
+            }
+
+            return LogGammaLanczos(z);
+        }
+
+        /// <summary>
+        /// Returns the value of the Digamma function: ψ(z).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float DiGamma(float x)
+        {
+            if (float.IsNaN(x)) return float.NaN;
+
+            // Real poles at non-positive integers
+            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
+
+            // Reflection to avoid small/negative arguments
+            if (x < 0.5f)
+            {
+                float pix = Maths.Pi * x;
+                float sin = Maths.Sin(pix);
+                if (sin == 0f) return float.NaN;             // pole
+                                                             // ψ(x) = ψ(1-x) - π cot(πx)
+                return DiGamma(1f - x) - Maths.Pi * (Maths.Cos(pix) / sin);
+            }
+
+            // Shift up to a safe region for the asymptotic
+            float acc = 0f;
+            float z = x;
+            while (z < 8f)
+            {
+                acc -= 1f / z;
+                z += 1f;
+            }
+
+            // Bernoulli asymptotic: ψ(z) ~ ln z - 1/(2z) - 1/(12 z^2) + 1/(120 z^4) - 1/(252 z^6) + 1/(240 z^8) - 1/(132 z^10)
+            float inv = 1f / z;
+            float inv2 = inv * inv;
+            float res = Maths.Log(z) - 0.5f * inv
+                        - (1f / 12f) * inv2
+                        + (1f / 120f) * (inv2 * inv2)
+                        - (1f / 252f) * (inv2 * inv2 * inv2)
+                        + (1f / 240f) * (inv2 * inv2 * inv2 * inv2)
+                        - (1f / 132f) * (inv2 * inv2 * inv2 * inv2 * inv2);
+
+            return res + acc;
+        }
+        /// <summary>
+        /// Returns the value of the Digamma function: ψ(z).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 DiGamma(Complex32 x)
+        {
+            // Real negative integers: poles
+            if (x.Imag == 0f)
+            {
+                float xr = x.Real;
+                if (xr <= 0f && xr == Maths.Round(xr))
+                    return Complex32.NaN;
+            }
+
+            Complex32 z = x;
+
+            // Reflection for better behavior near the poles/left half-plane
+            if (z.Real < 0.5f)
+            {
+                Complex32 piz = new Complex32(Maths.Pi, 0f) * z;
+                Complex32 sin = Maths.Sin(piz);
+                if (Maths.Abs(sin) == 0f) return Complex32.NaN;
+                // ψ(z) = ψ(1 - z) - π cot(π z) = ψ(1 - z) - π * cos(π z)/sin(π z)
+                Complex32 cot = Maths.Cos(piz) / sin;
+                return DiGamma(Complex32.One - z) - new Complex32(Maths.Pi, 0f) * cot;
+            }
+
+            // Shift up to Re(z) ≥ 8
+            Complex32 acc = Complex32.Zero;
+            while (z.Real < 8f)
+            {
+                acc -= Complex32.One / z;
+                z += Complex32.One;
+            }
+
+            // Bernoulli asymptotic in the complex plane
+            Complex32 inv = Complex32.One / z;
+            Complex32 inv2 = inv * inv;
+
+            Complex32 res = Maths.Log(z) - 0.5f * inv
+                            - (1f / 12f) * inv2
+                            + (1f / 120f) * (inv2 * inv2)
+                            - (1f / 252f) * (inv2 * inv2 * inv2)
+                            + (1f / 240f) * (inv2 * inv2 * inv2 * inv2)
+                            - (1f / 132f) * (inv2 * inv2 * inv2 * inv2 * inv2);
+
+            return res + acc;
+        }
+
+        /// <summary>
+        /// Returns the value of the Trigamma function: ψ1(z).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float TriGamma(float x)
+        {
+            if (float.IsNaN(x)) return float.NaN;
+
+            // Real poles at non-positive integers
+            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
+
+            // Reflection for better behavior in left half-plane
+            if (x < 0.5f)
+            {
+                float pix = Maths.Pi * x;
+                float sin = Maths.Sin(pix);
+                if (sin == 0f) return float.NaN;
+                float csc2 = 1f / (sin * sin);
+                return (Maths.Pi * Maths.Pi) * csc2 - TriGamma(1f - x);
+            }
+
+            // Shift up to a safe region for asymptotics
+            float z = x;
+            float acc = 0f;
+            while (z < 8f)
+            {
+                acc += 1f / (z * z);
+                z += 1f;
+            }
+
+            // Bernoulli asymptotic
+            float inv = 1f / z;
+            float inv2 = inv * inv;
+            float inv3 = inv2 * inv;
+            float inv5 = inv3 * inv2;
+            float inv7 = inv5 * inv2;
+            float inv9 = inv7 * inv2;
+            float inv11 = inv9 * inv2;
+
+            float res = inv
+                       + 0.5f * inv2
+                       + (1f / 6f) * inv3
+                       - (1f / 30f) * inv5
+                       + (1f / 42f) * inv7
+                       - (1f / 30f) * inv9
+                       + (5f / 66f) * inv11;
+
+            return res + acc;
+        }
+        /// <summary>
+        /// Returns the value of the Trigamma function: ψ1(z).
+        /// </summary>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 TriGamma(Complex32 x)
+        {
+            // Detect real negative integer poles exactly
+            if (x.Imag == 0f)
+            {
+                float xr = x.Real;
+                if (xr <= 0f && xr == Maths.Round(xr))
+                    return Complex32.NaN;
+            }
+
+            Complex32 z = x;
+
+            // Reflection
+            if (z.Real < 0.5f)
+            {
+                Complex32 piz = new Complex32(Maths.Pi, 0f) * z;
+                Complex32 sin = Maths.Sin(piz);
+                if (Maths.Abs(sin) == 0f) return Complex32.NaN;
+
+                Complex32 csc2 = Complex32.One / (sin * sin);
+                return new Complex32(Maths.Pi * Maths.Pi, 0f) * csc2 - TriGamma(Complex32.One - z);
+            }
+
+            // Shift up to Re(z) ≥ 8
+            Complex32 acc = Complex32.Zero;
+            while (z.Real < 8f)
+            {
+                acc += Complex32.One / (z * z);
+                z += Complex32.One;
+            }
+
+            // Bernoulli asymptotic
+            Complex32 inv = Complex32.One / z;
+            Complex32 inv2 = inv * inv;
+            Complex32 inv3 = inv2 * inv;
+            Complex32 inv5 = inv3 * inv2;
+            Complex32 inv7 = inv5 * inv2;
+            Complex32 inv9 = inv7 * inv2;
+            Complex32 inv11 = inv9 * inv2;
+
+            Complex32 res = inv
+                           + 0.5f * inv2
+                           + (1f / 6f) * inv3
+                           - (1f / 30f) * inv5
+                           + (1f / 42f) * inv7
+                           - (1f / 30f) * inv9
+                           + (5f / 66f) * inv11;
+
+            return res + acc;
+        }
+
+        /// <summary>
+        /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
+        /// </summary>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float GammaQ(float s, float x)
+        {
+            if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
+            if (s <= 0f && s == Maths.Round(s)) return float.NaN;    // poles of Γ(s)
+            if (x < 0f) return float.NaN;
+
+            if (x == 0f) return 1f;          // Q(s,0)=1 (for s>0)
+            if (float.IsPositiveInfinity(x)) return 0f;
+
+            // choose method
+            if (x < s + 1f)
+            {
+                // series for P(s,x), then Q = 1 - P
+                float P = LowerRegGammaSeries(s, x);
+                return 1f - P;
+            }
+            else
+            {
+                // continued fraction for Q(s,x)
+                float logPref = s * Maths.Log(x) - x - Special.LogGamma(s); // log( e^{-x} x^s / Γ(s) )
+                float h = UpperGammaCF(s, x);                 // CF value
+                return Maths.Exp(logPref) * h;
+            }
+        }
+        /// <summary>
+        /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
+        /// </summary>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 GammaQ(Complex32 s, Complex32 x)
+        {
+            // Poles at real non-positive integers s
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.One; // Q(s,0)=1 (analytic continuation)
+            if (float.IsNaN(s.Real) || float.IsNaN(s.Imag) ||
+                float.IsNaN(x.Real) || float.IsNaN(x.Imag))
+                return Complex32.NaN;
+
+            // heuristic split like real case
+            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
+            {
+                Complex32 P = LowerRegGammaSeries(s, x);
+                return Complex32.One - P;
+            }
+            else
+            {
+                Complex32 logPref = s * Maths.Log(x) - x - Special.LogGamma(s);
+                Complex32 h = UpperGammaCF(s, x);
+                return Maths.Exp(logPref) * h;
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
+        /// </summary>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float GammaP(float s, float x)
+        {
+            if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
+            if (x < 0f) return float.NaN;
+            // Poles of Γ(s) on the real line:
+            if (s <= 0f && s == Maths.Round(s)) return float.NaN;
+
+            if (x == 0f) return 0f;                        // P(s,0) = 0  (s>0)
+            if (float.IsPositiveInfinity(x)) return 1f;    // P(s,∞) = 1
+
+            // Choose method:
+            if (x < s + 1f)
+            {
+                // Direct series for P(s,x)
+                return LowerRegGammaSeries(s, x);
+            }
+            else
+            {
+                // Continued fraction for Q(s,x), then P = 1 - Q
+                float logPref = s * Maths.Log(x) - x - Special.LogGamma(s); // log(e^{-x} x^s / Γ(s))
+                float cf = UpperGammaCF(s, x);                // CF approximates Γ(s,x)/(e^{-x} x^s)
+                float Q = Maths.Exp(logPref) * cf;
+                return 1f - Q;
+            }
+        }
+        /// <summary>
+        /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
+        /// </summary>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 GammaP(Complex32 s, Complex32 x)
+        {
+            // Poles of Γ(s) at real non-positive integers:
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero; // P(s,0)=0 (analytic continuation)
+            if ((s.Imag == 0f) && s.Real <= 0f && s.Real == Maths.Round(s.Real))
+                return Complex32.NaN;
+
+            // Heuristic split mirroring the real case
+            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
+            {
+                return LowerRegGammaSeries(s, x);
+            }
+            else
+            {
+                Complex32 logPref = s * Maths.Log(x) - x - Special.LogGamma(s);
+                Complex32 cf = UpperGammaCF(s, x);
+                Complex32 Q = Maths.Exp(logPref) * cf;
+                return Complex32.One - Q;
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of an incomplete Gamma function: γ(s, x).
+        /// </summary>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float GammaIncomplete(float s, float x)
+        {
+            if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
+            if (x < 0f) return float.NaN;
+
+            // Poles of Γ(s) on the real axis (we restrict to s > 0 in this real overload)
+            if (s <= 0f && s == Maths.Round(s)) return float.NaN;
+
+            if (x == 0f) return 0f;                       // γ(s,0) = 0  (s>0)
+            if (float.IsPositiveInfinity(x)) return Special.Gamma(s); // γ(s,∞) = Γ(s)
+
+            if (x < s + 1f)
+            {
+                // Series for γ(s,x) via P(s,x) series, then multiply by Γ(s)
+                float P = LowerRegGammaSeries(s, x);    // P(s,x)
+                return Special.Gamma(s) * P;                          // γ = Γ * P
+            }
+            else
+            {
+                // γ(s,x) = Γ(s) − Γ(s,x),  Γ(s,x) ≈ e^{−x} x^s * CF
+                float logPref = s * Maths.Log(x) - x;                  // log(e^{−x} x^s)
+                float cf = UpperGammaCF(s, x);           // CF ≈ Γ(s,x)/(e^{−x} x^s)
+                float upper = Maths.Exp(logPref) * cf;
+                return Special.Gamma(s) - upper;
+            }
+        }
+        /// <summary>
+        /// Returns the value of an incomplete Gamma function: γ(s, x).
+        /// </summary>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 GammaIncomplete(Complex32 s, Complex32 x)
+        {
+            if ((float.IsNaN(s.Real) || float.IsNaN(s.Imag)) ||
+                (float.IsNaN(x.Real) || float.IsNaN(x.Imag)))
+                return Complex32.NaN;
+
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero; // γ(s,0) = 0
+
+            // Poles of Γ(s) on the principal branch (real negative integers)
+            if (s.Imag == 0f)
+            {
+                float sr = s.Real;
+                if (sr <= 0f && sr == Maths.Round(sr))
+                    return new Complex32(float.NaN, float.NaN);
+            }
+
+            // Heuristic split mirroring the real case
+            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
+            {
+                // γ = Γ * P, with P via series
+                Complex32 P = LowerRegGammaSeries(s, x);
+                return Special.Gamma(s) * P;
+            }
+            else
+            {
+                // γ = Γ − Γ(s,x), with Γ(s,x) ≈ e^{−x} x^s * CF
+                Complex32 logPref = s * Maths.Log(x) - x;         // log(e^{−x} x^s)
+                Complex32 cf = UpperGammaCF(s, x);
+                Complex32 upper = Maths.Exp(logPref) * cf;
+                return Special.Gamma(s) - upper;
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
+        /// </summary>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static float GammaIncompleteComplemented(float s, float x)
+        {
+            // Γ(s,x) = Γ(s) - γ(s,x)
+            return Special.Gamma(s) - Special.GammaIncomplete(s, x);
+        }
+        /// <summary>
+        /// Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
+        /// </summary>
+        /// <param name="s">Number</param>
+        /// <param name="x">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 GammaIncompleteComplemented(Complex32 s, Complex32 x)
+        {
+            return Special.Gamma(s) - Special.GammaIncomplete(s, x);
+        }
+
+        #region Private methods (helpers)
+
+        // ---------------------- helpers ----------------------
+
+        private const float G = 7f;
+        private const float SQRT_TWO_PI = 2.5066282746310005024f; // √(2π)
+
+        // Wikipedia/Numerical Recipes coefficients (cast to float)
+        private static readonly float[] LANCZOS = new float[]
+        {
+            0.99999999999980993f,
+            676.5203681218851f,
+            -1259.1392167224028f,
+            771.32342877765313f,
+            -176.61502916214059f,
+            12.507343278686905f,
+            -0.13857109526572012f,
+            0.0000099843695780195716f,
+            0.00000015056327351493116f
+        };
+
+        /// <summary>
+        /// Lanczos approximation (real) valid for Re(z) > 0.5. Computes principal branch.
+        /// </summary>
+        private static double GammaLanczos(double x)
+        {
+            // Γ(x) ≈ √(2π) * (t)^{x-0.5} * e^{-t} * A(x), where t = x + g - 0.5, A(x)=a0 + Σ a_k/(x-1+k)
+            double z = x - 1.0;
+            double sum = LANCZOS[0];
+            for (int k = 1; k < LANCZOS.Length; k++)
+                sum += LANCZOS[k] / (z + k);
+
+            double t = z + G + 0.5;
+            // Use log form to reduce overflow/underflow
+            double logGamma = Math.Log(SQRT_TWO_PI * sum) + (z + 0.5) * Math.Log(t) - t;
+            return Math.Exp(logGamma);
+        }
+
+        /// <summary>
+        /// Lanczos approximation (complex) valid for Re(z) > 0.5. Computes principal branch.
+        /// </summary>
+        private static Complex32 GammaLanczos(Complex32 x)
+        {
+            Complex32 z = x - Complex32.One;
+            Complex32 sum = new Complex32(LANCZOS[0], 0f);
+            for (int k = 1; k < LANCZOS.Length; k++)
+                sum += LANCZOS[k] / (z + new Complex32(k, 0f));
+
+            Complex32 t = z + new Complex32(G + 0.5f, 0f);
+            Complex32 logPart = Maths.Log(new Complex32(SQRT_TWO_PI, 0f) * sum)
+                              + (z + new Complex32(0.5f, 0f)) * Maths.Log(t)
+                              - t;
+            return Maths.Exp(logPart);
+        }
+
+        /// <summary>
+        /// Lanczos log-gamma for real x with Re(x) ≥ 0.5 (principal branch).
+        /// </summary>
+        private static double LogGammaLanczos(double x)
+        {
+            double z = x - 1.0;
+            double sum = LANCZOS[0];
+            for (int k = 1; k < LANCZOS.Length; k++)
+                sum += LANCZOS[k] / (z + k);
+
+            double t = z + G + 0.5;
+            // log Γ(x) ≈ log(√(2π)*sum) + (z+0.5) log t − t
+            return Math.Log(SQRT_TWO_PI * sum) + (z + 0.5) * Math.Log(t) - t;
+        }
+
+        /// <summary>
+        /// Lanczos log-gamma for complex z with Re(z) ≥ 0.5 (principal branch).
+        /// </summary>
+        private static Complex32 LogGammaLanczos(Complex32 x)
+        {
+            Complex32 z = x - Complex32.One;
+            Complex32 sum = new Complex32(LANCZOS[0], 0f);
+            for (int k = 1; k < LANCZOS.Length; k++)
+                sum += LANCZOS[k] / (z + new Complex32(k, 0f));
+
+            Complex32 t = z + new Complex32(G + 0.5f, 0f);
+            // log Γ(x) ≈ log(√(2π)*sum) + (z+0.5) log t − t
+            return Maths.Log(new Complex32(SQRT_TWO_PI, 0f) * sum)
+                 + (z + new Complex32(0.5f, 0f)) * Maths.Log(t)
+                 - t;
+        }
+
+        // ---------------- helpers: series for P(s,x) ----------------
+        // P(s,x) = e^{-x} x^{s} * Σ_{n>=0} [ x^n / (s(s+1)...(s+n)) ],
+        // with t0 = 1/s and t_{n+1} = t_n * x/(s+n+1).
+        private static float LowerRegGammaSeries(float s, float x)
+        {
+            float term = 1f / s;    // n=0
+            float sum = term;
+            float eps = 1e-16f;
+            int maxIter = 200;
+
+            for (int n = 0; n < maxIter; n++)
+            {
+                term *= x / (s + n + 1f);
+                sum += term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            // e^{-x} x^{s}
+            float pref = Maths.Exp(-x + s * Maths.Log(x));
+            return pref * sum;
+        }
+
+        private static Complex32 LowerRegGammaSeries(Complex32 s, Complex32 x)
+        {
+            Complex32 term = Complex32.One / s; // n=0
+            Complex32 sum = term;
+            float eps = 1e-16f;
+            int maxIter = 200;
+
+            for (int n = 0; n < maxIter; n++)
+            {
+                term *= x / (s + (n + 1f));
+                sum += term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            Complex32 pref = Maths.Exp(-x + s * Maths.Log(x));
+            return pref * sum;
+        }
+
+        // --------------- helpers: continued fraction for Q(s,x) ---------------
+        // Lentz’s algorithm for the continued fraction representation of Γ(s,x):
+        // Q(s,x) = e^{-x} x^{s} / Γ(s) * h, where
+        //   b0 = x + 1 - s,  h = 1/b0,
+        //   for i=1..: a_i = i*(s - i),  b_i = b_{i-1} + 2,
+        //   update via Lentz with c,d and delta = c*d.
+        private static float UpperGammaCF(float s, float x)
+        {
+            const float tiny = 1e-30f;
+
+            float b = x + 1f - s;
+            float c = 1f / tiny;
+            float d = 1f / b;
+            float h = d;
+
+            float eps = 1e-16f;
+            int maxIter = 200;
+
+            for (int i = 1; i <= maxIter; i++)
+            {
+                float a = i * (s - i);      // a_i
+                                            // d = 1 / (b + a*d),  c = b + a/c
+                d = 1f / (b + a * d);
+                c = b + a / c;
+                float delta = c * d;
+                h *= delta;
+
+                b += 2f;
+                if (Maths.Abs(delta - 1f) < eps) break;
+            }
+            return h;
+        }
+
+        private static Complex32 UpperGammaCF(Complex32 s, Complex32 x)
+        {
+            const float tiny = 1e-30f;
+
+            Complex32 b = x + Complex32.One - s;
+            Complex32 c = new Complex32(1f / tiny, 0f);
+            Complex32 d = Complex32.One / b;
+            Complex32 h = d;
+
+            float eps = 1e-16f;
+            int maxIter = 200;
+
+            for (int i = 1; i <= maxIter; i++)
+            {
+                Complex32 ii = new Complex32(i, 0f);
+                Complex32 a = ii * (s - ii); // a_i
+
+                d = Complex32.One / (b + a * d);
+                c = b + a / c;
+                Complex32 delta = c * d;
+                h *= delta;
+
+                b += 2f; // b increases by 2 each step
+                if (Maths.Abs(delta - Complex32.One) < eps) break;
+            }
+            return h;
+        }
+
+        #endregion
+
+        #endregion
+
+
 
         #region Struve function
         /// <summary>
@@ -2708,7 +3411,7 @@ namespace UMapx.Core
                 return t;
             }
 
-            y += t + Special.GammaLog(aa + bb) - Special.GammaLog(aa) - Special.GammaLog(bb);
+            y += t + Special.LogGamma(aa + bb) - Special.LogGamma(aa) - Special.LogGamma(bb);
             y += (float)Math.Log(w / aa);
             if (y < LogMin)
                 t = 0.0f;
@@ -2963,603 +3666,11 @@ namespace UMapx.Core
             }
             else
             {
-                t = GammaLog(a + b) - GammaLog(a) - GammaLog(b) + u + (float)Math.Log(s);
+                t = LogGamma(a + b) - LogGamma(a) - LogGamma(b) + u + (float)Math.Log(s);
                 if (t < LogMin) s = 0.0f;
                 else s = (float)Math.Exp(t);
             }
             return s;
-        }
-        #endregion
-        #endregion
-
-        #region Gamma function
-        /// <summary>
-        /// 
-        /// </summary>
-        private const float GammaMax = 171.624376956302725f;
-        /// <summary>
-        /// 
-        /// </summary>
-        private static float[] Px = {
-                         1.60119522476751861407E-4f,
-                         1.19135147006586384913E-3f,
-                         1.04213797561761569935E-2f,
-                         4.76367800457137231464E-2f,
-                         2.07448227648435975150E-1f,
-                         4.94214826801497100753E-1f,
-                         9.99999999999999996796E-1f
-                     };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static float[] Qx = {
-                         -2.31581873324120129819E-5f,
-                         5.39605580493303397842E-4f,
-                         -4.45641913851797240494E-3f,
-                         1.18139785222060435552E-2f,
-                         3.58236398605498653373E-2f,
-                         -2.34591795718243348568E-1f,
-                         7.14304917030273074085E-2f,
-                         1.00000000000000000320E0f
-                     };
-        /// <summary>
-        /// Returns the value of the Euler Gamma function: Г(z).
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static float Gamma(float z)
-        {
-            float p, g;
-            float q = Math.Abs(z);
-
-            if (q > 33.0)
-            {
-                if (z < 0.0)
-                {
-                    p = (float)Math.Floor(q);
-                    if (p == q) return float.NaN;
-                    g = q - p;
-                    if (g > 0.5)
-                    {
-                        p += 1.0f;
-                        g = q - p;
-                    }
-                    g = q * (float)Math.Sin(Math.PI * g);
-                    if (g == 0.0) return float.NaN;
-                    g = Math.Abs(g);
-                    g = Maths.Phi / (g * Special.Stirling(q));
-
-                    return -g;
-                }
-                else
-                {
-                    return Special.Stirling(z);
-                }
-            }
-
-            g = 1.0f;
-            while (z >= 3.0f)
-            {
-                z -= 1.0f;
-                g *= z;
-            }
-
-            while (z < 0.0)
-            {
-                if (z == 0.0)
-                {
-                    return float.NaN;
-                }
-                else if (z > -1.0E-9)
-                {
-                    return (g / ((1.0f + 0.5772156649015329f * z) * z));
-                }
-                g /= z;
-                z += 1.0f;
-            }
-
-            while (z < 2.0)
-            {
-                if (z == 0.0)
-                {
-                    return float.NaN;
-                }
-                else if (z < 1.0E-9)
-                {
-                    return g / ((1.0f + 0.5772156649015329f * z) * z);
-                }
-                g /= z;
-                z += 1.0f;
-            }
-
-            if ((z == 2.0) || (z == 3.0)) return g;
-
-            z -= 2.0f;
-            p = Special.Polynomials(z, Px, 6);
-            q = Special.Polynomials(z, Qx, 7);
-            return g * p / q;
-
-        }
-        /// <summary>
-        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static float GammaLog(float z)
-        {
-            if (z < 0)
-            {
-                if (z > -6)
-                {
-                    return (float)Math.Log(Gamma(z));
-                }
-                return float.NaN;
-            }
-            else if (z > 0)
-            {
-                return Special.GammaLogLanczos(z);
-            }
-            return float.NaN;
-        }
-        /// <summary>
-        /// Returns the value of the Digamma function: ψ(z).
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static float DiGamma(float z)
-        {
-            if (z == 0)
-                return float.NegativeInfinity;
-
-            float s = 0;
-            float w = 0;
-            float y = 0;
-            float yy = 0;
-            float nz = 0;
-
-            bool negative = false;
-
-            if (z <= 0.0)
-            {
-                negative = true;
-                float q = z;
-                float p = (int)Math.Floor(q);
-
-                if (p == q)
-                    return float.NaN;
-
-                nz = q - p;
-
-                if (nz != 0.5)
-                {
-                    if (nz > 0.5)
-                    {
-                        p = p + 1.0f;
-                        nz = q - p;
-                    }
-                    nz = (float)Math.PI / (float)Math.Tan(Math.PI * nz);
-                }
-                else
-                {
-                    nz = 0.0f;
-                }
-
-                z = 1.0f - z;
-            }
-
-            if (z <= 10.0 & z == Math.Floor(z))
-            {
-                y = 0.0f;
-                int n = (int)Math.Floor(z);
-                for (int i = 1; i <= n - 1; i++)
-                {
-                    w = i;
-                    y = y + 1.0f / w;
-                }
-                y = y - 0.57721566490153286061f;
-            }
-            else
-            {
-                s = z;
-                w = 0.0f;
-
-                while (s < 10.0)
-                {
-                    w = w + 1.0f / s;
-                    s = s + 1.0f;
-                }
-
-                if (s < 1.0E17)
-                {
-                    yy = 1.0f / (s * s);
-
-                    float polv = 8.33333333333333333333E-2f;
-                    polv = polv * yy - 2.10927960927960927961E-2f;
-                    polv = polv * yy + 7.57575757575757575758E-3f;
-                    polv = polv * yy - 4.16666666666666666667E-3f;
-                    polv = polv * yy + 3.96825396825396825397E-3f;
-                    polv = polv * yy - 8.33333333333333333333E-3f;
-                    polv = polv * yy + 8.33333333333333333333E-2f;
-                    y = yy * polv;
-                }
-                else
-                {
-                    y = 0.0f;
-                }
-                y = (float)Math.Log(s) - 0.5f / s - y - w;
-            }
-
-            if (negative == true)
-            {
-                y = y - nz;
-            }
-
-            return y;
-        }
-        /// <summary>
-        /// Returns the value of the Trigamma function: ψ1(z).
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static float TriGamma(float z)
-        {
-            float a = 0.0001f;
-            float b = 5.0f;
-            float b2 = 0.1666666667f;
-            float b4 = -0.03333333333f;
-            float b6 = 0.02380952381f;
-            float b8 = -0.03333333333f;
-            float value;
-            float y;
-            float yy;
-
-            // Check the input.
-            if (z <= 0.0)
-            {
-                return float.NaN;
-            }
-
-            yy = z;
-
-            // Use small value approximation if X <= A.
-            if (z <= a)
-            {
-                value = 1.0f / z / z;
-                return value;
-            }
-
-            // Increase argument to ( X + I ) >= B.
-            value = 0.0f;
-
-            while (yy < b)
-            {
-                value = value + 1.0f / yy / yy;
-                yy = yy + 1.0f;
-            }
-
-            // Apply asymptotic formula if argument is B or greater.
-            y = 1.0f / yy / yy;
-
-            value = value + 0.5f *
-                y + (1.0f
-              + y * (b2
-              + y * (b4
-              + y * (b6
-              + y * b8)))) / yy;
-
-            return value;
-        }
-        /// <summary>
-        /// Returns the value of the degree of the Euler Gamma function: Г(z)^p.
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <param name="p">Power</param>
-        /// <returns>Value</returns>
-        public static float Gamma(float z, uint p)
-        {
-            if (p == 1)
-            {
-                return Special.Gamma(z);
-            }
-
-            float prod = (float)Math.Pow(Math.PI, (1 / 4.0f) * p * (p - 1));
-            int i;
-
-            for (i = 0; i < p; i++)
-            {
-                prod *= Special.Gamma(z - 0.5f * i);
-            }
-
-            return prod;
-        }
-        /// <summary>
-        /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
-        /// </summary>
-        /// <param name="s">Number</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float GammaQ(float s, float x)
-        {
-            const float big = 4.503599627370496e15f;
-            const float biginv = 2.22044604925031308085e-16f;
-            float and, ax, c, yc, r, t, y, z;
-            float pk, pkm1, pkm2, qk, qkm1, qkm2;
-
-            if (x <= 0 || s <= 0)
-                return 1.0f;
-
-            if (x < 1.0 || x < s)
-                return 1.0f - GammaP(s, x);
-
-            if (float.IsPositiveInfinity(x))
-                return 0;
-
-            ax = s * (float)Math.Log(x) - x - GammaLog(s);
-
-            if (ax < -LogMax)
-                return 0.0f;
-
-            ax = (float)Math.Exp(ax);
-
-            // continued fraction
-            y = 1.0f - s;
-            z = x + y + 1.0f;
-            c = 0.0f;
-            pkm2 = 1.0f;
-            qkm2 = x;
-            pkm1 = x + 1.0f;
-            qkm1 = z * x;
-            and = pkm1 / qkm1;
-
-            do
-            {
-                c += 1.0f;
-                y += 1.0f;
-                z += 2.0f;
-                yc = y * c;
-                pk = pkm1 * z - pkm2 * yc;
-                qk = qkm1 * z - qkm2 * yc;
-                if (qk != 0)
-                {
-                    r = pk / qk;
-                    t = Math.Abs((and - r) / r);
-                    and = r;
-                }
-                else
-                    t = 1.0f;
-
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-                if (Math.Abs(pk) > big)
-                {
-                    pkm2 *= biginv;
-                    pkm1 *= biginv;
-                    qkm2 *= biginv;
-                    qkm1 *= biginv;
-                }
-            } while (t > float.Epsilon);
-
-            return and * ax;
-        }
-        /// <summary>
-        /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
-        /// </summary>
-        /// <param name="s">Number</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float GammaP(float s, float x)
-        {
-            if (s <= 0)
-                return 1.0f;
-
-            if (x <= 0)
-                return 0.0f;
-
-            if (x > 1.0 && x > s)
-                return 1.0f - GammaQ(s, x);
-
-            float ax = s * (float)Math.Log(x) - x - GammaLog(s);
-
-            if (ax < -LogMax)
-                return 0.0f;
-
-            ax = (float)Math.Exp(ax);
-
-            float r = s;
-            float c = 1.0f;
-            float and = 1.0f;
-
-            do
-            {
-                r += 1.0f;
-                c *= x / r;
-                and += c;
-            } while (c / and > float.Epsilon);
-
-            return and * ax / s;
-        }
-        /// <summary>
-        /// Returns the value of an incomplete Gamma function: γ(s, x).
-        /// </summary>
-        /// <param name="s">Number</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float GammaIncomplete(float s, float x)
-        {
-            float and, ax, c, r;
-
-            if (x <= 0 || s <= 0) return 0.0f;
-
-            if (x > 1.0 && x > s) return 1.0f - GammaIncomplete(s, x, true);
-
-            /* Compute  x**a * exp(-x) / gamma(a)  */
-            ax = s * (float)Math.Log(x) - x - GammaLog(s);
-            if (ax < -LogMax) return (0.0f);
-
-            ax = (float)Math.Exp(ax);
-
-            /* power series */
-            r = s;
-            c = 1.0f;
-            and = 1.0f;
-
-            do
-            {
-                r += 1.0f;
-                c *= x / r;
-                and += c;
-            } while (c / and > float.Epsilon);
-
-            return (and * ax / s);
-
-        }
-        /// <summary>
-        /// Returns the value of an incomplete Gamma function: γ(s, x).
-        /// </summary>
-        /// <param name="s">Number</param>
-        /// <param name="x">Number</param>
-        /// <param name="complemented">Additional function or not</param>
-        /// <returns>Value</returns>
-        public static float GammaIncomplete(float s, float x, bool complemented)
-        {
-            // not complemented
-            if (!complemented)
-                return GammaIncomplete(s, x);
-
-            float big = 4.503599627370496e15f;
-            float biginv = 2.22044604925031308085e-16f;
-            float and, ax, c, yc, r, t, y, z;
-            float pk, pkm1, pkm2, qk, qkm1, qkm2;
-
-            if (x <= 0 || s <= 0) return 1.0f;
-
-            if (x < 1.0 || x < s) return 1.0f - GammaIncomplete(s, x);
-
-            ax = s * (float)Math.Log(x) - x - GammaLog(s);
-            if (ax < -LogMax) return 0.0f;
-
-            ax = (float)Math.Exp(ax);
-
-            /* continued fraction */
-            y = 1.0f - s;
-            z = x + y + 1.0f;
-            c = 0.0f;
-            pkm2 = 1.0f;
-            qkm2 = x;
-            pkm1 = x + 1.0f;
-            qkm1 = z * x;
-            and = pkm1 / qkm1;
-
-            do
-            {
-                c += 1.0f;
-                y += 1.0f;
-                z += 2.0f;
-                yc = y * c;
-                pk = pkm1 * z - pkm2 * yc;
-                qk = qkm1 * z - qkm2 * yc;
-                if (qk != 0)
-                {
-                    r = pk / qk;
-                    t = Math.Abs((and - r) / r);
-                    and = r;
-                }
-                else
-                    t = 1.0f;
-
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-                if (Math.Abs(pk) > big)
-                {
-                    pkm2 *= biginv;
-                    pkm1 *= biginv;
-                    qkm2 *= biginv;
-                    qkm1 *= biginv;
-                }
-            } while (t > float.Epsilon);
-
-            return and * ax;
-        }
-
-        #region Gamma approximations
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="coef"></param>
-        /// <param name="N"></param>
-        /// <returns></returns>
-        private static float Polynomials(float x, float[] coef, int N)
-        {
-            float sum = coef[0];
-
-            for (int i = 1; i <= N; i++)
-            {
-                sum = sum * x + coef[i];
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private static float Stirling(float x)
-        {
-            float[] STIR =
-            {
-                7.87311395793093628397E-4f,
-               -2.29549961613378126380E-4f,
-               -2.68132617805781232825E-3f,
-                3.47222221605458667310E-3f,
-                8.33333333333482257126E-2f,
-            };
-            float MAXSTIR = 143.01608f;
-
-            float w = 1.0f / x;
-            float y = (float)Math.Exp(x);
-
-            w = 1.0f + w * Polynomials(w, STIR, 4);
-
-            if (x > MAXSTIR)
-            {
-                /* Avoid overflow in Math.Pow() */
-                float v = (float)Math.Pow(x, 0.5 * x - 0.25);
-                y = v * (v / y);
-            }
-            else
-            {
-                y = (float)Math.Pow(x, x - 0.5) / y;
-            }
-            y = 2.50662827463100050242E0f * y * w;
-            return y;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="z"></param>
-        /// <returns></returns>
-        private static float GammaLogLanczos(float z)
-        {
-            float[] coef = new float[6] { 76.18009172947146f, -86.50532032941677f, 24.01409824083091f, -1.231739572450155f, 0.1208650973866179E-2f, -0.5395239384953E-5f };
-            float LogSqrtTwoPi = 0.91893853320467274178f;
-            float denom = z + 1;
-            float y = z + 5.5f;
-            float series = 1.000000000190015f;
-            int i;
-
-            for (i = 0; i < 6; ++i)
-            {
-                series += coef[i] / denom;
-                denom += 1.0f;
-            }
-            return (LogSqrtTwoPi + (z + 0.5f) * (float)Math.Log(y) -
-            y + (float)Math.Log(series / z));
         }
         #endregion
         #endregion
@@ -3599,7 +3710,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float LogFactorial(float n)
         {
-            return Special.GammaLog(n + 1.0f);
+            return Special.LogGamma(n + 1.0f);
         }
         /// <summary>
         /// Returns the factorial of a number.
@@ -3673,7 +3784,7 @@ namespace UMapx.Core
             {
                 float p = 1.0f / n;
                 float w = 1.0f / SQRT_PI;
-                float v = Gamma(p) - GammaIncomplete(p, (float)Math.Pow(x, n), true);
+                float v = Gamma(p) - GammaIncompleteComplemented(p, (float)Math.Pow(x, n));
                 return w * Gamma(n) * v;
             }
             return float.NaN;

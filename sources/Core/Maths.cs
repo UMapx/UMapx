@@ -283,7 +283,7 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsInteger(float a)
         {
-            if (a == (int)a)
+            if (a == Maths.Round(a))
             {
                 return true;
             }

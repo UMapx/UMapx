@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         public Student(float n)
         {
             this.N = n;
-            float num = Special.GammaLog((n + 1) / 2.0f);
-            float den = 0.5f * (float)Math.Log(n * Maths.Pi) + Special.GammaLog(n / 2.0f);
+            float num = Special.LogGamma((n + 1) / 2.0f);
+            float den = 0.5f * (float)Math.Log(n * Maths.Pi) + Special.LogGamma(n / 2.0f);
             this.lambda = num - den;
         }
         /// <summary>

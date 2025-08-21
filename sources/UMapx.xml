@@ -12270,29 +12270,28 @@
             <param name="x"></param>
             <returns></returns>
         </member>
-        <member name="F:UMapx.Core.Special.GammaMax">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.Px">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.Qx">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="M:UMapx.Core.Special.Gamma(System.Single)">
             <summary>
             Returns the value of the Euler Gamma function: Г(z).
             </summary>
-            <param name="z">Number</param>
+            <param name="x">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.GammaLog(System.Single)">
+        <member name="M:UMapx.Core.Special.Gamma(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Euler Gamma function: Г(z).
+            </summary>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogGamma(System.Single)">
+            <summary>
+            Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+            </summary>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogGamma(UMapx.Core.Complex32)">
             <summary>
             Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
             </summary>
@@ -12303,25 +12302,39 @@
             <summary>
             Returns the value of the Digamma function: ψ(z).
             </summary>
-            <param name="z">Number</param>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DiGamma(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Digamma function: ψ(z).
+            </summary>
+            <param name="x">Number</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.TriGamma(System.Single)">
             <summary>
             Returns the value of the Trigamma function: ψ1(z).
             </summary>
-            <param name="z">Number</param>
+            <param name="x">Number</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Gamma(System.Single,System.UInt32)">
+        <member name="M:UMapx.Core.Special.TriGamma(UMapx.Core.Complex32)">
             <summary>
-            Returns the value of the degree of the Euler Gamma function: Г(z)^p.
+            Returns the value of the Trigamma function: ψ1(z).
             </summary>
-            <param name="z">Number</param>
-            <param name="p">Power</param>
+            <param name="x">Number</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.GammaQ(System.Single,System.Single)">
+            <summary>
+            Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
+            </summary>
+            <param name="s">Number</param>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaQ(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
             </summary>
@@ -12336,6 +12349,39 @@
             <param name="s">Number</param>
             <param name="x">Number</param>
             <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaP(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
+            </summary>
+            <param name="s">Number</param>
+            <param name="x">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaLanczos(System.Double)">
+            <summary>
+            Lanczos approximation (real) valid for Re(z) > 0.5. Computes principal branch.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaLanczos(UMapx.Core.Complex32)">
+            <summary>
+            Lanczos approximation (complex) valid for Re(z) > 0.5. Computes principal branch.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.LogGammaLanczos(System.Double)">
+            <summary>
+            Lanczos log-gamma for real x with Re(x) ≥ 0.5 (principal branch).
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.LogGammaLanczos(UMapx.Core.Complex32)">
+            <summary>
+            Lanczos log-gamma for complex z with Re(z) ≥ 0.5 (principal branch).
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Special.GammaMax">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:UMapx.Core.Special.GammaIncomplete(System.Single,System.Single)">
             <summary>
