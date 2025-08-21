@@ -289,6 +289,15 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
+        public static implicit operator Complex(Complex32 value)
+        {
+            return new Complex(value.Real, value.Imag);
+        }
+        /// <summary>
+        /// Defines an explicit conversion of a number to complex number.
+        /// </summary>
+        /// <param name="value">Value to be converted to complex number</param>
+        /// <returns>Complex number</returns>
         public static implicit operator Complex32(double value)
         {
             return new Complex32((float)value, 0);
