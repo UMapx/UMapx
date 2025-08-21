@@ -1604,7 +1604,7 @@ namespace UMapx.Core
             float s = 1.0f;
             float m = 1.0f;
             float pa = 1, pb = 1, pc = 1;
-            float t, eps = 1e-32f;
+            float t, eps = 1e-16f;
             int i, j, iterations = 140;
 
             // Taylor series:
@@ -1653,7 +1653,7 @@ namespace UMapx.Core
             Complex32 pb = Complex32.One;    // (b)_n
             Complex32 pc = Complex32.One;    // (c)_n
 
-            float eps = 1e-32f;
+            float eps = 1e-16f;
             int maxIter = 140;
 
             for (int i = 1; i < maxIter; i++)
@@ -1689,88 +1689,69 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Hypergeom(float a, float b, float z)
         {
-            // for all z = 0:
-            if (z == 0)
-                return 1;
+            // z = 0 => 1
+            if (z == 0f) return 1f;
 
-            // Properties:
-            float s = 1.0f;
-            float m = 1.0f;
-            float pa = 1, pb = 1;
-            float t, eps = 1e-32f;
-            int i, j, iterations = 140;
+            bool aNaN = float.IsNaN(a);
+            bool bNaN = float.IsNaN(b);
 
-            if (float.IsNaN(a) && float.IsNaN(b) ||
-                a == b)
+            // 0F0(;;z) = exp(z)  and  1F1(a;a;z) = exp(z)
+            if ((aNaN && bNaN) || a == b)
+                return Maths.Exp(z);
+
+            // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
+            if (bNaN)
+                return Maths.Exp(-a * Maths.Log(1f - z));
+
+            // pole guard: b ∈ {0, -1, -2, ...} (real axis)
             {
-                // s = e^z:
-                s = (float)Math.Exp(z);
-            }
-            else if (float.IsNaN(b))
-            {
-                // special case for complex
-                // values:
-                if (Math.Abs(z) > 1.0)
+                float k = Maths.Round(b);
+                if (b <= 0f && Maths.Abs(b - k) < 1e-6f)
                     return float.NaN;
-
-                // F(a,~,z):
-                for (i = 1; i < iterations; i++)
-                {
-                    // Pochhammer symbols:
-                    j = i - 1;
-                    pa *= a + j;
-
-                    // value:
-                    m *= z / i;
-                    t = pa * m;
-
-                    // stop point:
-                    if (Math.Abs(t) < eps)
-                    { break; }
-                    else { s += t; }
-                }
             }
-            else if (float.IsNaN(a))
+
+            const float eps = 1e-16f;     // relative stop; adjust to 1e-8..1e-12 if нужно
+            const int iterations = 140; // как в комплексной версии
+            const float tiny = 1e-30f;    // protect from near-zero denominator
+
+            float s = 1f;  // partial sum
+            float t = 1f;  // current term
+
+            // 0F1(;b;z): t_{n+1} = t_n * z / ((b+n)(n+1))
+            if (aNaN)
             {
-                // F(~,b,z):
-                for (i = 1; i < iterations; i++)
+                for (int n = 0; n < iterations; n++)
                 {
-                    // Pochhammer symbols:
-                    j = i - 1;
-                    pb *= b + j;
+                    float bn = b + n;
+                    float denom = bn * (n + 1f);
 
-                    // value:
-                    m *= z / i;
-                    t = m / pb;
+                    if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
 
-                    // stop point:
-                    if (Math.Abs(t) < eps)
-                    { break; }
-                    else { s += t; }
+                    t *= z / denom;
+                    s += t;
+
+                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
                 }
+                return s;
             }
-            else
+
+            // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
+            // Kummer transform helps convergence if z < 0
+            if (z < 0f)
+                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
+
+            for (int n = 0; n < iterations; n++)
             {
-                // F(a,b,z):
-                for (i = 1; i < iterations; i++)
-                {
-                    // Pochhammer symbols:
-                    j = i - 1;
-                    pa *= a + j;
-                    pb *= b + j;
+                float an = a + n;
+                float bn = b + n;
+                float denom = (n + 1f) * bn;
+                if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
 
-                    // value:
-                    m *= z / i;
-                    t = (pa * m) / pb;
+                t *= an * z / denom;
+                s += t;
 
-                    // stop point:
-                    if (Math.Abs(t) < eps)
-                    { break; }
-                    else { s += t; }
-                }
+                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
             }
-
-            // result:
             return s;
         }
         /// <summary>
@@ -1796,54 +1777,63 @@ namespace UMapx.Core
             bool bNaN = Complex32.IsNaN(b);
 
             // 0F0(;;z) = exp(z)
-            if ((aNaN && bNaN) || (a.Real == b.Real && a.Imag == b.Imag))
+            if (aNaN && bNaN || (a.Real == b.Real && a.Imag == b.Imag))
                 return Maths.Exp(z);
 
-            // 1F0(a;;z) = (1 - z)^(-a)  (analytic continuation, principal log)
+            // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
             if (bNaN)
                 return Maths.Exp(-a * Maths.Log(Complex32.One - z));
 
-            // params
-            float eps = 1e-32f;
-            int maxIter = 140;
-            Complex32 s = Complex32.One;
-            Complex32 m = Complex32.One;
-            Complex32 pa = Complex32.One;
-            Complex32 pb = Complex32.One;
+            // pole guard: b ∈ {0, -1, -2, ...} (real axis)
+            if (b.Imag == 0f)
+            {
+                float br = b.Real, k = Maths.Round(br);
+                if (br <= 0f && Maths.Abs(br - k) < 1e-6f)
+                    return Complex32.NaN;
+            }
 
-            // 0F1(;b;z) = Σ z^n / ((b)_n n!)
+            const float eps = 1e-16f;
+            const int iterations = 140;
+            const float tiny = 1e-30f;
+
+            Complex32 s = Complex32.One;   // partial sum
+            Complex32 t = Complex32.One;   // current term
+
+            // 0F1(;b;z): t_{n+1} = t_n * z / ((b+n)(n+1))
             if (aNaN)
             {
-                for (int i = 1; i < maxIter; i++)
+                for (int n = 0; n < iterations; n++)
                 {
-                    float jf = i - 1;
-                    var j = new Complex32(jf, 0f);
+                    Complex32 bn = b + new Complex32(n, 0f);
+                    Complex32 denom = bn * new Complex32(n + 1f, 0f);
 
-                    pb *= b + j;
-                    m *= z / i;
+                    if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
 
-                    Complex32 t = m / pb;
-                    if (Maths.Abs(t) < eps) break;
+                    t *= z / denom;
                     s += t;
+
+                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
                 }
+                return s;
             }
-            // 1F1(a;b;z) = Σ (a)_n z^n / ((b)_n n!)
-            else
+
+            // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
+            // Kummer transform helps convergence if Re(z) < 0
+            if (z.Real < 0f)
+                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
+
+            for (int n = 0; n < iterations; n++)
             {
+                Complex32 an = a + new Complex32(n, 0f);
+                Complex32 bn = b + new Complex32(n, 0f);
+                Complex32 denom = new Complex32(n + 1f, 0f) * bn;
 
-                for (int i = 1; i < maxIter; i++)
-                {
-                    float jf = i - 1;
-                    var j = new Complex32(jf, 0f);
+                if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
 
-                    pa *= a + j;
-                    pb *= b + j;
-                    m *= z / i;
+                t *= an * z / denom;
+                s += t;
 
-                    Complex32 t = pa * m / pb;
-                    if (Maths.Abs(t) < eps) break;
-                    s += t;
-                }
+                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
             }
             return s;
         }
@@ -2496,15 +2486,15 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Ai(float x)
         {
-            float xi = -(x * x * x) / 9f;                   // -x^3/9
-            float cA = 1f / (Maths.Pow(3f, 2f / 3f) * Maths.Exp(Special.LogGamma(2f / 3f))); // 1/(3^{2/3} Γ(2/3))
+            float xi = -(x * x * x) / 9f;
 
-            cA = 1f / (Maths.Pow(3f, 2f / 3f) * Special.Gamma(2f / 3f));
-            float cB = 1f / (Maths.Pow(3f, 1f / 3f) * Special.Gamma(1f / 3f));          // 1/(3^{1/3} Γ(1/3))
+            float cA = 1f / (Maths.Pow(3f, 2f / 3f) * Special.Gamma(2f / 3f));
+            float cB = 1f / (Maths.Pow(3f, 1f / 3f) * Special.Gamma(1f / 3f));
 
-            float F1 = Special.Hypergeom(float.NaN, 2f / 3f, xi);  // 0F1(;2/3;xi)
-            float F2 = Special.Hypergeom(float.NaN, 4f / 3f, xi);  // 0F1(;4/3;xi)
-            return cA * F1 - cB * x * F2;
+            float F1 = Special.Hypergeom(float.NaN, 2f / 3f, xi); // 0F1(;2/3;xi)
+            float F2 = Special.Hypergeom(float.NaN, 4f / 3f, xi); // 0F1(;4/3;xi)
+
+            return (cA * F1) - cB * x * F2;
         }
 
         /// <summary>
@@ -2515,12 +2505,15 @@ namespace UMapx.Core
         public static float Bi(float x)
         {
             float xi = -(x * x * x) / 9f;
+
             float cA = 1f / (Maths.Pow(3f, 2f / 3f) * Special.Gamma(2f / 3f));
             float cB = 1f / (Maths.Pow(3f, 1f / 3f) * Special.Gamma(1f / 3f));
+
             float rt3 = Maths.Sqrt(3f);
 
             float F1 = Special.Hypergeom(float.NaN, 2f / 3f, xi);
             float F2 = Special.Hypergeom(float.NaN, 4f / 3f, xi);
+
             return rt3 * (cA * F1 + cB * x * F2);
         }
         /// <summary>
@@ -2551,6 +2544,7 @@ namespace UMapx.Core
 
             float cA = 1f / (Maths.Pow(3f, 2f / 3f) * Special.Gamma(2f / 3f));
             float cB = 1f / (Maths.Pow(3f, 1f / 3f) * Special.Gamma(1f / 3f));
+
             float rt3 = Maths.Sqrt(3f);
 
             Complex32 F1 = Special.Hypergeom(Complex32.NaN, new Complex32(2f / 3f, 0f), xi);
