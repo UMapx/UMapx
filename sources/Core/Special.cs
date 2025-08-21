@@ -382,7 +382,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Radamecher function.
         /// </summary>
-        /// <param name="t">Argument [0, 1]</param>
+        /// <param name="t">Value [0, 1]</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
         public static float Rademacher(float t, int n)
@@ -1053,7 +1053,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Lambert W-function.
         /// </summary>
-        /// <param name="x">Argument [-1/e,+inf)</param>
+        /// <param name="x">Value [-1/e,+inf)</param>
         /// <param name="k">Branch</param>
         /// <returns>Value</returns>
         public static float LambertW(float x, int k = 0)
@@ -1161,7 +1161,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the square super-root.
         /// </summary>
-        /// <param name="x">Argument [1,+inf)</param>
+        /// <param name="x">Value [1,+inf)</param>
         /// <param name="k">Branch</param>
         /// <returns>Value</returns>
         public static float Ssqrt(float x, int k = 0)
@@ -1506,8 +1506,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Owen T function.
         /// </summary>
-        /// <param name="h">First argument</param>
-        /// <param name="a">Second argument</param>
+        /// <param name="h">First value</param>
+        /// <param name="a">Second value</param>
         /// <returns>Value</returns>
         public static float Owen(float h, float a)
         {
@@ -1540,8 +1540,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Owen T function.
         /// </summary>
-        /// <param name="h">First argument</param>
-        /// <param name="a">Second argument</param>
+        /// <param name="h">First value</param>
+        /// <param name="a">Second value</param>
         /// <returns>Value</returns>
         public static Complex32 Owen(Complex32 h, Complex32 a)
         {
@@ -3190,7 +3190,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the generalized error function.
         /// </summary>
-        /// <param name="x">Argument (0, +inf)</param>
+        /// <param name="x">Value (0, +inf)</param>
         /// <param name="n">Order [0, +inf)</param>
         /// <returns>Value</returns>
         public static float Gerf(float x, int n)
@@ -3221,7 +3221,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the generalized error function.
         /// </summary>
-        /// <param name="x">Argument (0, +inf)</param>
+        /// <param name="x">Value (0, +inf)</param>
         /// <param name="n">Order [0, +inf)</param>
         /// <returns>Value</returns>
         public static Complex32 Gerf(Complex32 x, int n)

@@ -11617,7 +11617,7 @@
             <summary>
             Returns the value of the Radamecher function.
             </summary>
-            <param name="t">Argument [0, 1]</param>
+            <param name="t">Value [0, 1]</param>
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
@@ -11879,7 +11879,7 @@
             <summary>
             Returns the value of the Lambert W-function.
             </summary>
-            <param name="x">Argument [-1/e,+inf)</param>
+            <param name="x">Value [-1/e,+inf)</param>
             <param name="k">Branch</param>
             <returns>Value</returns>
         </member>
@@ -11895,7 +11895,7 @@
             <summary>
             Returns the value of the square super-root.
             </summary>
-            <param name="x">Argument [1,+inf)</param>
+            <param name="x">Value [1,+inf)</param>
             <param name="k">Branch</param>
             <returns>Value</returns>
         </member>
@@ -12037,16 +12037,16 @@
             <summary>
             Returns the value of the Owen T function.
             </summary>
-            <param name="h">First argument</param>
-            <param name="a">Second argument</param>
+            <param name="h">First value</param>
+            <param name="a">Second value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Owen(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Returns the value of the Owen T function.
             </summary>
-            <param name="h">First argument</param>
-            <param name="a">Second argument</param>
+            <param name="h">First value</param>
+            <param name="a">Second value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
@@ -12319,7 +12319,7 @@
             <summary>
             Returns the value of the generalized error function.
             </summary>
-            <param name="x">Argument (0, +inf)</param>
+            <param name="x">Value (0, +inf)</param>
             <param name="n">Order [0, +inf)</param>
             <returns>Value</returns>
         </member>
@@ -12327,7 +12327,7 @@
             <summary>
             Returns the value of the generalized error function.
             </summary>
-            <param name="x">Argument (0, +inf)</param>
+            <param name="x">Value (0, +inf)</param>
             <param name="n">Order [0, +inf)</param>
             <returns>Value</returns>
         </member>
