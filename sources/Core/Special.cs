@@ -1195,7 +1195,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Laplace function
+        #region Laplace functions
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
@@ -2488,7 +2488,79 @@ namespace UMapx.Core
 
         #endregion
 
-        #region Gamma function
+        #region Airy functions
+        /// <summary>
+        /// Airy Ai(x), principal branch, entire function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float Ai(float x)
+        {
+            float xi = -(x * x * x) / 9f;                   // -x^3/9
+            float cA = 1f / (Maths.Pow(3f, 2f / 3f) * Maths.Exp(Special.LogGamma(2f / 3f))); // 1/(3^{2/3} Γ(2/3))
+
+            cA = 1f / (Maths.Pow(3f, 2f / 3f) * Special.Gamma(2f / 3f));
+            float cB = 1f / (Maths.Pow(3f, 1f / 3f) * Special.Gamma(1f / 3f));          // 1/(3^{1/3} Γ(1/3))
+
+            float F1 = Special.Hypergeom(float.NaN, 2f / 3f, xi);  // 0F1(;2/3;xi)
+            float F2 = Special.Hypergeom(float.NaN, 4f / 3f, xi);  // 0F1(;4/3;xi)
+            return cA * F1 - cB * x * F2;
+        }
+
+        /// <summary>
+        /// Airy Bi(x), principal branch, entire function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float Bi(float x)
+        {
+            float xi = -(x * x * x) / 9f;
+            float cA = 1f / (Maths.Pow(3f, 2f / 3f) * Special.Gamma(2f / 3f));
+            float cB = 1f / (Maths.Pow(3f, 1f / 3f) * Special.Gamma(1f / 3f));
+            float rt3 = Maths.Sqrt(3f);
+
+            float F1 = Special.Hypergeom(float.NaN, 2f / 3f, xi);
+            float F2 = Special.Hypergeom(float.NaN, 4f / 3f, xi);
+            return rt3 * (cA * F1 + cB * x * F2);
+        }
+        /// <summary>
+        /// Airy Ai(z), principal branch, entire function.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Ai(Complex32 z)
+        {
+            Complex32 xi = -(z * z * z) / 9f;
+
+            float cA = 1f / (Maths.Pow(3f, 2f / 3f) * Special.Gamma(2f / 3f));
+            float cB = 1f / (Maths.Pow(3f, 1f / 3f) * Special.Gamma(1f / 3f));
+
+            Complex32 F1 = Special.Hypergeom(Complex32.NaN, new Complex32(2f / 3f, 0f), xi); // 0F1(;2/3;xi)
+            Complex32 F2 = Special.Hypergeom(Complex32.NaN, new Complex32(4f / 3f, 0f), xi); // 0F1(;4/3;xi)
+
+            return (cA * F1) - cB * z * F2;
+        }
+        /// <summary>
+        /// Airy Bi(z), principal branch, entire function.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Bi(Complex32 z)
+        {
+            Complex32 xi = -(z * z * z) / 9f;
+
+            float cA = 1f / (Maths.Pow(3f, 2f / 3f) * Special.Gamma(2f / 3f));
+            float cB = 1f / (Maths.Pow(3f, 1f / 3f) * Special.Gamma(1f / 3f));
+            float rt3 = Maths.Sqrt(3f);
+
+            Complex32 F1 = Special.Hypergeom(Complex32.NaN, new Complex32(2f / 3f, 0f), xi);
+            Complex32 F2 = Special.Hypergeom(Complex32.NaN, new Complex32(4f / 3f, 0f), xi);
+
+            return rt3 * ((cA * F1) + cB * z * F2);
+        }
+        #endregion
+
+        #region Gamma functions
 
         /// <summary>
         /// Returns the value of the Euler Gamma function: Г(z).
@@ -3401,7 +3473,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Struve function
+        #region Struve functions
         /// <summary>
         /// Returns the value of the Struve function.
         /// </summary>
@@ -3756,7 +3828,7 @@ namespace UMapx.Core
 
         #endregion
 
-        #region Beta function
+        #region Beta functions
         /// <summary>
         /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
         /// </summary>

@@ -12175,6 +12175,34 @@
             <param name="a">Value</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Ai(System.Single)">
+            <summary>
+            Airy Ai(x), principal branch, entire function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Bi(System.Single)">
+            <summary>
+            Airy Bi(x), principal branch, entire function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ai(UMapx.Core.Complex32)">
+            <summary>
+            Airy Ai(z), principal branch, entire function.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Bi(UMapx.Core.Complex32)">
+            <summary>
+            Airy Bi(z), principal branch, entire function.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Gamma(System.Single)">
             <summary>
             Returns the value of the Euler Gamma function: Г(z).
