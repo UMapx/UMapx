@@ -5474,7 +5474,7 @@
         </member>
         <member name="F:UMapx.Core.Maths.Tau">
             <summary>
-            float pi.
+            Double pi.
             </summary>
         </member>
         <member name="F:UMapx.Core.Maths.Gamma">

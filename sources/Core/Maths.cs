@@ -23,7 +23,7 @@ namespace UMapx.Core
         /// </summary>
         public const float Phi = 1.6180339887498948482f;
         /// <summary>
-        /// float pi.
+        /// Double pi.
         /// </summary>
         public const float Tau = 6.283185307179586476925286766558f;
         /// <summary>
