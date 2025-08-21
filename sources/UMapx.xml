@@ -12460,7 +12460,23 @@
             <param name="a">Number</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.H(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Struve function.
+            </summary>
+            <param name="x">Number</param>
+            <param name="a">Number</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.L(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the modified Struve function.
+            </summary>
+            <param name="x">Number</param>
+            <param name="v">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.L(UMapx.Core.Complex32,System.Int32)">
             <summary>
             Returns the value of the modified Struve function.
             </summary>
