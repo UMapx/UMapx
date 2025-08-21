@@ -2195,7 +2195,7 @@ namespace UMapx.Core
         public static Complex32 CopySign(Complex32 magnitude, float sign)
         {
             if (float.IsNaN(sign))
-                return new Complex32(float.NaN, float.NaN);
+                return Complex32.NaN;
 
             int s = Math.Sign(sign);
             if (s > 0) return magnitude;

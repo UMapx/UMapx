@@ -1030,7 +1030,7 @@ namespace UMapx.Core
         {
             // Special cases match your real version
             if (v == 0) return Complex32.One;
-            if (v < 0) return new Complex32(float.NaN, float.NaN);
+            if (v < 0) return Complex32.NaN;
 
             Complex32 t = Complex32.One;  // term for k=0
             Complex32 b = Complex32.One;  // partial sum Σ_{k=0}^{v-1}
@@ -1974,7 +1974,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Y(Complex32 x, int a)
         {
-            if (x.Real == 0f && x.Imag == 0f) return new Complex32(float.NaN, float.NaN); // singular at 0
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.NaN; // singular at 0
 
             if (a == 0) return Y0(x);
             if (a == 1) return Y1(x);
@@ -2109,7 +2109,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 K(Complex32 x, int a)
         {
-            if (x.Real == 0f && x.Imag == 0f) return new Complex32(float.NaN, float.NaN); // singular at 0
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.NaN; // singular at 0
             int n = a < 0 ? -a : a;                 // K_{-n} = K_n
 
             if (n == 0) return K0(x);
@@ -2954,7 +2954,7 @@ namespace UMapx.Core
             {
                 float sr = s.Real;
                 if (sr <= 0f && sr == Maths.Round(sr))
-                    return new Complex32(float.NaN, float.NaN);
+                    return Complex32.NaN;
             }
 
             // Heuristic split mirroring the real case
@@ -3618,7 +3618,7 @@ namespace UMapx.Core
         {
             // explicit pole at s = 1 + 0i
             if (s.Imag == 0f && s.Real == 1f)
-                return new Complex32(float.NaN, float.NaN);
+                return Complex32.NaN;
 
             if (s.Real > 0f && !(s.Imag == 0f && s.Real == 1f))
                 return ZetaHasse(s);
