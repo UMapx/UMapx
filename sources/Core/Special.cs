@@ -852,23 +852,40 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Fresnelc(float x)
         {
-            if (x == 0f) return 0;
+            if (x == 0f) return 0f;
+
+            if (Math.Abs(x) > 6f)
+            {
+                double xd = x;
+                double invx = 1.0 / xd;
+                double x2 = xd * xd;
+                double sinx2 = Math.Sin(x2);
+                double cosx2 = Math.Cos(x2);
+
+                double approx = Math.Sqrt(Math.PI / 8.0) * Math.Sign(xd)
+                              + 0.5 * sinx2 * invx
+                              - 0.25 * cosx2 * invx * invx * invx
+                              + (3.0 / 8.0) * sinx2 * Math.Pow(invx, 5)
+                              - (15.0 / 16.0) * cosx2 * Math.Pow(invx, 7);
+
+                return (float)approx;
+            }
 
             // term_0 = z / ((2*0)! * (4*0+1)) = z
             float eps = 1e-16f;
             int maxIter = 120;
             double s = x;
             double term = x;
-            double z4 = x * x * x * x;
+            double z4 = (double)x * x; z4 *= z4; // x^4 в double
 
             // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
             for (int n = 0; n < maxIter; n++)
             {
-                double a = -(4 * n + 1);
-                double b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
+                double a = -(4.0 * n + 1.0);
+                double b = (2.0 * n + 2.0) * (2.0 * n + 1.0) * (4.0 * n + 5.0);
                 term *= a / b * z4;
 
-                if (Maths.Abs(term) < eps) break;
+                if (Math.Abs(term) < eps) break;
                 s += term;
             }
 
@@ -882,26 +899,48 @@ namespace UMapx.Core
         public static Complex32 Fresnelc(Complex32 z)
         {
             if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
+            if (z.Imag == 0f) return new Complex32(Fresnelc(z.Real), 0f);
+
+            double az = Math.Sqrt((double)z.Real * z.Real + (double)z.Imag * z.Imag);
+
+            if (az > 6.0)
+            {
+                double sgnInf = Math.Sign((double)z.Real + (double)z.Imag);
+
+                var Z = new Complex(z.Real, z.Imag);
+                var invZ = Complex.One / Z;
+                var Z2 = Z * Z;
+                var sinZ2 = Complex.Sin(Z2);
+                var cosZ2 = Complex.Cos(Z2);
+
+                var approx = Math.Sqrt(Math.PI / 8.0) * sgnInf
+                           + 0.5 * sinZ2 * invZ
+                           - 0.25 * cosZ2 * invZ * invZ * invZ
+                           + (3.0 / 8.0) * sinZ2 * invZ * invZ * invZ * invZ * invZ
+                           - (15.0 / 16.0) * cosZ2 * invZ * invZ * invZ * invZ * invZ * invZ * invZ;
+
+                return new Complex32((float)approx.Real, (float)approx.Imaginary);
+            }
 
             // term_0 = z / ((2*0)! * (4*0+1)) = z
             float eps = 1e-16f;
             int maxIter = 120;
-            Complex s = z;
-            Complex term = z;
-            Complex z4 = z * z * z * z;
+            var s = new Complex(z.Real, z.Imag);
+            var term = s;
+            var z4 = s * s * s * s;
 
             // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
             for (int n = 0; n < maxIter; n++)
             {
-                double a = -(4 * n + 1);
-                double b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
+                double a = -(4.0 * n + 1.0);
+                double b = (2.0 * n + 2.0) * (2.0 * n + 1.0) * (4.0 * n + 5.0);
                 term *= a / b * z4;
 
-                if (Maths.Abs(term) < eps) break;
+                if (Complex.Abs(term) < eps) break;
                 s += term;
             }
 
-            return s;
+            return new Complex32((float)s.Real, (float)s.Imaginary);
         }
         /// <summary>
         /// Returns the value of the Fresnel integral S(x).
@@ -910,24 +949,41 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Fresnels(float x)
         {
-            if (x == 0f) return 0;
+            if (x == 0f) return 0f;
+
+            if (Math.Abs(x) > 6f)
+            {
+                double xd = x;
+                double invx = 1.0 / xd;
+                double x2 = xd * xd;
+                double sinx2 = Math.Sin(x2);
+                double cosx2 = Math.Cos(x2);
+
+                double approx = Math.Sqrt(Math.PI / 8.0) * Math.Sign(xd)
+                              - 0.5 * cosx2 * invx
+                              - 0.25 * sinx2 * invx * invx * invx
+                              - (3.0 / 8.0) * cosx2 * Math.Pow(invx, 5)
+                              - (15.0 / 16.0) * sinx2 * Math.Pow(invx, 7);
+
+                return (float)approx;
+            }
 
             // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
             float eps = 1e-16f;
             int maxIter = 120;
-            double z2 = x * x;
-            double s = z2 * x / 3f;
+            double z2 = (double)x * x;
+            double s = z2 * x / 3.0;
             double term = s;
             double z4 = z2 * z2;
 
             // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
             for (int n = 0; n < maxIter; n++)
             {
-                double a = -(4 * n + 3);
-                double b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
-                term *= a / b * z4;
+                double a = -(4.0 * n + 3.0);
+                double b = (2.0 * n + 3.0) * (2.0 * n + 2.0) * (4.0 * n + 7.0);
+                term *= (a / b) * z4;
 
-                if (Maths.Abs(term) < eps) break;
+                if (Math.Abs(term) < eps) break;
                 s += term;
             }
 
@@ -941,27 +997,50 @@ namespace UMapx.Core
         public static Complex32 Fresnels(Complex32 z)
         {
             if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
+            if (z.Imag == 0f) return new Complex32(Fresnels(z.Real), 0f);
+
+            double az = Math.Sqrt((double)z.Real * z.Real + (double)z.Imag * z.Imag);
+
+            if (az > 6.0)
+            {
+                double sgnInf = Math.Sign((double)z.Real + (double)z.Imag);
+
+                var Z = new Complex(z.Real, z.Imag);
+                var invZ = Complex.One / Z;
+                var Z2 = Z * Z;
+                var sinZ2 = Complex.Sin(Z2);
+                var cosZ2 = Complex.Cos(Z2);
+
+                var approx = Math.Sqrt(Math.PI / 8.0) * sgnInf
+                           - 0.5 * cosZ2 * invZ
+                           - 0.25 * sinZ2 * invZ * invZ * invZ
+                           - (3.0 / 8.0) * cosZ2 * invZ * invZ * invZ * invZ * invZ
+                           - (15.0 / 16.0) * sinZ2 * invZ * invZ * invZ * invZ * invZ * invZ * invZ;
+
+                return new Complex32((float)approx.Real, (float)approx.Imaginary);
+            }
 
             // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
             float eps = 1e-16f;
             int maxIter = 120;
-            Complex z2 = z * z;
-            Complex s = z2 * (Complex)z / 3f;
-            Complex term = s;
-            Complex z4 = z2 * z2;
+            var Zc = new Complex(z.Real, z.Imag);
+            var z2 = Zc * Zc;
+            var s = z2 * Zc / 3.0;
+            var term = s;
+            var z4 = z2 * z2;
 
             // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
             for (int n = 0; n < maxIter; n++)
             {
-                double a = -(4 * n + 3);
-                double b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
+                double a = -(4.0 * n + 3.0);
+                double b = (2.0 * n + 3.0) * (2.0 * n + 2.0) * (4.0 * n + 7.0);
                 term *= a / b * z4;
 
-                if (Maths.Abs(term) < eps) break;
+                if (Complex.Abs(term) < eps) break;
                 s += term;
             }
 
-            return s;
+            return new Complex32((float)s.Real, (float)s.Imaginary);
         }
         #endregion
 
