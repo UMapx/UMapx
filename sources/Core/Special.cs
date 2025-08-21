@@ -3273,6 +3273,146 @@ namespace UMapx.Core
         public static Complex32 Gerf(Complex32 x) => Gerf(x, 2);
         #endregion
 
+        #region Factorial function
+        /// <summary>
+        /// Returns the natural logarithm of the factorial of a number log(n!).
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <returns>Value</returns>
+        public static float LogFactorial(float n)
+        {
+            return Special.LogGamma(n + 1.0f);
+        }
+        /// <summary>
+        /// Returns the natural logarithm of the factorial of a number log(n!).
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 LogFactorial(Complex32 z)
+        {
+            return Special.LogGamma(z + Complex32.One);
+        }
+        /// <summary>
+        /// Returns the factorial of a number.
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <returns>Value</returns>
+        public static float Factorial(float n)
+        {
+            // check it:
+            if (n >= 0 && n == Maths.Round(n))
+            {
+                // get it from memory
+                if (n <= 170)
+                {
+                    return (float)Special.A000142[(int)n];
+                }
+                return float.NaN;
+            }
+            return Special.Gamma(n + 1);
+        }
+        /// <summary>
+        /// Returns the factorial of a number.
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Factorial(Complex32 z)
+        {
+            return Special.Gamma(z + Complex32.One);
+        }
+        /// <summary>
+        /// Returns the decreasing factorial of a number.
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static float FactorialDown(float n, float k)
+        {
+            return Special.Factorial(n) / Special.Factorial(n - k);
+        }
+        /// <summary>
+        /// Returns the decreasing factorial of a number.
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 FactorialDown(Complex32 z, Complex32 k)
+        {
+            return Special.Gamma(z + Complex32.One) / Special.Gamma(z + Complex32.One - k);
+        }
+        /// <summary>
+        /// Returns the increasing factorial of a number (Pohhammer symbol).
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static float FactorialUp(float n, float k)
+        {
+            if (n == 0)
+            {
+                return 1.0f;
+            }
+            return Special.Gamma(n + k) / Special.Gamma(n);
+        }
+        /// <summary>
+        /// Returns the increasing factorial of a number (Pohhammer symbol).
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 FactorialUp(Complex32 z, Complex32 k)
+        {
+            return Special.Gamma(z + k) / Special.Gamma(z);
+        }
+        #endregion
+
+        #region Binomial function
+        /// <summary>
+        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static float Binomial(float n, float k)
+        {
+            if (k < 0)
+            {
+                return 0;
+            }
+            return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
+        }
+        /// <summary>
+        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Binomial(Complex32 n, Complex32 k)
+        {
+            return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
+        }
+        /// <summary>
+        /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static float LogBinomial(float n, float k)
+        {
+            return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
+        }
+        /// <summary>
+        /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
+        /// </summary>
+        /// <param name="n">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 LogBinomial(Complex32 n, Complex32 k)
+        {
+            return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
+        }
+        #endregion
+
 
 
         #region Struve function
@@ -3748,126 +3888,6 @@ namespace UMapx.Core
             return s;
         }
         #endregion
-        #endregion
-
-        #region Binomial function
-        /// <summary>
-        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static float Binomial(float n, float k)
-        {
-            if (k < 0)
-            {
-                return 0;
-            }
-            return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
-        }
-        /// <summary>
-        /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static float LogBinomial(float n, float k)
-        {
-            return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
-        }
-        #endregion
-
-        #region Factorial function
-        /// <summary>
-        /// Returns the natural logarithm of the factorial of a number log(n!).
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <returns>Value</returns>
-        public static float LogFactorial(float n)
-        {
-            return Special.LogGamma(n + 1.0f);
-        }
-        /// <summary>
-        /// Returns the natural logarithm of the factorial of a number log(n!).
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static Complex32 LogFactorial(Complex32 z)
-        {
-            return Special.LogGamma(z + Complex32.One);
-        }
-        /// <summary>
-        /// Returns the factorial of a number.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <returns>Value</returns>
-        public static float Factorial(float n)
-        {
-            // check it:
-            if (n >= 0 && n == Maths.Round(n))
-            {
-                // get it from memory
-                if (n <= 170)
-                {
-                    return (float)Special.A000142[(int)n];
-                }
-                return float.NaN;
-            }
-            return Special.Gamma(n + 1);
-        }
-        /// <summary>
-        /// Returns the factorial of a number.
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static Complex32 Factorial(Complex32 z)
-        {
-            return Special.Gamma(z + Complex32.One);
-        }
-        /// <summary>
-        /// Returns the decreasing factorial of a number.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static float FactorialDown(float n, float k)
-        {
-            return Special.Factorial(n) / Special.Factorial(n - k);
-        }
-        /// <summary>
-        /// Returns the decreasing factorial of a number.
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static Complex32 FactorialDown(Complex32 z, Complex32 k)
-        {
-            return Special.Gamma(z + Complex32.One) / Special.Gamma(z + Complex32.One - k);
-        }
-        /// <summary>
-        /// Returns the increasing factorial of a number (Pohhammer symbol).
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static float FactorialUp(float n, float k)
-        {
-            if (n == 0)
-            {
-                return 1.0f;
-            }
-            return Special.Gamma(n + k) / Special.Gamma(n);
-        }
-        /// <summary>
-        /// Returns the increasing factorial of a number (Pohhammer symbol).
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static Complex32 FactorialUp(Complex32 z, Complex32 k)
-        {
-            return Special.Gamma(z + k) / Special.Gamma(z);
-        }
         #endregion
 
 
