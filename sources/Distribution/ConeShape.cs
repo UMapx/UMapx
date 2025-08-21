@@ -102,8 +102,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the kernel density function.
         /// </summary>
-        /// <param name="eta">Argument</param>
-        /// <param name="tau">Argument</param>
+        /// <param name="eta">Value</param>
+        /// <param name="tau">Value</param>
         /// <returns>Value</returns>
         public float Function(float eta, float tau)
         {
@@ -114,8 +114,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the kernel distribution function.
         /// </summary>
-        /// <param name="t">Argument</param>
-        /// <param name="tau">Argument</param>
+        /// <param name="t">Value</param>
+        /// <param name="tau">Value</param>
         /// <returns>Value</returns>
         public float Distribution(float t, float tau)
         {

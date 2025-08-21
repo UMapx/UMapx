@@ -13,7 +13,7 @@
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         float Function(float x);
         /// <summary>

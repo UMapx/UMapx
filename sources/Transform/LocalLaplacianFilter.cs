@@ -341,7 +341,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Reconstruct function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="i">Increment</param>
         /// <param name="step">Step</param>
         /// <returns>Function</returns>
@@ -370,7 +370,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Remapping function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="sigma">Sigma</param>
         /// <param name="factor">Factor</param>
         /// <param name="i">Increment</param>

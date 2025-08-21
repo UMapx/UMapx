@@ -17,7 +17,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Function</returns>
         public Complex32 Scaling(float x)
         {
@@ -26,7 +26,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Function</returns>
         public Complex32 Wavelet(float x)
         {

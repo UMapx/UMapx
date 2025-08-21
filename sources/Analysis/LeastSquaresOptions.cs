@@ -13,7 +13,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the polynomial value.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="c">Approximation coefficients</param>
         /// <returns>Value</returns>
         public static float Polynomial(float x, float[] c)
@@ -30,7 +30,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="c">Approximation coefficients</param>
         /// <returns>Array</returns>
         public static float[] Polynomial(float[] x, float[] c)
@@ -47,7 +47,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="y">Function</param>
         /// <param name="iterations">Number of iterations</param>
         /// <returns>Array</returns>
@@ -163,7 +163,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the polynomial value.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="c">Approximation coefficients</param>
         /// <returns>Complex number</returns>
         public static Complex32 Polynomial(Complex32 x, Complex32[] c)
@@ -180,7 +180,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="c">Approximation coefficients</param>
         /// <returns>Array</returns>
         public static Complex32[] Polynomial(Complex32[] x, Complex32[] c)
@@ -197,7 +197,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="y">Function</param>
         /// <param name="iterations">Number of iterations</param>
         /// <returns>Array</returns>

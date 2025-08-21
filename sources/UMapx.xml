@@ -882,7 +882,7 @@
             <summary>
             Returns the polynomial value.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="c">Approximation coefficients</param>
             <returns>Value</returns>
         </member>
@@ -890,7 +890,7 @@
             <summary>
             Returns an array of polynomial values.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="c">Approximation coefficients</param>
             <returns>Array</returns>
         </member>
@@ -898,7 +898,7 @@
             <summary>
             Returns an array of polynomial values.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="y">Function</param>
             <param name="iterations">Number of iterations</param>
             <returns>Array</returns>
@@ -949,7 +949,7 @@
             <summary>
             Returns the polynomial value.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="c">Approximation coefficients</param>
             <returns>Complex number</returns>
         </member>
@@ -957,7 +957,7 @@
             <summary>
             Returns an array of polynomial values.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="c">Approximation coefficients</param>
             <returns>Array</returns>
         </member>
@@ -965,7 +965,7 @@
             <summary>
             Returns an array of polynomial values.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="y">Function</param>
             <param name="iterations">Number of iterations</param>
             <returns>Array</returns>
@@ -3891,14 +3891,14 @@
             <summary>
             Defines the delegate of a continuous function that depends on a single argument.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="T:UMapx.Core.IComplex">
             <summary>
             Defines the delegate of a continuous function that depends on a single argument.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Complex number</returns>
         </member>
         <member name="T:UMapx.Core.IFloatMesh">
@@ -4822,14 +4822,14 @@
             <summary>
             Returns the value of a bicubic function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Gaussian(System.Single,System.Single)">
             <summary>
             Returns the value of a Gaussian function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="sigma">Standard deviation (0, +inf)</param>
             <returns>Value</returns>
         </member>
@@ -4837,14 +4837,14 @@
             <summary>
             Returns the value of a Gaussian function σ = 1.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Lanczos(System.Single,System.Single)">
             <summary>
             Returns the value of the Lanczos function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Parameter</param>
             <returns>Value</returns>
         </member>
@@ -4852,84 +4852,84 @@
             <summary>
             Returns the value of the Lanczos function, with a = 1.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Uniform(System.Single)">
             <summary>
             Returns the value of a uniform function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Triangular(System.Single)">
             <summary>
             Returns the value of a triangular function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Trapezoid(System.Single)">
             <summary>
             Returns the value of the trapezoid function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Epanechnikov(System.Single)">
             <summary>
             Returns the value of the Epanechnikov function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Quartic(System.Single)">
             <summary>
             Returns the value of a Q function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Triweight(System.Single)">
             <summary>
             Returns the value of a T-function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Tricube(System.Single)">
             <summary>
             Returns the value of a tricubic function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Cosine(System.Single)">
             <summary>
             Returns the value of the cosine function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Logistic(System.Single)">
             <summary>
             Returns the value of a logistic function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Sigmoid(System.Single)">
             <summary>
             Returns the value of a sigmoid function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Kernel.Silverman(System.Single)">
             <summary>
             Returns the value of the Silverman function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="T:UMapx.Core.LinealgOptions">
@@ -11427,7 +11427,7 @@
             <summary>
             Returns the value of the Chebyshev polynomial of the first kind.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
@@ -11435,7 +11435,7 @@
             <summary>
             Returns the value of the Chebyshev polynomial of the first kind.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
@@ -11443,7 +11443,7 @@
             <summary>
             Returns the value of the Chebyshev polynomial of the second kind.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
@@ -11451,7 +11451,7 @@
             <summary>
             Returns the value of the Chebyshev polynomial of the second kind.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
@@ -11459,7 +11459,7 @@
             <summary>
             Returns the value of the Abel polynomial.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Power</param>
             <param name="n">Order</param>
             <returns>Value</returns>
@@ -11468,7 +11468,7 @@
             <summary>
             Returns the value of the Abel polynomial.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Power</param>
             <param name="n">Order</param>
             <returns>Value</returns>
@@ -11477,7 +11477,7 @@
             <summary>
             Returns the value of the Laguerre polynomial.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Power</param>
             <param name="k">Order</param>
             <returns>Value</returns>
@@ -11486,7 +11486,7 @@
             <summary>
             Returns the value of the Laguerre polynomial.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Power</param>
             <param name="k">Order</param>
             <returns>Value</returns>
@@ -11495,7 +11495,7 @@
             <summary>
             Returns the value of the Legendre polynomial of the first kind.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="m">Order</param>
             <returns>Value</returns>
         </member>
@@ -11503,7 +11503,7 @@
             <summary>
             Returns the value of the Legendre polynomial of the first kind.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="m">Order</param>
             <returns>Value</returns>
         </member>
@@ -11511,7 +11511,7 @@
             <summary>
             Returns the value of the Hermite polynomial.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="m">Order</param>
             <returns>Value</returns>
         </member>
@@ -11519,7 +11519,7 @@
             <summary>
             Returns the value of the Hermite polynomial.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="m">Order</param>
             <returns>Value</returns>
         </member>
@@ -11527,7 +11527,7 @@
             <summary>
             Returns the value of the Gegenbauer polynomial.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Power</param>
             <param name="n">Order</param>
             <returns>Value</returns>
@@ -11536,7 +11536,7 @@
             <summary>
             Returns the value of the Gegenbauer polynomial.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Power</param>
             <param name="n">Order</param>
             <returns>Value</returns>
@@ -11625,7 +11625,7 @@
             <summary>
             Returns the value of the Radamecher function.
             </summary>
-            <param name="z">Argument</param>
+            <param name="z">Value</param>
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
@@ -11633,7 +11633,7 @@
             <summary>
             Returns the value of the Heaviside delta function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="k">Smoothing factor</param>
             <returns>Value</returns>
         </member>
@@ -11641,7 +11641,7 @@
             <summary>
             Returns the value of the Heaviside delta function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="k">Smoothing factor</param>
             <returns>Value</returns>
         </member>
@@ -11665,7 +11665,7 @@
             <summary>
             Gets the value of the Gompertz function.
             </summary>
-            <param name="t">Argument</param>
+            <param name="t">Value</param>
             <param name="a">Upper asymptote</param>
             <param name="b">Growth parameter</param>
             <param name="c">Growth rate</param>
@@ -11675,7 +11675,7 @@
             <summary>
             Gets the value of the Gompertz function.
             </summary>
-            <param name="t">Argument</param>
+            <param name="t">Value</param>
             <param name="a">Upper asymptote</param>
             <param name="b">Growth parameter</param>
             <param name="c">Growth rate</param>
@@ -11685,7 +11685,7 @@
             <summary>
             Returns the value of the Dirac delta function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Coefficient</param>
             <returns>Value</returns>
         </member>
@@ -11693,7 +11693,7 @@
             <summary>
             Returns the value of the Dirac delta function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Coefficient</param>
             <returns>Value</returns>
         </member>
@@ -11701,7 +11701,7 @@
             <summary>
             Returns the value of a logistic function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Lower asymptote</param>
             <param name="k">Upper asymptote</param>
             <param name="b">Growth rate</param>
@@ -11714,7 +11714,7 @@
             <summary>
             Returns the value of a logistic function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Lower asymptote</param>
             <param name="k">Upper asymptote</param>
             <param name="b">Growth rate</param>
@@ -11727,7 +11727,7 @@
             <summary>
             Returns the value of a logistic function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Lower asymptote</param>
             <param name="k">Upper asymptote</param>
             <param name="b">Growth rate</param>
@@ -11737,7 +11737,7 @@
             <summary>
             Returns the value of a logistic function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Lower asymptote</param>
             <param name="k">Upper asymptote</param>
             <param name="b">Growth rate</param>
@@ -11747,14 +11747,14 @@
             <summary>
             Returns the value of a logistic function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Logistic(UMapx.Core.Complex32)">
             <summary>
             Returns the value of a logistic function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Ci(System.Single)">
@@ -11887,7 +11887,7 @@
             <summary>
             Returns the value of the Lambert W-function.
             </summary>
-            <param name="z">Argument</param>
+            <param name="z">Value</param>
             <param name="k">Branch</param>
             <returns>Value</returns>
         </member>
@@ -11903,7 +11903,7 @@
             <summary>
             Returns the value of the square super-root.
             </summary>
-            <param name="z">Argument</param>
+            <param name="z">Value</param>
             <param name="k">Branch</param>
             <returns>Value</returns>
         </member>
@@ -12005,7 +12005,7 @@
             <summary>
             Returns the value of the D- / D + Dawson function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="positive">D- или D+</param>
             <returns>Value</returns>
         </member>
@@ -12013,7 +12013,7 @@
             <summary>
             Returns the value of the D- / D + Dawson function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="positive">D- или D+</param>
             <returns>Value</returns>
         </member>
@@ -12021,7 +12021,7 @@
             <summary>
             Returns the value of a Q function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="inverse">Inverse function or not</param>
             <returns>Value</returns>
         </member>
@@ -12029,7 +12029,7 @@
             <summary>
             Returns the value of a Q function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="inverse">Inverse function or not</param>
             <returns>Value</returns>
         </member>
@@ -12061,7 +12061,7 @@
             <param name="a">Parameter</param>
             <param name="b">Parameter</param>
             <param name="c">Parameter</param>
-            <param name="z">Argument</param>
+            <param name="z">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
@@ -12076,7 +12076,7 @@
             <param name="a">Parameter</param>
             <param name="b">Parameter</param>
             <param name="c">Parameter</param>
-            <param name="z">Argument</param>
+            <param name="z">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single)">
@@ -12092,7 +12092,7 @@
             </summary>
             <param name="a">Parameter</param>
             <param name="b">Parameter</param>
-            <param name="z">Argument</param>
+            <param name="z">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
@@ -12108,7 +12108,7 @@
             </summary>
             <param name="a">Parameter</param>
             <param name="b">Parameter</param>
-            <param name="z">Argument</param>
+            <param name="z">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.J(System.Single,System.Int32)">
@@ -12335,14 +12335,14 @@
             <summary>
             Returns the value of the generalized error function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gerf(UMapx.Core.Complex32)">
             <summary>
             Returns the value of the generalized error function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.LogFactorial(System.Single)">
@@ -12529,7 +12529,7 @@
             </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.BetaIncomplete(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
@@ -12538,7 +12538,7 @@
             </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.BetaIncompleteRegularized(System.Single,System.Single,System.Single)">
@@ -12547,7 +12547,7 @@
             </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.LogBeta(System.Single,System.Single)">
@@ -12584,7 +12584,7 @@
             <summary>
             Returns the harmonic number.
             </summary>
-            <param name="n">Argument</param>
+            <param name="n">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Harm(System.Int32,System.Single)">
@@ -12592,7 +12592,7 @@
             Returns the harmonic number.
             </summary>
             <param name="n">Order</param>
-            <param name="m">Argument</param>
+            <param name="m">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Euler(System.Int32)">
@@ -12629,7 +12629,7 @@
             <summary>
             Returns the value of the Minkowski function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="F:UMapx.Core.Special.A027641">
@@ -14577,16 +14577,16 @@
             <summary>
             Returns the value of the kernel density function.
             </summary>
-            <param name="eta">Argument</param>
-            <param name="tau">Argument</param>
+            <param name="eta">Value</param>
+            <param name="tau">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.ChoiWilliams.Distribution(System.Single,System.Single)">
             <summary>
             Returns the value of the kernel distribution function.
             </summary>
-            <param name="t">Argument</param>
-            <param name="tau">Argument</param>
+            <param name="t">Value</param>
+            <param name="tau">Value</param>
             <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.ConeShape">
@@ -14653,16 +14653,16 @@
             <summary>
             Returns the value of the kernel density function.
             </summary>
-            <param name="eta">Argument</param>
-            <param name="tau">Argument</param>
+            <param name="eta">Value</param>
+            <param name="tau">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.ConeShape.Distribution(System.Single,System.Single)">
             <summary>
             Returns the value of the kernel distribution function.
             </summary>
-            <param name="t">Argument</param>
-            <param name="tau">Argument</param>
+            <param name="t">Value</param>
+            <param name="tau">Value</param>
             <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Erlang">
@@ -17905,7 +17905,7 @@
             <summary>
             Implements the "Cairo" function.
             </summary>
-            <param name="a">Argument</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="T:UMapx.Imaging.BottomHat">
@@ -20628,7 +20628,7 @@
             <summary>
             Implements the gamma correction.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="g">Gamma</param>
             <returns>Value</returns>
         </member>
@@ -20644,7 +20644,7 @@
             <summary>
             Implements the shift correction.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="b">Offset (-0.5, 0.5)</param>
             <returns>Value</returns>
         </member>
@@ -20660,7 +20660,7 @@
             <summary>
             Implements the threshold correction.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="threshold">Threshold [0, 1]</param>
             <returns>Value</returns>
         </member>
@@ -20676,7 +20676,7 @@
             <summary>
             Implements the exposure correction.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="average">Average</param>
             <returns>Value</returns>
         </member>
@@ -20692,7 +20692,7 @@
             <summary>
             Implements the sine correction.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="delta">Delta</param>
             <returns>Value</returns>
         </member>
@@ -20708,7 +20708,7 @@
             <summary>
             Implements the cosine correction.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="delta">Delta</param>
             <returns>Value</returns>
         </member>
@@ -20725,7 +20725,7 @@
             <summary>
             Implements the logarithmic correction.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="a">Logarithm base</param>
             <param name="delta">Delta</param>
             <returns>Value</returns>
@@ -20750,7 +20750,7 @@
             <summary>
             Implements the contrast correction.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="value">Contrast</param>
             <returns>Value</returns>
         </member>
@@ -20781,14 +20781,14 @@
             <summary>
             Negates the value.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Intensity.Equalize(System.Single,System.Single,System.Single)">
             <summary>
             Equalizes a value relative to the {min, max} range.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="max">Maximum value</param>
             <param name="min">Minimum value</param>
             <returns>Value</returns>
@@ -20825,7 +20825,7 @@
             <summary>
             Implements the linear correction.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="xmax">Maximum value</param>
             <param name="xmin">Minimum value</param>
             <param name="delta">Delta</param>
@@ -22182,15 +22182,15 @@
             <summary>
             One-dimensional Perlin noise function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.Function2D(System.Double,System.Double)">
             <summary>
             Two-dimensional Perlin noise function.
             </summary>
-            <param name="x">Argument</param>
-            <param name="y">Argument</param>
+            <param name="x">Value</param>
+            <param name="y">Value</param>
             <returns>Double precision floating point number</returns>
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.Noise(System.Int32)">
@@ -27330,7 +27330,7 @@
             <summary>
             Reconstruct function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="i">Increment</param>
             <param name="step">Step</param>
             <returns>Function</returns>
@@ -27348,7 +27348,7 @@
             <summary>
             Remapping function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="sigma">Sigma</param>
             <param name="factor">Factor</param>
             <param name="i">Increment</param>
@@ -29737,7 +29737,7 @@
             <summary>
             Initializes the graph pane.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="y">Function</param>
             <param name="depth">Depth</param>
             <param name="color">Color</param>
@@ -30238,14 +30238,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.ComplexGaussianWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.ComplexMorletWavelet">
@@ -30274,14 +30274,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.ComplexMorletWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition">
@@ -30454,14 +30454,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.FbspWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.GaborWavelet">
@@ -30496,21 +30496,21 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.GaborWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.GaborWavelet.WaveletReal(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.GaussianWavelet">
@@ -30533,14 +30533,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.GaussianWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.HaarWavelet">
@@ -30557,14 +30557,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.HaarWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.HermitianHatWavelet">
@@ -30581,14 +30581,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.HermitianHatWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.HermitianWavelet">
@@ -30611,14 +30611,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.HermitianWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.IComplexWavelet">
@@ -30630,14 +30630,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.IComplexWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.IFloatWavelet">
@@ -30649,14 +30649,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.IFloatWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.IWaveletTransform">
@@ -30683,14 +30683,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.MexicanHatWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.MeyerWavelet">
@@ -30707,14 +30707,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.MeyerWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.MorletWavelet">
@@ -30731,14 +30731,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.MorletWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.PoissonWavelet">
@@ -30761,14 +30761,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.PoissonWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.ShannonWavelet">
@@ -30785,14 +30785,14 @@
             <summary>
             Returns the value of the scaling function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="M:UMapx.Wavelet.ShannonWavelet.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Function</returns>
         </member>
         <member name="T:UMapx.Wavelet.WaveletDecomposition">
@@ -31772,7 +31772,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -31798,7 +31798,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -31824,7 +31824,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -31849,7 +31849,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -31887,7 +31887,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -31895,7 +31895,7 @@
             <summary>
             Функция G(x).
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.Confined.GetWindow(System.Int32)">
@@ -31919,7 +31919,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -31934,7 +31934,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Factor</returns>
         </member>
@@ -32380,7 +32380,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32412,7 +32412,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32438,7 +32438,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32464,7 +32464,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32489,7 +32489,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.IWindow.GetWindow">
@@ -32580,7 +32580,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32605,7 +32605,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32642,7 +32642,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32667,7 +32667,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32693,7 +32693,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32724,7 +32724,7 @@
             <summary>
             Function Z+-(x, a).
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="p">Sign</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
@@ -32733,7 +32733,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32955,7 +32955,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32970,7 +32970,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -32995,7 +32995,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -33020,7 +33020,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
@@ -33211,7 +33211,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Window.WindowBase.GetWindow">
@@ -33239,7 +33239,7 @@
             <summary>
             Returns the value of a window function.
             </summary>
-            <param name="x">Argument</param>
+            <param name="x">Value</param>
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>

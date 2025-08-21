@@ -39,7 +39,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Function(float x)
         {
@@ -83,7 +83,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="frameSize">Window size</param>
         /// <returns>Value</returns>
         public abstract float Function(float x, int frameSize);

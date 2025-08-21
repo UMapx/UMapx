@@ -394,7 +394,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the gamma correction.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="g">Gamma</param>
         /// <returns>Value</returns>
         public static float Gamma(float x, float g)
@@ -420,7 +420,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the shift correction.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="b">Offset (-0.5, 0.5)</param>
         /// <returns>Value</returns>
         public static float Shift(float x, float b)
@@ -447,7 +447,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the threshold correction.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="threshold">Threshold [0, 1]</param>
         /// <returns>Value</returns>
         public static float Bin(float x, float threshold)
@@ -473,7 +473,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the exposure correction.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="average">Average</param>
         /// <returns>Value</returns>
         public static float Exposure(float x, float average)
@@ -500,7 +500,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the sine correction.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="delta">Delta</param>
         /// <returns>Value</returns>
         public static float Sin(float x, float delta)
@@ -526,7 +526,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the cosine correction.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="delta">Delta</param>
         /// <returns>Value</returns>
         public static float Cos(float x, float delta)
@@ -553,7 +553,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the logarithmic correction.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Logarithm base</param>
         /// <param name="delta">Delta</param>
         /// <returns>Value</returns>
@@ -595,7 +595,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the contrast correction.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="value">Contrast</param>
         /// <returns>Value</returns>
         public static float Contrast(float x, float value)
@@ -655,7 +655,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Negates the value.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Invert(float x)
         {
@@ -664,7 +664,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Equalizes a value relative to the {min, max} range.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="max">Maximum value</param>
         /// <param name="min">Minimum value</param>
         /// <returns>Value</returns>
@@ -724,7 +724,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the linear correction.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="xmax">Maximum value</param>
         /// <param name="xmin">Minimum value</param>
         /// <param name="delta">Delta</param>

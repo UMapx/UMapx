@@ -253,7 +253,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "Cairo" function.
         /// </summary>
-        /// <param name="a">Argument</param>
+        /// <param name="a">Value</param>
         /// <returns>Value</returns>
         public static float Gw3c(float a)
         {

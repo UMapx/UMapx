@@ -13,7 +13,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Initializes the graph pane.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="y">Function</param>
         /// <param name="depth">Depth</param>
         /// <param name="color">Color</param>

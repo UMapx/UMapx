@@ -26,7 +26,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
         public static float ChebyshevT(float x, int n)
@@ -36,7 +36,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
         public static Complex32 ChebyshevT(Complex32 x, int n)
@@ -46,7 +46,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the second kind.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
         public static float ChebyshevU(float x, int n)
@@ -57,7 +57,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the second kind.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
         public static Complex32 ChebyshevU(Complex32 x, int n)
@@ -71,7 +71,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Abel polynomial.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Power</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
@@ -89,7 +89,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Abel polynomial.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Power</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
@@ -110,7 +110,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laguerre polynomial.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Power</param>
         /// <param name="k">Order</param>
         /// <returns>Value</returns>
@@ -130,7 +130,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laguerre polynomial.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Power</param>
         /// <param name="k">Order</param>
         /// <returns>Value</returns>
@@ -153,7 +153,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Legendre polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="m">Order</param>
         /// <returns>Value</returns>
         public static float Legendre(float x, int m)
@@ -173,7 +173,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Legendre polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="m">Order</param>
         /// <returns>Value</returns>
         public static Complex32 Legendre(Complex32 x, int m)
@@ -196,7 +196,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Hermite polynomial.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="m">Order</param>
         /// <returns>Value</returns>
         public static float Hermite(float x, int m)
@@ -213,7 +213,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Hermite polynomial.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="m">Order</param>
         /// <returns>Value</returns>
         public static Complex32 Hermite(Complex32 x, int m)
@@ -233,7 +233,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Gegenbauer polynomial.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Power</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
@@ -252,7 +252,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Gegenbauer polynomial.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Power</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
@@ -394,7 +394,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Radamecher function.
         /// </summary>
-        /// <param name="z">Argument</param>
+        /// <param name="z">Value</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
         public static Complex32 Rademacher(Complex32 z, int n)
@@ -414,7 +414,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Heaviside delta function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="k">Smoothing factor</param>
         /// <returns>Value</returns>
         public static float Heaviside(float x, float k)
@@ -424,7 +424,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Heaviside delta function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="k">Smoothing factor</param>
         /// <returns>Value</returns>
         public static Complex32 Heaviside(Complex32 x, Complex32 k)
@@ -460,7 +460,7 @@ namespace UMapx.Core
         /// <summary>
         /// Gets the value of the Gompertz function.
         /// </summary>
-        /// <param name="t">Argument</param>
+        /// <param name="t">Value</param>
         /// <param name="a">Upper asymptote</param>
         /// <param name="b">Growth parameter</param>
         /// <param name="c">Growth rate</param>
@@ -475,7 +475,7 @@ namespace UMapx.Core
         /// <summary>
         /// Gets the value of the Gompertz function.
         /// </summary>
-        /// <param name="t">Argument</param>
+        /// <param name="t">Value</param>
         /// <param name="a">Upper asymptote</param>
         /// <param name="b">Growth parameter</param>
         /// <param name="c">Growth rate</param>
@@ -493,7 +493,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Dirac delta function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Coefficient</param>
         /// <returns>Value</returns>
         public static float Dirac(float x, float a)
@@ -507,7 +507,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Dirac delta function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Coefficient</param>
         /// <returns>Value</returns>
         public static Complex32 Dirac(Complex32 x, Complex32 a)
@@ -524,7 +524,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Lower asymptote</param>
         /// <param name="k">Upper asymptote</param>
         /// <param name="b">Growth rate</param>
@@ -539,7 +539,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Lower asymptote</param>
         /// <param name="k">Upper asymptote</param>
         /// <param name="b">Growth rate</param>
@@ -554,7 +554,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Lower asymptote</param>
         /// <param name="k">Upper asymptote</param>
         /// <param name="b">Growth rate</param>
@@ -566,7 +566,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="a">Lower asymptote</param>
         /// <param name="k">Upper asymptote</param>
         /// <param name="b">Growth rate</param>
@@ -578,7 +578,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Logistic(float x)
         {
@@ -587,7 +587,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Logistic(Complex32 x)
         {
@@ -1118,7 +1118,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Lambert W-function.
         /// </summary>
-        /// <param name="z">Argument</param>
+        /// <param name="z">Value</param>
         /// <param name="k">Branch</param>
         /// <returns>Value</returns>
         public static Complex32 LambertW(Complex32 z, int k = 0)
@@ -1174,7 +1174,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the square super-root.
         /// </summary>
-        /// <param name="z">Argument</param>
+        /// <param name="z">Value</param>
         /// <param name="k">Branch</param>
         /// <returns>Value</returns>
         public static Complex32 Ssqrt(Complex32 z, int k = 0)
@@ -1426,7 +1426,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the D- / D + Dawson function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="positive">D- или D+</param>
         /// <returns>Value</returns>
         public static float Dawson(float x, bool positive)
@@ -1449,7 +1449,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the D- / D + Dawson function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="positive">D- или D+</param>
         /// <returns>Value</returns>
         public static Complex32 Dawson(Complex32 x, bool positive)
@@ -1475,7 +1475,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Q function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="inverse">Inverse function or not</param>
         /// <returns>Value</returns>
         public static float Q(float x, bool inverse = false)
@@ -1489,7 +1489,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Q function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="inverse">Inverse function or not</param>
         /// <returns>Value</returns>
         public static Complex32 Q(Complex32 x, bool inverse = false)
@@ -1592,7 +1592,7 @@ namespace UMapx.Core
         /// <param name="a">Parameter</param>
         /// <param name="b">Parameter</param>
         /// <param name="c">Parameter</param>
-        /// <param name="z">Argument</param>
+        /// <param name="z">Value</param>
         /// <returns>Value</returns>
         public static float Hypergeom(float a, float b, float c, float z)
         {
@@ -1640,7 +1640,7 @@ namespace UMapx.Core
         /// <param name="a">Parameter</param>
         /// <param name="b">Parameter</param>
         /// <param name="c">Parameter</param>
-        /// <param name="z">Argument</param>
+        /// <param name="z">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 c, Complex32 z)
         {
@@ -1685,7 +1685,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Parameter</param>
         /// <param name="b">Parameter</param>
-        /// <param name="z">Argument</param>
+        /// <param name="z">Value</param>
         /// <returns>Value</returns>
         public static float Hypergeom(float a, float b, float z)
         {
@@ -1785,7 +1785,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Parameter</param>
         /// <param name="b">Parameter</param>
-        /// <param name="z">Argument</param>
+        /// <param name="z">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 z)
         {
@@ -3247,7 +3247,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the generalized error function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Gerf(float x)
         {
@@ -3256,7 +3256,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the generalized error function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Gerf(Complex32 x) => Gerf(x, 2);
         #endregion
@@ -3812,7 +3812,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float BetaIncomplete(float a, float b, float x)
         {
@@ -3848,7 +3848,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static Complex32 BetaIncomplete(Complex32 a, Complex32 b, Complex32 x)
         {
@@ -3869,7 +3869,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float BetaIncompleteRegularized(float a, float b, float x)
         {
@@ -3930,7 +3930,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the harmonic number.
         /// </summary>
-        /// <param name="n">Argument</param>
+        /// <param name="n">Value</param>
         /// <returns>Value</returns>
         public static float Harm(int n)
         {
@@ -3940,7 +3940,7 @@ namespace UMapx.Core
         /// Returns the harmonic number.
         /// </summary>
         /// <param name="n">Order</param>
-        /// <param name="m">Argument</param>
+        /// <param name="m">Value</param>
         /// <returns>Value</returns>
         public static float Harm(int n, float m)
         {
@@ -4060,7 +4060,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Minkowski function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Minkowski(long x)
         {

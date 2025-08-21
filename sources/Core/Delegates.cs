@@ -3,13 +3,13 @@
     /// <summary>
     /// Defines the delegate of a continuous function that depends on a single argument.
     /// </summary>
-    /// <param name="x">Argument</param>
+    /// <param name="x">Value</param>
     /// <returns>Value</returns>
     public delegate float IFloat(float x);
     /// <summary>
     /// Defines the delegate of a continuous function that depends on a single argument.
     /// </summary>
-    /// <param name="x">Argument</param>
+    /// <param name="x">Value</param>
     /// <returns>Complex number</returns>
     public delegate Complex32 IComplex(Complex32 x);
     /// <summary>

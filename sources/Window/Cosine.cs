@@ -23,7 +23,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="frameSize">Window size</param>
         /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
@@ -47,7 +47,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Argument</param>
+        /// <param name="x">Value</param>
         /// <param name="frameSize">Window size</param>
         /// <returns>Factor</returns>
         internal static float cosinefunc(float x, int frameSize)
