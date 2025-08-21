@@ -11423,21 +11423,6 @@
             Sqrt( PI ).
             </summary>
         </member>
-        <member name="F:UMapx.Core.Special.LogMax">
-            <summary>
-            Log max.
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.LogMin">
-            <summary>
-            Log min.
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.GammaMax">
-            <summary>
-            Gamma max.
-            </summary>
-        </member>
         <member name="M:UMapx.Core.Special.ChebyshevT(System.Single,System.Int32)">
             <summary>
             Returns the value of the Chebyshev polynomial of the first kind.

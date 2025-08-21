@@ -20,18 +20,6 @@ namespace UMapx.Core
         /// Sqrt( PI ).
         /// </summary>
         private const float SQRT_PI = 1.7724538509055160272981674833411f;
-        /// <summary>
-        /// Log max.
-        /// </summary>
-        private const float LogMax = 7.09782712893383996732E2f;
-        /// <summary>
-        /// Log min.
-        /// </summary>
-        private const float LogMin = -7.451332191019412076235E2f;
-        /// <summary>
-        /// Gamma max.
-        /// </summary>
-        private const float GammaMax = 171.624376956302725f;
         #endregion
 
         #region Chebyshev polynomial
