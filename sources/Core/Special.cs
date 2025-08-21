@@ -3788,6 +3788,15 @@ namespace UMapx.Core
             return Special.LogGamma(n + 1.0f);
         }
         /// <summary>
+        /// Returns the natural logarithm of the factorial of a number log(n!).
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 LogFactorial(Complex32 z)
+        {
+            return Special.LogGamma(z + Complex32.One);
+        }
+        /// <summary>
         /// Returns the factorial of a number.
         /// </summary>
         /// <param name="n">Number</param>
@@ -3795,7 +3804,7 @@ namespace UMapx.Core
         public static float Factorial(float n)
         {
             // check it:
-            if (Maths.IsInteger(n) && n >= 0)
+            if (n >= 0 && n == Maths.Round(n))
             {
                 // get it from memory
                 if (n <= 170)
@@ -3807,6 +3816,15 @@ namespace UMapx.Core
             return Special.Gamma(n + 1);
         }
         /// <summary>
+        /// Returns the factorial of a number.
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 Factorial(Complex32 z)
+        {
+            return Special.Gamma(z + Complex32.One);
+        }
+        /// <summary>
         /// Returns the decreasing factorial of a number.
         /// </summary>
         /// <param name="n">Number</param>
@@ -3815,6 +3833,16 @@ namespace UMapx.Core
         public static float FactorialDown(float n, float k)
         {
             return Special.Factorial(n) / Special.Factorial(n - k);
+        }
+        /// <summary>
+        /// Returns the decreasing factorial of a number.
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 FactorialDown(Complex32 z, Complex32 k)
+        {
+            return Special.Gamma(z + Complex32.One) / Special.Gamma(z + Complex32.One - k);
         }
         /// <summary>
         /// Returns the increasing factorial of a number (Pohhammer symbol).
@@ -3829,6 +3857,16 @@ namespace UMapx.Core
                 return 1.0f;
             }
             return Special.Gamma(n + k) / Special.Gamma(n);
+        }
+        /// <summary>
+        /// Returns the increasing factorial of a number (Pohhammer symbol).
+        /// </summary>
+        /// <param name="z">Number</param>
+        /// <param name="k">Number</param>
+        /// <returns>Value</returns>
+        public static Complex32 FactorialUp(Complex32 z, Complex32 k)
+        {
+            return Special.Gamma(z + k) / Special.Gamma(z);
         }
         #endregion
 

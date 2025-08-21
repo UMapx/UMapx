@@ -12468,11 +12468,25 @@
             <param name="n">Number</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.LogFactorial(UMapx.Core.Complex32)">
+            <summary>
+            Returns the natural logarithm of the factorial of a number log(n!).
+            </summary>
+            <param name="z">Number</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Factorial(System.Single)">
             <summary>
             Returns the factorial of a number.
             </summary>
             <param name="n">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Factorial(UMapx.Core.Complex32)">
+            <summary>
+            Returns the factorial of a number.
+            </summary>
+            <param name="z">Number</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.FactorialDown(System.Single,System.Single)">
@@ -12483,11 +12497,27 @@
             <param name="k">Number</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.FactorialDown(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the decreasing factorial of a number.
+            </summary>
+            <param name="z">Number</param>
+            <param name="k">Number</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.FactorialUp(System.Single,System.Single)">
             <summary>
             Returns the increasing factorial of a number (Pohhammer symbol).
             </summary>
             <param name="n">Number</param>
+            <param name="k">Number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.FactorialUp(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the increasing factorial of a number (Pohhammer symbol).
+            </summary>
+            <param name="z">Number</param>
             <param name="k">Number</param>
             <returns>Value</returns>
         </member>
