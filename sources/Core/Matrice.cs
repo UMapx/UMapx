@@ -10005,54 +10005,28 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Compute(float min, float max, float step)
         {
-            // ******************************
-            // MATLAB vector computing void
-            // designed by Valery Asiryan
-            // ******************************
+            if (step == 0f)
+                throw new ArgumentException("step must be non-zero", nameof(step));
 
-            // shifts and variables:
-            float dy = max - min + step, i;
-            int dx = (int)Maths.Round(dy / step), j;
+            if ((max > min && step < 0f) || (max < min && step > 0f))
+                return Array.Empty<float>();
 
-            // C# has a significant bug, which you can check with:
-            // min = 0.5, max = 1, step = 0.001,
-            // maxz = max, j = 63.
+            double a = min;
+            double b = max;
+            double h = step;
 
-            // output vector and eps:
-            float[] x = new float[dx];
-            float eps = max / 1e8f, maxz;
+            double nExact = (b - a) / h;
+            int n = (int)Math.Round(nExact, MidpointRounding.AwayFromZero);
+            if (n < 0) n = 0;
 
-            // compute:
-            if (min > max)
-            {
-                // limit value:
-                maxz = max - eps;
+            int count = n + 1;
+            var x = new float[count];
 
-                // for arrays like [6,5...-5,-6]:
-                for (j = 0, i = min; i >= maxz; i += step)
-                {
-                    if (j < dx)
-                    {
-                        x[j] = i; j++;
-                    }
-                    else break;
-                }
-            }
-            else
-            {
-                // limit value:
-                maxz = max + eps;
+            for (int k = 0; k < n; k++)
+                x[k] = (float)(a + k * h);
 
-                // for arrays like [-6,-5...5,6]:
-                for (j = 0, i = min; i <= maxz; i += step)
-                {
-                    if (j < dx)
-                    {
-                        x[j] = i; j++;
-                    }
-                    else break;
-                }
-            }
+            x[n] = max;
+
             return x;
         }
         /// <summary>
