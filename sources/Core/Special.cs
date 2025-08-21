@@ -613,10 +613,11 @@ namespace UMapx.Core
                 return 0.0f;
 
             // properties:
-            float s = 0;
-            float f = 1.0f;
-            float z = x * x;
-            float t, m = 1, eps = 1e-16f;
+            double s = 0;
+            double f = 1.0f;
+            double z = x * x;
+            double t, m = 1;
+            float eps = 1e-16f;
             int k, i, iterations = 120;
             int p = 1;
 
@@ -639,7 +640,7 @@ namespace UMapx.Core
             }
 
             // construction:
-            return Maths.Gamma + (float)Math.Log(x) + s;
+            return Maths.Gamma + Maths.Log(x) + (float)s;
         }
         /// <summary>
         /// Returns the value of the integral cosine.
@@ -654,10 +655,10 @@ namespace UMapx.Core
 
             float eps = 1e-16f;
             int maxIter = 120;
-            Complex32 s = Complex32.Zero;
-            Complex32 z2 = z * z;
-            Complex32 m = Complex32.One; // will hold z^(2i)
-            float f = 1f;                 // factorial accumulator for (2i)!
+            Complex s = Complex.Zero;
+            Complex z2 = z * z;
+            Complex m = Complex.One; // will hold z^(2i)
+            double f = 1f;                 // factorial accumulator for (2i)!
             int sign = 1;
 
             for (int i = 1; i < maxIter; i++)
@@ -667,12 +668,12 @@ namespace UMapx.Core
                 sign = -sign;
                 m *= z2;                 // z^(2i)
 
-                Complex32 t = sign * m / (f * k);
+                Complex t = sign * m / (f * k);
                 if (Maths.Abs(t) < eps) break;
                 s += t;
             }
 
-            return Maths.Gamma + Maths.Log(z) + s;
+            return Maths.Gamma + Maths.Log(z) + (Complex32)s;
         }
         /// <summary>
         /// Returns the value of the integral sine.
@@ -688,10 +689,11 @@ namespace UMapx.Core
                 return -1.6f;
 
             // properties:
-            float s = x;
-            float f = 1.0f;
-            float z = x * x;
-            float t, m = x, eps = 1e-16f;
+            double s = x;
+            double f = 1.0f;
+            double z = x * x;
+            double t, m = x;
+            float eps = 1e-16f;
             int k, i, j = 1, iterations = 120;
             int p = 1;
 
@@ -714,7 +716,7 @@ namespace UMapx.Core
             }
 
             // result:
-            return s;
+            return (float)s;
         }
         /// <summary>
         /// Returns the value of the integral sine.
@@ -725,10 +727,10 @@ namespace UMapx.Core
         {
             float eps = 1e-16f;
             int maxIter = 120;
-            Complex32 s = z;             // start with n=0 term
-            Complex32 z2 = z * z;
-            Complex32 m = z;             // z^(2n+1)
-            float f = 1f;                // (2n+1)! accumulator via recurrence below
+            Complex s = z;             // start with n=0 term
+            Complex z2 = z * z;
+            Complex m = z;             // z^(2n+1)
+            double f = 1f;                // (2n+1)! accumulator via recurrence below
             int sign = 1;
             int j = 1;
 
@@ -740,7 +742,7 @@ namespace UMapx.Core
                 sign = -sign;
                 m *= z2;                 // z^(2n+1)
 
-                Complex32 t = sign * m / (f * k);
+                Complex t = sign * m / (f * k);
                 if (Maths.Abs(t) < eps) break;
                 s += t;
             }
@@ -755,10 +757,11 @@ namespace UMapx.Core
         public static float Ei(float x)
         {
             // Properties:
-            float s = 0.0f;
-            float f = 1.0f;
-            float m = 1.0f;
-            float t, eps = 1e-8f;
+            double s = 0.0f;
+            double f = 1.0f;
+            double m = 1.0f;
+            double t;
+            float eps = 1e-8f;
             int i, iterations = 120;
 
             // Taylor series:
@@ -776,14 +779,14 @@ namespace UMapx.Core
             }
 
             // construction:
-            float r = Maths.Gamma + s;
+            double r = Maths.Gamma + s;
 
             // ranges:
             if (x < 0)
             {
-                return r + (float)Math.Log(-x);
+                return (float)r + Maths.Log(-x);
             }
-            return r + (float)Math.Log(x);
+            return (float)r + Maths.Log(x);
         }
         /// <summary>
         /// Returns the value of an integral exponential function.
@@ -798,20 +801,20 @@ namespace UMapx.Core
 
             float eps = 1e-16f;
             int maxIter = 120;
-            Complex32 s = Complex32.Zero;
-            Complex32 m = Complex32.One; // z^k
-            float fact = 1f;
+            Complex s = Complex.Zero;
+            Complex m = Complex.One; // z^k
+            double fact = 1f;
 
             for (int k = 1; k < maxIter; k++)
             {
                 fact *= k;               // k!
-                m *= z;                  // z^k
-                Complex32 t = m / (fact * k);
+                m *= (Complex)z;         // z^k
+                Complex t = m / (fact * k);
                 if (Maths.Abs(t) < eps) break;
                 s += t;
             }
 
-            return Maths.Gamma + Maths.Log(z) + s;
+            return Maths.Gamma + Maths.Log(z) + (Complex32)s;
         }
         /// <summary>
         /// Returns the value of the integral logarithm.
