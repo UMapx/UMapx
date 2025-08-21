@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace UMapx.Core
 {
@@ -1858,15 +1859,15 @@ namespace UMapx.Core
 
             // reduce to nonnegative order
             int n = a < 0 ? -a : a;
-            float sign = (a < 0 && (n & 1) == 1) ? -1f : 1f;
+            double sign = (a < 0 && (n & 1) == 1) ? -1f : 1f;
 
             // initial term: (x/2)^n / n! via recurrence
-            float halfx = 0.5f * x;
-            float term = 1f;
+            double halfx = 0.5f * x;
+            double term = 1f;
             for (int k = 1; k <= n; k++)
                 term *= halfx / k;
 
-            float sum = term;
+            double sum = term;
 
             // common ratio factor for advancing m: q = -(x^2/4)
             float q = -0.25f * x * x;
@@ -1875,14 +1876,14 @@ namespace UMapx.Core
             for (int m = 0; m < maxIter; m++)
             {
                 // term_{m+1} = term_m * q / ((m+1)(m+n+1))
-                float denom = (m + 1f) * (m + n + 1f);
+                double denom = (m + 1f) * (m + n + 1f);
                 term *= q / denom;
                 sum += term;
 
                 if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
             }
 
-            return sign * sum;
+            return (float)(sign * sum);
         }
         /// <summary>
         /// Returns the value of a Bessel function of the first kind.
@@ -1902,23 +1903,23 @@ namespace UMapx.Core
             // reduce to nonnegative order
             int n = a < 0 ? -a : a;
             float sgn = (a < 0 && (n & 1) == 1) ? -1f : 1f;
-            Complex32 sign = new Complex32(sgn, 0f);
-
+            Complex sign = new Complex(sgn, 0f);
+            
             // initial term: (x/2)^n / n! via recurrence
-            Complex32 halfx = 0.5f * x;
-            Complex32 term = Complex32.One;
+            Complex halfx = 0.5f * x;
+            Complex term = Complex.One;
             for (int k = 1; k <= n; k++)
                 term *= halfx / k;
 
-            Complex32 sum = term;
+            Complex sum = term;
 
             // common factor q = -(x^2/4)
-            Complex32 q = -0.25f * x * x;
+            Complex q = -0.25f * x * x;
 
             for (int m = 0; m < maxIter; m++)
             {
                 // term_{m+1} = term_m * q / ((m+1)(m+n+1))
-                float denom = (m + 1f) * (m + n + 1f);
+                double denom = (m + 1f) * (m + n + 1f);
                 term *= q / denom;
                 sum += term;
 
@@ -1937,25 +1938,25 @@ namespace UMapx.Core
         public static float Y(float x, int a)
         {
             if (x <= 0f) return float.NaN;              // Y_n(x) is real-defined only for x>0
-            if (a == 0) return Y0(x);
-            if (a == 1) return Y1(x);
+            if (a == 0) return (float)Y0(x);
+            if (a == 1) return (float)Y1(x);
 
             int n = a < 0 ? -a : a;
-            float sgn = (a < 0 && ((n & 1) == 1)) ? -1f : 1f;
+            double sgn = (a < 0 && ((n & 1) == 1)) ? -1f : 1f;
 
             // upward recurrence from Y0,Y1
-            float Ym1 = Y0(x);            // Y_0
-            float Y0v = Y1(x);            // Y_1
-            float Yk = (n == 1) ? Y0v : 0f;
+            double Ym1 = Y0(x);            // Y_0
+            double Y0v = Y1(x);            // Y_1
+            double Yk = (n == 1) ? Y0v : 0f;
 
             for (int k = 1; k < n; k++)
             {
-                float Y1v = 2f * k / x * Y0v - Ym1;   // Y_{k+1}
+                double Y1v = 2f * k / x * Y0v - Ym1;   // Y_{k+1}
                 Ym1 = Y0v;
                 Y0v = Y1v;
                 Yk = Y1v;
             }
-            return sgn * Yk;
+            return (float)(sgn * Yk);
         }
         /// <summary>
         /// Returns the value of a Bessel function of the second kind.
@@ -1972,16 +1973,16 @@ namespace UMapx.Core
 
             int n = a < 0 ? -a : a;
             float sgnf = (a < 0 && ((n & 1) == 1)) ? -1f : 1f;
-            Complex32 sgn = new Complex32(sgnf, 0f);
+            Complex sgn = new Complex(sgnf, 0f);
 
             // upward recurrence from Y0,Y1
-            Complex32 Ym1 = Y0(x);        // Y_0
-            Complex32 Y0v = Y1(x);        // Y_1
-            Complex32 Yk = (n == 1) ? Y0v : Complex32.Zero;
+            Complex Ym1 = Y0(x);        // Y_0
+            Complex Y0v = Y1(x);        // Y_1
+            Complex Yk = (n == 1) ? Y0v : Complex.Zero;
 
             for (int k = 1; k < n; k++)
             {
-                Complex32 Y1v = 2f * k / x * Y0v - Ym1; // Y_{k+1}
+                Complex Y1v = 2f * k / (Complex)x * Y0v - Ym1; // Y_{k+1}
                 Ym1 = Y0v;
                 Y0v = Y1v;
                 Yk = Y1v;
@@ -2004,27 +2005,27 @@ namespace UMapx.Core
             int n = a < 0 ? -a : a;
 
             // Initial term: (x/2)^n / n! via recurrence
-            float halfx = 0.5f * x;
-            float term = 1f;
+            double halfx = 0.5f * x;
+            double term = 1f;
             for (int k = 1; k <= n; k++)
                 term *= halfx / k;
 
-            float sum = term;
+            double sum = term;
 
             // Common ratio for m→m+1: q = (x^2/4) / ((m+1)(m+n+1))
-            float qBase = 0.25f * x * x;
+            double qBase = 0.25f * x * x;
             float eps = 1e-16f;
             int maxIter = 512;
 
             for (int m = 0; m < maxIter; m++)
             {
-                float denom = (m + 1f) * (m + n + 1f);
+                double denom = (m + 1f) * (m + n + 1f);
                 term *= qBase / denom;
                 sum += term;
                 if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
             }
 
-            return sum;
+            return (float)sum;
         }
         /// <summary>
         /// Returns the value of the modified Bessel function of the first kind.
@@ -2042,21 +2043,21 @@ namespace UMapx.Core
             int n = a < 0 ? -a : a;
 
             // Initial term: (x/2)^n / n! via recurrence
-            Complex32 halfx = 0.5f * x;
-            Complex32 term = Complex32.One;
+            Complex halfx = 0.5f * x;
+            Complex term = Complex32.One;
             for (int k = 1; k <= n; k++)
                 term *= halfx / k;
 
-            Complex32 sum = term;
+            Complex sum = term;
 
             // Common ratio for m→m+1: q = (x^2/4) / ((m+1)(m+n+1))
-            Complex32 qBase = 0.25f * x * x;
+            Complex qBase = 0.25f * x * x;
             float eps = 1e-8f;
             int maxIter = 512;
 
             for (int m = 0; m < maxIter; m++)
             {
-                float denom = (m + 1f) * (m + n + 1f);
+                double denom = (m + 1f) * (m + n + 1f);
                 term *= qBase / denom;
                 sum += term;
                 if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
@@ -2076,21 +2077,21 @@ namespace UMapx.Core
             if (x <= 0f) return float.NaN;          // singular on non-positive real axis
             int n = a < 0 ? -a : a;                 // K_{-n} = K_n
 
-            if (n == 0) return K0(x);
-            if (n == 1) return K1(x);
+            if (n == 0) return (float)K0(x);
+            if (n == 1) return (float)K1(x);
 
-            float km1 = K0(x);       // K_0
-            float k0 = K1(x);       // K_1
-            float kn = k0;
+            double km1 = K0(x);       // K_0
+            double k0 = K1(x);       // K_1
+            double kn = k0;
 
             for (int k = 1; k < n; k++)
             {
-                float k1 = km1 + 2f * k / x * k0; // K_{k+1}
+                double k1 = km1 + 2f * k / x * k0; // K_{k+1}
                 km1 = k0;
                 k0 = k1;
                 kn = k1;
             }
-            return kn;
+            return (float)kn;
         }
         /// <summary>
         /// Returns the value of the modified Bessel function of the second kind.
@@ -2106,13 +2107,13 @@ namespace UMapx.Core
             if (n == 0) return K0(x);
             if (n == 1) return K1(x);
 
-            Complex32 km1 = K0(x);   // K_0
-            Complex32 k0 = K1(x);   // K_1
-            Complex32 kn = k0;
+            Complex km1 = K0(x);   // K_0
+            Complex k0 = K1(x);   // K_1
+            Complex kn = k0;
 
             for (int k = 1; k < n; k++)
             {
-                Complex32 k1 = km1 + 2f * k / x * k0; // K_{k+1}
+                Complex k1 = km1 + 2f * k / (Complex)x * k0; // K_{k+1}
                 km1 = k0;
                 k0 = k1;
                 kn = k1;
@@ -2124,15 +2125,15 @@ namespace UMapx.Core
 
         // ===================== Helpers: Y0, Y1 via canonical series =====================
 
-        private static float Y0(float x)
+        private static double Y0(double x)
         {
-            float j0 = J0(x);
-            float logt = (float)Math.Log(x * 0.5f) + Maths.Gamma;   // Euler–Mascheroni in Maths.Gamma
-            float sum = 0f;
+            double j0 = J0(x);
+            double logt = Math.Log(x * 0.5f) + Maths.Gamma;   // Euler–Mascheroni in Maths.Gamma
+            double sum = 0f;
 
-            float x2o4 = 0.25f * x * x;
-            float term = -x2o4;           // k=1: (-1)^1 (x/2)^2/(1!)^2
-            float H = 1f;                 // H_1
+            double x2o4 = 0.25f * x * x;
+            double term = -x2o4;           // k=1: (-1)^1 (x/2)^2/(1!)^2
+            double H = 1f;                 // H_1
 
             float eps = 1e-16f;
             int maxIter = 512;
@@ -2141,36 +2142,36 @@ namespace UMapx.Core
             {
                 sum += H * term;
                 // next term: multiply by - (x^2/4) / (k+1)^2
-                float ratio = -x2o4 / ((k + 1f) * (k + 1f));
+                double ratio = -x2o4 / ((k + 1f) * (k + 1f));
                 term *= ratio;
                 H += 1f / (k + 1f);
                 if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
             }
-            return 2f / (float)Math.PI * (logt * j0 + sum);
+            return 2f / Math.PI * (logt * j0 + sum);
         }
 
-        private static float Y1(float x)
+        private static double Y1(double x)
         {
-            float j1 = J1(x);
-            float logt = (float)Math.Log(x * 0.5f) + Maths.Gamma;
+            double j1 = J1(x);
+            double logt = Math.Log(x * 0.5f) + Maths.Gamma;
 
-            float sum = 0f;
-            float x2o4 = 0.25f * x * x;
+            double sum = 0f;
+            double x2o4 = 0.25f * x * x;
 
             // k=1 base term: (-1)^1 (x/2)^3/(1!*2!) = - x^3 / 16
-            float term = -(x * x * x) * (1f / 16f);
-            float H = 1f; // H_1
+            double term = -(x * x * x) * (1f / 16f);
+            double H = 1f; // H_1
 
             float eps = 1e-16f;
             int maxIter = 512;
 
             for (int k = 1; k < maxIter; k++)
             {
-                float coeff = H - 1f / (2f * k + 1f);
+                double coeff = H - 1f / (2f * k + 1f);
                 sum += coeff * term;
 
                 // next term: multiply by - (x^2/4) / ((k+1)(k+2))
-                float ratio = -x2o4 / ((k + 1f) * (k + 2f));
+                double ratio = -x2o4 / ((k + 1f) * (k + 2f));
                 term *= ratio;
                 H += 1f / (k + 1f);
                 if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
@@ -2179,16 +2180,16 @@ namespace UMapx.Core
             return 2f / (float)Math.PI * (logt * j1 - 1f / x + sum);
         }
 
-        private static Complex32 Y0(Complex32 x)
+        private static Complex Y0(Complex x)
         {
-            Complex32 j0 = J0(x);
-            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+            Complex j0 = J0(x);
+            Complex logt = Complex.Log(0.5f * x) + new Complex(Maths.Gamma, 0f);
 
-            Complex32 sum = Complex32.Zero;
-            Complex32 x2o4 = 0.25f * x * x;
+            Complex sum = Complex.Zero;
+            Complex x2o4 = 0.25f * x * x;
 
-            Complex32 term = -x2o4;      // k=1
-            float H = 1f;
+            Complex term = -x2o4;      // k=1
+            double H = 1f;
 
             float eps = 1e-16f;
             int maxIter = 512;
@@ -2196,49 +2197,49 @@ namespace UMapx.Core
             for (int k = 1; k < maxIter; k++)
             {
                 sum += H * term;
-                Complex32 ratio = -x2o4 / ((k + 1f) * (k + 1f));
+                Complex ratio = -x2o4 / ((k + 1f) * (k + 1f));
                 term *= ratio;
                 H += 1f / (k + 1f);
                 if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
             }
-            return 2f / (float)Math.PI * (logt * j0 + sum);
+            return 2f / Math.PI * (logt * j0 + sum);
         }
 
-        private static Complex32 Y1(Complex32 x)
+        private static Complex Y1(Complex x)
         {
-            Complex32 j1 = J1(x);
-            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+            Complex j1 = J1(x);
+            Complex logt = Complex.Log(0.5f * x) + new Complex(Maths.Gamma, 0f);
 
-            Complex32 sum = Complex32.Zero;
-            Complex32 x2o4 = 0.25f * x * x;
+            Complex sum = Complex.Zero;
+            Complex x2o4 = 0.25f * x * x;
 
-            Complex32 term = -(x * x * x) * (1f / 16f); // k=1
-            float H = 1f;
+            Complex term = -(x * x * x) * (1f / 16f); // k=1
+            double H = 1f;
 
             float eps = 1e-16f;
             int maxIter = 512;
 
             for (int k = 1; k < maxIter; k++)
             {
-                float coeff = H - 1f / (2f * k + 1f);
+                double coeff = H - 1f / (2f * k + 1f);
                 sum += coeff * term;
 
-                Complex32 ratio = -x2o4 / ((k + 1f) * (k + 2f));
+                Complex ratio = -x2o4 / ((k + 1f) * (k + 2f));
                 term *= ratio;
                 H += 1f / (k + 1f);
                 if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
             }
 
-            return 2f / (float)Math.PI * (logt * j1 - Complex32.One / x + sum);
+            return 2f / Math.PI * (logt * j1 - Complex.One / x + sum);
         }
 
         // ===================== Helpers: J0, J1 (series) =====================
 
-        private static float J0(float x)
+        private static double J0(double x)
         {
-            float sum = 1f;
-            float term = 1f;
-            float q = -0.25f * x * x;
+            double sum = 1f;
+            double term = 1f;
+            double q = -0.25f * x * x;
 
             float eps = 1e-16f;
             int maxIter = 512;
@@ -2252,11 +2253,11 @@ namespace UMapx.Core
             return sum;
         }
 
-        private static float J1(float x)
+        private static double J1(double x)
         {
-            float sum = 0.5f * x;  // m=0: (x/2)^{1}/(0!*1!)
-            float term = sum;
-            float q = -0.25f * x * x;
+            double sum = 0.5f * x;  // m=0: (x/2)^{1}/(0!*1!)
+            double term = sum;
+            double q = -0.25f * x * x;
 
             float eps = 1e-16f;
             int maxIter = 512;
@@ -2270,11 +2271,11 @@ namespace UMapx.Core
             return sum;
         }
 
-        private static Complex32 J0(Complex32 x)
+        private static Complex J0(Complex x)
         {
-            Complex32 sum = Complex32.One;
-            Complex32 term = Complex32.One;
-            Complex32 q = -0.25f * x * x;
+            Complex sum = Complex.One;
+            Complex term = Complex.One;
+            Complex q = -0.25f * x * x;
 
             float eps = 1e-16f;
             int maxIter = 512;
@@ -2288,11 +2289,11 @@ namespace UMapx.Core
             return sum;
         }
 
-        private static Complex32 J1(Complex32 x)
+        private static Complex J1(Complex x)
         {
-            Complex32 sum = 0.5f * x;
-            Complex32 term = sum;
-            Complex32 q = -0.25f * x * x;
+            Complex sum = 0.5f * x;
+            Complex term = sum;
+            Complex q = -0.25f * x * x;
 
             float eps = 1e-16f;
             int maxIter = 512;
@@ -2308,15 +2309,15 @@ namespace UMapx.Core
 
         // ===================== K0 and K1 via canonical series =====================
 
-        private static float K0(float x)
+        private static double K0(double x)
         {
-            float i0 = I0(x);
-            float logt = Maths.Log(0.5f * x) + Maths.Gamma;
+            double i0 = I0(x);
+            double logt = Math.Log(0.5f * x) + Maths.Gamma;
 
-            float sum = 0f;
-            float x2o4 = 0.25f * x * x;
-            float term = x2o4;     // k=1
-            float H = 1f;       // H_1
+            double sum = 0f;
+            double x2o4 = 0.25f * x * x;
+            double term = x2o4;     // k=1
+            double H = 1f;       // H_1
 
             float eps = 1e-16f;
             int maxIter = 512;
@@ -2331,17 +2332,17 @@ namespace UMapx.Core
             return -logt * i0 + sum;
         }
 
-        private static float K1(float x)
+        private static double K1(double x)
         {
-            float i1 = I1(x);
-            float logt = Maths.Log(0.5f * x) + Maths.Gamma;
+            double i1 = I1(x);
+            double logt = Math.Log(0.5f * x) + Maths.Gamma;
 
-            float sum = 0f;
-            float x2o4 = 0.25f * x * x;
+            double sum = 0f;
+            double x2o4 = 0.25f * x * x;
 
-            float term = 0.5f * x;   // k=0: (x/2)^1/(0!*1!)
-            float Hk = 0f;         // H_0 = 0
-            float coeff0 = -0.5f;    // -(H_0 + H_1)/2 = -1/2
+            double term = 0.5f * x;   // k=0: (x/2)^1/(0!*1!)
+            double Hk = 0f;         // H_0 = 0
+            double coeff0 = -0.5f;    // -(H_0 + H_1)/2 = -1/2
             float eps = 1e-16f;
             int maxIter = 512;
 
@@ -2351,8 +2352,8 @@ namespace UMapx.Core
             {
                 term *= x2o4 / ((k + 1f) * (k + 2f));        // next term
                 Hk += 1f / (k + 1f);
-                float Hk1 = Hk + 1f / (k + 2f);
-                float coeff = -0.5f * (Hk + Hk1);
+                double Hk1 = Hk + 1f / (k + 2f);
+                double coeff = -0.5f * (Hk + Hk1);
                 sum += coeff * term;
                 if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
             }
@@ -2360,15 +2361,15 @@ namespace UMapx.Core
             return (1f / x) + logt * i1 + sum;
         }
 
-        private static Complex32 K0(Complex32 x)
+        private static Complex K0(Complex x)
         {
-            Complex32 i0 = I0(x);
-            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
-
-            Complex32 sum = Complex32.Zero;
-            Complex32 x2o4 = 0.25f * x * x;
-            Complex32 term = x2o4;      // k=1
-            float H = 1f;        // H_1
+            Complex i0 = I0(x);
+            Complex logt = Complex.Log(0.5f * x) + new Complex(Maths.Gamma, 0f);
+            
+            Complex sum = Complex.Zero;
+            Complex x2o4 = 0.25f * x * x;
+            Complex term = x2o4;      // k=1
+            double H = 1f;        // H_1
             float eps = 1e-16f;
             int maxIter = 512;
 
@@ -2382,17 +2383,17 @@ namespace UMapx.Core
             return -logt * i0 + sum;
         }
 
-        private static Complex32 K1(Complex32 x)
+        private static Complex K1(Complex x)
         {
-            Complex32 i1 = I1(x);
-            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+            Complex i1 = I1(x);
+            Complex logt = Complex.Log(0.5f * x) + new Complex(Maths.Gamma, 0f);
 
-            Complex32 sum = Complex32.Zero;
-            Complex32 x2o4 = 0.25f * x * x;
+            Complex sum = Complex.Zero;
+            Complex x2o4 = 0.25f * x * x;
 
-            Complex32 term = 0.5f * x;  // k=0
-            float Hk = 0f;        // H_0 = 0
-            float coeff0 = -0.5f;
+            Complex term = 0.5f * x;  // k=0
+            double Hk = 0f;        // H_0 = 0
+            double coeff0 = -0.5f;
             float eps = 1e-16f;
             int maxIter = 512;
 
@@ -2402,20 +2403,20 @@ namespace UMapx.Core
             {
                 term *= x2o4 / ((k + 1f) * (k + 2f));
                 Hk += 1f / (k + 1f);
-                float Hk1 = Hk + 1f / (k + 2f);
-                float coeff = -0.5f * (Hk + Hk1);
+                double Hk1 = Hk + 1f / (k + 2f);
+                double coeff = -0.5f * (Hk + Hk1);
                 sum += coeff * term;
                 if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
             }
 
-            return Complex32.One / x + logt * i1 + sum;
+            return Complex.One / x + logt * i1 + sum;
         }
 
         // ===================== Modified Bessel I0 and I1 via series (used by K0, K1) =====================
 
-        private static float I0(float x)
+        private static double I0(double x)
         {
-            float sum = 1f, term = 1f, q = 0.25f * x * x;
+            double sum = 1f, term = 1f, q = 0.25f * x * x;
             float eps = 1e-16f;
             int maxIter = 512;
 
@@ -2428,9 +2429,9 @@ namespace UMapx.Core
             return sum;
         }
 
-        private static float I1(float x)
+        private static double I1(double x)
         {
-            float sum = 0.5f * x, term = sum, q = 0.25f * x * x;
+            double sum = 0.5f * x, term = sum, q = 0.25f * x * x;
             float eps = 1e-16f;
             int maxIter = 512;
 
@@ -2443,9 +2444,9 @@ namespace UMapx.Core
             return sum;
         }
 
-        private static Complex32 I0(Complex32 x)
+        private static Complex I0(Complex x)
         {
-            Complex32 sum = Complex32.One, term = Complex32.One, q = 0.25f * x * x;
+            Complex sum = Complex.One, term = Complex.One, q = 0.25f * x * x;
             float eps = 1e-16f;
             int maxIter = 512;
 
@@ -2458,9 +2459,9 @@ namespace UMapx.Core
             return sum;
         }
 
-        private static Complex32 I1(Complex32 x)
+        private static Complex I1(Complex x)
         {
-            Complex32 sum = 0.5f * x, term = sum, q = 0.25f * x * x;
+            Complex sum = 0.5f * x, term = sum, q = 0.25f * x * x;
             float eps = 1e-16f;
             int maxIter = 512;
 

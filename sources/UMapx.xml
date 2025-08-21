@@ -3658,6 +3658,13 @@
             <param name="value">Value to be converted to complex number</param>
             <returns>Complex number</returns>
         </member>
+        <member name="M:UMapx.Core.Complex32.op_Implicit(UMapx.Core.Complex32)~System.Numerics.Complex">
+            <summary>
+            Defines an explicit conversion of a number to complex number.
+            </summary>
+            <param name="value">Value to be converted to complex number</param>
+            <returns>Complex number</returns>
+        </member>
         <member name="M:UMapx.Core.Complex32.op_Implicit(System.Double)~UMapx.Core.Complex32">
             <summary>
             Defines an explicit conversion of a number to complex number.
