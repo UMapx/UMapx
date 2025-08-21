@@ -65,7 +65,7 @@ namespace UMapx.Core
         /// <summary>
         /// The function of converting number to a string
         /// </summary>
-        /// <param name="v">Number</param>
+        /// <param name="v">Value</param>
         /// <param name="format">Format string</param>
         /// <param name="s">First in a row or not</param>
         /// <param name="symbol">Symbol</param>

@@ -175,7 +175,7 @@ namespace UMapx.Distribution
                 return 0;
 
             float u = (d1 * x) / (d1 * x + d2);
-            return Special.BetaIncomplete(d1 * 0.5f, d2 * 0.5f, u);
+            return Special.BetaIncompleteRegularized(d1 * 0.5f, d2 * 0.5f, u);
         }
         /// <summary>
         /// Returns the value of the probability density function.

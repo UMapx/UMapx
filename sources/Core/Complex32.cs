@@ -61,46 +61,6 @@ namespace UMapx.Core
                 return (float)Math.Atan2(Imag, Real);
             }
         }
-        /// <summary>
-        /// Returns the imaginary one.
-        /// </summary>
-        public static Complex32 I
-        {
-            get
-            {
-                return new Complex32(0, 1);
-            }
-        }
-        /// <summary>
-        /// Returns the real one.
-        /// </summary>
-        public static Complex32 One
-        {
-            get
-            {
-                return new Complex32(1, 0);
-            }
-        }
-        /// <summary>
-        /// Returns the complex zero.
-        /// </summary>
-        public static Complex32 Zero
-        {
-            get
-            {
-                return new Complex32(0, 0);
-            }
-        }
-        /// <summary>
-        /// Returns the complex conjugate number.
-        /// </summary>
-        public Complex32 Conjugate
-        {
-            get
-            {
-                return new Complex32(this.Real, -this.Imag);
-            }
-        }
         #endregion
 
         #region Overrides
@@ -127,7 +87,7 @@ namespace UMapx.Core
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
-            return this.ToString("G5");
+            return this.ToString("G6");
         }
         /// <summary>
         /// Converts complex number to its corresponding string representation.
@@ -178,7 +138,7 @@ namespace UMapx.Core
         /// The sum of a complex number and a real number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator +(Complex32 a, float b)
         {
@@ -187,7 +147,7 @@ namespace UMapx.Core
         /// <summary>
         /// The sum of a complex number and a real number.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator +(float a, Complex32 b)
@@ -210,7 +170,7 @@ namespace UMapx.Core
         /// The difference between a complex number and a real number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator -(Complex32 a, float b)
         {
@@ -219,7 +179,7 @@ namespace UMapx.Core
         /// <summary>
         /// The difference between a complex number and a real number.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator -(float a, Complex32 b)
@@ -254,7 +214,7 @@ namespace UMapx.Core
         /// Multiplies real number by complex number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator *(float a, Complex32 b)
         {
@@ -263,7 +223,7 @@ namespace UMapx.Core
         /// <summary>
         /// Multiplies complex number by real number.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator *(Complex32 a, float b)
@@ -291,7 +251,7 @@ namespace UMapx.Core
         /// Divides complex number by real number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator /(Complex32 a, float b)
         {
@@ -300,7 +260,7 @@ namespace UMapx.Core
         /// <summary>
         /// Divides real number by complex number.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator /(float a, Complex32 b)
@@ -491,6 +451,75 @@ namespace UMapx.Core
                 magnitude * (float)Math.Cos(phase),
                 magnitude * (float)Math.Sin(phase)
             );
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the specified value is not a number.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Boolean</returns>
+        public static bool IsNaN(Complex32 z) => float.IsNaN(z.Real) || float.IsNaN(z.Imag);
+
+        /// <summary>
+        /// Returns a value indicating whether the specified number evaluates to negative or positive infinity.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Boolean</returns>
+        public static bool IsInfinity(Complex32 z) => float.IsInfinity(z.Real) || float.IsInfinity(z.Imag);
+
+        #endregion
+
+        #region Static properties
+
+        /// <summary>
+        /// Returns the imaginary one.
+        /// </summary>
+        public static Complex32 I
+        {
+            get
+            {
+                return new Complex32(0, 1);
+            }
+        }
+        /// <summary>
+        /// Returns the real one.
+        /// </summary>
+        public static Complex32 One
+        {
+            get
+            {
+                return new Complex32(1, 0);
+            }
+        }
+        /// <summary>
+        /// Returns the complex zero.
+        /// </summary>
+        public static Complex32 Zero
+        {
+            get
+            {
+                return new Complex32(0, 0);
+            }
+        }
+        /// <summary>
+        /// Returns the complex conjugate number.
+        /// </summary>
+        public Complex32 Conjugate
+        {
+            get
+            {
+                return new Complex32(this.Real, -this.Imag);
+            }
+        }
+        /// <summary>
+        /// Returns the not number.
+        /// </summary>
+        public static Complex32 NaN
+        {
+            get
+            {
+                return new Complex32(float.NaN, float.NaN);
+            }
         }
 
         #endregion

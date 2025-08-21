@@ -13,6 +13,14 @@ namespace UMapx.Core
     {
         #region Private data
         /// <summary>
+        /// 1 / ( 2 * PI ).
+        /// </summary>
+        private const float INV_2PI = 0.15915494309189533576888376337251f;
+        /// <summary>
+        /// Sqrt( PI ).
+        /// </summary>
+        private const float SQRT_PI = 1.7724538509055160272981674833411f;
+        /// <summary>
         /// Log max.
         /// </summary>
         private const float LogMax = 7.09782712893383996732E2f;
@@ -21,16 +29,589 @@ namespace UMapx.Core
         /// </summary>
         private const float LogMin = -7.451332191019412076235E2f;
         /// <summary>
-        /// Square PI.
+        /// Gamma max.
         /// </summary>
-        private const float sqrtPI = 1.7724538509055160272981674833411f;
+        private const float GammaMax = 171.624376956302725f;
+        #endregion
+
+        #region Chebyshev polynomial
+        /// <summary>
+        /// Returns the value of the Chebyshev polynomial of the first kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float ChebyshevT(float x, int n)
+        {
+            return Maths.Cos(n * Maths.Acos(x));
+        }
+        /// <summary>
+        /// Returns the value of the Chebyshev polynomial of the first kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 ChebyshevT(Complex32 x, int n)
+        {
+            return Maths.Cos(n * Maths.Acos(x));
+        }
+        /// <summary>
+        /// Returns the value of the Chebyshev polynomial of the second kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float ChebyshevU(float x, int n)
+        {
+            float z = Maths.Acos(x);
+            return Maths.Sin((n + 1) * z) / Maths.Sin(z);
+        }
+        /// <summary>
+        /// Returns the value of the Chebyshev polynomial of the second kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 ChebyshevU(Complex32 x, int n)
+        {
+            Complex32 z = Maths.Acos(x);
+            return Maths.Sin((n + 1) * z) / Maths.Sin(z);
+        }
+        #endregion
+
+        #region Abel polynomial
+        /// <summary>
+        /// Returns the value of the Abel polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float Abel(float x, float a, int n)
+        {
+            if (n == 0)
+                return 1;
+            if (n == 1)
+                return x;
+
+            // Generalized formula
+            // Abel polynomials recurrence relation for any n ≥ 1:
+            return x * Maths.Pow(x - a * n, n - 1);
+        }
+        /// <summary>
+        /// Returns the value of the Abel polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Abel(Complex32 x, float a, int n)
+        {
+            if (n == 0)
+                return 1;
+            if (n == 1)
+                return x;
+
+            // Generalized formula
+            // Abel polynomials recurrence relation for any n ≥ 1:
+            return x * Maths.Pow(x - a * n, n - 1);
+        }
+        #endregion
+
+        #region Laguerre polynomial
+        /// <summary>
+        /// Returns the value of the Laguerre polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="k">Order</param>
+        /// <returns>Value</returns>
+        public static float Laguerre(float x, float a, int k)
+        {
+            if (k == 0)
+                return 1;
+            if (k == 1)
+                return 1 + a - x;
+
+            // Generalized formula
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            float psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
+            float ksi = k + 1;
+            return psi / ksi;
+        }
+        /// <summary>
+        /// Returns the value of the Laguerre polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="k">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Laguerre(Complex32 x, Complex32 a, int k)
+        {
+            if (k == 0)
+                return 1;
+            if (k == 1)
+                return 1 + a - x;
+
+            // Generalized formula
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            Complex32 psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
+            Complex32 ksi = k + 1;
+            return psi / ksi;
+        }
+        #endregion
+
+        #region Legendre polynomial
+        /// <summary>
+        /// Returns the value of the Legendre polynomial of the first kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Value</returns>
+        public static float Legendre(float x, int m)
+        {
+            if (m == 0)
+                return 1;
+            if (m == 1)
+                return x;
+
+            // legendre function
+            // More info: https://pdfs.semanticscholar.org/be30/38b3aafed73d33fe78a701ee096471d16fa1.pdf
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            float ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
+            float psi = m + 1;
+            return ksi / psi;
+        }
+        /// <summary>
+        /// Returns the value of the Legendre polynomial of the first kind.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Legendre(Complex32 x, int m)
+        {
+            if (m == 0)
+                return 1;
+            if (m == 1)
+                return x;
+
+            // legendre function
+            // More info: https://pdfs.semanticscholar.org/be30/38b3aafed73d33fe78a701ee096471d16fa1.pdf
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            Complex32 ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
+            Complex32 psi = m + 1;
+            return ksi / psi;
+        }
+        #endregion
+
+        #region Hermite polynomial
+        /// <summary>
+        /// Returns the value of the Hermite polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Value</returns>
+        public static float Hermite(float x, int m)
+        {
+            if (m == 0)
+                return 1;
+            if (m == 1)
+                return x;
+
+            // recursion formula for Hermite polynomials
+            float ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
+            return 2 * ksi;
+        }
+        /// <summary>
+        /// Returns the value of the Hermite polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="m">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Hermite(Complex32 x, int m)
+        {
+            if (m == 0)
+                return 1;
+            if (m == 1)
+                return x;
+
+            // recursion formula for Hermite polynomials
+            Complex32 ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
+            return 2 * ksi;
+        }
+        #endregion
+
+        #region Gegenbauer polynomial
+        /// <summary>
+        /// Returns the value of the Gegenbauer polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float Gegenbauer(float x, float a, int n)
+        {
+            if (n == 0)
+                return 1;
+            if (n == 1)
+                return 2 * a * x;
+
+            // Generalized formula
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            float psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
+            return psi / n;
+        }
+        /// <summary>
+        /// Returns the value of the Gegenbauer polynomial.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Power</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gegenbauer(Complex32 x, Complex32 a, int n)
+        {
+            if (n == 0)
+                return 1;
+            if (n == 1)
+                return 2 * a * x;
+
+            // Generalized formula
+            // Laguerre polynomials recurrence relation for any k ≥ 1:
+            Complex32 psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
+            return psi / n;
+        }
+        #endregion
+
+        #region Sinc function
+        /// <summary>
+        /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float Sinc(float x)
+        {
+            return Special.Sinc(x, Maths.Pi);
+        }
+        /// <summary>
+        /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Sinc(Complex32 x)
+        {
+            return Special.Sinc(x, Maths.Pi);
+        }
+        /// <summary>
+        /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Parameter</param>
+        /// <returns>Value</returns>
+        public static float Sinc(float x, float a)
+        {
+            var ax = a * x;
+
+            if (ax == 0)
+                return 1;
+
+            return (float)Math.Sin(ax) / ax;
+        }
+        /// <summary>
+        /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Parameter</param>
+        /// <returns>Value</returns>
+        public static Complex32 Sinc(Complex32 x, Complex32 a)
+        {
+            var ax = a * x;
+
+            if (ax == Complex32.Zero)
+                return Complex32.One;
+
+            return Maths.Sin(ax) / ax;
+        }
+        #endregion
+
+        #region Guderman & Hartley functions
+        /// <summary>
+        /// Returns the value of the inverse Guderman function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float Agd(float x)
+        {
+            return Maths.Atan(Maths.Sin(x));
+        }
+        /// <summary>
+        /// Returns the value of the inverse Guderman function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Agd(Complex32 x)
+        {
+            return Maths.Atan(Maths.Sin(x));
+        }
+        /// <summary>
+        /// Returns the value of the Guderman function.
+        /// </summary>
+        /// <param name="x">Angle in radians</param>
+        /// <returns>Value</returns>
+        public static float Gd(float x)
+        {
+            return Maths.Asin(Maths.Tanh(x));
+        }
+        /// <summary>
+        /// Returns the value of the Guderman function.
+        /// </summary>
+        /// <param name="x">Angle in radians</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gd(Complex32 x)
+        {
+            return Maths.Asin(Maths.Tanh(x));
+        }
+        /// <summary>
+        /// Returns the value of the function Cas(x).
+        /// </summary>
+        /// <param name="theta">Theta</param>
+        /// <returns>Value</returns>
+        public static float Cas(float theta)
+        {
+            return Maths.Cos(theta) + Maths.Sin(theta);
+        }
+        /// <summary>
+        /// Returns the value of the function Cas(x).
+        /// </summary>
+        /// <param name="theta">Theta</param>
+        /// <returns>Value</returns>
+        public static Complex32 Cas(Complex32 theta)
+        {
+            return Maths.Cos(theta) + Maths.Sin(theta);
+        }
+        #endregion
+
+        #region Rademacher function
+        /// <summary>
+        /// Returns the value of the Radamecher function.
+        /// </summary>
+        /// <param name="t">Argument [0, 1]</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static float Rademacher(float t, int n)
+        {
+            float p = (float)Math.Pow(2, n);
+            float v = p * Maths.Pi * t;
+            return Math.Sign(Math.Sin(v));
+        }
+        /// <summary>
+        /// Returns the value of the Radamecher function.
+        /// </summary>
+        /// <param name="z">Argument</param>
+        /// <param name="n">Order</param>
+        /// <returns>Value</returns>
+        public static Complex32 Rademacher(Complex32 z, int n)
+        {
+            float p = (float)Math.Pow(2.0, n);
+            Complex32 v = new Complex32(p * Maths.Pi, 0f) * z;
+            Complex32 s = Maths.Sin(v);
+
+            float mag = Maths.Abs(s);
+            if (mag == 0f) return Complex32.Zero;  // zeros at z = k / 2^n for real z
+
+            return s / mag; // complex signum
+        }
+        #endregion
+
+        #region Heavyside delta-function
+        /// <summary>
+        /// Returns the value of the Heaviside delta function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="k">Smoothing factor</param>
+        /// <returns>Value</returns>
+        public static float Heaviside(float x, float k)
+        {
+            return 0.5f + 0.5f * Maths.Tanh(k * x);
+        }
+        /// <summary>
+        /// Returns the value of the Heaviside delta function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="k">Smoothing factor</param>
+        /// <returns>Value</returns>
+        public static Complex32 Heaviside(Complex32 x, Complex32 k)
+        {
+            return 0.5f + 0.5f * Maths.Tanh(k * x);
+        }
+        #endregion
+
+        #region Mahler function
+        /// <summary>
+        /// Returns the value of the Mahler function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="t">Parameter</param>
+        /// <returns>Value</returns>
+        public static float Mahler(float x, float t)
+        {
+            return Maths.Exp(x * (1.0f + t - Maths.Pow(Maths.E, t)));
+        }
+        /// <summary>
+        /// Returns the value of the Mahler function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="t">Parameter</param>
+        /// <returns>Value</returns>
+        public static Complex32 Mahler(Complex32 x, Complex32 t)
+        {
+            return Maths.Exp(x * (1.0f + t - Maths.Pow(Maths.E, t)));
+        }
+        #endregion
+
+        #region Gompertz function
+        /// <summary>
+        /// Gets the value of the Gompertz function.
+        /// </summary>
+        /// <param name="t">Argument</param>
+        /// <param name="a">Upper asymptote</param>
+        /// <param name="b">Growth parameter</param>
+        /// <param name="c">Growth rate</param>
+        /// <returns>Value</returns>
+        public static float Gompertz(float t, float a, float b, float c)
+        {
+            float x = -c * t;
+            float y = -b * Maths.E;
+            float z = a * Maths.E;
+            return (float)Math.Pow(z, Math.Pow(y, x));
+        }
+        /// <summary>
+        /// Gets the value of the Gompertz function.
+        /// </summary>
+        /// <param name="t">Argument</param>
+        /// <param name="a">Upper asymptote</param>
+        /// <param name="b">Growth parameter</param>
+        /// <param name="c">Growth rate</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gompertz(Complex32 t, Complex32 a, Complex32 b, Complex32 c)
+        {
+            Complex32 x = -c * t;
+            Complex32 y = -b * Maths.E;
+            Complex32 z = a * Maths.E;
+            return Maths.Pow(z, Maths.Pow(y, x));
+        }
+        #endregion
+
+        #region Dirac delta-function
+        /// <summary>
+        /// Returns the value of the Dirac delta function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Coefficient</param>
+        /// <returns>Value</returns>
+        public static float Dirac(float x, float a)
+        {
+            float s = (float)Math.Sqrt(Math.PI);
+            float b = 1.0f / Math.Abs(a) / s;
+            float c = (float)Math.Pow(x / a, 2);
+            float e = (float)Math.Exp(-c);
+            return b * e;
+        }
+        /// <summary>
+        /// Returns the value of the Dirac delta function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Coefficient</param>
+        /// <returns>Value</returns>
+        public static Complex32 Dirac(Complex32 x, Complex32 a)
+        {
+            Complex32 s = Maths.Sqrt(Maths.Pi);
+            Complex32 b = 1.0f / Maths.Abs(a) / s;
+            Complex32 c = Maths.Pow(x / a, 2);
+            Complex32 e = Maths.Exp(-c);
+            return b * e;
+        }
+        #endregion
+
+        #region Logistic function
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <param name="v">Affect</param>
+        /// <param name="q">Central moment</param>
+        /// <param name="c">Offset</param>
+        /// <returns>Value</returns>
+        public static float Logistic(float x, float a, float k, float b, float v, float q, float c)
+        {
+            return a + (k - a) / Maths.Pow(c + q * Maths.Exp(-b * x), 1.0f / v);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <param name="v">Affect</param>
+        /// <param name="q">Central moment</param>
+        /// <param name="c">Offset</param>
+        /// <returns>Value</returns>
+        public static Complex32 Logistic(Complex32 x, Complex32 a, Complex32 k, Complex32 b, Complex32 v, Complex32 q, Complex32 c)
+        {
+            return a + (k - a) / Maths.Pow(c + q * Maths.Exp(-b * x), 1.0f / v);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <returns>Value</returns>
+        public static float Logistic(float x, float a, float k, float b)
+        {
+            return Special.Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="a">Lower asymptote</param>
+        /// <param name="k">Upper asymptote</param>
+        /// <param name="b">Growth rate</param>
+        /// <returns>Value</returns>
+        public static Complex32 Logistic(Complex32 x, Complex32 a, Complex32 k, Complex32 b)
+        {
+            return Special.Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static float Logistic(float x)
+        {
+            return Special.Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+        }
+        /// <summary>
+        /// Returns the value of a logistic function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 Logistic(Complex32 x)
+        {
+            return Special.Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+        }
         #endregion
 
         #region Integral functions
         /// <summary>
         /// Returns the value of the integral cosine.
         /// </summary>
-        /// <param name="x">Number</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Ci(float x)
         {
@@ -72,9 +653,42 @@ namespace UMapx.Core
             return Maths.Gamma + (float)Math.Log(x) + s;
         }
         /// <summary>
+        /// Returns the value of the integral cosine.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Ci(Complex32 z)
+        {
+            // Singular at z = 0 due to log(z)
+            if (z.Real == 0f && z.Imag == 0f)
+                return new Complex32(float.NegativeInfinity, 0f);
+
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 s = Complex32.Zero;
+            Complex32 z2 = z * z;
+            Complex32 m = Complex32.One; // will hold z^(2i)
+            float f = 1f;                 // factorial accumulator for (2i)!
+            int sign = 1;
+
+            for (int i = 1; i < maxIter; i++)
+            {
+                int k = 2 * i;           // 2i
+                f *= k * (k - 1);        // (2i)! from (2(i-1))! * (2i)(2i-1)
+                sign = -sign;
+                m *= z2;                 // z^(2i)
+
+                Complex32 t = sign * m / (f * k);
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+
+            return Maths.Gamma + Maths.Log(z) + s;
+        }
+        /// <summary>
         /// Returns the value of the integral sine.
         /// </summary>
-        /// <param name="x">Number</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Si(float x)
         {
@@ -114,9 +728,40 @@ namespace UMapx.Core
             return s;
         }
         /// <summary>
+        /// Returns the value of the integral sine.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Si(Complex32 z)
+        {
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 s = z;             // start with n=0 term
+            Complex32 z2 = z * z;
+            Complex32 m = z;             // z^(2n+1)
+            float f = 1f;                // (2n+1)! accumulator via recurrence below
+            int sign = 1;
+            int j = 1;
+
+            for (int i = 1; i < maxIter; i++)
+            {
+                int k = 2 * i + 1;       // 2n+1
+                j += 2;                  // grows as 3,5,7,...
+                f *= j * (k - 1);        // (2n+1)! from (2(n-1)+1)! * (2n)(2n+1)
+                sign = -sign;
+                m *= z2;                 // z^(2n+1)
+
+                Complex32 t = sign * m / (f * k);
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+
+            return s;
+        }
+        /// <summary>
         /// Returns the value of an integral exponential function.
         /// </summary>
-        /// <param name="x">Number</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Ei(float x)
         {
@@ -152,9 +797,37 @@ namespace UMapx.Core
             return r + (float)Math.Log(x);
         }
         /// <summary>
+        /// Returns the value of an integral exponential function.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Ei(Complex32 z)
+        {
+            // Singular at z = 0 due to log(z)
+            if (z.Real == 0f && z.Imag == 0f)
+                return new Complex32(float.NegativeInfinity, 0f);
+
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 s = Complex32.Zero;
+            Complex32 m = Complex32.One; // z^k
+            float fact = 1f;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                fact *= k;               // k!
+                m *= z;                  // z^k
+                Complex32 t = m / (fact * k);
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+
+            return Maths.Gamma + Maths.Log(z) + s;
+        }
+        /// <summary>
         /// Returns the value of the integral logarithm.
         /// </summary>
-        /// <param name="x">Number</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Li(float x)
         {
@@ -167,1170 +840,374 @@ namespace UMapx.Core
             }
             return Ei(Maths.Log(x));
         }
+        /// <summary>
+        /// Returns the value of the integral logarithm.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Li(Complex32 z)
+        {
+            // Map via Ei(log z). Principal branches handle the standard cuts.
+            return Ei(Maths.Log(z));
+        }
         #endregion
 
         #region Fresnel integral functions
         /// <summary>
-        /// Returns the value of the Fresnel integral C (x).
+        /// Returns the value of the Fresnel integral C(x).
         /// </summary>
-        /// <param name="x">Number</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Fresnelc(float x)
         {
-            // special case:
-            if (Math.Abs(x) > 6)
-                return float.NaN;
+            if (x == 0f) return 0;
 
-            // properties:
+            // term_0 = z / ((2*0)! * (4*0+1)) = z
+            float eps = 1e-16f;
+            int maxIter = 120;
             float s = x;
-            float f = 1.0f;
-            float t, m = x, eps = 1e-16f;
-            float z = x * x * x * x;
-            int k, i, j, iterations = 120;
-            int p = 1;
+            float term = x;
+            float z4 = x * x * x * x;
 
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
+            // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
+            for (int n = 0; n < maxIter; n++)
             {
-                // factorial:
-                j = 2 * i;
-                k = 2 * j + 1;
-                f *= j * (j - 1);
+                float a = -(4 * n + 1);
+                float b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
+                term *= a / b * z4;
 
-                // sign and value:
-                p = -p;
-                m *= z;
-                t = p * m / (f * k);
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
+                if (Maths.Abs(term) < eps) break;
+                s += term;
             }
 
-            // construction:
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of the Fresnel integral C(x).
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Fresnelc(Complex32 z)
+        {
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
+
+            // term_0 = z / ((2*0)! * (4*0+1)) = z
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 s = z;
+            Complex32 term = z;
+            Complex32 z4 = z * z * z * z;
+
+            // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
+            for (int n = 0; n < maxIter; n++)
+            {
+                float a = -(4 * n + 1);
+                float b = (2 * n + 2) * (2 * n + 1) * (4 * n + 5);
+                term *= a / b * z4;
+
+                if (Maths.Abs(term) < eps) break;
+                s += term;
+            }
+
             return s;
         }
         /// <summary>
         /// Returns the value of the Fresnel integral S(x).
         /// </summary>
-        /// <param name="x">Number</param>
+        /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Fresnels(float x)
         {
-            // special case:
-            if (Math.Abs(x) > 6)
-                return float.NaN;
+            if (x == 0f) return 0;
 
-            // properties:
-            float s = x * x * x / 3;
-            float f = 1.0f;
-            float t, m = 3.0f * s, eps = 1e-16f;
-            float z = x * x * x * x;
-            int k, i, j = 1, iterations = 120;
-            int p = 1;
+            // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
+            float eps = 1e-16f;
+            int maxIter = 120;
+            float z2 = x * x;
+            float s = z2 * x / 3f;
+            float term = s;
+            float z4 = z2 * z2;
 
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
+            // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
+            for (int n = 0; n < maxIter; n++)
             {
-                // factorial:
-                k = 4 * i + 3;
-                j = 2 * i;
-                f *= j * (j + 1);
+                float a = -(4 * n + 3);
+                float b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
+                term *= a / b * z4;
 
-                // sign and value:
-                p = -p;
-                m *= z;
-                t = p * m / f / k;
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
+                if (Maths.Abs(term) < eps) break;
+                s += term;
             }
 
-            // construction:
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of the Fresnel integral S(x).
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Fresnels(Complex32 z)
+        {
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
+
+            // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
+            float eps = 1e-16f;
+            int maxIter = 120;
+            Complex32 z2 = z * z;
+            Complex32 s = z2 * z / 3f;
+            Complex32 term = s;
+            Complex32 z4 = z2 * z2;
+
+            // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
+            for (int n = 0; n < maxIter; n++)
+            {
+                float a = -(4 * n + 3);
+                float b = (2 * n + 3) * (2 * n + 2) * (4 * n + 7);
+                term *= a / b * z4;
+
+                if (Maths.Abs(term) < eps) break;
+                s += term;
+            }
+
             return s;
         }
         #endregion
 
-        #region Struve function
+        #region Elrang B and C functions
         /// <summary>
-        /// Returns the value of the Struve function.
+        /// Returns the value of the Erlang C-function.
         /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Number</param>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <param name="t">Time parameter</param>
         /// <returns>Value</returns>
-        public static float H(float x, int a)
+        public static float Erlang(float y, int v, float t)
         {
-            // Struve function calculation method.
-            // special cases:
-            if (a < 0)
-                return 0.0f;
-
-            // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
-            float x0 = 3.0f / 2.0f, x1 = x0 + a;
-            float g0 = 1.0f / Special.Gamma(x0);
-            float g1 = 1.0f / Special.Gamma(x1);
-
-            // construction:
-            float b = x / 2.0f;
-            float s = 0, p = 1;
-            float u = (float)Math.Pow(b, a + 1);
-            float t, eps = 1e-16f;
-            int i, iterations = 120;
-
-            // Taylor series:
-            for (i = 0; i < iterations; i++)
-            {
-                // value:
-                t = p * g0 * g1 * u;
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                {
-                    break;
-                }
-                else
-                {
-                    // summary:
-                    s += t;
-
-                    // for next step:
-                    g0 *= b / (x0 + i);
-                    g1 *= b / (x1 + i);
-                    p = -p;
-                }
-            }
-
-            // result:
-            return s;
+            float e = Special.Erlang(y, v);
+            float a = v * e;
+            float b = v - y + y * e;
+            float c = (v - y) * t;
+            return a / b * Maths.Exp(-c);
         }
         /// <summary>
-        /// Returns the value of the modified Struve function.
+        /// Returns the value of the Erlang C-function.
         /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="v">Number</param>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <param name="t">Time parameter</param>
         /// <returns>Value</returns>
-        public static float L(float x, int v)
+        public static Complex32 Erlang(Complex32 y, int v, Complex32 t)
         {
-            // Modified Struve function calculation method.
+            Complex32 e = Special.Erlang(y, v);             // Erlang-B (blocking)
+            Complex32 a = v * e;                    // v * B
+            Complex32 b = v - y + y * e;            // v - y + y B = v(1-ρ) + ρ v B
+            Complex32 c = (v - y) * t;              // (v - y) t
+            return a / b * Maths.Exp(-c);           // C * exp( - (v - y) t )
+        }
+        /// <summary>
+        /// Returns the value of the Erlang B-function.
+        /// </summary>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <returns>Value</returns>
+        public static float Erlang(float y, int v)
+        {
             // special cases:
+            if (v == 0)
+                return 1;
             if (v < 0)
-                return 0.0f;
+                return float.NaN;
 
-            // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
-            float x0 = 3.0f / 2.0f, x1 = x0 + v;
-            float g0 = 1.0f / Special.Gamma(x0);
-            float g1 = 1.0f / Special.Gamma(x1);
+            // set:
+            float t = 1, b = 1; int i;
 
-            // construction:
-            float b = x / 2.0f;
-            float s = 0;
-            float u = (float)Math.Pow(b, v);
-            float t, eps = 1e-16f;
-            int i, iterations = 120;
-
-            // Taylor series:
-            for (i = 0; i < iterations; i++)
+            //series:
+            for (i = 1; i < v; i++)
             {
-                // value:
-                t = g0 * g1 * u;
+                t *= y / i;
+                b += t;
+            }
 
-                // stop point:
-                if (Math.Abs(t) < eps)
+            // last step and result:
+            float a = t * y / i;
+            return a / (a + b);
+        }
+        /// <summary>
+        /// Returns the value of the Erlang B-function.
+        /// </summary>
+        /// <param name="y">Firset parameter</param>
+        /// <param name="v">Second parameter</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erlang(Complex32 y, int v)
+        {
+            // Special cases match your real version
+            if (v == 0) return Complex32.One;
+            if (v < 0) return new Complex32(float.NaN, float.NaN);
+
+            Complex32 t = Complex32.One;  // term for k=0
+            Complex32 b = Complex32.One;  // partial sum Σ_{k=0}^{v-1}
+            int i;
+
+            // Build sum up to k = v-1:  t = y^k / k!,  b += t
+            for (i = 1; i < v; i++)
+            {
+                t *= y / i;               // next term
+                b += t;
+            }
+
+            // Last term k = v:  a = y^v / v!
+            Complex32 a = t * y / i;      // here i == v
+            return a / (a + b);
+        }
+        #endregion
+
+        #region Lambert W-function
+        /// <summary>
+        /// Returns the value of the Lambert W-function.
+        /// </summary>
+        /// <param name="x">Argument [-1/e,+inf)</param>
+        /// <param name="k">Branch</param>
+        /// <returns>Value</returns>
+        public static float LambertW(float x, int k = 0)
+        {
+            // Only real branches supported here
+            if (k != 0 && k != -1)
+                return float.NaN;
+
+            const float xm = -0.36787944117144233f; // -1/e
+
+            // Domain checks on R
+            if (k == 0)
+            {
+                if (x < xm) return float.NaN;   // W0 real only for x ≥ -1/e
+                if (x == 0f) return 0f;
+                if (x == xm) return -1f;
+            }
+            else // k == -1
+            {
+                if (x < xm || x >= 0f) return float.NaN; // W_{-1} real only for -1/e ≤ x < 0
+                if (x == xm) return -1f;
+            }
+
+            // Halley's method
+            const float eps = 1e-8f;
+            const int maxIter = 100;
+
+            // Initial guess (simple and robust for real case)
+            float w = (k == 0) ? 1f : -2f;
+            // Better near the branch point x ≈ -1/e:
+            if (x < -0.2f)
+            {
+                // w ≈ -1 ± sqrt(2 (e x + 1))
+                float q = Maths.E * x + 1f;
+                if (q >= 0f)
                 {
+                    float s = Maths.Sqrt(2f * q);
+                    w = (k == 0) ? (-1f + s) : (-1f - s);
+                }
+            }
+
+            for (int it = 0; it < maxIter; it++)
+            {
+                float e = Maths.Exp(w);
+                float f = w * e - x;                  // f(w) = w e^w - x
+                float wp1 = w + 1f;
+
+                // Halley denominator: e*(w+1) - (w+2)*f/(2*(w+1))
+                float denom = e * wp1 - (w + 2f) * f / (2f * wp1);
+                if (!float.IsInfinity(denom) || denom == 0f)
+                    denom = e * wp1;                  // Newton fallback
+
+                var v = w;
+                w = w - f / denom;
+
+                if (Maths.Abs(w - v) <= eps * Maths.Abs(w))
                     break;
-                }
-                else
-                {
-                    // summary:
-                    s += t;
-
-                    // for next step:
-                    g0 *= b / (x0 + i);
-                    g1 *= b / (x1 + i);
-                }
             }
 
-            // result:
-            return b * u * s;
+            return w;
         }
-        #endregion
-
-        #region Beta function
         /// <summary>
-        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+        /// Returns the value of the Lambert W-function.
         /// </summary>
-        /// <param name="a">Number</param>
-        /// <param name="b">Number</param>
+        /// <param name="z">Argument</param>
+        /// <param name="k">Branch</param>
         /// <returns>Value</returns>
-        public static float Beta(float a, float b)
+        public static Complex32 LambertW(Complex32 z, int k = 0)
         {
-            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+            // Special cases
+            if (z.Real == 0f && z.Imag == 0f)
+            {
+                if (k == 0) return Complex32.Zero;           // W_0(0)=0
+                return Complex32.NaN;  // other branches not defined at 0
+            }
+
+            // Initial guess:
+            // w0 ≈ L - Log(L), where L = Log(z) + i*2πk (multi-valued log).
+            Complex32 I2Pi = new Complex32(0f, 2f * Maths.Pi);
+            Complex32 L = Maths.Log(z) + k * I2Pi;
+            Complex32 w = (Maths.Abs(L) < 1e-3f) ? Maths.Log(z) : (L - Maths.Log(L));
+
+            float tol = 1e-8f;
+            int maxIter = 64;
+
+            // Halley's iteration for f(w)=w e^w - z
+            for (int i = 0; i < maxIter; i++)
+            {
+                Complex32 ew = Maths.Exp(w);
+                Complex32 f = w * ew - z;
+                Complex32 wp1 = w + Complex32.One;
+
+                // If denominator near zero (w ≈ -1), fall back to Newton
+                Complex32 denom = ew * wp1 - (w + 2f) * f / (2f * wp1);  // Halley denominator
+                if (Maths.Abs(denom) == 0f)
+                    denom = ew * wp1; // Newton fallback
+
+                Complex32 wNext = w - f / denom;
+                if (Maths.Abs(wNext - w) <= tol * (1f + Maths.Abs(wNext)))
+                    return wNext;
+                w = wNext;
+            }
+            return w; // last iterate (should be within tol in normal cases)
         }
         /// <summary>
-        /// Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
+        /// Returns the value of the square super-root.
         /// </summary>
-        /// <param name="m">Integer number</param>
-        /// <param name="n">Integer number</param>
+        /// <param name="x">Argument [1,+inf)</param>
+        /// <param name="k">Branch</param>
         /// <returns>Value</returns>
-        public static float Beta(int m, int n)
+        public static float Ssqrt(float x, int k = 0)
         {
-            return Special.Factorial(m - 1) * Special.Factorial(n - 1) / Special.Factorial(m + n - 1);
+            // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
+            // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
+            float log = (float)Math.Log(x);
+            return log / LambertW(log, k);
         }
         /// <summary>
-        /// Returns the value of an incomplete beta function: Bx(a, b).
+        /// Returns the value of the square super-root.
         /// </summary>
-        /// <param name="a">Number</param>
-        /// <param name="b">Number</param>
-        /// <param name="x">Argument</param>
+        /// <param name="z">Argument</param>
+        /// <param name="k">Branch</param>
         /// <returns>Value</returns>
-        public static float Beta(float a, float b, float x)
+        public static Complex32 Ssqrt(Complex32 z, int k = 0)
         {
-            float aa, bb, t, xx, xc, w, y;
-            bool flag;
+            // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
+            // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
 
-            if (a <= 0.0)
-                throw new ArgumentOutOfRangeException("Invalid argument value: a <= 0");
-            if (b <= 0.0)
-                throw new ArgumentOutOfRangeException("Invalid argument value: b <= 0");
+            // z = 1 → Log(z)=0 → W_0(0)=0 → y=exp(0)=1 on principal branch
+            if (z.Real == 0f && z.Imag == 0f)
+                return Complex32.Zero; // y^y = 0 has solution y=0 (principal choice)
 
-            if ((x <= 0.0) || (x >= 1.0))
-            {
-                if (x == 0.0)
-                {
-                    return 0.0f;
-                }
-                if (x == 1.0)
-                {
-                    return 1.0f;
-                }
-                throw new ArgumentOutOfRangeException("Invalid argument value, because the value must belong to the interval [0, 1]");
-            }
+            Complex32 Lz = Maths.Log(z);  // principal log
+            if (Lz.Real == 0f && Lz.Imag == 0f && k == 0)
+                return Complex32.One;
 
-            flag = false;
-            if ((b * x) <= 1.0 && x <= 0.95)
-            {
-                t = Special.Series(a, b, x);
-                return t;
-            }
-
-            w = 1.0f - x;
-
-            if (x > (a / (a + b)))
-            {
-                flag = true;
-                aa = b;
-                bb = a;
-                xc = x;
-                xx = w;
-            }
-            else
-            {
-                aa = a;
-                bb = b;
-                xc = w;
-                xx = x;
-            }
-
-            if (flag && (bb * xx) <= 1.0 && xx <= 0.95)
-            {
-                t = Special.Series(aa, bb, xx);
-                if (t <= float.Epsilon) t = 1.0f - float.Epsilon;
-                else t = 1.0f - t;
-                return t;
-            }
-
-            y = xx * (aa + bb - 2.0f) - (aa - 1.0f);
-            if (y < 0.0)
-                w = Special.Incbcf(aa, bb, xx);
-            else
-                w = Special.Incbd(aa, bb, xx) / xc;
-
-            y = aa * (float)Math.Log(xx);
-            t = bb * (float)Math.Log(xc);
-            if ((aa + bb) < GammaMax && Math.Abs(y) < LogMax && Math.Abs(t) < LogMax)
-            {
-                t = (float)Math.Pow(xc, bb);
-                t *= (float)Math.Pow(xx, aa);
-                t /= aa;
-                t *= w;
-                t *= Special.Gamma(aa + bb) / (Special.Gamma(aa) * Special.Gamma(bb));
-                if (flag)
-                {
-                    if (t <= float.Epsilon) t = 1.0f - float.Epsilon;
-                    else t = 1.0f - t;
-                }
-                return t;
-            }
-
-            y += t + Special.GammaLog(aa + bb) - Special.GammaLog(aa) - Special.GammaLog(bb);
-            y += (float)Math.Log(w / aa);
-            if (y < LogMin)
-                t = 0.0f;
-            else
-                t = (float)Math.Exp(y);
-
-            if (flag)
-            {
-                if (t <= float.Epsilon) t = 1.0f - float.Epsilon;
-                else t = 1.0f - t;
-            }
-            return t;
+            Complex32 W = LambertW(Lz, k);
+            return Maths.Exp(W);
         }
-        /// <summary>
-        /// Returns the value of a derivative beta function: B'(a, b).
-        /// </summary>
-        /// <param name="a">Number</param>
-        /// <param name="b">Number</param>
-        /// <returns>Value</returns>
-        public static float BetaDerivative(float a, float b)
-        {
-            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
-        }
-        /// <summary>
-        /// Returns the value of a regularized incomplete beta function: Ix(a, b).
-        /// </summary>
-        /// <param name="a">Number</param>
-        /// <param name="b">Number</param>
-        /// <param name="x">Argument</param>
-        /// <returns>Value</returns>
-        public static float BetaIncomplete(float a, float b, float x)
-        {
-            return Special.Beta(a, b, x) / Special.Beta(a, b);
-        }
-        #region Private beta approximations
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private static float Incbcf(float a, float b, float x)
-        {
-            float xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
-            float k1, k2, k3, k4, k5, k6, k7, k8;
-            float r, t, and, thresh;
-            int n;
-            float big = 4.503599627370496e15f;
-            float biginv = 2.22044604925031308085e-16f;
-
-            k1 = a;
-            k2 = a + b;
-            k3 = a;
-            k4 = a + 1.0f;
-            k5 = 1.0f;
-            k6 = b - 1.0f;
-            k7 = k4;
-            k8 = a + 2.0f;
-
-            pkm2 = 0.0f;
-            qkm2 = 1.0f;
-            pkm1 = 1.0f;
-            qkm1 = 1.0f;
-            and = 1.0f;
-            r = 1.0f;
-            n = 0;
-            thresh = 3.0f * float.Epsilon;
-
-            do
-            {
-                xk = -(x * k1 * k2) / (k3 * k4);
-                pk = pkm1 + pkm2 * xk;
-                qk = qkm1 + qkm2 * xk;
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-
-                xk = (x * k5 * k6) / (k7 * k8);
-                pk = pkm1 + pkm2 * xk;
-                qk = qkm1 + qkm2 * xk;
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-
-                if (qk != 0) r = pk / qk;
-                if (r != 0)
-                {
-                    t = System.Math.Abs((and - r) / r);
-                    and = r;
-                }
-                else
-                    t = 1.0f;
-
-                if (t < thresh) return and;
-
-                k1 += 1.0f;
-                k2 += 1.0f;
-                k3 += 2.0f;
-                k4 += 2.0f;
-                k5 += 1.0f;
-                k6 -= 1.0f;
-                k7 += 2.0f;
-                k8 += 2.0f;
-
-                if ((Math.Abs(qk) + Math.Abs(pk)) > big)
-                {
-                    pkm2 *= biginv;
-                    pkm1 *= biginv;
-                    qkm2 *= biginv;
-                    qkm1 *= biginv;
-                }
-                if ((Math.Abs(qk) < biginv) || (Math.Abs(pk) < biginv))
-                {
-                    pkm2 *= big;
-                    pkm1 *= big;
-                    qkm2 *= big;
-                    qkm1 *= big;
-                }
-            } while (++n < 300);
-
-            return and;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private static float Incbd(float a, float b, float x)
-        {
-            float xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
-            float k1, k2, k3, k4, k5, k6, k7, k8;
-            float r, t, and, z, thresh;
-            int n;
-            float big = 4.503599627370496e15f;
-            float biginv = 2.22044604925031308085e-16f;
-
-            k1 = a;
-            k2 = b - 1.0f;
-            k3 = a;
-            k4 = a + 1.0f;
-            k5 = 1.0f;
-            k6 = a + b;
-            k7 = a + 1.0f;
-            ;
-            k8 = a + 2.0f;
-
-            pkm2 = 0.0f;
-            qkm2 = 1.0f;
-            pkm1 = 1.0f;
-            qkm1 = 1.0f;
-            z = x / (1.0f - x);
-            and = 1.0f;
-            r = 1.0f;
-            n = 0;
-            thresh = 3.0f * float.Epsilon;
-            do
-            {
-                xk = -(z * k1 * k2) / (k3 * k4);
-                pk = pkm1 + pkm2 * xk;
-                qk = qkm1 + qkm2 * xk;
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-
-                xk = (z * k5 * k6) / (k7 * k8);
-                pk = pkm1 + pkm2 * xk;
-                qk = qkm1 + qkm2 * xk;
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-
-                if (qk != 0) r = pk / qk;
-                if (r != 0)
-                {
-                    t = System.Math.Abs((and - r) / r);
-                    and = r;
-                }
-                else
-                    t = 1.0f;
-
-                if (t < thresh) return and;
-
-                k1 += 1.0f;
-                k2 -= 1.0f;
-                k3 += 2.0f;
-                k4 += 2.0f;
-                k5 += 1.0f;
-                k6 += 1.0f;
-                k7 += 2.0f;
-                k8 += 2.0f;
-
-                if ((System.Math.Abs(qk) + System.Math.Abs(pk)) > big)
-                {
-                    pkm2 *= biginv;
-                    pkm1 *= biginv;
-                    qkm2 *= biginv;
-                    qkm1 *= biginv;
-                }
-                if ((System.Math.Abs(qk) < biginv) || (System.Math.Abs(pk) < biginv))
-                {
-                    pkm2 *= big;
-                    pkm1 *= big;
-                    qkm2 *= big;
-                    qkm1 *= big;
-                }
-            } while (++n < 300);
-
-            return and;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private static float Series(float a, float b, float x)
-        {
-            float s, t, u, v, n, t1, z, ai;
-
-            ai = 1.0f / a;
-            u = (1.0f - b) * x;
-            v = u / (a + 1.0f);
-            t1 = v;
-            t = u;
-            n = 2.0f;
-            s = 0.0f;
-            z = float.Epsilon * ai;
-            while (System.Math.Abs(v) > z)
-            {
-                u = (n - b) * x / n;
-                t *= u;
-                v = t / (a + n);
-                s += v;
-                n += 1.0f;
-            }
-            s += t1;
-            s += ai;
-
-            u = a * (float)Math.Log(x);
-            if ((a + b) < GammaMax && (float)Math.Abs(u) < LogMax)
-            {
-                t = Gamma(a + b) / (Gamma(a) * Gamma(b));
-                s = s * t * (float)Math.Pow(x, a);
-            }
-            else
-            {
-                t = GammaLog(a + b) - GammaLog(a) - GammaLog(b) + u + (float)Math.Log(s);
-                if (t < LogMin) s = 0.0f;
-                else s = (float)Math.Exp(t);
-            }
-            return s;
-        }
-        #endregion
-        #endregion
-
-        #region Gamma function
-        /// <summary>
-        /// 
-        /// </summary>
-        private const float GammaMax = 171.624376956302725f;
-        /// <summary>
-        /// 
-        /// </summary>
-        private static float[] Px = {
-                         1.60119522476751861407E-4f,
-                         1.19135147006586384913E-3f,
-                         1.04213797561761569935E-2f,
-                         4.76367800457137231464E-2f,
-                         2.07448227648435975150E-1f,
-                         4.94214826801497100753E-1f,
-                         9.99999999999999996796E-1f
-                     };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static float[] Qx = {
-                         -2.31581873324120129819E-5f,
-                         5.39605580493303397842E-4f,
-                         -4.45641913851797240494E-3f,
-                         1.18139785222060435552E-2f,
-                         3.58236398605498653373E-2f,
-                         -2.34591795718243348568E-1f,
-                         7.14304917030273074085E-2f,
-                         1.00000000000000000320E0f
-                     };
-        /// <summary>
-        /// Returns the value of the Euler Gamma function: Г(z).
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static float Gamma(float z)
-        {
-            float p, g;
-            float q = Math.Abs(z);
-
-            if (q > 33.0)
-            {
-                if (z < 0.0)
-                {
-                    p = (float)Math.Floor(q);
-                    if (p == q) return float.NaN;
-                    g = q - p;
-                    if (g > 0.5)
-                    {
-                        p += 1.0f;
-                        g = q - p;
-                    }
-                    g = q * (float)Math.Sin(Math.PI * g);
-                    if (g == 0.0) return float.NaN;
-                    g = Math.Abs(g);
-                    g = Maths.Phi / (g * Special.Stirling(q));
-
-                    return -g;
-                }
-                else
-                {
-                    return Special.Stirling(z);
-                }
-            }
-
-            g = 1.0f;
-            while (z >= 3.0f)
-            {
-                z -= 1.0f;
-                g *= z;
-            }
-
-            while (z < 0.0)
-            {
-                if (z == 0.0)
-                {
-                    return float.NaN;
-                }
-                else if (z > -1.0E-9)
-                {
-                    return (g / ((1.0f + 0.5772156649015329f * z) * z));
-                }
-                g /= z;
-                z += 1.0f;
-            }
-
-            while (z < 2.0)
-            {
-                if (z == 0.0)
-                {
-                    return float.NaN;
-                }
-                else if (z < 1.0E-9)
-                {
-                    return g / ((1.0f + 0.5772156649015329f * z) * z);
-                }
-                g /= z;
-                z += 1.0f;
-            }
-
-            if ((z == 2.0) || (z == 3.0)) return g;
-
-            z -= 2.0f;
-            p = Special.Polynomials(z, Px, 6);
-            q = Special.Polynomials(z, Qx, 7);
-            return g * p / q;
-
-        }
-        /// <summary>
-        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static float GammaLog(float z)
-        {
-            if (z < 0)
-            {
-                if (z > -6)
-                {
-                    return (float)Math.Log(Gamma(z));
-                }
-                return float.NaN;
-            }
-            else if (z > 0)
-            {
-                return Special.GammaLogLanczos(z);
-            }
-            return float.NaN;
-        }
-        /// <summary>
-        /// Returns the value of the Digamma function: ψ(z).
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static float DiGamma(float z)
-        {
-            if (z == 0)
-                return float.NegativeInfinity;
-
-            float s = 0;
-            float w = 0;
-            float y = 0;
-            float yy = 0;
-            float nz = 0;
-
-            bool negative = false;
-
-            if (z <= 0.0)
-            {
-                negative = true;
-                float q = z;
-                float p = (int)Math.Floor(q);
-
-                if (p == q)
-                    return float.NaN;
-
-                nz = q - p;
-
-                if (nz != 0.5)
-                {
-                    if (nz > 0.5)
-                    {
-                        p = p + 1.0f;
-                        nz = q - p;
-                    }
-                    nz = (float)Math.PI / (float)Math.Tan(Math.PI * nz);
-                }
-                else
-                {
-                    nz = 0.0f;
-                }
-
-                z = 1.0f - z;
-            }
-
-            if (z <= 10.0 & z == Math.Floor(z))
-            {
-                y = 0.0f;
-                int n = (int)Math.Floor(z);
-                for (int i = 1; i <= n - 1; i++)
-                {
-                    w = i;
-                    y = y + 1.0f / w;
-                }
-                y = y - 0.57721566490153286061f;
-            }
-            else
-            {
-                s = z;
-                w = 0.0f;
-
-                while (s < 10.0)
-                {
-                    w = w + 1.0f / s;
-                    s = s + 1.0f;
-                }
-
-                if (s < 1.0E17)
-                {
-                    yy = 1.0f / (s * s);
-
-                    float polv = 8.33333333333333333333E-2f;
-                    polv = polv * yy - 2.10927960927960927961E-2f;
-                    polv = polv * yy + 7.57575757575757575758E-3f;
-                    polv = polv * yy - 4.16666666666666666667E-3f;
-                    polv = polv * yy + 3.96825396825396825397E-3f;
-                    polv = polv * yy - 8.33333333333333333333E-3f;
-                    polv = polv * yy + 8.33333333333333333333E-2f;
-                    y = yy * polv;
-                }
-                else
-                {
-                    y = 0.0f;
-                }
-                y = (float)Math.Log(s) - 0.5f / s - y - w;
-            }
-
-            if (negative == true)
-            {
-                y = y - nz;
-            }
-
-            return y;
-        }
-        /// <summary>
-        /// Returns the value of the Trigamma function: ψ1(z).
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <returns>Value</returns>
-        public static float TriGamma(float z)
-        {
-            float a = 0.0001f;
-            float b = 5.0f;
-            float b2 = 0.1666666667f;
-            float b4 = -0.03333333333f;
-            float b6 = 0.02380952381f;
-            float b8 = -0.03333333333f;
-            float value;
-            float y;
-            float yy;
-
-            // Check the input.
-            if (z <= 0.0)
-            {
-                return float.NaN;
-            }
-
-            yy = z;
-
-            // Use small value approximation if X <= A.
-            if (z <= a)
-            {
-                value = 1.0f / z / z;
-                return value;
-            }
-
-            // Increase argument to ( X + I ) >= B.
-            value = 0.0f;
-
-            while (yy < b)
-            {
-                value = value + 1.0f / yy / yy;
-                yy = yy + 1.0f;
-            }
-
-            // Apply asymptotic formula if argument is B or greater.
-            y = 1.0f / yy / yy;
-
-            value = value + 0.5f *
-                y + (1.0f
-              + y * (b2
-              + y * (b4
-              + y * (b6
-              + y * b8)))) / yy;
-
-            return value;
-        }
-        /// <summary>
-        /// Returns the value of the degree of the Euler Gamma function: Г(z)^p.
-        /// </summary>
-        /// <param name="z">Number</param>
-        /// <param name="p">Power</param>
-        /// <returns>Value</returns>
-        public static float Gamma(float z, uint p)
-        {
-            if (p == 1)
-            {
-                return Special.Gamma(z);
-            }
-
-            float prod = (float)Math.Pow(Math.PI, (1 / 4.0f) * p * (p - 1));
-            int i;
-
-            for (i = 0; i < p; i++)
-            {
-                prod *= Special.Gamma(z - 0.5f * i);
-            }
-
-            return prod;
-        }
-        /// <summary>
-        /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
-        /// </summary>
-        /// <param name="s">Number</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float GammaQ(float s, float x)
-        {
-            const float big = 4.503599627370496e15f;
-            const float biginv = 2.22044604925031308085e-16f;
-            float and, ax, c, yc, r, t, y, z;
-            float pk, pkm1, pkm2, qk, qkm1, qkm2;
-
-            if (x <= 0 || s <= 0)
-                return 1.0f;
-
-            if (x < 1.0 || x < s)
-                return 1.0f - GammaP(s, x);
-
-            if (float.IsPositiveInfinity(x))
-                return 0;
-
-            ax = s * (float)Math.Log(x) - x - GammaLog(s);
-
-            if (ax < -LogMax)
-                return 0.0f;
-
-            ax = (float)Math.Exp(ax);
-
-            // continued fraction
-            y = 1.0f - s;
-            z = x + y + 1.0f;
-            c = 0.0f;
-            pkm2 = 1.0f;
-            qkm2 = x;
-            pkm1 = x + 1.0f;
-            qkm1 = z * x;
-            and = pkm1 / qkm1;
-
-            do
-            {
-                c += 1.0f;
-                y += 1.0f;
-                z += 2.0f;
-                yc = y * c;
-                pk = pkm1 * z - pkm2 * yc;
-                qk = qkm1 * z - qkm2 * yc;
-                if (qk != 0)
-                {
-                    r = pk / qk;
-                    t = Math.Abs((and - r) / r);
-                    and = r;
-                }
-                else
-                    t = 1.0f;
-
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-                if (Math.Abs(pk) > big)
-                {
-                    pkm2 *= biginv;
-                    pkm1 *= biginv;
-                    qkm2 *= biginv;
-                    qkm1 *= biginv;
-                }
-            } while (t > float.Epsilon);
-
-            return and * ax;
-        }
-        /// <summary>
-        /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
-        /// </summary>
-        /// <param name="s">Number</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float GammaP(float s, float x)
-        {
-            if (s <= 0)
-                return 1.0f;
-
-            if (x <= 0)
-                return 0.0f;
-
-            if (x > 1.0 && x > s)
-                return 1.0f - GammaQ(s, x);
-
-            float ax = s * (float)Math.Log(x) - x - GammaLog(s);
-
-            if (ax < -LogMax)
-                return 0.0f;
-
-            ax = (float)Math.Exp(ax);
-
-            float r = s;
-            float c = 1.0f;
-            float and = 1.0f;
-
-            do
-            {
-                r += 1.0f;
-                c *= x / r;
-                and += c;
-            } while (c / and > float.Epsilon);
-
-            return and * ax / s;
-        }
-        /// <summary>
-        /// Returns the value of an incomplete Gamma function: γ(s, x).
-        /// </summary>
-        /// <param name="s">Number</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float GammaIncomplete(float s, float x)
-        {
-            float and, ax, c, r;
-
-            if (x <= 0 || s <= 0) return 0.0f;
-
-            if (x > 1.0 && x > s) return 1.0f - GammaIncomplete(s, x, true);
-
-            /* Compute  x**a * exp(-x) / gamma(a)  */
-            ax = s * (float)Math.Log(x) - x - GammaLog(s);
-            if (ax < -LogMax) return (0.0f);
-
-            ax = (float)Math.Exp(ax);
-
-            /* power series */
-            r = s;
-            c = 1.0f;
-            and = 1.0f;
-
-            do
-            {
-                r += 1.0f;
-                c *= x / r;
-                and += c;
-            } while (c / and > float.Epsilon);
-
-            return (and * ax / s);
-
-        }
-        /// <summary>
-        /// Returns the value of an incomplete Gamma function: γ(s, x).
-        /// </summary>
-        /// <param name="s">Number</param>
-        /// <param name="x">Number</param>
-        /// <param name="complemented">Additional function or not</param>
-        /// <returns>Value</returns>
-        public static float GammaIncomplete(float s, float x, bool complemented)
-        {
-            // not complemented
-            if (!complemented)
-                return GammaIncomplete(s, x);
-
-            float big = 4.503599627370496e15f;
-            float biginv = 2.22044604925031308085e-16f;
-            float and, ax, c, yc, r, t, y, z;
-            float pk, pkm1, pkm2, qk, qkm1, qkm2;
-
-            if (x <= 0 || s <= 0) return 1.0f;
-
-            if (x < 1.0 || x < s) return 1.0f - GammaIncomplete(s, x);
-
-            ax = s * (float)Math.Log(x) - x - GammaLog(s);
-            if (ax < -LogMax) return 0.0f;
-
-            ax = (float)Math.Exp(ax);
-
-            /* continued fraction */
-            y = 1.0f - s;
-            z = x + y + 1.0f;
-            c = 0.0f;
-            pkm2 = 1.0f;
-            qkm2 = x;
-            pkm1 = x + 1.0f;
-            qkm1 = z * x;
-            and = pkm1 / qkm1;
-
-            do
-            {
-                c += 1.0f;
-                y += 1.0f;
-                z += 2.0f;
-                yc = y * c;
-                pk = pkm1 * z - pkm2 * yc;
-                qk = qkm1 * z - qkm2 * yc;
-                if (qk != 0)
-                {
-                    r = pk / qk;
-                    t = Math.Abs((and - r) / r);
-                    and = r;
-                }
-                else
-                    t = 1.0f;
-
-                pkm2 = pkm1;
-                pkm1 = pk;
-                qkm2 = qkm1;
-                qkm1 = qk;
-                if (Math.Abs(pk) > big)
-                {
-                    pkm2 *= biginv;
-                    pkm1 *= biginv;
-                    qkm2 *= biginv;
-                    qkm1 *= biginv;
-                }
-            } while (t > float.Epsilon);
-
-            return and * ax;
-        }
-
-        #region Gamma approximations
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="coef"></param>
-        /// <param name="N"></param>
-        /// <returns></returns>
-        private static float Polynomials(float x, float[] coef, int N)
-        {
-            float sum = coef[0];
-
-            for (int i = 1; i <= N; i++)
-            {
-                sum = sum * x + coef[i];
-            }
-
-            return sum;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private static float Stirling(float x)
-        {
-            float[] STIR =
-            {
-                7.87311395793093628397E-4f,
-               -2.29549961613378126380E-4f,
-               -2.68132617805781232825E-3f,
-                3.47222221605458667310E-3f,
-                8.33333333333482257126E-2f,
-            };
-            float MAXSTIR = 143.01608f;
-
-            float w = 1.0f / x;
-            float y = (float)Math.Exp(x);
-
-            w = 1.0f + w * Polynomials(w, STIR, 4);
-
-            if (x > MAXSTIR)
-            {
-                /* Avoid overflow in Math.Pow() */
-                float v = (float)Math.Pow(x, 0.5 * x - 0.25);
-                y = v * (v / y);
-            }
-            else
-            {
-                y = (float)Math.Pow(x, x - 0.5) / y;
-            }
-            y = 2.50662827463100050242E0f * y * w;
-            return y;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="z"></param>
-        /// <returns></returns>
-        private static float GammaLogLanczos(float z)
-        {
-            float[] coef = new float[6] { 76.18009172947146f, -86.50532032941677f, 24.01409824083091f, -1.231739572450155f, 0.1208650973866179E-2f, -0.5395239384953E-5f };
-            float LogSqrtTwoPi = 0.91893853320467274178f;
-            float denom = z + 1;
-            float y = z + 5.5f;
-            float series = 1.000000000190015f;
-            int i;
-
-            for (i = 0; i < 6; ++i)
-            {
-                series += coef[i] / denom;
-                denom += 1.0f;
-            }
-            return (LogSqrtTwoPi + (z + 0.5f) * (float)Math.Log(y) -
-            y + (float)Math.Log(series / z));
-        }
-        #endregion
         #endregion
 
         #region Laplace function
-        /// <summary>
-        /// Returns the value of the Laplace integral (error function).
-        /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
-        public static float Erf(float x)
-        {
-            return Erf(x, false);
-        }
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
@@ -1380,6 +1257,37 @@ namespace UMapx.Core
             return erf;
         }
         /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <param name="inverse">Reverse function or not</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erf(Complex32 x, bool inverse)
+        {
+            // series converges ∀ x, removable singularity at 0
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
+
+            float sgn = inverse ? 1f : -1f;          // +1 → erfi, -1 → erf
+            Complex32 y = sgn * x * x;               // y = ± x^2
+            float coef = 2f / (float)Math.Sqrt(System.Math.PI);
+            
+            Complex32 a = Complex32.One;             // accumulator for y^n / n!
+            Complex32 b = x;                         // sum starts with n=0 term: x
+            float eps = 1e-16f;
+            int iterations = 120;
+            int k = 3;
+
+            for (int i = 1; i < iterations; i++, k += 2)
+            {
+                a *= y / i;                          // a ← a * (y / i)
+                Complex32 c = a * x / k;             // term: (±)^n x^{2n+1} / (n!(2n+1))
+                if (Maths.Abs(c) < eps) break;
+                b += c;
+            }
+
+            return b * coef;                         // 2/√π * Σ …
+        }
+        /// <summary>
         /// Returns the value of the imaginary error function.
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
@@ -1398,7 +1306,7 @@ namespace UMapx.Core
             float z = x * x;
             int k, iterations = 930;
             float eps = 1e-16f;
-            float p = 2.0f / Special.sqrtPI;
+            float p = 2.0f / Special.SQRT_PI;
 
             // Taylor series:
             for (int i = 1; i < iterations; i++)
@@ -1418,6 +1326,51 @@ namespace UMapx.Core
             return p * s;
         }
         /// <summary>
+        /// Returns the value of the imaginary error function.
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erfi(Complex32 x)
+        {
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
+
+            float coef = 2f / (float)System.Math.Sqrt(System.Math.PI);
+            Complex32 s = x;                         // start with n=0: x
+            Complex32 m = x;
+            Complex32 z2 = x * x;
+            float eps = 1e-16f;
+            int iterations = 930;
+
+            for (int i = 1; i < iterations; i++)
+            {
+                int k = 2 * i + 1;
+                m *= z2 / i;                         // m ← x^{2i+1} / i!
+                Complex32 t = m / k;                 // term: x^{2i+1} / (i! (2i+1))
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+
+            return s * coef;                          // 2/√π * Σ …
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static float Erf(float x)
+        {
+            return Erf(x, false);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erf(Complex32 x)
+        {
+            return Erf(x, false);
+        }
+        /// <summary>
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
@@ -1432,19 +1385,28 @@ namespace UMapx.Core
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="range">A pair of fractional numbers</param>
+        /// <param name="a">The lower boundary of the normalization</param>
+        /// <param name="b">The upper limit of the normalization</param>
         /// <returns>Value</returns>
-        public static float Erf(float x, RangeFloat range)
+        public static Complex32 Erf(Complex32 x, Complex32 a, Complex32 b)
         {
-            return Erf(x, range.Min, range.Max);
+            return Erf((x - a) / b);
         }
-
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <returns>Value</returns>
         public static float Erfc(float x)
+        {
+            return 1.0f - Erf(x);
+        }
+        /// <summary>
+        /// Returns the value of the Laplace integral (an additional error function).
+        /// </summary>
+        /// <param name="x">The value of the upper limit of the integral</param>
+        /// <returns>Value</returns>
+        public static Complex32 Erfc(Complex32 x)
         {
             return 1.0f - Erf(x);
         }
@@ -1463,11 +1425,61 @@ namespace UMapx.Core
         /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="range">A pair of fractional numbers</param>
+        /// <param name="a">The lower boundary of the normalization</param>
+        /// <param name="b">The upper limit of the normalization</param>
         /// <returns>Value</returns>
-        public static float Erfc(float x, RangeFloat range)
+        public static Complex32 Erfc(Complex32 x, Complex32 a, Complex32 b)
         {
-            return 1.0f - Erf(x, range.Min, range.Max);
+            return 1.0f - Erf(x, a, b);
+        }
+        #endregion
+
+        #region Dawson function
+        /// <summary>
+        /// Returns the value of the D- / D + Dawson function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="positive">D- или D+</param>
+        /// <returns>Value</returns>
+        public static float Dawson(float x, bool positive)
+        {
+            if (positive)
+            {
+                // D+ function:
+                float p = Special.SQRT_PI / 2.0f;
+                float v = Maths.Exp(-x * x);
+                float erfi = Special.Erfi(x);
+                return p * v * erfi;
+            }
+            // D- function:
+            float y = x * x;
+            float g = SQRT_PI / 2.0f;
+            float e = Special.Erf(x);
+            float d = Maths.Exp(y);
+            return g * d * e;
+        }
+        /// <summary>
+        /// Returns the value of the D- / D + Dawson function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="positive">D- или D+</param>
+        /// <returns>Value</returns>
+        public static Complex32 Dawson(Complex32 x, bool positive)
+        {
+            if (positive)
+            {
+                // D+ function:
+                Complex32 p = Special.SQRT_PI / 2.0f;
+                Complex32 v = Maths.Exp(-x * x);
+                Complex32 erfi = Special.Erfi(x);
+                return p * v * erfi;
+            }
+            // D- function:
+            Complex32 y = x * x;
+            Complex32 g = SQRT_PI / 2.0f;
+            Complex32 e = Special.Erf(x);
+            Complex32 d = Maths.Exp(y);
+            return g * d * e;
         }
         #endregion
 
@@ -1482,408 +1494,27 @@ namespace UMapx.Core
         {
             if (inverse)
             {
-                return (float)Math.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+                return Maths.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+            }
+            return 0.5f * Special.Erfc(x / Maths.Sqrt2);
+        }
+        /// <summary>
+        /// Returns the value of a Q function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <param name="inverse">Inverse function or not</param>
+        /// <returns>Value</returns>
+        public static Complex32 Q(Complex32 x, bool inverse = false)
+        {
+            if (inverse)
+            {
+                return Maths.Sqrt(2) * Special.Erf(1 - 2 * x, true);
             }
             return 0.5f * Special.Erfc(x / Maths.Sqrt2);
         }
         #endregion
 
-        #region Bessel functions
-        /// <summary>
-        /// Returns the value of the Bessel function of the first kind at a = 0.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float J0(float x)
-        {
-            float ax;
-
-            if ((ax = System.Math.Abs(x)) < 8.0)
-            {
-                float y = x * x;
-                float ans1 = 57568490574.0f + y * (-13362590354.0f + y * (651619640.7f
-                    + y * (-11214424.18f + y * (77392.33017f + y * (-184.9052456f)))));
-                float ans2 = 57568490411.0f + y * (1029532985.0f + y * (9494680.718f
-                    + y * (59272.64853f + y * (267.8532712f + y * 1.0f))));
-
-                return ans1 / ans2;
-            }
-            else
-            {
-                float z = 8.0f / ax;
-                float y = z * z;
-                float xx = ax - 0.785398164f;
-                float ans1 = 1.0f + y * (-0.1098628627e-2f + y * (0.2734510407e-4f
-                    + y * (-0.2073370639e-5f + y * 0.2093887211e-6f)));
-                float ans2 = -0.1562499995e-1f + y * (0.1430488765e-3f
-                    + y * (-0.6911147651e-5f + y * (0.7621095161e-6f
-                    - y * 0.934935152e-7f)));
-
-                return (float)Math.Sqrt(0.636619772f / ax) *
-                    ((float)Math.Cos(xx) * ans1 - z * (float)Math.Sin(xx) * ans2);
-            }
-        }
-        /// <summary>
-        /// Returns the value of the Bessel function of the first kind at a = 1.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float J1(float x)
-        {
-            float ax;
-            float y;
-            float ans1, ans2;
-
-            if ((ax = System.Math.Abs(x)) < 8.0)
-            {
-                y = x * x;
-                ans1 = x * (72362614232.0f + y * (-7895059235.0f + y * (242396853.1f
-                    + y * (-2972611.439f + y * (15704.48260f + y * (-30.16036606f))))));
-                ans2 = 144725228442.0f + y * (2300535178.0f + y * (18583304.74f
-                    + y * (99447.43394f + y * (376.9991397f + y * 1.0f))));
-                return ans1 / ans2;
-            }
-            else
-            {
-                float z = 8.0f / ax;
-                float xx = ax - 2.356194491f;
-                y = z * z;
-
-                ans1 = 1.0f + y * (0.183105e-2f + y * (-0.3516396496e-4f
-                    + y * (0.2457520174e-5f + y * (-0.240337019e-6f))));
-                ans2 = 0.04687499995f + y * (-0.2002690873e-3f
-                    + y * (0.8449199096e-5f + y * (-0.88228987e-6f
-                    + y * 0.105787412e-6f)));
-                float and = (float)Math.Sqrt(0.636619772 / ax) *
-                    ((float)Math.Cos(xx) * ans1 - z * (float)Math.Sin(xx) * ans2);
-                if (x < 0.0) and = -and;
-                return and;
-            }
-        }
-        /// <summary>
-        /// Returns the value of a Bessel function of the first kind.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Number</param>
-        /// <returns>Value</returns>
-        public static float J(float x, int a)
-        {
-            if (a < 0 || x == 0) return 0;
-            if (a == 0) return J0(x);
-            if (a == 1) return J1(x);
-
-            int j, m;
-            float ax, bj, bjm, bjp, sum, tox, and;
-            bool jsum;
-            float ACC = 40.0f;
-            float BIGNO = 1.0e+10f;
-            float BIGNI = 1.0e-10f;
-
-            ax = System.Math.Abs(x);
-            if (ax == 0.0) return 0.0f;
-            else if (ax > (float)a)
-            {
-                tox = 2.0f / ax;
-                bjm = J0(ax);
-                bj = J1(ax);
-                for (j = 1; j < a; j++)
-                {
-                    bjp = j * tox * bj - bjm;
-                    bjm = bj;
-                    bj = bjp;
-                }
-                and = bj;
-            }
-            else
-            {
-                tox = 2.0f / ax;
-                m = 2 * ((a + (int)System.Math.Sqrt(ACC * a)) / 2);
-                jsum = false;
-                bjp = and = sum = 0.0f;
-                bj = 1.0f;
-                for (j = m; j > 0; j--)
-                {
-                    bjm = j * tox * bj - bjp;
-                    bjp = bj;
-                    bj = bjm;
-                    if (System.Math.Abs(bj) > BIGNO)
-                    {
-                        bj *= BIGNI;
-                        bjp *= BIGNI;
-                        and *= BIGNI;
-                        sum *= BIGNI;
-                    }
-                    if (jsum) sum += bj;
-                    jsum = !jsum;
-                    if (j == a) and = bjp;
-                }
-                sum = 2.0f * sum - bj;
-                and /= sum;
-            }
-
-            return x < 0.0 && a % 2 == 1 ? -and : and;
-        }
-        /// <summary>
-        /// Returns the value of the Bessel function of the second kind at a = 0.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float Y0(float x)
-        {
-            if (x < 8.0)
-            {
-                float y = x * x;
-
-                float ans1 = -2957821389.0f + y * (7062834065.0f + y * (-512359803.6f
-                    + y * (10879881.29f + y * (-86327.92757f + y * 228.4622733f))));
-                float ans2 = 40076544269.0f + y * (745249964.8f + y * (7189466.438f
-                    + y * (47447.26470f + y * (226.1030244f + y * 1.0f))));
-
-                return (ans1 / ans2) + 0.636619772f * J0(x) * (float)Math.Log(x);
-            }
-            else
-            {
-                float z = 8.0f / x;
-                float y = z * z;
-                float xx = x - 0.785398164f;
-
-                float ans1 = 1.0f + y * (-0.1098628627e-2f + y * (0.2734510407e-4f
-                    + y * (-0.2073370639e-5f + y * 0.2093887211e-6f)));
-                float ans2 = -0.1562499995e-1f + y * (0.1430488765e-3f
-                    + y * (-0.6911147651e-5f + y * (0.7621095161e-6f
-                    + y * (-0.934945152e-7f))));
-                return (float)Math.Sqrt(0.636619772f / x) *
-                    ((float)Math.Sin(xx) * ans1 + z * (float)Math.Cos(xx) * ans2);
-            }
-        }
-        /// <summary>
-        /// Returns the value of the Bessel function of the second kind at a = 1.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float Y1(float x)
-        {
-            if (x < 8.0)
-            {
-                float y = x * x;
-                float ans1 = x * (-0.4900604943e13f + y * (0.1275274390e13f
-                    + y * (-0.5153438139e11f + y * (0.7349264551e9f
-                    + y * (-0.4237922726e7f + y * 0.8511937935e4f)))));
-                float ans2 = 0.2499580570e14f + y * (0.4244419664e12f
-                    + y * (0.3733650367e10f + y * (0.2245904002e8f
-                    + y * (0.1020426050e6f + y * (0.3549632885e3f + y)))));
-                return (ans1 / ans2) + 0.636619772f * (J1(x) * (float)Math.Log(x) - 1.0f / x);
-            }
-            else
-            {
-                float z = 8.0f / x;
-                float y = z * z;
-                float xx = x - 2.356194491f;
-                float ans1 = 1.0f + y * (0.183105e-2f + y * (-0.3516396496e-4f
-                    + y * (0.2457520174e-5f + y * (-0.240337019e-6f))));
-                float ans2 = 0.04687499995f + y * (-0.2002690873e-3f
-                    + y * (0.8449199096e-5f + y * (-0.88228987e-6f
-                    + y * 0.105787412e-6f)));
-                return (float)Math.Sqrt(0.636619772f / x) *
-                    ((float)Math.Sin(xx) * ans1 + z * (float)Math.Cos(xx) * ans2);
-            }
-        }
-        /// <summary>
-        /// Returns the value of a Bessel function of the second kind.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Number</param>
-        /// <returns>Value</returns>
-        public static float Y(float x, int a)
-        {
-            if (a < 0 || x == 0) return 0;
-            if (a == 0) return Y0(x);
-            if (a == 1) return Y1(x);
-
-            float by, bym, byp, tox;
-            tox = 2.0f / x;
-            by = Y1(x);
-            bym = Y0(x);
-            for (int j = 1; j < a; j++)
-            {
-                byp = j * tox * by - bym;
-                bym = by;
-                by = byp;
-            }
-            return by;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the first kind at a = 0.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float I0(float x)
-        {
-            float and;
-            float ax = Math.Abs(x);
-
-            if (ax < 3.75)
-            {
-                float y = x / 3.75f;
-                y = y * y;
-                and = 1.0f + y * (3.5156229f + y * (3.0899424f + y * (1.2067492f
-                   + y * (0.2659732f + y * (0.360768e-1f + y * 0.45813e-2f)))));
-            }
-            else
-            {
-                float y = 3.75f / ax;
-                and = (float)Math.Exp(ax) / (float)Math.Sqrt(ax) * (0.39894228f + y * (0.1328592e-1f
-                   + y * (0.225319e-2f + y * (-0.157565e-2f + y * (0.916281e-2f
-                   + y * (-0.2057706e-1f + y * (0.2635537e-1f + y * (-0.1647633e-1f
-                   + y * 0.392377e-2f))))))));
-            }
-
-            return and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the first kind at a = 1.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float I1(float x)
-        {
-            float and;
-
-            float ax = Math.Abs(x);
-
-            if (ax < 3.75)
-            {
-                float y = x / 3.75f;
-                y = y * y;
-                and = ax * (0.5f + y * (0.87890594f + y * (0.51498869f + y * (0.15084934f
-                   + y * (0.2658733e-1f + y * (0.301532e-2f + y * 0.32411e-3f))))));
-            }
-            else
-            {
-                float y = 3.75f / ax;
-                and = 0.2282967e-1f + y * (-0.2895312e-1f + y * (0.1787654e-1f - y * 0.420059e-2f));
-                and = 0.39894228f + y * (-0.3988024e-1f + y * (-0.362018e-2f + y * (0.163801e-2f + y * (-0.1031555e-1f + y * and))));
-                and *= (float)Math.Exp(ax) / (float)Math.Sqrt(ax);
-            }
-            return x < 0.0 ? -and : and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the first kind.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Number</param>
-        /// <returns>Value</returns>
-        public static float I(float x, int a)
-        {
-            if (a < 0 || x == 0) return 0;
-            if (a == 0) return I0(x);
-            if (a == 1) return I1(x);
-
-            float ACC = 40.0f;
-            float BIGNO = 1.0e+10f;
-            float BIGNI = 1.0e-10f;
-            float tox = 2.0f / Math.Abs(x);
-            float bip = 0, and = 0.0f;
-            float bi = 1.0f;
-
-            for (int j = 2 * (a + (int)Math.Sqrt(ACC * a)); j > 0; j--)
-            {
-                float bim = bip + j * tox * bi;
-                bip = bi;
-                bi = bim;
-
-                if (Math.Abs(bi) > BIGNO)
-                {
-                    and *= BIGNI;
-                    bi *= BIGNI;
-                    bip *= BIGNI;
-                }
-
-                if (j == a)
-                    and = bip;
-            }
-
-            and *= I0(x) / bi;
-            return x < 0.0 && a % 2 == 1 ? -and : and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the second kind at a = 0.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float K0(float x)
-        {
-            float y, and;
-
-            if (x <= 2.0)
-            {
-                y = x * x / 4.0f;
-                and = (-(float)Math.Log(x / 2.0) * I0(x)) + (-0.57721566f + y * (0.42278420f
-                   + y * (0.23069756f + y * (0.3488590e-1f + y * (0.262698e-2f
-                   + y * (0.10750e-3f + y * 0.74e-5f))))));
-            }
-            else
-            {
-                y = 2.0f / x;
-                and = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (-0.7832358e-1f
-                   + y * (0.2189568e-1f + y * (-0.1062446e-1f + y * (0.587872e-2f
-                   + y * (-0.251540e-2f + y * 0.53208e-3f))))));
-            }
-            return and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the second kind at a = 1.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        private static float K1(float x)
-        {
-            float y, and;
-
-            if (x <= 2.0)
-            {
-                y = x * x / 4.0f;
-                and = ((float)Math.Log(x / 2.0) * I1(x)) + (1.0f / x) * (1.0f + y * (0.15443144f
-                   + y * (-0.67278579f + y * (-0.18156897f + y * (-0.1919402e-1f
-                   + y * (-0.110404e-2f + y * (-0.4686e-4f)))))));
-            }
-            else
-            {
-                y = 2.0f / x;
-                and = (float)Math.Exp(-x) / (float)Math.Sqrt(x) * (1.25331414f + y * (0.23498619f
-                   + y * (-0.3655620e-1f + y * (0.1504268e-1f + y * (-0.780353e-2f
-                   + y * (0.325614e-2f + y * (-0.68245e-3f)))))));
-            }
-            return and;
-        }
-        /// <summary>
-        /// Returns the value of the modified Bessel function of the second kind.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Number</param>
-        /// <returns>Value</returns>
-        public static float K(float x, int a)
-        {
-            if (a < 0 || x == 0) return 0;
-            if (a == 0) return (K0(x));
-            if (a == 1) return (K1(x));
-
-            int j;
-            float bk, bkm, bkp, tox;
-            tox = 2.0f / x;
-            bkm = K0(x);
-            bk = K1(x);
-            for (j = 1; j < a; j++)
-            {
-                bkp = bkm + j * tox * bk;
-                bkm = bk;
-                bk = bkp;
-            }
-            return bk;
-        }
-        #endregion
-
-        #region Owen's T-function components
+        #region Owen's T-function
         /// <summary>
         /// Returns the value of the Owen T function.
         /// </summary>
@@ -1892,913 +1523,76 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Owen(float h, float a)
         {
-            float absa;
-            float absh;
-            float ah;
-            float cut = 0.67f;
-            float normah;
-            float normh;
-            float value;
+            if (float.IsNaN(h) || float.IsNaN(a)) return float.NaN;
+            if (a == 0f) return 0f;
+            if (h == 0f) return INV_2PI * (float)Math.Atan(a);
 
-            absh = Math.Abs(h);
-            absa = Math.Abs(a);
-            ah = absa * absh;
+            float sign = a >= 0f ? 1f : -1f;
+            float L = Math.Abs(a);
 
-            if (absa <= 1.0)
+            int n = 1024;
+            float hstep = L / n;
+
+            float f(float t)
             {
-                value = Special.owenhaah(absh, absa, ah);
-            }
-            else if (absh <= cut)
-            {
-                value = 0.25f - (-0.5f + Special.Q(-absh)) * (-0.5f + Special.Q(-ah))
-                  - Special.owenhaah(ah, 1.0f / absa, absh);
-            }
-            else
-            {
-                normh = Special.Q(absh);
-                normah = Special.Q(ah);
-                value = 0.5f * (normh + normah) - normh * normah
-                - Special.owenhaah(ah, 1.0f / absa, absh);
+                float t2 = t * t;
+                return (float)Math.Exp(-0.5f * h * h * (1f + t2)) / (1f + t2);
             }
 
-            if (a < 0.0)
+            float sum = f(0f) + f(L);
+            float s4 = 0f, s2 = 0f;
+            for (int i = 1; i < n; i++)
             {
-                value = -value;
+                float ti = i * hstep;
+                if ((i & 1) == 1) s4 += f(ti); else s2 += f(ti);
             }
-
-            return value;
+            float integral = hstep / 3f * (sum + 4f * s4 + 2f * s2);
+            return sign * INV_2PI * integral;
         }
-        #region Private data
         /// <summary>
         /// Returns the value of the Owen T function.
         /// </summary>
         /// <param name="h">First argument</param>
         /// <param name="a">Second argument</param>
-        /// <param name="ah">h * a</param>
         /// <returns>Value</returns>
-        private static float owenhaah(float h, float a, float ah)
+        public static Complex32 Owen(Complex32 h, Complex32 a)
         {
-            float ai;
-            float aj;
-            float AS;
-            float dhs;
-            float dj;
-            float gj;
+            if (float.IsNaN(h.Real) || float.IsNaN(h.Imag) ||
+                float.IsNaN(a.Real) || float.IsNaN(a.Imag))
+                return Complex32.NaN;
 
-            float hs;
-            int i;
-            int iaint;
-            int icode;
-            int ihint;
-            int ii;
-            int j;
-            int jj;
-            int m;
-            int maxii;
-            float normh;
-
-            float r;
-            const float rrtpi = 0.39894228040143267794f;
-            const float rtwopi = 0.15915494309189533577f;
-
-            float y;
-            float yi;
-            float z;
-            float zi;
-
-            float value = 0;
-            float vi;
-
-
-            /*
-              Determine appropriate method from t1...t6
-            */
-            ihint = 15;
-
-            for (i = 1; i <= 14; i++)
+            if (a.Real == 0f && a.Imag == 0f) return Complex32.Zero;
+            if (h.Real == 0f && h.Imag == 0f)
             {
-                if (h <= hrange[i - 1])
-                {
-                    ihint = i;
-                    break;
-                }
+                return INV_2PI * Maths.Atan(a);
             }
 
-            iaint = 8;
+            int n = 1024;
+            float ds = 1f / n;
 
-            for (i = 1; i <= 7; i++)
+            Complex32 F(float s)
             {
-                if (a <= arange[i - 1])
-                {
-                    iaint = i;
-                    break;
-                }
+                Complex32 sa = s * a;
+                Complex32 denom = Complex32.One + sa * sa;
+                Complex32 expo = Maths.Exp(-0.5f * h * h * denom);
+                return a * (expo / denom); // dt = a ds
             }
 
-            icode = select[ihint - 1 + (iaint - 1) * 15];
-            m = ord[icode - 1];
-
-            /*
-              t1(h, a, m) ; m = 2, 3, 4, 5, 7, 10, 12 or 18
-              jj = 2j - 1 ; gj = exp(-h*h/2) * (-h*h/2)**j / j
-              aj = a**(2j-1) / (2*pi)
-            */
-
-            if (meth[icode - 1] == 1)
+            Complex32 sum = F(0f) + F(1f);
+            Complex32 s4 = Complex32.Zero;
+            Complex32 s2 = Complex32.Zero;
+            for (int i = 1; i < n; i++)
             {
-                hs = -0.5f * h * h;
-                dhs = (float)Math.Exp(hs);
-                AS = a * a;
-                j = 1;
-                jj = 1;
-                aj = rtwopi * a;
-                value = rtwopi * (float)Math.Atan(a);
-                dj = dhs - 1.0f;
-                gj = hs * dhs;
-
-                for (; ; )
-                {
-                    value = value + dj * aj / (float)(jj);
-
-                    if (m <= j)
-                    {
-                        return value;
-                    }
-                    j = j + 1;
-                    jj = jj + 2;
-                    aj = aj * AS;
-                    dj = gj - dj;
-                    gj = gj * hs / (float)(j);
-                }
+                float si = i * ds;
+                if ((i & 1) == 1) s4 += F(si); else s2 += F(si);
             }
-
-            /*
-              t2(h, a, m) ; m = 10, 20 or 30
-              z = (-1)^(i-1) * zi ; ii = 2i - 1
-              vi = (-1)^(i-1) * a^(2i-1) * exp[-(a*h)^2/2] / sqrt(2*pi)
-            */
-            else if (meth[icode - 1] == 2)
-            {
-                maxii = m + m + 1;
-                ii = 1;
-                value = 0.0f;
-                hs = h * h;
-                AS = -a * a;
-                vi = rrtpi * a * (float)Math.Exp(-0.5 * ah * ah);
-                z = 0.5f * (-0.5f + Special.Q(-ah)) / h;
-                y = 1.0f / hs;
-
-                for (; ; )
-                {
-                    value = value + z;
-
-                    if (maxii <= ii)
-                    {
-                        value = value * rrtpi * (float)Math.Exp(-0.5 * hs);
-                        return value;
-                    }
-                    z = y * (vi - (float)(ii) * z);
-                    vi = AS * vi;
-                    ii = ii + 2;
-                }
-            }
-            /*
-              t3(h, a, m) ; m = 20
-              ii = 2i - 1
-              vi = a**(2i-1) * exp[-(a*h)**2/2] / sqrt(2*pi)
-            */
-            else if (meth[icode - 1] == 3)
-            {
-                i = 1;
-                ii = 1;
-                value = 0.0f;
-                hs = h * h;
-                AS = a * a;
-                vi = rrtpi * a * (float)Math.Exp(-0.5 * ah * ah);
-                zi = 0.5f * (-0.5f + Special.Q(-ah)) / h;
-                y = 1.0f / hs;
-
-                for (; ; )
-                {
-                    value = value + zi * coefT[i - 1];
-
-                    if (m < i)
-                    {
-                        value = value * rrtpi * (float)Math.Exp(-0.5 * hs);
-                        return value;
-                    }
-                    zi = y * ((float)(ii) * zi - vi);
-                    vi = AS * vi;
-                    i = i + 1;
-                    ii = ii + 2;
-                }
-            }
-            /*
-              t4(h, a, m) ; m = 4, 7, 8 or 20;  ii = 2i + 1
-              ai = a * exp[-h*h*(1+a*a)/2] * (-a*a)**i / (2*pi)
-            */
-            else if (meth[icode - 1] == 4)
-            {
-                maxii = m + m + 1;
-                ii = 1;
-                hs = h * h;
-                AS = -a * a;
-                value = 0.0f;
-                ai = rtwopi * a * (float)Math.Exp(-0.5 * hs * (1.0 - AS));
-                yi = 1.0f;
-
-                for (; ; )
-                {
-                    value = value + ai * yi;
-
-                    if (maxii <= ii)
-                        return value;
-
-                    ii = ii + 2;
-                    yi = (1.0f - hs * yi) / (float)(ii);
-                    ai = ai * AS;
-                }
-            }
-            /*
-              t5(h, a, m) ; m = 13
-              2m - point gaussian quadrature
-            */
-            else if (meth[icode - 1] == 5)
-            {
-                value = 0.0f;
-                AS = a * a;
-                hs = -0.5f * h * h;
-                for (i = 1; i <= m; i++)
-                {
-                    r = 1.0f + AS * pts[i - 1];
-                    value = value + wts[i - 1] * (float)Math.Exp(hs * r) / r;
-                }
-                value = a * value;
-            }
-            /*
-              t6(h, a);  approximation for a near 1, (a<=1)
-            */
-            else if (meth[icode - 1] == 6)
-            {
-                normh = Special.Q(h);
-                value = 0.5f * normh * (1.0f - normh);
-                y = 1.0f - a;
-                r = (float)Math.Atan(y / (1.0f + a));
-
-                if (r != 0.0)
-                    value = value - rtwopi * r * (float)Math.Exp(-0.5 * y * h * h / r);
-            }
-
-            return value;
+            Complex32 integral = ds / 3f * (sum + 4f * s4 + 2f * s2);
+            return INV_2PI * integral;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] arange =
-        {
-            0.025f, 0.09f, 0.15f, 0.36f, 0.5f, 0.9f, 0.99999f
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] coefT =
-        {
-                                          0.99999999999999987510f,
-            -0.99999999999988796462f,      0.99999999998290743652f,
-            -0.99999999896282500134f,      0.99999996660459362918f,
-            -0.99999933986272476760f,      0.99999125611136965852f,
-            -0.99991777624463387686f,      0.99942835555870132569f,
-            -0.99697311720723000295f,      0.98751448037275303682f,
-            -0.95915857980572882813f,      0.89246305511006708555f,
-            -0.76893425990463999675f,      0.58893528468484693250f,
-            -0.38380345160440256652f,      0.20317601701045299653f,
-            -0.82813631607004984866E-01f,  0.24167984735759576523E-01f,
-            -0.44676566663971825242E-02f,  0.39141169402373836468E-03f
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] hrange =
-        {
-            0.02f, 0.06f, 0.09f, 0.125f, 0.26f,
-            0.4f,  0.6f,  1.6f,  1.7f,   2.33f,
-            2.4f,  3.36f, 3.4f,  4.8f
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly int[] meth =
-        {
-            1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 6
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly int[] ord =
-        {
-            2, 3, 4, 5, 7,10,12,18,10,20,30,20, 4, 7, 8,20,13, 0
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] pts =
-        {
-                                         0.35082039676451715489E-02f,
-            0.31279042338030753740E-01f,  0.85266826283219451090E-01f,
-            0.16245071730812277011f,      0.25851196049125434828f,
-            0.36807553840697533536f,      0.48501092905604697475f,
-            0.60277514152618576821f,      0.71477884217753226516f,
-            0.81475510988760098605f,      0.89711029755948965867f,
-            0.95723808085944261843f,      0.99178832974629703586f
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly int[] select =
-        {
-            1, 1, 2,13,13,13,13,13,13,13,13,16,16,16, 9,
-            1, 2, 2, 3, 3, 5, 5,14,14,15,15,16,16,16, 9,
-            2, 2, 3, 3, 3, 5, 5,15,15,15,15,16,16,16,10,
-            2, 2, 3, 5, 5, 5, 5, 7, 7,16,16,16,16,16,10,
-            2, 3, 3, 5, 5, 6, 6, 8, 8,17,17,17,12,12,11,
-            2, 3, 5, 5, 5, 6, 6, 8, 8,17,17,17,12,12,12,
-            2, 3, 4, 4, 6, 6, 8, 8,17,17,17,17,17,12,12,
-            2, 3, 4, 4, 6, 6,18,18,18,18,17,17,17,12,12
-        };
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly float[] wts =
-        {
-                                         0.18831438115323502887E-01f,
-            0.18567086243977649478E-01f,  0.18042093461223385584E-01f,
-            0.17263829606398753364E-01f,  0.16243219975989856730E-01f,
-            0.14994592034116704829E-01f,  0.13535474469662088392E-01f,
-            0.11886351605820165233E-01f,  0.10070377242777431897E-01f,
-            0.81130545742299586629E-02f,  0.60419009528470238773E-02f,
-            0.38862217010742057883E-02f,  0.16793031084546090448E-02f
-        };
-        #endregion
+
         #endregion
 
-        #region Guderman & Hartley functions
-        /// <summary>
-        /// Returns the value of the inverse Guderman function.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float Agd(float x)
-        {
-            return 0.5f * (float)Math.Log((1.0 + Math.Sin(x)) / (1.0 - Math.Sin(x)));
-        }
-        /// <summary>
-        /// Returns the value of the Guderman function.
-        /// </summary>
-        /// <param name="x">Angle in radians</param>
-        /// <returns>Value</returns>
-        public static float Gd(float x)
-        {
-            return 2 * Maths.Atg(Maths.Exp(x)) - 1.57079632679f;
-        }
-        /// <summary>
-        /// Returns the value of the function Cas(x).
-        /// </summary>
-        /// <param name="theta">Theta</param>
-        /// <returns>Value</returns>
-        public static float Cas(float theta)
-        {
-            return 1.414f * (float)Math.Sin(theta + 0.78539);
-        }
-        #endregion
-
-        #region Sinc function
-        /// <summary>
-        /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float Sinc(float x)
-        {
-            return Special.Sinc(x, Maths.Pi);
-        }
-        /// <summary>
-        /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="a">Parameter</param>
-        /// <returns>Value</returns>
-        public static float Sinc(float x, float a)
-        {
-            if (x == 0)
-            {
-                return 1;
-            }
-            float ax = a * x;
-            return (float)Math.Sin(ax) / ax;
-        }
-        #endregion
-
-        #region Binomial function
-        /// <summary>
-        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static float Binomial(float n, float k)
-        {
-            if (k < 0)
-            {
-                return 0;
-            }
-            return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
-        }
-        /// <summary>
-        /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static float LogBinomial(float n, float k)
-        {
-            return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
-        }
-        #endregion
-
-        #region Factorial function
-        /// <summary>
-        /// Returns the natural logarithm of the factorial of a number log(n!).
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <returns>Value</returns>
-        public static float LogFactorial(float n)
-        {
-            return Special.GammaLog(n + 1.0f);
-        }
-        /// <summary>
-        /// Returns the factorial of a number.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <returns>Value</returns>
-        public static float Factorial(float n)
-        {
-            // check it:
-            if (Maths.IsInteger(n) && n >= 0)
-            {
-                // get it from memory
-                if (n <= 170)
-                {
-                    return (float)Special.A000142[(int)n];
-                }
-                return float.NaN;
-            }
-            return Special.Gamma(n + 1);
-        }
-        /// <summary>
-        /// Returns the decreasing factorial of a number.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static float FactorialDown(float n, float k)
-        {
-            return Special.Factorial(n) / Special.Factorial(n - k);
-        }
-        /// <summary>
-        /// Returns the increasing factorial of a number (Pohhammer symbol).
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <param name="k">Number</param>
-        /// <returns>Value</returns>
-        public static float FactorialUp(float n, float k)
-        {
-            if (n == 0)
-            {
-                return 1.0f;
-            }
-            return Special.Gamma(n + k) / Special.Gamma(n);
-        }
-        #endregion
-
-        #region Fibonacci & Lucas numbers
-        /// <summary>
-        /// Returns the value of the Fibonacci number.
-        /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <returns>Integer number</returns>
-        public static int Fibonacci(int n)
-        {
-            float r = 2.2360679774997896964f;
-            float phi = (1.0f + r) / 2.0f;
-            float psi = (1.0f - r) / 2.0f;
-            float num = (float)Math.Pow(phi, n) - (float)Math.Pow(psi, n);
-            return (int)(num / r);
-        }
-        /// <summary>
-        /// Returns the value of the Luca number.
-        /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <returns>Integer number</returns>
-        public static int Lucas(int n)
-        {
-            float r = 2.2360679774997896964f;
-            float phi = (1.0f + r) / 2.0f;
-            float psi = (1.0f - r) / 2.0f;
-            float num = (float)Math.Pow(phi, n) + (float)Math.Pow(psi, n);
-            return (int)(num);
-        }
-        #endregion
-
-        #region Bernoulli function
-        /// <summary>
-        /// Returns the Bernoulli number.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <returns>Value</returns>
-        public static float Bernoulli(int n)
-        {
-            // special cases:
-            if (n < 0)
-                return float.NaN;
-            else if (n == 0)
-                return 1;
-            else if (n == 1)
-                return -0.5f;
-
-            // for even number:
-            else if (Maths.Mod(n, 2) == 0)
-            {
-                // get it from memory
-                if (n <= 258)
-                {
-                    return (float)Special.A027641[n / 2 - 1];
-                }
-                return float.NaN;
-            }
-            // for odd number:
-            return 0;
-        }
-        /// <summary>
-        /// Returns the value of the Bernoulli polynomial.
-        /// </summary>
-        /// <param name="n">Order</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float Bernoulli(int n, float x)
-        {
-            // properties:
-            float p = 1, s = 0;
-
-            // series:
-            for (int k = 0; k <= n; k++)
-            {
-                s += Special.Binomial(n, k) * Special.Bernoulli(n - k) * p; p *= x;
-            }
-
-            // result:
-            return s;
-        }
-        #endregion
-
-        #region Euler function
-        /// <summary>
-        /// Returns the Euler number.
-        /// </summary>
-        /// <param name="n">Number</param>
-        /// <returns>Value</returns>
-        public static float Euler(int n)
-        {
-            // special cases:
-            if (n < 0)
-                return float.NaN;
-            else if (n == 0)
-                return 1;
-
-            // for even number:
-            else if (Maths.Mod(n, 2) == 0)
-            {
-                // get it from memory
-                if (n <= 186)
-                {
-                    return (float)Special.A122045[n / 2 - 1];
-                }
-                return float.NaN;
-            }
-            // for odd number:
-            return 0;
-        }
-        /// <summary>
-        /// Returns the value of the Euler polynomial.
-        /// </summary>
-        /// <param name="n">Order</param>
-        /// <param name="x">Number</param>
-        /// <returns>Value</returns>
-        public static float Euler(int n, float x)
-        {
-            // properties:
-            float p = 1, s = 0;
-            float v = x - 0.5f;
-            float u = (float)Math.Pow(v, n);
-
-            // series:
-            for (int k = 0; k <= n; k++)
-            {
-                s += Special.Binomial(n, k) * Special.Euler(k) / p * u; p *= 2; u /= v;
-            }
-
-            // result:
-            return s;
-        }
-        #endregion
-
-        #region Harmonic number
-        /// <summary>
-        /// Returns the harmonic number.
-        /// </summary>
-        /// <param name="n">Argument</param>
-        /// <returns>Value</returns>
-        public static float Harm(int n)
-        {
-            return Special.DiGamma(n) + 1.0f / n + Maths.Gamma;
-        }
-        /// <summary>
-        /// Returns the harmonic number.
-        /// </summary>
-        /// <param name="n">Order</param>
-        /// <param name="m">Argument</param>
-        /// <returns>Value</returns>
-        public static float Harm(int n, float m)
-        {
-            float sum = 0;
-            for (int i = 0; i < n; i++)
-            {
-                sum += (float)Math.Pow(i + 1, -m);
-            }
-
-            return sum;
-        }
-        #endregion
-
-        #region Chebyshev polynomials
-        /// <summary>
-        /// Returns the value of the Chebyshev polynomial of the first kind.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
-        public static float ChebyshevT(float x, int n)
-        {
-            return (float)Math.Cos(n * Math.Acos(x));
-        }
-        /// <summary>
-        /// Returns the value of the Chebyshev polynomial of the second kind.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
-        public static float ChebyshevU(float x, int n)
-        {
-            float z = (float)Math.Acos(x);
-            return (float)Math.Sin((n + 1) * z) / (float)Math.Sin(z);
-        }
-        #endregion
-
-        #region Abel polynomials
-        /// <summary>
-        /// Returns the value of the Abel polynomial.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Power</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
-        public static float Abel(float x, float a, int n)
-        {
-            if (n == 0)
-                return 1;
-            if (n == 1)
-                return x;
-
-            // Generalized formula
-            // Abel polynomials recurrence relation for any n ≥ 1:
-            return x * (float)Math.Pow(x - a * n, n - 1);
-        }
-        #endregion
-
-        #region Laguerre polynomial
-        /// <summary>
-        /// Returns the value of the Laguerre polynomial.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Power</param>
-        /// <param name="k">Order</param>
-        /// <returns>Value</returns>
-        public static float Laguerre(float x, float a, int k)
-        {
-            if (k == 0)
-                return 1;
-            if (k == 1)
-                return 1 + a - x;
-
-            // Generalized formula
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            float psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
-            float ksi = k + 1;
-            return psi / ksi;
-        }
-        #endregion
-
-        #region Legendre polynomial
-        /// <summary>
-        /// Returns the value of the Legendre polynomial of the first kind.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="m">Order</param>
-        /// <returns>Value</returns>
-        public static float Legendre(float x, int m)
-        {
-            if (m == 0)
-                return 1;
-            if (m == 1)
-                return x;
-
-            // legendre function
-            // More info: https://pdfs.semanticscholar.org/be30/38b3aafed73d33fe78a701ee096471d16fa1.pdf
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            float ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
-            float psi = m + 1;
-            return ksi / psi;
-        }
-        #endregion
-
-        #region Hermite polynomial
-        /// <summary>
-        /// Returns the value of the Hermite polynomial.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="m">Order</param>
-        /// <returns>Value</returns>
-        public static float Hermite(float x, int m)
-        {
-            if (m == 0)
-                return 1;
-            if (m == 1)
-                return x;
-
-            // recursion formula for Hermite polynomials
-            float ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
-            return 2 * ksi;
-        }
-        #endregion
-
-        #region Gegenbauer polynomial
-        /// <summary>
-        /// Returns the value of the Gegenbauer polynomial.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Power</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
-        public static float Gegenbauer(float x, float a, int n)
-        {
-            if (n == 0)
-                return 1;
-            if (n == 1)
-                return 2 * a * x;
-
-            // Generalized formula
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            float psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
-            return psi / n;
-        }
-        #endregion
-
-        #region Mahlerpolynom function
-        /// <summary>
-        /// Returns the value of the Mahler polynomial.
-        /// </summary>
-        /// <param name="x">Number</param>
-        /// <param name="t">Parameter</param>
-        /// <returns>Value</returns>
-        public static float Mahler(float x, float t)
-        {
-            return (float)Math.Exp(x * (1 + t - Math.Pow(Math.E, t)));
-        }
-        #endregion
-
-        #region Gompertz function
-        /// <summary>
-        /// Gets the value of the Gompertz function.
-        /// </summary>
-        /// <param name="t">Argument</param>
-        /// <param name="a">Upper asymptote</param>
-        /// <param name="b">Growth parameter</param>
-        /// <param name="c">Growth rate</param>
-        /// <returns>Value</returns>
-        public static float Gompertz(float t, float a, float b, float c)
-        {
-            float x = -c * t;
-            float y = -b * Maths.E;
-            float z = a * Maths.E;
-            return (float)Math.Pow(z, Math.Pow(y, x));
-        }
-        #endregion
-
-        #region Heavyside delta-function
-        /// <summary>
-        /// Returns the value of the Heaviside delta function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="k">Smoothing factor</param>
-        /// <returns>Value</returns>
-        public static float Heaviside(float x, float k)
-        {
-            return 0.5f + 0.5f * (float)Math.Tanh(k * x);
-        }
-        #endregion
-
-        #region Logistic function
-        /// <summary>
-        /// Returns the value of a logistic function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Lower asymptote</param>
-        /// <param name="k">Upper asymptote</param>
-        /// <param name="b">Growth rate</param>
-        /// <param name="v">Affect</param>
-        /// <param name="q">Central moment</param>
-        /// <param name="c">Offset</param>
-        /// <returns>Value</returns>
-        public static float Logistic(float x, float a, float k, float b, float v, float q, float c)
-        {
-            return a + (k - a) / (float)Math.Pow(c + q * (float)Math.Exp(-b * x), 1.0 / v);
-        }
-        /// <summary>
-        /// Returns the value of a logistic function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Lower asymptote</param>
-        /// <param name="k">Upper asymptote</param>
-        /// <param name="b">Growth rate</param>
-        /// <returns>Value</returns>
-        public static float Logistic(float x, float a, float k, float b)
-        {
-            return Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
-        }
-        /// <summary>
-        /// Returns the value of a logistic function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <returns>Value</returns>
-        public static float Logistic(float x)
-        {
-            return Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
-        }
-        #endregion
-
-        #region Dirac delta-function
-        /// <summary>
-        /// Returns the value of the Dirac delta function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="a">Coefficient</param>
-        /// <returns>Value</returns>
-        public static float Dirac(float x, float a)
-        {
-            float s = (float)Math.Sqrt(Math.PI);
-            float b = 1.0f / Math.Abs(a) / s;
-            float c = (float)Math.Pow(x / a, 2);
-            float e = (float)Math.Exp(-c);
-            return b * e;
-        }
-        #endregion
-
-        #region Dawson functions
-        /// <summary>
-        /// Returns the value of the D- / D + Dawson function.
-        /// </summary>
-        /// <param name="x">Argument</param>
-        /// <param name="positive">D- или D+</param>
-        /// <returns>Value</returns>
-        public static float Dawson(float x, bool positive)
-        {
-            if (positive)
-            {
-                // D+ function:
-                float p = Special.sqrtPI / 2.0f;
-                float v = Maths.Exp(-x * x);
-                float erfi = Special.Erfi(x);
-                return p * v * erfi;
-            }
-            // D- function:
-            float y = x * x;
-            float g = sqrtPI / 2.0f;
-            float e = Special.Erf(x);
-            float d = (float)Math.Exp(y);
-            return g * d * e;
-        }
-        #endregion
-
-        #region Hypergeometric functions
+        #region Hypergeometric function
         /// <summary>
         /// Returns the value of a hypergeometric function.
         /// <remarks>
@@ -2814,10 +1608,6 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Hypergeom(float a, float b, float c, float z)
         {
-            // catch exception:
-            if (float.IsNaN(a) || float.IsNaN(b) || float.IsNaN(c))
-                throw new ArgumentException("For this function, all input parameters must be correctly defined");
-
             // for all z = 0:
             if (z == 0)
                 return 1;
@@ -2834,9 +1624,9 @@ namespace UMapx.Core
             {
                 // Pochhammer symbols:
                 j = i - 1;
-                pa *= (a + j);
-                pb *= (b + j);
-                pc *= (c + j);
+                pa *= a + j;
+                pb *= b + j;
+                pc *= c + j;
 
                 // value:
                 m *= z / i;
@@ -2849,6 +1639,50 @@ namespace UMapx.Core
             }
 
             // result:
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+        /// More information can be found on the website:
+        /// https://en.wikipedia.org/wiki/Hypergeometric_function
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="c">Parameter</param>
+        /// <param name="z">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 c, Complex32 z)
+        {
+            // z = 0 => 1
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
+
+            Complex32 s = Complex32.One;     // partial sum
+            Complex32 m = Complex32.One;     // z^n / n!
+            Complex32 pa = Complex32.One;    // (a)_n
+            Complex32 pb = Complex32.One;    // (b)_n
+            Complex32 pc = Complex32.One;    // (c)_n
+
+            float eps = 1e-32f;
+            int maxIter = 140;
+
+            for (int i = 1; i < maxIter; i++)
+            {
+                float jf = i - 1;
+                var j = new Complex32(jf, 0f);
+
+                pa *= a + j;
+                pb *= b + j;
+                pc *= c + j;
+
+                m *= z / i; // z^i / i!
+                Complex32 t = pa * pb * m / pc;
+
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
             return s;
         }
         /// <summary>
@@ -2896,11 +1730,11 @@ namespace UMapx.Core
                 {
                     // Pochhammer symbols:
                     j = i - 1;
-                    pa *= (a + j);
+                    pa *= a + j;
 
                     // value:
                     m *= z / i;
-                    t = (pa * m);
+                    t = pa * m;
 
                     // stop point:
                     if (Math.Abs(t) < eps)
@@ -2915,7 +1749,7 @@ namespace UMapx.Core
                 {
                     // Pochhammer symbols:
                     j = i - 1;
-                    pb *= (b + j);
+                    pb *= b + j;
 
                     // value:
                     m *= z / i;
@@ -2934,8 +1768,8 @@ namespace UMapx.Core
                 {
                     // Pochhammer symbols:
                     j = i - 1;
-                    pa *= (a + j);
-                    pb *= (b + j);
+                    pa *= a + j;
+                    pb *= b + j;
 
                     // value:
                     m *= z / i;
@@ -2951,6 +1785,1417 @@ namespace UMapx.Core
             // result:
             return s;
         }
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// The hypergeometric function can be used in several variations:
+        /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+        /// Instead of the “~” sign, use the float.NaN value.
+        /// More information can be found on the website:
+        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="z">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 z)
+        {
+            // z = 0 => 1
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
+
+            bool aNaN = Complex32.IsNaN(a);
+            bool bNaN = Complex32.IsNaN(b);
+
+            // 0F0(;;z) = exp(z)
+            if ((aNaN && bNaN) || (a.Real == b.Real && a.Imag == b.Imag))
+                return Maths.Exp(z);
+
+            // 1F0(a;;z) = (1 - z)^(-a)  (analytic continuation, principal log)
+            if (bNaN)
+                return Maths.Exp(-a * Maths.Log(Complex32.One - z));
+
+            // params
+            float eps = 1e-32f;
+            int maxIter = 140;
+            Complex32 s = Complex32.One;
+            Complex32 m = Complex32.One;
+            Complex32 pa = Complex32.One;
+            Complex32 pb = Complex32.One;
+
+            // 0F1(;b;z) = Σ z^n / ((b)_n n!)
+            if (aNaN)
+            {
+                for (int i = 1; i < maxIter; i++)
+                {
+                    float jf = i - 1;
+                    var j = new Complex32(jf, 0f);
+
+                    pb *= b + j;
+                    m *= z / i;
+
+                    Complex32 t = m / pb;
+                    if (Maths.Abs(t) < eps) break;
+                    s += t;
+                }
+            }
+            // 1F1(a;b;z) = Σ (a)_n z^n / ((b)_n n!)
+            else
+            {
+
+                for (int i = 1; i < maxIter; i++)
+                {
+                    float jf = i - 1;
+                    var j = new Complex32(jf, 0f);
+
+                    pa *= a + j;
+                    pb *= b + j;
+                    m *= z / i;
+
+                    Complex32 t = pa * m / pb;
+                    if (Maths.Abs(t) < eps) break;
+                    s += t;
+                }
+            }
+            return s;
+        }
+        #endregion
+
+        #region Bessel functions
+
+        /// <summary>
+        /// Returns the value of a Bessel function of the first kind.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static float J(float x, int a)
+        {
+            // special values at x=0
+            if (x == 0f) return (a == 0) ? 1f : 0f;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            // reduce to nonnegative order
+            int n = a < 0 ? -a : a;
+            float sign = (a < 0 && (n & 1) == 1) ? -1f : 1f;
+
+            // initial term: (x/2)^n / n! via recurrence
+            float halfx = 0.5f * x;
+            float term = 1f;
+            for (int k = 1; k <= n; k++)
+                term *= halfx / k;
+
+            float sum = term;
+
+            // common ratio factor for advancing m: q = -(x^2/4)
+            float q = -0.25f * x * x;
+
+            // iterate m = 0,1,2,...
+            for (int m = 0; m < maxIter; m++)
+            {
+                // term_{m+1} = term_m * q / ((m+1)(m+n+1))
+                float denom = (m + 1f) * (m + n + 1f);
+                term *= q / denom;
+                sum += term;
+
+                if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
+            }
+
+            return sign * sum;
+        }
+        /// <summary>
+        /// Returns the value of a Bessel function of the first kind.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 J(Complex32 x, int a)
+        {
+            // special values at x=0
+            if (x.Real == 0f && x.Imag == 0f)
+                return (a == 0) ? Complex32.One : Complex32.Zero;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            // reduce to nonnegative order
+            int n = a < 0 ? -a : a;
+            float sgn = (a < 0 && (n & 1) == 1) ? -1f : 1f;
+            Complex32 sign = new Complex32(sgn, 0f);
+
+            // initial term: (x/2)^n / n! via recurrence
+            Complex32 halfx = 0.5f * x;
+            Complex32 term = Complex32.One;
+            for (int k = 1; k <= n; k++)
+                term *= halfx / k;
+
+            Complex32 sum = term;
+
+            // common factor q = -(x^2/4)
+            Complex32 q = -0.25f * x * x;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                // term_{m+1} = term_m * q / ((m+1)(m+n+1))
+                float denom = (m + 1f) * (m + n + 1f);
+                term *= q / denom;
+                sum += term;
+
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return sign * sum;
+        }
+
+        /// <summary>
+        /// Returns the value of a Bessel function of the second kind.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static float Y(float x, int a)
+        {
+            if (x <= 0f) return float.NaN;              // Y_n(x) is real-defined only for x>0
+            if (a == 0) return Y0(x);
+            if (a == 1) return Y1(x);
+
+            int n = a < 0 ? -a : a;
+            float sgn = (a < 0 && ((n & 1) == 1)) ? -1f : 1f;
+
+            // upward recurrence from Y0,Y1
+            float Ym1 = Y0(x);            // Y_0
+            float Y0v = Y1(x);            // Y_1
+            float Yk = (n == 1) ? Y0v : 0f;
+
+            for (int k = 1; k < n; k++)
+            {
+                float Y1v = 2f * k / x * Y0v - Ym1;   // Y_{k+1}
+                Ym1 = Y0v;
+                Y0v = Y1v;
+                Yk = Y1v;
+            }
+            return sgn * Yk;
+        }
+        /// <summary>
+        /// Returns the value of a Bessel function of the second kind.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Y(Complex32 x, int a)
+        {
+            if (x.Real == 0f && x.Imag == 0f) return new Complex32(float.NaN, float.NaN); // singular at 0
+
+            if (a == 0) return Y0(x);
+            if (a == 1) return Y1(x);
+
+            int n = a < 0 ? -a : a;
+            float sgnf = (a < 0 && ((n & 1) == 1)) ? -1f : 1f;
+            Complex32 sgn = new Complex32(sgnf, 0f);
+
+            // upward recurrence from Y0,Y1
+            Complex32 Ym1 = Y0(x);        // Y_0
+            Complex32 Y0v = Y1(x);        // Y_1
+            Complex32 Yk = (n == 1) ? Y0v : Complex32.Zero;
+
+            for (int k = 1; k < n; k++)
+            {
+                Complex32 Y1v = 2f * k / x * Y0v - Ym1; // Y_{k+1}
+                Ym1 = Y0v;
+                Y0v = Y1v;
+                Yk = Y1v;
+            }
+            return sgn * Yk;
+        }
+
+        /// <summary>
+        /// Returns the value of the modified Bessel function of the first kind.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static float I(float x, int a)
+        {
+            // Special values at x = 0
+            if (x == 0f) return (a == 0) ? 1f : 0f;
+
+            // Reduce to nonnegative order (I_{-n} = I_n)
+            int n = a < 0 ? -a : a;
+
+            // Initial term: (x/2)^n / n! via recurrence
+            float halfx = 0.5f * x;
+            float term = 1f;
+            for (int k = 1; k <= n; k++)
+                term *= halfx / k;
+
+            float sum = term;
+
+            // Common ratio for m→m+1: q = (x^2/4) / ((m+1)(m+n+1))
+            float qBase = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                float denom = (m + 1f) * (m + n + 1f);
+                term *= qBase / denom;
+                sum += term;
+                if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
+            }
+
+            return sum;
+        }
+        /// <summary>
+        /// Returns the value of the modified Bessel function of the first kind.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 I(Complex32 x, int a)
+        {
+            // Special values at x = 0
+            if (x.Real == 0f && x.Imag == 0f)
+                return (a == 0) ? Complex32.One : Complex32.Zero;
+
+            // Reduce to nonnegative order (I_{-n} = I_n)
+            int n = a < 0 ? -a : a;
+
+            // Initial term: (x/2)^n / n! via recurrence
+            Complex32 halfx = 0.5f * x;
+            Complex32 term = Complex32.One;
+            for (int k = 1; k <= n; k++)
+                term *= halfx / k;
+
+            Complex32 sum = term;
+
+            // Common ratio for m→m+1: q = (x^2/4) / ((m+1)(m+n+1))
+            Complex32 qBase = 0.25f * x * x;
+            float eps = 1e-8f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                float denom = (m + 1f) * (m + n + 1f);
+                term *= qBase / denom;
+                sum += term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return sum;
+        }
+
+        /// <summary>
+        /// Returns the value of the modified Bessel function of the second kind.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static float K(float x, int a)
+        {
+            if (x <= 0f) return float.NaN;          // singular on non-positive real axis
+            int n = a < 0 ? -a : a;                 // K_{-n} = K_n
+
+            if (n == 0) return K0(x);
+            if (n == 1) return K1(x);
+
+            float km1 = K0(x);       // K_0
+            float k0 = K1(x);       // K_1
+            float kn = k0;
+
+            for (int k = 1; k < n; k++)
+            {
+                float k1 = km1 + 2f * k / x * k0; // K_{k+1}
+                km1 = k0;
+                k0 = k1;
+                kn = k1;
+            }
+            return kn;
+        }
+        /// <summary>
+        /// Returns the value of the modified Bessel function of the second kind.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 K(Complex32 x, int a)
+        {
+            if (x.Real == 0f && x.Imag == 0f) return new Complex32(float.NaN, float.NaN); // singular at 0
+            int n = a < 0 ? -a : a;                 // K_{-n} = K_n
+
+            if (n == 0) return K0(x);
+            if (n == 1) return K1(x);
+
+            Complex32 km1 = K0(x);   // K_0
+            Complex32 k0 = K1(x);   // K_1
+            Complex32 kn = k0;
+
+            for (int k = 1; k < n; k++)
+            {
+                Complex32 k1 = km1 + 2f * k / x * k0; // K_{k+1}
+                km1 = k0;
+                k0 = k1;
+                kn = k1;
+            }
+            return kn;
+        }
+
+        #region Private methods (helpers)
+
+        // ===================== Helpers: Y0, Y1 via canonical series =====================
+
+        private static float Y0(float x)
+        {
+            float j0 = J0(x);
+            float logt = (float)Math.Log(x * 0.5f) + Maths.Gamma;   // Euler–Mascheroni in Maths.Gamma
+            float sum = 0f;
+
+            float x2o4 = 0.25f * x * x;
+            float term = -x2o4;           // k=1: (-1)^1 (x/2)^2/(1!)^2
+            float H = 1f;                 // H_1
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                sum += H * term;
+                // next term: multiply by - (x^2/4) / (k+1)^2
+                float ratio = -x2o4 / ((k + 1f) * (k + 1f));
+                term *= ratio;
+                H += 1f / (k + 1f);
+                if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
+            }
+            return 2f / (float)Math.PI * (logt * j0 + sum);
+        }
+
+        private static float Y1(float x)
+        {
+            float j1 = J1(x);
+            float logt = (float)Math.Log(x * 0.5f) + Maths.Gamma;
+
+            float sum = 0f;
+            float x2o4 = 0.25f * x * x;
+
+            // k=1 base term: (-1)^1 (x/2)^3/(1!*2!) = - x^3 / 16
+            float term = -(x * x * x) * (1f / 16f);
+            float H = 1f; // H_1
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                float coeff = H - 1f / (2f * k + 1f);
+                sum += coeff * term;
+
+                // next term: multiply by - (x^2/4) / ((k+1)(k+2))
+                float ratio = -x2o4 / ((k + 1f) * (k + 2f));
+                term *= ratio;
+                H += 1f / (k + 1f);
+                if (Math.Abs(term) < eps * (1f + Math.Abs(sum))) break;
+            }
+
+            return 2f / (float)Math.PI * (logt * j1 - 1f / x + sum);
+        }
+
+        private static Complex32 Y0(Complex32 x)
+        {
+            Complex32 j0 = J0(x);
+            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+
+            Complex32 sum = Complex32.Zero;
+            Complex32 x2o4 = 0.25f * x * x;
+
+            Complex32 term = -x2o4;      // k=1
+            float H = 1f;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                sum += H * term;
+                Complex32 ratio = -x2o4 / ((k + 1f) * (k + 1f));
+                term *= ratio;
+                H += 1f / (k + 1f);
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            return 2f / (float)Math.PI * (logt * j0 + sum);
+        }
+
+        private static Complex32 Y1(Complex32 x)
+        {
+            Complex32 j1 = J1(x);
+            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+
+            Complex32 sum = Complex32.Zero;
+            Complex32 x2o4 = 0.25f * x * x;
+
+            Complex32 term = -(x * x * x) * (1f / 16f); // k=1
+            float H = 1f;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                float coeff = H - 1f / (2f * k + 1f);
+                sum += coeff * term;
+
+                Complex32 ratio = -x2o4 / ((k + 1f) * (k + 2f));
+                term *= ratio;
+                H += 1f / (k + 1f);
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return 2f / (float)Math.PI * (logt * j1 - Complex32.One / x + sum);
+        }
+
+        // ===================== Helpers: J0, J1 (series) =====================
+
+        private static float J0(float x)
+        {
+            float sum = 1f;
+            float term = 1f;
+            float q = -0.25f * x * x;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 1f)); // next (-1)^m (x/2)^{2m}/(m!)^2
+                sum += term;
+                if (Math.Abs(term) < eps * Math.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static float J1(float x)
+        {
+            float sum = 0.5f * x;  // m=0: (x/2)^{1}/(0!*1!)
+            float term = sum;
+            float q = -0.25f * x * x;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 2f)); // next (-1)^m (x/2)^{2m+1}/(m!(m+1)!)
+                sum += term;
+                if (Math.Abs(term) < eps * Math.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static Complex32 J0(Complex32 x)
+        {
+            Complex32 sum = Complex32.One;
+            Complex32 term = Complex32.One;
+            Complex32 q = -0.25f * x * x;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 1f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static Complex32 J1(Complex32 x)
+        {
+            Complex32 sum = 0.5f * x;
+            Complex32 term = sum;
+            Complex32 q = -0.25f * x * x;
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 2f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        // ===================== K0 and K1 via canonical series =====================
+
+        private static float K0(float x)
+        {
+            float i0 = I0(x);
+            float logt = Maths.Log(0.5f * x) + Maths.Gamma;
+
+            float sum = 0f;
+            float x2o4 = 0.25f * x * x;
+            float term = x2o4;     // k=1
+            float H = 1f;       // H_1
+
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                sum += H * term;
+                term *= x2o4 / ((k + 1f) * (k + 1f)); // next term
+                H += 1f / (k + 1f);
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            return -logt * i0 + sum;
+        }
+
+        private static float K1(float x)
+        {
+            float i1 = I1(x);
+            float logt = Maths.Log(0.5f * x) + Maths.Gamma;
+
+            float sum = 0f;
+            float x2o4 = 0.25f * x * x;
+
+            float term = 0.5f * x;   // k=0: (x/2)^1/(0!*1!)
+            float Hk = 0f;         // H_0 = 0
+            float coeff0 = -0.5f;    // -(H_0 + H_1)/2 = -1/2
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            sum += coeff0 * term;
+
+            for (int k = 0; k < maxIter; k++)
+            {
+                term *= x2o4 / ((k + 1f) * (k + 2f));        // next term
+                Hk += 1f / (k + 1f);
+                float Hk1 = Hk + 1f / (k + 2f);
+                float coeff = -0.5f * (Hk + Hk1);
+                sum += coeff * term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return (1f / x) + logt * i1 + sum;
+        }
+
+        private static Complex32 K0(Complex32 x)
+        {
+            Complex32 i0 = I0(x);
+            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+
+            Complex32 sum = Complex32.Zero;
+            Complex32 x2o4 = 0.25f * x * x;
+            Complex32 term = x2o4;      // k=1
+            float H = 1f;        // H_1
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int k = 1; k < maxIter; k++)
+            {
+                sum += H * term;
+                term *= x2o4 / ((k + 1f) * (k + 1f));
+                H += 1f / (k + 1f);
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            return -logt * i0 + sum;
+        }
+
+        private static Complex32 K1(Complex32 x)
+        {
+            Complex32 i1 = I1(x);
+            Complex32 logt = Maths.Log(0.5f * x) + new Complex32(Maths.Gamma, 0f);
+
+            Complex32 sum = Complex32.Zero;
+            Complex32 x2o4 = 0.25f * x * x;
+
+            Complex32 term = 0.5f * x;  // k=0
+            float Hk = 0f;        // H_0 = 0
+            float coeff0 = -0.5f;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            sum += coeff0 * term;
+
+            for (int k = 0; k < maxIter; k++)
+            {
+                term *= x2o4 / ((k + 1f) * (k + 2f));
+                Hk += 1f / (k + 1f);
+                float Hk1 = Hk + 1f / (k + 2f);
+                float coeff = -0.5f * (Hk + Hk1);
+                sum += coeff * term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+
+            return Complex32.One / x + logt * i1 + sum;
+        }
+
+        // ===================== Modified Bessel I0 and I1 via series (used by K0, K1) =====================
+
+        private static float I0(float x)
+        {
+            float sum = 1f, term = 1f, q = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 1f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static float I1(float x)
+        {
+            float sum = 0.5f * x, term = sum, q = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 2f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static Complex32 I0(Complex32 x)
+        {
+            Complex32 sum = Complex32.One, term = Complex32.One, q = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 1f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        private static Complex32 I1(Complex32 x)
+        {
+            Complex32 sum = 0.5f * x, term = sum, q = 0.25f * x * x;
+            float eps = 1e-16f;
+            int maxIter = 512;
+
+            for (int m = 0; m < maxIter; m++)
+            {
+                term *= q / ((m + 1f) * (m + 2f));
+                sum += term;
+                if (Maths.Abs(term) < eps * Maths.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        // ================================================================================
+
+        #endregion
+
+        #endregion
+
+        #region Gamma function
+
+        /// <summary>
+        /// Returns the value of the Euler Gamma function: Г(z).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float Gamma(float x)
+        {
+            if (float.IsNaN(x)) return float.NaN;
+
+            // Poles on the real axis
+            if (x <= 0f && x == Maths.Round(x)) // integer check
+            {
+                int xi = (int)Maths.Round(x);
+                if (xi <= 0) return float.NaN;
+            }
+
+            // Reflection for better accuracy and negative non-integers
+            if (x < 0.5f)
+            {
+                float sinpix = Maths.Sin(Maths.Pi * x);
+                if (sinpix == 0f) return float.NaN; // pole
+                return Maths.Pi / (sinpix * Gamma(1f - x));
+            }
+
+            return (float)GammaLanczos((double)x);
+        }
+        /// <summary>
+        /// Returns the value of the Euler Gamma function: Г(z).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gamma(Complex32 x)
+        {
+            // Detect real negative integer poles exactly
+            if (x.Imag == 0f)
+            {
+                float xr = x.Real;
+                if (xr <= 0f && xr == Maths.Round(xr)) return Complex32.NaN;
+            }
+
+            if (x.Real < 0.5f)
+            {
+                Complex32 sinpiz = Maths.Sin(new Complex32(Maths.Pi, 0f) * x);
+                if (Maths.Abs(sinpiz) == 0f) return Complex32.NaN;
+                return new Complex32(Maths.Pi, 0f) / (sinpiz * Gamma(Complex32.One - x));
+            }
+
+            return GammaLanczos(x);
+        }
+
+        /// <summary>
+        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float LogGamma(float x)
+        {
+            if (float.IsNaN(x)) return float.NaN;
+
+            // Poles on the real axis
+            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
+
+            if (x < 0.5f)
+            {
+                // log|Γ(x)| = log(π) - log|sin(πx)| - log|Γ(1-x)|
+                float sinpix = Maths.Sin(Maths.Pi * x);
+                if (sinpix == 0f) return float.NaN;
+                return Maths.Log(Maths.Pi) - Maths.Log(Maths.Abs(sinpix)) - LogGamma(1f - x);
+            }
+
+            return (float)LogGammaLanczos((double)x);
+        }
+        /// <summary>
+        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 LogGamma(Complex32 z)
+        {
+            // Real negative integers: simple poles
+            if (z.Imag == 0f)
+            {
+                float xr = z.Real;
+                if (xr <= 0f && xr == Maths.Round(xr))
+                    return Complex32.NaN;
+            }
+
+            if (z.Real < 0.5f)
+            {
+                // log Γ(z) = log π − log sin(πz) − log Γ(1−z)  (principal branches)
+                Complex32 sinpiz = Maths.Sin(new Complex32(Maths.Pi, 0f) * z);
+                if (Maths.Abs(sinpiz) == 0f) return Complex32.NaN;
+                return Maths.Log(new Complex32(Maths.Pi, 0f)) - Maths.Log(sinpiz) - LogGamma(Complex32.One - z);
+            }
+
+            return LogGammaLanczos(z);
+        }
+
+        /// <summary>
+        /// Returns the value of the Digamma function: ψ(z).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float DiGamma(float x)
+        {
+            if (float.IsNaN(x)) return float.NaN;
+
+            // Real poles at non-positive integers
+            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
+
+            // Reflection to avoid small/negative arguments
+            if (x < 0.5f)
+            {
+                float pix = Maths.Pi * x;
+                float sin = Maths.Sin(pix);
+                if (sin == 0f) return float.NaN;             // pole
+                                                             // ψ(x) = ψ(1-x) - π cot(πx)
+                return DiGamma(1f - x) - Maths.Pi * (Maths.Cos(pix) / sin);
+            }
+
+            // Shift up to a safe region for the asymptotic
+            float acc = 0f;
+            float z = x;
+            while (z < 8f)
+            {
+                acc -= 1f / z;
+                z += 1f;
+            }
+
+            // Bernoulli asymptotic: ψ(z) ~ ln z - 1/(2z) - 1/(12 z^2) + 1/(120 z^4) - 1/(252 z^6) + 1/(240 z^8) - 1/(132 z^10)
+            float inv = 1f / z;
+            float inv2 = inv * inv;
+            float res = Maths.Log(z) - 0.5f * inv
+                        - (1f / 12f) * inv2
+                        + (1f / 120f) * (inv2 * inv2)
+                        - (1f / 252f) * (inv2 * inv2 * inv2)
+                        + (1f / 240f) * (inv2 * inv2 * inv2 * inv2)
+                        - (1f / 132f) * (inv2 * inv2 * inv2 * inv2 * inv2);
+
+            return res + acc;
+        }
+        /// <summary>
+        /// Returns the value of the Digamma function: ψ(z).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 DiGamma(Complex32 x)
+        {
+            // Real negative integers: poles
+            if (x.Imag == 0f)
+            {
+                float xr = x.Real;
+                if (xr <= 0f && xr == Maths.Round(xr))
+                    return Complex32.NaN;
+            }
+
+            Complex32 z = x;
+
+            // Reflection for better behavior near the poles/left half-plane
+            if (z.Real < 0.5f)
+            {
+                Complex32 piz = new Complex32(Maths.Pi, 0f) * z;
+                Complex32 sin = Maths.Sin(piz);
+                if (Maths.Abs(sin) == 0f) return Complex32.NaN;
+                // ψ(z) = ψ(1 - z) - π cot(π z) = ψ(1 - z) - π * cos(π z)/sin(π z)
+                Complex32 cot = Maths.Cos(piz) / sin;
+                return DiGamma(Complex32.One - z) - new Complex32(Maths.Pi, 0f) * cot;
+            }
+
+            // Shift up to Re(z) ≥ 8
+            Complex32 acc = Complex32.Zero;
+            while (z.Real < 8f)
+            {
+                acc -= Complex32.One / z;
+                z += Complex32.One;
+            }
+
+            // Bernoulli asymptotic in the complex plane
+            Complex32 inv = Complex32.One / z;
+            Complex32 inv2 = inv * inv;
+
+            Complex32 res = Maths.Log(z) - 0.5f * inv
+                            - (1f / 12f) * inv2
+                            + (1f / 120f) * (inv2 * inv2)
+                            - (1f / 252f) * (inv2 * inv2 * inv2)
+                            + (1f / 240f) * (inv2 * inv2 * inv2 * inv2)
+                            - (1f / 132f) * (inv2 * inv2 * inv2 * inv2 * inv2);
+
+            return res + acc;
+        }
+
+        /// <summary>
+        /// Returns the value of the Trigamma function: ψ1(z).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float TriGamma(float x)
+        {
+            if (float.IsNaN(x)) return float.NaN;
+
+            // Real poles at non-positive integers
+            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
+
+            // Reflection for better behavior in left half-plane
+            if (x < 0.5f)
+            {
+                float pix = Maths.Pi * x;
+                float sin = Maths.Sin(pix);
+                if (sin == 0f) return float.NaN;
+                float csc2 = 1f / (sin * sin);
+                return (Maths.Pi * Maths.Pi) * csc2 - TriGamma(1f - x);
+            }
+
+            // Shift up to a safe region for asymptotics
+            float z = x;
+            float acc = 0f;
+            while (z < 8f)
+            {
+                acc += 1f / (z * z);
+                z += 1f;
+            }
+
+            // Bernoulli asymptotic
+            float inv = 1f / z;
+            float inv2 = inv * inv;
+            float inv3 = inv2 * inv;
+            float inv5 = inv3 * inv2;
+            float inv7 = inv5 * inv2;
+            float inv9 = inv7 * inv2;
+            float inv11 = inv9 * inv2;
+
+            float res = inv
+                       + 0.5f * inv2
+                       + (1f / 6f) * inv3
+                       - (1f / 30f) * inv5
+                       + (1f / 42f) * inv7
+                       - (1f / 30f) * inv9
+                       + (5f / 66f) * inv11;
+
+            return res + acc;
+        }
+        /// <summary>
+        /// Returns the value of the Trigamma function: ψ1(z).
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 TriGamma(Complex32 x)
+        {
+            // Detect real negative integer poles exactly
+            if (x.Imag == 0f)
+            {
+                float xr = x.Real;
+                if (xr <= 0f && xr == Maths.Round(xr))
+                    return Complex32.NaN;
+            }
+
+            Complex32 z = x;
+
+            // Reflection
+            if (z.Real < 0.5f)
+            {
+                Complex32 piz = new Complex32(Maths.Pi, 0f) * z;
+                Complex32 sin = Maths.Sin(piz);
+                if (Maths.Abs(sin) == 0f) return Complex32.NaN;
+
+                Complex32 csc2 = Complex32.One / (sin * sin);
+                return new Complex32(Maths.Pi * Maths.Pi, 0f) * csc2 - TriGamma(Complex32.One - z);
+            }
+
+            // Shift up to Re(z) ≥ 8
+            Complex32 acc = Complex32.Zero;
+            while (z.Real < 8f)
+            {
+                acc += Complex32.One / (z * z);
+                z += Complex32.One;
+            }
+
+            // Bernoulli asymptotic
+            Complex32 inv = Complex32.One / z;
+            Complex32 inv2 = inv * inv;
+            Complex32 inv3 = inv2 * inv;
+            Complex32 inv5 = inv3 * inv2;
+            Complex32 inv7 = inv5 * inv2;
+            Complex32 inv9 = inv7 * inv2;
+            Complex32 inv11 = inv9 * inv2;
+
+            Complex32 res = inv
+                           + 0.5f * inv2
+                           + (1f / 6f) * inv3
+                           - (1f / 30f) * inv5
+                           + (1f / 42f) * inv7
+                           - (1f / 30f) * inv9
+                           + (5f / 66f) * inv11;
+
+            return res + acc;
+        }
+
+        /// <summary>
+        /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float GammaQ(float s, float x)
+        {
+            if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
+            if (s <= 0f && s == Maths.Round(s)) return float.NaN;    // poles of Γ(s)
+            if (x < 0f) return float.NaN;
+
+            if (x == 0f) return 1f;          // Q(s,0)=1 (for s>0)
+            if (float.IsPositiveInfinity(x)) return 0f;
+
+            // choose method
+            if (x < s + 1f)
+            {
+                // series for P(s,x), then Q = 1 - P
+                float P = LowerRegGammaSeries(s, x);
+                return 1f - P;
+            }
+            else
+            {
+                // continued fraction for Q(s,x)
+                float logPref = s * Maths.Log(x) - x - Special.LogGamma(s); // log( e^{-x} x^s / Γ(s) )
+                float h = UpperGammaCF(s, x);                 // CF value
+                return Maths.Exp(logPref) * h;
+            }
+        }
+        /// <summary>
+        /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 GammaQ(Complex32 s, Complex32 x)
+        {
+            // Poles at real non-positive integers s
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.One; // Q(s,0)=1 (analytic continuation)
+            if (float.IsNaN(s.Real) || float.IsNaN(s.Imag) ||
+                float.IsNaN(x.Real) || float.IsNaN(x.Imag))
+                return Complex32.NaN;
+
+            // heuristic split like real case
+            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
+            {
+                Complex32 P = LowerRegGammaSeries(s, x);
+                return Complex32.One - P;
+            }
+            else
+            {
+                Complex32 logPref = s * Maths.Log(x) - x - Special.LogGamma(s);
+                Complex32 h = UpperGammaCF(s, x);
+                return Maths.Exp(logPref) * h;
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float GammaP(float s, float x)
+        {
+            if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
+            if (x < 0f) return float.NaN;
+            // Poles of Γ(s) on the real line:
+            if (s <= 0f && s == Maths.Round(s)) return float.NaN;
+
+            if (x == 0f) return 0f;                        // P(s,0) = 0  (s>0)
+            if (float.IsPositiveInfinity(x)) return 1f;    // P(s,∞) = 1
+
+            // Choose method:
+            if (x < s + 1f)
+            {
+                // Direct series for P(s,x)
+                return LowerRegGammaSeries(s, x);
+            }
+            else
+            {
+                // Continued fraction for Q(s,x), then P = 1 - Q
+                float logPref = s * Maths.Log(x) - x - Special.LogGamma(s); // log(e^{-x} x^s / Γ(s))
+                float cf = UpperGammaCF(s, x);                // CF approximates Γ(s,x)/(e^{-x} x^s)
+                float Q = Maths.Exp(logPref) * cf;
+                return 1f - Q;
+            }
+        }
+        /// <summary>
+        /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 GammaP(Complex32 s, Complex32 x)
+        {
+            // Poles of Γ(s) at real non-positive integers:
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero; // P(s,0)=0 (analytic continuation)
+            if ((s.Imag == 0f) && s.Real <= 0f && s.Real == Maths.Round(s.Real))
+                return Complex32.NaN;
+
+            // Heuristic split mirroring the real case
+            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
+            {
+                return LowerRegGammaSeries(s, x);
+            }
+            else
+            {
+                Complex32 logPref = s * Maths.Log(x) - x - Special.LogGamma(s);
+                Complex32 cf = UpperGammaCF(s, x);
+                Complex32 Q = Maths.Exp(logPref) * cf;
+                return Complex32.One - Q;
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of an incomplete Gamma function: γ(s, x).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float GammaIncomplete(float s, float x)
+        {
+            if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
+            if (x < 0f) return float.NaN;
+
+            // Poles of Γ(s) on the real axis (we restrict to s > 0 in this real overload)
+            if (s <= 0f && s == Maths.Round(s)) return float.NaN;
+
+            if (x == 0f) return 0f;                       // γ(s,0) = 0  (s>0)
+            if (float.IsPositiveInfinity(x)) return Special.Gamma(s); // γ(s,∞) = Γ(s)
+
+            if (x < s + 1f)
+            {
+                // Series for γ(s,x) via P(s,x) series, then multiply by Γ(s)
+                float P = LowerRegGammaSeries(s, x);    // P(s,x)
+                return Special.Gamma(s) * P;                          // γ = Γ * P
+            }
+            else
+            {
+                // γ(s,x) = Γ(s) − Γ(s,x),  Γ(s,x) ≈ e^{−x} x^s * CF
+                float logPref = s * Maths.Log(x) - x;                  // log(e^{−x} x^s)
+                float cf = UpperGammaCF(s, x);           // CF ≈ Γ(s,x)/(e^{−x} x^s)
+                float upper = Maths.Exp(logPref) * cf;
+                return Special.Gamma(s) - upper;
+            }
+        }
+        /// <summary>
+        /// Returns the value of an incomplete Gamma function: γ(s, x).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 GammaIncomplete(Complex32 s, Complex32 x)
+        {
+            if ((float.IsNaN(s.Real) || float.IsNaN(s.Imag)) ||
+                (float.IsNaN(x.Real) || float.IsNaN(x.Imag)))
+                return Complex32.NaN;
+
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero; // γ(s,0) = 0
+
+            // Poles of Γ(s) on the principal branch (real negative integers)
+            if (s.Imag == 0f)
+            {
+                float sr = s.Real;
+                if (sr <= 0f && sr == Maths.Round(sr))
+                    return new Complex32(float.NaN, float.NaN);
+            }
+
+            // Heuristic split mirroring the real case
+            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
+            {
+                // γ = Γ * P, with P via series
+                Complex32 P = LowerRegGammaSeries(s, x);
+                return Special.Gamma(s) * P;
+            }
+            else
+            {
+                // γ = Γ − Γ(s,x), with Γ(s,x) ≈ e^{−x} x^s * CF
+                Complex32 logPref = s * Maths.Log(x) - x;         // log(e^{−x} x^s)
+                Complex32 cf = UpperGammaCF(s, x);
+                Complex32 upper = Maths.Exp(logPref) * cf;
+                return Special.Gamma(s) - upper;
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float GammaIncompleteComplemented(float s, float x)
+        {
+            // Γ(s,x) = Γ(s) - γ(s,x)
+            return Special.Gamma(s) - Special.GammaIncomplete(s, x);
+        }
+        /// <summary>
+        /// Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 GammaIncompleteComplemented(Complex32 s, Complex32 x)
+        {
+            return Special.Gamma(s) - Special.GammaIncomplete(s, x);
+        }
+
+        #region Private methods (helpers)
+
+        // ---------------------- helpers ----------------------
+
+        private const float G = 7f;
+        private const float SQRT_TWO_PI = 2.5066282746310005024f; // √(2π)
+
+        // Wikipedia/Numerical Recipes coefficients (cast to float)
+        private static readonly float[] LANCZOS = new float[]
+        {
+            0.99999999999980993f,
+            676.5203681218851f,
+            -1259.1392167224028f,
+            771.32342877765313f,
+            -176.61502916214059f,
+            12.507343278686905f,
+            -0.13857109526572012f,
+            0.0000099843695780195716f,
+            0.00000015056327351493116f
+        };
+
+        /// <summary>
+        /// Lanczos approximation (real) valid for Re(z) > 0.5. Computes principal branch.
+        /// </summary>
+        private static double GammaLanczos(double x)
+        {
+            // Γ(x) ≈ √(2π) * (t)^{x-0.5} * e^{-t} * A(x), where t = x + g - 0.5, A(x)=a0 + Σ a_k/(x-1+k)
+            double z = x - 1.0;
+            double sum = LANCZOS[0];
+            for (int k = 1; k < LANCZOS.Length; k++)
+                sum += LANCZOS[k] / (z + k);
+
+            double t = z + G + 0.5;
+            // Use log form to reduce overflow/underflow
+            double logGamma = Math.Log(SQRT_TWO_PI * sum) + (z + 0.5) * Math.Log(t) - t;
+            return Math.Exp(logGamma);
+        }
+
+        /// <summary>
+        /// Lanczos approximation (complex) valid for Re(z) > 0.5. Computes principal branch.
+        /// </summary>
+        private static Complex32 GammaLanczos(Complex32 x)
+        {
+            Complex32 z = x - Complex32.One;
+            Complex32 sum = new Complex32(LANCZOS[0], 0f);
+            for (int k = 1; k < LANCZOS.Length; k++)
+                sum += LANCZOS[k] / (z + new Complex32(k, 0f));
+
+            Complex32 t = z + new Complex32(G + 0.5f, 0f);
+            Complex32 logPart = Maths.Log(new Complex32(SQRT_TWO_PI, 0f) * sum)
+                              + (z + new Complex32(0.5f, 0f)) * Maths.Log(t)
+                              - t;
+            return Maths.Exp(logPart);
+        }
+
+        /// <summary>
+        /// Lanczos log-gamma for real x with Re(x) ≥ 0.5 (principal branch).
+        /// </summary>
+        private static double LogGammaLanczos(double x)
+        {
+            double z = x - 1.0;
+            double sum = LANCZOS[0];
+            for (int k = 1; k < LANCZOS.Length; k++)
+                sum += LANCZOS[k] / (z + k);
+
+            double t = z + G + 0.5;
+            // log Γ(x) ≈ log(√(2π)*sum) + (z+0.5) log t − t
+            return Math.Log(SQRT_TWO_PI * sum) + (z + 0.5) * Math.Log(t) - t;
+        }
+
+        /// <summary>
+        /// Lanczos log-gamma for complex z with Re(z) ≥ 0.5 (principal branch).
+        /// </summary>
+        private static Complex32 LogGammaLanczos(Complex32 x)
+        {
+            Complex32 z = x - Complex32.One;
+            Complex32 sum = new Complex32(LANCZOS[0], 0f);
+            for (int k = 1; k < LANCZOS.Length; k++)
+                sum += LANCZOS[k] / (z + new Complex32(k, 0f));
+
+            Complex32 t = z + new Complex32(G + 0.5f, 0f);
+            // log Γ(x) ≈ log(√(2π)*sum) + (z+0.5) log t − t
+            return Maths.Log(new Complex32(SQRT_TWO_PI, 0f) * sum)
+                 + (z + new Complex32(0.5f, 0f)) * Maths.Log(t)
+                 - t;
+        }
+
+        // ---------------- helpers: series for P(s,x) ----------------
+        // P(s,x) = e^{-x} x^{s} * Σ_{n>=0} [ x^n / (s(s+1)...(s+n)) ],
+        // with t0 = 1/s and t_{n+1} = t_n * x/(s+n+1).
+        private static float LowerRegGammaSeries(float s, float x)
+        {
+            float term = 1f / s;    // n=0
+            float sum = term;
+            float eps = 1e-16f;
+            int maxIter = 200;
+
+            for (int n = 0; n < maxIter; n++)
+            {
+                term *= x / (s + n + 1f);
+                sum += term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            // e^{-x} x^{s}
+            float pref = Maths.Exp(-x + s * Maths.Log(x));
+            return pref * sum;
+        }
+
+        private static Complex32 LowerRegGammaSeries(Complex32 s, Complex32 x)
+        {
+            Complex32 term = Complex32.One / s; // n=0
+            Complex32 sum = term;
+            float eps = 1e-16f;
+            int maxIter = 200;
+
+            for (int n = 0; n < maxIter; n++)
+            {
+                term *= x / (s + (n + 1f));
+                sum += term;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
+            }
+            Complex32 pref = Maths.Exp(-x + s * Maths.Log(x));
+            return pref * sum;
+        }
+
+        // --------------- helpers: continued fraction for Q(s,x) ---------------
+        // Lentz’s algorithm for the continued fraction representation of Γ(s,x):
+        // Q(s,x) = e^{-x} x^{s} / Γ(s) * h, where
+        //   b0 = x + 1 - s,  h = 1/b0,
+        //   for i=1..: a_i = i*(s - i),  b_i = b_{i-1} + 2,
+        //   update via Lentz with c,d and delta = c*d.
+        private static float UpperGammaCF(float s, float x)
+        {
+            const float tiny = 1e-30f;
+
+            float b = x + 1f - s;
+            float c = 1f / tiny;
+            float d = 1f / b;
+            float h = d;
+
+            float eps = 1e-16f;
+            int maxIter = 200;
+
+            for (int i = 1; i <= maxIter; i++)
+            {
+                float a = i * (s - i);      // a_i
+                                            // d = 1 / (b + a*d),  c = b + a/c
+                d = 1f / (b + a * d);
+                c = b + a / c;
+                float delta = c * d;
+                h *= delta;
+
+                b += 2f;
+                if (Maths.Abs(delta - 1f) < eps) break;
+            }
+            return h;
+        }
+
+        private static Complex32 UpperGammaCF(Complex32 s, Complex32 x)
+        {
+            const float tiny = 1e-30f;
+
+            Complex32 b = x + Complex32.One - s;
+            Complex32 c = new Complex32(1f / tiny, 0f);
+            Complex32 d = Complex32.One / b;
+            Complex32 h = d;
+
+            float eps = 1e-16f;
+            int maxIter = 200;
+
+            for (int i = 1; i <= maxIter; i++)
+            {
+                Complex32 ii = new Complex32(i, 0f);
+                Complex32 a = ii * (s - ii); // a_i
+
+                d = Complex32.One / (b + a * d);
+                c = b + a / c;
+                Complex32 delta = c * d;
+                h *= delta;
+
+                b += 2f; // b increases by 2 each step
+                if (Maths.Abs(delta - Complex32.One) < eps) break;
+            }
+            return h;
+        }
+
+        #endregion
+
         #endregion
 
         #region Generalized error function
@@ -2967,10 +3212,10 @@ namespace UMapx.Core
                 return float.NaN; // singular values
 
             else if (n == 0)
-                return x / (float)Math.E / sqrtPI; // E0(x)
+                return x / Maths.E / SQRT_PI; // E0(x)
 
             else if (n == 1)
-                return (1 - (float)Math.Exp(-x)) / sqrtPI; // E1(x)
+                return (1 - Maths.Exp(-x)) / SQRT_PI; // E1(x)
 
             else if (n == 2)
                 return Erf(x); // E2(x) = erf(x)
@@ -2979,11 +3224,37 @@ namespace UMapx.Core
             if (x > 0)
             {
                 float p = 1.0f / n;
-                float w = 1.0f / sqrtPI;
-                float v = Gamma(p) - GammaIncomplete(p, (float)Math.Pow(x, n), true);
+                float w = 1.0f / SQRT_PI;
+                float v = Gamma(p) - GammaIncompleteComplemented(p, Maths.Pow(x, n));
                 return w * Gamma(n) * v;
             }
             return float.NaN;
+        }
+        /// <summary>
+        /// Returns the value of the generalized error function.
+        /// </summary>
+        /// <param name="x">Argument (0, +inf)</param>
+        /// <param name="n">Order [0, +inf)</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gerf(Complex32 x, int n)
+        {
+            if (n < 0)
+                return Complex32.NaN; // singular by your convention
+
+            // E0, E1, E2
+            if (n == 0)
+                return x / (Maths.E * SQRT_PI);
+            if (n == 1)
+                return (Complex32.One - Maths.Exp(-x)) / SQRT_PI;
+            if (n == 2)
+                return Erf(x); // your complex erf
+
+            // General case: En(x) = Γ(n)/√π * γ(1/n, x^n)
+            Complex32 xn = Maths.Pow(x, n);                       // x^n, integer power
+            Complex32 p = new Complex32(1f / n, 0f);          // 1/n
+            Complex32 lower = GammaIncomplete(p, xn);          // γ(1/n, x^n)
+            Complex32 gammaN = Gamma(new Complex32(n, 0f));    // Γ(n) = (n-1)!
+            return gammaN * lower / SQRT_PI;
         }
         /// <summary>
         /// Returns the value of the generalized error function.
@@ -2994,109 +3265,787 @@ namespace UMapx.Core
         {
             return Gerf(x, 2);
         }
+        /// <summary>
+        /// Returns the value of the generalized error function.
+        /// </summary>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 Gerf(Complex32 x) => Gerf(x, 2);
         #endregion
 
-        #region Rademacher function
+        #region Factorial function
         /// <summary>
-        /// Returns the value of the Radamecher function.
+        /// Returns the natural logarithm of the factorial of a number log(n!).
         /// </summary>
-        /// <param name="t">Argument [0, 1]</param>
-        /// <param name="n">Order</param>
+        /// <param name="n">Value</param>
         /// <returns>Value</returns>
-        public static float Rademacher(float t, int n)
+        public static float LogFactorial(float n)
         {
-            float p = (float)Math.Pow(2, n);
-            float v = p * Maths.Pi * t;
-            return Math.Sign(Math.Sin(v));
+            return Special.LogGamma(n + 1.0f);
+        }
+        /// <summary>
+        /// Returns the natural logarithm of the factorial of a number log(n!).
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 LogFactorial(Complex32 z)
+        {
+            return Special.LogGamma(z + Complex32.One);
+        }
+        /// <summary>
+        /// Returns the factorial of a number.
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <returns>Value</returns>
+        public static float Factorial(float n)
+        {
+            // check it:
+            if (n >= 0 && n == Maths.Round(n))
+            {
+                // get it from memory
+                if (n <= 170)
+                {
+                    return (float)Special.A000142[(int)n];
+                }
+                return float.NaN;
+            }
+            return Special.Gamma(n + 1);
+        }
+        /// <summary>
+        /// Returns the factorial of a number.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Factorial(Complex32 z)
+        {
+            return Special.Gamma(z + Complex32.One);
+        }
+        /// <summary>
+        /// Returns the decreasing factorial of a number.
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <param name="k">Value</param>
+        /// <returns>Value</returns>
+        public static float FactorialDown(float n, float k)
+        {
+            return Special.Factorial(n) / Special.Factorial(n - k);
+        }
+        /// <summary>
+        /// Returns the decreasing factorial of a number.
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <param name="k">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 FactorialDown(Complex32 z, Complex32 k)
+        {
+            return Special.Gamma(z + Complex32.One) / Special.Gamma(z + Complex32.One - k);
+        }
+        /// <summary>
+        /// Returns the increasing factorial of a number (Pohhammer symbol).
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <param name="k">Value</param>
+        /// <returns>Value</returns>
+        public static float FactorialUp(float n, float k)
+        {
+            if (n == 0)
+            {
+                return 1.0f;
+            }
+            return Special.Gamma(n + k) / Special.Gamma(n);
+        }
+        /// <summary>
+        /// Returns the increasing factorial of a number (Pohhammer symbol).
+        /// </summary>
+        /// <param name="z">Value</param>
+        /// <param name="k">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 FactorialUp(Complex32 z, Complex32 k)
+        {
+            return Special.Gamma(z + k) / Special.Gamma(z);
         }
         #endregion
 
-        #region Elrang B and C functions
+        #region Binomial function
         /// <summary>
-        /// Returns the value of the Erlang C-function.
+        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
         /// </summary>
-        /// <param name="y">Firset parameter</param>
-        /// <param name="v">Second parameter</param>
-        /// <param name="t">Time parameter</param>
+        /// <param name="n">Value</param>
+        /// <param name="k">Value</param>
         /// <returns>Value</returns>
-        public static float Erlang(float y, int v, float t)
+        public static float Binomial(float n, float k)
         {
-            float e = Special.Erlang(y, v);
-            float a = v * e;
-            float b = v - y + y * e;
-            float c = (v - y) * t;
-            return a / b * (float)Math.Exp(-c);
+            if (k < 0)
+            {
+                return 0;
+            }
+            return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
         }
         /// <summary>
-        /// Returns the value of the Erlang B-function.
+        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
         /// </summary>
-        /// <param name="y">Firset parameter</param>
-        /// <param name="v">Second parameter</param>
+        /// <param name="n">Value</param>
+        /// <param name="k">Value</param>
         /// <returns>Value</returns>
-        public static float Erlang(float y, int v)
+        public static Complex32 Binomial(Complex32 n, Complex32 k)
         {
+            return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
+        }
+        /// <summary>
+        /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <param name="k">Value</param>
+        /// <returns>Value</returns>
+        public static float LogBinomial(float n, float k)
+        {
+            return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
+        }
+        /// <summary>
+        /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <param name="k">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 LogBinomial(Complex32 n, Complex32 k)
+        {
+            return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
+        }
+        #endregion
+
+        #region Struve function
+        /// <summary>
+        /// Returns the value of the Struve function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static float H(float x, int a)
+        {
+            // Struve function calculation method.
             // special cases:
-            if (v == 0)
-                return 1;
+            if (a < 0)
+                return 0.0f;
+
+            // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
+            float x0 = 3.0f / 2.0f, x1 = x0 + a;
+            float g0 = 1.0f / Special.Gamma(x0);
+            float g1 = 1.0f / Special.Gamma(x1);
+
+            // construction:
+            float b = x / 2.0f;
+            float s = 0, p = 1;
+            float u = (float)Math.Pow(b, a + 1);
+            float t, eps = 1e-16f;
+            int i, iterations = 120;
+
+            // Taylor series:
+            for (i = 0; i < iterations; i++)
+            {
+                // value:
+                t = p * g0 * g1 * u;
+
+                // stop point:
+                if (Math.Abs(t) < eps)
+                {
+                    break;
+                }
+                else
+                {
+                    // summary:
+                    s += t;
+
+                    // for next step:
+                    g0 *= b / (x0 + i);
+                    g1 *= b / (x1 + i);
+                    p = -p;
+                }
+            }
+
+            // result:
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of the Struve function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="a">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 H(Complex32 x, int a)
+        {
+            // special cases / convention
+            if (a < 0) return Complex32.Zero;
+
+            // constants: x0 = 3/2, x1 = 3/2 + a
+            float x0 = 1.5f, x1 = 1.5f + a;
+
+            // g0 = 1/Γ(3/2), g1 = 1/Γ(3/2 + a)
+            Complex32 g0 = new Complex32(1f / Special.Gamma(x0), 0f);
+            Complex32 g1 = new Complex32(1f / Special.Gamma(x1), 0f);
+
+            // b = x/2, u = b^{a+1}
+            Complex32 b = 0.5f * x;
+            Complex32 u = Maths.Pow(b, a + 1);
+
+            Complex32 s = Complex32.Zero;
+            float p = 1f;                  // alternating sign
+            float eps = 1e-16f;
+            int iters = 120;
+
+            for (int i = 0; i < iters; i++)
+            {
+                Complex32 t = p * g0 * g1 * u;
+
+                if (Maths.Abs(t) < eps) break;
+
+                s += t;
+
+                // next step: multiply each 1/Γ by b/(x0+i) and b/(x1+i) ⇒ powers grow by 2 per step
+                g0 *= b / new Complex32(x0 + i, 0f);
+                g1 *= b / new Complex32(x1 + i, 0f);
+                p = -p;
+            }
+
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of the modified Struve function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="v">Value</param>
+        /// <returns>Value</returns>
+        public static float L(float x, int v)
+        {
+            // Modified Struve function calculation method.
+            // special cases:
             if (v < 0)
+                return 0.0f;
+
+            // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
+            float x0 = 3.0f / 2.0f, x1 = x0 + v;
+            float g0 = 1.0f / Special.Gamma(x0);
+            float g1 = 1.0f / Special.Gamma(x1);
+
+            // construction:
+            float b = x / 2.0f;
+            float s = 0;
+            float u = (float)Math.Pow(b, v);
+            float t, eps = 1e-16f;
+            int i, iterations = 120;
+
+            // Taylor series:
+            for (i = 0; i < iterations; i++)
+            {
+                // value:
+                t = g0 * g1 * u;
+
+                // stop point:
+                if (Math.Abs(t) < eps)
+                {
+                    break;
+                }
+                else
+                {
+                    // summary:
+                    s += t;
+
+                    // for next step:
+                    g0 *= b / (x0 + i);
+                    g1 *= b / (x1 + i);
+                }
+            }
+
+            // result:
+            return b * u * s;
+        }
+        /// <summary>
+        /// Returns the value of the modified Struve function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <param name="v">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 L(Complex32 x, int v)
+        {
+            if (v < 0) return Complex32.Zero;
+
+            float x0 = 1.5f, x1 = 1.5f + v;
+
+            Complex32 g0 = new Complex32(1f / Special.Gamma(x0), 0f);
+            Complex32 g1 = new Complex32(1f / Special.Gamma(x1), 0f);
+
+            Complex32 b = 0.5f * x;
+            Complex32 u = Maths.Pow(b, v);    // will multiply by b at the end
+
+            Complex32 s = Complex32.Zero;
+            float eps = 1e-16f;
+            int iters = 120;
+
+            for (int i = 0; i < iters; i++)
+            {
+                Complex32 t = g0 * g1 * u;
+
+                if (Maths.Abs(t) < eps) break;
+
+                s += t;
+
+                g0 *= b / new Complex32(x0 + i, 0f);
+                g1 *= b / new Complex32(x1 + i, 0f);
+            }
+
+            // your real version returns:  b * u * s  ⇒ total power (z/2)^{2k+v+1}
+            return b * u * s;
+        }
+        #endregion
+
+        #region Riemann's Zeta function
+        /// <summary>
+        /// Returns the value of the Riemann zeta ζ(s) on the principal branch (real s).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <returns>Value</returns>
+        public static float Zeta(float s)
+        {
+            if (float.IsNaN(s)) return float.NaN;
+            if (s == 1f) return float.PositiveInfinity;     // simple pole
+
+            // Re(s) > 0: use eta(s)/(1-2^{1-s})
+            if (s > 0f)
+                return ZetaHasse(s);
+
+            // Functional equation for s ≤ 0
+            float twoPowS = Maths.Exp(s * Maths.Log(2f));
+            float piPow = Maths.Exp((s - 1f) * Maths.Log(Maths.Pi));
+            float sinTerm = Maths.Sin(0.5f * Maths.Pi * s);
+            float gamma = Special.Gamma(1f - s);
+
+            float zeta1ms = ZetaHasse(1f - s);          // now 1-s ≥ 1
+            return twoPowS * piPow * sinTerm * gamma * zeta1ms;
+        }
+        /// <summary>
+        /// Returns the value of the Riemann zeta ζ(s) on the principal branch (complex s).
+        /// </summary>
+        /// <param name="s">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Zeta(Complex32 s)
+        {
+            // explicit pole at s = 1 + 0i
+            if (s.Imag == 0f && s.Real == 1f)
+                return new Complex32(float.NaN, float.NaN);
+
+            if (s.Real > 0f && !(s.Imag == 0f && s.Real == 1f))
+                return ZetaHasse(s);
+
+            // Functional equation
+            Complex32 two = new Complex32(2f, 0f);
+            Complex32 pi = new Complex32(Maths.Pi, 0f);
+
+            Complex32 twoPowS = Maths.Exp(s * Maths.Log(two));
+            Complex32 piPow = Maths.Exp((s - Complex32.One) * Maths.Log(pi));
+            Complex32 sinTerm = Maths.Sin(0.5f * pi * s);
+            Complex32 gamma = Special.Gamma(Complex32.One - s);
+
+            Complex32 zeta1ms = ZetaHasse(Complex32.One - s);
+            return twoPowS * piPow * sinTerm * gamma * zeta1ms;
+        }
+
+        #region Private methods (helpers)
+
+        // ---------- helpers (Dirichlet eta series, principal branch) ----------
+
+        [Obsolete]
+        private static float ZetaEta(float s)
+        {
+            // ζ(s) = η(s) / (1 - 2^{1-s}), valid for s>0, s≠1
+            float denom = 1f - Maths.Exp((1f - s) * Maths.Log(2f));
+            // Handle s≈1 numerically? Here API has exact s; s==1 already excluded.
+
+            const float eps = 1e-16f;
+            const int maxIter = 100000;
+
+            double sum = 0.0; // accumulate in double for a bit more headroom
+            for (int n = 1; n <= maxIter; n++)
+            {
+                double term = 1.0 / Math.Pow(n, s);
+                if ((n & 1) == 0) term = -term; // alternating
+                sum += term;
+                if (Math.Abs(term) < eps) break;
+            }
+            return (float)(sum / denom);
+        }
+
+        [Obsolete]
+        private static Complex32 ZetaEta(Complex32 s)
+        {
+            // ζ(s) = η(s) / (1 - 2^{1-s}), valid for Re(s)>0, s≠1
+            Complex32 two = new Complex32(2f, 0f);
+            Complex32 denom = Complex32.One - Maths.Exp((Complex32.One - s) * Maths.Log(two));
+
+            const float eps = 1e-16f;
+            const int maxIter = 10000000;
+
+            Complex32 sum = Complex32.Zero;
+            for (int n = 1; n <= maxIter; n++)
+            {
+                // term = (-1)^{n-1} / n^s  = (-1)^{n-1} * exp( -s * log n )
+                Complex32 term = Maths.Exp(-s * new Complex32(Maths.Log(n), 0f));
+                if ((n & 1) == 0) term = -term;
+                sum += term;
+                if (Maths.Abs(term) < eps) break;
+            }
+            return sum / denom;
+        }
+
+        private static float ZetaHasse(float s)
+        {
+            // ζ(s) = S(s) / (1 - 2^{1-s}), with S(s) the Hasse inner sum
+            float denom = 1f - Maths.Exp((1f - s) * Maths.Log(2f));
+            // handle near-pole numerically? caller excludes s=1 exactly.
+
+            double S = 0.0;
+            float eps = 1e-16f;
+            int maxK = 512;
+
+            for (int k = 0; k < maxK; k++)
+            {
+                // inner sum: A_k(s) = Σ_{q=0..k} (-1)^q C(k,q) (q+1)^{-s}
+                double Ak = 0.0;
+                double C = 1.0; // C(k,0)
+
+                for (int q = 0; q <= k; q++)
+                {
+                    double term = C * Math.Pow(q + 1.0, -s);
+                    if ((q & 1) == 1) term = -term;
+                    Ak += term;
+
+                    // next binomial C(k,q+1)
+                    C *= (double)(k - q) / (q + 1.0);
+                }
+
+                double Tk = Ak / Math.Pow(2.0, k + 1.0);
+                S += Tk;
+
+                if (Math.Abs(Tk) < eps * (1.0 + Math.Abs(S))) break;
+            }
+            return (float)(S / denom);
+        }
+
+        private static Complex32 ZetaHasse(Complex32 s)
+        {
+            Complex32 two = new Complex32(2f, 0f);
+            Complex32 denom = Complex32.One - Maths.Exp((Complex32.One - s) * Maths.Log(two));
+
+            Complex32 S = Complex32.Zero;
+            float eps = 1e-16f;
+            int maxK = 512;
+
+            for (int k = 0; k < maxK; k++)
+            {
+                Complex32 Ak = Complex32.Zero;
+                // binomial C(k,q) iteratively
+                Complex32 C = Complex32.One; // real-positive actually, but keep as complex-friendly
+                for (int q = 0; q <= k; q++)
+                {
+                    // (q+1)^{-s} = exp( -s * log(q+1) )
+                    Complex32 pow = Maths.Exp(-s * new Complex32(Maths.Log(q + 1), 0f));
+                    Complex32 term = C * pow;
+                    if ((q & 1) == 1) term = -term;
+                    Ak += term;
+
+                    // C(k,q+1) = C(k,q) * (k - q)/(q + 1)
+                    float ratio = (q < k) ? (float)(k - q) / (q + 1f) : 0f;
+                    C *= new Complex32(ratio, 0f);
+                }
+
+                Complex32 Tk = Ak / Maths.Exp(new Complex32((k + 1f) * Maths.Log(2f), 0f));
+                S += Tk;
+
+                if (Maths.Abs(Tk) < eps * (1f + Maths.Abs(S))) break;
+            }
+            return S / denom;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Beta function
+        /// <summary>
+        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static float Beta(float a, float b)
+        {
+            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+        }
+        /// <summary>
+        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Beta(Complex32 a, Complex32 b)
+        {
+            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+        }
+        /// <summary>
+        /// Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
+        /// </summary>
+        /// <param name="m">Integer number</param>
+        /// <param name="n">Integer number</param>
+        /// <returns>Value</returns>
+        public static float Beta(int m, int n)
+        {
+            return Special.Factorial(m - 1) * Special.Factorial(n - 1) / Special.Factorial(m + n - 1);
+        }
+        /// <summary>
+        /// Returns the value of a derivative beta function: B'(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static float BetaDerivative(float a, float b)
+        {
+            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
+        }
+        /// <summary>
+        /// Returns the value of a derivative beta function: B'(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 BetaDerivative(Complex32 a, Complex32 b)
+        {
+            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
+        }
+        /// <summary>
+        /// Returns the value of an incomplete beta function: Bx(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static float BetaIncomplete(float a, float b, float x)
+        {
+            if (float.IsNaN(a) || float.IsNaN(b) || float.IsNaN(x)) return float.NaN;
+
+            // Domain commonly assumed for the real-valued branch:
+            if (x <= 0f) return 0f;
+            if (x >= 1f)
+            {
+                // Complete beta B(a,b)
+                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+            }
+
+            // Poles of Beta when a or b is a non-positive integer
+            if ((a <= 0f && a == Maths.Round(a)) || (b <= 0f && b == Maths.Round(b)))
                 return float.NaN;
 
-            // set:
-            float t = 1, b = 1; int i;
-
-            //series:
-            for (i = 1; i < v; i++)
+            // Optional symmetry to improve conditioning near x≈1:
+            // B_x(a,b) = B(a,b) - B_{1-x}(b,a)
+            if (x > 0.5f)
             {
-                t *= y / i;
-                b += t;
+                float B = Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+                return B - BetaIncomplete(b, a, 1f - x);
             }
 
-            // last step and result:
-            float a = t * y / i;
-            return a / (a + b);
+            // Hypergeometric representation
+            float pref = Maths.Exp(a * Maths.Log(x)) / a;          // x^a / a
+            float hyp = Special.Hypergeom(a, 1f - b, a + 1f, x);  // 2F1(a,1-b; a+1; x)
+            return pref * hyp;
+        }
+        /// <summary>
+        /// Returns the value of an incomplete beta function: Bx(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static Complex32 BetaIncomplete(Complex32 a, Complex32 b, Complex32 x)
+        {
+            // B_0(a,b) = 0
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
+
+            // B_1(a,b) = B(a,b) = Γ(a)Γ(b)/Γ(a+b)
+            if (x.Imag == 0f && x.Real == 1f)
+                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+
+            // Principal-branch power and Gauss 2F1
+            Complex32 pref = Maths.Exp(a * Maths.Log(x)) / a;                   // x^a / a
+            Complex32 hyp = Special.Hypergeom(a, Complex32.One - b, a + Complex32.One, x); // 2F1(a,1-b; a+1; x)
+            return pref * hyp;
+        }
+        /// <summary>
+        /// Returns the value of a regularized incomplete beta function: Ix(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="x">Argument</param>
+        /// <returns>Value</returns>
+        public static float BetaIncompleteRegularized(float a, float b, float x)
+        {
+            return Special.BetaIncomplete(a, b, x) / Special.Beta(a, b);
+        }
+
+        #endregion
+
+        #region Fibonacci & Lucas numbers
+        /// <summary>
+        /// Returns the value of the Fibonacci number.
+        /// </summary>
+        /// <param name="n">Integer number</param>
+        /// <returns>Integer number</returns>
+        public static int Fibonacci(int n)
+        {
+            float r = 2.2360679774997896964f;
+            float phi = (1.0f + r) / 2.0f;
+            float psi = (1.0f - r) / 2.0f;
+            float num = (float)Math.Pow(phi, n) - (float)Math.Pow(psi, n);
+            return (int)(num / r);
+        }
+        /// <summary>
+        /// Returns the value of the Luca number.
+        /// </summary>
+        /// <param name="n">Integer number</param>
+        /// <returns>Integer number</returns>
+        public static int Lucas(int n)
+        {
+            float r = 2.2360679774997896964f;
+            float phi = (1.0f + r) / 2.0f;
+            float psi = (1.0f - r) / 2.0f;
+            float num = (float)Math.Pow(phi, n) + (float)Math.Pow(psi, n);
+            return (int)(num);
         }
         #endregion
 
-        #region Lambert W-function
+        #region Harmonic number
         /// <summary>
-        /// Returns the value of the Lambert W-function.
+        /// Returns the harmonic number.
         /// </summary>
-        /// <param name="x">Argument [-1/e,+inf)</param>
-        /// <param name="branch">Function branch</param>
+        /// <param name="n">Argument</param>
         /// <returns>Value</returns>
-        public static float LambertW(float x, bool branch = true)
+        public static float Harm(int n)
         {
-            // *****************************************************************
-            // Halley's method for calculating Lambert W-function.
-            // *****************************************************************
-            // Halley's method is a method for finding a zero of a real-valued 
-            // function with a continuous and easily computed second derivative.
-
-            float eps = 1e-8f, e, f;
-            float w = branch ? 1 : -2;
-            float v = float.PositiveInfinity * w;
-
-            while (Math.Abs(w - v) / Math.Abs(w) > eps)
-            {
-                v = w;
-                e = (float)Math.Exp(w);
-                f = w * e - x;  // Iterate to make this quantity zero
-                w = w - f / (e * (w + 1) - (w + 2) * f / (2 * w + 2));
-            }
-            return w;
+            return Special.DiGamma(n) + 1.0f / n + Maths.Gamma;
         }
         /// <summary>
-        /// Returns the value of the square super-root.
+        /// Returns the harmonic number.
         /// </summary>
-        /// <param name="x">Argument [1,+inf)</param>
-        /// <param name="branch">Function branch</param>
+        /// <param name="n">Order</param>
+        /// <param name="m">Argument</param>
         /// <returns>Value</returns>
-        public static float Ssqrt(float x, bool branch = true)
+        public static float Harm(int n, float m)
         {
-            // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
-            // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
-            float log = (float)Math.Log(x);
-            return log / LambertW(log, branch);
+            float sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum += (float)Math.Pow(i + 1, -m);
+            }
+
+            return sum;
+        }
+        #endregion
+
+        #region Euler function
+        /// <summary>
+        /// Returns the Euler number.
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <returns>Value</returns>
+        public static float Euler(int n)
+        {
+            // special cases:
+            if (n < 0)
+                return float.NaN;
+            else if (n == 0)
+                return 1;
+
+            // for even number:
+            else if (Maths.Mod(n, 2) == 0)
+            {
+                // get it from memory
+                if (n <= 186)
+                {
+                    return (float)Special.A122045[n / 2 - 1];
+                }
+                return float.NaN;
+            }
+            // for odd number:
+            return 0;
+        }
+        /// <summary>
+        /// Returns the value of the Euler polynomial.
+        /// </summary>
+        /// <param name="n">Order</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float Euler(int n, float x)
+        {
+            // properties:
+            float p = 1, s = 0;
+            float v = x - 0.5f;
+            float u = (float)Math.Pow(v, n);
+
+            // series:
+            for (int k = 0; k <= n; k++)
+            {
+                s += Special.Binomial(n, k) * Special.Euler(k) / p * u; p *= 2; u /= v;
+            }
+
+            // result:
+            return s;
+        }
+        #endregion
+
+        #region Bernoulli function
+        /// <summary>
+        /// Returns the Bernoulli number.
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <returns>Value</returns>
+        public static float Bernoulli(int n)
+        {
+            // special cases:
+            if (n < 0)
+                return float.NaN;
+            else if (n == 0)
+                return 1;
+            else if (n == 1)
+                return -0.5f;
+
+            // for even number:
+            else if (Maths.Mod(n, 2) == 0)
+            {
+                // get it from memory
+                if (n <= 258)
+                {
+                    return (float)Special.A027641[n / 2 - 1];
+                }
+                return float.NaN;
+            }
+            // for odd number:
+            return 0;
+        }
+        /// <summary>
+        /// Returns the value of the Bernoulli polynomial.
+        /// </summary>
+        /// <param name="n">Order</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float Bernoulli(int n, float x)
+        {
+            // properties:
+            float p = 1, s = 0;
+
+            // series:
+            for (int k = 0; k <= n; k++)
+            {
+                s += Special.Binomial(n, k) * Special.Bernoulli(n - k) * p; p *= x;
+            }
+
+            // result:
+            return s;
         }
         #endregion
 
@@ -3106,10 +4055,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Argument</param>
         /// <returns>Value</returns>
-        public static float Minkowski(float x)
+        public static float Minkowski(long x)
         {
             // Minkowski function:
-            long p = (long)x, q = 1, r = p + 1, s = 1, m, n;
+            long p = x, q = 1, r = p + 1, s = 1, m, n;
             float d = 1, y = p;
 
             if (x < p || (p < 0) ^ (r <= 0))

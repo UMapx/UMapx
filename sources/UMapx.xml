@@ -3506,26 +3506,6 @@
             Gets the value of the phase.
             </summary>
         </member>
-        <member name="P:UMapx.Core.Complex32.I">
-            <summary>
-            Returns the imaginary one.
-            </summary>
-        </member>
-        <member name="P:UMapx.Core.Complex32.One">
-            <summary>
-            Returns the real one.
-            </summary>
-        </member>
-        <member name="P:UMapx.Core.Complex32.Zero">
-            <summary>
-            Returns the complex zero.
-            </summary>
-        </member>
-        <member name="P:UMapx.Core.Complex32.Conjugate">
-            <summary>
-            Returns the complex conjugate number.
-            </summary>
-        </member>
         <member name="M:UMapx.Core.Complex32.GetHashCode">
             <summary>
             Returns the hash code for this object.
@@ -3581,14 +3561,14 @@
             The sum of a complex number and a real number.
             </summary>
             <param name="a">Complex number</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Complex number</returns>
         </member>
         <member name="M:UMapx.Core.Complex32.op_Addition(System.Single,UMapx.Core.Complex32)">
             <summary>
             The sum of a complex number and a real number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="b">Complex number</param>
             <returns>Complex number</returns>
         </member>
@@ -3605,14 +3585,14 @@
             The difference between a complex number and a real number.
             </summary>
             <param name="a">Complex number</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Complex number</returns>
         </member>
         <member name="M:UMapx.Core.Complex32.op_Subtraction(System.Single,UMapx.Core.Complex32)">
             <summary>
             The difference between a complex number and a real number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="b">Complex number</param>
             <returns>Complex number</returns>
         </member>
@@ -3636,14 +3616,14 @@
             Multiplies real number by complex number.
             </summary>
             <param name="a">Complex number</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Complex number</returns>
         </member>
         <member name="M:UMapx.Core.Complex32.op_Multiply(UMapx.Core.Complex32,System.Single)">
             <summary>
             Multiplies complex number by real number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="b">Complex number</param>
             <returns>Complex number</returns>
         </member>
@@ -3660,14 +3640,14 @@
             Divides complex number by real number.
             </summary>
             <param name="a">Complex number</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Complex number</returns>
         </member>
         <member name="M:UMapx.Core.Complex32.op_Division(System.Single,UMapx.Core.Complex32)">
             <summary>
             Divides real number by complex number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="b">Complex number</param>
             <returns>Complex number</returns>
         </member>
@@ -3791,6 +3771,45 @@
             </summary>
             <param name="magnitude">Magnitude (radius)</param>
             <param name="phase">Phase (angle in radians)</param>
+        </member>
+        <member name="M:UMapx.Core.Complex32.IsNaN(UMapx.Core.Complex32)">
+            <summary>
+            Returns a value that indicates whether the specified value is not a number.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:UMapx.Core.Complex32.IsInfinity(UMapx.Core.Complex32)">
+            <summary>
+            Returns a value indicating whether the specified number evaluates to negative or positive infinity.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="P:UMapx.Core.Complex32.I">
+            <summary>
+            Returns the imaginary one.
+            </summary>
+        </member>
+        <member name="P:UMapx.Core.Complex32.One">
+            <summary>
+            Returns the real one.
+            </summary>
+        </member>
+        <member name="P:UMapx.Core.Complex32.Zero">
+            <summary>
+            Returns the complex zero.
+            </summary>
+        </member>
+        <member name="P:UMapx.Core.Complex32.Conjugate">
+            <summary>
+            Returns the complex conjugate number.
+            </summary>
+        </member>
+        <member name="P:UMapx.Core.Complex32.NaN">
+            <summary>
+            Returns the not number.
+            </summary>
         </member>
         <member name="T:UMapx.Core.Debugger">
             <summary>
@@ -5576,7 +5595,7 @@
             <summary>
             Checks a number for an exception.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.Maths.IsSingular(UMapx.Core.Complex32)">
@@ -5597,43 +5616,43 @@
             <summary>
             Checks whether a number is a power of another number.
             </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.Maths.IsInteger(System.Single)">
             <summary>
             Checks whether a number is an integer.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.Maths.IsEven(System.Single)">
             <summary>
             Checks whether a number is even.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.Maths.IsNotEven(System.Single)">
             <summary>
             Checks whether a number is odd.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Pow(System.Single)">
             <summary>
             Returns the number raised to the second power.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Pow(System.Single,System.Single)">
             <summary>
             Returns the number raised to the power.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="b">Power</param>
             <returns>Value</returns>
         </member>
@@ -5648,28 +5667,28 @@
             <summary>
             Returns the natural logarithm of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Log10(System.Single)">
             <summary>
             Returns the decimal logarithm of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Log2(System.Single)">
             <summary>
             Returns the binary logarithm of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Log(System.Single,System.Single)">
             <summary>
             Returns the logarithm of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="b">Base</param>
             <returns>Value</returns>
         </member>
@@ -5677,14 +5696,14 @@
             <summary>
             Returns the square root of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sqrt(System.Single,System.Single)">
             <summary>
             Returns the root of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="b">Power</param>
             <returns>Value</returns>
         </member>
@@ -5692,7 +5711,7 @@
             <summary>
             Returns the modulus of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Max(System.Single,System.Single)">
@@ -5733,35 +5752,35 @@
             <summary>
             Returns the sign of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Floor(System.Single)">
             <summary>
             Returns the rounded number down.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Ceil(System.Single)">
             <summary>
             Returns the rounded number up.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Round(System.Single)">
             <summary>
             Returns the rounded number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Round(System.Single,System.Int32)">
             <summary>
             Returns the rounded number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="dig">Digits</param>
             <returns>Value</returns>
         </member>
@@ -5831,6 +5850,14 @@
             <param name="b">Power</param>
             <returns>Complex number</returns>
         </member>
+        <member name="M:UMapx.Core.Maths.Pow(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the number raised to the power.
+            </summary>
+            <param name="a">Complex number</param>
+            <param name="b">Power</param>
+            <returns>Complex number</returns>
+        </member>
         <member name="M:UMapx.Core.Maths.Sqrt(UMapx.Core.Complex32)">
             <summary>
             Returns the square root of a number.
@@ -5839,6 +5866,14 @@
             <returns>Complex number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sqrt(UMapx.Core.Complex32,System.Single)">
+            <summary>
+            Returns the root of a number.
+            </summary>
+            <param name="a">Complex number</param>
+            <param name="b">Power</param>
+            <returns>Complex number</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.Sqrt(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Returns the root of a number.
             </summary>
@@ -5883,14 +5918,14 @@
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Tg(System.Single)">
+        <member name="M:UMapx.Core.Maths.Tan(System.Single)">
             <summary>
             Returns the tangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ctg(System.Single)">
+        <member name="M:UMapx.Core.Maths.Ctan(System.Single)">
             <summary>
             Returns the cotangent of an angle.
             </summary>
@@ -5915,42 +5950,42 @@
             <summary>
             Returns the arcsine of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Acos(System.Single)">
             <summary>
             Returns the arccosine of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Atg(System.Single)">
+        <member name="M:UMapx.Core.Maths.Atan(System.Single)">
             <summary>
             Returns the arctangent of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Actg(System.Single)">
+        <member name="M:UMapx.Core.Maths.Actan(System.Single)">
             <summary>
             Returns the arccotangent of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Asec(System.Single)">
             <summary>
             Returns the arcsecance of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Acosc(System.Single)">
             <summary>
             Returns the arccosecant of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Cos(UMapx.Core.Complex32)">
@@ -5967,14 +6002,14 @@
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Tg(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Tan(UMapx.Core.Complex32)">
             <summary>
             Returns the tangent of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ctg(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Ctan(UMapx.Core.Complex32)">
             <summary>
             Returns the cotangent of an angle.
             </summary>
@@ -6009,14 +6044,14 @@
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Atg(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Atan(UMapx.Core.Complex32)">
             <summary>
             Returns the arctangent of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Actg(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Actan(UMapx.Core.Complex32)">
             <summary>
             Returns the arccotangent of a number.
             </summary>
@@ -6037,168 +6072,168 @@
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Sh(System.Single)">
+        <member name="M:UMapx.Core.Maths.Sinh(System.Single)">
             <summary>
             Returns the hyperbolic sine of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Cosh(System.Single)">
             <summary>
             Returns the hyperbolic cosine of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Th(System.Single)">
+        <member name="M:UMapx.Core.Maths.Tanh(System.Single)">
             <summary>
             Returns the hyperbolic tangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Cth(System.Single)">
+        <member name="M:UMapx.Core.Maths.Ctanh(System.Single)">
             <summary>
             Returns the hyperbolic cotangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Sch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Sech(System.Single)">
             <summary>
             Returns the hyperbolic secant of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Csch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Cosch(System.Single)">
             <summary>
             Returns the hyperbolic cosecant of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ash(System.Single)">
+        <member name="M:UMapx.Core.Maths.Asinh(System.Single)">
             <summary>
             Returns the hyperbolic arcsine of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ach(System.Single)">
+        <member name="M:UMapx.Core.Maths.Acosh(System.Single)">
             <summary>
             Returns the hyperbolic arccosine of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ath(System.Single)">
+        <member name="M:UMapx.Core.Maths.Atanh(System.Single)">
             <summary>
             Returns the hyperbolic arctangent of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Acth(System.Single)">
+        <member name="M:UMapx.Core.Maths.Actanh(System.Single)">
             <summary>
             Returns the hyperbolic arccotangent of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Asch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Asech(System.Single)">
             <summary>
             Returns the hyperbolic arcsecance of a number.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Acsch(System.Single)">
+        <member name="M:UMapx.Core.Maths.Acosch(System.Single)">
             <summary>
             Returns the hyperbolic arccosecant of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Sh(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Sinh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic sine of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Cosh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic cosine of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Th(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Tanh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic tangent of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Cth(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Ctanh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic cotangent of an angle.
             </summary>
             <param name="a">Angle in radians</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Sch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Sech(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic secant of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Csch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Cosch(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic cosecant of an angle.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ash(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Asinh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arcsine of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ach(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Acosh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arccosine of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Ath(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Atanh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arctangent of a number.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Acth(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Actanh(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arccotangent of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Asch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Asech(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arcsecance of a number.
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.Acsch(UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Maths.Acosch(UMapx.Core.Complex32)">
             <summary>
             Returns the hyperbolic arccosecant of a number.
             </summary>
@@ -6212,7 +6247,7 @@
             This method is based on enumerating all the divisors.
             </remarks>
             </summary>
-            <param name="p">Number</param>
+            <param name="p">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.Maths.IsPrime(System.Int64)">
@@ -6222,7 +6257,7 @@
             This method is based on enumerating all the divisors.
             </remarks>
             </summary>
-            <param name="p">Number</param>
+            <param name="p">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Coprime(System.Int32,System.Int32)">
@@ -6245,7 +6280,7 @@
             <summary>
             Returns the remainder of dividing one number by another.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="n">Modulo</param>
             <returns>Integer number</returns>
         </member>
@@ -6253,7 +6288,7 @@
             <summary>
             Returns the remainder of dividing one number by another.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="n">Modulo</param>
             <returns>Integer number</returns>
         </member>
@@ -6261,7 +6296,7 @@
             <summary>
             Returns the remainder of dividing one number by another.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="n">Modulo</param>
             <returns>Integer number</returns>
         </member>
@@ -6269,7 +6304,7 @@
             <summary>
             Returns the result of raising the number "a" to the power of "x" modulo p.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="x">Power</param>
             <param name="p">Modulo</param>
             <param name="modified">Use modified algorithm or not</param>
@@ -6279,7 +6314,7 @@
             <summary>
             Returns the result of raising the number "a" to the power of "x" modulo p.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="x">Power</param>
             <param name="p">Modulo</param>
             <param name="modified">Use modified algorithm or not</param>
@@ -6307,7 +6342,7 @@
             <summary>
             Returns the inverse number modulo.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="n">Modulo</param>
             <returns>Integer number</returns>
         </member>
@@ -6315,7 +6350,7 @@
             <summary>
             Returns the inverse number modulo.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="n">Modulo</param>
             <returns>Integer number</returns>
         </member>
@@ -6323,7 +6358,7 @@
             <summary>
             Implements a generalized Euclidean algorithm.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="n">Modulo</param>
             <returns>Array</returns>
         </member>
@@ -6331,7 +6366,7 @@
             <summary>
             Implements a generalized Euclidean algorithm.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="n">Modulo</param>
             <returns>Array</returns>
         </member>
@@ -6401,14 +6436,14 @@
             <summary>
             Returns the value of the Euler function.
             </summary>
-            <param name="n">Number</param>
+            <param name="n">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Etf(System.Int64)">
             <summary>
             Returns the value of the Euler function.
             </summary>
-            <param name="n">Number</param>
+            <param name="n">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sieve(System.Int32)">
@@ -6419,28 +6454,28 @@
             The operational complexity of the O(N* logN) algorithm.The memory complexity is O(Δ), where Δ = sqrt(N).
             </remarks>
             </summary>
-            <param name="limit">Number</param>
+            <param name="limit">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Maths.BuildBasePrimes(System.Int32)">
             <summary>
             Odd-only sieve up to n (inclusive). Returns base primes incl. 2.
             </summary>
-            <param name="n">Number</param>
+            <param name="n">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Radical(System.Int32)">
             <summary>
             Returns the radical of an integer.
             </summary>
-            <param name="n">Number</param>
+            <param name="n">Value</param>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Radical(System.Int64)">
             <summary>
             Returns the radical of an integer.
             </summary>
-            <param name="n">Number</param>
+            <param name="n">Value</param>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Decimal2Base(System.Int64,System.Int32)">
@@ -6482,7 +6517,7 @@
             Example: 1010[10] = {1,0,1,0}[2]
             </remarks>
             </summary>
-            <param name="x">Number</param>
+            <param name="x">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Maths.NumLength(System.Int64,System.Int32)">
@@ -6542,16 +6577,16 @@
             <summary>
             Implements the construction of the Givens rotation matrix for a pair of real numbers.
             </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Rotation(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Implements the construction of the Givens rotation matrix for a pair of real numbers.
             </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Sign(System.Single,System.Single)">
@@ -6928,7 +6963,7 @@
             Returns the sum of a matrix and a number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32)">
@@ -6936,7 +6971,7 @@
             Returns the sum of a matrix and a number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex32[0:,0:],System.Single)">
@@ -6944,7 +6979,7 @@
             Returns the sum of a matrix and a number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(System.Single[0:,0:],UMapx.Core.Complex32)">
@@ -6952,7 +6987,7 @@
             Returns the sum of a matrix and a number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(System.Single,System.Single[0:,0:])">
@@ -6960,7 +6995,7 @@
             Returns the sum of a number and a matrix.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex32,UMapx.Core.Complex32[0:,0:])">
@@ -6968,7 +7003,7 @@
             Returns the sum of a number and a matrix.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex32,System.Single[0:,0:])">
@@ -6976,7 +7011,7 @@
             Returns the sum of a number and a matrix.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(System.Single,UMapx.Core.Complex32[0:,0:])">
@@ -6984,7 +7019,7 @@
             Returns the sum of a number and a matrix.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(System.Single[0:,0:],System.Single[0:,0:])">
@@ -7024,7 +7059,7 @@
             Subtracts a number from the matrix.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32)">
@@ -7032,7 +7067,7 @@
             Subtracts a number from the matrix.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex32[0:,0:],System.Single)">
@@ -7040,7 +7075,7 @@
             Subtracts a number from the matrix.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(System.Single[0:,0:],UMapx.Core.Complex32)">
@@ -7048,7 +7083,7 @@
             Subtracts a number from the matrix.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(System.Single,System.Single[0:,0:])">
@@ -7056,7 +7091,7 @@
             Subtracts a matrix from a number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex32,UMapx.Core.Complex32[0:,0:])">
@@ -7064,7 +7099,7 @@
             Subtracts a matrix from a number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex32,System.Single[0:,0:])">
@@ -7072,7 +7107,7 @@
             Subtracts a matrix from a number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(System.Single,UMapx.Core.Complex32[0:,0:])">
@@ -7080,7 +7115,7 @@
             Subtracts a matrix from a number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Single[0:,0:],System.Single[])">
@@ -7152,7 +7187,7 @@
             Multiplies all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32)">
@@ -7160,7 +7195,7 @@
             Multiplies all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32[0:,0:],System.Single)">
@@ -7168,7 +7203,7 @@
             Multiplies all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Single[0:,0:],UMapx.Core.Complex32)">
@@ -7176,7 +7211,7 @@
             Multiplies all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Single,System.Single[0:,0:])">
@@ -7184,7 +7219,7 @@
             Multiplies all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32,UMapx.Core.Complex32[0:,0:])">
@@ -7192,7 +7227,7 @@
             Multiplies all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32,System.Single[0:,0:])">
@@ -7200,7 +7235,7 @@
             Multiplies all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Single,UMapx.Core.Complex32[0:,0:])">
@@ -7208,7 +7243,7 @@
             Multiplies all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Single[0:,0:],System.Single[0:,0:])">
@@ -7248,7 +7283,7 @@
             Divides all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32)">
@@ -7256,7 +7291,7 @@
             Divides all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex32[0:,0:],System.Single)">
@@ -7264,7 +7299,7 @@
             Divides all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Single[0:,0:],UMapx.Core.Complex32)">
@@ -7272,7 +7307,7 @@
             Divides all matrix elements by number.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Single,System.Single[0:,0:])">
@@ -7280,7 +7315,7 @@
             Divides number into matrix elements.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex32,UMapx.Core.Complex32[0:,0:])">
@@ -7288,7 +7323,7 @@
             Divides number into matrix elements.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex32,System.Single[0:,0:])">
@@ -7296,7 +7331,7 @@
             Divides number into matrix elements.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Single,UMapx.Core.Complex32[0:,0:])">
@@ -7304,7 +7339,7 @@
             Divides number into matrix elements.
             </summary>
             <param name="m">Matrix</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Pow(UMapx.Core.Complex32[0:,0:],System.Single)">
@@ -7312,7 +7347,7 @@
             Raises all matrix elements to a power.
             </summary>
             <param name="m">Matrix</param>
-            <param name="pow">Number</param>
+            <param name="pow">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Pow(System.Single[0:,0:],UMapx.Core.Complex32)">
@@ -7320,7 +7355,7 @@
             Raises all matrix elements to a power.
             </summary>
             <param name="m">Matrix</param>
-            <param name="pow">Number</param>
+            <param name="pow">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Pow(System.Single[0:,0:],System.Single)">
@@ -7328,14 +7363,14 @@
             Raises all matrix elements to a power.
             </summary>
             <param name="m">Matrix</param>
-            <param name="pow">Number</param>
+            <param name="pow">Value</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Pow(System.Single,System.Single[0:,0:])">
             <summary>
             Raises the number to the power of the matrix.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="m">Matrix</param>
             <returns>Matrix</returns>
         </member>
@@ -7343,7 +7378,7 @@
             <summary>
             Raises the number to the power of the matrix.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="m">Matrix</param>
             <returns>Matrix</returns>
         </member>
@@ -7351,7 +7386,7 @@
             <summary>
             Raises the number to the power of the matrix.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="m">Matrix</param>
             <returns>Matrix</returns>
         </member>
@@ -8101,7 +8136,7 @@
             Returns the sum of a vector and a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex32[],UMapx.Core.Complex32)">
@@ -8109,7 +8144,7 @@
             Returns the sum of a vector and a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex32[],System.Single)">
@@ -8117,7 +8152,7 @@
             Returns the sum of a vector and a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(System.Single[],UMapx.Core.Complex32)">
@@ -8125,7 +8160,7 @@
             Returns the sum of a vector and a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(System.Single,System.Single[])">
@@ -8133,7 +8168,7 @@
             Returns the sum of a vector and a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex32,UMapx.Core.Complex32[])">
@@ -8141,7 +8176,7 @@
             Returns the sum of a vector and a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(System.Single,UMapx.Core.Complex32[])">
@@ -8149,7 +8184,7 @@
             Returns the sum of a vector and a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Add(UMapx.Core.Complex32,System.Single[])">
@@ -8157,7 +8192,7 @@
             Returns the sum of a vector and a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
@@ -8197,7 +8232,7 @@
             Subtracts a number from a vector.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex32[],UMapx.Core.Complex32)">
@@ -8205,7 +8240,7 @@
             Subtracts a number from a vector.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex32[],System.Single)">
@@ -8213,7 +8248,7 @@
             Subtracts a number from a vector.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(System.Single[],UMapx.Core.Complex32)">
@@ -8221,7 +8256,7 @@
             Subtracts a number from a vector.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(System.Single,System.Single[])">
@@ -8229,7 +8264,7 @@
             Subtracts a vector from a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex32,UMapx.Core.Complex32[])">
@@ -8237,7 +8272,7 @@
             Subtracts a vector from a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(UMapx.Core.Complex32,System.Single[])">
@@ -8245,7 +8280,7 @@
             Subtracts a vector from a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Sub(System.Single,UMapx.Core.Complex32[])">
@@ -8253,7 +8288,7 @@
             Subtracts a vector from a number.
             </summary>
             <param name="a">Array</param>
-            <param name="b">Number</param>
+            <param name="b">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Single[],System.Single[])">
@@ -8293,7 +8328,7 @@
             Implements the multiplication of the vector by number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Single[],UMapx.Core.Complex32)">
@@ -8301,7 +8336,7 @@
             Implements the multiplication of the vector by number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32[],System.Single)">
@@ -8309,7 +8344,7 @@
             Implements the multiplication of the vector by number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32[],UMapx.Core.Complex32)">
@@ -8317,7 +8352,7 @@
             Implements the multiplication of the vector by number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Single,System.Single[])">
@@ -8325,7 +8360,7 @@
             Implements the multiplication of the vector by number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32,UMapx.Core.Complex32[])">
@@ -8333,7 +8368,7 @@
             Implements the multiplication of the vector by number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(UMapx.Core.Complex32,System.Single[])">
@@ -8341,7 +8376,7 @@
             Implements the multiplication of the vector by number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Mul(System.Single,UMapx.Core.Complex32[])">
@@ -8349,7 +8384,7 @@
             Implements the multiplication of the vector by number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Single[],System.Single[])">
@@ -8389,7 +8424,7 @@
             Divides a vector by a number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Single[],UMapx.Core.Complex32)">
@@ -8397,7 +8432,7 @@
             Divides a vector by a number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex32[],System.Single)">
@@ -8405,7 +8440,7 @@
             Divides a vector by a number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex32[],UMapx.Core.Complex32)">
@@ -8413,7 +8448,7 @@
             Divides a vector by a number.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Single,System.Single[])">
@@ -8421,7 +8456,7 @@
             Divides a number by a vector.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex32,UMapx.Core.Complex32[])">
@@ -8429,7 +8464,7 @@
             Divides a number by a vector.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(System.Single,UMapx.Core.Complex32[])">
@@ -8437,7 +8472,7 @@
             Divides a number by a vector.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Div(UMapx.Core.Complex32,System.Single[])">
@@ -8445,7 +8480,7 @@
             Divides a number by a vector.
             </summary>
             <param name="v">Array</param>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Pow(System.Single[],System.Single)">
@@ -8476,7 +8511,7 @@
             <summary>
             Raises the number to the power of the vector.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="v">Array</param>
             <returns>Array</returns>
         </member>
@@ -8484,7 +8519,7 @@
             <summary>
             Raises the number to the power of the vector.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="v">Array</param>
             <returns>Array</returns>
         </member>
@@ -8492,7 +8527,7 @@
             <summary>
             Raises the number to the power of the vector.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="v">Array</param>
             <returns>Array</returns>
         </member>
@@ -11080,7 +11115,7 @@
             <summary>
             Checks if the value is in the specified interval.
             </summary>
-            <param name="x">Number</param>
+            <param name="x">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.RangeFloat.GetHashCode">
@@ -11156,7 +11191,7 @@
             <summary>
             Checks if the value is in the specified interval.
             </summary>
-            <param name="x">Number</param>
+            <param name="x">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.RangeInt.GetHashCode">
@@ -11378,6 +11413,16 @@
             </remarks>
             </summary>
         </member>
+        <member name="F:UMapx.Core.Special.INV_2PI">
+            <summary>
+            1 / ( 2 * PI ).
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Special.SQRT_PI">
+            <summary>
+            Sqrt( PI ).
+            </summary>
+        </member>
         <member name="F:UMapx.Core.Special.LogMax">
             <summary>
             Log max.
@@ -11388,603 +11433,20 @@
             Log min.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Special.sqrtPI">
-            <summary>
-            Square PI.
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.Ci(System.Single)">
-            <summary>
-            Returns the value of the integral cosine.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Si(System.Single)">
-            <summary>
-            Returns the value of the integral sine.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Ei(System.Single)">
-            <summary>
-            Returns the value of an integral exponential function.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Li(System.Single)">
-            <summary>
-            Returns the value of the integral logarithm.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Fresnelc(System.Single)">
-            <summary>
-            Returns the value of the Fresnel integral C (x).
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Fresnels(System.Single)">
-            <summary>
-            Returns the value of the Fresnel integral S(x).
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the Struve function.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.L(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the modified Struve function.
-            </summary>
-            <param name="x">Number</param>
-            <param name="v">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
-            <summary>
-            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
-            </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(System.Int32,System.Int32)">
-            <summary>
-            Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
-            </summary>
-            <param name="m">Integer number</param>
-            <param name="n">Integer number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of an incomplete beta function: Bx(a, b).
-            </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
-            <param name="x">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.BetaDerivative(System.Single,System.Single)">
-            <summary>
-            Returns the value of a derivative beta function: B'(a, b).
-            </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.BetaIncomplete(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of a regularized incomplete beta function: Ix(a, b).
-            </summary>
-            <param name="a">Number</param>
-            <param name="b">Number</param>
-            <param name="x">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Incbcf(System.Single,System.Single,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="x"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Incbd(System.Single,System.Single,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="x"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Series(System.Single,System.Single,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="x"></param>
-            <returns></returns>
-        </member>
         <member name="F:UMapx.Core.Special.GammaMax">
             <summary>
-            
+            Gamma max.
             </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.Px">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.Qx">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.Gamma(System.Single)">
-            <summary>
-            Returns the value of the Euler Gamma function: Г(z).
-            </summary>
-            <param name="z">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.GammaLog(System.Single)">
-            <summary>
-            Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
-            </summary>
-            <param name="z">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.DiGamma(System.Single)">
-            <summary>
-            Returns the value of the Digamma function: ψ(z).
-            </summary>
-            <param name="z">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.TriGamma(System.Single)">
-            <summary>
-            Returns the value of the Trigamma function: ψ1(z).
-            </summary>
-            <param name="z">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Gamma(System.Single,System.UInt32)">
-            <summary>
-            Returns the value of the degree of the Euler Gamma function: Г(z)^p.
-            </summary>
-            <param name="z">Number</param>
-            <param name="p">Power</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.GammaQ(System.Single,System.Single)">
-            <summary>
-            Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
-            </summary>
-            <param name="s">Number</param>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.GammaP(System.Single,System.Single)">
-            <summary>
-            Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
-            </summary>
-            <param name="s">Number</param>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.GammaIncomplete(System.Single,System.Single)">
-            <summary>
-            Returns the value of an incomplete Gamma function: γ(s, x).
-            </summary>
-            <param name="s">Number</param>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.GammaIncomplete(System.Single,System.Single,System.Boolean)">
-            <summary>
-            Returns the value of an incomplete Gamma function: γ(s, x).
-            </summary>
-            <param name="s">Number</param>
-            <param name="x">Number</param>
-            <param name="complemented">Additional function or not</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Polynomials(System.Single,System.Single[],System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="x"></param>
-            <param name="coef"></param>
-            <param name="N"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Stirling(System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="x"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.GammaLogLanczos(System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="z"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Boolean)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="inverse">Reverse function or not</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfi(System.Single)">
-            <summary>
-            Returns the value of the imaginary error function.
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="a">The lower boundary of the normalization</param>
-            <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single,UMapx.Core.RangeFloat)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="range">A pair of fractional numbers</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="a">The lower boundary of the normalization</param>
-            <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(System.Single,UMapx.Core.RangeFloat)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="range">A pair of fractional numbers</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
-            <summary>
-            Returns the value of a Q function.
-            </summary>
-            <param name="x">Argument</param>
-            <param name="inverse">Inverse function or not</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.J0(System.Single)">
-            <summary>
-            Returns the value of the Bessel function of the first kind at a = 0.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.J1(System.Single)">
-            <summary>
-            Returns the value of the Bessel function of the first kind at a = 1.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.J(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a Bessel function of the first kind.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Y0(System.Single)">
-            <summary>
-            Returns the value of the Bessel function of the second kind at a = 0.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Y1(System.Single)">
-            <summary>
-            Returns the value of the Bessel function of the second kind at a = 1.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Y(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a Bessel function of the second kind.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.I0(System.Single)">
-            <summary>
-            Returns the value of the modified Bessel function of the first kind at a = 0.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.I1(System.Single)">
-            <summary>
-            Returns the value of the modified Bessel function of the first kind at a = 1.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.I(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the modified Bessel function of the first kind.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.K0(System.Single)">
-            <summary>
-            Returns the value of the modified Bessel function of the second kind at a = 0.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.K1(System.Single)">
-            <summary>
-            Returns the value of the modified Bessel function of the second kind at a = 1.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.K(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the modified Bessel function of the second kind.
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Owen(System.Single,System.Single)">
-            <summary>
-            Returns the value of the Owen T function.
-            </summary>
-            <param name="h">First argument</param>
-            <param name="a">Second argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.owenhaah(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of the Owen T function.
-            </summary>
-            <param name="h">First argument</param>
-            <param name="a">Second argument</param>
-            <param name="ah">h * a</param>
-            <returns>Value</returns>
-        </member>
-        <member name="F:UMapx.Core.Special.arange">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.coefT">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.hrange">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.meth">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.ord">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.pts">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.select">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.wts">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.Agd(System.Single)">
-            <summary>
-            Returns the value of the inverse Guderman function.
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Gd(System.Single)">
-            <summary>
-            Returns the value of the Guderman function.
-            </summary>
-            <param name="x">Angle in radians</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Cas(System.Single)">
-            <summary>
-            Returns the value of the function Cas(x).
-            </summary>
-            <param name="theta">Theta</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Sinc(System.Single)">
-            <summary>
-            Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
-            </summary>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Sinc(System.Single,System.Single)">
-            <summary>
-            Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
-            </summary>
-            <param name="x">Number</param>
-            <param name="a">Parameter</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Binomial(System.Single,System.Single)">
-            <summary>
-            Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
-            </summary>
-            <param name="n">Number</param>
-            <param name="k">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.LogBinomial(System.Single,System.Single)">
-            <summary>
-            Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
-            </summary>
-            <param name="n">Number</param>
-            <param name="k">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.LogFactorial(System.Single)">
-            <summary>
-            Returns the natural logarithm of the factorial of a number log(n!).
-            </summary>
-            <param name="n">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Factorial(System.Single)">
-            <summary>
-            Returns the factorial of a number.
-            </summary>
-            <param name="n">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.FactorialDown(System.Single,System.Single)">
-            <summary>
-            Returns the decreasing factorial of a number.
-            </summary>
-            <param name="n">Number</param>
-            <param name="k">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.FactorialUp(System.Single,System.Single)">
-            <summary>
-            Returns the increasing factorial of a number (Pohhammer symbol).
-            </summary>
-            <param name="n">Number</param>
-            <param name="k">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Fibonacci(System.Int32)">
-            <summary>
-            Returns the value of the Fibonacci number.
-            </summary>
-            <param name="n">Integer number</param>
-            <returns>Integer number</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Lucas(System.Int32)">
-            <summary>
-            Returns the value of the Luca number.
-            </summary>
-            <param name="n">Integer number</param>
-            <returns>Integer number</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Bernoulli(System.Int32)">
-            <summary>
-            Returns the Bernoulli number.
-            </summary>
-            <param name="n">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Bernoulli(System.Int32,System.Single)">
-            <summary>
-            Returns the value of the Bernoulli polynomial.
-            </summary>
-            <param name="n">Order</param>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Euler(System.Int32)">
-            <summary>
-            Returns the Euler number.
-            </summary>
-            <param name="n">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Euler(System.Int32,System.Single)">
-            <summary>
-            Returns the value of the Euler polynomial.
-            </summary>
-            <param name="n">Order</param>
-            <param name="x">Number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Harm(System.Int32)">
-            <summary>
-            Returns the harmonic number.
-            </summary>
-            <param name="n">Argument</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Harm(System.Int32,System.Single)">
-            <summary>
-            Returns the harmonic number.
-            </summary>
-            <param name="n">Order</param>
-            <param name="m">Argument</param>
-            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.ChebyshevT(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Chebyshev polynomial of the first kind.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="n">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ChebyshevT(UMapx.Core.Complex32,System.Int32)">
             <summary>
             Returns the value of the Chebyshev polynomial of the first kind.
             </summary>
@@ -12000,7 +11462,24 @@
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.ChebyshevU(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Chebyshev polynomial of the second kind.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="n">Order</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Abel(System.Single,System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Abel polynomial.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Power</param>
+            <param name="n">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Abel(UMapx.Core.Complex32,System.Single,System.Int32)">
             <summary>
             Returns the value of the Abel polynomial.
             </summary>
@@ -12018,6 +11497,15 @@
             <param name="k">Order</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Laguerre(UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Laguerre polynomial.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Power</param>
+            <param name="k">Order</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Legendre(System.Single,System.Int32)">
             <summary>
             Returns the value of the Legendre polynomial of the first kind.
@@ -12026,7 +11514,23 @@
             <param name="m">Order</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Legendre(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Legendre polynomial of the first kind.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="m">Order</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Hermite(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Hermite polynomial.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="m">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hermite(UMapx.Core.Complex32,System.Int32)">
             <summary>
             Returns the value of the Hermite polynomial.
             </summary>
@@ -12043,11 +11547,132 @@
             <param name="n">Order</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Gegenbauer(UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Gegenbauer polynomial.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Power</param>
+            <param name="n">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Sinc(System.Single)">
+            <summary>
+            Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Sinc(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Sinc(System.Single,System.Single)">
+            <summary>
+            Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Sinc(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Agd(System.Single)">
+            <summary>
+            Returns the value of the inverse Guderman function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Agd(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the inverse Guderman function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gd(System.Single)">
+            <summary>
+            Returns the value of the Guderman function.
+            </summary>
+            <param name="x">Angle in radians</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gd(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Guderman function.
+            </summary>
+            <param name="x">Angle in radians</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Cas(System.Single)">
+            <summary>
+            Returns the value of the function Cas(x).
+            </summary>
+            <param name="theta">Theta</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Cas(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the function Cas(x).
+            </summary>
+            <param name="theta">Theta</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Rademacher(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Radamecher function.
+            </summary>
+            <param name="t">Argument [0, 1]</param>
+            <param name="n">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Rademacher(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Radamecher function.
+            </summary>
+            <param name="z">Argument</param>
+            <param name="n">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Heaviside(System.Single,System.Single)">
+            <summary>
+            Returns the value of the Heaviside delta function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="k">Smoothing factor</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Heaviside(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Heaviside delta function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="k">Smoothing factor</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Mahler(System.Single,System.Single)">
             <summary>
-            Returns the value of the Mahler polynomial.
+            Returns the value of the Mahler function.
             </summary>
-            <param name="x">Number</param>
+            <param name="x">Value</param>
+            <param name="t">Parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Mahler(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Mahler function.
+            </summary>
+            <param name="x">Value</param>
             <param name="t">Parameter</param>
             <returns>Value</returns>
         </member>
@@ -12061,15 +11686,46 @@
             <param name="c">Growth rate</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Heaviside(System.Single,System.Single)">
+        <member name="M:UMapx.Core.Special.Gompertz(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
-            Returns the value of the Heaviside delta function.
+            Gets the value of the Gompertz function.
+            </summary>
+            <param name="t">Argument</param>
+            <param name="a">Upper asymptote</param>
+            <param name="b">Growth parameter</param>
+            <param name="c">Growth rate</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Dirac(System.Single,System.Single)">
+            <summary>
+            Returns the value of the Dirac delta function.
             </summary>
             <param name="x">Argument</param>
-            <param name="k">Smoothing factor</param>
+            <param name="a">Coefficient</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Dirac(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Dirac delta function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Coefficient</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Logistic(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a logistic function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Lower asymptote</param>
+            <param name="k">Upper asymptote</param>
+            <param name="b">Growth rate</param>
+            <param name="v">Affect</param>
+            <param name="q">Central moment</param>
+            <param name="c">Offset</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Logistic(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Returns the value of a logistic function.
             </summary>
@@ -12092,6 +11748,16 @@
             <param name="b">Growth rate</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Logistic(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a logistic function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="a">Lower asymptote</param>
+            <param name="k">Upper asymptote</param>
+            <param name="b">Growth rate</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Logistic(System.Single)">
             <summary>
             Returns the value of a logistic function.
@@ -12099,12 +11765,255 @@
             <param name="x">Argument</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Dirac(System.Single,System.Single)">
+        <member name="M:UMapx.Core.Special.Logistic(UMapx.Core.Complex32)">
             <summary>
-            Returns the value of the Dirac delta function.
+            Returns the value of a logistic function.
             </summary>
             <param name="x">Argument</param>
-            <param name="a">Coefficient</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ci(System.Single)">
+            <summary>
+            Returns the value of the integral cosine.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ci(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the integral cosine.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Si(System.Single)">
+            <summary>
+            Returns the value of the integral sine.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Si(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the integral sine.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ei(System.Single)">
+            <summary>
+            Returns the value of an integral exponential function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ei(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an integral exponential function.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Li(System.Single)">
+            <summary>
+            Returns the value of the integral logarithm.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Li(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the integral logarithm.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Fresnelc(System.Single)">
+            <summary>
+            Returns the value of the Fresnel integral C(x).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Fresnelc(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Fresnel integral C(x).
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Fresnels(System.Single)">
+            <summary>
+            Returns the value of the Fresnel integral S(x).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Fresnels(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Fresnel integral S(x).
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32,System.Single)">
+            <summary>
+            Returns the value of the Erlang C-function.
+            </summary>
+            <param name="y">Firset parameter</param>
+            <param name="v">Second parameter</param>
+            <param name="t">Time parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erlang(UMapx.Core.Complex32,System.Int32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Erlang C-function.
+            </summary>
+            <param name="y">Firset parameter</param>
+            <param name="v">Second parameter</param>
+            <param name="t">Time parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Erlang B-function.
+            </summary>
+            <param name="y">Firset parameter</param>
+            <param name="v">Second parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erlang(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Erlang B-function.
+            </summary>
+            <param name="y">Firset parameter</param>
+            <param name="v">Second parameter</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LambertW(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Lambert W-function.
+            </summary>
+            <param name="x">Argument [-1/e,+inf)</param>
+            <param name="k">Branch</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LambertW(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Lambert W-function.
+            </summary>
+            <param name="z">Argument</param>
+            <param name="k">Branch</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ssqrt(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the square super-root.
+            </summary>
+            <param name="x">Argument [1,+inf)</param>
+            <param name="k">Branch</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ssqrt(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the square super-root.
+            </summary>
+            <param name="z">Argument</param>
+            <param name="k">Branch</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Boolean)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="inverse">Reverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32,System.Boolean)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="inverse">Reverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfi(System.Single)">
+            <summary>
+            Returns the value of the imaginary error function.
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfi(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the imaginary error function.
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
@@ -12115,7 +12024,62 @@
             <param name="positive">D- или D+</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Dawson(UMapx.Core.Complex32,System.Boolean)">
+            <summary>
+            Returns the value of the D- / D + Dawson function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="positive">D- или D+</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
+            <summary>
+            Returns the value of a Q function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="inverse">Inverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Q(UMapx.Core.Complex32,System.Boolean)">
+            <summary>
+            Returns the value of a Q function.
+            </summary>
+            <param name="x">Argument</param>
+            <param name="inverse">Inverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Owen(System.Single,System.Single)">
+            <summary>
+            Returns the value of the Owen T function.
+            </summary>
+            <param name="h">First argument</param>
+            <param name="a">Second argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Owen(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Owen T function.
+            </summary>
+            <param name="h">First argument</param>
+            <param name="a">Second argument</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Hypergeometric_function
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="c">Parameter</param>
+            <param name="z">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Returns the value of a hypergeometric function.
             <remarks>
@@ -12146,7 +12110,235 @@
             <param name="z">Argument</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            The hypergeometric function can be used in several variations:
+            F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+            Instead of the “~” sign, use the float.NaN value.
+            More information can be found on the website:
+            https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="z">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.J(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the first kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.J(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the first kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Y(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the second kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Y(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the second kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.I(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the first kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.I(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the first kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.K(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the second kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.K(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the second kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gamma(System.Single)">
+            <summary>
+            Returns the value of the Euler Gamma function: Г(z).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gamma(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Euler Gamma function: Г(z).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogGamma(System.Single)">
+            <summary>
+            Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogGamma(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DiGamma(System.Single)">
+            <summary>
+            Returns the value of the Digamma function: ψ(z).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DiGamma(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Digamma function: ψ(z).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.TriGamma(System.Single)">
+            <summary>
+            Returns the value of the Trigamma function: ψ1(z).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.TriGamma(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Trigamma function: ψ1(z).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaQ(System.Single,System.Single)">
+            <summary>
+            Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
+            </summary>
+            <param name="s">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaQ(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
+            </summary>
+            <param name="s">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaP(System.Single,System.Single)">
+            <summary>
+            Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
+            </summary>
+            <param name="s">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaP(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
+            </summary>
+            <param name="s">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaIncomplete(System.Single,System.Single)">
+            <summary>
+            Returns the value of an incomplete Gamma function: γ(s, x).
+            </summary>
+            <param name="s">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaIncomplete(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an incomplete Gamma function: γ(s, x).
+            </summary>
+            <param name="s">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaIncompleteComplemented(System.Single,System.Single)">
+            <summary>
+            Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
+            </summary>
+            <param name="s">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaIncompleteComplemented(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
+            </summary>
+            <param name="s">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaLanczos(System.Double)">
+            <summary>
+            Lanczos approximation (real) valid for Re(z) > 0.5. Computes principal branch.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaLanczos(UMapx.Core.Complex32)">
+            <summary>
+            Lanczos approximation (complex) valid for Re(z) > 0.5. Computes principal branch.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.LogGammaLanczos(System.Double)">
+            <summary>
+            Lanczos log-gamma for real x with Re(x) ≥ 0.5 (principal branch).
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.LogGammaLanczos(UMapx.Core.Complex32)">
+            <summary>
+            Lanczos log-gamma for complex z with Re(z) ≥ 0.5 (principal branch).
+            </summary>
+        </member>
         <member name="M:UMapx.Core.Special.Gerf(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the generalized error function.
+            </summary>
+            <param name="x">Argument (0, +inf)</param>
+            <param name="n">Order [0, +inf)</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Gerf(UMapx.Core.Complex32,System.Int32)">
             <summary>
             Returns the value of the generalized error function.
             </summary>
@@ -12161,48 +12353,278 @@
             <param name="x">Argument</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Rademacher(System.Single,System.Int32)">
+        <member name="M:UMapx.Core.Special.Gerf(UMapx.Core.Complex32)">
             <summary>
-            Returns the value of the Radamecher function.
+            Returns the value of the generalized error function.
             </summary>
-            <param name="t">Argument [0, 1]</param>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogFactorial(System.Single)">
+            <summary>
+            Returns the natural logarithm of the factorial of a number log(n!).
+            </summary>
+            <param name="n">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogFactorial(UMapx.Core.Complex32)">
+            <summary>
+            Returns the natural logarithm of the factorial of a number log(n!).
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Factorial(System.Single)">
+            <summary>
+            Returns the factorial of a number.
+            </summary>
+            <param name="n">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Factorial(UMapx.Core.Complex32)">
+            <summary>
+            Returns the factorial of a number.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.FactorialDown(System.Single,System.Single)">
+            <summary>
+            Returns the decreasing factorial of a number.
+            </summary>
+            <param name="n">Value</param>
+            <param name="k">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.FactorialDown(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the decreasing factorial of a number.
+            </summary>
+            <param name="z">Value</param>
+            <param name="k">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.FactorialUp(System.Single,System.Single)">
+            <summary>
+            Returns the increasing factorial of a number (Pohhammer symbol).
+            </summary>
+            <param name="n">Value</param>
+            <param name="k">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.FactorialUp(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the increasing factorial of a number (Pohhammer symbol).
+            </summary>
+            <param name="z">Value</param>
+            <param name="k">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Binomial(System.Single,System.Single)">
+            <summary>
+            Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+            </summary>
+            <param name="n">Value</param>
+            <param name="k">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Binomial(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+            </summary>
+            <param name="n">Value</param>
+            <param name="k">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogBinomial(System.Single,System.Single)">
+            <summary>
+            Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
+            </summary>
+            <param name="n">Value</param>
+            <param name="k">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogBinomial(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
+            </summary>
+            <param name="n">Value</param>
+            <param name="k">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the Struve function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.H(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the Struve function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.L(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the modified Struve function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="v">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.L(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the modified Struve function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="v">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Zeta(System.Single)">
+            <summary>
+            Returns the value of the Riemann zeta ζ(s) on the principal branch (real s).
+            </summary>
+            <param name="s">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Zeta(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Riemann zeta ζ(s) on the principal branch (complex s).
+            </summary>
+            <param name="s">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
+            <summary>
+            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Beta(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Beta(System.Int32,System.Int32)">
+            <summary>
+            Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
+            </summary>
+            <param name="m">Integer number</param>
+            <param name="n">Integer number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaDerivative(System.Single,System.Single)">
+            <summary>
+            Returns the value of a derivative beta function: B'(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaDerivative(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a derivative beta function: B'(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaIncomplete(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of an incomplete beta function: Bx(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaIncomplete(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an incomplete beta function: Bx(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaIncompleteRegularized(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a regularized incomplete beta function: Ix(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="x">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Fibonacci(System.Int32)">
+            <summary>
+            Returns the value of the Fibonacci number.
+            </summary>
+            <param name="n">Integer number</param>
+            <returns>Integer number</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Lucas(System.Int32)">
+            <summary>
+            Returns the value of the Luca number.
+            </summary>
+            <param name="n">Integer number</param>
+            <returns>Integer number</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Harm(System.Int32)">
+            <summary>
+            Returns the harmonic number.
+            </summary>
+            <param name="n">Argument</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Harm(System.Int32,System.Single)">
+            <summary>
+            Returns the harmonic number.
+            </summary>
             <param name="n">Order</param>
+            <param name="m">Argument</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32,System.Single)">
+        <member name="M:UMapx.Core.Special.Euler(System.Int32)">
             <summary>
-            Returns the value of the Erlang C-function.
+            Returns the Euler number.
             </summary>
-            <param name="y">Firset parameter</param>
-            <param name="v">Second parameter</param>
-            <param name="t">Time parameter</param>
+            <param name="n">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32)">
+        <member name="M:UMapx.Core.Special.Euler(System.Int32,System.Single)">
             <summary>
-            Returns the value of the Erlang B-function.
+            Returns the value of the Euler polynomial.
             </summary>
-            <param name="y">Firset parameter</param>
-            <param name="v">Second parameter</param>
+            <param name="n">Order</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.LambertW(System.Single,System.Boolean)">
+        <member name="M:UMapx.Core.Special.Bernoulli(System.Int32)">
             <summary>
-            Returns the value of the Lambert W-function.
+            Returns the Bernoulli number.
             </summary>
-            <param name="x">Argument [-1/e,+inf)</param>
-            <param name="branch">Function branch</param>
+            <param name="n">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Ssqrt(System.Single,System.Boolean)">
+        <member name="M:UMapx.Core.Special.Bernoulli(System.Int32,System.Single)">
             <summary>
-            Returns the value of the square super-root.
+            Returns the value of the Bernoulli polynomial.
             </summary>
-            <param name="x">Argument [1,+inf)</param>
-            <param name="branch">Function branch</param>
+            <param name="n">Order</param>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Minkowski(System.Single)">
+        <member name="M:UMapx.Core.Special.Minkowski(System.Int64)">
             <summary>
             Returns the value of the Minkowski function.
             </summary>
@@ -12252,7 +12674,7 @@
             <summary>
             The function of converting number to a string
             </summary>
-            <param name="v">Number</param>
+            <param name="v">Value</param>
             <param name="format">Format string</param>
             <param name="s">First in a row or not</param>
             <param name="symbol">Symbol</param>
@@ -20189,7 +20611,7 @@
             <summary>
             Returns the number raised to the logarithmic power.
             </summary>
-            <param name="a">Number</param>
+            <param name="a">Value</param>
             <param name="power">Power</param>
             <returns>Value</returns>
         </member>

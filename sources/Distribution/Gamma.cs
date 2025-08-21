@@ -171,7 +171,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return k * thetta + (1 - k) * (float)Math.Log(thetta) + Special.GammaLog(k); // + (1 - k) * Special.Ksi(k);
+                return k * thetta + (1 - k) * (float)Math.Log(thetta) + Special.LogGamma(k); // + (1 - k) * Special.Ksi(k);
             }
         }
         #endregion

@@ -180,7 +180,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return k * xm + (1 - k) * (float)Math.Log(xm) + Special.GammaLog(k); // + (1 - k) * Special.Ksi(k);
+                return k * xm + (1 - k) * (float)Math.Log(xm) + Special.LogGamma(k); // + (1 - k) * Special.Ksi(k);
             }
         }
         #endregion

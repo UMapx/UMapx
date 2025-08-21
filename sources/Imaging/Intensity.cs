@@ -365,7 +365,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the number raised to the logarithmic power.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="power">Power</param>
         /// <returns>Value</returns>
         public static float LogPow(float a, float power)
