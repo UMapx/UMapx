@@ -10006,7 +10006,7 @@ namespace UMapx.Core
         public static float[] Compute(float min, float max, float step)
         {
             if (step == 0f)
-                throw new ArgumentException("step must be non-zero", nameof(step));
+                throw new ArgumentException("Step must be non-zero", nameof(step));
 
             if ((max > min && step < 0f) || (max < min && step > 0f))
                 return Array.Empty<float>();
