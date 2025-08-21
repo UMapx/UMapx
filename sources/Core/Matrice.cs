@@ -867,7 +867,7 @@ namespace UMapx.Core
         /// Returns the sum of a matrix and a number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static float[,] Add(this float[,] m, float a)
         {
@@ -889,7 +889,7 @@ namespace UMapx.Core
         /// Returns the sum of a matrix and a number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Add(this Complex32[,] m, Complex32 a)
         {
@@ -911,7 +911,7 @@ namespace UMapx.Core
         /// Returns the sum of a matrix and a number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Add(this Complex32[,] m, float a)
         {
@@ -933,7 +933,7 @@ namespace UMapx.Core
         /// Returns the sum of a matrix and a number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Add(this float[,] m, Complex32 a)
         {
@@ -956,7 +956,7 @@ namespace UMapx.Core
         /// Returns the sum of a number and a matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static float[,] Add(float a, float[,] m)
         {
@@ -978,7 +978,7 @@ namespace UMapx.Core
         /// Returns the sum of a number and a matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Add(Complex32 a, Complex32[,] m)
         {
@@ -1000,7 +1000,7 @@ namespace UMapx.Core
         /// Returns the sum of a number and a matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Add(Complex32 a, float[,] m)
         {
@@ -1022,7 +1022,7 @@ namespace UMapx.Core
         /// Returns the sum of a number and a matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Add(float a, Complex32[,] m)
         {
@@ -1130,7 +1130,7 @@ namespace UMapx.Core
         /// Subtracts a number from the matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static float[,] Sub(this float[,] m, float a)
         {
@@ -1152,7 +1152,7 @@ namespace UMapx.Core
         /// Subtracts a number from the matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Sub(this Complex32[,] m, Complex32 a)
         {
@@ -1174,7 +1174,7 @@ namespace UMapx.Core
         /// Subtracts a number from the matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Sub(this Complex32[,] m, float a)
         {
@@ -1196,7 +1196,7 @@ namespace UMapx.Core
         /// Subtracts a number from the matrix.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Sub(this float[,] m, Complex32 a)
         {
@@ -1219,7 +1219,7 @@ namespace UMapx.Core
         /// Subtracts a matrix from a number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static float[,] Sub(float a, float[,] m)
         {
@@ -1241,7 +1241,7 @@ namespace UMapx.Core
         /// Subtracts a matrix from a number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Sub(Complex32 a, Complex32[,] m)
         {
@@ -1263,7 +1263,7 @@ namespace UMapx.Core
         /// Subtracts a matrix from a number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Sub(Complex32 a, float[,] m)
         {
@@ -1285,7 +1285,7 @@ namespace UMapx.Core
         /// Subtracts a matrix from a number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Sub(float a, Complex32[,] m)
         {
@@ -1483,7 +1483,7 @@ namespace UMapx.Core
         /// Multiplies all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static float[,] Mul(this float[,] m, float a)
         {
@@ -1505,7 +1505,7 @@ namespace UMapx.Core
         /// Multiplies all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Mul(this Complex32[,] m, Complex32 a)
         {
@@ -1527,7 +1527,7 @@ namespace UMapx.Core
         /// Multiplies all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Mul(this Complex32[,] m, float a)
         {
@@ -1549,7 +1549,7 @@ namespace UMapx.Core
         /// Multiplies all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Mul(this float[,] m, Complex32 a)
         {
@@ -1572,7 +1572,7 @@ namespace UMapx.Core
         /// Multiplies all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static float[,] Mul(float a, float[,] m)
         {
@@ -1594,7 +1594,7 @@ namespace UMapx.Core
         /// Multiplies all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Mul(Complex32 a, Complex32[,] m)
         {
@@ -1616,7 +1616,7 @@ namespace UMapx.Core
         /// Multiplies all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Mul(Complex32 a, float[,] m)
         {
@@ -1638,7 +1638,7 @@ namespace UMapx.Core
         /// Multiplies all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Mul(float a, Complex32[,] m)
         {
@@ -1748,7 +1748,7 @@ namespace UMapx.Core
         /// Divides all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static float[,] Div(this float[,] m, float a)
         {
@@ -1770,7 +1770,7 @@ namespace UMapx.Core
         /// Divides all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Div(this Complex32[,] m, Complex32 a)
         {
@@ -1792,7 +1792,7 @@ namespace UMapx.Core
         /// Divides all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Div(this Complex32[,] m, float a)
         {
@@ -1814,7 +1814,7 @@ namespace UMapx.Core
         /// Divides all matrix elements by number.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Div(this float[,] m, Complex32 a)
         {
@@ -1837,7 +1837,7 @@ namespace UMapx.Core
         /// Divides number into matrix elements.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static float[,] Div(float a, float[,] m)
         {
@@ -1859,7 +1859,7 @@ namespace UMapx.Core
         /// Divides number into matrix elements.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Div(Complex32 a, Complex32[,] m)
         {
@@ -1881,7 +1881,7 @@ namespace UMapx.Core
         /// Divides number into matrix elements.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Div(Complex32 a, float[,] m)
         {
@@ -1903,7 +1903,7 @@ namespace UMapx.Core
         /// Divides number into matrix elements.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Div(float a, Complex32[,] m)
         {
@@ -1928,7 +1928,7 @@ namespace UMapx.Core
         /// Raises all matrix elements to a power.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="pow">Number</param>
+        /// <param name="pow">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Pow(this Complex32[,] m, float pow)
         {
@@ -1950,7 +1950,7 @@ namespace UMapx.Core
         /// Raises all matrix elements to a power.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="pow">Number</param>
+        /// <param name="pow">Value</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Pow(this float[,] m, Complex32 pow)
         {
@@ -1972,7 +1972,7 @@ namespace UMapx.Core
         /// Raises all matrix elements to a power.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="pow">Number</param>
+        /// <param name="pow">Value</param>
         /// <returns>Matrix</returns>
         public static float[,] Pow(this float[,] m, float pow)
         {
@@ -1994,7 +1994,7 @@ namespace UMapx.Core
         /// <summary>
         /// Raises the number to the power of the matrix.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
         public static float[,] Pow(float a, float[,] m)
@@ -2017,7 +2017,7 @@ namespace UMapx.Core
         /// <summary>
         /// Raises the number to the power of the matrix.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Pow(Complex32 a, float[,] m)
@@ -2040,7 +2040,7 @@ namespace UMapx.Core
         /// <summary>
         /// Raises the number to the power of the matrix.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Pow(float a, Complex32[,] m)
@@ -3854,7 +3854,7 @@ namespace UMapx.Core
         /// Returns the sum of a vector and a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static float[] Add(this float[] a, float b)
         {
@@ -3871,7 +3871,7 @@ namespace UMapx.Core
         /// Returns the sum of a vector and a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Add(this Complex32[] a, Complex32 b)
         {
@@ -3888,7 +3888,7 @@ namespace UMapx.Core
         /// Returns the sum of a vector and a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Add(this Complex32[] a, float b)
         {
@@ -3905,7 +3905,7 @@ namespace UMapx.Core
         /// Returns the sum of a vector and a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Add(this float[] a, Complex32 b)
         {
@@ -3923,7 +3923,7 @@ namespace UMapx.Core
         /// Returns the sum of a vector and a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static float[] Add(float b, float[] a)
         {
@@ -3940,7 +3940,7 @@ namespace UMapx.Core
         /// Returns the sum of a vector and a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Add(Complex32 b, Complex32[] a)
         {
@@ -3957,7 +3957,7 @@ namespace UMapx.Core
         /// Returns the sum of a vector and a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Add(float b, Complex32[] a)
         {
@@ -3974,7 +3974,7 @@ namespace UMapx.Core
         /// Returns the sum of a vector and a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Add(Complex32 b, float[] a)
         {
@@ -4061,7 +4061,7 @@ namespace UMapx.Core
         /// Subtracts a number from a vector.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static float[] Sub(this float[] a, float b)
         {
@@ -4078,7 +4078,7 @@ namespace UMapx.Core
         /// Subtracts a number from a vector.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Sub(this Complex32[] a, Complex32 b)
         {
@@ -4095,7 +4095,7 @@ namespace UMapx.Core
         /// Subtracts a number from a vector.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Sub(this Complex32[] a, float b)
         {
@@ -4112,7 +4112,7 @@ namespace UMapx.Core
         /// Subtracts a number from a vector.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Sub(this float[] a, Complex32 b)
         {
@@ -4130,7 +4130,7 @@ namespace UMapx.Core
         /// Subtracts a vector from a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static float[] Sub(float b, float[] a)
         {
@@ -4147,7 +4147,7 @@ namespace UMapx.Core
         /// Subtracts a vector from a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Sub(Complex32 b, Complex32[] a)
         {
@@ -4164,7 +4164,7 @@ namespace UMapx.Core
         /// Subtracts a vector from a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Sub(Complex32 b, float[] a)
         {
@@ -4181,7 +4181,7 @@ namespace UMapx.Core
         /// Subtracts a vector from a number.
         /// </summary>
         /// <param name="a">Array</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Sub(float b, Complex32[] a)
         {
@@ -4270,7 +4270,7 @@ namespace UMapx.Core
         /// Implements the multiplication of the vector by number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static float[] Mul(this float[] v, float a)
         {
@@ -4287,7 +4287,7 @@ namespace UMapx.Core
         /// Implements the multiplication of the vector by number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Mul(this float[] v, Complex32 a)
         {
@@ -4304,7 +4304,7 @@ namespace UMapx.Core
         /// Implements the multiplication of the vector by number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Mul(this Complex32[] v, float a)
         {
@@ -4321,7 +4321,7 @@ namespace UMapx.Core
         /// Implements the multiplication of the vector by number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Mul(this Complex32[] v, Complex32 a)
         {
@@ -4339,7 +4339,7 @@ namespace UMapx.Core
         /// Implements the multiplication of the vector by number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static float[] Mul(float a, float[] v)
         {
@@ -4356,7 +4356,7 @@ namespace UMapx.Core
         /// Implements the multiplication of the vector by number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Mul(Complex32 a, Complex32[] v)
         {
@@ -4373,7 +4373,7 @@ namespace UMapx.Core
         /// Implements the multiplication of the vector by number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Mul(Complex32 a, float[] v)
         {
@@ -4390,7 +4390,7 @@ namespace UMapx.Core
         /// Implements the multiplication of the vector by number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Mul(float a, Complex32[] v)
         {
@@ -4479,7 +4479,7 @@ namespace UMapx.Core
         /// Divides a vector by a number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static float[] Div(this float[] v, float a)
         {
@@ -4496,7 +4496,7 @@ namespace UMapx.Core
         /// Divides a vector by a number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Div(this float[] v, Complex32 a)
         {
@@ -4513,7 +4513,7 @@ namespace UMapx.Core
         /// Divides a vector by a number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Div(this Complex32[] v, float a)
         {
@@ -4530,7 +4530,7 @@ namespace UMapx.Core
         /// Divides a vector by a number.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Div(this Complex32[] v, Complex32 a)
         {
@@ -4548,7 +4548,7 @@ namespace UMapx.Core
         /// Divides a number by a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static float[] Div(float a, float[] v)
         {
@@ -4565,7 +4565,7 @@ namespace UMapx.Core
         /// Divides a number by a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Div(Complex32 a, Complex32[] v)
         {
@@ -4582,7 +4582,7 @@ namespace UMapx.Core
         /// Divides a number by a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Div(float a, Complex32[] v)
         {
@@ -4599,7 +4599,7 @@ namespace UMapx.Core
         /// Divides a number by a vector.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <returns>Array</returns>
         public static Complex32[] Div(Complex32 a, float[] v)
         {
@@ -4670,7 +4670,7 @@ namespace UMapx.Core
         /// <summary>
         /// Raises the number to the power of the vector.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
         public static float[] Pow(float a, float[] v)
@@ -4689,7 +4689,7 @@ namespace UMapx.Core
         /// <summary>
         /// Raises the number to the power of the vector.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
         public static Complex32[] Pow(Complex32 a, float[] v)
@@ -4708,7 +4708,7 @@ namespace UMapx.Core
         /// <summary>
         /// Raises the number to the power of the vector.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
         public static Complex32[] Pow(float a, Complex32[] v)

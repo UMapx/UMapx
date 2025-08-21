@@ -138,7 +138,7 @@ namespace UMapx.Core
         /// The sum of a complex number and a real number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator +(Complex32 a, float b)
         {
@@ -147,7 +147,7 @@ namespace UMapx.Core
         /// <summary>
         /// The sum of a complex number and a real number.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator +(float a, Complex32 b)
@@ -170,7 +170,7 @@ namespace UMapx.Core
         /// The difference between a complex number and a real number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator -(Complex32 a, float b)
         {
@@ -179,7 +179,7 @@ namespace UMapx.Core
         /// <summary>
         /// The difference between a complex number and a real number.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator -(float a, Complex32 b)
@@ -214,7 +214,7 @@ namespace UMapx.Core
         /// Multiplies real number by complex number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator *(float a, Complex32 b)
         {
@@ -223,7 +223,7 @@ namespace UMapx.Core
         /// <summary>
         /// Multiplies complex number by real number.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator *(Complex32 a, float b)
@@ -251,7 +251,7 @@ namespace UMapx.Core
         /// Divides complex number by real number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <param name="b">Number</param>
+        /// <param name="b">Value</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator /(Complex32 a, float b)
         {
@@ -260,7 +260,7 @@ namespace UMapx.Core
         /// <summary>
         /// Divides real number by complex number.
         /// </summary>
-        /// <param name="a">Number</param>
+        /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
         /// <returns>Complex number</returns>
         public static Complex32 operator /(float a, Complex32 b)

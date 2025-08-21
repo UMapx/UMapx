@@ -55,7 +55,7 @@ namespace UMapx.Core
         /// <summary>
         /// Checks if the value is in the specified interval.
         /// </summary>
-        /// <param name="x">Number</param>
+        /// <param name="x">Value</param>
         /// <returns>Boolean</returns>
         public bool IsOnRange(double x)
         {
