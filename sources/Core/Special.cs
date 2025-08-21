@@ -1153,6 +1153,24 @@ namespace UMapx.Core
                 if (x < xm) return float.NaN;   // W0 real only for x ≥ -1/e
                 if (x == 0f) return 0f;
                 if (x == xm) return -1f;
+
+                // ---- ASYMPTOTIC for large x on principal branch ----
+                if (x > 1000f)
+                {
+                    // Corless et al. expansion
+                    double L1 = Math.Log(x);
+                    double L2 = Math.Log(L1);
+                    double invL1 = 1.0 / L1;
+                    double invL1_2 = invL1 * invL1;
+                    double invL1_3 = invL1_2 * invL1;
+
+                    double v = L1 - L2
+                             + L2 * invL1
+                             + (L2 * (-2.0 + L2)) * 0.5 * invL1_2
+                             + (L2 * (6.0 - 9.0 * L2 + 2.0 * L2 * L2)) * (1.0 / 6.0) * invL1_3;
+
+                    return (float)v;
+                }
             }
             else // k == -1
             {
@@ -1162,10 +1180,10 @@ namespace UMapx.Core
 
             // Halley's method
             const float eps = 1e-8f;
-            const int maxIter = 100;
+            const int maxIter = 240;
 
             // Initial guess (simple and robust for real case)
-            float w = (k == 0) ? 1f : -2f;
+            double w = (k == 0) ? 1f : -2f;
             // Better near the branch point x ≈ -1/e:
             if (x < -0.2f)
             {
@@ -1180,14 +1198,16 @@ namespace UMapx.Core
 
             for (int it = 0; it < maxIter; it++)
             {
-                float e = Maths.Exp(w);
-                float f = w * e - x;                  // f(w) = w e^w - x
-                float wp1 = w + 1f;
+                double e = Math.Exp(w);
+                double f = w * e - x;                  // f(w) = w e^w - x
+                double wp1 = w + 1f;
 
                 // Halley denominator: e*(w+1) - (w+2)*f/(2*(w+1))
-                float denom = e * wp1 - (w + 2f) * f / (2f * wp1);
-                if (!float.IsInfinity(denom) || denom == 0f)
-                    denom = e * wp1;                  // Newton fallback
+                double denom = e * wp1 - (w + 2f) * f / (2f * wp1);
+
+                // Newton fallback if denom is unusable
+                if (double.IsInfinity(denom) || denom == 0.0)
+                    denom = e * wp1;
 
                 var v = w;
                 w = w - f / denom;
@@ -1196,7 +1216,7 @@ namespace UMapx.Core
                     break;
             }
 
-            return w;
+            return (float)w;
         }
         /// <summary>
         /// Returns the value of the Lambert W-function.
@@ -1210,36 +1230,62 @@ namespace UMapx.Core
             if (z.Real == 0f && z.Imag == 0f)
             {
                 if (k == 0) return Complex32.Zero;           // W_0(0)=0
-                return Complex32.NaN;  // other branches not defined at 0
+                return Complex32.NaN;                        // other branches not defined at 0
+            }
+
+            // ---- ASYMPTOTIC for large |z| on branch k ----
+            // W_k(z) ≈ L1 − L2 + L2/L1 + L2(−2+L2)/(2 L1^2) + L2(6−9L2+2L2^2)/(6 L1^3)
+            if (Maths.Abs(z) > 1000f)
+            {
+                Complex I2Pi = new Complex(0f, 2f * Maths.Pi);
+                Complex L1 = Complex.Log(z) + k * I2Pi;
+                Complex L2 = Complex.Log(L1);
+
+                Complex invL1 = Complex.One / L1;
+                Complex invL1_2 = invL1 * invL1;
+                Complex invL1_3 = invL1_2 * invL1;
+
+                Complex v = L1 - L2
+                          + L2 * invL1
+                          + (L2 * (-2f + L2)) * 0.5f * invL1_2
+                          + (L2 * (6f - 9f * L2 + 2f * L2 * L2)) * (1f / 6f) * invL1_3;
+
+                return (Complex32)v;
             }
 
             // Initial guess:
             // w0 ≈ L - Log(L), where L = Log(z) + i*2πk (multi-valued log).
-            Complex32 I2Pi = new Complex32(0f, 2f * Maths.Pi);
-            Complex32 L = Maths.Log(z) + k * I2Pi;
-            Complex32 w = (Maths.Abs(L) < 1e-3f) ? Maths.Log(z) : (L - Maths.Log(L));
+            Complex I2Pi0 = new Complex(0f, 2f * Maths.Pi);
+            Complex L = Complex.Log(z) + k * I2Pi0;
+            Complex w0 = (Complex.Abs(L) < 1e-3f) ? Complex.Log(z) : (L - Complex.Log(L));
+            Complex w = w0;
 
             float tol = 1e-8f;
-            int maxIter = 64;
+            int maxIter = 240;
 
             // Halley's iteration for f(w)=w e^w - z
             for (int i = 0; i < maxIter; i++)
             {
-                Complex32 ew = Maths.Exp(w);
-                Complex32 f = w * ew - z;
-                Complex32 wp1 = w + Complex32.One;
+                Complex ew = Complex.Exp(w);
+                Complex f = w * ew - (Complex)z;
+                Complex wp1 = w + Complex.One;
 
-                // If denominator near zero (w ≈ -1), fall back to Newton
-                Complex32 denom = ew * wp1 - (w + 2f) * f / (2f * wp1);  // Halley denominator
+                // Halley denominator
+                Complex denom = ew * wp1 - (w + 2f) * f / (2f * wp1);
+
+                // Newton fallback if denom ~ 0
                 if (Maths.Abs(denom) == 0f)
-                    denom = ew * wp1; // Newton fallback
+                    denom = ew * wp1;
 
-                Complex32 wNext = w - f / denom;
+                Complex wNext = w - f / denom;
+
                 if (Maths.Abs(wNext - w) <= tol * (1f + Maths.Abs(wNext)))
-                    return wNext;
+                    return (Complex32)wNext;
+
                 w = wNext;
             }
-            return w; // last iterate (should be within tol in normal cases)
+
+            return (Complex32)w; // last iterate
         }
         /// <summary>
         /// Returns the value of the square super-root.
