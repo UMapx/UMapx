@@ -174,17 +174,21 @@ namespace UMapx.Visualization
             }
             else if (AutoRange && _panes.Count != 0)
             {
-                _xmin = _ymin = float.MaxValue;
-                _xmax = _ymax = float.MinValue;
+                var xmin = float.PositiveInfinity; var xmax = float.NegativeInfinity;
+                var ymin = float.PositiveInfinity; var ymax = float.NegativeInfinity;
 
                 foreach (var pane in _panes)
                 {
-                    // TODO: avoid singular values: NaN, Infinity
-                    _xmin = Math.Min(_xmin, pane.X.Min());
-                    _xmax = Math.Max(_xmax, pane.X.Max());
-                    _ymin = Math.Min(_ymin, pane.Y.Min());
-                    _ymax = Math.Max(_ymax, pane.Y.Max());
+                    xmin = Math.Min(xmin, pane.X.GetMin() ?? xmin);
+                    xmax = Math.Max(xmax, pane.X.GetMax() ?? xmax);
+                    ymin = Math.Min(ymin, pane.Y.GetMin() ?? ymin);
+                    ymax = Math.Max(ymax, pane.Y.GetMax() ?? ymax);
                 }
+
+                _xmin = Maths.IsSingular(xmin) ? _xmin : xmin;
+                _xmax = Maths.IsSingular(xmax) ? _xmax : xmax;
+                _ymin = Maths.IsSingular(ymin) ? _ymin : ymin;
+                _ymax = Maths.IsSingular(ymax) ? _ymax : ymax;
             }
             else
             {
