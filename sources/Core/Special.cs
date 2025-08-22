@@ -78,10 +78,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Abel(float x, float a, int n)
         {
-            if (n == 0)
-                return 1;
-            if (n == 1)
-                return x;
+            if (n < 0) return float.NaN;
+            if (n == 0) return 1;
+            if (n == 1) return x;
 
             // Generalized formula
             // Abel polynomials recurrence relation for any n ≥ 1:
@@ -96,10 +95,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Abel(Complex32 x, float a, int n)
         {
-            if (n == 0)
-                return 1;
-            if (n == 1)
-                return x;
+            if (n < 0) return Complex32.NaN;
+            if (n == 0) return 1;
+            if (n == 1) return x;
 
             // Generalized formula
             // Abel polynomials recurrence relation for any n ≥ 1:
@@ -117,16 +115,12 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Laguerre(float x, float a, int k)
         {
-            if (k == 0)
-                return 1;
-            if (k == 1)
-                return 1 + a - x;
+            if (k < 0) return float.NaN;
+            if (k == 0) return 1f;
+            if (k == 1) return 1f + a - x;
 
-            // Generalized formula
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            float psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
-            float ksi = k + 1;
-            return psi / ksi;
+            float num = (2f * k - 1f + a - x) * Laguerre(x, a, k - 1) - (k - 1f + a) * Laguerre(x, a, k - 2);
+            return num / k;
         }
         /// <summary>
         /// Returns the value of the Laguerre polynomial.
@@ -137,16 +131,12 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Laguerre(Complex32 x, Complex32 a, int k)
         {
-            if (k == 0)
-                return 1;
-            if (k == 1)
-                return 1 + a - x;
+            if (k < 0) return Complex32.NaN;
+            if (k == 0) return 1f;
+            if (k == 1) return 1f + a - x;
 
-            // Generalized formula
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            Complex32 psi = (2 * k + 1 + a - x) * Laguerre(x, a, k - 1) - (k + a) * Laguerre(x, a, k - 2);
-            Complex32 ksi = k + 1;
-            return psi / ksi;
+            Complex32 num = (2f * k - 1f + a - x) * Laguerre(x, a, k - 1) - (k - 1f + a) * Laguerre(x, a, k - 2);
+            return num / k;
         }
         #endregion
 
@@ -159,17 +149,12 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Legendre(float x, int m)
         {
-            if (m == 0)
-                return 1;
-            if (m == 1)
-                return x;
+            if (m < 0) return float.NaN;
+            if (m == 0) return 1f;
+            if (m == 1) return x;
 
-            // legendre function
-            // More info: https://pdfs.semanticscholar.org/be30/38b3aafed73d33fe78a701ee096471d16fa1.pdf
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            float ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
-            float psi = m + 1;
-            return ksi / psi;
+            float num = (2f * m - 1f) * x * Legendre(x, m - 1) - (m - 1f) * Legendre(x, m - 2);
+            return num / m;
         }
         /// <summary>
         /// Returns the value of the Legendre polynomial of the first kind.
@@ -179,17 +164,12 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Legendre(Complex32 x, int m)
         {
-            if (m == 0)
-                return 1;
-            if (m == 1)
-                return x;
+            if (m < 0) return Complex32.NaN;
+            if (m == 0) return 1f;
+            if (m == 1) return x;
 
-            // legendre function
-            // More info: https://pdfs.semanticscholar.org/be30/38b3aafed73d33fe78a701ee096471d16fa1.pdf
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            Complex32 ksi = (2 * m + 1) * x * Legendre(x, m - 1) - m * Legendre(x, m - 2);
-            Complex32 psi = m + 1;
-            return ksi / psi;
+            Complex32 num = (2f * m - 1f) * x * Legendre(x, m - 1) - (m - 1f) * Legendre(x, m - 2);
+            return num / m;
         }
         #endregion
 
@@ -202,14 +182,12 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Hermite(float x, int m)
         {
-            if (m == 0)
-                return 1;
-            if (m == 1)
-                return x;
+            if (m < 0) return float.NaN;
+            if (m == 0) return 1f;
+            if (m == 1) return 2f * x;
 
-            // recursion formula for Hermite polynomials
             float ksi = x * Hermite(x, m - 1) - (m - 1) * Hermite(x, m - 2);
-            return 2 * ksi;
+            return 2f * ksi;
         }
         /// <summary>
         /// Returns the value of the Hermite polynomial.
@@ -219,14 +197,12 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Hermite(Complex32 x, int m)
         {
-            if (m == 0)
-                return 1;
-            if (m == 1)
-                return x;
+            if (m < 0) return Complex32.NaN;
+            if (m == 0) return Complex32.One;
+            if (m == 1) return 2f * x;
 
-            // recursion formula for Hermite polynomials
             Complex32 ksi = x * Hermite(x, m - 1) - (m - 1) * Hermite(x, m - 2);
-            return 2 * ksi;
+            return 2f * ksi;
         }
         #endregion
 
@@ -240,10 +216,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Gegenbauer(float x, float a, int n)
         {
-            if (n == 0)
-                return 1;
-            if (n == 1)
-                return 2 * a * x;
+            if (n < 0) return float.NaN;
+            if (n == 0) return 1;
+            if (n == 1) return 2 * a * x;
 
             // Generalized formula
             // Laguerre polynomials recurrence relation for any k ≥ 1:
@@ -259,10 +234,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Gegenbauer(Complex32 x, Complex32 a, int n)
         {
-            if (n == 0)
-                return 1;
-            if (n == 1)
-                return 2 * a * x;
+            if (n < 0) return Complex32.NaN;
+            if (n == 0) return 1;
+            if (n == 1) return 2 * a * x;
 
             // Generalized formula
             // Laguerre polynomials recurrence relation for any k ≥ 1:
