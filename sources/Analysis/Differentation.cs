@@ -186,7 +186,7 @@ namespace UMapx.Analysis
 
                 for (k = 0; k < points; k++)
                 {
-                    deltas[j, k] = h / (float)Special.Factorial(k);
+                    deltas[j, k] = (float)(h / Special.Factorial(k));
                     h *= delta;
                 }
             }
