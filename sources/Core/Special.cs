@@ -294,7 +294,7 @@ namespace UMapx.Core
         /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
         /// </summary>
         /// <param name="x">Value</param>
-        /// <param name="a">Parameter</param>
+        /// <param name="a">Value</param>
         /// <returns>Value</returns>
         public static float Sinc(float x, float a)
         {
@@ -309,7 +309,7 @@ namespace UMapx.Core
         /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
         /// </summary>
         /// <param name="x">Value</param>
-        /// <param name="a">Parameter</param>
+        /// <param name="a">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Sinc(Complex32 x, Complex32 a)
         {
@@ -439,7 +439,7 @@ namespace UMapx.Core
         /// Returns the value of the Mahler function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <param name="t">Parameter</param>
+        /// <param name="t">Value</param>
         /// <returns>Value</returns>
         public static float Mahler(float x, float t)
         {
@@ -449,7 +449,7 @@ namespace UMapx.Core
         /// Returns the value of the Mahler function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <param name="t">Parameter</param>
+        /// <param name="t">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Mahler(Complex32 x, Complex32 t)
         {
@@ -2632,9 +2632,9 @@ namespace UMapx.Core
         /// https://en.wikipedia.org/wiki/Hypergeometric_function
         /// </remarks>
         /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
-        /// <param name="c">Parameter</param>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="c">Value</param>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
         public static float Hypergeom(float a, float b, float c, float z)
@@ -2681,9 +2681,9 @@ namespace UMapx.Core
         /// https://en.wikipedia.org/wiki/Hypergeometric_function
         /// </remarks>
         /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
-        /// <param name="c">Parameter</param>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="c">Value</param>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 c, Complex32 z)
@@ -2727,8 +2727,8 @@ namespace UMapx.Core
         /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
         /// </remarks>
         /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
         public static float Hypergeom(float a, float b, float z)
@@ -2809,8 +2809,8 @@ namespace UMapx.Core
         /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
         /// </remarks>
         /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 z)

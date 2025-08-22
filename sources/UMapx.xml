@@ -11567,7 +11567,7 @@
             Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
             </summary>
             <param name="x">Value</param>
-            <param name="a">Parameter</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Sinc(UMapx.Core.Complex32,UMapx.Core.Complex32)">
@@ -11575,7 +11575,7 @@
             Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
             </summary>
             <param name="x">Value</param>
-            <param name="a">Parameter</param>
+            <param name="a">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Agd(System.Single)">
@@ -11657,7 +11657,7 @@
             Returns the value of the Mahler function.
             </summary>
             <param name="x">Value</param>
-            <param name="t">Parameter</param>
+            <param name="t">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Mahler(UMapx.Core.Complex32,UMapx.Core.Complex32)">
@@ -11665,7 +11665,7 @@
             Returns the value of the Mahler function.
             </summary>
             <param name="x">Value</param>
-            <param name="t">Parameter</param>
+            <param name="t">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gompertz(System.Single,System.Single,System.Single,System.Single)">
@@ -12299,9 +12299,9 @@
             https://en.wikipedia.org/wiki/Hypergeometric_function
             </remarks>
             </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
-            <param name="c">Parameter</param>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="c">Value</param>
             <param name="z">Value</param>
             <returns>Value</returns>
         </member>
@@ -12314,9 +12314,9 @@
             https://en.wikipedia.org/wiki/Hypergeometric_function
             </remarks>
             </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
-            <param name="c">Parameter</param>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="c">Value</param>
             <param name="z">Value</param>
             <returns>Value</returns>
         </member>
@@ -12331,8 +12331,8 @@
             https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
             </remarks>
             </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
             <param name="z">Value</param>
             <returns>Value</returns>
         </member>
@@ -12347,8 +12347,8 @@
             https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
             </remarks>
             </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
             <param name="z">Value</param>
             <returns>Value</returns>
         </member>
