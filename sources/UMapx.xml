@@ -11764,90 +11764,6 @@
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Ci(System.Single)">
-            <summary>
-            Returns the value of the integral cosine.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Ci(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the integral cosine.
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Si(System.Single)">
-            <summary>
-            Returns the value of the integral sine.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Si(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the integral sine.
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Ei(System.Single)">
-            <summary>
-            Returns the value of an integral exponential function.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Ei(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of an integral exponential function.
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Li(System.Single)">
-            <summary>
-            Returns the value of the integral logarithm.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Li(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the integral logarithm.
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Fresnelc(System.Single)">
-            <summary>
-            Returns the value of the Fresnel integral C(x).
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Fresnelc(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the Fresnel integral C(x).
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Fresnels(System.Single)">
-            <summary>
-            Returns the value of the Fresnel integral S(x).
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Fresnels(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the Fresnel integral S(x).
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
         <member name="M:UMapx.Core.Special.Erlang(System.Single,System.Int32,System.Single)">
             <summary>
             Returns the value of the Erlang C-function.
@@ -11914,130 +11830,32 @@
             <param name="k">Branch</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Boolean)">
+        <member name="M:UMapx.Core.Special.Fresnelc(System.Single)">
             <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="inverse">Reverse function or not</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32,System.Boolean)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="inverse">Reverse function or not</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfi(System.Single)">
-            <summary>
-            Returns the value of the imaginary error function.
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfi(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the imaginary error function.
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="a">The lower boundary of the normalization</param>
-            <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the Laplace integral (error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="a">The lower boundary of the normalization</param>
-            <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="a">The lower boundary of the normalization</param>
-            <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Erfc(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the Laplace integral (an additional error function).
-            </summary>
-            <param name="x">The value of the upper limit of the integral</param>
-            <param name="a">The lower boundary of the normalization</param>
-            <param name="b">The upper limit of the normalization</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
-            <summary>
-            Returns the value of the D- / D + Dawson function.
+            Returns the value of the Fresnel integral C(x).
             </summary>
             <param name="x">Value</param>
-            <param name="positive">D- или D+</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Dawson(UMapx.Core.Complex32,System.Boolean)">
+        <member name="M:UMapx.Core.Special.Fresnelc(UMapx.Core.Complex32)">
             <summary>
-            Returns the value of the D- / D + Dawson function.
+            Returns the value of the Fresnel integral C(x).
             </summary>
-            <param name="x">Value</param>
-            <param name="positive">D- или D+</param>
+            <param name="z">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
+        <member name="M:UMapx.Core.Special.Fresnels(System.Single)">
             <summary>
-            Returns the value of a Q function.
+            Returns the value of the Fresnel integral S(x).
             </summary>
             <param name="x">Value</param>
-            <param name="inverse">Inverse function or not</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Q(UMapx.Core.Complex32,System.Boolean)">
+        <member name="M:UMapx.Core.Special.Fresnels(UMapx.Core.Complex32)">
             <summary>
-            Returns the value of a Q function.
+            Returns the value of the Fresnel integral S(x).
             </summary>
-            <param name="x">Value</param>
-            <param name="inverse">Inverse function or not</param>
+            <param name="z">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Owen(System.Single,System.Single)">
@@ -12056,130 +11874,18 @@
             <param name="a">Second value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:UMapx.Core.Special.Zeta(System.Single)">
             <summary>
-            Returns the value of a hypergeometric function.
-            <remarks>
-            This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
-            More information can be found on the website:
-            https://en.wikipedia.org/wiki/Hypergeometric_function
-            </remarks>
+            Returns the value of the Riemann zeta ζ(s) on the principal branch (real s).
             </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
-            <param name="c">Parameter</param>
-            <param name="z">Value</param>
+            <param name="s">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+        <member name="M:UMapx.Core.Special.Zeta(UMapx.Core.Complex32)">
             <summary>
-            Returns the value of a hypergeometric function.
-            <remarks>
-            This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
-            More information can be found on the website:
-            https://en.wikipedia.org/wiki/Hypergeometric_function
-            </remarks>
+            Returns the value of the Riemann zeta ζ(s) on the principal branch (complex s).
             </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
-            <param name="c">Parameter</param>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of a hypergeometric function.
-            <remarks>
-            The hypergeometric function can be used in several variations:
-            F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
-            Instead of the “~” sign, use the float.NaN value.
-            More information can be found on the website:
-            https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
-            </remarks>
-            </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of a hypergeometric function.
-            <remarks>
-            The hypergeometric function can be used in several variations:
-            F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
-            Instead of the “~” sign, use the float.NaN value.
-            More information can be found on the website:
-            https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
-            </remarks>
-            </summary>
-            <param name="a">Parameter</param>
-            <param name="b">Parameter</param>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.J(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a Bessel function of the first kind.
-            </summary>
-            <param name="x">Value</param>
-            <param name="a">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.J(UMapx.Core.Complex32,System.Int32)">
-            <summary>
-            Returns the value of a Bessel function of the first kind.
-            </summary>
-            <param name="x">Value</param>
-            <param name="a">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Y(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a Bessel function of the second kind.
-            </summary>
-            <param name="x">Value</param>
-            <param name="a">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Y(UMapx.Core.Complex32,System.Int32)">
-            <summary>
-            Returns the value of a Bessel function of the second kind.
-            </summary>
-            <param name="x">Value</param>
-            <param name="a">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.I(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the modified Bessel function of the first kind.
-            </summary>
-            <param name="x">Value</param>
-            <param name="a">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.I(UMapx.Core.Complex32,System.Int32)">
-            <summary>
-            Returns the value of the modified Bessel function of the first kind.
-            </summary>
-            <param name="x">Value</param>
-            <param name="a">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.K(System.Single,System.Int32)">
-            <summary>
-            Returns the value of the modified Bessel function of the second kind.
-            </summary>
-            <param name="x">Value</param>
-            <param name="a">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.K(UMapx.Core.Complex32,System.Int32)">
-            <summary>
-            Returns the value of the modified Bessel function of the second kind.
-            </summary>
-            <param name="x">Value</param>
-            <param name="a">Value</param>
+            <param name="s">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gamma(System.Single)">
@@ -12444,6 +12150,314 @@
             <param name="k">Value</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Boolean)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="inverse">Reverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32,System.Boolean)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="inverse">Reverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfi(System.Single)">
+            <summary>
+            Returns the value of the imaginary error function.
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfi(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the imaginary error function.
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erf(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Erfc(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Laplace integral (an additional error function).
+            </summary>
+            <param name="x">The value of the upper limit of the integral</param>
+            <param name="a">The lower boundary of the normalization</param>
+            <param name="b">The upper limit of the normalization</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
+            <summary>
+            Returns the value of the D- / D + Dawson function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="positive">D- или D+</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Dawson(UMapx.Core.Complex32,System.Boolean)">
+            <summary>
+            Returns the value of the D- / D + Dawson function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="positive">D- или D+</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
+            <summary>
+            Returns the value of a Q function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="inverse">Inverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Q(UMapx.Core.Complex32,System.Boolean)">
+            <summary>
+            Returns the value of a Q function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="inverse">Inverse function or not</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ci(System.Single)">
+            <summary>
+            Returns the value of the integral cosine.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ci(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the integral cosine.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Si(System.Single)">
+            <summary>
+            Returns the value of the integral sine.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Si(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the integral sine.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ei(System.Single)">
+            <summary>
+            Returns the value of an integral exponential function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ei(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an integral exponential function.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Li(System.Single)">
+            <summary>
+            Returns the value of the integral logarithm.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Li(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the integral logarithm.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Hypergeometric_function
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="c">Parameter</param>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Hypergeometric_function
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="c">Parameter</param>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            The hypergeometric function can be used in several variations:
+            F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+            Instead of the “~” sign, use the float.NaN value.
+            More information can be found on the website:
+            https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a hypergeometric function.
+            <remarks>
+            The hypergeometric function can be used in several variations:
+            F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+            Instead of the “~” sign, use the float.NaN value.
+            More information can be found on the website:
+            https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+            </remarks>
+            </summary>
+            <param name="a">Parameter</param>
+            <param name="b">Parameter</param>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.J(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the first kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.J(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the first kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Y(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the second kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Y(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of a Bessel function of the second kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.I(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the first kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.I(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the first kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.K(System.Single,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the second kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.K(UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of the modified Bessel function of the second kind.
+            </summary>
+            <param name="x">Value</param>
+            <param name="a">Value</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
             <summary>
             Returns the value of the Struve function.
@@ -12474,20 +12488,6 @@
             </summary>
             <param name="x">Value</param>
             <param name="v">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Zeta(System.Single)">
-            <summary>
-            Returns the value of the Riemann zeta ζ(s) on the principal branch (real s).
-            </summary>
-            <param name="s">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Zeta(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the Riemann zeta ζ(s) on the principal branch (complex s).
-            </summary>
-            <param name="s">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
