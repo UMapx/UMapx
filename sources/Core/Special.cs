@@ -2623,7 +2623,7 @@ namespace UMapx.Core
         }
         #endregion
 
-
+        // needed to be approximated and optimized
 
         #region Integral functions
         /// <summary>
@@ -3003,7 +3003,7 @@ namespace UMapx.Core
                     return float.NaN;
             }
 
-            const float eps = 1e-16f;     // relative stop; adjust to 1e-8..1e-12 if нужно
+            const float eps = 1e-16f;     // relative stop; adjust to 1e-8..1e-12
             const int iterations = 140;
             const float tiny = 1e-30f;    // protect from near-zero denominator
 
@@ -4097,7 +4097,7 @@ namespace UMapx.Core
         }
         #endregion
 
-
+        // ------------------------
 
         #region Fibonacci & Lucas numbers
         /// <summary>
