@@ -3930,14 +3930,15 @@ namespace UMapx.Core
 
             // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
             float x0 = 3.0f / 2.0f, x1 = x0 + a;
-            float g0 = 1.0f / Special.Gamma(x0);
-            float g1 = 1.0f / Special.Gamma(x1);
+            double g0 = 1.0f / Special.Gamma(x0);
+            double g1 = 1.0f / Special.Gamma(x1);
 
             // construction:
-            float b = x / 2.0f;
-            float s = 0, p = 1;
-            float u = (float)Math.Pow(b, a + 1);
-            float t, eps = 1e-16f;
+            double b = x / 2.0f;
+            double s = 0, p = 1;
+            double u = Math.Pow(b, a + 1);
+            double t;
+            float eps = 1e-16f;
             int i, iterations = 120;
 
             // Taylor series:
@@ -3964,7 +3965,7 @@ namespace UMapx.Core
             }
 
             // result:
-            return s;
+            return (float)s;
         }
         /// <summary>
         /// Returns the value of the Struve function.
@@ -3981,29 +3982,29 @@ namespace UMapx.Core
             float x0 = 1.5f, x1 = 1.5f + a;
 
             // g0 = 1/Γ(3/2), g1 = 1/Γ(3/2 + a)
-            Complex32 g0 = new Complex32(1f / Special.Gamma(x0), 0f);
-            Complex32 g1 = new Complex32(1f / Special.Gamma(x1), 0f);
+            Complex g0 = new Complex(1f / Special.Gamma(x0), 0f);
+            Complex g1 = new Complex(1f / Special.Gamma(x1), 0f);
 
             // b = x/2, u = b^{a+1}
-            Complex32 b = 0.5f * x;
-            Complex32 u = Maths.Pow(b, a + 1);
+            Complex b = 0.5f * x;
+            Complex u = Complex.Pow(b, a + 1);
 
-            Complex32 s = Complex32.Zero;
-            float p = 1f;                  // alternating sign
+            Complex s = Complex.Zero;
+            Complex p = 1f;                  // alternating sign
             float eps = 1e-16f;
             int iters = 120;
 
             for (int i = 0; i < iters; i++)
             {
-                Complex32 t = p * g0 * g1 * u;
+                Complex t = p * g0 * g1 * u;
 
                 if (Maths.Abs(t) < eps) break;
 
                 s += t;
 
                 // next step: multiply each 1/Γ by b/(x0+i) and b/(x1+i) ⇒ powers grow by 2 per step
-                g0 *= b / new Complex32(x0 + i, 0f);
-                g1 *= b / new Complex32(x1 + i, 0f);
+                g0 *= b / new Complex(x0 + i, 0f);
+                g1 *= b / new Complex(x1 + i, 0f);
                 p = -p;
             }
 
@@ -4024,14 +4025,15 @@ namespace UMapx.Core
 
             // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
             float x0 = 3.0f / 2.0f, x1 = x0 + v;
-            float g0 = 1.0f / Special.Gamma(x0);
-            float g1 = 1.0f / Special.Gamma(x1);
+            double g0 = 1.0f / Special.Gamma(x0);
+            double g1 = 1.0f / Special.Gamma(x1);
 
             // construction:
-            float b = x / 2.0f;
-            float s = 0;
-            float u = (float)Math.Pow(b, v);
-            float t, eps = 1e-16f;
+            double b = x / 2.0f;
+            double s = 0;
+            double u = Math.Pow(b, v);
+            double t;
+            float eps = 1e-16f;
             int i, iterations = 120;
 
             // Taylor series:
@@ -4057,7 +4059,7 @@ namespace UMapx.Core
             }
 
             // result:
-            return b * u * s;
+            return (float)(b * u * s);
         }
         /// <summary>
         /// Returns the value of the modified Struve function.
@@ -4071,26 +4073,26 @@ namespace UMapx.Core
 
             float x0 = 1.5f, x1 = 1.5f + v;
 
-            Complex32 g0 = new Complex32(1f / Special.Gamma(x0), 0f);
-            Complex32 g1 = new Complex32(1f / Special.Gamma(x1), 0f);
+            Complex g0 = new Complex(1f / Special.Gamma(x0), 0f);
+            Complex g1 = new Complex(1f / Special.Gamma(x1), 0f);
 
-            Complex32 b = 0.5f * x;
-            Complex32 u = Maths.Pow(b, v);    // will multiply by b at the end
+            Complex b = 0.5f * x;
+            Complex u = Complex.Pow(b, v);    // will multiply by b at the end
 
-            Complex32 s = Complex32.Zero;
+            Complex s = Complex.Zero;
             float eps = 1e-16f;
             int iters = 120;
 
             for (int i = 0; i < iters; i++)
             {
-                Complex32 t = g0 * g1 * u;
+                Complex t = g0 * g1 * u;
 
                 if (Maths.Abs(t) < eps) break;
-
+                
                 s += t;
 
-                g0 *= b / new Complex32(x0 + i, 0f);
-                g1 *= b / new Complex32(x1 + i, 0f);
+                g0 *= b / new Complex(x0 + i, 0f);
+                g1 *= b / new Complex(x1 + i, 0f);
             }
 
             // your real version returns:  b * u * s  ⇒ total power (z/2)^{2k+v+1}
