@@ -101,7 +101,6 @@ namespace UMapx.Imaging
 
             Parallel.For(0, height, y =>
             {
-                // отдельная гистограмма для каждого канала
                 int[] histB = new int[range];
                 int[] histG = new int[range];
                 int[] histR = new int[range];

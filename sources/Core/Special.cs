@@ -2525,7 +2525,7 @@ namespace UMapx.Core
         /// Returns the value of the D- / D + Dawson function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <param name="positive">D- или D+</param>
+        /// <param name="positive">D- or D+</param>
         /// <returns>Value</returns>
         public static float Dawson(float x, bool positive)
         {
@@ -2548,7 +2548,7 @@ namespace UMapx.Core
         /// Returns the value of the D- / D + Dawson function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <param name="positive">D- или D+</param>
+        /// <param name="positive">D- or D+</param>
         /// <returns>Value</returns>
         public static Complex32 Dawson(Complex32 x, bool positive)
         {
@@ -2566,6 +2566,29 @@ namespace UMapx.Core
             Complex32 e = Special.Erf(x);
             Complex32 d = Maths.Exp(y);
             return g * d * e;
+        }
+        #endregion
+
+        #region Faddeeva function
+        /// <summary>
+        /// Returns the value of the Faddeeva function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Faddeeva(float x)
+        {
+            float re = (float)Math.Exp(-(double)x * x);
+            float im = (float)(2.0 / Math.Sqrt(Math.PI)) * Special.Dawson(x, true);
+            return new Complex32(re, im);
+        }
+        /// <summary>
+        /// Returns the value of the Faddeeva function.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Faddeeva(Complex32 x)
+        {
+            return Maths.Exp(-x * x) * Special.Erfc(-x * Complex32.I);
         }
         #endregion
 
@@ -2981,7 +3004,7 @@ namespace UMapx.Core
             }
 
             const float eps = 1e-16f;     // relative stop; adjust to 1e-8..1e-12 if нужно
-            const int iterations = 140; // как в комплексной версии
+            const int iterations = 140;
             const float tiny = 1e-30f;    // protect from near-zero denominator
 
             float s = 1f;  // partial sum

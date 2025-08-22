@@ -12249,7 +12249,7 @@
             Returns the value of the D- / D + Dawson function.
             </summary>
             <param name="x">Value</param>
-            <param name="positive">D- или D+</param>
+            <param name="positive">D- or D+</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Dawson(UMapx.Core.Complex32,System.Boolean)">
@@ -12257,7 +12257,21 @@
             Returns the value of the D- / D + Dawson function.
             </summary>
             <param name="x">Value</param>
-            <param name="positive">D- или D+</param>
+            <param name="positive">D- or D+</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Faddeeva(System.Single)">
+            <summary>
+            Returns the value of the Faddeeva function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Faddeeva(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the Faddeeva function.
+            </summary>
+            <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Q(System.Single,System.Boolean)">
