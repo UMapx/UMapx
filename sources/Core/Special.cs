@@ -1275,7 +1275,7 @@ namespace UMapx.Core
                     Ak += term;
 
                     // next binomial C(k,q+1)
-                    C *= (double)(k - q) / (q + 1.0);
+                    C *= (k - q) / (q + 1.0);
                 }
 
                 double Tk = Ak / Math.Pow(2.0, k + 1.0);
@@ -2301,8 +2301,8 @@ namespace UMapx.Core
             }
             else
             {
-                if (x.Imag == 0f)
-                    return new Complex32(Erf(x.Real, true), 0f);
+                // inverse error function: y = erf^{-1}(x)
+                if (x.Imag == 0f) return new Complex32(Erf(x.Real, true), 0f);
 
                 const double a = 0.147;
                 Complex u = Complex.Log(Complex.One - z * z);
@@ -2358,8 +2358,7 @@ namespace UMapx.Core
                 return (float)val;
             }
 
-            if (ax > DBL_OVER_X)
-                return x > 0 ? float.PositiveInfinity : float.NegativeInfinity;
+            if (ax > DBL_OVER_X) return x > 0 ? float.PositiveInfinity : float.NegativeInfinity;
 
             // erfi(x) ≈ e^{x^2} / (√π x) * ( 1 + 1/(2x^2) + 3/(4x^4) + 15/(8x^6) + 105/(16x^8) )
             double invx = 1.0 / ax;
