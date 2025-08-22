@@ -179,6 +179,7 @@ namespace UMapx.Visualization
 
                 foreach (var pane in _panes)
                 {
+                    // TODO: avoid singular values: NaN, Infinity
                     _xmin = Math.Min(_xmin, pane.X.Min());
                     _xmax = Math.Max(_xmax, pane.X.Max());
                     _ymin = Math.Min(_ymin, pane.Y.Min());
