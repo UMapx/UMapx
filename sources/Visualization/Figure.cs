@@ -78,6 +78,9 @@ namespace UMapx.Visualization
                 if (value.Min == value.Max)
                     throw new ArgumentOutOfRangeException("Start and end points cannot be the same");
 
+                if (Maths.IsSingular(value.Min) || Maths.IsSingular(value.Max))
+                    throw new ArgumentOutOfRangeException("Start of end points cannot be singular");
+
                 _xmin = value.Min; _xmax = value.Max;
             }
         }
@@ -95,6 +98,9 @@ namespace UMapx.Visualization
                 if (value.Min == value.Max)
                     throw new ArgumentOutOfRangeException("Start and end points cannot be the same");
 
+                if (Maths.IsSingular(value.Min) || Maths.IsSingular(value.Max))
+                    throw new ArgumentOutOfRangeException("Start of end points cannot be singular");
+
                 _ymin = value.Min; _ymax = value.Max;
             }
         }
@@ -111,6 +117,9 @@ namespace UMapx.Visualization
             {
                 if (value.X < 1 || value.Y < 1)
                     throw new ArgumentException("The range of marks cannot be less than 1");
+
+                if (value.X > 20 || value.Y > 20)
+                    throw new ArgumentException("The range of marks cannot be more than 20");
 
                 _xscale = value.X; _yscale = value.Y;
             }

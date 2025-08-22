@@ -101,7 +101,7 @@ namespace UMapx.Visualization
         /// </remarks>
         public static bool IsSingularPoint(float a)
         {
-            return Maths.IsSquare(a);
+            return Maths.IsSingular(a);
         }
         /// <summary>
         /// Clips a value to a half-open range, returning a sentinel just outside if out of bounds.
