@@ -2623,7 +2623,7 @@ namespace UMapx.Core
         }
         #endregion
 
-        // needed to be approximated and optimized
+        // TODO: needed to be approximated and optimized
 
         #region Integral functions
         /// <summary>
