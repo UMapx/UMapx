@@ -3808,49 +3808,45 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float H(float x, int a)
         {
-            // Struve function calculation method.
-            // special cases:
-            if (a < 0)
-                return 0.0f;
+            if (a < 0) return 0f;
+            if (x == 0f) return 0f;
 
-            // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
-            float x0 = 3.0f / 2.0f, x1 = x0 + a;
-            double g0 = 1.0f / Special.Gamma(x0);
-            double g1 = 1.0f / Special.Gamma(x1);
+            double ax = Math.Abs((double)x);
+            double signArg = (x < 0) ? (((a & 1) == 0) ? -1.0 : 1.0) : 1.0;
 
-            // construction:
-            double b = x / 2.0f;
-            double s = 0, p = 1;
-            double u = Math.Pow(b, a + 1);
-            double t;
-            float eps = 1e-16f;
-            int i, iterations = 120;
+            const double XSW = 12.0;
+            double ga = Special.Gamma(a + 0.5f);
+            double invNorm = 1.0 / (Math.Sqrt(Math.PI) * ga);
 
-            // Taylor series:
-            for (i = 0; i < iterations; i++)
+            if (ax <= XSW)
             {
-                // value:
-                t = p * g0 * g1 * u;
+                double pref = 2.0 * Math.Pow(0.5 * ax, a) * invNorm;
 
-                // stop point:
-                if (Math.Abs(t) < eps)
-                {
-                    break;
-                }
-                else
-                {
-                    // summary:
-                    s += t;
+                double sum = 0.0, half = Math.PI * 0.25;
+                double[] u = { -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
+                        0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363 };
+                double[] w = { 0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
+                       0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763 };
 
-                    // for next step:
-                    g0 *= b / (x0 + i);
-                    g1 *= b / (x1 + i);
-                    p = -p;
+                for (int i = 0; i < 8; i++)
+                {
+                    double tau = half * (u[i] + 1.0);
+                    double wt = half * w[i];
+                    double s2a = Math.Pow(Math.Sin(tau), 2 * a);
+                    double f = Math.Sin(ax * Math.Cos(tau));   // <--- ax
+                    sum += wt * s2a * f;
                 }
+
+                double val = pref * sum;
+                return (float)(signArg * val);
             }
-
-            // result:
-            return (float)s;
+            else
+            {
+                double lead = Math.Pow(0.5 * ax, a - 1) * invNorm;
+                double ya = Special.Y((float)ax, a);          // <--- Y(|x|,a)
+                double val = ya + lead;
+                return (float)(signArg * val);
+            }
         }
         /// <summary>
         /// Returns the value of the Struve function.
@@ -3860,40 +3856,46 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 H(Complex32 x, int a)
         {
-            // special cases / convention
             if (a < 0) return Complex32.Zero;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
 
-            // constants: x0 = 3/2, x1 = 3/2 + a
-            float x0 = 1.5f, x1 = 1.5f + a;
+            if (x.Imag == 0f)
+                return new Complex32(H(x.Real, a), 0f);
 
-            // g0 = 1/Γ(3/2), g1 = 1/Γ(3/2 + a)
-            Complex g0 = new Complex(1f / Special.Gamma(x0), 0f);
-            Complex g1 = new Complex(1f / Special.Gamma(x1), 0f);
+            var Z = new Complex(x.Real, x.Imag);
+            double r = Maths.Abs(x);
+            const double XSW = 12.0;
 
-            // b = x/2, u = b^{a+1}
-            Complex b = 0.5f * x;
-            Complex u = Complex.Pow(b, a + 1);
+            double ga = Special.Gamma(a + 0.5f);
+            double invNorm = 1.0 / (Math.Sqrt(Math.PI) * ga);
 
-            Complex s = Complex.Zero;
-            Complex p = 1f;                  // alternating sign
-            float eps = 1e-16f;
-            int iters = 120;
-
-            for (int i = 0; i < iters; i++)
+            if (r <= XSW)
             {
-                Complex t = p * g0 * g1 * u;
-
-                if (Maths.Abs(t) < eps) break;
-
-                s += t;
-
-                // next step: multiply each 1/Γ by b/(x0+i) and b/(x1+i) ⇒ powers grow by 2 per step
-                g0 *= b / new Complex(x0 + i, 0f);
-                g1 *= b / new Complex(x1 + i, 0f);
-                p = -p;
+                var sum = Complex.Zero;
+                double half = Math.PI * 0.25;
+                double[] u = { -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
+                        0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363 };
+                double[] w = { 0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
+                       0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763 };
+                for (int i = 0; i < 8; i++)
+                {
+                    double tau = half * (u[i] + 1.0);
+                    double wt = half * w[i];
+                    double s2a = Math.Pow(Math.Sin(tau), 2 * a);
+                    var f = Complex.Sin(Z * Math.Cos(tau));
+                    sum += wt * s2a * f;
+                }
+                var pref = 2.0 * invNorm * Complex.Exp(a * Complex.Log(Z * 0.5));
+                var val = pref * sum;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
-
-            return s;
+            else
+            {
+                var lead = Complex.Exp((a - 1) * Complex.Log(Z * 0.5)) * invNorm;
+                var ya = Special.Y(x, a);
+                var val = new Complex(ya.Real, ya.Imag) + lead;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
+            }
         }
         /// <summary>
         /// Returns the value of the modified Struve function.
@@ -3903,48 +3905,45 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float L(float x, int v)
         {
-            // Modified Struve function calculation method.
-            // special cases:
-            if (v < 0)
-                return 0.0f;
+            if (v < 0) return 0f;
+            if (x == 0f) return 0f;
 
-            // {1.0 / Г(3/2)} and {1.0 / Г(3/2 + a)}
-            float x0 = 3.0f / 2.0f, x1 = x0 + v;
-            double g0 = 1.0f / Special.Gamma(x0);
-            double g1 = 1.0f / Special.Gamma(x1);
+            double ax = Math.Abs((double)x);
+            double signArg = (x < 0) ? (((v & 1) == 0) ? -1.0 : 1.0) : 1.0; // (-1)^{v+1}
 
-            // construction:
-            double b = x / 2.0f;
-            double s = 0;
-            double u = Math.Pow(b, v);
-            double t;
-            float eps = 1e-16f;
-            int i, iterations = 120;
+            const double XSW = 12.0;
+            double gv = Special.Gamma(v + 0.5f);
+            double invNorm = 1.0 / (Math.Sqrt(Math.PI) * gv);
 
-            // Taylor series:
-            for (i = 0; i < iterations; i++)
+            if (ax <= XSW)
             {
-                // value:
-                t = g0 * g1 * u;
+                double pref = 2.0 * Math.Pow(0.5 * ax, v) * invNorm;
 
-                // stop point:
-                if (Math.Abs(t) < eps)
-                {
-                    break;
-                }
-                else
-                {
-                    // summary:
-                    s += t;
+                double sum = 0.0, half = Math.PI * 0.25;
+                double[] u = { -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
+                        0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363 };
+                double[] w = { 0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
+                       0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763 };
 
-                    // for next step:
-                    g0 *= b / (x0 + i);
-                    g1 *= b / (x1 + i);
+                for (int i = 0; i < 8; i++)
+                {
+                    double tau = half * (u[i] + 1.0);
+                    double wt = half * w[i];
+                    double s2v = Math.Pow(Math.Sin(tau), 2 * v);
+                    double f = Math.Sinh(ax * Math.Cos(tau));   // <--- ax
+                    sum += wt * s2v * f;
                 }
+
+                double val = pref * sum;
+                return (float)(signArg * val);
             }
-
-            // result:
-            return (float)(b * u * s);
+            else
+            {
+                double lead = Math.Pow(0.5 * ax, v - 1) * invNorm;
+                double iv = Special.I((float)ax, v);   // I(|x|,v); I_n(-x) = (-1)^n I_n(x)
+                double val = iv + lead;
+                return (float)(signArg * val);
+            }
         }
         /// <summary>
         /// Returns the value of the modified Struve function.
@@ -3955,37 +3954,48 @@ namespace UMapx.Core
         public static Complex32 L(Complex32 x, int v)
         {
             if (v < 0) return Complex32.Zero;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
 
-            float x0 = 1.5f, x1 = 1.5f + v;
+            if (x.Imag == 0f)
+                return new Complex32(L(x.Real, v), 0f);
 
-            Complex g0 = new Complex(1f / Special.Gamma(x0), 0f);
-            Complex g1 = new Complex(1f / Special.Gamma(x1), 0f);
+            var Z = new Complex(x.Real, x.Imag);
+            double r = Maths.Abs(x);
+            const double XSW = 12.0;
 
-            Complex b = 0.5f * x;
-            Complex u = Complex.Pow(b, v);    // will multiply by b at the end
+            double gv = Special.Gamma(v + 0.5f);
+            double invNorm = 1.0 / (Math.Sqrt(Math.PI) * gv);
 
-            Complex s = Complex.Zero;
-            float eps = 1e-16f;
-            int iters = 120;
-
-            for (int i = 0; i < iters; i++)
+            if (r <= XSW)
             {
-                Complex t = g0 * g1 * u;
+                var sum = Complex.Zero;
+                double half = Math.PI * 0.25;
+                double[] u = { -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
+                        0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363 };
+                double[] w = { 0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
+                       0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763 };
+                for (int i = 0; i < 8; i++)
+                {
+                    double tau = half * (u[i] + 1.0);
+                    double wt = half * w[i];
+                    double s2v = Math.Pow(Math.Sin(tau), 2 * v);
+                    var f = Complex.Sinh(Z * Math.Cos(tau));
+                    sum += wt * s2v * f;
+                }
 
-                if (Maths.Abs(t) < eps) break;
-                
-                s += t;
-
-                g0 *= b / new Complex(x0 + i, 0f);
-                g1 *= b / new Complex(x1 + i, 0f);
+                var pref = 2.0 * invNorm * Complex.Exp(v * Complex.Log(Z * 0.5));
+                var val = pref * sum;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
-
-            // your real version returns:  b * u * s  ⇒ total power (z/2)^{2k+v+1}
-            return b * u * s;
+            else
+            {
+                var lead = Complex.Exp((v - 1) * Complex.Log(Z * 0.5)) * invNorm;
+                var iv = Special.I(x, v);
+                var val = new Complex(iv.Real, iv.Imag) + lead;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
+            }
         }
         #endregion
-
-        // ------------------------
 
         #region Fibonacci & Lucas numbers
         /// <summary>
