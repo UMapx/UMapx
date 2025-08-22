@@ -27,7 +27,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <DocumentationFile>UMapx.xml</DocumentationFile>
     <OutputPath></OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
