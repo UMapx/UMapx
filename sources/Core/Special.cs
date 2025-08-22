@@ -3788,41 +3788,70 @@ namespace UMapx.Core
             if (x == 0f) return 0f;
 
             double ax = Math.Abs((double)x);
-            double signArg = (x < 0) ? (((a & 1) == 0) ? -1.0 : 1.0) : 1.0;
+            double signArg = (x < 0) ? ((a & 1) == 0) ? -1.0 : 1.0 : 1.0;
 
-            const double XSW = 12.0;
-            double ga = Special.Gamma(a + 0.5f);
-            double invNorm = 1.0 / (Math.Sqrt(Math.PI) * ga);
+            const double XSW = 25.0;
+            const double BW = 1.0;
 
-            if (ax <= XSW)
+            double invNorm0 = 1.0 / (Math.Sqrt(Math.PI) * Special.Gamma(a + 0.5f)); // 1/(√π Γ(a+1/2))
+            double invNorm1 = 1.0 / (Math.Sqrt(Math.PI) * Special.Gamma(a - 0.5f)); // 1/(√π Γ(a-1/2))
+
+            double smallVal()
             {
-                double pref = 2.0 * Math.Pow(0.5 * ax, a) * invNorm;
+                double pref = 2.0 * Math.Pow(0.5 * ax, a) * invNorm0;
+                int panels = Math.Max(2, (int)Math.Ceiling(ax / 4.0));
 
-                double sum = 0.0, half = Math.PI * 0.25;
-                double[] u = { -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
-                        0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363 };
-                double[] w = { 0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
-                       0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763 };
+                double[] u = {
+                    -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
+                     0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363
+                };
+                double[] w = {
+                    0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
+                    0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763
+                };
 
-                for (int i = 0; i < 8; i++)
+                double sum = 0.0;
+                for (int p = 0; p < panels; p++)
                 {
-                    double tau = half * (u[i] + 1.0);
-                    double wt = half * w[i];
-                    double s2a = Math.Pow(Math.Sin(tau), 2 * a);
-                    double f = Math.Sin(ax * Math.Cos(tau));   // <--- ax
-                    sum += wt * s2a * f;
-                }
+                    double aτ = p * (Math.PI * 0.5) / panels;
+                    double bτ = (p + 1) * (Math.PI * 0.5) / panels;
+                    double half = 0.5 * (bτ - aτ);
+                    double mid = 0.5 * (aτ + bτ);
 
-                double val = pref * sum;
-                return (float)(signArg * val);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        double tau = mid + half * u[i];
+                        double wt = half * w[i];
+                        double s2a = Math.Pow(Math.Sin(tau), 2 * a);
+                        double f = Math.Sin(ax * Math.Cos(tau));
+                        sum += wt * s2a * f;
+                    }
+                }
+                return pref * sum;
             }
+
+            double largeVal()
+            {
+                double ya = Special.Y((float)ax, a); // Y_a(|x|)
+                double lead0 = Math.Pow(0.5 * ax, a - 1) * invNorm0;
+                double lead1 = 4.0 / 3.0 * Math.Pow(0.5 * ax, a - 3) * invNorm1;
+                return ya + (lead0 - lead1);
+            }
+
+            double valSmall = smallVal();
+            double valLarge = largeVal();
+            double val;
+
+            if (ax <= XSW - BW) val = valSmall;
+            else if (ax >= XSW + BW) val = valLarge;
             else
             {
-                double lead = Math.Pow(0.5 * ax, a - 1) * invNorm;
-                double ya = Special.Y((float)ax, a);          // <--- Y(|x|,a)
-                double val = ya + lead;
-                return (float)(signArg * val);
+                double t = (ax - (XSW - BW)) / (2.0 * BW);
+                double wBlend = 0.5 * (1.0 - Math.Cos(Math.PI * t));
+                val = (1.0 - wBlend) * valSmall + wBlend * valLarge;
             }
+
+            return (float)(signArg * val);
         }
         /// <summary>
         /// Returns the value of the Struve function.
@@ -3834,44 +3863,77 @@ namespace UMapx.Core
         {
             if (a < 0) return Complex32.Zero;
             if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
-
-            if (x.Imag == 0f)
-                return new Complex32(H(x.Real, a), 0f);
+            if (x.Imag == 0f) return new Complex32(H(x.Real, a), 0f);
 
             var Z = new Complex(x.Real, x.Imag);
             double r = Maths.Abs(x);
-            const double XSW = 12.0;
 
-            double ga = Special.Gamma(a + 0.5f);
-            double invNorm = 1.0 / (Math.Sqrt(Math.PI) * ga);
+            const double XSW = 25.0;
+            const double BW = 1.0;
 
-            if (r <= XSW)
+            double invNorm0 = 1.0 / (Math.Sqrt(Math.PI) * Special.Gamma(a + 0.5f)); // 1/(√π Γ(a+1/2))
+            double invNorm1 = 1.0 / (Math.Sqrt(Math.PI) * Special.Gamma(a - 0.5f)); // 1/(√π Γ(a-1/2))
+
+            Complex smallVal()
             {
+                // pref = 2/(√π Γ) * (Z/2)^a
+                var pref = 2.0 * invNorm0 * Complex.Pow(Z * 0.5, a);
+
+                int panels = Math.Max(2, (int)Math.Ceiling(r / 4.0));
+                double[] u = {
+                    -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
+                     0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363
+                };
+                double[] w = {
+                    0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
+                    0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763
+                };
+
                 var sum = Complex.Zero;
-                double half = Math.PI * 0.25;
-                double[] u = { -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
-                        0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363 };
-                double[] w = { 0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
-                       0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763 };
-                for (int i = 0; i < 8; i++)
+                for (int p = 0; p < panels; p++)
                 {
-                    double tau = half * (u[i] + 1.0);
-                    double wt = half * w[i];
-                    double s2a = Math.Pow(Math.Sin(tau), 2 * a);
-                    var f = Complex.Sin(Z * Math.Cos(tau));
-                    sum += wt * s2a * f;
+                    double aτ = (p) * (Math.PI * 0.5) / panels;
+                    double bτ = (p + 1) * (Math.PI * 0.5) / panels;
+                    double half = 0.5 * (bτ - aτ);
+                    double mid = 0.5 * (aτ + bτ);
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        double tau = mid + half * u[i];
+                        double wt = half * w[i];
+                        double s2a = Math.Pow(Math.Sin(tau), 2 * a);
+                        var f = Complex.Sin(Z * Math.Cos(tau));
+                        sum += wt * s2a * f;
+                    }
                 }
-                var pref = 2.0 * invNorm * Complex.Exp(a * Complex.Log(Z * 0.5));
-                var val = pref * sum;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
+                return pref * sum;
             }
+
+            Complex largeVal()
+            {
+                Complex32 ya32 = Special.Y(x, a);
+                var ya = new Complex(ya32.Real, ya32.Imag);
+
+                var lead0 = Complex.Pow(Z * 0.5, a - 1) * invNorm0;
+                var lead1 = (4.0 / 3.0) * Complex.Pow(Z * 0.5, a - 3) * invNorm1;
+
+                return ya + (lead0 - lead1);
+            }
+
+            var valSmall = smallVal();
+            var valLarge = largeVal();
+            Complex val;
+
+            if (r <= XSW - BW) val = valSmall;
+            else if (r >= XSW + BW) val = valLarge;
             else
             {
-                var lead = Complex.Exp((a - 1) * Complex.Log(Z * 0.5)) * invNorm;
-                var ya = Special.Y(x, a);
-                var val = new Complex(ya.Real, ya.Imag) + lead;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
+                double t = (r - (XSW - BW)) / (2.0 * BW);
+                double wBlend = 0.5 * (1.0 - Math.Cos(Math.PI * t));
+                val = (1.0 - wBlend) * valSmall + wBlend * valLarge;
             }
+
+            return new Complex32((float)val.Real, (float)val.Imaginary);
         }
         /// <summary>
         /// Returns the value of the modified Struve function.
