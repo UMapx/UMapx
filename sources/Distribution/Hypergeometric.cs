@@ -172,10 +172,10 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            float a = Special.Binomial(d, x);
-            float b = Special.Binomial(n - d, k - x);
-            float c = Special.Binomial(n, k);
-            return (a * b) / c;
+            double a = Special.Binomial(d, x);
+            double b = Special.Binomial(n - d, k - x);
+            double c = Special.Binomial(n, k);
+            return (float)(a * b / c);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.

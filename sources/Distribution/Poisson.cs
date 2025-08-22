@@ -128,7 +128,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return (float)Math.Exp(-l) * (float)Math.Pow(l, x) / Special.Factorial(x);
+            return (float)Math.Exp(-l) * (float)Math.Pow(l, x) / (float)Special.Factorial(x);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -155,10 +155,10 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// 
+        /// Calculate row.
         /// </summary>
-        /// <param name="l"></param>
-        /// <returns></returns>
+        /// <param name="l">Value</param>
+        /// <returns>Value</returns>
         private float Row(float l)
         {
             float sum = 0;
@@ -167,7 +167,7 @@ namespace UMapx.Distribution
 
             for (k = 0; k < n; k++)
             {
-                fac = Special.Factorial(k);
+                fac = (float)Special.Factorial(k);
                 sum += (float)Math.Pow(l, k) * (float)Math.Log(fac) / fac;
             }
 

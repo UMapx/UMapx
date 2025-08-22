@@ -59,7 +59,7 @@ namespace UMapx.Wavelet
             {
                 return 0;
             }
-            return (x - n) / Special.Factorial(n) * (float)Math.Pow(x, n - 1) * (float)Math.Exp(-x);
+            return (float)((x - n) / Special.Factorial(n) * Math.Pow(x, n - 1) *Math.Exp(-x));
         }
         #endregion
     }

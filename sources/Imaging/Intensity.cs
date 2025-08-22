@@ -695,7 +695,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="range">Pair of numbers Max и Min</param>
+        /// <param name="range">Pair of numbers max and min</param>
         /// <param name="delta">Delta</param>
         /// <param name="length">Length</param>
         /// <returns>Array</returns>

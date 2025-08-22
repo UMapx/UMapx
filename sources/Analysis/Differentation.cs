@@ -174,7 +174,6 @@ namespace UMapx.Analysis
         public static float[,] GetCoefficients(int points)
         {
             // Compute difference coefficient table
-            float fac = Special.Factorial(points);
             float[,] deltas = new float[points, points];
             float h, delta;
             int j, k;
@@ -187,7 +186,7 @@ namespace UMapx.Analysis
 
                 for (k = 0; k < points; k++)
                 {
-                    deltas[j, k] = h / Special.Factorial(k);
+                    deltas[j, k] = h / (float)Special.Factorial(k);
                     h *= delta;
                 }
             }
@@ -196,6 +195,7 @@ namespace UMapx.Analysis
             deltas = Matrice.Invert(deltas);
 
             //// rounding
+            //float fac = (float)Special.Factorial(points);
             //for (j = 0; j < points; j++)
             //    for (k = 0; k < points; k++)
             //        deltas[j, k] = (Math.Round(deltas[j, k] * fac, MidpointRounding.AwayFromZero)) / fac;

@@ -63,7 +63,7 @@ namespace UMapx.Window
             return G(x) - a / b;
         }
         /// <summary>
-        /// Функция G(x).
+        /// Function G(x).
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>

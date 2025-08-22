@@ -154,7 +154,7 @@ namespace UMapx.Distribution
             {
                 return float.NaN;
             }
-            return (float)Math.Pow(lambda, k) * (float)Math.Pow(x, k - 1) * (float)Math.Exp(-lambda * x) / Special.Factorial(k - 1);
+            return (float)Math.Pow(lambda, k) * (float)Math.Pow(x, k - 1) * (float)Math.Exp(-lambda * x) / (float)Special.Factorial(k - 1);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -167,7 +167,7 @@ namespace UMapx.Distribution
             {
                 return float.NaN;
             }
-            return Special.GammaIncomplete(k, lambda * x) / Special.Factorial(k - 1);
+            return Special.GammaIncomplete(k, lambda * x) / (float)Special.Factorial(k - 1);
         }
         #endregion
     }

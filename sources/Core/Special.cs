@@ -2122,7 +2122,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Value</param>
         /// <returns>Value</returns>
-        public static float Factorial(float n)
+        public static double Factorial(float n)
         {
             // check it:
             if (n >= 0 && n == Maths.Round(n))
@@ -2130,7 +2130,7 @@ namespace UMapx.Core
                 // get it from memory
                 if (n <= 170)
                 {
-                    return (float)Special.A000142[(int)n];
+                    return Special.A000142[(int)n];
                 }
                 return float.NaN;
             }
@@ -2151,7 +2151,7 @@ namespace UMapx.Core
         /// <param name="n">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
-        public static float FactorialDown(float n, float k)
+        public static double FactorialDown(float n, float k)
         {
             return Special.Factorial(n) / Special.Factorial(n - k);
         }
@@ -2198,7 +2198,7 @@ namespace UMapx.Core
         /// <param name="n">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
-        public static float Binomial(float n, float k)
+        public static double Binomial(float n, float k)
         {
             if (k < 0)
             {
@@ -2911,7 +2911,7 @@ namespace UMapx.Core
         /// <param name="m">Integer number</param>
         /// <param name="n">Integer number</param>
         /// <returns>Value</returns>
-        public static float Beta(int m, int n)
+        public static double Beta(int m, int n)
         {
             return Special.Factorial(m - 1) * Special.Factorial(n - 1) / Special.Factorial(m + n - 1);
         }
@@ -3158,7 +3158,6 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Si(float x)
         {
-            // нечётность
             if (x < 0f) return -Si(-x);
 
             double xd = x;
@@ -4288,7 +4287,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Value</param>
         /// <returns>Value</returns>
-        public static float Euler(int n)
+        public static double Euler(int n)
         {
             // special cases:
             if (n < 0)
@@ -4302,7 +4301,7 @@ namespace UMapx.Core
                 // get it from memory
                 if (n <= 186)
                 {
-                    return (float)Special.A122045[n / 2 - 1];
+                    return Special.A122045[n / 2 - 1];
                 }
                 return float.NaN;
             }
@@ -4315,12 +4314,12 @@ namespace UMapx.Core
         /// <param name="n">Order</param>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static float Euler(int n, float x)
+        public static double Euler(int n, float x)
         {
             // properties:
-            float p = 1, s = 0;
-            float v = x - 0.5f;
-            float u = (float)Math.Pow(v, n);
+            double p = 1, s = 0;
+            double v = x - 0.5f;
+            double u = Math.Pow(v, n);
 
             // series:
             for (int k = 0; k <= n; k++)
@@ -4339,7 +4338,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="n">Value</param>
         /// <returns>Value</returns>
-        public static float Bernoulli(int n)
+        public static double Bernoulli(int n)
         {
             // special cases:
             if (n < 0)
@@ -4355,7 +4354,7 @@ namespace UMapx.Core
                 // get it from memory
                 if (n <= 258)
                 {
-                    return (float)Special.A027641[n / 2 - 1];
+                    return Special.A027641[n / 2 - 1];
                 }
                 return float.NaN;
             }
@@ -4368,10 +4367,10 @@ namespace UMapx.Core
         /// <param name="n">Order</param>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static float Bernoulli(int n, float x)
+        public static double Bernoulli(int n, float x)
         {
             // properties:
-            float p = 1, s = 0;
+            double p = 1, s = 0;
 
             // series:
             for (int k = 0; k <= n; k++)

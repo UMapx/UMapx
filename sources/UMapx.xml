@@ -16471,10 +16471,10 @@
         </member>
         <member name="M:UMapx.Distribution.Poisson.Row(System.Single)">
             <summary>
-            
+            Calculate row.
             </summary>
-            <param name="l"></param>
-            <returns></returns>
+            <param name="l">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Rademacher">
             <summary>
@@ -20827,7 +20827,7 @@
             <summary>
             Returns the correction mask.
             </summary>
-            <param name="range">Pair of numbers Max и Min</param>
+            <param name="range">Pair of numbers max and min</param>
             <param name="delta">Delta</param>
             <param name="length">Length</param>
             <returns>Array</returns>
@@ -31914,7 +31914,7 @@
         </member>
         <member name="M:UMapx.Window.Confined.G(System.Single)">
             <summary>
-            Функция G(x).
+            Function G(x).
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
