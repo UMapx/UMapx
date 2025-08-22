@@ -208,7 +208,7 @@ namespace UMapx.Core
                 return x;
 
             // recursion formula for Hermite polynomials
-            float ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
+            float ksi = x * Hermite(x, m - 1) - (m - 1) * Hermite(x, m - 2);
             return 2 * ksi;
         }
         /// <summary>
@@ -225,7 +225,7 @@ namespace UMapx.Core
                 return x;
 
             // recursion formula for Hermite polynomials
-            Complex32 ksi = x * Hermite(x, m - 1) - m * Hermite(x, m - 2);
+            Complex32 ksi = x * Hermite(x, m - 1) - (m - 1) * Hermite(x, m - 2);
             return 2 * ksi;
         }
         #endregion
@@ -330,7 +330,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Agd(float x)
         {
-            return Maths.Atan(Maths.Sin(x));
+            // gd^{-1}(x) = artanh(sin(x))
+            return Maths.Atanh(Maths.Sin(x));
         }
         /// <summary>
         /// Returns the value of the inverse Guderman function.
@@ -339,7 +340,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Agd(Complex32 x)
         {
-            return Maths.Atan(Maths.Sin(x));
+            // gd^{-1}(x) = artanh(sin(x))
+            return Maths.Atanh(Maths.Sin(x));
         }
         /// <summary>
         /// Returns the value of the Guderman function.
