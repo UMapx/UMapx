@@ -3025,8 +3025,6 @@ namespace UMapx.Core
         }
         #endregion
 
-        // TODO: needed to be approximated and optimized
-
         #region Integral functions
         /// <summary>
         /// Returns the value of the integral cosine.
@@ -3035,43 +3033,59 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Ci(float x)
         {
-            // special cases:
-            if (x == 0)
-                return float.NegativeInfinity;
-            if (x < 0)
-                return float.NaN;
-            if (x > 35)
-                return 0.0f;
+            if (x == 0f) return float.NegativeInfinity;
+            if (x < 0f) return float.NaN;
 
-            // properties:
-            double s = 0;
-            double f = 1.0f;
-            double z = x * x;
-            double t, m = 1;
-            float eps = 1e-16f;
-            int k, i, iterations = 120;
-            int p = 1;
+            double xd = x;
+            const double XSW = 16.0;
 
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
+            if (xd <= XSW)
             {
-                // factorial:
-                k = 2 * i;
-                f *= k * (k - 1);
-
-                // sign and value:
-                p *= -1;
-                m *= z;
-                t = p * m / (f * k);
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
+                // Ci(x) = γ + ln x + ∫_0^1 (cos(x t) - 1)/t dt
+                double integral = GaussLegendre01(t => (Math.Cos(xd * t) - 1.0) / t);
+                return (float)(Maths.Gamma + Math.Log(xd) + integral);
+            }
+            else
+            {
+                // S0 = Σ (-1)^n (2n)! / x^{2n+1}, S1 = Σ (-1)^n (2n+1)! / x^{2n+2}
+                double inv = 1.0 / xd, inv2 = inv * inv;
+                double s0 = inv * (1.0 - 2.0 * inv2 + 24.0 * inv2 * inv2 - 720.0 * inv2 * inv2 * inv2);
+                double s1 = inv * inv * (1.0 - 6.0 * inv2 + 120.0 * inv2 * inv2 - 5040.0 * inv2 * inv2 * inv2);
+                double sinx = Math.Sin(xd), cosx = Math.Cos(xd);
+                return (float)(sinx * s0 - cosx * s1);
             }
 
-            // construction:
-            return Maths.Gamma + Maths.Log(x) + (float)s;
+            static double GaussLegendre01(Func<double, double> f, int panels = 1)
+            {
+                double[] u = new double[] {
+                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
+                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
+                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
+                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
+                };
+
+                double[] w = new double[] {
+                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
+                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
+                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
+                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
+                };
+
+                double sum = 0.0, h = 1.0 / panels;
+                for (int p = 0; p < panels; p++)
+                {
+                    double a = p * h, b = (p + 1) * h;
+                    double half = 0.5 * (b - a), mid = 0.5 * (a + b);
+                    double loc = 0.0;
+                    for (int i = 0; i < 16; i++)
+                    {
+                        double t = mid + half * u[i];
+                        loc += w[i] * f(t);
+                    }
+                    sum += half * loc;
+                }
+                return sum;
+            }
         }
         /// <summary>
         /// Returns the value of the integral cosine.
@@ -3080,31 +3094,62 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Ci(Complex32 z)
         {
-            // Singular at z = 0 due to log(z)
             if (z.Real == 0f && z.Imag == 0f)
                 return new Complex32(float.NegativeInfinity, 0f);
 
-            float eps = 1e-16f;
-            int maxIter = 120;
-            Complex s = Complex.Zero;
-            Complex z2 = z * z;
-            Complex m = Complex.One; // will hold z^(2i)
-            double f = 1f;                 // factorial accumulator for (2i)!
-            int sign = 1;
+            var Z = new Complex(z.Real, z.Imag);
+            double r = Complex.Abs(Z);
+            const double XSW = 16.0;
 
-            for (int i = 1; i < maxIter; i++)
+            if (r <= XSW)
             {
-                int k = 2 * i;           // 2i
-                f *= k * (k - 1);        // (2i)! from (2(i-1))! * (2i)(2i-1)
-                sign = -sign;
-                m *= z2;                 // z^(2i)
-
-                Complex t = sign * m / (f * k);
-                if (Maths.Abs(t) < eps) break;
-                s += t;
+                // Ci(z) = γ + Log(z) + ∫_0^1 (cos(z t) - 1)/t dt  (principal log)
+                var integral = GaussLegendre01C(t => Complex.Cos(Z * t) - Complex.One);
+                var val = (Maths.Gamma + Complex.Log(Z)) + integral;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
+            }
+            else
+            {
+                var inv = Complex.One / Z;
+                var inv2 = inv * inv;
+                var s0 = inv * (1.0 - 2.0 * inv2 + 24.0 * inv2 * inv2 - 720.0 * inv2 * inv2 * inv2);
+                var s1 = inv2 * (1.0 - 6.0 * inv2 + 120.0 * inv2 * inv2 - 5040.0 * inv2 * inv2 * inv2);
+                var sinz = Complex.Sin(Z);
+                var cosz = Complex.Cos(Z);
+                var val = sinz * s0 - cosz * s1;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
 
-            return Maths.Gamma + Maths.Log(z) + (Complex32)s;
+            static Complex GaussLegendre01C(Func<double, Complex> f, int panels = 1)
+            {
+                double[] u = new double[] {
+                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
+                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
+                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
+                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
+                };
+                double[] w = new double[] {
+                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
+                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
+                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
+                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
+                };
+                Complex sum = Complex.Zero;
+                double h = 1.0 / panels;
+                for (int p = 0; p < panels; p++)
+                {
+                    double a = p * h, b = (p + 1) * h;
+                    double half = 0.5 * (b - a), mid = 0.5 * (a + b);
+                    Complex loc = Complex.Zero;
+                    for (int i = 0; i < 16; i++)
+                    {
+                        double t = mid + half * u[i];
+                        loc += w[i] * (f(t) / t);
+                    }
+                    sum += half * loc;
+                }
+                return sum;
+            }
         }
         /// <summary>
         /// Returns the value of the integral sine.
@@ -3113,41 +3158,58 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Si(float x)
         {
-            // special cases:
-            if (x > 35)
-                return 1.6f;
-            if (x < -35)
-                return -1.6f;
+            // нечётность
+            if (x < 0f) return -Si(-x);
 
-            // properties:
-            double s = x;
-            double f = 1.0f;
-            double z = x * x;
-            double t, m = x;
-            float eps = 1e-16f;
-            int k, i, j = 1, iterations = 120;
-            int p = 1;
+            double xd = x;
+            const double XSW = 16.0;
 
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
+            if (xd <= XSW)
             {
-                // factorial:
-                k = 2 * i + 1; j += 2;
-                f *= j * (k - 1);
-
-                // sign and value:
-                p *= -1;
-                m *= z;
-                t = p / f / k * m;
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
+                // Si(x) = ∫_0^1 sin(x t)/t dt
+                double integral = Ci_GaussLegendre01(t => Math.Sin(xd * t) / t);
+                return (float)integral;
+            }
+            else
+            {
+                // Si ≈ π/2 − cos x * S0 − sin x * S1
+                double inv = 1.0 / xd, inv2 = inv * inv;
+                double s0 = inv * (1.0 - 2.0 * inv2 + 24.0 * inv2 * inv2 - 720.0 * inv2 * inv2 * inv2);
+                double s1 = inv * inv * (1.0 - 6.0 * inv2 + 120.0 * inv2 * inv2 - 5040.0 * inv2 * inv2 * inv2);
+                return (float)(Math.PI * 0.5 - Math.Cos(xd) * s0 - Math.Sin(xd) * s1);
             }
 
-            // result:
-            return (float)s;
+            static double Ci_GaussLegendre01(Func<double, double> f, int panels = 1)
+            {
+                double[] u = new double[] {
+                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
+                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
+                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
+                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
+                };
+
+                double[] w = new double[] {
+                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
+                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
+                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
+                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
+                };
+
+                double sum = 0.0, h = 1.0 / panels;
+                for (int p = 0; p < panels; p++)
+                {
+                    double a = p * h, b = (p + 1) * h;
+                    double half = 0.5 * (b - a), mid = 0.5 * (a + b);
+                    double loc = 0.0;
+                    for (int i = 0; i < 16; i++)
+                    {
+                        double t = mid + half * u[i];
+                        loc += w[i] * f(t);
+                    }
+                    sum += half * loc;
+                }
+                return sum;
+            }
         }
         /// <summary>
         /// Returns the value of the integral sine.
@@ -3156,29 +3218,58 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Si(Complex32 z)
         {
-            float eps = 1e-16f;
-            int maxIter = 120;
-            Complex s = z;             // start with n=0 term
-            Complex z2 = z * z;
-            Complex m = z;             // z^(2n+1)
-            double f = 1f;                // (2n+1)! accumulator via recurrence below
-            int sign = 1;
-            int j = 1;
+            var Z = new Complex(z.Real, z.Imag);
+            double r = Complex.Abs(Z);
+            const double XSW = 16.0;
 
-            for (int i = 1; i < maxIter; i++)
+            if (r <= XSW)
             {
-                int k = 2 * i + 1;       // 2n+1
-                j += 2;                  // grows as 3,5,7,...
-                f *= j * (k - 1);        // (2n+1)! from (2(n-1)+1)! * (2n)(2n+1)
-                sign = -sign;
-                m *= z2;                 // z^(2n+1)
-
-                Complex t = sign * m / (f * k);
-                if (Maths.Abs(t) < eps) break;
-                s += t;
+                // Si(z) = ∫_0^1 sin(z t)/t dt
+                var integral = GL01C(t => Complex.Sin(Z * t) / t);
+                return new Complex32((float)integral.Real, (float)integral.Imaginary);
+            }
+            else
+            {
+                var inv = Complex.One / Z;
+                var inv2 = inv * inv;
+                var s0 = inv * (1.0 - 2.0 * inv2 + 24.0 * inv2 * inv2 - 720.0 * inv2 * inv2 * inv2);
+                var s1 = inv2 * (1.0 - 6.0 * inv2 + 120.0 * inv2 * inv2 - 5040.0 * inv2 * inv2 * inv2);
+                var val = Math.PI * 0.5 - Complex.Cos(Z) * s0 - Complex.Sin(Z) * s1;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
 
-            return s;
+            static Complex GL01C(Func<double, Complex> f, int panels = 1)
+            {
+                double[] u = new double[] {
+                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
+                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
+                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
+                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
+                };
+
+                double[] w = new double[] {
+                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
+                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
+                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
+                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
+                };
+
+                Complex sum = Complex.Zero;
+                double h = 1.0 / panels;
+                for (int p = 0; p < panels; p++)
+                {
+                    double a = p * h, b = (p + 1) * h;
+                    double half = 0.5 * (b - a), mid = 0.5 * (a + b);
+                    Complex loc = Complex.Zero;
+                    for (int i = 0; i < 16; i++)
+                    {
+                        double t = mid + half * u[i];
+                        loc += w[i] * f(t);
+                    }
+                    sum += half * loc;
+                }
+                return sum;
+            }
         }
         /// <summary>
         /// Returns the value of an integral exponential function.
@@ -3187,37 +3278,47 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Ei(float x)
         {
-            // Properties:
-            double s = 0.0f;
-            double f = 1.0f;
-            double m = 1.0f;
-            double t;
-            float eps = 1e-8f;
-            int i, iterations = 120;
+            if (x == 0f) return float.NegativeInfinity;
 
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
+            double xd = x;
+            const double XASY = 25.0;
+
+            if (Math.Abs(xd) >= XASY)
             {
-                // value:
-                f *= i;
-                m *= x;
-                t = m / (f * i);
+                double inv = 1.0 / xd, inv2 = inv * inv;
+                double poly = 1.0 + inv + 2.0 * inv2 + 6.0 * inv2 * inv + 24.0 * inv2 * inv2;
+                double val = Math.Exp(xd) * inv * poly;
 
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
+                return (float)val;
             }
 
-            // construction:
-            double r = Maths.Gamma + s;
+            // Ei(x) = γ + ln|x| + ∫_0^1 (e^{x t} - 1)/t dt  (|arg x|<π)
+            double integral = GL01(t => (Math.Exp(xd * t) - 1.0) / t);
+            return (float)(Maths.Gamma + Math.Log(Math.Abs(xd)) + integral);
 
-            // ranges:
-            if (x < 0)
+            static double GL01(Func<double, double> f, int panels = 1)
             {
-                return (float)r + Maths.Log(-x);
+                double[] u = new double[] {
+                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
+                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
+                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
+                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
+                };
+                double[] w = new double[] {
+                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
+                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
+                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
+                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
+                };
+
+                double sum = 0.0;
+                for (int i = 0; i < 16; i++)
+                {
+                    double t = 0.5 * (u[i] + 1.0);     // [0,1]
+                    sum += w[i] * f(t);
+                }
+                return 0.5 * sum;
             }
-            return (float)r + Maths.Log(x);
         }
         /// <summary>
         /// Returns the value of an integral exponential function.
@@ -3226,26 +3327,53 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Ei(Complex32 z)
         {
-            // Singular at z = 0 due to log(z)
             if (z.Real == 0f && z.Imag == 0f)
                 return new Complex32(float.NegativeInfinity, 0f);
 
-            float eps = 1e-16f;
-            int maxIter = 120;
-            Complex s = Complex.Zero;
-            Complex m = Complex.One; // z^k
-            double fact = 1f;
+            var Z = new Complex(z.Real, z.Imag);
+            double r = Complex.Abs(Z);
+            const double XASY = 25.0;
 
-            for (int k = 1; k < maxIter; k++)
+            if (r >= XASY)
             {
-                fact *= k;               // k!
-                m *= (Complex)z;         // z^k
-                Complex t = m / (fact * k);
-                if (Maths.Abs(t) < eps) break;
-                s += t;
+                //  Ei(z) ~ e^z / z * (1 + 1/z + 2!/z^2 + 3!/z^3 + 4!/z^4), |arg z|<π
+                var inv = Complex.One / Z;
+                var inv2 = inv * inv;
+                var poly = Complex.One + inv + 2.0 * inv2 + 6.0 * inv2 * inv + 24.0 * inv2 * inv2;
+                var val = Complex.Exp(Z) * inv * poly;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
+            }
+            else
+            {
+                // Ei(z) = γ + Log(z) + ∫_0^1 (e^{z t} - 1)/t dt
+                var integral = GL01C(t => (Complex.Exp(Z * t) - Complex.One) / t);
+                var val = (Maths.Gamma + Complex.Log(Z)) + integral;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
 
-            return Maths.Gamma + Maths.Log(z) + (Complex32)s;
+            static Complex GL01C(Func<double, Complex> f)
+            {
+                double[] u = new double[] {
+                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
+                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
+                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
+                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
+                };
+                double[] w = new double[] {
+                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
+                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
+                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
+                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
+                };
+
+                Complex sum = Complex.Zero;
+                for (int i = 0; i < 16; i++)
+                {
+                    double t = 0.5 * (u[i] + 1.0); // [0,1]
+                    sum += w[i] * f(t);
+                }
+                return 0.5 * sum;
+            }
         }
         /// <summary>
         /// Returns the value of the integral logarithm.
@@ -3254,13 +3382,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Li(float x)
         {
-            // calculating Li(x) from Ei(x) 
-            // integral function.
-
-            if (x < 0)
-            {
-                return float.NaN;
-            }
+            if (x < 0f) return float.NaN;
             return Ei(Maths.Log(x));
         }
         /// <summary>
@@ -3270,10 +3392,11 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Li(Complex32 z)
         {
-            // Map via Ei(log z). Principal branches handle the standard cuts.
             return Ei(Maths.Log(z));
         }
         #endregion
+
+        // TODO: needed to be approximated and optimized
 
         #region Bessel functions
 
