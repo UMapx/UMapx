@@ -12290,62 +12290,6 @@
             <param name="inverse">Inverse function or not</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.Ci(System.Single)">
-            <summary>
-            Returns the value of the integral cosine.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Ci(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the integral cosine.
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Si(System.Single)">
-            <summary>
-            Returns the value of the integral sine.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Si(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the integral sine.
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Ei(System.Single)">
-            <summary>
-            Returns the value of an integral exponential function.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Ei(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of an integral exponential function.
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Li(System.Single)">
-            <summary>
-            Returns the value of the integral logarithm.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Li(UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the integral logarithm.
-            </summary>
-            <param name="z">Value</param>
-            <returns>Value</returns>
-        </member>
         <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Returns the value of a hypergeometric function.
@@ -12405,6 +12349,145 @@
             </summary>
             <param name="a">Parameter</param>
             <param name="b">Parameter</param>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
+            <summary>
+            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Beta(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Beta(System.Int32,System.Int32)">
+            <summary>
+            Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
+            </summary>
+            <param name="m">Integer number</param>
+            <param name="n">Integer number</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaDerivative(System.Single,System.Single)">
+            <summary>
+            Returns the value of a derivative beta function: B'(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaDerivative(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a derivative beta function: B'(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaIncomplete(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of an incomplete beta function: Bx(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaIncomplete(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an incomplete beta function: Bx(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaIncompleteRegularized(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the value of a regularized incomplete beta function: Ix(a, b).
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogBeta(System.Single,System.Single)">
+            <summary>
+            Returns the value of a log-beta function.
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogBeta(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of a log-beta function.
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ci(System.Single)">
+            <summary>
+            Returns the value of the integral cosine.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ci(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the integral cosine.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Si(System.Single)">
+            <summary>
+            Returns the value of the integral sine.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Si(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the integral sine.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ei(System.Single)">
+            <summary>
+            Returns the value of an integral exponential function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Ei(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of an integral exponential function.
+            </summary>
+            <param name="z">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Li(System.Single)">
+            <summary>
+            Returns the value of the integral logarithm.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Li(UMapx.Core.Complex32)">
+            <summary>
+            Returns the value of the integral logarithm.
+            </summary>
             <param name="z">Value</param>
             <returns>Value</returns>
         </member>
@@ -12502,89 +12585,6 @@
             </summary>
             <param name="x">Value</param>
             <param name="v">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
-            <summary>
-            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(UMapx.Core.Complex32,UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.Beta(System.Int32,System.Int32)">
-            <summary>
-            Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
-            </summary>
-            <param name="m">Integer number</param>
-            <param name="n">Integer number</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.BetaDerivative(System.Single,System.Single)">
-            <summary>
-            Returns the value of a derivative beta function: B'(a, b).
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.BetaDerivative(UMapx.Core.Complex32,UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of a derivative beta function: B'(a, b).
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.BetaIncomplete(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of an incomplete beta function: Bx(a, b).
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.BetaIncomplete(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of an incomplete beta function: Bx(a, b).
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.BetaIncompleteRegularized(System.Single,System.Single,System.Single)">
-            <summary>
-            Returns the value of a regularized incomplete beta function: Ix(a, b).
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.LogBeta(System.Single,System.Single)">
-            <summary>
-            Returns the value of a log-beta function.
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Core.Special.LogBeta(UMapx.Core.Complex32,UMapx.Core.Complex32)">
-            <summary>
-            Returns the value of a log-beta function.
-            </summary>
-            <param name="a">Value</param>
-            <param name="b">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Fibonacci(System.Int32)">

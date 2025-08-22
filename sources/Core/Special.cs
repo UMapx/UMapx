@@ -2623,6 +2623,408 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Hypergeometric function
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+        /// More information can be found on the website:
+        /// https://en.wikipedia.org/wiki/Hypergeometric_function
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="c">Parameter</param>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static float Hypergeom(float a, float b, float c, float z)
+        {
+            // for all z = 0:
+            if (z == 0)
+                return 1;
+
+            // Properties:
+            double s = 1.0f;
+            double m = 1.0f;
+            double pa = 1, pb = 1, pc = 1;
+            double t;
+            float eps = 1e-16f;
+            int i, j, iterations = 240;
+
+            // Taylor series:
+            for (i = 1; i < iterations; i++)
+            {
+                // Pochhammer symbols:
+                j = i - 1;
+                pa *= a + j;
+                pb *= b + j;
+                pc *= c + j;
+
+                // value:
+                m *= z / i;
+                t = pa * pb * m / pc;
+
+                // stop point:
+                if (Math.Abs(t) < eps)
+                { break; }
+                else { s += t; }
+            }
+
+            // result:
+            return (float)s;
+        }
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
+        /// More information can be found on the website:
+        /// https://en.wikipedia.org/wiki/Hypergeometric_function
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="c">Parameter</param>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 c, Complex32 z)
+        {
+            // z = 0 => 1
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
+
+            Complex s = Complex.One;     // partial sum
+            Complex m = Complex.One;     // z^n / n!
+            Complex pa = Complex.One;    // (a)_n
+            Complex pb = Complex.One;    // (b)_n
+            Complex pc = Complex.One;    // (c)_n
+
+            float eps = 1e-16f;
+            int maxIter = 240;
+
+            for (int i = 1; i < maxIter; i++)
+            {
+                double jf = i - 1;
+                var j = new Complex(jf, 0f);
+
+                pa *= (Complex)a + j;
+                pb *= (Complex)b + j;
+                pc *= (Complex)c + j;
+
+                m *= (Complex)z / i; // z^i / i!
+                Complex t = pa * pb * m / pc;
+
+                if (Maths.Abs(t) < eps) break;
+                s += t;
+            }
+            return s;
+        }
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// The hypergeometric function can be used in several variations:
+        /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+        /// Instead of the “~” sign, use the float.NaN value.
+        /// More information can be found on the website:
+        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static float Hypergeom(float a, float b, float z)
+        {
+            // z = 0 => 1
+            if (z == 0f) return 1f;
+
+            bool aNaN = float.IsNaN(a);
+            bool bNaN = float.IsNaN(b);
+
+            // 0F0(;;z) = exp(z)  and  1F1(a;a;z) = exp(z)
+            if ((aNaN && bNaN) || a == b)
+                return Maths.Exp(z);
+
+            // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
+            if (bNaN)
+                return Maths.Exp(-a * Maths.Log(1f - z));
+
+            // pole guard: b ∈ {0, -1, -2, ...} (real axis)
+            {
+                float k = Maths.Round(b);
+                if (b <= 0f && Maths.Abs(b - k) < 1e-6f)
+                    return float.NaN;
+            }
+
+            const float eps = 1e-16f;     // relative stop; adjust to 1e-8..1e-12
+            const int iterations = 240;
+            const float tiny = 1e-30f;    // protect from near-zero denominator
+
+            double s = 1f;  // partial sum
+            double t = 1f;  // current term
+
+            // 0F1(;b;z): t_{n+1} = t_n * z / ((b+n)(n+1))
+            if (aNaN)
+            {
+                for (int n = 0; n < iterations; n++)
+                {
+                    double bn = b + n;
+                    double denom = bn * (n + 1f);
+
+                    if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
+
+                    t *= z / denom;
+                    s += t;
+
+                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
+                }
+                return (float)s;
+            }
+
+            // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
+            // Kummer transform helps convergence if z < 0
+            if (z < 0f)
+                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
+
+            for (int n = 0; n < iterations; n++)
+            {
+                double an = a + n;
+                double bn = b + n;
+                double denom = (n + 1f) * bn;
+
+                if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
+
+                t *= an * z / denom;
+                s += t;
+
+                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
+            }
+            return (float)s;
+        }
+        /// <summary>
+        /// Returns the value of a hypergeometric function.
+        /// <remarks>
+        /// The hypergeometric function can be used in several variations:
+        /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
+        /// Instead of the “~” sign, use the float.NaN value.
+        /// More information can be found on the website:
+        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+        /// </remarks>
+        /// </summary>
+        /// <param name="a">Parameter</param>
+        /// <param name="b">Parameter</param>
+        /// <param name="z">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 z)
+        {
+            // z = 0 => 1
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
+
+            bool aNaN = Complex32.IsNaN(a);
+            bool bNaN = Complex32.IsNaN(b);
+
+            // 0F0(;;z) = exp(z)
+            if (aNaN && bNaN || (a.Real == b.Real && a.Imag == b.Imag))
+                return Maths.Exp(z);
+
+            // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
+            if (bNaN)
+                return Maths.Exp(-a * Maths.Log(Complex32.One - z));
+
+            // pole guard: b ∈ {0, -1, -2, ...} (real axis)
+            if (b.Imag == 0f)
+            {
+                float br = b.Real, k = Maths.Round(br);
+                if (br <= 0f && Maths.Abs(br - k) < 1e-6f)
+                    return Complex32.NaN;
+            }
+
+            const float eps = 1e-16f;
+            const int iterations = 240;
+            const float tiny = 1e-30f;
+
+            Complex s = Complex.One;   // partial sum
+            Complex t = Complex.One;   // current term
+
+            // 0F1(;b;z): t_{n+1} = t_n * z / ((b+n)(n+1))
+            if (aNaN)
+            {
+                for (int n = 0; n < iterations; n++)
+                {
+                    Complex bn = (Complex)b + new Complex(n, 0f);
+                    Complex denom = bn * new Complex(n + 1f, 0f);
+
+                    if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
+
+                    t *= (Complex)z / denom;
+                    s += t;
+
+                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
+                }
+                return s;
+            }
+
+            // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
+            // Kummer transform helps convergence if Re(z) < 0
+            if (z.Real < 0f)
+                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
+
+            for (int n = 0; n < iterations; n++)
+            {
+                Complex an = (Complex)a + new Complex(n, 0f);
+                Complex bn = (Complex)b + new Complex(n, 0f);
+                Complex denom = new Complex(n + 1f, 0f) * bn;
+
+                if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
+
+                t *= an * (Complex)z / denom;
+                s += t;
+
+                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
+            }
+            return s;
+        }
+        #endregion
+
+        #region Beta functions
+        /// <summary>
+        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static float Beta(float a, float b)
+        {
+            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+        }
+        /// <summary>
+        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Beta(Complex32 a, Complex32 b)
+        {
+            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+        }
+        /// <summary>
+        /// Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
+        /// </summary>
+        /// <param name="m">Integer number</param>
+        /// <param name="n">Integer number</param>
+        /// <returns>Value</returns>
+        public static float Beta(int m, int n)
+        {
+            return Special.Factorial(m - 1) * Special.Factorial(n - 1) / Special.Factorial(m + n - 1);
+        }
+        /// <summary>
+        /// Returns the value of a derivative beta function: B'(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static float BetaDerivative(float a, float b)
+        {
+            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
+        }
+        /// <summary>
+        /// Returns the value of a derivative beta function: B'(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 BetaDerivative(Complex32 a, Complex32 b)
+        {
+            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
+        }
+        /// <summary>
+        /// Returns the value of an incomplete beta function: Bx(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float BetaIncomplete(float a, float b, float x)
+        {
+            if (float.IsNaN(a) || float.IsNaN(b) || float.IsNaN(x)) return float.NaN;
+
+            // Domain commonly assumed for the real-valued branch:
+            if (x <= 0f) return 0f;
+            if (x >= 1f)
+            {
+                // Complete beta B(a,b)
+                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+            }
+
+            // Poles of Beta when a or b is a non-positive integer
+            if ((a <= 0f && a == Maths.Round(a)) || (b <= 0f && b == Maths.Round(b)))
+                return float.NaN;
+
+            // Optional symmetry to improve conditioning near x≈1:
+            // B_x(a,b) = B(a,b) - B_{1-x}(b,a)
+            if (x > 0.5f)
+            {
+                float B = Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+                return B - BetaIncomplete(b, a, 1f - x);
+            }
+
+            // Hypergeometric representation
+            float pref = Maths.Exp(a * Maths.Log(x)) / a;          // x^a / a
+            float hyp = Special.Hypergeom(a, 1f - b, a + 1f, x);  // 2F1(a,1-b; a+1; x)
+            return pref * hyp;
+        }
+        /// <summary>
+        /// Returns the value of an incomplete beta function: Bx(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 BetaIncomplete(Complex32 a, Complex32 b, Complex32 x)
+        {
+            // B_0(a,b) = 0
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
+
+            // B_1(a,b) = B(a,b) = Γ(a)Γ(b)/Γ(a+b)
+            if (x.Imag == 0f && x.Real == 1f)
+                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+
+            // Principal-branch power and Gauss 2F1
+            Complex32 pref = Maths.Exp(a * Maths.Log(x)) / a;                   // x^a / a
+            Complex32 hyp = Special.Hypergeom(a, Complex32.One - b, a + Complex32.One, x); // 2F1(a,1-b; a+1; x)
+            return pref * hyp;
+        }
+        /// <summary>
+        /// Returns the value of a regularized incomplete beta function: Ix(a, b).
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        public static float BetaIncompleteRegularized(float a, float b, float x)
+        {
+            return Special.BetaIncomplete(a, b, x) / Special.Beta(a, b);
+        }
+        /// <summary>
+        /// Returns the value of a log-beta function.
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static float LogBeta(float a, float b)
+        {
+            return Special.LogGamma(a) + Special.LogGamma(b) - Special.LogGamma(a + b);
+        }
+        /// <summary>
+        /// Returns the value of a log-beta function.
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 LogBeta(Complex32 a, Complex32 b)
+        {
+            return Special.LogGamma(a) + Special.LogGamma(b) - Special.LogGamma(a + b);
+        }
+        #endregion
+
         // TODO: needed to be approximated and optimized
 
         #region Integral functions
@@ -2870,266 +3272,6 @@ namespace UMapx.Core
         {
             // Map via Ei(log z). Principal branches handle the standard cuts.
             return Ei(Maths.Log(z));
-        }
-        #endregion
-
-        #region Hypergeometric function
-        /// <summary>
-        /// Returns the value of a hypergeometric function.
-        /// <remarks>
-        /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
-        /// More information can be found on the website:
-        /// https://en.wikipedia.org/wiki/Hypergeometric_function
-        /// </remarks>
-        /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
-        /// <param name="c">Parameter</param>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
-        public static float Hypergeom(float a, float b, float c, float z)
-        {
-            // for all z = 0:
-            if (z == 0)
-                return 1;
-
-            // Properties:
-            float s = 1.0f;
-            float m = 1.0f;
-            float pa = 1, pb = 1, pc = 1;
-            float t, eps = 1e-16f;
-            int i, j, iterations = 140;
-
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
-            {
-                // Pochhammer symbols:
-                j = i - 1;
-                pa *= a + j;
-                pb *= b + j;
-                pc *= c + j;
-
-                // value:
-                m *= z / i;
-                t = pa * pb * m / pc;
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
-            }
-
-            // result:
-            return s;
-        }
-        /// <summary>
-        /// Returns the value of a hypergeometric function.
-        /// <remarks>
-        /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
-        /// More information can be found on the website:
-        /// https://en.wikipedia.org/wiki/Hypergeometric_function
-        /// </remarks>
-        /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
-        /// <param name="c">Parameter</param>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
-        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 c, Complex32 z)
-        {
-            // z = 0 => 1
-            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
-
-            Complex32 s = Complex32.One;     // partial sum
-            Complex32 m = Complex32.One;     // z^n / n!
-            Complex32 pa = Complex32.One;    // (a)_n
-            Complex32 pb = Complex32.One;    // (b)_n
-            Complex32 pc = Complex32.One;    // (c)_n
-
-            float eps = 1e-16f;
-            int maxIter = 140;
-
-            for (int i = 1; i < maxIter; i++)
-            {
-                float jf = i - 1;
-                var j = new Complex32(jf, 0f);
-
-                pa *= a + j;
-                pb *= b + j;
-                pc *= c + j;
-
-                m *= z / i; // z^i / i!
-                Complex32 t = pa * pb * m / pc;
-
-                if (Maths.Abs(t) < eps) break;
-                s += t;
-            }
-            return s;
-        }
-        /// <summary>
-        /// Returns the value of a hypergeometric function.
-        /// <remarks>
-        /// The hypergeometric function can be used in several variations:
-        /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
-        /// Instead of the “~” sign, use the float.NaN value.
-        /// More information can be found on the website:
-        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
-        /// </remarks>
-        /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
-        public static float Hypergeom(float a, float b, float z)
-        {
-            // z = 0 => 1
-            if (z == 0f) return 1f;
-
-            bool aNaN = float.IsNaN(a);
-            bool bNaN = float.IsNaN(b);
-
-            // 0F0(;;z) = exp(z)  and  1F1(a;a;z) = exp(z)
-            if ((aNaN && bNaN) || a == b)
-                return Maths.Exp(z);
-
-            // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
-            if (bNaN)
-                return Maths.Exp(-a * Maths.Log(1f - z));
-
-            // pole guard: b ∈ {0, -1, -2, ...} (real axis)
-            {
-                float k = Maths.Round(b);
-                if (b <= 0f && Maths.Abs(b - k) < 1e-6f)
-                    return float.NaN;
-            }
-
-            const float eps = 1e-16f;     // relative stop; adjust to 1e-8..1e-12
-            const int iterations = 140;
-            const float tiny = 1e-30f;    // protect from near-zero denominator
-
-            float s = 1f;  // partial sum
-            float t = 1f;  // current term
-
-            // 0F1(;b;z): t_{n+1} = t_n * z / ((b+n)(n+1))
-            if (aNaN)
-            {
-                for (int n = 0; n < iterations; n++)
-                {
-                    float bn = b + n;
-                    float denom = bn * (n + 1f);
-
-                    if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
-
-                    t *= z / denom;
-                    s += t;
-
-                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
-                }
-                return s;
-            }
-
-            // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
-            // Kummer transform helps convergence if z < 0
-            if (z < 0f)
-                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
-
-            for (int n = 0; n < iterations; n++)
-            {
-                float an = a + n;
-                float bn = b + n;
-                float denom = (n + 1f) * bn;
-
-                if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
-
-                t *= an * z / denom;
-                s += t;
-
-                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
-            }
-            return s;
-        }
-        /// <summary>
-        /// Returns the value of a hypergeometric function.
-        /// <remarks>
-        /// The hypergeometric function can be used in several variations:
-        /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
-        /// Instead of the “~” sign, use the float.NaN value.
-        /// More information can be found on the website:
-        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
-        /// </remarks>
-        /// </summary>
-        /// <param name="a">Parameter</param>
-        /// <param name="b">Parameter</param>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
-        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 z)
-        {
-            // z = 0 => 1
-            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
-
-            bool aNaN = Complex32.IsNaN(a);
-            bool bNaN = Complex32.IsNaN(b);
-
-            // 0F0(;;z) = exp(z)
-            if (aNaN && bNaN || (a.Real == b.Real && a.Imag == b.Imag))
-                return Maths.Exp(z);
-
-            // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
-            if (bNaN)
-                return Maths.Exp(-a * Maths.Log(Complex32.One - z));
-
-            // pole guard: b ∈ {0, -1, -2, ...} (real axis)
-            if (b.Imag == 0f)
-            {
-                float br = b.Real, k = Maths.Round(br);
-                if (br <= 0f && Maths.Abs(br - k) < 1e-6f)
-                    return Complex32.NaN;
-            }
-
-            const float eps = 1e-16f;
-            const int iterations = 140;
-            const float tiny = 1e-30f;
-
-            Complex32 s = Complex32.One;   // partial sum
-            Complex32 t = Complex32.One;   // current term
-
-            // 0F1(;b;z): t_{n+1} = t_n * z / ((b+n)(n+1))
-            if (aNaN)
-            {
-                for (int n = 0; n < iterations; n++)
-                {
-                    Complex32 bn = b + new Complex32(n, 0f);
-                    Complex32 denom = bn * new Complex32(n + 1f, 0f);
-
-                    if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
-
-                    t *= z / denom;
-                    s += t;
-
-                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
-                }
-                return s;
-            }
-
-            // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
-            // Kummer transform helps convergence if Re(z) < 0
-            if (z.Real < 0f)
-                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
-
-            for (int n = 0; n < iterations; n++)
-            {
-                Complex32 an = a + new Complex32(n, 0f);
-                Complex32 bn = b + new Complex32(n, 0f);
-                Complex32 denom = new Complex32(n + 1f, 0f) * bn;
-
-                if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
-
-                t *= an * z / denom;
-                s += t;
-
-                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
-            }
-            return s;
         }
         #endregion
 
@@ -3953,147 +4095,6 @@ namespace UMapx.Core
 
             // your real version returns:  b * u * s  ⇒ total power (z/2)^{2k+v+1}
             return b * u * s;
-        }
-        #endregion
-
-        #region Beta functions
-        /// <summary>
-        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
-        public static float Beta(float a, float b)
-        {
-            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
-        }
-        /// <summary>
-        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
-        public static Complex32 Beta(Complex32 a, Complex32 b)
-        {
-            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
-        }
-        /// <summary>
-        /// Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
-        /// </summary>
-        /// <param name="m">Integer number</param>
-        /// <param name="n">Integer number</param>
-        /// <returns>Value</returns>
-        public static float Beta(int m, int n)
-        {
-            return Special.Factorial(m - 1) * Special.Factorial(n - 1) / Special.Factorial(m + n - 1);
-        }
-        /// <summary>
-        /// Returns the value of a derivative beta function: B'(a, b).
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
-        public static float BetaDerivative(float a, float b)
-        {
-            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
-        }
-        /// <summary>
-        /// Returns the value of a derivative beta function: B'(a, b).
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
-        public static Complex32 BetaDerivative(Complex32 a, Complex32 b)
-        {
-            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
-        }
-        /// <summary>
-        /// Returns the value of an incomplete beta function: Bx(a, b).
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
-        public static float BetaIncomplete(float a, float b, float x)
-        {
-            if (float.IsNaN(a) || float.IsNaN(b) || float.IsNaN(x)) return float.NaN;
-
-            // Domain commonly assumed for the real-valued branch:
-            if (x <= 0f) return 0f;
-            if (x >= 1f)
-            {
-                // Complete beta B(a,b)
-                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
-            }
-
-            // Poles of Beta when a or b is a non-positive integer
-            if ((a <= 0f && a == Maths.Round(a)) || (b <= 0f && b == Maths.Round(b)))
-                return float.NaN;
-
-            // Optional symmetry to improve conditioning near x≈1:
-            // B_x(a,b) = B(a,b) - B_{1-x}(b,a)
-            if (x > 0.5f)
-            {
-                float B = Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
-                return B - BetaIncomplete(b, a, 1f - x);
-            }
-
-            // Hypergeometric representation
-            float pref = Maths.Exp(a * Maths.Log(x)) / a;          // x^a / a
-            float hyp = Special.Hypergeom(a, 1f - b, a + 1f, x);  // 2F1(a,1-b; a+1; x)
-            return pref * hyp;
-        }
-        /// <summary>
-        /// Returns the value of an incomplete beta function: Bx(a, b).
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
-        public static Complex32 BetaIncomplete(Complex32 a, Complex32 b, Complex32 x)
-        {
-            // B_0(a,b) = 0
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
-
-            // B_1(a,b) = B(a,b) = Γ(a)Γ(b)/Γ(a+b)
-            if (x.Imag == 0f && x.Real == 1f)
-                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
-
-            // Principal-branch power and Gauss 2F1
-            Complex32 pref = Maths.Exp(a * Maths.Log(x)) / a;                   // x^a / a
-            Complex32 hyp = Special.Hypergeom(a, Complex32.One - b, a + Complex32.One, x); // 2F1(a,1-b; a+1; x)
-            return pref * hyp;
-        }
-        /// <summary>
-        /// Returns the value of a regularized incomplete beta function: Ix(a, b).
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
-        public static float BetaIncompleteRegularized(float a, float b, float x)
-        {
-            return Special.BetaIncomplete(a, b, x) / Special.Beta(a, b);
-        }
-        /// <summary>
-        /// Returns the value of a log-beta function.
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
-        public static float LogBeta(float a, float b)
-        {
-            return Special.LogGamma(a) + Special.LogGamma(b) - Special.LogGamma(a + b);
-        }
-        /// <summary>
-        /// Returns the value of a log-beta function.
-        /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
-        public static Complex32 LogBeta(Complex32 a, Complex32 b)
-        {
-            return Special.LogGamma(a) + Special.LogGamma(b) - Special.LogGamma(a + b);
         }
         #endregion
 
