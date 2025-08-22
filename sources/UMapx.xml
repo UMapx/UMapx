@@ -26597,6 +26597,119 @@
             <param name="r">Filter size</param>
             <param name="eps">Epsilon (0, 1)</param>
         </member>
+        <member name="T:UMapx.Transform.HankelTransform">
+            <summary>
+            Defines the Hankel transform.
+            <remarks>
+            NOT RECOMMENDED.
+            
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Hankel_transform
+            </remarks>
+            </summary>
+        </member>
+        <member name="F:UMapx.Transform.HankelTransform.direction">
+            <summary>
+            Processing direction.
+            </summary>
+        </member>
+        <member name="F:UMapx.Transform.HankelTransform.a">
+            <summary>
+            Param.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.#ctor(System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes the Hankel transform.
+            </summary>
+            <param name="a">Param</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="P:UMapx.Transform.HankelTransform.Direction">
+            <summary>
+            Gets or sets the processing direction.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.HankelTransform.A">
+            <summary>
+            Gets or sets the param of transform.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.Matrix(System.Int32,System.Int32)">
+            <summary>
+            Implements the construction of the Hankel transform matrix.
+            </summary>
+            <param name="N">Size</param>
+            <param name="a">Param</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.BesselZeroJ(System.Int32,System.Int32)">
+            <summary>
+            K-th positive zero of J_a (ν = a):
+            Start from McMahon’s asymptotic and refine with Newton’s method.
+            Do all computations in double for ~1e-12 relative accuracy of zeros.
+            </summary>
+            <param name="a">Value</param>
+            <param name="k">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.Forward(System.Single[])">
+            <summary>
+            Forward Hankel transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.Backward(System.Single[])">
+            <summary>
+            Backward Hankel transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward Hankel transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward Hankel transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Hankel transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward Hankel transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward Hankel transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.HankelTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Hankel transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="T:UMapx.Transform.HartleyTransform">
             <summary>
             Defines the Hartley transform.
