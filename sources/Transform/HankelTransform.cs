@@ -7,6 +7,7 @@ namespace UMapx.Transform
     /// Defines the Hankel transform.
     /// <remarks>
     /// NOT RECOMMENDED.
+    /// There is no fast O(N log N) algorithm for this transform.
     /// 
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Hankel_transform

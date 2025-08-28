@@ -25944,6 +25944,7 @@
             Defines the fast sine transform.
             <remarks>
             NOT RECOMMENDED.
+            This algorithm is less effective than the fast cosine transform.
             
             More information can be found on the website:
             http://sernam.ru/book_prett1.php?id=91
@@ -26602,6 +26603,7 @@
             Defines the Hankel transform.
             <remarks>
             NOT RECOMMENDED.
+            There is no fast O(N log N) algorithm for this transform.
             
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hankel_transform

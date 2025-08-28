@@ -9,6 +9,7 @@ namespace UMapx.Transform
     /// Defines the fast sine transform.
     /// <remarks>
     /// NOT RECOMMENDED.
+    /// This algorithm is less effective than the fast cosine transform.
     /// 
     /// More information can be found on the website:
     /// http://sernam.ru/book_prett1.php?id=91
