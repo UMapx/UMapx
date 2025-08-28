@@ -12,6 +12,7 @@ namespace UMapx.Window
     {
         #region Private data
         private readonly FourierTransform DFT = new FourierTransform(false, Direction.Vertical);
+        private int m;
         #endregion
 
         #region Initialize
@@ -29,7 +30,20 @@ namespace UMapx.Window
         /// Even number.
         /// </remarks>
         /// </summary>
-        public int M { get; set; }
+        public int M
+        {
+            get
+            {
+                return m;
+            }
+            set
+            {
+                if (value <= 0) 
+                    throw new ArgumentException("M must be positive");
+
+                m = value;
+            }
+        }
         #endregion
 
         #region Zak transform
@@ -42,7 +56,6 @@ namespace UMapx.Window
         public Complex32[,] Forward(Complex32[] input)
         {
             int N = input.Length;
-            if (M <= 0) throw new ArgumentException("M must be positive");
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
@@ -79,7 +92,6 @@ namespace UMapx.Window
         public Complex32[,] Forward(float[] input)
         {
             int N = input.Length;
-            if (M <= 0) throw new ArgumentException("M must be positive");
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
@@ -118,8 +130,6 @@ namespace UMapx.Window
         {
             int N = matrix.GetLength(0);
             int L = matrix.GetLength(1);
-
-            if (M <= 0) throw new ArgumentException("M must be positive");
             if (N % M != 0 || L != N / M) throw new ArgumentException("The dimensions of matrix do not correspond to the M parameter");
 
             var output = new Complex32[N];
@@ -149,7 +159,6 @@ namespace UMapx.Window
         public float[] Orthogonalize(float[] input)
         {
             int N = input.Length;
-            if (M <= 0) throw new ArgumentException("M must be positive");
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
@@ -212,7 +221,6 @@ namespace UMapx.Window
         public Complex32[] Orthogonalize(Complex32[] input)
         {
             int N = input.Length;
-            if (M <= 0) throw new ArgumentException("M must be positive");
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
