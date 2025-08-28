@@ -510,8 +510,7 @@ namespace UMapx.Window
             var Y_main = new Complex32[Mloc]; // spectra over k for a fixed l
             var Y_half = new Complex32[Mloc];
 
-            // gain used in the forward:
-            //   gain = 1 / (2√L)
+            // gain used in the forward
             // hence inverse gain:
             float invGain = 1.0f / (2 * Maths.Sqrt(L));
 
