@@ -161,10 +161,16 @@ namespace UMapx.Visualization
             using var figure = new Bitmap(_figure_width, _figure_height);
             using Graphics figure_graphics = Graphics.FromImage(figure);
             figure_graphics.Clear(Style.ColorFrame);
+            figure_graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            figure_graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            figure_graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
             using var canvas = new Bitmap(_canvas_width, _canvas_height);
             using Graphics canvas_graphics = Graphics.FromImage(canvas);
             canvas_graphics.Clear(Style.ColorBack);
+            canvas_graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            canvas_graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            canvas_graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
             // offsets
             int dx = _canvas_width / _xscale;
