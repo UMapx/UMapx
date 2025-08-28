@@ -30399,6 +30399,11 @@
             Returns black style.
             </summary>
         </member>
+        <member name="P:UMapx.Visualization.Style.BlackAndWhite">
+            <summary>
+            Returns black and white style.
+            </summary>
+        </member>
         <member name="T:UMapx.Visualization.Symbol">
             <summary>
             Defines the symbol type.

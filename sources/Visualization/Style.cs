@@ -361,6 +361,29 @@ namespace UMapx.Visualization
                 };
             }
         }
+        /// <summary>
+        /// Returns black and white style.
+        /// </summary>
+        public static Style BlackAndWhite
+        {
+            get
+            {
+                return new Style
+                {
+                    FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
+                    FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
+                    ColorFrame = Color.White,
+                    ColorBack = Color.White,
+                    ColorGrid = Color.Black,
+                    ColorShapes = Color.Black,
+                    ColorText = Color.Black,
+                    ColorMarks = Color.Black,
+                    DepthShapes = 1f,
+                    GridX = false,
+                    GridY = false
+                };
+            }
+        }
         #endregion
     }
 }
