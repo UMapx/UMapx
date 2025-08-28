@@ -42,8 +42,8 @@ namespace UMapx.Window
         public Complex32[,] Forward(Complex32[] input)
         {
             int N = input.Length;
-            if (N % M != 0)
-                throw new ArgumentException("The length of the input must be a multiple of M");
+            if (M <= 0) throw new ArgumentException("M must be positive");
+            if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
             var result = new Complex32[N, L];
@@ -79,8 +79,8 @@ namespace UMapx.Window
         public Complex32[,] Forward(float[] input)
         {
             int N = input.Length;
-            if (N % M != 0)
-                throw new ArgumentException("The length of the input must be a multiple of M");
+            if (M <= 0) throw new ArgumentException("M must be positive");
+            if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
             var result = new Complex32[N, L];
@@ -119,8 +119,8 @@ namespace UMapx.Window
             int N = matrix.GetLength(0);
             int L = matrix.GetLength(1);
 
-            if (N % M != 0 || L != N / M)
-                throw new ArgumentException("The dimensions of matrix do not correspond to the M parameter");
+            if (M <= 0) throw new ArgumentException("M must be positive");
+            if (N % M != 0 || L != N / M) throw new ArgumentException("The dimensions of matrix do not correspond to the M parameter");
 
             var output = new Complex32[N];
 
@@ -148,59 +148,61 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public float[] Orthogonalize(float[] input)
         {
-            // Fast shaping orthogonalization algorithm
-            // WH functions using a discrete Zak transform.
-            // V.P. Volchkov, D.A. Petrov and V.M. Asiryan.
-            // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
-
             int N = input.Length;
-            float[] vort = new float[N];
-            int L = N / M, L2 = L * 2, i, j;
-            Complex32[,] G = new Complex32[L2, N];
-            Complex32[,] Z;
+            if (M <= 0) throw new ArgumentException("M must be positive");
+            if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
-            for (i = 0; i < L2; i++)
+            int L = N / M;
+            int R = Maths.Gcd(M, L);           // number of Zak cosets to stitch
+            int RL = R * L;                    // vertical length
+            int delta = M / R;                 // time shift step between cosets
+            const float eps = 1e-8f;
+
+            // 1) Build G (RL x N) by circular shifts with step Δ = M/R
+            var G = new Complex32[RL, N];
+            for (int i = 0; i < RL; i++)
             {
-                for (j = 0; j < N; j++)
+                int shift = delta * i % N;
+                for (int j = 0; j < N; j++)
                 {
-                    G[i, j] = input[Maths.Mod(j + M / 2 * i, N)];
+                    G[i, j] = input[Maths.Mod(j + shift, N)];
                 }
             }
 
-            Z = DFT.Forward(G);
+            // 2) Vertical Zak-DFT (length = RL)
+            var Z = DFT.Forward(G); // Z has shape (RL x N)
 
-            float w = 2 / (float)Math.Sqrt(M);
-            float even, odd, phi;
-            Complex32 z1, z2;
-
-            for (i = 0; i < L; i++)
+            // 3) Block-wise normalization over R rows: i, i+L, i+2L, ...
+            float w = R / (float)Math.Sqrt(M); // -> sum_r |Z|^2 becomes w^2 (matches R=2 case)
+            for (int i = 0; i < L; i++)
             {
-                for (j = 0; j < N; j++)
+                for (int j = 0; j < N; j++)
                 {
-                    z1 = Z[i, j];
-                    z2 = Z[L + i, j];
+                    // accumulate energy over the R cosets at this (i,j)
+                    float energy = 0f;
+                    for (int r = 0; r < R; r++)
+                    {
+                        var z = Z[i + r * L, j];
+                        energy += z.Real * z.Real + z.Imag * z.Imag;
+                    }
+                    float phi = w / (float)Math.Sqrt(energy + eps);
 
-                    even = (float)Math.Pow(z1.Abs, 2);
-                    odd = (float)Math.Pow(z2.Abs, 2);
-                    phi = w / (float)Math.Sqrt(even + odd);
-
-                    Z[i, j] = z1 * phi;
-                    Z[L + i, j] = z2 * phi;
+                    // scale all R components by the same φ
+                    for (int r = 0; r < R; r++)
+                        Z[i + r * L, j] *= phi;
                 }
             }
 
-            Complex32 sum;
-            for (i = 0; i < N; i++)
+            // 4) Take DC over the vertical axis (average across RL rows)
+            var outR = new float[N];
+            for (int j = 0; j < N; j++)
             {
-                sum = 0;
-                for (j = 0; j < L2; j++)
-                {
-                    sum += Z[j, i];
-                }
-                vort[i] = (sum / L2).Real;
+                Complex32 sum = Complex32.Zero;
+                for (int i = 0; i < RL; i++)
+                    sum += Z[i, j];
+                outR[j] = (sum / RL).Real;
             }
-
-            return vort;
+            return outR;
         }
         /// <summary>
         /// Zak orthogonalization.
@@ -209,59 +211,59 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public Complex32[] Orthogonalize(Complex32[] input)
         {
-            // Fast shaping orthogonalization algorithm
-            // WH functions using a discrete Zak transform.
-            // V.P. Volchkov, D.A. Petrov and V.M. Asiryan.
-            // http://www.conf.mirea.ru/CD2017/pdf/p4/66.pdf
-
             int N = input.Length;
-            Complex32[] vort = new Complex32[N];
-            int L = N / M, L2 = L * 2, i, j;
-            Complex32[,] G = new Complex32[L2, N];
-            Complex32[,] Z;
+            if (M <= 0) throw new ArgumentException("M must be positive");
+            if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
-            for (i = 0; i < L2; i++)
+            int L = N / M;
+            int R = Maths.Gcd(M, L);           // number of Zak cosets to stitch
+            int RL = R * L;                    // vertical length
+            int delta = M / R;                 // time shift step between cosets
+            const float eps = 1e-8f;
+
+            // 1) Build G (RL x N) by circular shifts with step Δ = M/R
+            var G = new Complex32[RL, N];
+            for (int i = 0; i < RL; i++)
             {
-                for (j = 0; j < N; j++)
+                int shift = delta * i % N;
+                for (int j = 0; j < N; j++)
                 {
-                    G[i, j] = input[Maths.Mod(j + M / 2 * i, N)];
+                    G[i, j] = input[Maths.Mod(j + shift, N)];
                 }
             }
 
-            Z = DFT.Forward(G);
+            // 2) Vertical Zak-DFT (length = RL)
+            var Z = DFT.Forward(G); // Z has shape (RL x N)
 
-            float w = 2 / (float)Math.Sqrt(M);
-            float even, odd, phi;
-            Complex32 z1, z2;
-
-            for (i = 0; i < L; i++)
+            // 3) Block-wise normalization over R rows: i, i+L, i+2L, ...
+            float w = R / (float)Math.Sqrt(M); // -> sum_r |Z|^2 becomes w^2 (matches R=2 case)
+            for (int i = 0; i < L; i++)
             {
-                for (j = 0; j < N; j++)
+                for (int j = 0; j < N; j++)
                 {
-                    z1 = Z[i, j];
-                    z2 = Z[L + i, j];
-
-                    even = (float)Math.Pow(z1.Abs, 2);
-                    odd = (float)Math.Pow(z2.Abs, 2);
-                    phi = w / (float)Math.Sqrt(even + odd);
-
-                    Z[i, j] = z1 * phi;
-                    Z[L + i, j] = z2 * phi;
+                    // accumulate energy over the R cosets at this (i,j)
+                    float energy = 0f;
+                    for (int r = 0; r < R; r++)
+                    {
+                        var z = Z[i + r * L, j];
+                        energy += z.Real * z.Real + z.Imag * z.Imag;
+                    }
+                    float phi = w / (float)Math.Sqrt(energy + eps);
+                    for (int r = 0; r < R; r++)
+                        Z[i + r * L, j] *= phi;
                 }
             }
 
-            Complex32 sum;
-            for (i = 0; i < N; i++)
+            // 4) Take DC over the vertical axis (average across RL rows)
+            var outC = new Complex32[N];
+            for (int j = 0; j < N; j++)
             {
-                sum = 0;
-                for (j = 0; j < L2; j++)
-                {
-                    sum += Z[j, i];
-                }
-                vort[i] = sum / L2;
+                Complex32 sum = Complex32.Zero;
+                for (int i = 0; i < RL; i++)
+                    sum += Z[i, j];
+                outC[j] = sum / RL;
             }
-
-            return vort;
+            return outC;
         }
         #endregion
     }
