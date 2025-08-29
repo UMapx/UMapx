@@ -66,5 +66,18 @@ namespace UMapx.Window
             return this.Function(x, frameSize);
         }
         #endregion
+
+        #region Static methods
+        /// <summary>
+        /// Returns Gabor window function defined without sigma. Scaled function version.
+        /// </summary>
+        /// <param name="frameSize">Window size</param>
+        /// <returns>Gabor window function</returns>
+        public static Gabor Scaled(int frameSize)
+        {
+            var s = 1.0f / Maths.Sqrt(frameSize / 4.0f);
+            return new Gabor(frameSize, s);
+        }
+        #endregion
     }
 }

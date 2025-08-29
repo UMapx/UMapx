@@ -31853,6 +31853,13 @@
             Returns Vaidyanathan wavelet.
             </summary>
         </member>
+        <member name="M:UMapx.Wavelet.WaveletPack.GaborZak(System.Int32)">
+            <summary>
+            Returns the symmetric dyadic discrete Gabor-Zak wavelet.
+            </summary>
+            <param name="n">Number [2, 64]</param>
+            <returns>Discrete wavelet [2N dimension]</returns>
+        </member>
         <member name="T:UMapx.Wavelet.WaveletTransform">
             <summary>
             Defines a discrete wavelet transform.
@@ -32640,6 +32647,13 @@
             </summary>
             <param name="frameSize">Window size</param>
             <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.Gabor.Scaled(System.Int32)">
+            <summary>
+            Returns Gabor window function defined without sigma. Scaled function version.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Gabor window function</returns>
         </member>
         <member name="T:UMapx.Window.Hamming">
             <summary>

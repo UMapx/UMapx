@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using UMapx.Core;
+using UMapx.Window;
 
 namespace UMapx.Wavelet
 {
@@ -4142,6 +4143,25 @@ namespace UMapx.Wavelet
                      -0.0000629061180000f, 0.0003436319050000f, -0.0004539566200000f,-0.0009448971360000f,0.0028438345470000f,0.0007081375040000f,-0.0088391034090000f,0.0031538470560000f,0.0196872150100000f,-0.0148534480050000f,-0.0354703986070000f,0.0387426192930000f,0.0558925236910000f,-0.0777097509020000f,-0.0839288843660000f,0.1319716614170000f,0.1350842271290000f,-0.1944504717660000f,-0.2634948024880000f,0.2016121617750000f,0.6356010598720000f,0.5727977932110000f,0.2501841295050000f,0.0457993341110000f
                 });
             }
+        }
+        #endregion
+
+        #region Zak-Gabor wavelets
+        /// <summary>
+        /// Returns the symmetric dyadic discrete Gabor-Zak wavelet.
+        /// </summary>
+        /// <param name="n">Number [2, 64]</param>
+        /// <returns>Discrete wavelet [2N dimension]</returns>
+        public static WaveletPack GaborZak(int n)
+        {
+            if (n < 2) throw new ArgumentException("Wavelet number must be greater or equal 2");
+            if (n > 64) throw new ArgumentException("Wavelet number must be less or equal 64");
+
+            var window = Gabor.Scaled(frameSize: 2 * n);
+            var zak = new FastZakTransform(m: 2);
+            var g0 = window.GetWindow();
+            var y = zak.Orthogonalize(g0);
+            return WaveletPack.Create(y);
         }
         #endregion
     }
