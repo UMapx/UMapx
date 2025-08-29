@@ -4146,16 +4146,38 @@ namespace UMapx.Wavelet
         }
         #endregion
 
-        #region Zak-Gabor wavelets
+        #region Gabor-Zak wavelets
         /// <summary>
         /// Returns the symmetric dyadic discrete Gabor-Zak wavelet.
         /// </summary>
-        /// <param name="n">Number [2, 64]</param>
+        /// <param name="n">Length [2, 64]</param>
         /// <returns>Discrete wavelet [2N dimension]</returns>
         public static WaveletPack GaborZak(int n)
         {
-            if (n < 2) throw new ArgumentException("Wavelet number must be greater or equal 2");
-            if (n > 64) throw new ArgumentException("Wavelet number must be less or equal 64");
+            if (n < 2) throw new ArgumentException("Wavelet length must be greater or equal 2");
+            if (n > 64) throw new ArgumentException("Wavelet length must be less or equal 64");
+
+            // Gabor–Zak wavelets (dyadic, periodic).
+            // Builds an orthonormal 2-channel (M=2) wavelet filter bank on ℓ²(ℤ_N)
+            // by Zak-domain orthogonalization of a centered truncated Gaussian
+            // (Gabor) prototype and CQF construction for the high-pass.
+            //
+            // Idea (one line): take a symmetric N-periodic Gaussian g → enforce
+            // Walnut/Wexler–Raz locally in the Zak domain (|Z₀|²+|Z₁|² = const) →
+            // inverse mapping gives the paraunitary low-pass h₀; define h₁ by CQF:
+            //     h₁[n] = (−1)ⁿ · h₀[Nf−1−n].
+            //
+            // Properties:
+            // • Orthonormal dyadic filter bank (perfect reconstruction, periodic DWT).
+            // • Symmetric (N-periodic even) when N ≡ 0 (mod 4).
+            // • Low-pass normalization: Σ h₀ = √2 and H₀(π)=0 ⇒ ψ has zero mean (≥1 vanishing moment).
+            //
+            // Parameters:
+            // • N — filter length / circle size (also sets the max number of levels).
+            //
+            // Notes:
+            // • This is a discrete/periodic construction on ℤ_N (not asserting a continuous MRA on L²(ℝ)).
+            // • This discrete wavelet filter bank was found and introduced by Valery Asiryan (Yerevan, Armenia, 2025).
 
             var window = Gabor.Scaled(frameSize: 2 * n);
             var zak = new FastZakTransform(m: 2);

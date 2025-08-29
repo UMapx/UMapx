@@ -31857,7 +31857,7 @@
             <summary>
             Returns the symmetric dyadic discrete Gabor-Zak wavelet.
             </summary>
-            <param name="n">Number [2, 64]</param>
+            <param name="n">Length [2, 64]</param>
             <returns>Discrete wavelet [2N dimension]</returns>
         </member>
         <member name="T:UMapx.Wavelet.WaveletTransform">
