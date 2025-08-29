@@ -4182,8 +4182,9 @@ namespace UMapx.Wavelet
             var window = Gabor.Scaled(frameSize: 2 * n);
             var zak = new FastZakTransform(m: 2);
             var g0 = window.GetWindow();
-            var y = zak.Orthogonalize(g0);
-            return WaveletPack.Create(y);
+            var h0 = zak.Orthogonalize(g0);
+            var h1 = Maths.IsEven(n) ? WaveletPack.InvertOdds(h0) : WaveletPack.InvertEvens(h0);
+            return WaveletPack.Create(h0, h1);
         }
         #endregion
     }
