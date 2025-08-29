@@ -4132,46 +4132,47 @@ namespace UMapx.Wavelet
         #region Gabor-Zak wavelets
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT).
-        /// Total filter length is N = 4·n; the pack contains four N-tap filters
+        /// Total filter length is N = 2^n; the pack contains four N-tap filters
         /// (analysis low/high and synthesis low/high).
         /// </summary>
-        /// <param name="n">Size parameter (1..32); the resulting filter length is N = 4·n</param>
-        /// <returns>WaveletPack with (h0, h1, g0, g1), each of length N = 4·n</returns>
+        /// <param name="n">
+        /// Size parameter (2..7): N = 2^n.
+        /// </param>
+        /// <returns>
+        /// WaveletPack with (h0, h1, g0, g1), each of length N = 2^n.
+        /// </returns>
         public static WaveletPack GaborZak(int n)
         {
-            if (n < 1) throw new ArgumentException("Wavelet size must be greater or equal 1");
-            if (n > 32) throw new ArgumentException("Wavelet size must be less or equal 32");
+            if (n < 2) throw new ArgumentException("Wavelet size must be greater or equal 2");
+            if (n > 7) throw new ArgumentException("Wavelet size must be less or equal 7");
 
             // Gabor–Zak wavelets (dyadic, periodic).
             // Builds an orthonormal 2-channel (M=2) wavelet filter bank on ℓ²(ℤ_N)
-            // by Zak-domain orthogonalization of a centered truncated Gaussian
-            // (Gabor) prototype and CQF construction for the high-pass.
+            // by Zak-domain orthogonalization of a centered truncated Gaussian (Gabor) prototype
+            // and CQF construction for the high-pass.
             //
-            // Idea (one line): take a symmetric N-periodic Gaussian g → enforce
-            // Walnut/Wexler–Raz locally in the Zak domain (|Z₀|²+|Z₁|² = const) →
-            // inverse mapping gives the paraunitary low-pass h₀; define h₁ by CQF:
-            //     h₁[n] = (−1)ⁿ · h₀[Nf−1−n].
+            // Idea: take a symmetric N-periodic Gaussian g → enforce Walnut/Wexler–Raz locally
+            // in the Zak domain (|Z₀|² + |Z₁|² = const) → inverse mapping gives the paraunitary
+            // low-pass h₀; define h₁ by CQF: h₁[n] = (−1)ⁿ · h₀[Nf−1−n].
             //
             // Properties:
             // • Orthonormal dyadic filter bank (perfect reconstruction, periodic DWT).
-            // • Symmetric (N-periodic even) when N ≡ 0 (mod 4).
-            // • Low-pass normalization: Σ h₀ = √2 and H₀(π)=0 ⇒ ψ has zero mean (≥1 vanishing moment).
-            //
-            // Parameters:
-            // • N — filter length / circle size (also sets the max number of levels).
+            // • Symmetric (N-periodic even) when N ≡ 0 (mod 4) — i.e., n ≥ 2.
+            // • Low-pass normalization: Σ h₀ = √2 and H₀(π) = 0 ⇒ ψ has zero mean (≥1 vanishing moment).
             //
             // Notes:
-            // • This is a discrete/periodic construction on ℤ_N (not asserting a continuous MRA on L²(ℝ)).
-            // • N = 4n ⇒ N ≡ 0 (mod 4) ⇒ R = gcd(M, N/2) = 2 (stable two-coset Zak orthogonalization).
+            // • Discrete/periodic construction on ℤ_N (no claim of a continuous MRA on L²(ℝ)).
+            // • With N = 2^n and n ≥ 2 we have R = gcd(M, N/2) = 2 (stable two-coset Zak orthogonalization).
             // • This discrete wavelet filter bank was found and introduced by Valery Asiryan (Yerevan, Armenia, 2025).
 
-            var N = 4 * n;
+            var N = (int)Maths.Pow(2, n);
             var window = Gabor.Scaled(frameSize: N);
             var zak = new FastZakTransform(m: 2);
             var g0 = window.GetWindow();
             var h0 = zak.Orthogonalize(g0);
             return WaveletPack.Create(h0);
         }
+
         #endregion
     }
 }

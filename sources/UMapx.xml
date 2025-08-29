@@ -31846,11 +31846,15 @@
         <member name="M:UMapx.Wavelet.WaveletPack.GaborZak(System.Int32)">
             <summary>
             Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT).
-            Total filter length is N = 4·n; the pack contains four N-tap filters
+            Total filter length is N = 2^n; the pack contains four N-tap filters
             (analysis low/high and synthesis low/high).
             </summary>
-            <param name="n">Size parameter (1..32); the resulting filter length is N = 4·n</param>
-            <returns>WaveletPack with (h0, h1, g0, g1), each of length N = 4·n</returns>
+            <param name="n">
+            Size parameter (2..7): N = 2^n.
+            </param>
+            <returns>
+            WaveletPack with (h0, h1, g0, g1), each of length N = 2^n.
+            </returns>
         </member>
         <member name="T:UMapx.Wavelet.WaveletTransform">
             <summary>
