@@ -94,47 +94,30 @@ namespace UMapx.Wavelet
 
         #region Public static voids
         /// <summary>
-        /// Inverts the odd elements of a vector.
+        /// Builds the analysis high-pass filter h1 from a real-valued analysis low-pass h0
+        /// using the Conjugate-Quadrature-Filter (CQF) relation:
+        ///     h1[n] = (-1)^n * h0[N-1-n].
+        /// For a paraunitary (orthonormal) 2-channel bank this must be combined with a
+        /// properly normalized low-pass (e.g., sum(h0)=√2 and H0(π)=0).
         /// </summary>
-        /// <param name="v">Array</param>
-        /// <returns>Array</returns>
-        public static float[] InvertOdds(float[] v)
-        {
-            float[] w = (float[])v.Clone();
-            int length = w.Length, i;
-
-            // inversion of odd elements:
-            for (i = 1; i < length; i += 2)
-            {
-                w[i] = -w[i];
-            }
-            return w;
-        }
-        /// <summary>
-        /// Inverts even elements of a vector.
-        /// </summary>
-        /// <param name="v">Array</param>
-        /// <returns>Array</returns>
-        public static float[] InvertEvens(float[] v)
-        {
-            float[] w = (float[])v.Clone();
-            int length = w.Length, i;
-
-            // inversion of even elements:
-            for (i = 0; i < length; i += 2)
-            {
-                w[i] = -w[i];
-            }
-            return w;
-        }
-        /// <summary>
-        /// Returns the Daubechies wavelet function.
-        /// </summary>
-        /// <param name="scaling">Scaling function</param>
+        /// <param name="v">Scaling function</param>
         /// <returns>Wavelet function</returns>
-        private static float[] GetWavelet(float[] scaling)
+        public static float[] CQF(float[] v)
         {
-            return WaveletPack.InvertOdds(Matrice.Flip(scaling));
+            // High-pass by CQF:
+            // h1[n] = (-1)^n * h0[(N-1-n) mod N]
+            var N = v.Length;
+            var h = new float[N];
+
+            for (int i = 0; i < N; i++)
+            {
+                // reverse index (mod N)
+                int r = N - 1 - i;
+                float sign = ((i & 1) == 0) ? +1f : -1f;
+                h[i] = sign * v[r];
+            }
+
+            return h;
         }
         /// <summary>
         /// Creates the discrete wavelet.
@@ -144,7 +127,7 @@ namespace UMapx.Wavelet
         public static WaveletPack Create(float[] scaling)
         {
             float[] lp = scaling;
-            float[] hp = WaveletPack.GetWavelet(lp);
+            float[] hp = CQF(lp);
             float[] ilp = Matrice.Flip(lp);
             float[] ihp = Matrice.Flip(hp);
 
@@ -160,8 +143,8 @@ namespace UMapx.Wavelet
         {
             float[] lp = scaling;
             float[] hp = wavelet;
-            float[] ilp = WaveletPack.InvertEvens(hp);
-            float[] ihp = WaveletPack.InvertOdds(lp);
+            float[] ilp = Matrice.Flip(lp);
+            float[] ihp = Matrice.Flip(hp);
 
             return new WaveletPack(lp, hp, ilp, ihp);
         }
@@ -4148,14 +4131,16 @@ namespace UMapx.Wavelet
 
         #region Gabor-Zak wavelets
         /// <summary>
-        /// Returns the symmetric dyadic discrete Gabor-Zak wavelet.
+        /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT).
+        /// Total filter length is N = 4·n; the pack contains four N-tap filters
+        /// (analysis low/high and synthesis low/high).
         /// </summary>
-        /// <param name="n">Length [2, 64]</param>
-        /// <returns>Discrete wavelet [2N dimension]</returns>
+        /// <param name="n">Size parameter (1..32); the resulting filter length is N = 4·n</param>
+        /// <returns>WaveletPack with (h0, h1, g0, g1), each of length N = 4·n</returns>
         public static WaveletPack GaborZak(int n)
         {
-            if (n < 2) throw new ArgumentException("Wavelet length must be greater or equal 2");
-            if (n > 64) throw new ArgumentException("Wavelet length must be less or equal 64");
+            if (n < 1) throw new ArgumentException("Wavelet size must be greater or equal 1");
+            if (n > 32) throw new ArgumentException("Wavelet size must be less or equal 32");
 
             // Gabor–Zak wavelets (dyadic, periodic).
             // Builds an orthonormal 2-channel (M=2) wavelet filter bank on ℓ²(ℤ_N)
@@ -4177,14 +4162,15 @@ namespace UMapx.Wavelet
             //
             // Notes:
             // • This is a discrete/periodic construction on ℤ_N (not asserting a continuous MRA on L²(ℝ)).
+            // • N = 4n ⇒ N ≡ 0 (mod 4) ⇒ R = gcd(M, N/2) = 2 (stable two-coset Zak orthogonalization).
             // • This discrete wavelet filter bank was found and introduced by Valery Asiryan (Yerevan, Armenia, 2025).
 
-            var window = Gabor.Scaled(frameSize: 2 * n);
+            var N = 4 * n;
+            var window = Gabor.Scaled(frameSize: N);
             var zak = new FastZakTransform(m: 2);
             var g0 = window.GetWindow();
             var h0 = zak.Orthogonalize(g0);
-            var h1 = Maths.IsEven(n) ? WaveletPack.InvertOdds(h0) : WaveletPack.InvertEvens(h0);
-            return WaveletPack.Create(h0, h1);
+            return WaveletPack.Create(h0);
         }
         #endregion
     }

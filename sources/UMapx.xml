@@ -31179,25 +31179,15 @@
             Gets or sets the wavelet function of backward transform.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.InvertOdds(System.Single[])">
+        <member name="M:UMapx.Wavelet.WaveletPack.CQF(System.Single[])">
             <summary>
-            Inverts the odd elements of a vector.
+            Builds the analysis high-pass filter h1 from a real-valued analysis low-pass h0
+            using the Conjugate-Quadrature-Filter (CQF) relation:
+                h1[n] = (-1)^n * h0[N-1-n].
+            For a paraunitary (orthonormal) 2-channel bank this must be combined with a
+            properly normalized low-pass (e.g., sum(h0)=√2 and H0(π)=0).
             </summary>
-            <param name="v">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.InvertEvens(System.Single[])">
-            <summary>
-            Inverts even elements of a vector.
-            </summary>
-            <param name="v">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.GetWavelet(System.Single[])">
-            <summary>
-            Returns the Daubechies wavelet function.
-            </summary>
-            <param name="scaling">Scaling function</param>
+            <param name="v">Scaling function</param>
             <returns>Wavelet function</returns>
         </member>
         <member name="M:UMapx.Wavelet.WaveletPack.Create(System.Single[])">
@@ -31855,10 +31845,12 @@
         </member>
         <member name="M:UMapx.Wavelet.WaveletPack.GaborZak(System.Int32)">
             <summary>
-            Returns the symmetric dyadic discrete Gabor-Zak wavelet.
+            Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT).
+            Total filter length is N = 4·n; the pack contains four N-tap filters
+            (analysis low/high and synthesis low/high).
             </summary>
-            <param name="n">Length [2, 64]</param>
-            <returns>Discrete wavelet [2N dimension]</returns>
+            <param name="n">Size parameter (1..32); the resulting filter length is N = 4·n</param>
+            <returns>WaveletPack with (h0, h1, g0, g1), each of length N = 4·n</returns>
         </member>
         <member name="T:UMapx.Wavelet.WaveletTransform">
             <summary>
