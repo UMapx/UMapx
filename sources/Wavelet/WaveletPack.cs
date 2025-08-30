@@ -4133,7 +4133,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=4).
         /// </summary>
-        public static WaveletPack GaborZak2
+        public static WaveletPack GZ2
         {
             get
             {
@@ -4143,7 +4143,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=8).
         /// </summary>
-        public static WaveletPack GaborZak3
+        public static WaveletPack GZ3
         {
             get
             {
@@ -4153,7 +4153,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=16).
         /// </summary>
-        public static WaveletPack GaborZak4
+        public static WaveletPack GZ4
         {
             get
             {
@@ -4163,7 +4163,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=32).
         /// </summary>
-        public static WaveletPack GaborZak5
+        public static WaveletPack GZ5
         {
             get
             {
@@ -4173,7 +4173,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=64).
         /// </summary>
-        public static WaveletPack GaborZak6
+        public static WaveletPack GZ6
         {
             get
             {
@@ -4183,7 +4183,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=128).
         /// </summary>
-        public static WaveletPack GaborZak7
+        public static WaveletPack GZ7
         {
             get
             {
