@@ -4167,7 +4167,7 @@ namespace UMapx.Wavelet
         {
             get
             {
-                return GaborZak(5);
+                return WaveletPack.GaborZak(5);
             }
         }
         /// <summary>
