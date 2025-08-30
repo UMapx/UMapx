@@ -4131,6 +4131,66 @@ namespace UMapx.Wavelet
 
         #region Gabor-Zak wavelets
         /// <summary>
+        /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=4).
+        /// </summary>
+        public static WaveletPack GaborZak2
+        {
+            get
+            {
+                return WaveletPack.GaborZak(2);
+            }
+        }
+        /// <summary>
+        /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=8).
+        /// </summary>
+        public static WaveletPack GaborZak3
+        {
+            get
+            {
+                return WaveletPack.GaborZak(3);
+            }
+        }
+        /// <summary>
+        /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=16).
+        /// </summary>
+        public static WaveletPack GaborZak4
+        {
+            get
+            {
+                return WaveletPack.GaborZak(4);
+            }
+        }
+        /// <summary>
+        /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=32).
+        /// </summary>
+        public static WaveletPack GaborZak5
+        {
+            get
+            {
+                return GaborZak(5);
+            }
+        }
+        /// <summary>
+        /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=64).
+        /// </summary>
+        public static WaveletPack GaborZak6
+        {
+            get
+            {
+                return WaveletPack.GaborZak(6);
+            }
+        }
+        /// <summary>
+        /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=128).
+        /// </summary>
+        public static WaveletPack GaborZak7
+        {
+            get
+            {
+                return WaveletPack.GaborZak(7);
+            }
+        }
+        /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT).
         /// Total filter length is N = 2^n; the pack contains four N-tap filters
         /// (analysis low/high and synthesis low/high).
@@ -4141,7 +4201,7 @@ namespace UMapx.Wavelet
         /// <returns>
         /// WaveletPack with (h0, h1, g0, g1), each of length N = 2^n.
         /// </returns>
-        public static WaveletPack GaborZak(int n)
+        internal static WaveletPack GaborZak(int n)
         {
             if (n < 2) throw new ArgumentException("Wavelet size must be greater or equal 2");
             if (n > 7) throw new ArgumentException("Wavelet size must be less or equal 7");

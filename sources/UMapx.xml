@@ -31843,6 +31843,36 @@
             Returns Vaidyanathan wavelet.
             </summary>
         </member>
+        <member name="P:UMapx.Wavelet.WaveletPack.GaborZak2">
+            <summary>
+            Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=4).
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletPack.GaborZak3">
+            <summary>
+            Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=8).
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletPack.GaborZak4">
+            <summary>
+            Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=16).
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletPack.GaborZak5">
+            <summary>
+            Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=32).
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletPack.GaborZak6">
+            <summary>
+            Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=64).
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletPack.GaborZak7">
+            <summary>
+            Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=128).
+            </summary>
+        </member>
         <member name="M:UMapx.Wavelet.WaveletPack.GaborZak(System.Int32)">
             <summary>
             Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT).
