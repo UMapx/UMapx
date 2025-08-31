@@ -31732,9 +31732,9 @@
             Defines the wavelet transform interface.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.IWaveletTransform.Wavelet">
+        <member name="P:UMapx.Wavelet.IWaveletTransform.WaveletDecomposition">
             <summary>
-            Gets or sets the discrete wavelet.
+            Gets or sets the discrete wavelet decomposition.
             </summary>
         </member>
         <member name="T:UMapx.Wavelet.MexicanHatWavelet">
@@ -31874,13 +31874,25 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletDecomposition.#ctor(UMapx.Wavelet.WaveletTransform)">
+        <member name="M:UMapx.Wavelet.WaveletDecomposition.#ctor(UMapx.Wavelet.WaveletPack,System.Int32,System.Boolean)">
             <summary>
             Initializes a discrete wavelet decomposition.
             </summary>
-            <param name="waveletTransform">Discrete wavelet transform</param>
+            <param name="wavelet">Discrete wavelet</param>
+            <param name="levels">Number of levels</param>
+            <param name="normalized">Normalized transform or not</param>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletDecomposition.WaveletTransform">
+        <member name="P:UMapx.Wavelet.WaveletDecomposition.Levels">
+            <summary>
+            Gets or sets the number of transform levels.
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletDecomposition.Normalized">
+            <summary>
+            Normalized transform or not.
+            </summary>
+        </member>
+        <member name="P:UMapx.Wavelet.WaveletDecomposition.Wavelet">
             <summary>
             Gets or sets the discrete wavelet.
             </summary>
@@ -32002,27 +32014,15 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.#ctor(UMapx.Wavelet.WaveletPack,System.Int32,System.Boolean)">
+        <member name="M:UMapx.Wavelet.WaveletTransform.#ctor(UMapx.Wavelet.WaveletDecomposition)">
             <summary>
-            Initializes a discrete wavelet transform.
+            Initializes the discrete wavelet transform.
             </summary>
-            <param name="wavelet">Discrete wavelet</param>
-            <param name="levels">Number of levels</param>
-            <param name="normalized">Normalized transform or not</param>
+            <param name="waveletDecomposition">Discrete wavelet decomposition</param>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletTransform.Levels">
+        <member name="P:UMapx.Wavelet.WaveletTransform.WaveletDecomposition">
             <summary>
-            Gets or sets the number of transform levels.
-            </summary>
-        </member>
-        <member name="P:UMapx.Wavelet.WaveletTransform.Normalized">
-            <summary>
-            Normalized transform or not.
-            </summary>
-        </member>
-        <member name="P:UMapx.Wavelet.WaveletTransform.Wavelet">
-            <summary>
-            Gets or sets the discrete wavelet.
+            Gets or sets the discrete wavelet decomposition.
             </summary>
         </member>
         <member name="M:UMapx.Wavelet.WaveletTransform.Forward(System.Single[])">
@@ -32080,38 +32080,6 @@
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.DWT(System.Single[],System.Int32)">
-            <summary>
-            Forward discrete wavelet transform.
-            </summary>
-            <param name="input">Input signal</param>
-            <param name="level">Current level of transform</param>
-            <returns>Output data</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.IDWT(System.Single[],System.Int32)">
-            <summary>
-            Backward discrete wavelet transform.
-            </summary>
-            <param name="input">Input signal</param>
-            <param name="level">Current level of transform</param>
-            <returns>Output data</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.DWT(UMapx.Core.Complex32[],System.Int32)">
-            <summary>
-            Forward discrete wavelet transform.
-            </summary>
-            <param name="input">Input signal</param>
-            <param name="level">Current level of transform</param>
-            <returns>Output data</returns>
-        </member>
-        <member name="M:UMapx.Wavelet.WaveletTransform.IDWT(UMapx.Core.Complex32[],System.Int32)">
-            <summary>
-            Backward discrete wavelet transform.
-            </summary>
-            <param name="input">Input signal</param>
-            <param name="level">Current level of transform</param>
-            <returns>Output data</returns>
         </member>
         <member name="T:UMapx.Window.BarlettHann">
             <summary>

@@ -7,9 +7,9 @@
     {
         #region Interface
         /// <summary>
-        /// Gets or sets the discrete wavelet.
+        /// Gets or sets the discrete wavelet decomposition.
         /// </summary>
-        WaveletPack Wavelet { get; set; }
+        WaveletDecomposition WaveletDecomposition { get; set; }
         #endregion
     }
 }

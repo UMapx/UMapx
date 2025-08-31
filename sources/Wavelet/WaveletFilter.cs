@@ -72,8 +72,8 @@ namespace UMapx.Wavelet
 
             var output = WaveletDecomposition.Backward(B);
             float factor = 1 + Factor;
-            n = data.GetLength(0);
-            m = data.GetLength(1);
+            n = output.GetLength(0);
+            m = output.GetLength(1);
 
             for (int y = 0; y < n; y++)
             {
@@ -115,7 +115,7 @@ namespace UMapx.Wavelet
 
             var output = WaveletDecomposition.Backward(B);
             float factor = 1 + Factor;
-            n = data.GetLength(0);
+            n = output.GetLength(0);
 
             for (int y = 0; y < n; y++)
             {
@@ -159,8 +159,8 @@ namespace UMapx.Wavelet
 
             var output = WaveletDecomposition.Backward(B);
             float factor = 1 + Factor;
-            n = data.GetLength(0);
-            m = data.GetLength(1);
+            n = output.GetLength(0);
+            m = output.GetLength(1);
 
             for (int y = 0; y < n; y++)
             {
@@ -202,7 +202,7 @@ namespace UMapx.Wavelet
 
             var output = WaveletDecomposition.Backward(B);
             float factor = 1 + Factor;
-            n = data.GetLength(0);
+            n = output.GetLength(0);
 
             for (int y = 0; y < n; y++)
             {

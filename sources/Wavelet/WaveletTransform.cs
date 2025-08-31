@@ -17,71 +17,30 @@ namespace UMapx.Wavelet
     public class WaveletTransform : IWaveletTransform, ITransform
     {
         #region Private data
-        private float[] lp;        // Low-Pass filter,
-        private float[] hp;        // High-Pass filer,
-        private float[] ilp;       // Inverse Low-Pass filter,
-        private float[] ihp;       // Inverse High-Pass filter,
-        private bool normalized;    // Normalized transform or not,
-        private int levels;         // Number of levels.
+        private WaveletDecomposition waveletDecomposition;
         #endregion
 
         #region Initialize
         /// <summary>
-        /// Initializes a discrete wavelet transform.
+        /// Initializes the discrete wavelet transform.
         /// </summary>
-        /// <param name="wavelet">Discrete wavelet</param>
-        /// <param name="levels">Number of levels</param>
-        /// <param name="normalized">Normalized transform or not</param>
-        public WaveletTransform(WaveletPack wavelet, int levels = 1, bool normalized = true)
+        /// <param name="waveletDecomposition">Discrete wavelet decomposition</param>
+        public WaveletTransform(WaveletDecomposition waveletDecomposition)
         {
-            Wavelet = wavelet; Levels = levels; Normalized = normalized;
+            WaveletDecomposition = waveletDecomposition;
         }
         /// <summary>
-        /// Gets or sets the number of transform levels.
+        /// Gets or sets the discrete wavelet decomposition.
         /// </summary>
-        public int Levels
+        public WaveletDecomposition WaveletDecomposition
         {
             get
             {
-                return this.levels;
+                return waveletDecomposition;
             }
             set
             {
-                if (value < 1)
-                    throw new ArgumentException("Number of levels cannot be less than 1");
-
-                this.levels = value;
-            }
-        }
-        /// <summary>
-        /// Normalized transform or not.
-        /// </summary>
-        public bool Normalized
-        {
-            get
-            {
-                return this.normalized;
-            }
-            set
-            {
-                this.normalized = value;
-            }
-        }
-        /// <summary>
-        /// Gets or sets the discrete wavelet.
-        /// </summary>
-        public WaveletPack Wavelet
-        {
-            get
-            {
-                return new WaveletPack(lp, hp, ilp, ihp);
-            }
-            set
-            {
-                this.lp = value.LowPass;
-                this.hp = value.HighPass;
-                this.ilp = value.ILowPass;
-                this.ihp = value.IHighPass;
+                this.waveletDecomposition = value;
             }
         }
         #endregion
@@ -94,16 +53,18 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public float[] Forward(float[] A)
         {
-            // params
-            int nLevels = (int)Math.Min(Maths.Log2(A.Length), this.levels);
+            var packs = waveletDecomposition.Forward(A);
+            int N = A.Length;
+            var y = new float[N];
+            int pos = 0;
 
-            // forward multi-scale wavelet transform
-            for (int i = 0; i < nLevels; i++)
+            for (int i = 0; i < packs.Length; i++)
             {
-                A = this.DWT(A, i);
+                var b = packs[i];
+                Buffer.BlockCopy(b, 0, y, pos * sizeof(float), b.Length * sizeof(float));
+                pos += b.Length;
             }
-
-            return A;
+            return y;
         }
         /// <summary>
         /// Backward wavelet transform.
@@ -112,16 +73,19 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public float[] Backward(float[] B)
         {
-            // params
-            int nLevels = (int)Math.Min(Maths.Log2(B.Length), this.levels);
+            int N = B.Length, L = Math.Min((int)Maths.Log2(N), waveletDecomposition.Levels);
+            int aLen = N >> L; int pos = 0;
+            var coeffs = new float[L + 1][];
+            coeffs[0] = new float[aLen];
+            Buffer.BlockCopy(B, 0, coeffs[0], 0, aLen * sizeof(float)); pos += aLen;
 
-            // backward multi-scale wavelet transform
-            for (int i = nLevels; i > 0; i--)
+            for (int lev = L; lev >= 1; lev--)
             {
-                B = this.IDWT(B, i);
+                int dLen = N >> lev; var d = new float[dLen];
+                Buffer.BlockCopy(B, pos * sizeof(float), d, 0, dLen * sizeof(float)); pos += dLen; coeffs[L - lev + 1] = d;
             }
 
-            return B;
+            return waveletDecomposition.Backward(coeffs);
         }
         /// <summary>
         /// Forward wavelet transform.
@@ -130,42 +94,38 @@ namespace UMapx.Wavelet
         /// <returns>Matrix</returns>
         public float[,] Forward(float[,] A)
         {
-            // params
-            int Bound1, Bound2, i, j;
-            int DataLen1 = A.GetLength(0);
-            int DataLen2 = A.GetLength(1);
-            float[,] output = (float[,])A.Clone();
-            float[] buff2 = new float[DataLen2];
-            float[] buff1 = new float[DataLen1];
-            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
+            var packs = waveletDecomposition.Forward(A); int L = (packs.Length - 1) / 3;
+            int rows = packs[0].GetLength(0) << L;
+            int cols = packs[0].GetLength(1) << L; var Y = new float[rows, cols];
 
-            // do job
-            for (int lev = 0; lev < nLevels; lev++)
+            // place coarsest LL
+            for (int r = 0; r < packs[0].GetLength(0); r++)
             {
-                Bound1 = DataLen1 >> lev;
-                Bound2 = DataLen2 >> lev;
-
-                if (!Maths.IsEven(Bound1) && Bound1 < DataLen1)
-                    Bound1--;
-                if (!Maths.IsEven(Bound2) && Bound2 < DataLen2)
-                    Bound2--;
-
-                for (i = 0; i < Bound1; i++)
+                for (int c = 0; c < packs[0].GetLength(1); c++)
                 {
-                    for (j = 0; j < Bound2; j++) buff2[j] = output[i, j];
-                    buff2 = this.DWT(buff2, lev);
-                    for (j = 0; j < Bound2; j++) output[i, j] = buff2[j];
-                }
-
-                for (j = 0; j < Bound2; j++)
-                {
-                    for (i = 0; i < Bound1; i++) buff1[i] = output[i, j];
-                    buff1 = this.DWT(buff1, lev);
-                    for (i = 0; i < Bound1; i++) output[i, j] = buff1[i];
+                    Y[r, c] = packs[0][r, c];
                 }
             }
 
-            return output;
+            for (int lev = L; lev >= 1; lev--)
+            {
+                int h = rows >> (lev - 1), w = cols >> (lev - 1), hr = h >> 1, wc = w >> 1;
+                var LH = packs[1 + 3 * (L - lev) + 0];
+                var HL = packs[1 + 3 * (L - lev) + 1];
+                var HH = packs[1 + 3 * (L - lev) + 2];
+
+                for (int r = 0; r < hr; r++)
+                {
+                    for (int c = 0; c < wc; c++)
+                    {
+                        Y[r, wc + c] = LH[r, c];
+                        Y[hr + r, c] = HL[r, c];
+                        Y[hr + r, wc + c] = HH[r, c];
+                    }
+                }
+            }
+
+            return Y;
         }
         /// <summary>
         /// Backward wavelet transform.
@@ -174,37 +134,42 @@ namespace UMapx.Wavelet
         /// <returns>Matrix</returns>
         public float[,] Backward(float[,] B)
         {
-            // params
-            int Bound1, Bound2, i, j;
-            int DataLen1 = B.GetLength(0);
-            int DataLen2 = B.GetLength(1);
-            float[,] output = (float[,])B.Clone();
-            float[] buff1 = new float[DataLen1];
-            float[] buff2 = new float[DataLen2];
-            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
+            int R = B.GetLength(0), C = B.GetLength(1);
+            int L = Math.Min(Math.Min((int)Maths.Log2(R), (int)Maths.Log2(C)), waveletDecomposition.Levels);
+            var packs = new float[1 + 3 * L][,];
+            int hL = R >> L, wL = C >> L; var LL = new float[hL, wL];
 
-            // do job
-            for (int lev = nLevels; lev > 0; lev--)
+            for (int r = 0; r < hL; r++)
             {
-                Bound1 = DataLen1 >> lev;
-                Bound2 = DataLen2 >> lev;
-
-                for (i = 0; i < Bound1 << 1; i++)
+                for (int c = 0; c < wL; c++)
                 {
-                    for (j = 0; j < Bound2 << 1; j++) buff2[j] = output[i, j];
-                    buff2 = this.IDWT(buff2, lev);
-                    for (j = 0; j < Bound2 << 1; j++) output[i, j] = buff2[j];
-                }
-
-                for (j = 0; j < Bound2 << 1; j++)
-                {
-                    for (i = 0; i < Bound1 << 1; i++) buff1[i] = output[i, j];
-                    buff1 = this.IDWT(buff1, lev);
-                    for (i = 0; i < Bound1 << 1; i++) output[i, j] = buff1[i];
+                    LL[r, c] = B[r, c]; packs[0] = LL;
                 }
             }
 
-            return output;
+            for (int lev = L; lev >= 1; lev--)
+            {
+                int h = R >> (lev - 1), w = C >> (lev - 1), hr = h >> 1, wc = w >> 1;
+                var LH = new float[hr, wc];
+                var HL = new float[hr, wc];
+                var HH = new float[hr, wc];
+
+                for (int r = 0; r < hr; r++)
+                {
+                    for (int c = 0; c < wc; c++)
+                    {
+                        LH[r, c] = B[r, wc + c];
+                        HL[r, c] = B[hr + r, c];
+                        HH[r, c] = B[hr + r, wc + c];
+                    }
+                }
+
+                packs[1 + 3 * (L - lev) + 0] = LH;
+                packs[1 + 3 * (L - lev) + 1] = HL;
+                packs[1 + 3 * (L - lev) + 2] = HH;
+            }
+
+            return waveletDecomposition.Backward(packs);
         }
         /// <summary>
         /// Forward wavelet transform.
@@ -213,16 +178,19 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public Complex32[] Forward(Complex32[] A)
         {
-            // params
-            int nLevels = (int)Math.Min(Maths.Log2(A.Length), this.levels);
+            var packs = waveletDecomposition.Forward(A);
+            int N = A.Length;
+            var y = new Complex32[N];
+            int pos = 0;
 
-            // forward multi-scale wavelet transform
-            for (int i = 0; i < nLevels; i++)
+            for (int i = 0; i < packs.Length; i++)
             {
-                A = this.DWT(A, i);
+                var b = packs[i];
+                Array.Copy(b, 0, y, pos, b.Length);
+                pos += b.Length;
             }
 
-            return A;
+            return y;
         }
         /// <summary>
         /// Backward wavelet transform.
@@ -231,16 +199,24 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public Complex32[] Backward(Complex32[] B)
         {
-            // params
-            int nLevels = (int)Math.Min(Maths.Log2(B.Length), this.levels);
+            int N = B.Length, L = Math.Min((int)Maths.Log2(N), waveletDecomposition.Levels);
+            int aLen = N >> L;
+            int pos = 0;
+            var coeffs = new Complex32[L + 1][];
+            coeffs[0] = new Complex32[aLen];
+            Array.Copy(B, pos, coeffs[0], 0, aLen);
+            pos += aLen;
 
-            // backward multi-scale wavelet transform
-            for (int i = nLevels; i > 0; i--)
+            for (int lev = L; lev >= 1; lev--)
             {
-                B = this.IDWT(B, i);
+                int dLen = N >> lev;
+                var d = new Complex32[dLen];
+                Array.Copy(B, pos, d, 0, dLen);
+                pos += dLen;
+                coeffs[L - lev + 1] = d;
             }
 
-            return B;
+            return waveletDecomposition.Backward(coeffs);
         }
         /// <summary>
         /// Forward wavelet transform.
@@ -249,42 +225,39 @@ namespace UMapx.Wavelet
         /// <returns>Matrix</returns>
         public Complex32[,] Forward(Complex32[,] A)
         {
-            // params
-            int Bound1, Bound2, i, j;
-            int DataLen1 = A.GetLength(0);
-            int DataLen2 = A.GetLength(1);
-            Complex32[,] output = (Complex32[,])A.Clone();
-            Complex32[] buff2 = new Complex32[DataLen2];
-            Complex32[] buff1 = new Complex32[DataLen1];
-            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
+            var packs = waveletDecomposition.Forward(A);
+            int L = (packs.Length - 1) / 3;
+            int rows = packs[0].GetLength(0) << L;
+            int cols = packs[0].GetLength(1) << L;
+            var Y = new Complex32[rows, cols];
 
-            // do job
-            for (int lev = 0; lev < nLevels; lev++)
+            for (int r = 0; r < packs[0].GetLength(0); r++)
             {
-                Bound1 = DataLen1 >> lev;
-                Bound2 = DataLen2 >> lev;
-
-                if (!Maths.IsEven(Bound1) && Bound1 < DataLen1)
-                    Bound1--;
-                if (!Maths.IsEven(Bound2) && Bound2 < DataLen2)
-                    Bound2--;
-
-                for (i = 0; i < Bound1; i++)
+                for (int c = 0; c < packs[0].GetLength(1); c++)
                 {
-                    for (j = 0; j < Bound2; j++) buff2[j] = output[i, j];
-                    buff2 = this.DWT(buff2, lev);
-                    for (j = 0; j < Bound2; j++) output[i, j] = buff2[j];
-                }
-
-                for (j = 0; j < Bound2; j++)
-                {
-                    for (i = 0; i < Bound1; i++) buff1[i] = output[i, j];
-                    buff1 = this.DWT(buff1, lev);
-                    for (i = 0; i < Bound1; i++) output[i, j] = buff1[i];
+                    Y[r, c] = packs[0][r, c];
                 }
             }
 
-            return output;
+            for (int lev = L; lev >= 1; lev--)
+            {
+                int h = rows >> (lev - 1), w = cols >> (lev - 1), hr = h >> 1, wc = w >> 1;
+                var LH = packs[1 + 3 * (L - lev) + 0];
+                var HL = packs[1 + 3 * (L - lev) + 1];
+                var HH = packs[1 + 3 * (L - lev) + 2];
+
+                for (int r = 0; r < hr; r++)
+                {
+                    for (int c = 0; c < wc; c++)
+                    {
+                        Y[r, wc + c] = LH[r, c];
+                        Y[hr + r, c] = HL[r, c];
+                        Y[hr + r, wc + c] = HH[r, c];
+                    }
+                }
+            }
+
+            return Y;
         }
         /// <summary>
         /// Backward wavelet transform.
@@ -293,307 +266,45 @@ namespace UMapx.Wavelet
         /// <returns>Matrix</returns>
         public Complex32[,] Backward(Complex32[,] B)
         {
-            // params
-            int Bound1, Bound2, i, j;
-            int DataLen1 = B.GetLength(0);
-            int DataLen2 = B.GetLength(1);
-            Complex32[,] output = (Complex32[,])B.Clone();
-            Complex32[] buff1 = new Complex32[DataLen1];
-            Complex32[] buff2 = new Complex32[DataLen2];
-            int nLevels = (int)Math.Min(Math.Min(Maths.Log2(DataLen1), this.levels), DataLen2);
+            int R = B.GetLength(0), C = B.GetLength(1);
+            int L = Math.Min(Math.Min((int)Maths.Log2(R), (int)Maths.Log2(C)), waveletDecomposition.Levels);
+            var packs = new Complex32[1 + 3 * L][,];
+            int hL = R >> L, wL = C >> L;
+            var LL = new Complex32[hL, wL];
 
-            // do job
-            for (int lev = nLevels; lev > 0; lev--)
+            for (int r = 0; r < hL; r++)
             {
-                Bound1 = DataLen1 >> lev;
-                Bound2 = DataLen2 >> lev;
-
-                for (i = 0; i < Bound1 << 1; i++)
+                for (int c = 0; c < wL; c++)
                 {
-                    for (j = 0; j < Bound2 << 1; j++) buff2[j] = output[i, j];
-                    buff2 = this.IDWT(buff2, lev);
-                    for (j = 0; j < Bound2 << 1; j++) output[i, j] = buff2[j];
-                }
-
-                for (j = 0; j < Bound2 << 1; j++)
-                {
-                    for (i = 0; i < Bound1 << 1; i++) buff1[i] = output[i, j];
-                    buff1 = this.IDWT(buff1, lev);
-                    for (i = 0; i < Bound1 << 1; i++) output[i, j] = buff1[i];
+                    LL[r, c] = B[r, c];
                 }
             }
 
-            return output;
-        }
-        #endregion
+            packs[0] = LL;
 
-        #region Private voids
-        /// <summary>
-        /// Forward discrete wavelet transform.
-        /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="level">Current level of transform</param>
-        /// <returns>Output data</returns>
-        internal float[] DWT(float[] input, int level)
-        {
-            // params
-            int length = input.Length;
-            float[] output = new float[length];
-            int Bound = length >> level;
-
-            // odd element
-            if (!Maths.IsEven(Bound))
+            for (int lev = L; lev >= 1; lev--)
             {
-                Bound--;
+                int h = R >> (lev - 1), w = C >> (lev - 1), hr = h >> 1, wc = w >> 1;
+                var LH = new Complex32[hr, wc];
+                var HL = new Complex32[hr, wc];
+                var HH = new Complex32[hr, wc];
+
+                for (int r = 0; r < hr; r++)
+                {
+                    for (int c = 0; c < wc; c++)
+                    {
+                        LH[r, c] = B[r, wc + c];
+                        HL[r, c] = B[hr + r, c];
+                        HH[r, c] = B[hr + r, wc + c];
+                    }
+                }
+
+                packs[1 + 3 * (L - lev) + 0] = LH;
+                packs[1 + 3 * (L - lev) + 1] = HL;
+                packs[1 + 3 * (L - lev) + 2] = HH;
             }
 
-            int lpLen = this.lp.Length;
-            int hpLen = this.hp.Length;
-            int lpStart = -((lpLen >> 1) - 1);
-            int hpStart = -((hpLen >> 1) - 1);
-            Array.Copy(input, Bound, output, Bound, length - Bound);
-            float a = 0;
-            float b = 0;
-            int h = Bound >> 1;
-            int c, i, j, r, k;
-
-            // do job
-            for (i = 0, r = 0; i < Bound; i += 2, r++)
-            {
-                // low-pass filter
-                for (j = lpStart, k = 0; k < lpLen; j++, k++)
-                {
-                    if (j < 0 || j >= Bound)
-                        c = (j % Bound + Bound) % Bound;
-                    else
-                        c = j;
-                    a += this.lp[k] * input[c];
-                }
-
-                // high-pass filter
-                for (j = hpStart, k = 0; k < hpLen; j++, k++)
-                {
-                    if (j < 0 || j >= Bound)
-                        c = (j % Bound + Bound) % Bound;
-                    else
-                        c = j;
-                    b += this.hp[k] * input[c];
-                }
-                lpStart += 2;
-                hpStart += 2;
-
-                if (normalized)
-                {
-                    output[r] = a / Maths.Sqrt2;
-                    output[r + h] = b / Maths.Sqrt2;
-                }
-                else
-                {
-                    output[r] = a;
-                    output[r + h] = b;
-                }
-
-                a = 0;
-                b = 0;
-            }
-
-            return output;
-        }
-        /// <summary>
-        /// Backward discrete wavelet transform.
-        /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="level">Current level of transform</param>
-        /// <returns>Output data</returns>
-        internal float[] IDWT(float[] input, int level)
-        {
-            // params
-            int length = input.Length;
-            float[] output = (float[])input.Clone();
-            int Bound = length >> level;
-            int h = Bound << 1;
-            int lpLen = this.ilp.Length;
-            int hpLen = this.ihp.Length;
-            int lpStart = -((lpLen >> 1) - 1);
-            int hpStart = -((hpLen >> 1) - 1);
-            float[] Low = new float[h];
-            float[] Hig = new float[h];
-            float s = 0;
-            int c, i, j, k;
-
-            // redim
-            for (i = 0, j = 0; i < h; i += 2, j++)
-            {
-                Low[i] = 0;
-                Hig[i] = 0;
-                Low[i + 1] = input[j];
-                Hig[i + 1] = input[Bound + j];
-            }
-
-            // do job
-            for (i = 0; i < h; i++)
-            {
-                // low-pass filter
-                for (j = lpStart, k = 0; k < lpLen; j++, k++)
-                {
-                    if (j < 0 || j >= h)
-                        c = (j % h + h) % h;
-                    else
-                        c = j;
-                    s += this.ilp[k] * Low[c];
-                }
-
-                // high-pass filter
-                for (j = hpStart, k = 0; k < hpLen; j++, k++)
-                {
-                    if (j < 0 || j >= h)
-                        c = (j % h + h) % h;
-                    else
-                        c = j;
-                    s += this.ihp[k] * Hig[c];
-                }
-
-                lpStart += 1;
-                hpStart += 1;
-                output[i] = (normalized) ? s * Maths.Sqrt2 : s;
-                s = 0;
-            }
-
-            return output;
-        }
-
-        /// <summary>
-        /// Forward discrete wavelet transform.
-        /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="level">Current level of transform</param>
-        /// <returns>Output data</returns>
-        internal Complex32[] DWT(Complex32[] input, int level)
-        {
-            // params
-            int length = input.Length;
-            Complex32[] output = new Complex32[length];
-            int Bound = length >> level;
-
-            // odd element
-            if (!Maths.IsEven(Bound))
-            {
-                Bound--;
-            }
-
-            int lpLen = this.lp.Length;
-            int hpLen = this.hp.Length;
-            int lpStart = -((lpLen >> 1) - 1);
-            int hpStart = -((hpLen >> 1) - 1);
-            Array.Copy(input, Bound, output, Bound, length - Bound);
-            Complex32 a = 0;
-            Complex32 b = 0;
-            int h = Bound >> 1;
-            int c, i, j, r, k;
-
-            // do job
-            for (i = 0, r = 0; i < Bound; i += 2, r++)
-            {
-                // low-pass filter
-                for (j = lpStart, k = 0; k < lpLen; j++, k++)
-                {
-                    if (j < 0 || j >= Bound)
-                        c = (j % Bound + Bound) % Bound;
-                    else
-                        c = j;
-                    a += this.lp[k] * input[c];
-                }
-
-                // high-pass filter
-                for (j = hpStart, k = 0; k < hpLen; j++, k++)
-                {
-                    if (j < 0 || j >= Bound)
-                        c = (j % Bound + Bound) % Bound;
-                    else
-                        c = j;
-                    b += this.hp[k] * input[c];
-                }
-                lpStart += 2;
-                hpStart += 2;
-
-                if (normalized)
-                {
-                    output[r] = a / Maths.Sqrt2;
-                    output[r + h] = b / Maths.Sqrt2;
-                }
-                else
-                {
-                    output[r] = a;
-                    output[r + h] = b;
-                }
-
-                a = 0;
-                b = 0;
-            }
-
-            return output;
-        }
-        /// <summary>
-        /// Backward discrete wavelet transform.
-        /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="level">Current level of transform</param>
-        /// <returns>Output data</returns>
-        internal Complex32[] IDWT(Complex32[] input, int level)
-        {
-            // params
-            int length = input.Length;
-            Complex32[] output = (Complex32[])input.Clone();
-            int Bound = length >> level;
-            int h = Bound << 1;
-            int lpLen = this.ilp.Length;
-            int hpLen = this.ihp.Length;
-            int lpStart = -((lpLen >> 1) - 1);
-            int hpStart = -((hpLen >> 1) - 1);
-            Complex32[] Low = new Complex32[h];
-            Complex32[] Hig = new Complex32[h];
-            Complex32 s = 0;
-            int c, i, j, k;
-
-            // redim
-            for (i = 0, j = 0; i < h; i += 2, j++)
-            {
-                Low[i] = 0;
-                Hig[i] = 0;
-                Low[i + 1] = input[j];
-                Hig[i + 1] = input[Bound + j];
-            }
-
-            // do job
-            for (i = 0; i < h; i++)
-            {
-                // low-pass filter
-                for (j = lpStart, k = 0; k < lpLen; j++, k++)
-                {
-                    if (j < 0 || j >= h)
-                        c = (j % h + h) % h;
-                    else
-                        c = j;
-                    s += this.ilp[k] * Low[c];
-                }
-
-                // high-pass filter
-                for (j = hpStart, k = 0; k < hpLen; j++, k++)
-                {
-                    if (j < 0 || j >= h)
-                        c = (j % h + h) % h;
-                    else
-                        c = j;
-                    s += this.ihp[k] * Hig[c];
-                }
-
-                lpStart += 1;
-                hpStart += 1;
-                output[i] = (normalized) ? s * Maths.Sqrt2 : s;
-                s = 0;
-            }
-
-            return output;
+            return waveletDecomposition.Backward(packs);
         }
         #endregion
     }
