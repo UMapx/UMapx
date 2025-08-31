@@ -486,6 +486,19 @@ namespace UMapx.Wavelet
         #endregion
 
         #region Private methods
+        /// <summary>
+        /// Performs a single-level 1D wavelet <b>analysis</b> (decimation by 2) with periodic boundaries.
+        /// Writes concatenated coefficients into <paramref name="output"/> as <c>[A(0..h-1), D(0..h-1)]</c>,
+        /// where <c>h = bound/2</c>.
+        /// </summary>
+        /// <param name="input">Source samples; only the first <paramref name="bound"/> values are used</param>
+        /// <param name="bound">Working length (must be even). Defines <c>h = bound/2</c></param>
+        /// <param name="output">Destination buffer of length <paramref name="bound"/> receiving A then D</param>
+        /// <remarks>
+        /// Uses circular (periodic) extension by advancing rotating indices instead of using modulo per tap.
+        /// If <see cref="Normalized"/> is true, the output bands are scaled by <c>1/√2</c> to match orthonormal energy.
+        /// Complexity: O(bound · (|lp| + |hp|)).
+        /// </remarks>
         private void DWT1D(float[] input, int bound, float[] output)
         {
             if (!Maths.IsEven(bound)) bound--;
@@ -506,7 +519,19 @@ namespace UMapx.Wavelet
                 else { output[r] = a; output[r + h] = b; }
             }
         }
-
+        /// <summary>
+        /// Performs a single-level 1D wavelet <b>synthesis</b> from concatenated bands.
+        /// Reconstructs a signal of length <paramref name="bound"/> from <c>a_d = [A(0..h-1), D(0..h-1)]</c>, <c>h = bound/2</c>.
+        /// </summary>
+        /// <param name="a_d">Input buffer holding A followed by D coefficients</param>
+        /// <param name="bound">Output length (must be even). Defines <c>h = bound/2</c></param>
+        /// <param name="dest">Destination signal of length <paramref name="bound"/></param>
+        /// <remarks>
+        /// Uses odd-phase upsampling (values placed at indices <c>i+1</c>) for both A and D branches to reproduce legacy phasing.
+        /// Circular (periodic) extension is applied during convolution; indices advance by one per output sample.
+        /// If <see cref="Normalized"/> is true, the result is scaled by <c>√2</c> (inverse of analysis scaling).
+        /// Complexity: O(bound · (|ilp| + |ihp|)).
+        /// </remarks>
         private void IDWT1D(float[] a_d, int bound, float[] dest)
         {
             if (!Maths.IsEven(bound)) bound--;
@@ -532,7 +557,19 @@ namespace UMapx.Wavelet
                 cL0++; if (cL0 == bound) cL0 = 0; cH0++; if (cH0 == bound) cH0 = 0;
             }
         }
-
+        /// <summary>
+        /// Performs a single-level 1D wavelet <b>analysis</b> (decimation by 2) with periodic boundaries.
+        /// Writes concatenated coefficients into <paramref name="output"/> as <c>[A(0..h-1), D(0..h-1)]</c>,
+        /// where <c>h = bound/2</c>.
+        /// </summary>
+        /// <param name="input">Source samples; only the first <paramref name="bound"/> values are used</param>
+        /// <param name="bound">Working length (must be even). Defines <c>h = bound/2</c></param>
+        /// <param name="output">Destination buffer of length <paramref name="bound"/> receiving A then D</param>
+        /// <remarks>
+        /// Uses circular (periodic) extension by advancing rotating indices instead of using modulo per tap.
+        /// If <see cref="Normalized"/> is true, the output bands are scaled by <c>1/√2</c> to match orthonormal energy.
+        /// Complexity: O(bound · (|lp| + |hp|)).
+        /// </remarks>
         private void DWT1D(Complex32[] input, int bound, Complex32[] output)
         {
             if (!Maths.IsEven(bound)) bound--;
@@ -552,7 +589,19 @@ namespace UMapx.Wavelet
                 output[r + h] = normalized ? b / Maths.Sqrt2 : b;
             }
         }
-
+        /// <summary>
+        /// Performs a single-level 1D wavelet <b>synthesis</b> from concatenated bands.
+        /// Reconstructs a signal of length <paramref name="bound"/> from <c>a_d = [A(0..h-1), D(0..h-1)]</c>, <c>h = bound/2</c>.
+        /// </summary>
+        /// <param name="a_d">Input buffer holding A followed by D coefficients</param>
+        /// <param name="bound">Output length (must be even). Defines <c>h = bound/2</c></param>
+        /// <param name="dest">Destination signal of length <paramref name="bound"/></param>
+        /// <remarks>
+        /// Uses odd-phase upsampling (values placed at indices <c>i+1</c>) for both A and D branches to reproduce legacy phasing.
+        /// Circular (periodic) extension is applied during convolution; indices advance by one per output sample.
+        /// If <see cref="Normalized"/> is true, the result is scaled by <c>√2</c> (inverse of analysis scaling).
+        /// Complexity: O(bound · (|ilp| + |ihp|)).
+        /// </remarks>
         private void IDWT1D(Complex32[] a_d, int bound, Complex32[] dest)
         {
             if (!Maths.IsEven(bound)) bound--;
@@ -574,7 +623,12 @@ namespace UMapx.Wavelet
                 cL0++; if (cL0 == bound) cL0 = 0; cH0++; if (cH0 == bound) cH0 = 0;
             }
         }
-
+        /// <summary>
+        /// Returns <paramref name="j"/> wrapped into the range <c>[0, n)</c>.
+        /// </summary>
+        /// <param name="j">Index (may be negative or ≥ <paramref name="n"/>)</param>
+        /// <param name="n">Modulus (&gt; 0)</param>
+        /// <returns>Value in <c>[0, n)</c> equivalent to <paramref name="j"/> modulo <paramref name="n"/></returns>
         private static int ModBound(int j, int n) { int r = j % n; return r < 0 ? r + n : r; }
         #endregion
     }
