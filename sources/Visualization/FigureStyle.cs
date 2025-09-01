@@ -7,7 +7,7 @@ namespace UMapx.Visualization
     /// Defines the figure style.
     /// </summary>
     [Serializable]
-    public class Style : IDisposable
+    public class FigureStyle : IDisposable
     {
         #region Private data
 
@@ -20,7 +20,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Initializes the figure style.
         /// </summary>
-        public Style() { }
+        public FigureStyle() { }
         #endregion
 
         #region Parameters
@@ -124,7 +124,7 @@ namespace UMapx.Visualization
         }
 
         /// <inheritdoc/>
-        ~Style()
+        ~FigureStyle()
         {
             Dispose(false);
         }
@@ -134,11 +134,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns MATLAB style.
         /// </summary>
-        public static Style MATLAB
+        public static FigureStyle MATLAB
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Helvetica", 10, FontStyle.Regular),
                     FontText = new Font("Helvetica", 12, FontStyle.Regular),
@@ -157,11 +157,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns MathCad style.
         /// </summary>
-        public static Style MathCad
+        public static FigureStyle MathCad
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Arial", 10, FontStyle.Regular),
                     FontText = new Font("Arial", 12, FontStyle.Regular),
@@ -180,11 +180,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns MicroCap style.
         /// </summary>
-        public static Style MicroCap
+        public static FigureStyle MicroCap
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Arial", 10, FontStyle.Regular),
                     FontText = new Font("Arial", 12, FontStyle.Regular),
@@ -203,11 +203,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns Excel style.
         /// </summary>
-        public static Style Excel
+        public static FigureStyle Excel
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Arial Cyr", 10, FontStyle.Regular),
                     FontText = new Font("Arial Cyr", 12, FontStyle.Regular),
@@ -226,11 +226,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns standard style.
         /// </summary>
-        public static Style Standard
+        public static FigureStyle Standard
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -249,11 +249,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns beige style.
         /// </summary>
-        public static Style Beige
+        public static FigureStyle Beige
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -272,11 +272,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns cyan style.
         /// </summary>
-        public static Style Cyan
+        public static FigureStyle Cyan
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -295,11 +295,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns rose style.
         /// </summary>
-        public static Style Rose
+        public static FigureStyle Rose
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -318,11 +318,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns coral style.
         /// </summary>
-        public static Style Coral
+        public static FigureStyle Coral
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -341,11 +341,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns black style.
         /// </summary>
-        public static Style Black
+        public static FigureStyle Black
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
@@ -364,17 +364,17 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns black and white style.
         /// </summary>
-        public static Style BlackAndWhite
+        public static FigureStyle BlackAndWhite
         {
             get
             {
-                return new Style
+                return new FigureStyle
                 {
                     FontMarks = new Font("Trojan Pro", 10, FontStyle.Regular),
                     FontText = new Font("Trojan Pro", 12, FontStyle.Regular),
                     ColorFrame = Color.White,
                     ColorBack = Color.White,
-                    ColorGrid = Color.Black,
+                    ColorGrid = Color.LightGray,
                     ColorShapes = Color.Black,
                     ColorText = Color.Black,
                     ColorMarks = Color.Black,

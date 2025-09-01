@@ -14,7 +14,7 @@ namespace UMapx.Visualization
         /// </summary>
         public Legend() { }
         /// <summary>
-        /// Show legend panel or not.
+        /// Show the legend panel or not.
         /// </summary>
         public bool Show { get; set; } = true;
         /// <summary>

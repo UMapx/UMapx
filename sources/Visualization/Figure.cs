@@ -17,7 +17,7 @@ namespace UMapx.Visualization
         private int _xscale = 10, _yscale = 10;
         private float _xmin = -5, _xmax = 5;
         private float _ymin = -5, _ymax = 5;
-        private Style _style;
+        private FigureStyle _style;
         private readonly List<GraphPane> _panes = new List<GraphPane>();
         private Bitmap _imagePane;
         #endregion
@@ -27,7 +27,7 @@ namespace UMapx.Visualization
         /// Initializes the figure.
         /// </summary>
         /// <param name="style">Figure style</param>
-        public Figure(Style style)
+        public Figure(FigureStyle style)
         {
             Style = style;
         }
@@ -37,7 +37,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets figure style.
         /// </summary>
-        public Style Style
+        public FigureStyle Style
         {
             get
             { 
@@ -60,6 +60,10 @@ namespace UMapx.Visualization
         /// Gets or sets X title.
         /// </summary>
         public string Title { get; set; } = "Title";
+        /// <summary>
+        /// Gets or sets the grid.
+        /// </summary>
+        public Grid Grid { get; set; } = new Grid();
         /// <summary>
         /// Gets or sets the legend.
         /// </summary>
@@ -132,10 +136,6 @@ namespace UMapx.Visualization
         /// Gets or sets shapes.
         /// </summary>
         public bool Shapes { get; set; } = true;
-        /// <summary>
-        /// Gets or sets grid.
-        /// </summary>
-        public bool Grid { get; set; } = false;
         /// <summary>
         /// Gets or sets property of auto range axes.
         /// </summary>
@@ -250,7 +250,7 @@ namespace UMapx.Visualization
             #endregion
 
             #region Grid painting
-            if (Grid == true)
+            if (Grid.Show)
             {
                 xlength = X.Length;
 
@@ -258,7 +258,7 @@ namespace UMapx.Visualization
                 {
                     numX = X[i];
                     xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
-                    canvas_graphics.DrawLine(pen1, xpoint, 0, xpoint, _canvas_height);
+                    DrawGridVertical(canvas_graphics, xpoint, _canvas_height, pen1);
                 }
 
                 ylength = Y.Length;
@@ -267,7 +267,7 @@ namespace UMapx.Visualization
                 {
                     numY = Y[i];
                     ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
-                    canvas_graphics.DrawLine(pen1, 0, ypoint, _canvas_width, ypoint);
+                    DrawGridHorizontal(canvas_graphics, ypoint, _canvas_width, pen1);
                 }
             }
             #endregion
@@ -446,6 +446,78 @@ namespace UMapx.Visualization
         #endregion
 
         #region Private voids
+
+        #region Grid voids
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="x"></param>
+        /// <param name="height"></param>
+        /// <param name="basePen"></param>
+        private void DrawGridVertical(Graphics g, int x, int height, Pen basePen)
+        {
+            switch (Grid.Style)
+            {
+                case GridStyle.Solid:
+                    g.DrawLine(basePen, x, 0, x, height);
+                    break;
+
+                case GridStyle.Dashed:
+                    using (var pen = (Pen)basePen.Clone())
+                    {
+                        pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Custom;
+                        pen.DashPattern = new float[] { Math.Max(1f, Grid.DashLength), Math.Max(1f, Grid.GapLength) };
+                        g.DrawLine(pen, x, 0, x, height);
+                    }
+                    break;
+
+                case GridStyle.Dot:
+                    using (var pen = (Pen)basePen.Clone())
+                    {
+                        pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+                        pen.DashCap = System.Drawing.Drawing2D.DashCap.Round;
+                        g.DrawLine(pen, x, 0, x, height);
+                    }
+                    break;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="basePen"></param>
+        private void DrawGridHorizontal(Graphics g, int y, int width, Pen basePen)
+        {
+            switch (Grid.Style)
+            {
+                case GridStyle.Solid:
+                    g.DrawLine(basePen, 0, y, width, y);
+                    break;
+
+                case GridStyle.Dashed:
+                    using (var pen = (Pen)basePen.Clone())
+                    {
+                        pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Custom;
+                        pen.DashPattern = new float[] { Math.Max(1f, Grid.DashLength), Math.Max(1f, Grid.GapLength) };
+                        g.DrawLine(pen, 0, y, width, y);
+                    }
+                    break;
+
+                case GridStyle.Dot:
+                    using (var pen = (Pen)basePen.Clone())
+                    {
+                        pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+                        pen.DashCap = System.Drawing.Drawing2D.DashCap.Round;
+                        g.DrawLine(pen, 0, y, width, y);
+                    }
+                    break;
+            }
+        }
+
+        #endregion
 
         #region Legend voids
         /// <summary>

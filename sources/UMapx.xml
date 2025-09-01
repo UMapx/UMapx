@@ -29646,7 +29646,7 @@
             Defines the figure to plotting in a Cartesian coordinate system.
             </summary>
         </member>
-        <member name="M:UMapx.Visualization.Figure.#ctor(UMapx.Visualization.Style)">
+        <member name="M:UMapx.Visualization.Figure.#ctor(UMapx.Visualization.FigureStyle)">
             <summary>
             Initializes the figure.
             </summary>
@@ -29670,6 +29670,11 @@
         <member name="P:UMapx.Visualization.Figure.Title">
             <summary>
             Gets or sets X title.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Figure.Grid">
+            <summary>
+            Gets or sets the grid.
             </summary>
         </member>
         <member name="P:UMapx.Visualization.Figure.Legend">
@@ -29702,11 +29707,6 @@
             Gets or sets shapes.
             </summary>
         </member>
-        <member name="P:UMapx.Visualization.Figure.Grid">
-            <summary>
-            Gets or sets grid.
-            </summary>
-        </member>
         <member name="P:UMapx.Visualization.Figure.AutoRange">
             <summary>
             Gets or sets property of auto range axes.
@@ -29734,6 +29734,24 @@
             <summary>
             Removes all graphs from the figure. 
             </summary>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.DrawGridVertical(System.Drawing.Graphics,System.Int32,System.Int32,System.Drawing.Pen)">
+            <summary>
+            
+            </summary>
+            <param name="g"></param>
+            <param name="x"></param>
+            <param name="height"></param>
+            <param name="basePen"></param>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.DrawGridHorizontal(System.Drawing.Graphics,System.Int32,System.Int32,System.Drawing.Pen)">
+            <summary>
+            
+            </summary>
+            <param name="g"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+            <param name="basePen"></param>
         </member>
         <member name="M:UMapx.Visualization.Figure.DrawLegendMarker(System.Drawing.Graphics,System.Int32,System.Int32,System.Int32,System.Drawing.Color,UMapx.Visualization.Symbol,System.Single)">
             <summary>
@@ -29904,6 +29922,135 @@
             <param name="v"></param>
             <returns></returns>
         </member>
+        <member name="T:UMapx.Visualization.FigureStyle">
+            <summary>
+            Defines the figure style.
+            </summary>
+        </member>
+        <member name="M:UMapx.Visualization.FigureStyle.#ctor">
+            <summary>
+            Initializes the figure style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.ColorFrame">
+            <summary>
+            Gets or sets frame color.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.ColorBack">
+            <summary>
+            Gets or sets background color.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.ColorGrid">
+            <summary>
+            Gets or sets grid color.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.ColorShapes">
+            <summary>
+            Gets or sets shapes color.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.ColorText">
+            <summary>
+            Gets or sets text color.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.ColorMarks">
+            <summary>
+            Gets or sets marks color.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.FontMarks">
+            <summary>
+            Gets or sets marks font.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.FontText">
+            <summary>
+            Gets or sets text font.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.DepthShapes">
+            <summary>
+            Gets or sets shapes depth.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.GridX">
+            <summary>
+            Gets or sets X grid.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.GridY">
+            <summary>
+            Gets or sets Y grid.
+            </summary>
+        </member>
+        <member name="M:UMapx.Visualization.FigureStyle.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Visualization.FigureStyle.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Visualization.FigureStyle.Finalize">
+            <inheritdoc/>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.MATLAB">
+            <summary>
+            Returns MATLAB style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.MathCad">
+            <summary>
+            Returns MathCad style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.MicroCap">
+            <summary>
+            Returns MicroCap style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.Excel">
+            <summary>
+            Returns Excel style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.Standard">
+            <summary>
+            Returns standard style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.Beige">
+            <summary>
+            Returns beige style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.Cyan">
+            <summary>
+            Returns cyan style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.Rose">
+            <summary>
+            Returns rose style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.Coral">
+            <summary>
+            Returns coral style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.Black">
+            <summary>
+            Returns black style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.FigureStyle.BlackAndWhite">
+            <summary>
+            Returns black and white style.
+            </summary>
+        </member>
         <member name="T:UMapx.Visualization.GraphPane">
             <summary>
             Defines the graph pane.
@@ -29956,6 +30103,56 @@
             Gets or sets pane type.
             </summary>
         </member>
+        <member name="T:UMapx.Visualization.Grid">
+            <summary>
+            Defines a grid.
+            </summary>
+        </member>
+        <member name="M:UMapx.Visualization.Grid.#ctor">
+            <summary>
+            Initializes the grid.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Grid.Show">
+            <summary>
+            Show the grid or not.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Grid.Style">
+            <summary>
+            Gets or sets grid style.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Grid.DashLength">
+            <summary>
+            Gets or sets grid dash length.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Grid.GapLength">
+            <summary>
+            Gets or sets grid gap length.
+            </summary>
+        </member>
+        <member name="T:UMapx.Visualization.GridStyle">
+            <summary>
+            Defines a grid style.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.GridStyle.Solid">
+            <summary>
+            Solid.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.GridStyle.Dashed">
+            <summary>
+            Dashed.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.GridStyle.Dot">
+            <summary>
+            Dot.
+            </summary>
+        </member>
         <member name="T:UMapx.Visualization.Legend">
             <summary>
             Defines a legend.
@@ -29968,7 +30165,7 @@
         </member>
         <member name="P:UMapx.Visualization.Legend.Show">
             <summary>
-            Show legend panel or not.
+            Show the legend panel or not.
             </summary>
         </member>
         <member name="P:UMapx.Visualization.Legend.Anchor">
@@ -30316,135 +30513,6 @@
             The step is rounded to 2 decimal places, which may cause the last tick
             to deviate slightly from <paramref name="max"/> for certain ranges.
             </remarks>
-        </member>
-        <member name="T:UMapx.Visualization.Style">
-            <summary>
-            Defines the figure style.
-            </summary>
-        </member>
-        <member name="M:UMapx.Visualization.Style.#ctor">
-            <summary>
-            Initializes the figure style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.ColorFrame">
-            <summary>
-            Gets or sets frame color.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.ColorBack">
-            <summary>
-            Gets or sets background color.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.ColorGrid">
-            <summary>
-            Gets or sets grid color.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.ColorShapes">
-            <summary>
-            Gets or sets shapes color.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.ColorText">
-            <summary>
-            Gets or sets text color.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.ColorMarks">
-            <summary>
-            Gets or sets marks color.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.FontMarks">
-            <summary>
-            Gets or sets marks font.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.FontText">
-            <summary>
-            Gets or sets text font.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.DepthShapes">
-            <summary>
-            Gets or sets shapes depth.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.GridX">
-            <summary>
-            Gets or sets X grid.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.GridY">
-            <summary>
-            Gets or sets Y grid.
-            </summary>
-        </member>
-        <member name="M:UMapx.Visualization.Style.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="M:UMapx.Visualization.Style.Dispose(System.Boolean)">
-            <inheritdoc/>
-        </member>
-        <member name="M:UMapx.Visualization.Style.Finalize">
-            <inheritdoc/>
-        </member>
-        <member name="P:UMapx.Visualization.Style.MATLAB">
-            <summary>
-            Returns MATLAB style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.MathCad">
-            <summary>
-            Returns MathCad style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.MicroCap">
-            <summary>
-            Returns MicroCap style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.Excel">
-            <summary>
-            Returns Excel style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.Standard">
-            <summary>
-            Returns standard style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.Beige">
-            <summary>
-            Returns beige style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.Cyan">
-            <summary>
-            Returns cyan style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.Rose">
-            <summary>
-            Returns rose style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.Coral">
-            <summary>
-            Returns coral style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.Black">
-            <summary>
-            Returns black style.
-            </summary>
-        </member>
-        <member name="P:UMapx.Visualization.Style.BlackAndWhite">
-            <summary>
-            Returns black and white style.
-            </summary>
         </member>
         <member name="T:UMapx.Visualization.Symbol">
             <summary>
