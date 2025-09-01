@@ -137,7 +137,7 @@ namespace UMapx.Transform
                 Parallel.For(0, M, j =>
                 {
                     var col = new Complex32[N];
-                    for (int i = 0; i < N; i++) col[i] = B[i, j];
+                    for (int i = 0; i < N; i++) col[i] = B[i, j].Conjugate;
 
                     if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, false);
                     else BluesteinFFT(col, false);
@@ -152,7 +152,7 @@ namespace UMapx.Transform
                 Parallel.For(0, M, j =>
                 {
                     var col = new Complex32[N];
-                    for (int i = 0; i < N; i++) col[i] = B[i, j];
+                    for (int i = 0; i < N; i++) col[i] = B[i, j].Conjugate;
 
                     if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, false);
                     else BluesteinFFT(col, false);
@@ -207,7 +207,7 @@ namespace UMapx.Transform
                 Parallel.For(0, N, i =>
                 {
                     var row = new Complex32[M];
-                    for (int j = 0; j < M; j++) row[j] = A[i, j];
+                    for (int j = 0; j < M; j++) row[j] = A[i, j].Conjugate;
 
                     if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, true);
                     else BluesteinFFT(row, true);
@@ -239,7 +239,7 @@ namespace UMapx.Transform
                 Parallel.For(0, N, i =>
                 {
                     var row = new Complex32[M];
-                    for (int j = 0; j < M; j++) row[j] = A[i, j];
+                    for (int j = 0; j < M; j++) row[j] = A[i, j].Conjugate;
 
                     if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, true);
                     else BluesteinFFT(row, true);
