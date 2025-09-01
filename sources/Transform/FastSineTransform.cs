@@ -36,7 +36,7 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public FastSineTransform(Direction direction = Direction.Vertical)
         {
-            this.FFT = new FastFourierTransform(true, Direction.Both);
+            this.FFT = new FastFourierTransform(false, Direction.Both);
             this.direction = direction;
         }
         /// <summary>
@@ -76,9 +76,9 @@ namespace UMapx.Transform
             }
 
             extended[n + 1] = Complex.Zero;
-            FFT.Forward(extended);
+            extended = FFT.Forward(extended);
 
-            float scale = Maths.Sqrt(2.0f / (n + 1));
+            float scale = Maths.Sqrt(1.0f / m);
             float[] output = new float[n];
 
             for (int i = 0; i < n; i++)
@@ -86,7 +86,7 @@ namespace UMapx.Transform
                 output[i] = scale * extended[i + 1].Imag;
             }
 
-            return A;
+            return output;
         }
         /// <summary>
         /// Backward sine transform.
@@ -108,9 +108,9 @@ namespace UMapx.Transform
             }
 
             spectrum[n + 1] = Complex.Zero;
-            FFT.Backward(spectrum);
+            spectrum = FFT.Backward(spectrum);
 
-            float scale = Maths.Sqrt(2.0f / (n + 1));
+            float scale = Maths.Sqrt(1.0f / m);
             float[] output = new float[n];
 
             for (int i = 0; i < n; i++)
