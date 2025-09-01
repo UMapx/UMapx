@@ -104,7 +104,7 @@ namespace UMapx.Transform
             Complex32[] B = FFT.Forward(A);
 
             // Fourier to Laplace transform:
-            laplace(B, sigma);
+            ApplyLaplaceOperator(B, sigma);
             return B;
         }
         /// <summary>
@@ -116,7 +116,7 @@ namespace UMapx.Transform
         {
             // Laplace to Fourier transform:
             Complex32[] A = (Complex32[])B.Clone();
-            invlaplace(A, sigma);
+            ApplyLaplaceInverseOperator(A, sigma);
 
             // Fourier transform:
             return FFT.Backward(A);
@@ -342,11 +342,11 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Applies Laplace transform operator.
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="sigma">Sigma</param>
-        internal static void laplace(Complex32[] v, float sigma = 0.003f)
+        internal static void ApplyLaplaceOperator(Complex32[] v, float sigma = 0.003f)
         {
             // forward laplacian transform
             // for signal:
@@ -358,11 +358,11 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// 
+        /// Applies inverse Laplace transform operator.
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="sigma">Sigma</param>
-        internal static void invlaplace(Complex32[] v, float sigma = 0.003f)
+        internal static void ApplyLaplaceInverseOperator(Complex32[] v, float sigma = 0.003f)
         {
             // inverse laplacian transform
             // for signal:

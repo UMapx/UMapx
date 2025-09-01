@@ -25772,6 +25772,8 @@
             <summary>
             Defines the fast Hilbert transform.
             <remarks>
+            NOT RECOMMENDED.
+            
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hilbert_transform
             </remarks>
@@ -25966,16 +25968,16 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.laplace(UMapx.Core.Complex32[],System.Single)">
+        <member name="M:UMapx.Transform.FastLaplaceTransform.ApplyLaplaceOperator(UMapx.Core.Complex32[],System.Single)">
             <summary>
-            
+            Applies Laplace transform operator.
             </summary>
             <param name="v">Array</param>
             <param name="sigma">Sigma</param>
         </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.invlaplace(UMapx.Core.Complex32[],System.Single)">
+        <member name="M:UMapx.Transform.FastLaplaceTransform.ApplyLaplaceInverseOperator(UMapx.Core.Complex32[],System.Single)">
             <summary>
-            
+            Applies inverse Laplace transform operator.
             </summary>
             <param name="v">Array</param>
             <param name="sigma">Sigma</param>
@@ -26856,6 +26858,8 @@
             <summary>
             Defines the Hilbert transform.
             <remarks>
+            NOT RECOMMENDED.
+            
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hilbert_transform
             </remarks>

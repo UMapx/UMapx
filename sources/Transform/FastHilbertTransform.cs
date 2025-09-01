@@ -7,6 +7,8 @@ namespace UMapx.Transform
     /// <summary>
     /// Defines the fast Hilbert transform.
     /// <remarks>
+    /// NOT RECOMMENDED.
+    /// 
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Hilbert_transform
     /// </remarks>
