@@ -342,8 +342,6 @@ namespace UMapx.Window
             var B = new Complex32[2 * N];
 
             int Mloc = C.M;
-            if (!Maths.IsEven(Mloc)) throw new ArgumentException("M must be even");
-
             int L = N / Mloc;
             if (L * Mloc != N) throw new ArgumentException("N must be divisible by M");
 
@@ -488,8 +486,6 @@ namespace UMapx.Window
             if (B.Length != 2 * N) throw new ArgumentException("Expect 2N coefficients (main + half)");
 
             int Mloc = C.M;
-            if (!Maths.IsEven(Mloc)) throw new ArgumentException("M must be even");
-
             int L = N / Mloc;
             if (L * Mloc != N) throw new ArgumentException("N must be divisible by M");
 
@@ -691,7 +687,6 @@ namespace UMapx.Window
             public static PolyphaseCache Build(int N, int Mloc, IWindow window)
             {
                 // If cache for the given N is already computed, reuse it
-                if (!Maths.IsEven(Mloc)) throw new ArgumentException("M must be even");
                 int L = N / Mloc;
                 if (L * Mloc != N) throw new ArgumentException("N must be divisible by M");
 
