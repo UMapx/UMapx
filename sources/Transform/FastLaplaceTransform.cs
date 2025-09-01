@@ -20,13 +20,9 @@ namespace UMapx.Transform
         /// </summary>
         private readonly FastFourierTransform FFT;
         /// <summary>
-        /// Standard deviation.
+        /// Damping factor.
         /// </summary>
         private float sigma;
-        /// <summary>
-        /// Normalized transform or not.
-        /// </summary>
-        private bool normalized;
         /// <summary>
         /// Processing direction.
         /// </summary>
@@ -37,16 +33,17 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the fast Laplace transform.
         /// </summary>
-        /// <param name="sigma">Standard deviation (0, 1)</param>
+        /// <param name="sigma">Damping factor (0, 1)</param>
         /// <param name="normalized">Normalized transform or not</param>
         /// <param name="direction">Processing direction</param>
         public FastLaplaceTransform(float sigma = 0.0005f, bool normalized = true, Direction direction = Direction.Vertical)
         {
-            this.FFT = new FastFourierTransform(true, Direction.Vertical);
-            Sigma = sigma; this.normalized = normalized; this.direction = direction;
+            this.FFT = new FastFourierTransform(normalized, Direction.Vertical);
+            this.Sigma = sigma; 
+            this.Direction = direction;
         }
         /// <summary>
-        /// Gets or sets the standard deviation (0, 1).
+        /// Gets or sets the damping factor (0, 1).
         /// <remarks>
         /// If σ = 0, then the Laplace transform takes the form of a Fourier transform.
         /// </remarks>
@@ -72,11 +69,11 @@ namespace UMapx.Transform
         {
             get
             {
-                return this.normalized;
+                return this.FFT.Normalized;
             }
             set
             {
-                this.normalized = value;
+                this.FFT.Normalized = value;
             }
         }
         /// <summary>

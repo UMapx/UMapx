@@ -25876,12 +25876,7 @@
         </member>
         <member name="F:UMapx.Transform.FastLaplaceTransform.sigma">
             <summary>
-            Standard deviation.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastLaplaceTransform.normalized">
-            <summary>
-            Normalized transform or not.
+            Damping factor.
             </summary>
         </member>
         <member name="F:UMapx.Transform.FastLaplaceTransform.direction">
@@ -25893,13 +25888,13 @@
             <summary>
             Initializes the fast Laplace transform.
             </summary>
-            <param name="sigma">Standard deviation (0, 1)</param>
+            <param name="sigma">Damping factor (0, 1)</param>
             <param name="normalized">Normalized transform or not</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="P:UMapx.Transform.FastLaplaceTransform.Sigma">
             <summary>
-            Gets or sets the standard deviation (0, 1).
+            Gets or sets the damping factor (0, 1).
             <remarks>
             If σ = 0, then the Laplace transform takes the form of a Fourier transform.
             </remarks>
@@ -27122,7 +27117,7 @@
         </member>
         <member name="F:UMapx.Transform.LaplaceTransform.sigma">
             <summary>
-            Standard deviation.
+            Damping factor.
             </summary>
         </member>
         <member name="F:UMapx.Transform.LaplaceTransform.normalized">
@@ -27139,13 +27134,13 @@
             <summary>
             Initializes the Laplace transform.
             </summary>
-            <param name="sigma">Standard deviation (0, 1)</param>
+            <param name="sigma">Damping factor (0, 1)</param>
             <param name="normalized">Normalized transform or not</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="P:UMapx.Transform.LaplaceTransform.Sigma">
             <summary>
-            Gets or sets the standard deviation (0, 1).
+            Gets or sets the damping factor (0, 1).
             <remarks>
             If σ = 0, then the Laplace transform takes the form of a Fourier transform.
             </remarks>
@@ -27166,7 +27161,7 @@
             Implements the construction of the Laplace matrix.
             </summary>
             <param name="n">Size</param>
-            <param name="sigma">Standard deviation (0, 1)</param>
+            <param name="sigma">Damping factor (0, 1)</param>
             <param name="backward">Return backward transformation matrix or not</param>
             <returns>Matrix</returns>
         </member>

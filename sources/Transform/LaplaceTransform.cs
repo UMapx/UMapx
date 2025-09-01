@@ -15,7 +15,7 @@ namespace UMapx.Transform
     {
         #region Private data
         /// <summary>
-        /// Standard deviation.
+        /// Damping factor.
         /// </summary>
         private float sigma;
         /// <summary>
@@ -32,15 +32,17 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Laplace transform.
         /// </summary>
-        /// <param name="sigma">Standard deviation (0, 1)</param>
+        /// <param name="sigma">Damping factor (0, 1)</param>
         /// <param name="normalized">Normalized transform or not</param>
         /// <param name="direction">Processing direction</param>
         public LaplaceTransform(float sigma = 0.0005f, bool normalized = true, Direction direction = Direction.Vertical)
         {
-            Sigma = sigma; this.normalized = normalized; this.direction = direction;
+            this.Sigma = sigma; 
+            this.Normalized = normalized; 
+            this.Direction = direction;
         }
         /// <summary>
-        /// Gets or sets the standard deviation (0, 1).
+        /// Gets or sets the damping factor (0, 1).
         /// <remarks>
         /// If σ = 0, then the Laplace transform takes the form of a Fourier transform.
         /// </remarks>
@@ -94,7 +96,7 @@ namespace UMapx.Transform
         /// Implements the construction of the Laplace matrix.
         /// </summary>
         /// <param name="n">Size</param>
-        /// <param name="sigma">Standard deviation (0, 1)</param>
+        /// <param name="sigma">Damping factor (0, 1)</param>
         /// <param name="backward">Return backward transformation matrix or not</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Matrix(int n, float sigma, bool backward = false)
