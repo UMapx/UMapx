@@ -422,7 +422,7 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// Implements the rearrangement of the spectrum UMapxing to Hilbert.
+        /// Implements the rearrangement of the spectrum to Hilbert.
         /// </summary>
         /// <param name="f">Spectrum</param>
         /// <param name="n">Length</param>
@@ -437,7 +437,7 @@ namespace UMapx.Transform
             }
         }
         /// <summary>
-        /// Implements the rearrangement of the spectrum UMapxing to Hilbert.
+        /// Implements the rearrangement of the spectrum to Hilbert.
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="f">Spectrum</param>
