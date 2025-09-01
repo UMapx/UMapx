@@ -25582,13 +25582,17 @@
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.BluesteinFFT(UMapx.Core.Complex32[],System.Boolean)">
             <summary>
-            Fast Fourier transform (Bluestein) — inverse handled by swap-trick; no scaling inside.
+            Fast Fourier transform (Bluestein FFT).
             </summary>
+            <param name="data">Array</param>
+            <param name="inverse">Inverse or not</param>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.CooleyTukeyFFT(UMapx.Core.Complex32[],System.Boolean)">
             <summary>
-            Fast Fourier transform (Cooley–Tukey radix-2) — inverse handled by swap-trick; no scaling inside.
+            Fast Fourier transform (Cooley-Tukey FFT).
             </summary>
+            <param name="data">Array</param>
+            <param name="inverse">Inverse or not</param>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.TransformRadix2(UMapx.Core.Complex32[])">
             <summary>

@@ -292,10 +292,11 @@ namespace UMapx.Transform
         #endregion
 
         #region Core FFTs
-
         /// <summary>
-        /// Fast Fourier transform (Bluestein) — inverse handled by swap-trick; no scaling inside.
+        /// Fast Fourier transform (Bluestein FFT).
         /// </summary>
+        /// <param name="data">Array</param>
+        /// <param name="inverse">Inverse or not</param>
         internal static void BluesteinFFT(Complex32[] data, bool inverse)
         {
             if (data == null || data.Length <= 1) return;
@@ -304,10 +305,11 @@ namespace UMapx.Transform
             TransformBluestein(data);                 // forward kernel
             if (inverse) SwapRealImagInPlace(data);   // back from conj
         }
-
         /// <summary>
-        /// Fast Fourier transform (Cooley–Tukey radix-2) — inverse handled by swap-trick; no scaling inside.
+        /// Fast Fourier transform (Cooley-Tukey FFT).
         /// </summary>
+        /// <param name="data">Array</param>
+        /// <param name="inverse">Inverse or not</param>
         internal static void CooleyTukeyFFT(Complex32[] data, bool inverse)
         {
             if (data == null || data.Length <= 1) return;
