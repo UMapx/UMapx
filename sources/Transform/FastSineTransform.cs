@@ -71,8 +71,8 @@ namespace UMapx.Transform
 
             for (int i = 0; i < n; i++)
             {
-                extended[i + 1] = new Complex(A[i], 0);
-                extended[m - 1 - i] = new Complex(-A[i], 0);
+                extended[i + 1] = new Complex(-A[i], 0);
+                extended[m - 1 - i] = new Complex(A[i], 0);
             }
 
             extended[n + 1] = Complex.Zero;
@@ -103,8 +103,8 @@ namespace UMapx.Transform
 
             for (int i = 0; i < n; i++)
             {
-                spectrum[i + 1] = new Complex(0, B[i]);
-                spectrum[m - 1 - i] = new Complex(0, -B[i]);
+                spectrum[i + 1] = new Complex(0, -B[i]);
+                spectrum[m - 1 - i] = new Complex(0, B[i]);
             }
 
             spectrum[n + 1] = Complex.Zero;
