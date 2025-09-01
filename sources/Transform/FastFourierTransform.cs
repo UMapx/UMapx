@@ -105,8 +105,8 @@ namespace UMapx.Transform
 
             if (normalized)
                 Scale(A, 1f / (float)Math.Sqrt(N));
-            else
-                Scale(A, 1f / N);
+            //else
+            //    Scale(A, 1f / N);
 
             return A;
         }
@@ -216,7 +216,7 @@ namespace UMapx.Transform
                 });
 
                 if (normalized) A = Matrice.Div(A, (float)Math.Sqrt(N * (double)M));
-                else A = Matrice.Div(A, (float)(N * (double)M));
+                //else A = Matrice.Div(A, (float)(N * (double)M));
             }
             else if (direction == Direction.Vertical)
             {
@@ -232,7 +232,7 @@ namespace UMapx.Transform
                 });
 
                 if (normalized) A = Matrice.Div(A, (float)Math.Sqrt(N));
-                else A = Matrice.Div(A, (float)N);
+                //else A = Matrice.Div(A, (float)N);
             }
             else // Direction.Horizontal
             {
@@ -248,7 +248,7 @@ namespace UMapx.Transform
                 });
 
                 if (normalized) A = Matrice.Div(A, (float)Math.Sqrt(M));
-                else A = Matrice.Div(A, (float)M);
+                //else A = Matrice.Div(A, (float)M);
             }
 
             return A;
