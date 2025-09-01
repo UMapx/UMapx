@@ -26946,14 +26946,14 @@
         </member>
         <member name="M:UMapx.Transform.HilbertTransform.hilbertf(UMapx.Core.Complex32[],System.Int32)">
             <summary>
-            Implements the rearrangement of the spectrum UMapxing to Hilbert.
+            Implements the rearrangement of the spectrum to Hilbert.
             </summary>
             <param name="f">Spectrum</param>
             <param name="n">Length</param>
         </member>
         <member name="M:UMapx.Transform.HilbertTransform.hilbertb(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32)">
             <summary>
-            Implements the rearrangement of the spectrum UMapxing to Hilbert.
+            Implements the rearrangement of the spectrum to Hilbert.
             </summary>
             <param name="a">Array</param>
             <param name="f">Spectrum</param>
