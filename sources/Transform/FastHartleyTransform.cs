@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using UMapx.Core;
 
 namespace UMapx.Transform
@@ -108,22 +109,91 @@ namespace UMapx.Transform
         /// <returns>Matrix</returns>
         public float[,] Forward(float[,] A)
         {
-            Complex32[,] B = Matrice.ToComplex(A);
-            B = FFT.Forward(B);
+            float[,] B = (float[,])A.Clone();
+            int N = B.GetLength(0);
+            int M = B.GetLength(1);
 
-            int width = A.GetLength(1), height = A.GetLength(0);
-            float[,] Hk = new float[height, width];
-            int i, j;
-
-            for (i = 0; i < height; i++)
+            if (Direction == Direction.Both)
             {
-                for (j = 0; j < width; j++)
+                Parallel.For(0, N, i =>
                 {
-                    Hk[i, j] = B[i, j].Real - B[i, j].Imag;
+                    float[] row = new float[M];
+                    int j;
+
+                    for (j = 0; j < M; j++)
+                    {
+                        row[j] = B[i, j];
+                    }
+
+                    row = Forward(row);
+
+                    for (j = 0; j < M; j++)
+                    {
+                        B[i, j] = row[j];
+                    }
                 }
+                );
+
+                Parallel.For(0, M, j =>
+                {
+                    float[] col = new float[N];
+                    int i;
+
+                    for (i = 0; i < N; i++)
+                    {
+                        col[i] = B[i, j];
+                    }
+
+                    col = Forward(col);
+
+                    for (i = 0; i < N; i++)
+                    {
+                        B[i, j] = col[i];
+                    }
+                });
+            }
+            else if (Direction == Direction.Vertical)
+            {
+                Parallel.For(0, M, j =>
+                {
+                    float[] col = new float[N];
+                    int i;
+
+                    for (i = 0; i < N; i++)
+                    {
+                        col[i] = B[i, j];
+                    }
+
+                    col = Forward(col);
+
+                    for (i = 0; i < N; i++)
+                    {
+                        B[i, j] = col[i];
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, N, i =>
+                {
+                    float[] row = new float[M];
+                    int j;
+
+                    for (j = 0; j < M; j++)
+                    {
+                        row[j] = B[i, j];
+                    }
+
+                    row = Forward(row);
+
+                    for (j = 0; j < M; j++)
+                    {
+                        B[i, j] = row[j];
+                    }
+                });
             }
 
-            return Hk;
+            return B;
         }
         /// <summary>
         /// Backward Hartley transform.
@@ -132,22 +202,86 @@ namespace UMapx.Transform
         /// <returns>Matrix</returns>
         public float[,] Backward(float[,] B)
         {
-            Complex32[,] A = Matrice.ToComplex(B);
-            A = FFT.Backward(A);
+            float[,] A = (float[,])B.Clone();
+            int N = B.GetLength(0);
+            int M = B.GetLength(1);
 
-            int width = B.GetLength(1), height = B.GetLength(0);
-            float[,] Hk = new float[height, width];
-            int i, j;
-
-            for (i = 0; i < height; i++)
+            if (Direction == Direction.Both)
             {
-                for (j = 0; j < width; j++)
+                Parallel.For(0, M, j =>
                 {
-                    Hk[i, j] = A[i, j].Real + A[i, j].Imag;
+                    float[] col = new float[N];
+                    int i;
+                    for (i = 0; i < N; i++)
+                    {
+                        col[i] = A[i, j];
+                    }
+                    col = Backward(col);
+
+                    for (i = 0; i < N; i++)
+                    {
+                        A[i, j] = col[i];
+                    }
                 }
+                );
+
+                Parallel.For(0, N, i =>
+                {
+                    float[] row = new float[M];
+                    int j;
+
+                    for (j = 0; j < M; j++)
+                    {
+                        row[j] = A[i, j];
+                    }
+                    row = Backward(row);
+
+                    for (j = 0; j < M; j++)
+                    {
+                        A[i, j] = row[j];
+                    }
+                }
+                );
+            }
+            else if (Direction == Direction.Vertical)
+            {
+                Parallel.For(0, M, j =>
+                {
+                    float[] col = new float[N];
+                    int i;
+                    for (i = 0; i < N; i++)
+                    {
+                        col[i] = A[i, j];
+                    }
+                    col = Backward(col);
+
+                    for (i = 0; i < N; i++)
+                    {
+                        A[i, j] = col[i];
+                    }
+                });
+            }
+            else
+            {
+                Parallel.For(0, N, i =>
+                {
+                    float[] row = new float[M];
+                    int j;
+
+                    for (j = 0; j < M; j++)
+                    {
+                        row[j] = A[i, j];
+                    }
+                    row = Backward(row);
+
+                    for (j = 0; j < M; j++)
+                    {
+                        A[i, j] = row[j];
+                    }
+                });
             }
 
-            return Hk;
+            return A;
         }
         /// <summary>
         /// Forward Hartley transform.
@@ -156,16 +290,25 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public Complex32[] Forward(Complex32[] A)
         {
-            int length = A.Length, i;
-            Complex32[] B = FFT.Forward(A);
-            Complex32[] Hk = new Complex32[length];
+            int n = A.Length;
+            var re = new float[n];
+            var im = new float[n];
 
-            for (i = 0; i < length; i++)
+            for (int i = 0; i < n; i++)
             {
-                Hk[i] = B[i].Real - B[i].Imag;
+                re[i] = A[i].Real;
+                im[i] = A[i].Imag;
             }
 
-            return Hk;
+            // reuse correct real FHT you showed above
+            var Hr = Forward(re);
+            var Hi = Forward(im);
+
+            var H = new Complex32[n];
+            for (int i = 0; i < n; i++)
+                H[i] = new Complex32(Hr[i], Hi[i]);
+
+            return H;
         }
         /// <summary>
         /// Backward Hartley transform.
@@ -174,16 +317,24 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public Complex32[] Backward(Complex32[] B)
         {
-            int length = B.Length, i;
-            Complex32[] A = FFT.Backward(B);
-            Complex32[] Hk = new Complex32[length];
+            int n = B.Length;
+            var re = new float[n];
+            var im = new float[n];
 
-            for (i = 0; i < length; i++)
+            for (int i = 0; i < n; i++)
             {
-                Hk[i] = A[i].Real + A[i].Imag;
+                re[i] = B[i].Real;
+                im[i] = B[i].Imag;
             }
 
-            return Hk;
+            var xr = Backward(re);
+            var xi = Backward(im);
+
+            var X = new Complex32[n];
+            for (int i = 0; i < n; i++)
+                X[i] = new Complex32(xr[i], xi[i]);
+
+            return X;
         }
         /// <summary>
         /// Forward Hartley transform.
@@ -192,20 +343,31 @@ namespace UMapx.Transform
         /// <returns>Matrix</returns>
         public Complex32[,] Forward(Complex32[,] A)
         {
-            Complex32[,] B = FFT.Forward(A);
-            int width = A.GetLength(1), height = A.GetLength(0);
-            Complex32[,] Hk = new Complex32[height, width];
-            int i, j;
+            int N = A.GetLength(0);
+            int M = A.GetLength(1);
 
-            for (i = 0; i < height; i++)
-            {
-                for (j = 0; j < width; j++)
+            // split into two real planes
+            var R = new float[N, M];
+            var I = new float[N, M];
+
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < M; j++)
                 {
-                    Hk[i, j] = B[i, j].Real - B[i, j].Imag;
+                    R[i, j] = A[i, j].Real;
+                    I[i, j] = A[i, j].Imag;
                 }
-            }
 
-            return Hk;
+            // reuse your correct real 2D FHT
+            var HR = Forward(R);
+            var HI = Forward(I);
+
+            // combine back into complex result
+            var H = new Complex32[N, M];
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < M; j++)
+                    H[i, j] = new Complex32(HR[i, j], HI[i, j]);
+
+            return H;
         }
         /// <summary>
         /// Backward Hartley transform.
@@ -214,21 +376,30 @@ namespace UMapx.Transform
         /// <returns>Matrix</returns>
         public Complex32[,] Backward(Complex32[,] B)
         {
-            Complex32[,] A = FFT.Backward(B);
-            int width = B.GetLength(1), height = B.GetLength(0);
-            Complex32[,] Hk = new Complex32[height, width];
-            int i, j;
+            int N = B.GetLength(0);
+            int M = B.GetLength(1);
 
-            for (i = 0; i < height; i++)
-            {
-                for (j = 0; j < width; j++)
+            var R = new float[N, M];
+            var I = new float[N, M];
+
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < M; j++)
                 {
-                    Hk[i, j] = A[i, j].Real + A[i, j].Imag;
+                    R[i, j] = B[i, j].Real;
+                    I[i, j] = B[i, j].Imag;
                 }
-            }
 
-            return Hk;
+            var XR = Backward(R);
+            var XI = Backward(I);
+
+            var X = new Complex32[N, M];
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < M; j++)
+                    X[i, j] = new Complex32(XR[i, j], XI[i, j]);
+
+            return X;
         }
+
         #endregion
     }
 }
