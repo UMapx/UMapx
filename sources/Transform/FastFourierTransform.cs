@@ -503,11 +503,6 @@ namespace UMapx.Transform
         #endregion
 
         #region Helpers: tables, bit tricks
-        // ===== Trigonometric tables caches (double for accuracy) =====
-        private static double[] cosTable;       // size: n/2
-        private static double[] sinTable;       // size: n/2
-        private static double[] expCosTable;    // size: n
-        private static double[] expSinTable;    // size: n
 
         /// <summary>
         /// Returns the highest one bit of <paramref name="i"/> (as a power-of-two integer).
@@ -553,8 +548,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         private static double[] CosTable(int halfN)
         {
-            if (cosTable != null && cosTable.Length == halfN) return cosTable;
-            cosTable = new double[halfN];
+            var cosTable = new double[halfN];
             for (int i = 0; i < halfN; i++) cosTable[i] = Math.Cos(Math.PI * i / halfN);
             return cosTable;
         }
@@ -565,8 +559,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         private static double[] SinTable(int halfN)
         {
-            if (sinTable != null && sinTable.Length == halfN) return sinTable;
-            sinTable = new double[halfN];
+            var sinTable = new double[halfN];
             for (int i = 0; i < halfN; i++) sinTable[i] = Math.Sin(Math.PI * i / halfN);
             return sinTable;
         }
@@ -577,8 +570,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         private static double[] ExpCosTable(int n)
         {
-            if (expCosTable != null && expCosTable.Length == n) return expCosTable;
-            expCosTable = new double[n];
+            var expCosTable = new double[n];
             for (int i = 0; i < n; i++)
             {
                 int j = (int)((long)i * i % (2L * n));
@@ -593,8 +585,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         private static double[] ExpSinTable(int n)
         {
-            if (expSinTable != null && expSinTable.Length == n) return expSinTable;
-            expSinTable = new double[n];
+            var expSinTable = new double[n];
             for (int i = 0; i < n; i++)
             {
                 int j = (int)((long)i * i % (2L * n));
