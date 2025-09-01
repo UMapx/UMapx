@@ -339,8 +339,6 @@ namespace UMapx.Window
         internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
         {
             int N = A.Length;
-            if (!Maths.IsPower(N, 2)) throw new ArgumentException("Dimension of the signal must be a power of 2");
-
             var B = new Complex32[2 * N];
 
             int Mloc = C.M;
@@ -487,7 +485,6 @@ namespace UMapx.Window
         internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
         {
             int N = C.N;
-            if (!Maths.IsPower(N, 2)) throw new ArgumentException("Dimension of the signal must be a power of 2");
             if (B.Length != 2 * N) throw new ArgumentException("Expect 2N coefficients (main + half)");
 
             int Mloc = C.M;
@@ -694,7 +691,6 @@ namespace UMapx.Window
             public static PolyphaseCache Build(int N, int Mloc, IWindow window)
             {
                 // If cache for the given N is already computed, reuse it
-                if (!Maths.IsPower(N, 2)) throw new ArgumentException("Dimension of the signal must be a power of 2");
                 if (!Maths.IsEven(Mloc)) throw new ArgumentException("M must be even");
                 int L = N / Mloc;
                 if (L * Mloc != N) throw new ArgumentException("N must be divisible by M");
