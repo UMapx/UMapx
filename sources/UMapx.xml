@@ -25582,58 +25582,100 @@
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.BluesteinFFT(UMapx.Core.Complex32[],System.Boolean)">
             <summary>
-            Fast Fourier transform (Bluestein FFT).
+            Fast Fourier transform (Bluestein) — inverse handled by swap-trick; no scaling inside.
             </summary>
-            <param name="data">Array</param>
-            <param name="inverse">Inverse or not</param>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.CooleyTukeyFFT(UMapx.Core.Complex32[],System.Boolean)">
             <summary>
-            Fast Fourier transform (Cooley-Tukey FFT).
+            Fast Fourier transform (Cooley–Tukey radix-2) — inverse handled by swap-trick; no scaling inside.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.FastFourierTransform.TransformRadix2(UMapx.Core.Complex32[])">
+            <summary>
+            Radix-2 forward kernel (no scaling). Assumes length is a power of two.
             </summary>
             <param name="data">Array</param>
-            <param name="inverse">Inverse or not</param>
+            <exception cref="T:System.ArgumentException">Exception</exception>
         </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.GetReversedBits(System.Int32)">
+        <member name="M:UMapx.Transform.FastFourierTransform.TransformBluestein(UMapx.Core.Complex32[])">
             <summary>
-            Gets an array with pointers to data members that must be replaced before the FFT.
-            </summary>
-            <param name="numberOfBits">Number of bits</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.ForwardComplexRotation(System.Int32)">
-            <summary>
-            Gets the forward rotation of a complex number.
-            </summary>
-            <param name="numberOfBits">Number of bits</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.BackwardComplexRotation(System.Int32)">
-            <summary>
-            Gets the backward rotation of a complex number.
-            </summary>
-            <param name="numberOfBits">Number of bits</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.ReorderData(UMapx.Core.Complex32[])">
-            <summary>
-            Reorders data to use FFT.
+            Bluestein forward kernel (no scaling). Works for arbitrary lengths.
             </summary>
             <param name="data">Array</param>
         </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.Pow2(System.Int32)">
+        <member name="M:UMapx.Transform.FastFourierTransform.Convolve(System.Double[],System.Double[],System.Double[],System.Double[],System.Double[],System.Double[])">
             <summary>
-            Computes power of 2.
+            Circular convolution using in-class FFT kernels. Applies final 1/n scaling.
             </summary>
-            <param name="power">Power</param>
-            <returns>Integer number</returns>
+            <param name="xre">X.Re</param>
+            <param name="xim">X.Im</param>
+            <param name="yre">Y.Re</param>
+            <param name="yim">Y.Im</param>
+            <param name="ore">O.Re</param>
+            <param name="oim">O.Im</param>
         </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.Log2(System.Int32)">
+        <member name="M:UMapx.Transform.FastFourierTransform.SwapRealImagInPlace(UMapx.Core.Complex32[])">
             <summary>
-            Calculates the base 2 logarithm.
+            Swaps real and imaginary parts in-place.
+            This is equivalent to applying the conjugation trick to switch between forward and inverse.
             </summary>
-            <param name="x">Integer number</param>
-            <returns>Integer number</returns>
+            <param name="a">Array</param>
+        </member>
+        <member name="M:UMapx.Transform.FastFourierTransform.Scale(UMapx.Core.Complex32[],System.Single)">
+            <summary>
+            Scales a complex vector by a scalar (in-place).
+            </summary>
+            <param name="a">Array</param>
+            <param name="s">Scale param</param>
+        </member>
+        <member name="M:UMapx.Transform.FastFourierTransform.HighestOneBit(System.Int32)">
+            <summary>
+            Returns the highest one bit of <paramref name="i"/> (as a power-of-two integer).
+            </summary>
+            <param name="i">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Transform.FastFourierTransform.ReverseBits32(System.Int32)">
+            <summary>
+            Reverses the bits of a 32-bit integer.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Transform.FastFourierTransform.FloorLog2(System.Int32)">
+            <summary>
+            Returns floor(log2(n)) for n &gt; 0.
+            </summary>
+            <param name="n">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Transform.FastFourierTransform.CosTable(System.Int32)">
+            <summary>
+            Half-period cosine table: cos(2πk/n) for k=0..n/2-1.
+            </summary>
+            <param name="halfN">Value</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.FastFourierTransform.SinTable(System.Int32)">
+            <summary>
+            Half-period sine table: sin(2πk/n) for k=0..n/2-1.
+            </summary>
+            <param name="halfN">Value</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.FastFourierTransform.ExpCosTable(System.Int32)">
+            <summary>
+            Chirp cosine table: cos(π i² / n), i=0..n-1 (mod 2n to reduce overflow/rounding).
+            </summary>
+            <param name="n">Value</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.FastFourierTransform.ExpSinTable(System.Int32)">
+            <summary>
+            Chirp sine table: sin(π i² / n), i=0..n-1 (mod 2n to reduce overflow/rounding).
+            </summary>
+            <param name="n">Value</param>
+            <returns>Array</returns>
         </member>
         <member name="T:UMapx.Transform.FastHartleyTransform">
             <summary>

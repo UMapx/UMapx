@@ -34,7 +34,8 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public FastFourierTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
-            this.normalized = normalized; this.direction = direction;
+            this.normalized = normalized;
+            this.direction = direction;
         }
         /// <summary>
         /// Normalized transform or not.
@@ -75,21 +76,15 @@ namespace UMapx.Transform
         public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            Complex32[] B = (Complex32[])A.Clone();
+            var B = (Complex32[])A.Clone();
 
-            if (!Maths.IsPower(N, 2))
-            {
-                BluesteinFFT(B, false);
-            }
+            if ((N & (N - 1)) == 0)
+                CooleyTukeyFFT(B, inverse: false);
             else
-            {
-                CooleyTukeyFFT(B, false);
-            }
+                BluesteinFFT(B, inverse: false);
 
-            if (normalized == true)
-            {
-                B = Matrice.Div(B, Math.Sqrt(N));
-            }
+            if (normalized)
+                Scale(B, 1f / (float)Math.Sqrt(N));
 
             return B;
         }
@@ -101,21 +96,17 @@ namespace UMapx.Transform
         public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            Complex32[] A = (Complex32[])B.Clone();
+            var A = (Complex32[])B.Clone();
 
-            if (!Maths.IsPower(N, 2))
-            {
-                BluesteinFFT(B, true);
-            }
+            if ((N & (N - 1)) == 0)
+                CooleyTukeyFFT(A, inverse: true);
             else
-            {
-                CooleyTukeyFFT(A, true);
-            }
+                BluesteinFFT(A, inverse: true);
 
-            if (normalized == true)
-            {
-                A = Matrice.Div(A, Math.Sqrt(N));
-            }
+            if (normalized)
+                Scale(A, 1f / (float)Math.Sqrt(N));
+            else
+                Scale(A, 1f / N);
 
             return A;
         }
@@ -126,7 +117,7 @@ namespace UMapx.Transform
         /// <returns>Matrix</returns>
         public Complex32[,] Forward(Complex32[,] A)
         {
-            Complex32[,] B = (Complex32[,])A.Clone();
+            var B = (Complex32[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -134,122 +125,57 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var row = new Complex32[M];
+                    for (int j = 0; j < M; j++) row[j] = B[i, j];
 
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
+                    if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, false);
+                    else BluesteinFFT(row, false);
 
-                    if (!Maths.IsPower(M, 2))
-                    {
-                        BluesteinFFT(row, true);
-                    }
-                    else
-                    {
-                        CooleyTukeyFFT(row, true);
-                    }
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
+                    for (int j = 0; j < M; j++) B[i, j] = row[j];
                 });
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N];
+                    for (int i = 0; i < N; i++) col[i] = B[i, j];
 
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                    }
+                    if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, false);
+                    else BluesteinFFT(col, false);
 
-                    if (!Maths.IsPower(N, 2))
-                    {
-                        BluesteinFFT(col, false);
-                    }
-                    else
-                    {
-                        CooleyTukeyFFT(col, false);
-                    }
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
+                    for (int i = 0; i < N; i++) B[i, j] = col[i];
                 });
 
-                if (normalized == true)
-                {
-                    B = Matrice.Div(B, Math.Sqrt(N * M));
-                }
+                if (normalized) B = Matrice.Div(B, (float)Math.Sqrt(N * (double)M));
             }
             else if (direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N];
+                    for (int i = 0; i < N; i++) col[i] = B[i, j];
 
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                    }
+                    if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, false);
+                    else BluesteinFFT(col, false);
 
-                    if (!Maths.IsPower(N, 2))
-                    {
-                        BluesteinFFT(col, false);
-                    }
-                    else
-                    {
-                        CooleyTukeyFFT(col, false);
-                    }
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
+                    for (int i = 0; i < N; i++) B[i, j] = col[i];
                 });
 
-                if (normalized == true)
-                {
-                    B = Matrice.Div(B, Math.Sqrt(N));
-                }
+                if (normalized) B = Matrice.Div(B, (float)Math.Sqrt(N));
             }
-            else
+            else // Direction.Horizontal
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var row = new Complex32[M];
+                    for (int j = 0; j < M; j++) row[j] = B[i, j];
 
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
+                    if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, false);
+                    else BluesteinFFT(row, false);
 
-                    if (!Maths.IsPower(M, 2))
-                    {
-                        BluesteinFFT(row, true);
-                    }
-                    else
-                    {
-                        CooleyTukeyFFT(row, true);
-                    }
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
+                    for (int j = 0; j < M; j++) B[i, j] = row[j];
                 });
 
-                if (normalized == true)
-                {
-                    B = Matrice.Div(B, Math.Sqrt(M));
-                }
+                if (normalized) B = Matrice.Div(B, (float)Math.Sqrt(M));
             }
 
             return B;
@@ -261,131 +187,68 @@ namespace UMapx.Transform
         /// <returns>Matrix</returns>
         public Complex32[,] Backward(Complex32[,] B)
         {
-            Complex32[,] A = (Complex32[,])B.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
+            var A = (Complex32[,])B.Clone();
+            int N = A.GetLength(0);
+            int M = A.GetLength(1);
 
             if (direction == Direction.Both)
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N];
+                    for (int i = 0; i < N; i++) col[i] = A[i, j];
 
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
+                    if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, true);
+                    else BluesteinFFT(col, true);
 
-                    if (!Maths.IsPower(N, 2))
-                    {
-                        BluesteinFFT(col, true);
-                    }
-                    else
-                    {
-                        CooleyTukeyFFT(col, true);
-                    }
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
+                    for (int i = 0; i < N; i++) A[i, j] = col[i];
                 });
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var row = new Complex32[M];
+                    for (int j = 0; j < M; j++) row[j] = A[i, j];
 
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j];
-                    }
+                    if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, true);
+                    else BluesteinFFT(row, true);
 
-                    if (!Maths.IsPower(M, 2))
-                    {
-                        BluesteinFFT(row, false);
-                    }
-                    else
-                    {
-                        CooleyTukeyFFT(row, false);
-                    }
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
+                    for (int j = 0; j < M; j++) A[i, j] = row[j];
                 });
 
-                if (normalized == true)
-                {
-                    A = Matrice.Div(A, Math.Sqrt(N * M));
-                }
+                if (normalized) A = Matrice.Div(A, (float)Math.Sqrt(N * (double)M));
+                else A = Matrice.Div(A, (float)(N * (double)M));
             }
             else if (direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    var col = new Complex32[N];
+                    for (int i = 0; i < N; i++) col[i] = A[i, j];
 
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
+                    if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, true);
+                    else BluesteinFFT(col, true);
 
-                    if (!Maths.IsPower(N, 2))
-                    {
-                        BluesteinFFT(col, true);
-                    }
-                    else
-                    {
-                        CooleyTukeyFFT(col, true);
-                    }
+                    for (int i = 0; i < N; i++) A[i, j] = col[i];
+                });
 
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
-                }
-                );
-
-                if (normalized == true)
-                {
-                    A = Matrice.Div(A, Math.Sqrt(N));
-                }
+                if (normalized) A = Matrice.Div(A, (float)Math.Sqrt(N));
+                else A = Matrice.Div(A, (float)N);
             }
-            else
+            else // Direction.Horizontal
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
+                    var row = new Complex32[M];
+                    for (int j = 0; j < M; j++) row[j] = A[i, j];
 
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j];
-                    }
+                    if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, true);
+                    else BluesteinFFT(row, true);
 
-                    if (!Maths.IsPower(M, 2))
-                    {
-                        BluesteinFFT(row, false);
-                    }
-                    else
-                    {
-                        CooleyTukeyFFT(row, false);
-                    }
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
+                    for (int j = 0; j < M; j++) A[i, j] = row[j];
                 });
 
-                if (normalized == true)
-                {
-                    A = Matrice.Div(A, Math.Sqrt(M));
-                }
+                if (normalized) A = Matrice.Div(A, (float)Math.Sqrt(M));
+                else A = Matrice.Div(A, (float)M);
             }
 
             return A;
@@ -428,258 +291,314 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Private data
-        private const int minBits = 1;
-        private const int maxBits = 14;
-        private static int[][] reversedBits = new int[maxBits][];
-        private static Complex32[,][] complexRotation = new Complex32[maxBits, 2][];
-        #endregion
+        #region Core FFTs
 
-        #region Private voids
         /// <summary>
-        /// Fast Fourier transform (Bluestein FFT).
+        /// Fast Fourier transform (Bluestein) — inverse handled by swap-trick; no scaling inside.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <param name="inverse">Inverse or not</param>
         internal static void BluesteinFFT(Complex32[] data, bool inverse)
         {
-            int N = data.Length;
-            int M = 1;
+            if (data == null || data.Length <= 1) return;
 
-            while (M < 2 * N - 1)
-                M <<= 1;
-
-            var a = new Complex32[M];
-            var b = new Complex32[M];
-            var c = new Complex32[M];
-
-            float sign = inverse ? 1f : -1f;
-            float norm = 1f / M;
-
-            for (int n = 0; n < N; n++)
-            {
-                float angle = Maths.Pi * n * n / N;
-                Complex32 w = Maths.Exp(sign * Maths.I * angle);
-                a[n] = data[n] * w;
-                b[n] = Maths.Exp(-sign * Maths.I * angle);
-            }
-
-            for (int i = N; i < M; i++)
-            {
-                a[i] = Complex32.Zero;
-                b[i] = Complex32.Zero;
-            }
-
-            for (int i = 1; i < N; i++)
-            {
-                b[M - i] = b[i];
-            }
-
-            CooleyTukeyFFT(a, false);
-            CooleyTukeyFFT(b, false);
-
-            for (int i = 0; i < M; i++)
-            {
-                c[i] = a[i] * b[i];
-            }
-
-            CooleyTukeyFFT(c, true);
-
-            for (int n = 0; n < N; n++)
-            {
-                float angle = Maths.Pi * n * n / N;
-                Complex32 w = Maths.Exp(sign * Maths.I * angle);
-                data[n] = c[n] * w;
-                data[n] *= norm;
-            }
+            if (inverse) SwapRealImagInPlace(data);   // conj trick
+            TransformBluestein(data);                 // forward kernel
+            if (inverse) SwapRealImagInPlace(data);   // back from conj
         }
+
         /// <summary>
-        /// Fast Fourier transform (Cooley-Tukey FFT).
+        /// Fast Fourier transform (Cooley–Tukey radix-2) — inverse handled by swap-trick; no scaling inside.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <param name="inverse">Inverse or not</param>
         internal static void CooleyTukeyFFT(Complex32[] data, bool inverse)
         {
+            if (data == null || data.Length <= 1) return;
             int n = data.Length;
-            if (n <= 1) return;
-            int m = Log2(n);
+            if ((n & (n - 1)) != 0)
+                throw new ArgumentException("Length must be a power of two.");
 
-            // reorder data first
-            FastFourierTransform.ReorderData(data);
-
-            // compute FFT
-            int tn = 1, tm, k, i, even, odd;
-            Complex32[] rotation;
-            Complex32 t, ce, co;
-            float tr, ti;
-
-            for (k = 1; k <= m; k++)
-            {
-                rotation = inverse ? FastFourierTransform.BackwardComplexRotation(k) : FastFourierTransform.ForwardComplexRotation(k);
-                tm = tn; tn <<= 1;
-
-                for (i = 0; i < tm; i++)
-                {
-                    t = rotation[i];
-
-                    for (even = i; even < n; even += tn)
-                    {
-                        odd = even + tm;
-                        ce = data[even];
-                        co = data[odd];
-
-                        tr = co.Real * t.Real - co.Imag * t.Imag;
-                        ti = co.Real * t.Imag + co.Imag * t.Real;
-
-                        data[even].Real += tr;
-                        data[even].Imag += ti;
-
-                        data[odd].Real = ce.Real - tr;
-                        data[odd].Imag = ce.Imag - ti;
-                    }
-                }
-            }
+            if (inverse) SwapRealImagInPlace(data);   // conj trick
+            TransformRadix2(data);                    // forward kernel
+            if (inverse) SwapRealImagInPlace(data);   // back from conj
         }
         /// <summary>
-        /// Gets an array with pointers to data members that must be replaced before the FFT.
-        /// </summary>
-        /// <param name="numberOfBits">Number of bits</param>
-        /// <returns>Array</returns>
-        private static int[] GetReversedBits(int numberOfBits)
-        {
-            if ((numberOfBits < minBits) || (numberOfBits > maxBits))
-                throw new ArgumentOutOfRangeException();
-
-            // check if the array is already calculated
-            if (reversedBits[numberOfBits - 1] == null)
-            {
-                int n = Pow2(numberOfBits);
-                int[] rBits = new int[n];
-                int i, j, oldBits, newBits;
-
-                // calculate the array
-                for (i = 0; i < n; i++)
-                {
-                    oldBits = i;
-                    newBits = 0;
-
-                    for (j = 0; j < numberOfBits; j++)
-                    {
-                        newBits = (newBits << 1) | (oldBits & 1);
-                        oldBits = (oldBits >> 1);
-                    }
-                    rBits[i] = newBits;
-                }
-                reversedBits[numberOfBits - 1] = rBits;
-            }
-            return reversedBits[numberOfBits - 1];
-        }
-        /// <summary>
-        /// Gets the forward rotation of a complex number.
-        /// </summary>
-        /// <param name="numberOfBits">Number of bits</param>
-        /// <returns>Array</returns>
-        private static Complex32[] ForwardComplexRotation(int numberOfBits)
-        {
-            int directionIndex = 0;
-
-            // check if the array is already calculated
-            if (complexRotation[numberOfBits - 1, directionIndex] == null)
-            {
-                int n = 1 << (numberOfBits - 1), i;
-                float uR = 1.0f;
-                float uI = 0.0f;
-                float angle = -Maths.Pi / n;
-                float wR = Maths.Cos(angle);
-                float wI = Maths.Sin(angle);
-                float t;
-                Complex32[] rotation = new Complex32[n];
-
-                for (i = 0; i < n; i++)
-                {
-                    rotation[i] = new Complex32(uR, uI);
-                    t = uR * wI + uI * wR;
-                    uR = uR * wR - uI * wI;
-                    uI = t;
-                }
-
-                complexRotation[numberOfBits - 1, directionIndex] = rotation;
-            }
-            return complexRotation[numberOfBits - 1, directionIndex];
-        }
-        /// <summary>
-        /// Gets the backward rotation of a complex number.
-        /// </summary>
-        /// <param name="numberOfBits">Number of bits</param>
-        /// <returns>Array</returns>
-        private static Complex32[] BackwardComplexRotation(int numberOfBits)
-        {
-            int directionIndex = 1;
-
-            // check if the array is already calculated
-            if (complexRotation[numberOfBits - 1, directionIndex] == null)
-            {
-                int n = 1 << (numberOfBits - 1), i;
-                float uR = 1.0f;
-                float uI = 0.0f;
-                float angle = Maths.Pi / n;
-                float wR = Maths.Cos(angle);
-                float wI = Maths.Sin(angle);
-                float t;
-                Complex32[] rotation = new Complex32[n];
-
-                for (i = 0; i < n; i++)
-                {
-                    rotation[i] = new Complex32(uR, uI);
-                    t = uR * wI + uI * wR;
-                    uR = uR * wR - uI * wI;
-                    uI = t;
-                }
-
-                complexRotation[numberOfBits - 1, directionIndex] = rotation;
-            }
-            return complexRotation[numberOfBits - 1, directionIndex];
-        }
-        /// <summary>
-        /// Reorders data to use FFT.
+        /// Radix-2 forward kernel (no scaling). Assumes length is a power of two.
         /// </summary>
         /// <param name="data">Array</param>
-        private static void ReorderData(Complex32[] data)
+        /// <exception cref="ArgumentException">Exception</exception>
+        private static void TransformRadix2(Complex32[] data)
         {
-            int length = data.Length;
-            int[] rBits = GetReversedBits(Log2(length));
-            Complex32 t;
-            int i, s;
+            int n = data.Length;
+            int levels = FloorLog2(n);
+            if ((1 << levels) != n) throw new ArgumentException("Length is not a power of 2");
 
-            for (i = 0; i < length; i++)
+            // trig tables (size n/2): cos(2π k / n), sin(2π k / n)
+            var ct = CosTable(n >> 1);
+            var st = SinTable(n >> 1);
+
+            // bit-reversed permutation
+            for (int i = 0; i < n; i++)
             {
-                s = rBits[i];
-
-                if (s > i)
+                int j = (int)((uint)ReverseBits32(i) >> (32 - levels));
+                if (j > i)
                 {
-                    t = data[i];
-                    data[i] = data[s];
-                    data[s] = t;
+                    var tmp = data[i]; data[i] = data[j]; data[j] = tmp;
                 }
+            }
+
+            // butterflies
+            for (int size = 2; size <= n; size <<= 1)
+            {
+                int half = size >> 1;
+                int step = n / size;
+                for (int i = 0; i < n; i += size)
+                {
+                    int k = 0;
+                    for (int j = i; j < i + half; j++, k += step)
+                    {
+                        int h = j + half;
+
+                        double re = data[h].Real;
+                        double im = data[h].Imag;
+
+                        double tpre = +re * ct[k] + im * st[k];
+                        double tpim = -re * st[k] + im * ct[k];
+
+                        double rej = data[j].Real;
+                        double imj = data[j].Imag;
+
+                        data[h] = new Complex32((float)(rej - tpre), (float)(imj - tpim));
+                        data[j] = new Complex32((float)(rej + tpre), (float)(imj + tpim));
+                    }
+                }
+                if (size == n) break; // prevent overflow
             }
         }
         /// <summary>
-        /// Computes power of 2.
+        /// Bluestein forward kernel (no scaling). Works for arbitrary lengths.
         /// </summary>
-        /// <param name="power">Power</param>
-        /// <returns>Integer number</returns>
-        private static int Pow2(int power)
+        /// <param name="data">Array</param>
+        private static void TransformBluestein(Complex32[] data)
         {
-            return ((power >= 0) && (power <= 30)) ? (1 << power) : 0;
+            int n = data.Length;
+            int m = HighestOneBit(n * 2 + 1) << 1; // next power-of-two >= 2n
+
+            var expC = ExpCosTable(n);
+            var expS = ExpSinTable(n);
+
+            // A(z) = x * w1 pre-chirp
+            var are = new double[m];
+            var aim = new double[m];
+            for (int i = 0; i < n; i++)
+            {
+                double re = data[i].Real, im = data[i].Imag;
+                are[i] = +re * expC[i] + im * expS[i];
+                aim[i] = -re * expS[i] + im * expC[i];
+            }
+
+            // B(z) = chirp kernel (symmetric)
+            var bre = new double[m];
+            var bim = new double[m];
+            bre[0] = expC[0]; bim[0] = expS[0];
+            for (int i = 1; i < n; i++)
+            {
+                bre[i] = bre[m - i] = expC[i];
+                bim[i] = bim[m - i] = expS[i];
+            }
+
+            // C = A ⊛ B (circular convolution via FFT)
+            var cre = new double[m];
+            var cim = new double[m];
+            Convolve(are, aim, bre, bim, cre, cim);
+
+            // post-chirp: y = C * w1
+            for (int i = 0; i < n; i++)
+            {
+                double re = +cre[i] * expC[i] + cim[i] * expS[i];
+                double im = -cre[i] * expS[i] + cim[i] * expC[i];
+                data[i] = new Complex32((float)re, (float)im);
+            }
         }
         /// <summary>
-        /// Calculates the base 2 logarithm.
+        /// Circular convolution using in-class FFT kernels. Applies final 1/n scaling.
         /// </summary>
-        /// <param name="x">Integer number</param>
-        /// <returns>Integer number</returns>
-        private static int Log2(int x)
+        /// <param name="xre">X.Re</param>
+        /// <param name="xim">X.Im</param>
+        /// <param name="yre">Y.Re</param>
+        /// <param name="yim">Y.Im</param>
+        /// <param name="ore">O.Re</param>
+        /// <param name="oim">O.Im</param>
+        private static void Convolve(double[] xre, double[] xim, double[] yre, double[] yim, double[] ore, double[] oim)
         {
-            return (int)Math.Log(x, 2);
+            int n = xre.Length;
+
+            // pack to Complex32
+            var X = new Complex32[n];
+            var Y = new Complex32[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                X[i] = new Complex32((float)xre[i], (float)xim[i]);
+                Y[i] = new Complex32((float)yre[i], (float)yim[i]);
+            }
+
+            // FFT forward
+            if ((n & (n - 1)) == 0)
+            {
+                TransformRadix2(X);
+                TransformRadix2(Y);
+            }
+            else
+            {
+                TransformBluestein(X);
+                TransformBluestein(Y);
+            }
+
+            // pointwise multiply
+            for (int i = 0; i < n; i++)
+            {
+                float ar = X[i].Real, ai = X[i].Imag;
+                float br = Y[i].Real, bi = Y[i].Imag;
+                X[i] = new Complex32(ar * br - ai * bi, ai * br + ar * bi);
+            }
+
+            // IDFT without scaling (swap trick)
+            SwapRealImagInPlace(X);
+            if ((n & (n - 1)) == 0) TransformRadix2(X); else TransformBluestein(X);
+            SwapRealImagInPlace(X);
+
+            // final scaling by 1/n
+            float s = 1f / n;
+            for (int i = 0; i < n; i++)
+            {
+                ore[i] = X[i].Real * s;
+                oim[i] = X[i].Imag * s;
+            }
+        }
+        /// <summary>
+        /// Swaps real and imaginary parts in-place.
+        /// This is equivalent to applying the conjugation trick to switch between forward and inverse.
+        /// </summary>
+        /// <param name="a">Array</param>
+        private static void SwapRealImagInPlace(Complex32[] a)
+        {
+            for (int i = 0; i < a.Length; i++)
+            {
+                float r = a[i].Real, im = a[i].Imag;
+                a[i] = new Complex32(im, r);
+            }
+        }
+        /// <summary>
+        /// Scales a complex vector by a scalar (in-place).
+        /// </summary>
+        /// <param name="a">Array</param>
+        /// <param name="s">Scale param</param>
+        private static void Scale(Complex32[] a, float s)
+        {
+            for (int i = 0; i < a.Length; i++)
+            {
+                a[i].Real *= s; a[i].Imag *= s;
+            }
+        }
+        #endregion
+
+        #region Helpers: tables, bit tricks
+        // ===== Trigonometric tables caches (double for accuracy) =====
+        private static double[] cosTable;       // size: n/2
+        private static double[] sinTable;       // size: n/2
+        private static double[] expCosTable;    // size: n
+        private static double[] expSinTable;    // size: n
+
+        /// <summary>
+        /// Returns the highest one bit of <paramref name="i"/> (as a power-of-two integer).
+        /// </summary>
+        /// <param name="i">Value</param>
+        /// <returns>Value</returns>
+        private static int HighestOneBit(int i)
+        {
+            i |= (i >> 1);
+            i |= (i >> 2);
+            i |= (i >> 4);
+            i |= (i >> 8);
+            i |= (i >> 16);
+            return i - (int)((uint)i >> 1);
+        }
+        /// <summary>
+        /// Reverses the bits of a 32-bit integer.
+        /// </summary>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
+        private static uint ReverseBits32(int x)
+        {
+            uint i = (uint)x;
+            i = (i & 0x55555555u) << 1 | (i >> 1) & 0x55555555u;
+            i = (i & 0x33333333u) << 2 | (i >> 2) & 0x33333333u;
+            i = (i & 0x0f0f0f0fu) << 4 | (i >> 4) & 0x0f0f0f0fu;
+            i = (i << 24) | ((i & 0xff00u) << 8) | ((i >> 8) & 0xff00u) | (i >> 24);
+            return i;
+        }
+        /// <summary>
+        /// Returns floor(log2(n)) for n &gt; 0.
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <returns>Value</returns>
+        private static int FloorLog2(int n)
+        {
+            int r = 0; while ((1 << r) < n) r++; return r - (((1 << r) == n) ? 0 : 1);
+        }
+        /// <summary>
+        /// Half-period cosine table: cos(2πk/n) for k=0..n/2-1.
+        /// </summary>
+        /// <param name="halfN">Value</param>
+        /// <returns>Array</returns>
+        private static double[] CosTable(int halfN)
+        {
+            if (cosTable != null && cosTable.Length == halfN) return cosTable;
+            cosTable = new double[halfN];
+            for (int i = 0; i < halfN; i++) cosTable[i] = Math.Cos(Math.PI * i / halfN);
+            return cosTable;
+        }
+        /// <summary>
+        /// Half-period sine table: sin(2πk/n) for k=0..n/2-1.
+        /// </summary>
+        /// <param name="halfN">Value</param>
+        /// <returns>Array</returns>
+        private static double[] SinTable(int halfN)
+        {
+            if (sinTable != null && sinTable.Length == halfN) return sinTable;
+            sinTable = new double[halfN];
+            for (int i = 0; i < halfN; i++) sinTable[i] = Math.Sin(Math.PI * i / halfN);
+            return sinTable;
+        }
+        /// <summary>
+        /// Chirp cosine table: cos(π i² / n), i=0..n-1 (mod 2n to reduce overflow/rounding).
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <returns>Array</returns>
+        private static double[] ExpCosTable(int n)
+        {
+            if (expCosTable != null && expCosTable.Length == n) return expCosTable;
+            expCosTable = new double[n];
+            for (int i = 0; i < n; i++)
+            {
+                int j = (int)((long)i * i % (2L * n));
+                expCosTable[i] = Math.Cos(Math.PI * j / n);
+            }
+            return expCosTable;
+        }
+        /// <summary>
+        /// Chirp sine table: sin(π i² / n), i=0..n-1 (mod 2n to reduce overflow/rounding).
+        /// </summary>
+        /// <param name="n">Value</param>
+        /// <returns>Array</returns>
+        private static double[] ExpSinTable(int n)
+        {
+            if (expSinTable != null && expSinTable.Length == n) return expSinTable;
+            expSinTable = new double[n];
+            for (int i = 0; i < n; i++)
+            {
+                int j = (int)((long)i * i % (2L * n));
+                expSinTable[i] = Math.Sin(Math.PI * j / n);
+            }
+            return expSinTable;
         }
         #endregion
     }
