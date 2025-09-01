@@ -26866,6 +26866,11 @@
             Fourier transform.
             </summary>
         </member>
+        <member name="F:UMapx.Transform.HilbertTransform.direction">
+            <summary>
+            Processing direction.
+            </summary>
+        </member>
         <member name="M:UMapx.Transform.HilbertTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
             <summary>
             Initializes the Hilbert transform.
@@ -26939,21 +26944,11 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.HilbertTransform.hilbertf(UMapx.Core.Complex32[],System.Int32)">
+        <member name="M:UMapx.Transform.HilbertTransform.ApplyHilbertOperatorMaskInplace(UMapx.Core.Complex32[])">
             <summary>
-            Implements the rearrangement of the spectrum to Hilbert.
+            Applies Hilber spectrum operator.
             </summary>
-            <param name="f">Spectrum</param>
-            <param name="n">Length</param>
-        </member>
-        <member name="M:UMapx.Transform.HilbertTransform.hilbertb(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32)">
-            <summary>
-            Implements the rearrangement of the spectrum to Hilbert.
-            </summary>
-            <param name="a">Array</param>
-            <param name="f">Spectrum</param>
-            <param name="n">Length</param>
-            <returns>Array</returns>
+            <param name="F">Array</param>
         </member>
         <member name="T:UMapx.Transform.IFilter">
             <summary>

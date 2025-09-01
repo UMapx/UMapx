@@ -19,6 +19,10 @@ namespace UMapx.Transform
         /// Fourier transform.
         /// </summary>
         private readonly FourierTransform DFT;
+        /// <summary>
+        /// Processing direction.
+        /// </summary>
+        private Direction direction;
         #endregion
 
         #region Initialize
@@ -29,7 +33,8 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public HilbertTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
-            this.DFT = new FourierTransform(normalized, direction);
+            this.DFT = new FourierTransform(normalized, Direction.Both);
+            this.direction = direction;
         }
         /// <summary>
         /// Normalized transform or not.
@@ -52,11 +57,11 @@ namespace UMapx.Transform
         {
             get
             {
-                return this.DFT.Direction;
+                return this.direction;
             }
             set
             {
-                this.DFT.Direction = value;
+                this.direction = value;
             }
         }
         #endregion
@@ -69,11 +74,9 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public Complex32[] Forward(Complex32[] A)
         {
-            int N = A.Length;
-            Complex32[] F = DFT.Forward(A);
-            HilbertTransform.hilbertf(F, N);
-            F = DFT.Backward(F);
-            return HilbertTransform.hilbertb(A, F, N);
+            var F = DFT.Forward(A);
+            ApplyHilbertOperatorMaskInplace(F);
+            return DFT.Backward(F);
         }
         /// <summary>
         /// Backward Hilbert transform.
@@ -82,15 +85,9 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public Complex32[] Backward(Complex32[] B)
         {
-            int N = B.Length, i;
-            Complex32[] A = new Complex32[N];
-
-            for (i = 0; i < N; i++)
-            {
-                A[i] = new Complex32(B[i].Real, 0);
-            }
-
-            return A;
+            var Hx = Forward(B);
+            for (int i = 0; i < Hx.Length; i++) Hx[i] = -Hx[i];
+            return Hx;
         }
         /// <summary>
         /// Forward Hilbert transform.
@@ -100,15 +97,11 @@ namespace UMapx.Transform
         public Complex32[,] Forward(Complex32[,] A)
         {
             Complex32[,] B = (Complex32[,])A.Clone();
-            int N = A.GetLength(0);
-            int M = A.GetLength(1);
+            int N = B.GetLength(0);
+            int M = B.GetLength(1);
 
-            if (Direction == Direction.Both)
+            if (direction == Direction.Both)
             {
-                // 2-dimension horizontal Hilbert transform:
-                DFT.Direction = Direction.Horizontal;
-                B = DFT.Forward(B);
-
                 Parallel.For(0, N, i =>
                 {
                     Complex32[] row = new Complex32[M];
@@ -119,41 +112,14 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    HilbertTransform.hilbertf(row, M);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
                         B[i, j] = row[j];
                     }
-                });
-
-                B = DFT.Backward(B);
-
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    Complex32[] num = new Complex32[M];
-
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                        num[j] = A[i, j];
-                    }
-
-                    num = HilbertTransform.hilbertb(num, row, M);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = num[j];
-                    }
-                });
-
-
-                // 2-dimension vertical Hilbert transform:
-                DFT.Direction = Direction.Vertical;
-                B = DFT.Forward(B);
+                }
+                );
 
                 Parallel.For(0, M, j =>
                 {
@@ -165,43 +131,16 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    HilbertTransform.hilbertf(col, N);
+                    col = Forward(col);
 
                     for (i = 0; i < N; i++)
                     {
                         B[i, j] = col[i];
                     }
                 });
-
-                B = DFT.Backward(B);
-
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    Complex32[] num = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                        num[i] = A[i, j];
-                    }
-
-                    num = HilbertTransform.hilbertb(num, col, N);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = num[i];
-                    }
-                });
-
-                DFT.Direction = Direction.Both;
             }
-            else if (Direction == Direction.Vertical)
+            else if (direction == Direction.Vertical)
             {
-                // 2-dimension vertical Hilbert transform:
-                B = DFT.Forward(B);
-
                 Parallel.For(0, M, j =>
                 {
                     Complex32[] col = new Complex32[N];
@@ -212,41 +151,16 @@ namespace UMapx.Transform
                         col[i] = B[i, j];
                     }
 
-                    HilbertTransform.hilbertf(col, N);
+                    col = Forward(col);
 
-                    for (i = 0; i < M; i++)
+                    for (i = 0; i < N; i++)
                     {
                         B[i, j] = col[i];
-                    }
-                });
-
-                B = DFT.Backward(B);
-
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    Complex32[] num = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                        num[i] = A[i, j];
-                    }
-
-                    num = HilbertTransform.hilbertb(num, col, N);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = num[i];
                     }
                 });
             }
             else
             {
-                // 2-dimension horizontal Hilbert transform:
-                B = DFT.Forward(B);
-
                 Parallel.For(0, N, i =>
                 {
                     Complex32[] row = new Complex32[M];
@@ -257,34 +171,11 @@ namespace UMapx.Transform
                         row[j] = B[i, j];
                     }
 
-                    HilbertTransform.hilbertf(row, M);
+                    row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
                         B[i, j] = row[j];
-                    }
-                });
-
-                B = DFT.Backward(B);
-
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    Complex32[] num = new Complex32[M];
-
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                        num[j] = A[i, j];
-                    }
-
-                    num = HilbertTransform.hilbertb(num, row, M);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = num[j];
                     }
                 });
             }
@@ -302,13 +193,12 @@ namespace UMapx.Transform
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
-            if (Direction == Direction.Both)
+            if (direction == Direction.Both)
             {
                 Parallel.For(0, M, j =>
                 {
                     Complex32[] col = new Complex32[N];
                     int i;
-
                     for (i = 0; i < N; i++)
                     {
                         col[i] = A[i, j];
@@ -337,45 +227,42 @@ namespace UMapx.Transform
                     {
                         A[i, j] = row[j];
                     }
-                }
-                );
+                });
             }
-            else if (Direction == Direction.Vertical)
+            else if (direction == Direction.Vertical)
             {
-                Parallel.For(0, N, i =>
+                Parallel.For(0, M, j =>
                 {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
+                    Complex32[] col = new Complex32[N];
+                    int i;
+                    for (i = 0; i < N; i++)
                     {
-                        row[j] = A[i, j];
+                        col[i] = A[i, j];
                     }
-                    row = Backward(row);
+                    col = Backward(col);
 
-                    for (j = 0; j < M; j++)
+                    for (i = 0; i < N; i++)
                     {
-                        A[i, j] = row[j];
+                        A[i, j] = col[i];
                     }
-                }
-                );
+                });
             }
             else
             {
-                Parallel.For(0, M, j =>
+                Parallel.For(0, N, i =>
                 {
-                    Complex32[] col = new Complex32[N];
-                    int i;
+                    Complex32[] row = new Complex32[M];
+                    int j;
 
-                    for (i = 0; i < N; i++)
+                    for (j = 0; j < M; j++)
                     {
-                        col[i] = A[i, j];
+                        row[j] = A[i, j];
                     }
-                    col = Backward(col);
+                    row = Backward(row);
 
-                    for (i = 0; i < N; i++)
+                    for (j = 0; j < M; j++)
                     {
-                        A[i, j] = col[i];
+                        A[i, j] = row[j];
                     }
                 });
             }
@@ -422,37 +309,38 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// Implements the rearrangement of the spectrum to Hilbert.
+        /// Applies Hilber spectrum operator.
         /// </summary>
-        /// <param name="f">Spectrum</param>
-        /// <param name="n">Length</param>
-        internal static void hilbertf(Complex32[] f, int n)
+        /// <param name="F">Array</param>
+        internal static void ApplyHilbertOperatorMaskInplace(Complex32[] F)
         {
-            int n2 = n / 2;
+            int N = F.Length;
+            if (N == 0) return;
 
-            for (int i = 0; i < n2; i++)
+            // DC
+            F[0] = Complex32.Zero;
+
+            if ((N & 1) == 0)
             {
-                f[i] *= 2.0;
-                f[i + n2] = Complex32.Zero;
-            }
-        }
-        /// <summary>
-        /// Implements the rearrangement of the spectrum to Hilbert.
-        /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="f">Spectrum</param>
-        /// <param name="n">Length</param>
-        /// <returns>Array</returns>
-        internal static Complex32[] hilbertb(Complex32[] a, Complex32[] f, int n)
-        {
-            Complex32[] B = new Complex32[n];
+                int half = N / 2;
 
-            for (int i = 0; i < n; i++)
+                // Nyquist
+                F[half] = Complex32.Zero;
+
+                // positive freqs: 1..half-1  -> -i
+                for (int k = 1; k < half; k++) F[k] *= new Complex32(0f, -1f);
+
+                // negative freqs: half+1..N-1 -> +i
+                for (int k = half + 1; k < N; k++) F[k] *= new Complex32(0f, +1f);
+            }
+            else
             {
-                B[i] = new Complex32(a[i].Real, f[i].Imag);
+                int half = N / 2; // floor
+                                  // positive: 1..half -> -i
+                for (int k = 1; k <= half; k++) F[k] *= new Complex32(0f, -1f);
+                // negative: half+1..N-1 -> +i
+                for (int k = half + 1; k < N; k++) F[k] *= new Complex32(0f, +1f);
             }
-
-            return B;
         }
         #endregion
     }

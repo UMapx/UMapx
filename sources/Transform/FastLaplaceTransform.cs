@@ -160,7 +160,7 @@ namespace UMapx.Transform
 
                     for (i = 0; i < N; i++)
                     {
-                        col[i] = B[i, j];
+                        col[i] = B[i, j].Conjugate;
                     }
 
                     col = Forward(col);
@@ -180,7 +180,7 @@ namespace UMapx.Transform
 
                     for (i = 0; i < N; i++)
                     {
-                        col[i] = B[i, j];
+                        col[i] = B[i, j].Conjugate;
                     }
 
                     col = Forward(col);
@@ -251,7 +251,7 @@ namespace UMapx.Transform
 
                     for (j = 0; j < M; j++)
                     {
-                        row[j] = A[i, j];
+                        row[j] = A[i, j].Conjugate;
                     }
                     row = Backward(row);
 
@@ -289,7 +289,7 @@ namespace UMapx.Transform
 
                     for (j = 0; j < M; j++)
                     {
-                        row[j] = A[i, j];
+                        row[j] = A[i, j].Conjugate;
                     }
                     row = Backward(row);
 
