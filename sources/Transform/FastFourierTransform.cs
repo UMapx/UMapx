@@ -501,6 +501,7 @@ namespace UMapx.Transform
         internal static void CooleyTukeyFFT(Complex32[] data, bool inverse)
         {
             int n = data.Length;
+            if (n <= 1) return;
             int m = Log2(n);
 
             // reorder data first
