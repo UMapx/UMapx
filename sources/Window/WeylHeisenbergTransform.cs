@@ -43,9 +43,6 @@ namespace UMapx.Window
         }
         /// <summary>
         /// Gets or sets number of frequency shifts [4, N].
-        /// <remarks>
-        /// Even number.
-        /// </remarks>
         /// </summary>
         public int M
         {
@@ -55,6 +52,9 @@ namespace UMapx.Window
             }
             set
             {
+                if (value <= 2)
+                    throw new ArgumentException("M must be greater than 2");
+
                 this.m = value;
             }
         }

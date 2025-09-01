@@ -33504,9 +33504,6 @@
         <member name="P:UMapx.Window.WeylHeisenbergTransform.M">
             <summary>
             Gets or sets number of frequency shifts [4, N].
-            <remarks>
-            Even number.
-            </remarks>
             </summary>
         </member>
         <member name="P:UMapx.Window.WeylHeisenbergTransform.Direction">
