@@ -114,17 +114,19 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float linear(float[] x, float[] y, float xl)
         {
-            float yval = 0.0f;
-            int length = x.Length - 1;
+            int n = x?.Length ?? 0;
+            if (n == 0 || y == null || y.Length != n) throw new ArgumentException();
+            if (xl <= x[0]) return y[0];
+            if (xl >= x[n - 1]) return y[n - 1];
 
-            for (int i = 0; i < length; i++)
+            int lo = 0, hi = n - 1;
+            while (hi - lo > 1)
             {
-                if (xl >= x[i] && xl < x[i + 1])
-                {
-                    yval = y[i] + (xl - x[i]) * (y[i + 1] - y[i]) / (x[i + 1] - x[i]);
-                }
+                int mid = (lo + hi) >> 1;
+                if (xl >= x[mid]) lo = mid; else hi = mid;
             }
-            return yval;
+            float t = (xl - x[lo]) / (x[lo + 1] - x[lo]);
+            return y[lo] + t * (y[lo + 1] - y[lo]);
         }
         /// <summary>
         /// 
@@ -137,24 +139,38 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float bilinear(float[] x, float[] y, float[,] z, float xval, float yval)
         {
-            float zval = 0.0f;
-            int xlength = x.Length - 1;
-            int ylength = y.Length - 1;
+            int nx = x?.Length ?? 0, ny = y?.Length ?? 0;
+            if (nx < 2 || ny < 2 || z == null || z.GetLength(0) != nx || z.GetLength(1) != ny)
+                throw new ArgumentException();
 
-            for (int i = 0; i < xlength; i++)
+            if (xval <= x[0]) return (yval <= y[0]) ? z[0, 0] : (yval >= y[ny - 1] ? z[0, ny - 1] : z[0, LowerIndex(y, yval)]);
+            if (xval >= x[nx - 1]) return (yval <= y[0]) ? z[nx - 1, 0] : (yval >= y[ny - 1] ? z[nx - 1, ny - 1] : z[nx - 1, LowerIndex(y, yval)]);
+
+            int ix = LowerIndex(x, xval); // x[ix] <= xval < x[ix+1]
+            int iy = LowerIndex(y, yval); // y[iy] <= yval < y[iy+1]
+
+            float x0 = x[ix], x1 = x[ix + 1];
+            float y0 = y[iy], y1 = y[iy + 1];
+            float tx = (xval - x0) / (x1 - x0);
+            float ty = (yval - y0) / (y1 - y0);
+
+            float z00 = z[ix, iy], z10 = z[ix + 1, iy], z01 = z[ix, iy + 1], z11 = z[ix + 1, iy + 1];
+            float z0 = z00 + tx * (z10 - z00);
+            float z1 = z01 + tx * (z11 - z01);
+            return z0 + ty * (z1 - z0);
+
+            static int LowerIndex(float[] a, float v)
             {
-                for (int j = 0; j < ylength; j++)
+                int lo = 0, hi = a.Length - 1;
+                if (v <= a[0]) return 0;
+                if (v >= a[hi]) return hi - 1;
+                while (hi - lo > 1)
                 {
-                    if (xval >= x[i] && xval < x[i + 1] && yval >= y[j] && yval < y[j + 1])
-                    {
-                        zval = z[i, j] * (x[i + 1] - xval) * (y[j + 1] - yval) / (x[i + 1] - x[i]) / (y[j + 1] - y[j]) +
-                        z[i + 1, j] * (xval - x[i]) * (y[j + 1] - yval) / (x[i + 1] - x[i]) / (y[j + 1] - y[j]) +
-                        z[i, j + 1] * (x[i + 1] - xval) * (yval - y[j]) / (x[i + 1] - x[i]) / (y[j + 1] - y[j]) +
-                        z[i + 1, j + 1] * (xval - x[i]) * (yval - y[j]) / (x[i + 1] - x[i]) / (y[j + 1] - y[j]);
-                    }
+                    int mid = (lo + hi) >> 1;
+                    if (v >= a[mid]) lo = mid; else hi = mid;
                 }
+                return lo;
             }
-            return zval;
         }
         /// <summary>
         /// 
@@ -193,28 +209,16 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float newto(float[] x, float[] y, float xval)
         {
-            float yval;
-            int length = x.Length;
-            float[] tarray = new float[length];
-            int i, j;
+            int n = x.Length;
+            var a = (float[])y.Clone();
+            for (int i = 1; i < n; i++)
+                for (int j = n - 1; j >= i; j--)
+                    a[j] = (a[j] - a[j - 1]) / (x[j] - x[j - i]);
 
-            for (i = 0; i < length; i++)
-            {
-                tarray[i] = y[i];
-            }
-            for (i = 0; i < length - 1; i++)
-            {
-                for (j = length - 1; j > i; j--)
-                {
-                    tarray[j] = (tarray[j - 1] - tarray[j]) / (x[j - 1 - i] - x[j]);
-                }
-            }
-            yval = tarray[length - 1];
-            for (i = length - 2; i >= 0; i--)
-            {
-                yval = tarray[i] + (xval - x[i]) * yval;
-            }
-            return yval;
+            float res = a[n - 1];
+            for (int i = n - 2; i >= 0; i--)
+                res = a[i] + (xval - x[i]) * res;
+            return res;
         }
         /// <summary>
         /// 
@@ -225,34 +229,26 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float baryc(float[] x, float[] y, float xval)
         {
-            float product;
-            float deltaX;
-            float bc1 = 0;
-            float bc2 = 0;
-            int length = x.Length;
-            float[] weights = new float[length];
-            int i, j;
+            int n = x.Length;
+            for (int i = 0; i < n; i++) if (xval == x[i]) return y[i];
 
-            for (i = 0; i < length; i++)
+            var w = new float[n];
+            for (int i = 0; i < n; i++)
             {
-                product = 1;
-                for (j = 0; j < length; j++)
-                {
-                    if (i != j)
-                    {
-                        product *= (x[i] - x[j]);
-                        weights[i] = 1.0f / product;
-                    }
-                }
+                float prod = 1f;
+                for (int j = 0; j < n; j++) if (i != j) prod *= (x[i] - x[j]);
+                if (prod == 0f) throw new ArgumentException("Duplicate nodes");
+                w[i] = 1f / prod;
             }
-
-            for (i = 0; i < length; i++)
+            float num = 0f, den = 0f;
+            for (int i = 0; i < n; i++)
             {
-                deltaX = weights[i] / (xval - x[i]);
-                bc1 += y[i] * deltaX;
-                bc2 += deltaX;
+                float d = xval - x[i];
+                float wi = w[i] / d;
+                num += wi * y[i];
+                den += wi;
             }
-            return bc1 / bc2;
+            return num / den;
         }
         /// <summary>
         /// 
@@ -291,28 +287,16 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static Complex32 newto(Complex32[] x, Complex32[] y, Complex32 xval)
         {
-            Complex32 yval;
-            int length = x.Length;
-            Complex32[] tarray = new Complex32[length];
-            int i, j;
+            int n = x.Length;
+            var a = (Complex32[])y.Clone();
+            for (int i = 1; i < n; i++)
+                for (int j = n - 1; j >= i; j--)
+                    a[j] = (a[j] - a[j - 1]) / (x[j] - x[j - i]);
 
-            for (i = 0; i < length; i++)
-            {
-                tarray[i] = y[i];
-            }
-            for (i = 0; i < length - 1; i++)
-            {
-                for (j = length - 1; j > i; j--)
-                {
-                    tarray[j] = (tarray[j - 1] - tarray[j]) / (x[j - 1 - i] - x[j]);
-                }
-            }
-            yval = tarray[length - 1];
-            for (i = length - 2; i >= 0; i--)
-            {
-                yval = tarray[i] + (xval - x[i]) * yval;
-            }
-            return yval;
+            Complex32 res = a[n - 1];
+            for (int i = n - 2; i >= 0; i--)
+                res = a[i] + (xval - x[i]) * res;
+            return res;
         }
         /// <summary>
         /// 
@@ -323,34 +307,26 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static Complex32 baryc(Complex32[] x, Complex32[] y, Complex32 xval)
         {
-            Complex32 product;
-            Complex32 deltaX;
-            Complex32 bc1 = 0;
-            Complex32 bc2 = 0;
-            int length = x.Length;
-            Complex32[] weights = new Complex32[length];
-            int i, j;
+            int n = x.Length;
+            for (int i = 0; i < n; i++) if (xval == x[i]) return y[i];
 
-            for (i = 0; i < length; i++)
+            var w = new Complex32[n];
+            for (int i = 0; i < n; i++)
             {
-                product = 1;
-                for (j = 0; j < length; j++)
-                {
-                    if (i != j)
-                    {
-                        product *= (x[i] - x[j]);
-                        weights[i] = 1.0 / product;
-                    }
-                }
+                Complex32 prod = 1f;
+                for (int j = 0; j < n; j++) if (i != j) prod *= (x[i] - x[j]);
+                if (prod == 0f) throw new ArgumentException("Duplicate nodes");
+                w[i] = 1f / prod;
             }
-
-            for (i = 0; i < length; i++)
+            Complex32 num = 0f, den = 0f;
+            for (int i = 0; i < n; i++)
             {
-                deltaX = weights[i] / (xval - x[i]);
-                bc1 += y[i] * deltaX;
-                bc2 += deltaX;
+                Complex32 d = xval - x[i];
+                Complex32 wi = w[i] / d;
+                num += wi * y[i];
+                den += wi;
             }
-            return bc1 / bc2;
+            return num / den;
         }
         #endregion
     }
