@@ -1279,63 +1279,96 @@
         </member>
         <member name="M:UMapx.Analysis.Nonlinear.bisec(UMapx.Core.IFloat,System.Single,System.Single,System.Single)">
             <summary>
-            
+            Bisection method for solving f(x) = 0 on a bracketing interval [a, b].
             </summary>
-            <param name="f"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="eps"></param>
-            <returns></returns>
+            <remarks>
+            - Requires a sign change on the endpoints: f(a) * f(b) ≤ 0 (throws if violated).<br/>
+            - Guarantees convergence to a root in [a, b] for continuous f (linear convergence).<br/>
+            - Stops when the interval width or |f(mid)| is below <paramref name="eps"/>, or on iteration cap.
+            - Returns the final midpoint or a short secant refinement if available.
+            </remarks>
+            <param name="f">Scalar continuous function</param>
+            <param name="a">Left endpoint of the initial bracket</param>
+            <param name="b">Right endpoint of the initial bracket</param>
+            <param name="eps">Absolute tolerance for both x-interval and residual checks</param>
+            <returns>Approximate root in [a, b]</returns>
+            <exception cref="T:System.ArgumentException">If f(a) and f(b) have the same strict sign</exception>
         </member>
         <member name="M:UMapx.Analysis.Nonlinear.secan(UMapx.Core.IFloat,System.Single,System.Single,System.Single)">
             <summary>
-            
+            Secant method (open method) for solving f(x) = 0 using two initial guesses.
             </summary>
-            <param name="f"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="eps"></param>
-            <returns></returns>
+            <remarks>
+            - Does not require a bracket; may fail if the sequence diverges or hits a zero derivative surrogate.<br/>
+            - Superlinear convergence near a simple root; sensitive to starting points.<br/>
+            - Stops on small residual |f(x)|, small step |Δx|, or iteration cap; returns the last iterate.
+            </remarks>
+            <param name="f">Scalar continuous function</param>
+            <param name="a">First initial guess</param>
+            <param name="b">Second initial guess</param>
+            <param name="eps">Absolute tolerance for residual and step size</param>
+            <returns>Approximate root</returns>
         </member>
         <member name="M:UMapx.Analysis.Nonlinear.falpo(UMapx.Core.IFloat,System.Single,System.Single,System.Single)">
             <summary>
-            
+            Regula Falsi (false position) method for solving f(x) = 0 on a bracketing interval [a, b].
             </summary>
-            <param name="f"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="eps"></param>
-            <returns></returns>
+            <remarks>
+            - Maintains a bracket with a sign change at every step (robust).<br/>
+            - Can stagnate if one endpoint changes very slowly; convergence is at least linear.<br/>
+            - Stops on small residual |f(x)|, small step |Δx|, or iteration cap; returns the last secant point.
+            </remarks>
+            <param name="f">Scalar continuous function</param>
+            <param name="a">Left endpoint of the initial bracket</param>
+            <param name="b">Right endpoint of the initial bracket</param>
+            <param name="eps">Absolute tolerance for residual and step size</param>
+            <returns>Approximate root in [a, b]</returns>
+            <exception cref="T:System.ArgumentException">If f(a) and f(b) have the same strict sign</exception>
         </member>
         <member name="M:UMapx.Analysis.Nonlinear.chord(UMapx.Core.IFloat,System.Single,System.Single,System.Single)">
             <summary>
-            
+            One-endpoint chord method (fixed endpoint secant) for solving f(x) = 0.
             </summary>
-            <param name="f"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="eps"></param>
-            <returns></returns>
+            <remarks>
+            - Uses fixed endpoint at <paramref name="a"/> and forms a secant with the current iterate.<br/>
+            - Does not enforce bracketing; convergence is problem-dependent and may be slow or fail.<br/>
+            - Stops on small residual |f(x)|, small step |Δx|, or iteration cap.
+            </remarks>
+            <param name="f">Scalar continuous function</param>
+            <param name="a">Fixed endpoint used in each chord</param>
+            <param name="b">Second endpoint used only to initialize the first iterate</param>
+            <param name="eps">Absolute tolerance for residual and step size</param>
+            <returns>Approximate root</returns>
         </member>
         <member name="M:UMapx.Analysis.Nonlinear.chord(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Single)">
             <summary>
-            
+            One-endpoint chord method (fixed endpoint secant) for solving f(x) = 0.
             </summary>
-            <param name="f"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="eps"></param>
-            <returns></returns>
+            <remarks>
+            - Uses fixed endpoint at <paramref name="a"/> and forms a secant with the current iterate.<br/>
+            - Does not enforce bracketing; convergence is problem-dependent and may be slow or fail.<br/>
+            - Stops on small residual |f(x)|, small step |Δx|, or iteration cap.
+            </remarks>
+            <param name="f">Scalar continuous function</param>
+            <param name="a">Fixed endpoint used in each chord</param>
+            <param name="b">Second endpoint used only to initialize the first iterate</param>
+            <param name="eps">Absolute tolerance for residual and step size</param>
+            <returns>Approximate root</returns>
         </member>
         <member name="M:UMapx.Analysis.Nonlinear.secan(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Single)">
             <summary>
-            
+            Secant method (open method) for solving f(x) = 0 using two initial guesses.
             </summary>
-            <param name="f"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="eps"></param>
-            <returns></returns>
+            <remarks>
+            - Does not require a bracket; may fail if the sequence diverges or hits a zero derivative surrogate.<br/>
+            - Superlinear convergence near a simple root; sensitive to starting points.<br/>
+            - Stops on small residual |f(x)|, small step |Δx|, or iteration cap; returns the last iterate.
+            </remarks>
+            <param name="f">Scalar continuous function</param>
+            <param name="a">First initial guess</param>
+            <param name="b">Second initial guess</param>
+            <param name="eps">Absolute tolerance for residual and step size</param>
+            <returns>Approximate root</returns>
         </member>
         <member name="T:UMapx.Analysis.NonlinearMethod">
             <summary>
