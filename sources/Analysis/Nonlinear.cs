@@ -94,7 +94,7 @@ namespace UMapx.Analysis
                 case NonlinearMethod.Chord:
                     return Nonlinear.chord(function, a, b, this.eps);
                 case NonlinearMethod.FalsePosition:
-                    return Nonlinear.falpo(function, a, b, this.eps);
+                    throw new NotSupportedException("False position is not defined for complex-valued functions");
 
                 default:
                     return Nonlinear.secan(function, a, b, this.eps);
@@ -113,22 +113,25 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float bisec(IFloat f, float a, float b, float eps = 1e-8f)
         {
-            float x1 = a; float x2 = b;
-            float fb = f(b);
-            float midpt;
+            float x1 = a, x2 = b;
+            float fa = f(x1), fb = f(x2);
+            if (fa == 0f) return x1;
+            if (fb == 0f) return x2;
+            if (fa * fb > 0f) throw new ArgumentException("Bisection requires f(a)*f(b) <= 0");
+
             int n = 0;
-
-            while (Math.Abs(x2 - x1) > eps && n < short.MaxValue)
+            while ((Math.Abs(x2 - x1) > eps) && (n++ < short.MaxValue))
             {
-                midpt = 0.5f * (x1 + x2);
+                float mid = 0.5f * (x1 + x2);
+                float fm = f(mid);
+                if (fm == 0f) return mid;
 
-                if (fb * f(midpt) > 0)
-                    x2 = midpt;
-                else
-                    x1 = midpt;
-                n++;
+                if (fa * fm < 0f) { x2 = mid; fb = fm; }
+                else { x1 = mid; fa = fm; }
             }
-            return x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
+            float denom = (f(x2) - f(x1));
+            return denom != 0f ? x2 - (x2 - x1) * f(x2) / denom
+                               : 0.5f * (x1 + x2);
         }
         /// <summary>
         /// 
@@ -140,19 +143,18 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float secan(IFloat f, float a, float b, float eps = 1e-8f)
         {
-            float x1 = a;
-            float x2 = b;
-            float fb = f(b);
-            float mpoint;
+            float x1 = a, x2 = b;
+            float f1 = f(x1), f2 = f(x2);
             int n = 0;
 
-            while (Math.Abs(f(x2)) > eps && n < short.MaxValue)
+            while (Math.Abs(f2) > eps && Math.Abs(x2 - x1) > eps && n++ < short.MaxValue)
             {
-                mpoint = x2 - (x2 - x1) * fb / (fb - f(x1));
-                x1 = x2;
-                x2 = mpoint;
-                fb = f(x2);
-                n++;
+                float denom = (f2 - f1);
+                if (denom == 0f) break;
+                float x3 = x2 - (x2 - x1) * f2 / denom;
+
+                x1 = x2; f1 = f2;
+                x2 = x3; f2 = f(x2);
             }
             return x2;
         }
@@ -166,23 +168,26 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float falpo(IFloat f, float a, float b, float eps = 1e-8f)
         {
-            float x1 = a;
-            float x2 = b;
-            float fb = f(b);
-            int n = 0;
+            float x1 = a, x2 = b;
+            float fa = f(x1), fb = f(x2);
+            if (fa == 0f) return x1;
+            if (fb == 0f) return x2;
+            if (fa * fb > 0f) throw new ArgumentException("False position requires f(a)*f(b) <= 0");
 
-            while (Math.Abs(x2 - x1) > eps && n < short.MaxValue)
+            int n = 0;
+            float x = x2;
+            while (n++ < short.MaxValue)
             {
-                float xpoint = x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
-                if (fb * f(xpoint) > 0)
-                    x2 = xpoint;
-                else
-                    x1 = xpoint;
-                if (Math.Abs(f(xpoint)) < eps)
-                    break;
-                n++;
+                float denom = (fb - fa);
+                if (denom == 0f) break;
+                x = x2 - (x2 - x1) * fb / denom;
+                float fx = f(x);
+                if (Math.Abs(fx) <= eps || Math.Abs(x - x2) <= eps) return x;
+
+                if (fa * fx < 0f) { x2 = x; fb = fx; }
+                else { x1 = x; fa = fx; }
             }
-            return x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
+            return x;
         }
         /// <summary>
         /// 
@@ -194,15 +199,21 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float chord(IFloat f, float a, float b, float eps = 1e-8f)
         {
+            float x0 = 0.5f * (a + b);
+            float fa = f(a);
             int n = 0;
-            float x0 = (b - a) / 2.0f;
-            float x;
 
-            while (Math.Abs(f(x0) / b) > eps && n < short.MaxValue)
+            while (n++ < short.MaxValue)
             {
-                x = x0;
-                x0 = x - (f(x) * (a - x)) / (f(a) - f(x));
-                n++;
+                float fx = f(x0);
+                if (Math.Abs(fx) <= eps) return x0;
+
+                float denom = (fa - fx);
+                if (denom == 0f) break;
+
+                float x1 = x0 - fx * (a - x0) / denom;
+                if (Math.Abs(x1 - x0) <= eps) return x1;
+                x0 = x1;
             }
             return x0;
         }
@@ -216,15 +227,21 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static Complex32 chord(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
+            Complex32 x0 = 0.5f * (a + b);
+            Complex32 fa = f(a);
             int n = 0;
-            Complex32 x0 = (b - a) / 2.0;
-            Complex32 x;
 
-            while (Maths.Abs(f(x0) / b) > eps && n < short.MaxValue)
+            while (n++ < short.MaxValue)
             {
-                x = x0;
-                x0 = x - (f(x) * (a - x)) / (f(a) - f(x));
-                n++;
+                Complex32 fx = f(x0);
+                if (Maths.Abs(fx) <= eps) return x0;
+
+                Complex32 denom = (fa - fx);
+                if (Maths.Abs(denom) == 0f) break;
+
+                Complex32 x1 = x0 - fx * (a - x0) / denom;
+                if (Maths.Abs(x1 - x0) <= eps) return x1;
+                x0 = x1;
             }
             return x0;
         }
@@ -238,54 +255,20 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static Complex32 secan(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
-            Complex32 x1 = a;
-            Complex32 x2 = b;
-            Complex32 fb = f(b);
-            Complex32 mpoint;
+            Complex32 x1 = a, x2 = b;
+            Complex32 f1 = f(x1), f2 = f(x2);
             int n = 0;
 
-            while (Maths.Abs(f(x2)) > eps && n < short.MaxValue)
+            while (Maths.Abs(f2) > eps && Maths.Abs(x2 - x1) > eps && n++ < short.MaxValue)
             {
-                mpoint = x2 - (x2 - x1) * fb / (fb - f(x1));
-                x1 = x2;
-                x2 = mpoint;
-                fb = f(x2);
-                n++;
+                Complex32 denom = (f2 - f1);
+                if (Maths.Abs(denom) == 0f) break;
+                Complex32 x3 = x2 - (x2 - x1) * f2 / denom;
+
+                x1 = x2; f1 = f2;
+                x2 = x3; f2 = f(x2);
             }
             return x2;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="f"></param>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="eps"></param>
-        /// <returns></returns>
-        private static Complex32 falpo(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
-        {
-            Complex32 x1 = a;
-            Complex32 x2 = b;
-            Complex32 fb = f(b);
-            int n = 0;
-
-            while (Maths.Abs(x2 - x1) > eps && n < short.MaxValue)
-            {
-                Complex32 xpoint = x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
-                Complex32 fxpoint = f(xpoint);
-                float s = fb.Real * fxpoint.Real;
-
-                // sign
-                if (s > 0)
-                    x2 = xpoint;
-                else
-                    x1 = xpoint;
-
-                if (Maths.Abs(fxpoint) < eps)
-                    break;
-                n++;
-            }
-            return x2 - (x2 - x1) * f(x2) / (f(x2) - f(x1));
         }
         #endregion
     }

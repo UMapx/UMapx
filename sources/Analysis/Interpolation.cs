@@ -67,15 +67,16 @@ namespace UMapx.Analysis
             // chose method of interpolation
             switch (method)
             {
-                case InterpolationMethod.Lagrange:
-                    return Interpolation.lagra(x, y, xl);
-
                 case InterpolationMethod.Newton:
                     return Interpolation.newto(x, y, xl);
 
                 case InterpolationMethod.Barycentric:
                     return Interpolation.baryc(x, y, xl);
 
+                case InterpolationMethod.Lagrange:
+                    return Interpolation.lagra(x, y, xl);
+
+                case InterpolationMethod.Linear:
                 default:
                     return Interpolation.linear(x, y, xl);
             }
@@ -98,8 +99,12 @@ namespace UMapx.Analysis
                 case InterpolationMethod.Barycentric:
                     return Interpolation.baryc(x, y, xl);
 
+                case InterpolationMethod.Lagrange:
                 default:
                     return Interpolation.lagra(x, y, xl);
+
+                case InterpolationMethod.Linear:
+                    throw new NotSupportedException("Linear interpolation is not defined for complex-valued functions");
             }
         }
         #endregion

@@ -1115,16 +1115,6 @@
             <param name="eps"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Nonlinear.falpo(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Single)">
-            <summary>
-            
-            </summary>
-            <param name="f"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="eps"></param>
-            <returns></returns>
-        </member>
         <member name="T:UMapx.Analysis.NonlinearMethod">
             <summary>
             Method for solving a nonlinear equation.
