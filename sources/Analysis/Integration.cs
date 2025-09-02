@@ -419,12 +419,12 @@ namespace UMapx.Analysis
         /// levels is limited by the highest power of two dividing (N - 1) and by <paramref name="maxK"/>.
         /// Early exit occurs when successive diagonal entries satisfy the relative tolerance.
         /// </remarks>
-        /// <param name="y">Samples y[0..N-1] on a uniform grid from a to b (inclusive).</param>
-        /// <param name="a">Lower limit of integration (corresponds to y[0]).</param>
-        /// <param name="b">Upper limit of integration (corresponds to y[N-1]).</param>
-        /// <param name="maxK">Maximum number of Romberg levels to build (≥ 1).</param>
-        /// <param name="eps">Relative tolerance for early stopping.</param>
-        /// <returns>Romberg estimate of ∫_a^b f(x) dx.</returns>
+        /// <param name="y">Samples y[0..N-1] on a uniform grid from a to b (inclusive)</param>
+        /// <param name="a">Lower limit of integration (corresponds to y[0])</param>
+        /// <param name="b">Upper limit of integration (corresponds to y[N-1])</param>
+        /// <param name="maxK">Maximum number of Romberg levels to build (≥ 1)</param>
+        /// <param name="eps">Relative tolerance for early stopping</param>
+        /// <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
         private static float romb(float[] y, float a, float b, int maxK, float eps = 1e-8f)
         {
             if (y == null || y.Length < 2) throw new ArgumentException("Function must have at least 2 samples");
@@ -725,12 +725,12 @@ namespace UMapx.Analysis
         /// and (N - 1) must be divisible by 2^k for each level k to be usable.
         /// Early exit uses a relative tolerance based on complex magnitude.
         /// </remarks>
-        /// <param name="y">Complex samples y[0..N-1] on a uniform grid from a to b.</param>
-        /// <param name="a">Lower limit (complex), corresponds to y[0].</param>
-        /// <param name="b">Upper limit (complex), corresponds to y[N-1].</param>
-        /// <param name="maxK">Maximum number of Romberg levels (≥ 1).</param>
-        /// <param name="eps">Relative tolerance for early stopping.</param>
-        /// <returns>Romberg estimate of ∫_a^b f(x) dx in Complex32.</returns>
+        /// <param name="y">Complex samples y[0..N-1] on a uniform grid from a to b</param>
+        /// <param name="a">Lower limit (complex), corresponds to y[0]</param>
+        /// <param name="b">Upper limit (complex), corresponds to y[N-1]</param>
+        /// <param name="maxK">Maximum number of Romberg levels (≥ 1)</param>
+        /// <param name="eps">Relative tolerance for early stopping</param>
+        /// <returns>Romberg estimate of ∫_a^b f(x) dx in Complex32</returns>
         private static Complex32 romb(Complex32[] y, Complex32 a, Complex32 b, int maxK, float eps = 1e-8f)
         {
             if (y == null || y.Length < 2) throw new ArgumentException("y must have at least 2 samples.");

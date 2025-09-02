@@ -721,12 +721,12 @@
             levels is limited by the highest power of two dividing (N - 1) and by <paramref name="maxK"/>.
             Early exit occurs when successive diagonal entries satisfy the relative tolerance.
             </remarks>
-            <param name="y">Samples y[0..N-1] on a uniform grid from a to b (inclusive).</param>
-            <param name="a">Lower limit of integration (corresponds to y[0]).</param>
-            <param name="b">Upper limit of integration (corresponds to y[N-1]).</param>
-            <param name="maxK">Maximum number of Romberg levels to build (≥ 1).</param>
-            <param name="eps">Relative tolerance for early stopping.</param>
-            <returns>Romberg estimate of ∫_a^b f(x) dx.</returns>
+            <param name="y">Samples y[0..N-1] on a uniform grid from a to b (inclusive)</param>
+            <param name="a">Lower limit of integration (corresponds to y[0])</param>
+            <param name="b">Upper limit of integration (corresponds to y[N-1])</param>
+            <param name="maxK">Maximum number of Romberg levels to build (≥ 1)</param>
+            <param name="eps">Relative tolerance for early stopping</param>
+            <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
         </member>
         <member name="M:UMapx.Analysis.Integration.rect(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
             <summary>
@@ -868,12 +868,12 @@
             and (N - 1) must be divisible by 2^k for each level k to be usable.
             Early exit uses a relative tolerance based on complex magnitude.
             </remarks>
-            <param name="y">Complex samples y[0..N-1] on a uniform grid from a to b.</param>
-            <param name="a">Lower limit (complex), corresponds to y[0].</param>
-            <param name="b">Upper limit (complex), corresponds to y[N-1].</param>
-            <param name="maxK">Maximum number of Romberg levels (≥ 1).</param>
-            <param name="eps">Relative tolerance for early stopping.</param>
-            <returns>Romberg estimate of ∫_a^b f(x) dx in Complex32.</returns>
+            <param name="y">Complex samples y[0..N-1] on a uniform grid from a to b</param>
+            <param name="a">Lower limit (complex), corresponds to y[0]</param>
+            <param name="b">Upper limit (complex), corresponds to y[N-1]</param>
+            <param name="maxK">Maximum number of Romberg levels (≥ 1)</param>
+            <param name="eps">Relative tolerance for early stopping</param>
+            <returns>Romberg estimate of ∫_a^b f(x) dx in Complex32</returns>
         </member>
         <member name="T:UMapx.Analysis.IntegrationMethod">
             <summary>
@@ -958,77 +958,117 @@
         </member>
         <member name="M:UMapx.Analysis.Interpolation.linear(System.Single[],System.Single[],System.Single)">
             <summary>
-            
+            Piecewise-linear interpolation on a sorted 1D grid using binary search.
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="xl"></param>
-            <returns></returns>
+            <remarks>
+            - Expects strictly increasing <paramref name="x"/> with the same length as <paramref name="y"/>.<br/>
+            - Returns endpoint values for out-of-range <paramref name="xl"/> (clamped extrapolation).<br/>
+            - Time complexity: O(log n) due to binary search.
+            </remarks>
+            <param name="x">Sorted grid nodes x[0..n-1], strictly increasing</param>
+            <param name="y">Function samples y[i] = f(x[i]) of the same length as x</param>
+            <param name="xl">Query point</param>
+            <returns>Interpolated value at xl (clamped to the nearest endpoint if outside [x0, x_{n-1}])</returns>
+            <exception cref="T:System.ArgumentException">Thrown if arrays are null, lengths mismatch, or empty</exception>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.bilinear(System.Single[],System.Single[],System.Single[0:,0:],System.Single,System.Single)">
             <summary>
-            
+            Bilinear interpolation on a 2D rectilinear grid with clamped behavior at the edges.
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="z"></param>
-            <param name="xval"></param>
-            <param name="yval"></param>
-            <returns></returns>
+            <remarks>
+            - Expects strictly increasing 1D grids <paramref name="x"/> (size nx) and <paramref name="y"/> (size ny).<br/>
+            - <paramref name="z"/> must be an nx-by-ny matrix with z[i,j] = f(x[i], y[j]).<br/>
+            - If (<paramref name="xval"/>, <paramref name="yval"/>) is outside the grid rectangle, the value from the nearest
+              boundary cell is returned (clamped).<br/>
+            - Time complexity: O(log nx + log ny) due to binary searches.
+            </remarks>
+            <param name="x">X-grid nodes (length nx), strictly increasing</param>
+            <param name="y">Y-grid nodes (length ny), strictly increasing</param>
+            <param name="z">Function values, shape [nx, ny]</param>
+            <param name="xval">Query x-coordinate</param>
+            <param name="yval">Query y-coordinate</param>
+            <returns>Interpolated value at (xval, yval)</returns>
+            <exception cref="T:System.ArgumentException">Thrown if grid sizes are invalid or inconsistent</exception>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.lagra(System.Single[],System.Single[],System.Single)">
             <summary>
-            
+            Lagrange polynomial interpolation (naive O(n²) evaluation).
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="xval"></param>
-            <returns></returns>
+            <remarks>
+            - Expects pairwise distinct nodes <paramref name="x"/> (not necessarily uniform).<br/>
+            - Numerically unstable for large n; prefer barycentric form for better stability.
+            </remarks>
+            <param name="x">Interpolation nodes x[0..n-1]</param>
+            <param name="y">Function samples y[i] = f(x[i])</param>
+            <param name="xval">Query point</param>
+            <returns>Interpolated value at xval</returns>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.newto(System.Single[],System.Single[],System.Single)">
             <summary>
-            
+            Newton interpolation in divided differences with Horner-like evaluation.
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="xval"></param>
-            <returns></returns>
+            <remarks>
+            - Builds the divided-difference table in-place (O(n²)), then evaluates in O(n).<br/>
+            - More numerically stable than the naïve Lagrange form; nodes need not be uniform.
+            </remarks>
+            <param name="x">Interpolation nodes x[0..n-1] (distinct)</param>
+            <param name="y">Function samples y[i] = f(x[i])</param>
+            <param name="xval">Query point</param>
+            <returns>Interpolated value at xval</returns>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.baryc(System.Single[],System.Single[],System.Single)">
             <summary>
-            
+            First-form barycentric Lagrange interpolation (precompute weights, O(n²); evaluate O(n)).
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="xval"></param>
-            <returns></returns>
+            <remarks>
+            - Requires pairwise distinct nodes; throws if duplicates are detected.<br/>
+            - More numerically robust than naïve Lagrange; for repeated queries, cache weights <c>w[i]</c>.
+            </remarks>
+            <param name="x">Interpolation nodes (distinct)</param>
+            <param name="y">Function samples at nodes</param>
+            <param name="xval">Query point; if equal to a node, returns the corresponding sample exactly</param>
+            <returns>Interpolated value at xval</returns>
+            <exception cref="T:System.ArgumentException">Thrown when duplicate nodes are detected</exception>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.lagra(UMapx.Core.Complex32[],UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
-            
+            Lagrange polynomial interpolation (naive O(n²) evaluation).
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="xval"></param>
-            <returns></returns>
+            <remarks>
+            - Expects pairwise distinct nodes <paramref name="x"/> (not necessarily uniform).<br/>
+            - Numerically unstable for large n; prefer barycentric form for better stability.
+            </remarks>
+            <param name="x">Interpolation nodes x[0..n-1]</param>
+            <param name="y">Function samples y[i] = f(x[i])</param>
+            <param name="xval">Query point</param>
+            <returns>Interpolated value at xval</returns>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.newto(UMapx.Core.Complex32[],UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
-            
+            Newton interpolation in divided differences with Horner-like evaluation.
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="xval"></param>
-            <returns></returns>
+            <remarks>
+            - Builds the divided-difference table in-place (O(n²)), then evaluates in O(n).<br/>
+            - More numerically stable than the naïve Lagrange form; nodes need not be uniform.
+            </remarks>
+            <param name="x">Interpolation nodes x[0..n-1] (distinct)</param>
+            <param name="y">Function samples y[i] = f(x[i])</param>
+            <param name="xval">Query point</param>
+            <returns>Interpolated value at xval</returns>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.baryc(UMapx.Core.Complex32[],UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
-            
+            First-form barycentric Lagrange interpolation (precompute weights, O(n²); evaluate O(n)).
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="xval"></param>
-            <returns></returns>
+            <remarks>
+            - Requires pairwise distinct nodes; throws if duplicates are detected.<br/>
+            - More numerically robust than naïve Lagrange; for repeated queries, cache weights <c>w[i]</c>.
+            </remarks>
+            <param name="x">Interpolation nodes (distinct)</param>
+            <param name="y">Function samples at nodes</param>
+            <param name="xval">Query point; if equal to a node, returns the corresponding sample exactly</param>
+            <returns>Interpolated value at xval</returns>
+            <exception cref="T:System.ArgumentException">Thrown when duplicate nodes are detected</exception>
         </member>
         <member name="T:UMapx.Analysis.InterpolationMethod">
             <summary>
