@@ -585,7 +585,7 @@ namespace UMapx.Transform
         /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
-        internal void FWHT(float[] data)
+        private void FWHT(float[] data)
         {
             int N = data.Length;
 
@@ -623,7 +623,7 @@ namespace UMapx.Transform
         /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
-        internal void FWHT(Complex32[] data)
+        private void FWHT(Complex32[] data)
         {
             int N = data.Length;
 
