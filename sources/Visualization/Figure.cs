@@ -17,6 +17,7 @@ namespace UMapx.Visualization
         private int _xscale = 10, _yscale = 10;
         private float _xmin = -5, _xmax = 5;
         private float _ymin = -5, _ymax = 5;
+        private float _scaling = 0.65f;
         private FigureStyle _style;
         private readonly List<GraphPane> _panes = new List<GraphPane>();
         private Bitmap _imagePane;
@@ -120,10 +121,7 @@ namespace UMapx.Visualization
             set
             {
                 if (value.X < 1 || value.Y < 1)
-                    throw new ArgumentException("The range of marks cannot be less than 1");
-
-                if (value.X > 20 || value.Y > 20)
-                    throw new ArgumentException("The range of marks cannot be more than 20");
+                    throw new ArgumentOutOfRangeException("The range of marks cannot be less than 1");
 
                 _xscale = value.X; _yscale = value.Y;
             }
@@ -131,11 +129,20 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets the scale factor for the canvas [0.5, 0.8]. 
         /// </summary>
-        public float Scaling { get; set; } = 0.65f;
-        /// <summary>
-        /// Gets or sets shapes.
-        /// </summary>
-        public bool Shapes { get; set; } = true;
+        public float Scaling
+        {
+            get 
+            { 
+                return _scaling; 
+            }
+            set 
+            {
+                if (value <= 0 || value > 1)
+                    throw new ArgumentOutOfRangeException("Scale factor cannot be less than 0 or more than 1");
+
+                _scaling = value; 
+            }
+        }
         /// <summary>
         /// Gets or sets property of auto range axes.
         /// </summary>
@@ -154,8 +161,8 @@ namespace UMapx.Visualization
             var size = graphics.VisibleClipBounds.Size;
             _figure_width  = (int)size.Width;
             _figure_height = (int)size.Height;
-            _canvas_width  = (int)(_figure_width * Scaling);
-            _canvas_height = (int)(_figure_height * Scaling);
+            _canvas_width  = (int)(_figure_width * _scaling);
+            _canvas_height = (int)(_figure_height * _scaling);
 
             // encapsulation of figure and canvas graphics
             using var figure = new Bitmap(_figure_width, _figure_height);
@@ -376,7 +383,7 @@ namespace UMapx.Visualization
             #endregion
 
             #region Shapes
-            if (Shapes == true)
+            if (Grid.Shapes)
             {
                 xlength = X.Length;
 

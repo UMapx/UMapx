@@ -29,6 +29,10 @@ namespace UMapx.Visualization
         /// Gets or sets grid gap length.
         /// </summary>
         public float GapLength { get; set; } = 4f;
+        /// <summary>
+        /// Gets or sets shapes.
+        /// </summary>
+        public bool Shapes { get; set; } = true;
         #endregion
     }
 }

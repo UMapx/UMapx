@@ -29702,11 +29702,6 @@
             Gets or sets the scale factor for the canvas [0.5, 0.8]. 
             </summary>
         </member>
-        <member name="P:UMapx.Visualization.Figure.Shapes">
-            <summary>
-            Gets or sets shapes.
-            </summary>
-        </member>
         <member name="P:UMapx.Visualization.Figure.AutoRange">
             <summary>
             Gets or sets property of auto range axes.
@@ -30161,6 +30156,11 @@
         <member name="P:UMapx.Visualization.Grid.GapLength">
             <summary>
             Gets or sets grid gap length.
+            </summary>
+        </member>
+        <member name="P:UMapx.Visualization.Grid.Shapes">
+            <summary>
+            Gets or sets shapes.
             </summary>
         </member>
         <member name="T:UMapx.Visualization.GridStyle">
