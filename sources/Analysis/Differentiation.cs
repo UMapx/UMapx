@@ -7,7 +7,7 @@ namespace UMapx.Analysis
     /// Defines a class that implements numerical differentiation.
     /// </summary>
     [Serializable]
-    public class Differentation
+    public class Differentiation
     {
         #region Private data
         private int points;
@@ -18,7 +18,7 @@ namespace UMapx.Analysis
         /// Initializes a class that implements numerical differentiation.
         /// </summary>
         /// <param name="points">Number of interpolation points</param>
-        public Differentation(int points)
+        public Differentiation(int points)
         {
             this.Points = points;
         }
@@ -57,7 +57,7 @@ namespace UMapx.Analysis
 
             // Create the interpolation points
             int length = this.points + 1;
-            float[,] coefficients = Differentation.GetCoefficients(length);
+            float[,] coefficients = Differentiation.GetCoefficients(length);
             float sum = 0.0f;
 
             // do job
@@ -88,7 +88,7 @@ namespace UMapx.Analysis
 
             // Create the interpolation points
             int length = this.points + 1;
-            float[,] coefficients = Differentation.GetCoefficients(length);
+            float[,] coefficients = Differentiation.GetCoefficients(length);
             float sum = 0.0f;
 
             // do job
@@ -119,7 +119,7 @@ namespace UMapx.Analysis
 
             // Create the interpolation points
             int length = this.points + 1;
-            float[,] coefficients = Differentation.GetCoefficients(length);
+            float[,] coefficients = Differentiation.GetCoefficients(length);
             Complex32 sum = 0.0;
 
             // do job
@@ -150,7 +150,7 @@ namespace UMapx.Analysis
 
             // Create the interpolation points
             int length = this.points + 1;
-            float[,] coefficients = Differentation.GetCoefficients(length);
+            float[,] coefficients = Differentiation.GetCoefficients(length);
             Complex32 sum = 0.0;
 
             // do job
