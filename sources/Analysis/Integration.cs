@@ -335,44 +335,33 @@ namespace UMapx.Analysis
         /// <param name="f"></param>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        /// <param name="iterations"></param>
+        /// <param name="maxK"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static float romb(IFloat f, float a, float b, int iterations, float eps = 1e-8f)
+        private static float romb(IFloat f, float a, float b, int maxK, float eps = 1e-6f)
         {
-            int n = 2;
+            if (maxK < 1) throw new ArgumentException();
+            float[,] R = new float[maxK, maxK];
+
             float h = b - a;
-            float sum = 0.0f;
-            int j = 0;
-            float[,] R = new float[iterations, iterations];
-            R[1, 1] = h * (f(a) + f(b)) / 2.0f;
-            h = h / 2;
-            R[2, 1] = R[1, 1] / 2 + h * f(a + h);
-            R[2, 2] = (4 * R[2, 1] - R[1, 1]) / 3;
-            for (j = 3; j <= iterations; j++)
+            R[0, 0] = 0.5f * h * (f(a) + f(b));
+            int n = 1;
+
+            for (int k = 1; k < maxK; k++)
             {
-                n = 2 * n;
-                h = h / 2;
-                sum = 0.0f;
-                for (int k = 1; k <= n; k += 2)
-                {
-                    sum += f(a + k * h);
-                }
-                R[j, 1] = R[j - 1, 1] / 2 + h * sum;
-                float factor = 4.0f;
-                for (int k = 2; k <= j; k++)
-                {
-                    R[j, k] = (factor * R[j, k - 1] - R[j - 1, k - 1]) / (factor - 1);
-                    factor = factor * 4.0f;
-                }
-                if (Math.Abs(R[j, j] - R[j, j - 1]) < eps * Math.Abs(R[j, j]))
-                {
-                    sum = R[j, j];
-                    return sum;
-                }
+                n *= 2; h *= 0.5f;
+                float sum = 0f;
+                for (int i = 1; i < n; i += 2) sum += f(a + i * h);
+                R[k, 0] = 0.5f * R[k - 1, 0] + h * sum;
+
+                float factor = 4f;
+                for (int j = 1; j <= k; j++, factor *= 4f)
+                    R[k, j] = (factor * R[k, j - 1] - R[k - 1, j - 1]) / (factor - 1f);
+
+                if (Math.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * Math.Abs(R[k, k]))
+                    return R[k, k];
             }
-            sum = R[n, n];
-            return sum;
+            return R[maxK - 1, maxK - 1];
         }
 
         /// <summary>
@@ -558,44 +547,33 @@ namespace UMapx.Analysis
         /// <param name="f"></param>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        /// <param name="iterations"></param>
+        /// <param name="maxK"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex32 romb(IComplex32 f, Complex32 a, Complex32 b, int iterations, float eps = 1e-8f)
+        private static Complex32 romb(IComplex32 f, Complex32 a, Complex32 b, int maxK, float eps = 1e-6f)
         {
-            int n = 2;
+            if (maxK < 1) throw new ArgumentException();
+            Complex32[,] R = new Complex32[maxK, maxK];
+
             Complex32 h = b - a;
-            Complex32 sum = 0.0;
-            int j = 0;
-            Complex32[,] R = new Complex32[iterations, iterations];
-            R[1, 1] = h * (f(a) + f(b)) / 2.0;
-            h = h / 2;
-            R[2, 1] = R[1, 1] / 2 + h * f(a + h);
-            R[2, 2] = (4 * R[2, 1] - R[1, 1]) / 3;
-            for (j = 3; j <= iterations; j++)
+            R[0, 0] = 0.5f * h * (f(a) + f(b));
+            int n = 1;
+
+            for (int k = 1; k < maxK; k++)
             {
-                n = 2 * n;
-                h = h / 2;
-                sum = 0.0;
-                for (int k = 1; k <= n; k += 2)
-                {
-                    sum += f(a + k * h);
-                }
-                R[j, 1] = R[j - 1, 1] / 2 + h * sum;
-                float factor = 4.0f;
-                for (int k = 2; k <= j; k++)
-                {
-                    R[j, k] = (factor * R[j, k - 1] - R[j - 1, k - 1]) / (factor - 1);
-                    factor = factor * 4.0f;
-                }
-                if (Maths.Abs(R[j, j] - R[j, j - 1]) < eps * Maths.Abs(R[j, j]))
-                {
-                    sum = R[j, j];
-                    return sum;
-                }
+                n *= 2; h *= 0.5f;
+                Complex32 sum = 0f;
+                for (int i = 1; i < n; i += 2) sum += f(a + i * h);
+                R[k, 0] = 0.5f * R[k - 1, 0] + h * sum;
+
+                Complex32 factor = 4f;
+                for (int j = 1; j <= k; j++, factor *= 4f)
+                    R[k, j] = (factor * R[k, j - 1] - R[k - 1, j - 1]) / (factor - 1f);
+
+                if (Maths.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * Maths.Abs(R[k, k]))
+                    return R[k, k];
             }
-            sum = R[n, n];
-            return sum;
+            return R[maxK - 1, maxK - 1];
         }
         #endregion
     }

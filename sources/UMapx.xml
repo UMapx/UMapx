@@ -598,7 +598,7 @@
             <param name="f"></param>
             <param name="a"></param>
             <param name="b"></param>
-            <param name="iterations"></param>
+            <param name="maxK"></param>
             <param name="eps"></param>
             <returns></returns>
         </member>
@@ -689,7 +689,7 @@
             <param name="f"></param>
             <param name="a"></param>
             <param name="b"></param>
-            <param name="iterations"></param>
+            <param name="maxK"></param>
             <param name="eps"></param>
             <returns></returns>
         </member>
