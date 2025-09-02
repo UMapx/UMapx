@@ -53,7 +53,7 @@ namespace UMapx.Analysis
         /// <returns>Value</returns>
         public float Compute(float[] x, float[] y, float[,] z, float xl, float yl)
         {
-            return bilinear(x, y, z, xl, yl);
+            return Bilinear(x, y, z, xl, yl);
         }
         /// <summary>
         /// Returns the value of a function at a point.
@@ -68,17 +68,17 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case InterpolationMethod.Newton:
-                    return Interpolation.newto(x, y, xl);
+                    return Interpolation.Newto(x, y, xl);
 
                 case InterpolationMethod.Barycentric:
-                    return Interpolation.baryc(x, y, xl);
+                    return Interpolation.Baryc(x, y, xl);
 
                 case InterpolationMethod.Lagrange:
-                    return Interpolation.lagra(x, y, xl);
+                    return Interpolation.Lagra(x, y, xl);
 
                 case InterpolationMethod.Linear:
                 default:
-                    return Interpolation.linear(x, y, xl);
+                    return Interpolation.Linear(x, y, xl);
             }
         }
         /// <summary>
@@ -94,14 +94,14 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case InterpolationMethod.Newton:
-                    return Interpolation.newto(x, y, xl);
+                    return Interpolation.Newto(x, y, xl);
 
                 case InterpolationMethod.Barycentric:
-                    return Interpolation.baryc(x, y, xl);
+                    return Interpolation.Baryc(x, y, xl);
 
                 case InterpolationMethod.Lagrange:
                 default:
-                    return Interpolation.lagra(x, y, xl);
+                    return Interpolation.Lagra(x, y, xl);
 
                 case InterpolationMethod.Linear:
                     throw new NotSupportedException("Linear interpolation is not defined for complex-valued functions");
@@ -123,7 +123,7 @@ namespace UMapx.Analysis
         /// <param name="xl">Query point</param>
         /// <returns>Interpolated value at xl (clamped to the nearest endpoint if outside [x0, x_{n-1}])</returns>
         /// <exception cref="ArgumentException">Thrown if arrays are null, lengths mismatch, or empty</exception>
-        private static float linear(float[] x, float[] y, float xl)
+        private static float Linear(float[] x, float[] y, float xl)
         {
             int n = x?.Length ?? 0;
             if (n == 0 || y == null || y.Length != n) throw new ArgumentException();
@@ -157,7 +157,7 @@ namespace UMapx.Analysis
         /// <returns>Interpolated value at (xval, yval)</returns>
         /// <exception cref="ArgumentException">Thrown if grid sizes are invalid or inconsistent</exception>
 
-        private static float bilinear(float[] x, float[] y, float[,] z, float xval, float yval)
+        private static float Bilinear(float[] x, float[] y, float[,] z, float xval, float yval)
         {
             int nx = x?.Length ?? 0, ny = y?.Length ?? 0;
             if (nx < 2 || ny < 2 || z == null || z.GetLength(0) != nx || z.GetLength(1) != ny)
@@ -203,24 +203,23 @@ namespace UMapx.Analysis
         /// <param name="y">Function samples y[i] = f(x[i])</param>
         /// <param name="xval">Query point</param>
         /// <returns>Interpolated value at xval</returns>
-        private static float lagra(float[] x, float[] y, float xval)
+        private static float Lagra(float[] x, float[] y, float xval)
         {
             float yval = 0.0f;
-            float Products = y[0];
             int length = x.Length;
             int i, j;
 
             for (i = 0; i < length; i++)
             {
-                Products = y[i];
+                float products = y[i];
                 for (j = 0; j < length; j++)
                 {
                     if (i != j)
                     {
-                        Products *= (xval - x[j]) / (x[i] - x[j]);
+                        products *= (xval - x[j]) / (x[i] - x[j]);
                     }
                 }
-                yval += Products;
+                yval += products;
             }
             return yval;
         }
@@ -235,7 +234,7 @@ namespace UMapx.Analysis
         /// <param name="y">Function samples y[i] = f(x[i])</param>
         /// <param name="xval">Query point</param>
         /// <returns>Interpolated value at xval</returns>
-        private static float newto(float[] x, float[] y, float xval)
+        private static float Newto(float[] x, float[] y, float xval)
         {
             int n = x.Length;
             var a = (float[])y.Clone();
@@ -260,7 +259,7 @@ namespace UMapx.Analysis
         /// <param name="xval">Query point; if equal to a node, returns the corresponding sample exactly</param>
         /// <returns>Interpolated value at xval</returns>
         /// <exception cref="ArgumentException">Thrown when duplicate nodes are detected</exception>
-        private static float baryc(float[] x, float[] y, float xval)
+        private static float Baryc(float[] x, float[] y, float xval)
         {
             int n = x.Length;
             for (int i = 0; i < n; i++) if (xval == x[i]) return y[i];
@@ -294,24 +293,23 @@ namespace UMapx.Analysis
         /// <param name="y">Function samples y[i] = f(x[i])</param>
         /// <param name="xval">Query point</param>
         /// <returns>Interpolated value at xval</returns>
-        private static Complex32 lagra(Complex32[] x, Complex32[] y, Complex32 xval)
+        private static Complex32 Lagra(Complex32[] x, Complex32[] y, Complex32 xval)
         {
             Complex32 yval = 0.0;
-            Complex32 Products = y[0];
             int length = x.Length;
             int i, j;
 
             for (i = 0; i < length; i++)
             {
-                Products = y[i];
+                Complex32 products = y[i];
                 for (j = 0; j < length; j++)
                 {
                     if (i != j)
                     {
-                        Products *= (xval - x[j]) / (x[i] - x[j]);
+                        products *= (xval - x[j]) / (x[i] - x[j]);
                     }
                 }
-                yval += Products;
+                yval += products;
             }
             return yval;
         }
@@ -326,7 +324,7 @@ namespace UMapx.Analysis
         /// <param name="y">Function samples y[i] = f(x[i])</param>
         /// <param name="xval">Query point</param>
         /// <returns>Interpolated value at xval</returns>
-        private static Complex32 newto(Complex32[] x, Complex32[] y, Complex32 xval)
+        private static Complex32 Newto(Complex32[] x, Complex32[] y, Complex32 xval)
         {
             int n = x.Length;
             var a = (Complex32[])y.Clone();
@@ -351,7 +349,7 @@ namespace UMapx.Analysis
         /// <param name="xval">Query point; if equal to a node, returns the corresponding sample exactly</param>
         /// <returns>Interpolated value at xval</returns>
         /// <exception cref="ArgumentException">Thrown when duplicate nodes are detected</exception>
-        private static Complex32 baryc(Complex32[] x, Complex32[] y, Complex32 xval)
+        private static Complex32 Baryc(Complex32[] x, Complex32[] y, Complex32 xval)
         {
             int n = x.Length;
             for (int i = 0; i < n; i++) if (xval == x[i]) return y[i];

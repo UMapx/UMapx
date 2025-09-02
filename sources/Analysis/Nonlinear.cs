@@ -69,13 +69,13 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case NonlinearMethod.Chord:
-                    return Nonlinear.chord(function, a, b, this.eps);
+                    return Nonlinear.Chord(function, a, b, this.eps);
                 case NonlinearMethod.FalsePosition:
-                    return Nonlinear.falpo(function, a, b, this.eps);
+                    return Nonlinear.Falpo(function, a, b, this.eps);
                 case NonlinearMethod.Bisection:
-                    return Nonlinear.bisec(function, a, b, this.eps);
+                    return Nonlinear.Bisec(function, a, b, this.eps);
                 default:
-                    return Nonlinear.secan(function, a, b, this.eps);
+                    return Nonlinear.Secan(function, a, b, this.eps);
             }
         }
         /// <summary>
@@ -91,13 +91,13 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case NonlinearMethod.Chord:
-                    return Nonlinear.chord(function, a, b, this.eps);
+                    return Nonlinear.Chord(function, a, b, this.eps);
                 case NonlinearMethod.FalsePosition:
                     throw new NotSupportedException("False position is not defined for complex-valued functions");
                 case NonlinearMethod.Bisection:
                     throw new NotSupportedException("Bisection is not defined for complex-valued functions");
                 default:
-                    return Nonlinear.secan(function, a, b, this.eps);
+                    return Nonlinear.Secan(function, a, b, this.eps);
             }
         }
         #endregion
@@ -118,7 +118,7 @@ namespace UMapx.Analysis
         /// <param name="eps">Absolute tolerance for both x-interval and residual checks</param>
         /// <returns>Approximate root in [a, b]</returns>
         /// <exception cref="ArgumentException">If f(a) and f(b) have the same strict sign</exception>
-        private static float bisec(IFloat f, float a, float b, float eps = 1e-8f)
+        private static float Bisec(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1 = a, x2 = b;
             float fa = f(x1), fb = f(x2);
@@ -153,7 +153,7 @@ namespace UMapx.Analysis
         /// <param name="b">Second initial guess</param>
         /// <param name="eps">Absolute tolerance for residual and step size</param>
         /// <returns>Approximate root</returns>
-        private static float secan(IFloat f, float a, float b, float eps = 1e-8f)
+        private static float Secan(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1 = a, x2 = b;
             float f1 = f(x1), f2 = f(x2);
@@ -184,7 +184,7 @@ namespace UMapx.Analysis
         /// <param name="eps">Absolute tolerance for residual and step size</param>
         /// <returns>Approximate root in [a, b]</returns>
         /// <exception cref="ArgumentException">If f(a) and f(b) have the same strict sign</exception>
-        private static float falpo(IFloat f, float a, float b, float eps = 1e-8f)
+        private static float Falpo(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1 = a, x2 = b;
             float fa = f(x1), fb = f(x2);
@@ -220,7 +220,7 @@ namespace UMapx.Analysis
         /// <param name="b">Second endpoint used only to initialize the first iterate</param>
         /// <param name="eps">Absolute tolerance for residual and step size</param>
         /// <returns>Approximate root</returns>
-        private static float chord(IFloat f, float a, float b, float eps = 1e-8f)
+        private static float Chord(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x0 = 0.5f * (a + b);
             float fa = f(a);
@@ -253,7 +253,7 @@ namespace UMapx.Analysis
         /// <param name="b">Second endpoint used only to initialize the first iterate</param>
         /// <param name="eps">Absolute tolerance for residual and step size</param>
         /// <returns>Approximate root</returns>
-        private static Complex32 chord(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
+        private static Complex32 Chord(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
             Complex32 x0 = 0.5f * (a + b);
             Complex32 fa = f(a);
@@ -286,7 +286,7 @@ namespace UMapx.Analysis
         /// <param name="b">Second initial guess</param>
         /// <param name="eps">Absolute tolerance for residual and step size</param>
         /// <returns>Approximate root</returns>
-        private static Complex32 secan(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
+        private static Complex32 Secan(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
             Complex32 x1 = a, x2 = b;
             Complex32 f1 = f(x1), f2 = f(x2);

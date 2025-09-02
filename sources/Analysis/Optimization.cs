@@ -50,7 +50,7 @@ namespace UMapx.Analysis
         public float Compute(IFloat function, float a, float b, bool max = false)
         {
             // max or min
-            return (max) ? goldenMax(function, a, b, this.eps) : goldenMin(function, a, b, this.eps);
+            return (max) ? GoldenMax(function, a, b, this.eps) : GoldenMin(function, a, b, this.eps);
         }
         #endregion
 
@@ -75,7 +75,7 @@ namespace UMapx.Analysis
         /// <returns>
         /// Approximate minimizer x* ∈ [a, b] (the x-coordinate). To get the minimum value, evaluate f at the result.
         /// </returns>
-        private static float goldenMin(IFloat f, float a, float b, float eps = 1e-8f)
+        private static float GoldenMin(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1, x2;
 
@@ -98,7 +98,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <remarks>
         /// - Assumes <paramref name="f"/> is continuous and unimodal on [a, b].
-        /// - Same scheme as <see cref="goldenMin"/>, but with the inequality flipped to seek the maximum.
+        /// - Same scheme as <see cref="GoldenMin"/>, but with the inequality flipped to seek the maximum.
         /// - Terminates when |b - a| &lt; <paramref name="eps"/> or when the iteration cap is reached.
         /// - Returns the midpoint of the final bracket as the argmax approximation (not f at that point).
         /// </remarks>
@@ -109,7 +109,7 @@ namespace UMapx.Analysis
         /// <returns>
         /// Approximate maximizer x* ∈ [a, b] (the x-coordinate). To get the maximum value, evaluate f at the result.
         /// </returns>
-        private static float goldenMax(IFloat f, float a, float b, float eps = 1e-8f)
+        private static float GoldenMax(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1, x2;
 

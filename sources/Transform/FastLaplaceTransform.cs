@@ -346,7 +346,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="sigma">Sigma</param>
-        internal static void ApplyLaplaceOperator(Complex32[] v, float sigma = 0.003f)
+        private static void ApplyLaplaceOperator(Complex32[] v, float sigma = 0.003f)
         {
             // forward laplacian transform
             // for signal:
@@ -362,7 +362,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="sigma">Sigma</param>
-        internal static void ApplyLaplaceInverseOperator(Complex32[] v, float sigma = 0.003f)
+        private static void ApplyLaplaceInverseOperator(Complex32[] v, float sigma = 0.003f)
         {
             // inverse laplacian transform
             // for signal:

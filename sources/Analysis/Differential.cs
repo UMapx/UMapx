@@ -52,16 +52,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case DifferentialMethod.Euler:
-                    return Differential.euler(function, x, y0);
+                    return Differential.Euler(function, x, y0);
 
                 case DifferentialMethod.Fehlberg:
-                    return Differential.fehlberg(function, x, y0);
+                    return Differential.Fehlberg(function, x, y0);
 
                 case DifferentialMethod.RungeKutta4:
-                    return Differential.rungeKutta4(function, x, y0);
+                    return Differential.RungeKutta4(function, x, y0);
 
                 default:
-                    return Differential.rungeKutta2(function, x, y0);
+                    return Differential.RungeKutta2(function, x, y0);
             }
         }
         /// <summary>
@@ -77,16 +77,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case DifferentialMethod.Euler:
-                    return Differential.euler(function, x, y0);
+                    return Differential.Euler(function, x, y0);
 
                 case DifferentialMethod.Fehlberg:
-                    return Differential.fehlberg(function, x, y0);
+                    return Differential.Fehlberg(function, x, y0);
 
                 case DifferentialMethod.RungeKutta4:
-                    return Differential.rungeKutta4(function, x, y0);
+                    return Differential.RungeKutta4(function, x, y0);
 
                 default:
-                    return Differential.rungeKutta2(function, x, y0);
+                    return Differential.RungeKutta2(function, x, y0);
             }
         }
         #endregion
@@ -239,7 +239,7 @@ namespace UMapx.Analysis
         /// <param name="x">Monotone grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static float[] euler(IFloatMesh f, float[] x, float y0)
+        private static float[] Euler(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
             float xnew, ynew = y0, h;
@@ -264,7 +264,7 @@ namespace UMapx.Analysis
         /// <param name="x">Grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static float[] rungeKutta2(IFloatMesh f, float[] x, float y0)
+        private static float[] RungeKutta2(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
             float xnew, ynew = y0, h, k1, k2;
@@ -292,7 +292,7 @@ namespace UMapx.Analysis
         /// <param name="x">Grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static float[] rungeKutta4(IFloatMesh f, float[] x, float y0)
+        private static float[] RungeKutta4(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
             float xnew, ynew = y0, h, k1, k2, k3, k4;
@@ -323,7 +323,7 @@ namespace UMapx.Analysis
         /// <param name="x">Grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static float[] fehlberg(IFloatMesh f, float[] x, float y0)
+        private static float[] Fehlberg(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
             float xnew, ynew = y0, h, k1, k2, k3, k4, k5, k6;
@@ -356,7 +356,7 @@ namespace UMapx.Analysis
         /// <param name="x">Monotone grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static Complex32[] euler(IComplex32Mesh f, Complex32[] x, Complex32 y0)
+        private static Complex32[] Euler(IComplex32Mesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
             Complex32 xnew, ynew = y0, h;
@@ -381,7 +381,7 @@ namespace UMapx.Analysis
         /// <param name="x">Grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static Complex32[] rungeKutta2(IComplex32Mesh f, Complex32[] x, Complex32 y0)
+        private static Complex32[] RungeKutta2(IComplex32Mesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
             Complex32 xnew, ynew = y0, h, k1, k2;
@@ -409,7 +409,7 @@ namespace UMapx.Analysis
         /// <param name="x">Grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static Complex32[] rungeKutta4(IComplex32Mesh f, Complex32[] x, Complex32 y0)
+        private static Complex32[] RungeKutta4(IComplex32Mesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
             Complex32 xnew, ynew = y0, h, k1, k2, k3, k4;
@@ -440,7 +440,7 @@ namespace UMapx.Analysis
         /// <param name="x">Grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static Complex32[] fehlberg(IComplex32Mesh f, Complex32[] x, Complex32 y0)
+        private static Complex32[] Fehlberg(IComplex32Mesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
             Complex32 xnew, ynew = y0, h, k1, k2, k3, k4, k5, k6;

@@ -109,7 +109,7 @@ namespace UMapx.Transform
 
                 // guided filter
                 float[] copy = (float[])data.Clone();
-                GuidedFilter.guidedfilter(copy, this.radius, this.eps);
+                GuidedFilter.Guidedfilter(copy, this.radius, this.eps);
 
                 // process
                 for (i = 0; i < l0; i++)
@@ -132,7 +132,7 @@ namespace UMapx.Transform
 
                 // guided filter
                 float[,] copy = (float[,])data.Clone();
-                GuidedFilter.guidedfilter(copy, this.radius, this.eps);
+                GuidedFilter.Guidedfilter(copy, this.radius, this.eps);
 
                 // process
                 for (i = 0; i < l0; i++)
@@ -155,7 +155,7 @@ namespace UMapx.Transform
 
                 // guided filter
                 Complex32[] copy = (Complex32[])data.Clone();
-                GuidedFilter.guidedfilter(copy, this.radius, this.eps);
+                GuidedFilter.Guidedfilter(copy, this.radius, this.eps);
 
                 // process
                 for (i = 0; i < l0; i++)
@@ -178,7 +178,7 @@ namespace UMapx.Transform
 
                 // guided filter
                 Complex32[,] copy = (Complex32[,])data.Clone();
-                GuidedFilter.guidedfilter(copy, this.radius, this.eps);
+                GuidedFilter.Guidedfilter(copy, this.radius, this.eps);
 
                 // process
                 for (i = 0; i < l0; i++)
@@ -202,7 +202,7 @@ namespace UMapx.Transform
         /// <param name="input">Input signal</param>
         /// <param name="r">Filter size</param>
         /// <param name="eps">Epsilon (0, 1)</param>
-        internal static void guidedfilter(float[,] input, int r, float eps)
+        private static void Guidedfilter(float[,] input, int r, float eps)
         {
             // Input signal properties:
             int l0 = input.GetLength(0), l1 = input.GetLength(1), i, j;
@@ -249,7 +249,7 @@ namespace UMapx.Transform
         /// <param name="input">Input signal</param>
         /// <param name="r">Filter size</param>
         /// <param name="eps">Epsilon (0, 1)</param>
-        internal static void guidedfilter(Complex32[,] input, int r, float eps)
+        private static void Guidedfilter(Complex32[,] input, int r, float eps)
         {
             // Input signal properties:
             int l0 = input.GetLength(0), l1 = input.GetLength(1), i, j;
@@ -294,7 +294,7 @@ namespace UMapx.Transform
         /// <param name="input">Input signal</param>
         /// <param name="r">Filter size</param>
         /// <param name="eps">Epsilon (0, 1)</param>
-        internal static void guidedfilter(float[] input, int r, float eps)
+        private static void Guidedfilter(float[] input, int r, float eps)
         {
             // Input signal properties:
             int length = input.Length, i;
@@ -336,7 +336,7 @@ namespace UMapx.Transform
         /// <param name="input">Input signal</param>
         /// <param name="r">Filter size</param>
         /// <param name="eps">Epsilon (0, 1)</param>
-        internal static void guidedfilter(Complex32[] input, int r, float eps)
+        private static void Guidedfilter(Complex32[] input, int r, float eps)
         {
             // Input signal properties:
             int length = input.Length, i;

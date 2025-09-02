@@ -111,7 +111,7 @@ namespace UMapx.Transform
 
                 // guided filter
                 float[] copy = (float[])data.Clone();
-                BilateralFilter.bilateralfilter(copy, this.radius, this.sigma, this.levels);
+                BilateralFilter.Bilateralfilter(copy, this.radius, this.sigma, this.levels);
 
                 // process
                 for (i = 0; i < l0; i++)
@@ -134,7 +134,7 @@ namespace UMapx.Transform
 
                 // guided filter
                 float[,] copy = (float[,])data.Clone();
-                BilateralFilter.bilateralfilter(copy, this.radius, this.sigma, this.levels);
+                BilateralFilter.Bilateralfilter(copy, this.radius, this.sigma, this.levels);
 
                 // process
                 for (i = 0; i < l0; i++)
@@ -157,7 +157,7 @@ namespace UMapx.Transform
 
                 // guided filter
                 Complex32[] copy = (Complex32[])data.Clone();
-                BilateralFilter.bilateralfilter(copy, this.radius, this.sigma, this.levels);
+                BilateralFilter.Bilateralfilter(copy, this.radius, this.sigma, this.levels);
 
                 // process
                 for (i = 0; i < l0; i++)
@@ -180,7 +180,7 @@ namespace UMapx.Transform
 
                 // guided filter
                 Complex32[,] copy = (Complex32[,])data.Clone();
-                BilateralFilter.bilateralfilter(copy, this.radius, this.sigma, this.levels);
+                BilateralFilter.Bilateralfilter(copy, this.radius, this.sigma, this.levels);
 
                 // process
                 for (i = 0; i < l0; i++)
@@ -199,7 +199,7 @@ namespace UMapx.Transform
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
         /// <returns>Filtered image</returns>
-        internal static void bilateralfilter(float[,] array, int r, float s = 0.1f, int samples = 32)
+        private static void Bilateralfilter(float[,] array, int r, float s = 0.1f, int samples = 32)
         {
             int height = array.GetLength(0);
             int width = array.GetLength(1);
@@ -282,7 +282,7 @@ namespace UMapx.Transform
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
         /// <returns>Filtered image</returns>
-        internal static void bilateralfilter(Complex32[,] array, int r, float s = 0.1f, int samples = 32)
+        private static void Bilateralfilter(Complex32[,] array, int r, float s = 0.1f, int samples = 32)
         {
             int height = array.GetLength(0);
             int width = array.GetLength(1);
@@ -365,7 +365,7 @@ namespace UMapx.Transform
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
         /// <returns>Filtered image</returns>
-        internal static void bilateralfilter(float[] input, int r, float s = 0.1f, int samples = 32)
+        private static void Bilateralfilter(float[] input, int r, float s = 0.1f, int samples = 32)
         {
             int length = input.Length;
             float[] levels = new float[samples];
@@ -434,7 +434,7 @@ namespace UMapx.Transform
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
         /// <returns>Filtered image</returns>
-        internal static void bilateralfilter(Complex32[] input, int r, float s = 0.1f, int samples = 32)
+        private static void Bilateralfilter(Complex32[] input, int r, float s = 0.1f, int samples = 32)
         {
             int length = input.Length;
             Complex32[] levels = new Complex32[samples];

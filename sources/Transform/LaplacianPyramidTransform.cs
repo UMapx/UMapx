@@ -94,8 +94,8 @@ namespace UMapx.Transform
 
             for (int i = 0; i < nlev - 1; i++)
             {
-                I = GaussianPyramidTransform.downsample(J, this.radius);
-                lapl[i] = GaussianPyramidTransform.sub(J, GaussianPyramidTransform.upsample(I, this.radius));
+                I = GaussianPyramidTransform.Downsample(J, this.radius);
+                lapl[i] = GaussianPyramidTransform.Sub(J, GaussianPyramidTransform.Upsample(I, this.radius));
                 J = I;
             }
 
@@ -117,8 +117,8 @@ namespace UMapx.Transform
 
             for (int i = 0; i < nlev - 1; i++)
             {
-                I = GaussianPyramidTransform.downsample(J, this.radius);
-                lapl[i] = GaussianPyramidTransform.sub(J, GaussianPyramidTransform.upsample(I, this.radius));
+                I = GaussianPyramidTransform.Downsample(J, this.radius);
+                lapl[i] = GaussianPyramidTransform.Sub(J, GaussianPyramidTransform.Upsample(I, this.radius));
                 J = I;
             }
 
@@ -137,7 +137,7 @@ namespace UMapx.Transform
 
             for (int i = nlev - 1; i >= 0; i--)
             {
-                I = GaussianPyramidTransform.add(pyramid[i], GaussianPyramidTransform.upsample(I, this.radius));
+                I = GaussianPyramidTransform.Add(pyramid[i], GaussianPyramidTransform.Upsample(I, this.radius));
             }
 
             return I;
@@ -154,7 +154,7 @@ namespace UMapx.Transform
 
             for (int i = nlev - 1; i >= 0; i--)
             {
-                I = GaussianPyramidTransform.add(pyramid[i], GaussianPyramidTransform.upsample(I, this.radius));
+                I = GaussianPyramidTransform.Add(pyramid[i], GaussianPyramidTransform.Upsample(I, this.radius));
             }
 
             return I;
@@ -173,8 +173,8 @@ namespace UMapx.Transform
 
             for (int i = 0; i < nlev - 1; i++)
             {
-                I = GaussianPyramidTransform.downsample(J, this.radius);
-                lapl[i] = GaussianPyramidTransform.sub(J, GaussianPyramidTransform.upsample(I, this.radius));
+                I = GaussianPyramidTransform.Downsample(J, this.radius);
+                lapl[i] = GaussianPyramidTransform.Sub(J, GaussianPyramidTransform.Upsample(I, this.radius));
                 J = I;
             }
 
@@ -196,8 +196,8 @@ namespace UMapx.Transform
 
             for (int i = 0; i < nlev - 1; i++)
             {
-                I = GaussianPyramidTransform.downsample(J, this.radius);
-                lapl[i] = GaussianPyramidTransform.sub(J, GaussianPyramidTransform.upsample(I, this.radius));
+                I = GaussianPyramidTransform.Downsample(J, this.radius);
+                lapl[i] = GaussianPyramidTransform.Sub(J, GaussianPyramidTransform.Upsample(I, this.radius));
                 J = I;
             }
 
@@ -216,7 +216,7 @@ namespace UMapx.Transform
 
             for (int i = nlev - 1; i >= 0; i--)
             {
-                I = GaussianPyramidTransform.add(pyramid[i], GaussianPyramidTransform.upsample(I, this.radius));
+                I = GaussianPyramidTransform.Add(pyramid[i], GaussianPyramidTransform.Upsample(I, this.radius));
             }
 
             return I;
@@ -233,7 +233,7 @@ namespace UMapx.Transform
 
             for (int i = nlev - 1; i >= 0; i--)
             {
-                I = GaussianPyramidTransform.add(pyramid[i], GaussianPyramidTransform.upsample(I, this.radius));
+                I = GaussianPyramidTransform.Add(pyramid[i], GaussianPyramidTransform.Upsample(I, this.radius));
             }
 
             return I;
@@ -253,7 +253,7 @@ namespace UMapx.Transform
 
             for (int i = 1; i < nlev; i++)
             {
-                lapl[i - 1] = GaussianPyramidTransform.sub(data[i - 1], GaussianPyramidTransform.upsample(data[i], this.radius));
+                lapl[i - 1] = GaussianPyramidTransform.Sub(data[i - 1], GaussianPyramidTransform.Upsample(data[i], this.radius));
             }
 
             lapl[nlev - 1] = data[nlev - 1];
@@ -271,7 +271,7 @@ namespace UMapx.Transform
 
             for (int i = 1; i < nlev; i++)
             {
-                lapl[i - 1] = GaussianPyramidTransform.sub(data[i - 1], GaussianPyramidTransform.upsample(data[i], this.radius));
+                lapl[i - 1] = GaussianPyramidTransform.Sub(data[i - 1], GaussianPyramidTransform.Upsample(data[i], this.radius));
             }
 
             lapl[nlev - 1] = data[nlev - 1];
@@ -289,7 +289,7 @@ namespace UMapx.Transform
 
             for (int i = 1; i < nlev; i++)
             {
-                lapl[i - 1] = GaussianPyramidTransform.sub(data[i - 1], GaussianPyramidTransform.upsample(data[i], this.radius));
+                lapl[i - 1] = GaussianPyramidTransform.Sub(data[i - 1], GaussianPyramidTransform.Upsample(data[i], this.radius));
             }
 
             lapl[nlev - 1] = data[nlev - 1];
@@ -307,7 +307,7 @@ namespace UMapx.Transform
 
             for (int i = 1; i < nlev; i++)
             {
-                lapl[i - 1] = GaussianPyramidTransform.sub(data[i - 1], GaussianPyramidTransform.upsample(data[i], this.radius));
+                lapl[i - 1] = GaussianPyramidTransform.Sub(data[i - 1], GaussianPyramidTransform.Upsample(data[i], this.radius));
             }
 
             lapl[nlev - 1] = data[nlev - 1];

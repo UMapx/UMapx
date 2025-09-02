@@ -97,7 +97,7 @@ namespace UMapx.Transform
             for (int i = 0; i < nlev; i++)
             {
                 pyr[i] = dummy;
-                dummy = downsample(dummy, this.radius);
+                dummy = Downsample(dummy, this.radius);
             }
 
             return pyr;
@@ -118,7 +118,7 @@ namespace UMapx.Transform
             for (int i = 0; i < nlev; i++)
             {
                 pyr[i] = dummy;
-                dummy = downsample(dummy, this.radius);
+                dummy = Downsample(dummy, this.radius);
             }
 
             return pyr;
@@ -158,7 +158,7 @@ namespace UMapx.Transform
             for (int i = 0; i < nlev; i++)
             {
                 pyr[i] = dummy;
-                dummy = downsample(dummy, this.radius);
+                dummy = Downsample(dummy, this.radius);
             }
 
             return pyr;
@@ -179,7 +179,7 @@ namespace UMapx.Transform
             for (int i = 0; i < nlev; i++)
             {
                 pyr[i] = dummy;
-                dummy = downsample(dummy, this.radius);
+                dummy = Downsample(dummy, this.radius);
             }
 
             return pyr;
@@ -206,12 +206,12 @@ namespace UMapx.Transform
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Upsample the input signal.
         /// </summary>
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static float[,] upsample(float[,] u, int radius)
+        internal static float[,] Upsample(float[,] u, int radius)
         {
             int r = u.GetLength(0), c = u.GetLength(1);
             int n = r * 2, m = c * 2;
@@ -232,12 +232,12 @@ namespace UMapx.Transform
             return v.Mean(radius, radius);
         }
         /// <summary>
-        ///  
+        /// Upsample the input signal.
         /// </summary>
         /// <param name="u">Array</param>
         /// <param name="radius">Radius</param>
         /// <returns>Array</returns>
-        internal static float[] upsample(float[] u, int radius)
+        internal static float[] Upsample(float[] u, int radius)
         {
             int r = u.GetLength(0);
             int n = r * 2;
@@ -253,12 +253,12 @@ namespace UMapx.Transform
             return v.Mean(radius);
         }
         /// <summary>
-        /// 
+        /// Downsample the input signal.
         /// </summary>
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static float[,] downsample(float[,] u, int radius)
+        internal static float[,] Downsample(float[,] u, int radius)
         {
             int r = u.GetLength(0);
             int c = u.GetLength(1);
@@ -277,12 +277,12 @@ namespace UMapx.Transform
             return v.Mean(radius, radius);
         }
         /// <summary>
-        /// 
+        /// Downsample the input signal.
         /// </summary>
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static float[] downsample(float[] u, int radius)
+        internal static float[] Downsample(float[] u, int radius)
         {
             int r = u.Length;
             int n = (r + 1) / 2;
@@ -297,12 +297,12 @@ namespace UMapx.Transform
             return v.Mean(radius);
         }
         /// <summary>
-        /// 
+        /// Add two matrices.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        internal static float[,] add(float[,] m, float[,] n)
+        internal static float[,] Add(float[,] m, float[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             int mr = (int)Math.Min(m.GetLength(1), n.GetLength(1));
@@ -319,12 +319,12 @@ namespace UMapx.Transform
             return H;
         }
         /// <summary>
-        /// 
+        /// Add two arrays.
         /// </summary>
         /// <param name="m">Array</param>
         /// <param name="n">Array</param>
         /// <returns>Array</returns>
-        internal static float[] add(float[] m, float[] n)
+        internal static float[] Add(float[] m, float[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             float[] v = new float[ml];
@@ -337,12 +337,12 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// 
+        /// Sub two matrices.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        internal static float[,] sub(float[,] m, float[,] n)
+        internal static float[,] Sub(float[,] m, float[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             int mr = (int)Math.Min(m.GetLength(1), n.GetLength(1));
@@ -359,12 +359,12 @@ namespace UMapx.Transform
             return H;
         }
         /// <summary>
-        /// 
+        /// Sub two arrays.
         /// </summary>
         /// <param name="m">Array</param>
         /// <param name="n">Array</param>
         /// <returns>Array</returns>
-        internal static float[] sub(float[] m, float[] n)
+        internal static float[] Sub(float[] m, float[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             float[] v = new float[ml];
@@ -377,12 +377,12 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// 
+        /// Upsample the input signal.
         /// </summary>
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static Complex32[,] upsample(Complex32[,] u, int radius)
+        internal static Complex32[,] Upsample(Complex32[,] u, int radius)
         {
             int r = u.GetLength(0), c = u.GetLength(1);
             int n = r * 2, m = c * 2;
@@ -403,12 +403,12 @@ namespace UMapx.Transform
             return v.Mean(radius, radius);
         }
         /// <summary>
-        /// 
+        /// Upsample the input signal.
         /// </summary>
         /// <param name="u">Array</param>
         /// <param name="radius">Radius</param>
         /// <returns>Array</returns>
-        internal static Complex32[] upsample(Complex32[] u, int radius)
+        internal static Complex32[] Upsample(Complex32[] u, int radius)
         {
             int r = u.GetLength(0);
             int n = r * 2;
@@ -424,12 +424,12 @@ namespace UMapx.Transform
             return v.Mean(radius);
         }
         /// <summary>
-        /// 
+        /// Downsample the input signal.
         /// </summary>
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static Complex32[,] downsample(Complex32[,] u, int radius)
+        internal static Complex32[,] Downsample(Complex32[,] u, int radius)
         {
             int r = u.GetLength(0);
             int c = u.GetLength(1);
@@ -448,12 +448,12 @@ namespace UMapx.Transform
             return v.Mean(radius, radius);
         }
         /// <summary>
-        /// 
+        /// Downsample the input signal.
         /// </summary>
         /// <param name="u">Matrix</param>
         /// <param name="radius">Radius</param>
         /// <returns>Matrix</returns>
-        internal static Complex32[] downsample(Complex32[] u, int radius)
+        internal static Complex32[] Downsample(Complex32[] u, int radius)
         {
             int r = u.Length;
             int n = (r + 1) / 2;
@@ -468,12 +468,12 @@ namespace UMapx.Transform
             return v.Mean(radius);
         }
         /// <summary>
-        /// 
+        /// Add two matrices.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        internal static Complex32[,] add(Complex32[,] m, Complex32[,] n)
+        internal static Complex32[,] Add(Complex32[,] m, Complex32[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             int mr = (int)Math.Min(m.GetLength(1), n.GetLength(1));
@@ -490,12 +490,12 @@ namespace UMapx.Transform
             return H;
         }
         /// <summary>
-        /// 
+        /// Add two arrays.
         /// </summary>
         /// <param name="m">Array</param>
         /// <param name="n">Array</param>
         /// <returns>Array</returns>
-        internal static Complex32[] add(Complex32[] m, Complex32[] n)
+        internal static Complex32[] Add(Complex32[] m, Complex32[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             Complex32[] v = new Complex32[ml];
@@ -508,12 +508,12 @@ namespace UMapx.Transform
             return v;
         }
         /// <summary>
-        /// 
+        /// Sub two matrices.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <param name="n">Matrix</param>
         /// <returns>Matrix</returns>
-        internal static Complex32[,] sub(Complex32[,] m, Complex32[,] n)
+        internal static Complex32[,] Sub(Complex32[,] m, Complex32[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             int mr = (int)Math.Min(m.GetLength(1), n.GetLength(1));
@@ -530,12 +530,12 @@ namespace UMapx.Transform
             return H;
         }
         /// <summary>
-        /// 
+        /// Sub two arrays.
         /// </summary>
         /// <param name="m">Array</param>
         /// <param name="n">Array</param>
         /// <returns>Array</returns>
-        internal static Complex32[] sub(Complex32[] m, Complex32[] n)
+        internal static Complex32[] Sub(Complex32[] m, Complex32[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
             Complex32[] v = new Complex32[ml];

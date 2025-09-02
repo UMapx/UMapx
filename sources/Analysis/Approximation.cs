@@ -76,16 +76,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
-                    return Approximation.poly(x, y, power, out _, out _, out _);
+                    return Approximation.Poly(x, y, power, out _, out _, out _);
 
                 case ApproximationMethod.Logarithmic:
-                    return Approximation.logc(x, y, power, out _, out _, out _);
+                    return Approximation.Logc(x, y, power, out _, out _, out _);
 
                 case ApproximationMethod.Exponential:
-                    return Approximation.expn(x, y, power, out _, out _, out _);
+                    return Approximation.Expn(x, y, power, out _, out _, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, out _, out _, out _);
+                    return Approximation.Powr(x, y, power, out _, out _, out _);
             }
         }
         /// <summary>
@@ -101,16 +101,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
-                    return Approximation.poly(x, y, power, out cf, out _, out _);
+                    return Approximation.Poly(x, y, power, out cf, out _, out _);
 
                 case ApproximationMethod.Logarithmic:
-                    return Approximation.logc(x, y, power, out cf, out _, out _);
+                    return Approximation.Logc(x, y, power, out cf, out _, out _);
 
                 case ApproximationMethod.Exponential:
-                    return Approximation.expn(x, y, power, out cf, out _, out _);
+                    return Approximation.Expn(x, y, power, out cf, out _, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, out cf, out _, out _);
+                    return Approximation.Powr(x, y, power, out cf, out _, out _);
             }
         }
         /// <summary>
@@ -127,16 +127,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
-                    return Approximation.poly(x, y, power, out cf, out similarity, out _);
+                    return Approximation.Poly(x, y, power, out cf, out similarity, out _);
 
                 case ApproximationMethod.Logarithmic:
-                    return Approximation.logc(x, y, power, out cf, out similarity, out _);
+                    return Approximation.Logc(x, y, power, out cf, out similarity, out _);
 
                 case ApproximationMethod.Exponential:
-                    return Approximation.expn(x, y, power, out cf, out similarity, out _);
+                    return Approximation.Expn(x, y, power, out cf, out similarity, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, out cf, out similarity, out _);
+                    return Approximation.Powr(x, y, power, out cf, out similarity, out _);
             }
         }
         /// <summary>
@@ -154,16 +154,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
-                    return Approximation.poly(x, y, power, out cf, out similarity, out equation);
+                    return Approximation.Poly(x, y, power, out cf, out similarity, out equation);
 
                 case ApproximationMethod.Logarithmic:
-                    return Approximation.logc(x, y, power, out cf, out similarity, out equation);
+                    return Approximation.Logc(x, y, power, out cf, out similarity, out equation);
 
                 case ApproximationMethod.Exponential:
-                    return Approximation.expn(x, y, power, out cf, out similarity, out equation);
+                    return Approximation.Expn(x, y, power, out cf, out similarity, out equation);
 
                 default:
-                    return Approximation.powr(x, y, power, out cf, out similarity, out equation);
+                    return Approximation.Powr(x, y, power, out cf, out similarity, out equation);
             }
         }
 
@@ -179,16 +179,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
-                    return Approximation.poly(x, y, power, out _, out _, out _);
+                    return Approximation.Poly(x, y, power, out _, out _, out _);
 
                 case ApproximationMethod.Logarithmic:
-                    return Approximation.logc(x, y, power, out _, out _, out _);
+                    return Approximation.Logc(x, y, power, out _, out _, out _);
 
                 case ApproximationMethod.Exponential:
-                    return Approximation.expn(x, y, power, out _, out _, out _);
+                    return Approximation.Expn(x, y, power, out _, out _, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, out _, out _, out _);
+                    return Approximation.Powr(x, y, power, out _, out _, out _);
             }
         }
         /// <summary>
@@ -204,16 +204,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
-                    return Approximation.poly(x, y, power, out cf, out _, out _);
+                    return Approximation.Poly(x, y, power, out cf, out _, out _);
 
                 case ApproximationMethod.Logarithmic:
-                    return Approximation.logc(x, y, power, out cf, out _, out _);
+                    return Approximation.Logc(x, y, power, out cf, out _, out _);
 
                 case ApproximationMethod.Exponential:
-                    return Approximation.expn(x, y, power, out cf, out _, out _);
+                    return Approximation.Expn(x, y, power, out cf, out _, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, out cf, out _, out _);
+                    return Approximation.Powr(x, y, power, out cf, out _, out _);
             }
         }
         /// <summary>
@@ -230,16 +230,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
-                    return Approximation.poly(x, y, power, out cf, out similarity, out _);
+                    return Approximation.Poly(x, y, power, out cf, out similarity, out _);
 
                 case ApproximationMethod.Logarithmic:
-                    return Approximation.logc(x, y, power, out cf, out similarity, out _);
+                    return Approximation.Logc(x, y, power, out cf, out similarity, out _);
 
                 case ApproximationMethod.Exponential:
-                    return Approximation.expn(x, y, power, out cf, out similarity, out _);
+                    return Approximation.Expn(x, y, power, out cf, out similarity, out _);
 
                 default:
-                    return Approximation.powr(x, y, power, out cf, out similarity, out _);
+                    return Approximation.Powr(x, y, power, out cf, out similarity, out _);
             }
         }
         /// <summary>
@@ -257,16 +257,16 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
-                    return Approximation.poly(x, y, power, out cf, out similarity, out equation);
+                    return Approximation.Poly(x, y, power, out cf, out similarity, out equation);
 
                 case ApproximationMethod.Logarithmic:
-                    return Approximation.logc(x, y, power, out cf, out similarity, out equation);
+                    return Approximation.Logc(x, y, power, out cf, out similarity, out equation);
 
                 case ApproximationMethod.Exponential:
-                    return Approximation.expn(x, y, power, out cf, out similarity, out equation);
+                    return Approximation.Expn(x, y, power, out cf, out similarity, out equation);
 
                 default:
-                    return Approximation.powr(x, y, power, out cf, out similarity, out equation);
+                    return Approximation.Powr(x, y, power, out cf, out similarity, out equation);
             }
         }
         #endregion
@@ -288,7 +288,7 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error)</param>
         /// <param name="equation">Output: formatted equation string</param>
         /// <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>)</returns>
-        private static float[] poly(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
+        private static float[] Poly(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -314,7 +314,7 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error)</param>
         /// <param name="equation">Output: formatted equation string</param>
         /// <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>)</returns>
-        private static Complex32[] poly(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
+        private static Complex32[] Poly(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -338,7 +338,7 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error on original y</param>
         /// <param name="equation">Output: equation string using “* Log(x)^k”</param>
         /// <returns>Fitted values ŷ at x</returns>
-        private static float[] logc(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
+        private static float[] Logc(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
             int n = x.Length, i;
@@ -373,7 +373,7 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error on original y</param>
         /// <param name="equation">Output: equation string using “* Log(x)^k”</param>
         /// <returns>Fitted values ŷ at x</returns>
-        private static Complex32[] logc(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
+        private static Complex32[] Logc(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
             int n = x.Length, i;
@@ -409,7 +409,7 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error on original y</param>
         /// <param name="equation">Output: equation string “Exp( … )”</param>
         /// <returns>Fitted values ŷ at x</returns>
-        private static float[] expn(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
+        private static float[] Expn(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -451,7 +451,7 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error on original y</param>
         /// <param name="equation">Output: equation string “Exp( … )”</param>
         /// <returns>Fitted values ŷ at x</returns>
-        private static Complex32[] expn(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
+        private static Complex32[] Expn(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -493,7 +493,7 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error on original y</param>
         /// <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”</param>
         /// <returns>Fitted values ŷ at x</returns>
-        private static float[] powr(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
+        private static float[] Powr(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
@@ -537,7 +537,7 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error on original y</param>
         /// <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”</param>
         /// <returns>Fitted values ŷ at x</returns>
-        private static Complex32[] powr(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
+        private static Complex32[] Powr(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;

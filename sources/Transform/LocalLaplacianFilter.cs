@@ -132,7 +132,7 @@ namespace UMapx.Transform
         /// <param name="data">Matrix</param>
         public void Apply(float[,] data)
         {
-            llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
+            Llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
         }
         /// <summary>
         /// Apply filter.
@@ -140,7 +140,7 @@ namespace UMapx.Transform
         /// <param name="data">Matrix</param>
         public void Apply(float[] data)
         {
-            llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
+            Llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
         }
         /// <summary>
         /// Apply filter.
@@ -185,7 +185,7 @@ namespace UMapx.Transform
         /// <param name="n">Number of steps</param>
         /// <param name="levels">Levels</param>
         /// <returns>Output data</returns>
-        internal static void llfilter(float[,] input, int radius, float sigma, float factor, int n, int levels)
+        private static void Llfilter(float[,] input, int radius, float sigma, float factor, int n, int levels)
         {
             // exception
             if (factor == 0)
@@ -272,7 +272,7 @@ namespace UMapx.Transform
         /// <param name="n">Number of steps</param>
         /// <param name="levels">Levels</param>
         /// <returns>Output data</returns>
-        internal static void llfilter(float[] input, int radius, float sigma, float factor, int n, int levels)
+        private static void Llfilter(float[] input, int radius, float sigma, float factor, int n, int levels)
         {
             // exception
             if (factor == 0)

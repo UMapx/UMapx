@@ -53,19 +53,19 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case IntegrationMethod.Midpoint:
-                    return Integration.midp(function, a, b, n);
+                    return Integration.Midp(function, a, b, n);
 
                 case IntegrationMethod.Trapezoidal:
-                    return Integration.trap(function, a, b, n);
+                    return Integration.Trap(function, a, b, n);
 
                 case IntegrationMethod.Simpson:
-                    return Integration.simp(function, a, b, n);
+                    return Integration.Simp(function, a, b, n);
 
                 case IntegrationMethod.Romberg:
-                    return Integration.romb(function, a, b, n);
+                    return Integration.Romb(function, a, b, n);
 
                 default:
-                    return Integration.rect(function, a, b, n);
+                    return Integration.Rect(function, a, b, n);
             }
         }
         /// <summary>
@@ -82,19 +82,19 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case IntegrationMethod.Midpoint:
-                    return Integration.midp(y, a, b, n);
+                    return Integration.Midp(y, a, b, n);
 
                 case IntegrationMethod.Trapezoidal:
-                    return Integration.trap(y, a, b, n);
+                    return Integration.Trap(y, a, b, n);
 
                 case IntegrationMethod.Simpson:
-                    return Integration.simp(y, a, b, n);
+                    return Integration.Simp(y, a, b, n);
 
                 case IntegrationMethod.Romberg:
-                    return Integration.romb(y, a, b, n);
+                    return Integration.Romb(y, a, b, n);
 
                 default:
-                    return Integration.rect(y, a, b, n);
+                    return Integration.Rect(y, a, b, n);
             }
         }
         /// <summary>
@@ -111,19 +111,19 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case IntegrationMethod.Midpoint:
-                    return Integration.midp(function, a, b, n);
+                    return Integration.Midp(function, a, b, n);
 
                 case IntegrationMethod.Trapezoidal:
-                    return Integration.trap(function, a, b, n);
+                    return Integration.Trap(function, a, b, n);
 
                 case IntegrationMethod.Simpson:
-                    return Integration.simp(function, a, b, n);
+                    return Integration.Simp(function, a, b, n);
 
                 case IntegrationMethod.Romberg:
-                    return Integration.romb(function, a, b, n);
+                    return Integration.Romb(function, a, b, n);
 
                 default:
-                    return Integration.rect(function, a, b, n);
+                    return Integration.Rect(function, a, b, n);
             }
         }
         /// <summary>
@@ -140,19 +140,19 @@ namespace UMapx.Analysis
             switch (method)
             {
                 case IntegrationMethod.Midpoint:
-                    return Integration.midp(y, a, b, n);
+                    return Integration.Midp(y, a, b, n);
 
                 case IntegrationMethod.Trapezoidal:
-                    return Integration.trap(y, a, b, n);
+                    return Integration.Trap(y, a, b, n);
 
                 case IntegrationMethod.Simpson:
-                    return Integration.simp(y, a, b, n);
+                    return Integration.Simp(y, a, b, n);
 
                 case IntegrationMethod.Romberg:
-                    return Integration.romb(y, a, b, n);
+                    return Integration.Romb(y, a, b, n);
 
                 default:
-                    return Integration.rect(y, a, b, n);
+                    return Integration.Rect(y, a, b, n);
             }
         }
         #endregion
@@ -170,7 +170,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals (rectangles)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static float rect(IFloat f, float a, float b, int n)
+        private static float Rect(IFloat f, float a, float b, int n)
         {
             float sum = 0.0f;
             float h = (b - a) / n;
@@ -192,7 +192,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals/samples used (left endpoints)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static float rect(float[] y, float a, float b, int n)
+        private static float Rect(float[] y, float a, float b, int n)
         {
             float sum = 0.0f;
             float h = (b - a) / n;
@@ -215,7 +215,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static float midp(IFloat f, float a, float b, int n)
+        private static float Midp(IFloat f, float a, float b, int n)
         {
             // Midpoint
             float sum = 0.0f;
@@ -238,7 +238,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of samples (grid points)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static float midp(float[] y, float a, float b, int n)
+        private static float Midp(float[] y, float a, float b, int n)
         {
             float sum = 0.0f;
             float h = (b - a) / (n - 1);
@@ -261,7 +261,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static float trap(IFloat f, float a, float b, int n)
+        private static float Trap(IFloat f, float a, float b, int n)
         {
             float sum = 0.0f;
             float h = (b - a) / n;
@@ -283,7 +283,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of samples (grid points)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static float trap(float[] y, float a, float b, int n)
+        private static float Trap(float[] y, float a, float b, int n)
         {
             float sum = 0.0f;
             float h = (b - a) / (n - 1);
@@ -307,7 +307,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals (even for pure Simpson 1/3)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx (NaN if n &lt; 2)</returns>
-        private static float simp(IFloat f, float a, float b, int n)
+        private static float Simp(IFloat f, float a, float b, int n)
         {
             if (n < 2) return float.NaN;
             float h = (b - a) / n;
@@ -345,7 +345,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of samples (grid points)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx (NaN if n &lt; 3)</returns>
-        private static float simp(float[] y, float a, float b, int n)
+        private static float Simp(float[] y, float a, float b, int n)
         {
             if (n < 3) return float.NaN;
 
@@ -384,7 +384,7 @@ namespace UMapx.Analysis
         /// <param name="maxK">Maximum number of Romberg levels (table size)</param>
         /// <param name="eps">Relative tolerance for early stopping</param>
         /// <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
-        private static float romb(IFloat f, float a, float b, int maxK, float eps = 1e-8f)
+        private static float Romb(IFloat f, float a, float b, int maxK, float eps = 1e-8f)
         {
             if (maxK < 1) throw new ArgumentException();
             float[,] R = new float[maxK, maxK];
@@ -425,7 +425,7 @@ namespace UMapx.Analysis
         /// <param name="maxK">Maximum number of Romberg levels to build (≥ 1)</param>
         /// <param name="eps">Relative tolerance for early stopping</param>
         /// <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
-        private static float romb(float[] y, float a, float b, int maxK, float eps = 1e-8f)
+        private static float Romb(float[] y, float a, float b, int maxK, float eps = 1e-8f)
         {
             if (y == null || y.Length < 2) throw new ArgumentException("Function must have at least 2 samples");
             if (maxK < 1) throw new ArgumentException(nameof(maxK));
@@ -478,7 +478,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals (rectangles)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static Complex32 rect(IComplex32 f, Complex32 a, Complex32 b, int n)
+        private static Complex32 Rect(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
             Complex32 sum = 0.0;
             Complex32 h = (b - a) / n;
@@ -500,7 +500,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals/samples used (left endpoints)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static Complex32 rect(Complex32[] y, Complex32 a, Complex32 b, int n)
+        private static Complex32 Rect(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
             Complex32 sum = 0.0;
             Complex32 h = (b - a) / n;
@@ -523,7 +523,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static Complex32 midp(IComplex32 f, Complex32 a, Complex32 b, int n)
+        private static Complex32 Midp(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
             // Midpoint
             Complex32 sum = 0.0;
@@ -546,7 +546,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of samples (grid points)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static Complex32 midp(Complex32[] y, Complex32 a, Complex32 b, int n)
+        private static Complex32 Midp(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
             Complex32 sum = 0.0;
             Complex32 h = (b - a) / (n - 1);
@@ -569,7 +569,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static Complex32 trap(IComplex32 f, Complex32 a, Complex32 b, int n)
+        private static Complex32 Trap(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
             Complex32 sum = 0.0;
             Complex32 h = (b - a) / n;
@@ -591,7 +591,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of samples (grid points)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static Complex32 trap(Complex32[] y, Complex32 a, Complex32 b, int n)
+        private static Complex32 Trap(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
             Complex32 sum = 0.0;
             Complex32 h = (b - a) / (n - 1);
@@ -615,7 +615,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals (even for pure Simpson 1/3)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx (NaN if n &lt; 2)</returns>
-        private static Complex32 simp(IComplex32 f, Complex32 a, Complex32 b, int n)
+        private static Complex32 Simp(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
             if (n < 2) return Complex32.NaN;
             Complex32 h = (b - a) / n;
@@ -653,7 +653,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of samples (grid points)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx (NaN if n &lt; 3)</returns>
-        private static Complex32 simp(Complex32[] y, Complex32 a, Complex32 b, int n)
+        private static Complex32 Simp(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
             if (n < 3) return Complex32.NaN;
 
@@ -692,7 +692,7 @@ namespace UMapx.Analysis
         /// <param name="maxK">Maximum number of Romberg levels (table size)</param>
         /// <param name="eps">Relative tolerance for early stopping</param>
         /// <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
-        private static Complex32 romb(IComplex32 f, Complex32 a, Complex32 b, int maxK, float eps = 1e-8f)
+        private static Complex32 Romb(IComplex32 f, Complex32 a, Complex32 b, int maxK, float eps = 1e-8f)
         {
             if (maxK < 1) throw new ArgumentException();
             Complex32[,] R = new Complex32[maxK, maxK];
@@ -731,7 +731,7 @@ namespace UMapx.Analysis
         /// <param name="maxK">Maximum number of Romberg levels (≥ 1)</param>
         /// <param name="eps">Relative tolerance for early stopping</param>
         /// <returns>Romberg estimate of ∫_a^b f(x) dx in Complex32</returns>
-        private static Complex32 romb(Complex32[] y, Complex32 a, Complex32 b, int maxK, float eps = 1e-8f)
+        private static Complex32 Romb(Complex32[] y, Complex32 a, Complex32 b, int maxK, float eps = 1e-8f)
         {
             if (y == null || y.Length < 2) throw new ArgumentException("y must have at least 2 samples.");
             if (maxK < 1) throw new ArgumentException(nameof(maxK));
