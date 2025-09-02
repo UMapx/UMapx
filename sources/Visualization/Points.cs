@@ -184,7 +184,7 @@ namespace UMapx.Visualization
         /// </remarks>
         public static float[] GetPoints(float min, float max, int points)
         {
-            float delta = (float)Math.Round((max - min) / points, 2);
+            float delta = (max - min) / points;
             float[] marks = new float[points + 1];
             float c = min;
 

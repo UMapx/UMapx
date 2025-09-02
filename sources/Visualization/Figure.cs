@@ -1012,15 +1012,15 @@ namespace UMapx.Visualization
             if (Points.IsSingularPoint(v))
                 return string.Empty;
 
-            if (Maths.Abs(v) < 1e-6f)
+            if (v == 0 /*|| Maths.Abs(v) < 1e-8f*/)
                 return "0";
 
             float a = Maths.Abs(v);
 
-            if (a >= 1e4f || (a > 0f && a < 1e-4f))
+            if (a >= 1e4f || (a > 0f && a < 1e-3f))
                 return v.ToString("0.##E+0");
 
-            return v.ToString("0.##");
+            return v.ToString("0.###");
         }
         #endregion
 
