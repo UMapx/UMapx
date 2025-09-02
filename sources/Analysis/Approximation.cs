@@ -273,15 +273,21 @@ namespace UMapx.Analysis
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Polynomial least-squares fit: y(x) ≈ Σ_{k=0}^{power} c_k x^k.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="power"></param>
-        /// <param name="cf"></param>
-        /// <param name="error"></param>
-        /// <param name="equation"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Builds a degree-<paramref name="power"/> polynomial model using least squares.
+        /// The number of basis terms is m = power + 1. Returns the fitted values ŷ at the
+        /// sample points <paramref name="x"/> and also outputs the coefficients, an error metric,
+        /// and a human-readable equation string.
+        /// </remarks>
+        /// <param name="x">Sample abscissas</param>
+        /// <param name="y">Sample ordinates</param>
+        /// <param name="power">Polynomial degree (≥ 1)</param>
+        /// <param name="cf">Output: polynomial coefficients c[0..power]</param>
+        /// <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error)</param>
+        /// <param name="equation">Output: formatted equation string</param>
+        /// <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>)</returns>
         private static float[] poly(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
@@ -293,15 +299,21 @@ namespace UMapx.Analysis
             return ya;
         }
         /// <summary>
-        /// 
+        /// Polynomial least-squares fit: y(x) ≈ Σ_{k=0}^{power} c_k x^k.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="power"></param>
-        /// <param name="cf"></param>
-        /// <param name="error"></param>
-        /// <param name="equation"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Builds a degree-<paramref name="power"/> polynomial model using least squares.
+        /// The number of basis terms is m = power + 1. Returns the fitted values ŷ at the
+        /// sample points <paramref name="x"/> and also outputs the coefficients, an error metric,
+        /// and a human-readable equation string.
+        /// </remarks>
+        /// <param name="x">Sample abscissas</param>
+        /// <param name="y">Sample ordinates</param>
+        /// <param name="power">Polynomial degree (≥ 1)</param>
+        /// <param name="cf">Output: polynomial coefficients c[0..power]</param>
+        /// <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error)</param>
+        /// <param name="equation">Output: formatted equation string</param>
+        /// <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>)</returns>
         private static Complex32[] poly(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
@@ -313,15 +325,19 @@ namespace UMapx.Analysis
             return ya;
         }
         /// <summary>
-        /// 
+        /// Logarithmic least-squares fit (real): y(x) ≈ Σ_{k=0}^{power} c_k [log(x)]^k.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="power"></param>
-        /// <param name="cf"></param>
-        /// <param name="error"></param>
-        /// <param name="equation"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Fits a polynomial in the transformed variable u = log(x).
+        /// <para><b>Domain:</b> requires x[i] &gt; 0 for all i.</para>
+        /// </remarks>
+        /// <param name="x">Sample abscissas (must be &gt; 0)</param>
+        /// <param name="y">Sample ordinates</param>
+        /// <param name="power">Degree in log-domain (≥ 1)</param>
+        /// <param name="cf">Output: coefficients in the log-domain</param>
+        /// <param name="error">Output: fit error on original y</param>
+        /// <param name="equation">Output: equation string using “* Log(x)^k”</param>
+        /// <returns>Fitted values ŷ at x</returns>
         private static float[] logc(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
@@ -344,15 +360,19 @@ namespace UMapx.Analysis
             return ya;
         }
         /// <summary>
-        /// 
+        /// Logarithmic least-squares fit (real): y(x) ≈ Σ_{k=0}^{power} c_k [log(x)]^k.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="power"></param>
-        /// <param name="cf"></param>
-        /// <param name="error"></param>
-        /// <param name="equation"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Fits a polynomial in the transformed variable u = log(x).
+        /// <para><b>Domain:</b> requires x[i] &gt; 0 for all i.</para>
+        /// </remarks>
+        /// <param name="x">Sample abscissas (must be &gt; 0)</param>
+        /// <param name="y">Sample ordinates</param>
+        /// <param name="power">Degree in log-domain (≥ 1)</param>
+        /// <param name="cf">Output: coefficients in the log-domain</param>
+        /// <param name="error">Output: fit error on original y</param>
+        /// <param name="equation">Output: equation string using “* Log(x)^k”</param>
+        /// <returns>Fitted values ŷ at x</returns>
         private static Complex32[] logc(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
@@ -375,15 +395,20 @@ namespace UMapx.Analysis
             return ya;
         }
         /// <summary>
-        /// 
+        /// Exponential least-squares fit (real): y(x) ≈ exp( Σ_{k=0}^{power} c_k x^k ).
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="power"></param>
-        /// <param name="cf"></param>
-        /// <param name="error"></param>
-        /// <param name="equation"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Applies a log transform to the response: v = log(y), fits a polynomial v ≈ Σ c_k x^k,
+        /// then maps back by exponentiation ŷ = exp( Σ c_k x^k ).
+        /// <para><b>Domain:</b> requires y[i] &gt; 0 for all i (log defined).</para>
+        /// </remarks>
+        /// <param name="x">Sample abscissas</param>
+        /// <param name="y">Sample ordinates (must be &gt; 0)</param>
+        /// <param name="power">Polynomial degree inside the exponent (≥ 1)</param>
+        /// <param name="cf">Output: polynomial coefficients for log(y)</param>
+        /// <param name="error">Output: fit error on original y</param>
+        /// <param name="equation">Output: equation string “Exp( … )”</param>
+        /// <returns>Fitted values ŷ at x</returns>
         private static float[] expn(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
@@ -412,15 +437,20 @@ namespace UMapx.Analysis
             return ya;
         }
         /// <summary>
-        /// 
+        /// Exponential least-squares fit (real): y(x) ≈ exp( Σ_{k=0}^{power} c_k x^k ).
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="power"></param>
-        /// <param name="cf"></param>
-        /// <param name="error"></param>
-        /// <param name="equation"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Applies a log transform to the response: v = log(y), fits a polynomial v ≈ Σ c_k x^k,
+        /// then maps back by exponentiation ŷ = exp( Σ c_k x^k ).
+        /// <para><b>Domain:</b> requires y[i] &gt; 0 for all i (log defined).</para>
+        /// </remarks>
+        /// <param name="x">Sample abscissas</param>
+        /// <param name="y">Sample ordinates (must be &gt; 0)</param>
+        /// <param name="power">Polynomial degree inside the exponent (≥ 1)</param>
+        /// <param name="cf">Output: polynomial coefficients for log(y)</param>
+        /// <param name="error">Output: fit error on original y</param>
+        /// <param name="equation">Output: equation string “Exp( … )”</param>
+        /// <returns>Fitted values ŷ at x</returns>
         private static Complex32[] expn(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
@@ -449,15 +479,20 @@ namespace UMapx.Analysis
             return ya;
         }
         /// <summary>
-        /// 
+        /// Power-law–type least-squares fit (real): y(x) ≈ Exp( Σ_{k=0}^{power} c_k [Log(x)]^k ).
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="power"></param>
-        /// <param name="cf"></param>
-        /// <param name="error"></param>
-        /// <param name="equation"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Applies log transforms to both variables: u = log(x), v = log(y), fits v ≈ Σ c_k u^k,
+        /// then maps back as ŷ = exp( Σ c_k [log(x)]^k ).
+        /// <para><b>Domain:</b> requires x[i] &gt; 0 and y[i] &gt; 0 for all i.</para>
+        /// </remarks>
+        /// <param name="x">Sample abscissas (must be &gt; 0)</param>
+        /// <param name="y">Sample ordinates (must be &gt; 0)</param>
+        /// <param name="power">Polynomial degree in log-log domain (≥ 1)</param>
+        /// <param name="cf">Output: coefficients in the log-log domain</param>
+        /// <param name="error">Output: fit error on original y</param>
+        /// <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”</param>
+        /// <returns>Fitted values ŷ at x</returns>
         private static float[] powr(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
@@ -488,15 +523,20 @@ namespace UMapx.Analysis
             return ya;
         }
         /// <summary>
-        /// 
+        /// Power-law–type least-squares fit (real): y(x) ≈ Exp( Σ_{k=0}^{power} c_k [Log(x)]^k ).
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="power"></param>
-        /// <param name="cf"></param>
-        /// <param name="error"></param>
-        /// <param name="equation"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Applies log transforms to both variables: u = log(x), v = log(y), fits v ≈ Σ c_k u^k,
+        /// then maps back as ŷ = exp( Σ c_k [log(x)]^k ).
+        /// <para><b>Domain:</b> requires x[i] &gt; 0 and y[i] &gt; 0 for all i.</para>
+        /// </remarks>
+        /// <param name="x">Sample abscissas (must be &gt; 0)</param>
+        /// <param name="y">Sample ordinates (must be &gt; 0)</param>
+        /// <param name="power">Polynomial degree in log-log domain (≥ 1)</param>
+        /// <param name="cf">Output: coefficients in the log-log domain</param>
+        /// <param name="error">Output: fit error on original y</param>
+        /// <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”</param>
+        /// <returns>Fitted values ŷ at x</returns>
         private static Complex32[] powr(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:

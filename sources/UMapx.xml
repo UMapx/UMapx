@@ -109,99 +109,139 @@
         </member>
         <member name="M:UMapx.Analysis.Approximation.poly(System.Single[],System.Single[],System.Int32,System.Single[]@,System.Single@,System.String@)">
             <summary>
-            
+            Polynomial least-squares fit: y(x) ≈ Σ_{k=0}^{power} c_k x^k.
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="power"></param>
-            <param name="cf"></param>
-            <param name="error"></param>
-            <param name="equation"></param>
-            <returns></returns>
+            <remarks>
+            Builds a degree-<paramref name="power"/> polynomial model using least squares.
+            The number of basis terms is m = power + 1. Returns the fitted values ŷ at the
+            sample points <paramref name="x"/> and also outputs the coefficients, an error metric,
+            and a human-readable equation string.
+            </remarks>
+            <param name="x">Sample abscissas</param>
+            <param name="y">Sample ordinates</param>
+            <param name="power">Polynomial degree (≥ 1)</param>
+            <param name="cf">Output: polynomial coefficients c[0..power]</param>
+            <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error)</param>
+            <param name="equation">Output: formatted equation string</param>
+            <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>)</returns>
         </member>
         <member name="M:UMapx.Analysis.Approximation.poly(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32,UMapx.Core.Complex32[]@,UMapx.Core.Complex32@,System.String@)">
             <summary>
-            
+            Polynomial least-squares fit: y(x) ≈ Σ_{k=0}^{power} c_k x^k.
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="power"></param>
-            <param name="cf"></param>
-            <param name="error"></param>
-            <param name="equation"></param>
-            <returns></returns>
+            <remarks>
+            Builds a degree-<paramref name="power"/> polynomial model using least squares.
+            The number of basis terms is m = power + 1. Returns the fitted values ŷ at the
+            sample points <paramref name="x"/> and also outputs the coefficients, an error metric,
+            and a human-readable equation string.
+            </remarks>
+            <param name="x">Sample abscissas</param>
+            <param name="y">Sample ordinates</param>
+            <param name="power">Polynomial degree (≥ 1)</param>
+            <param name="cf">Output: polynomial coefficients c[0..power]</param>
+            <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error)</param>
+            <param name="equation">Output: formatted equation string</param>
+            <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>)</returns>
         </member>
         <member name="M:UMapx.Analysis.Approximation.logc(System.Single[],System.Single[],System.Int32,System.Single[]@,System.Single@,System.String@)">
             <summary>
-            
+            Logarithmic least-squares fit (real): y(x) ≈ Σ_{k=0}^{power} c_k [log(x)]^k.
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="power"></param>
-            <param name="cf"></param>
-            <param name="error"></param>
-            <param name="equation"></param>
-            <returns></returns>
+            <remarks>
+            Fits a polynomial in the transformed variable u = log(x).
+            <para><b>Domain:</b> requires x[i] &gt; 0 for all i.</para>
+            </remarks>
+            <param name="x">Sample abscissas (must be &gt; 0)</param>
+            <param name="y">Sample ordinates</param>
+            <param name="power">Degree in log-domain (≥ 1)</param>
+            <param name="cf">Output: coefficients in the log-domain</param>
+            <param name="error">Output: fit error on original y</param>
+            <param name="equation">Output: equation string using “* Log(x)^k”</param>
+            <returns>Fitted values ŷ at x</returns>
         </member>
         <member name="M:UMapx.Analysis.Approximation.logc(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32,UMapx.Core.Complex32[]@,UMapx.Core.Complex32@,System.String@)">
             <summary>
-            
+            Logarithmic least-squares fit (real): y(x) ≈ Σ_{k=0}^{power} c_k [log(x)]^k.
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="power"></param>
-            <param name="cf"></param>
-            <param name="error"></param>
-            <param name="equation"></param>
-            <returns></returns>
+            <remarks>
+            Fits a polynomial in the transformed variable u = log(x).
+            <para><b>Domain:</b> requires x[i] &gt; 0 for all i.</para>
+            </remarks>
+            <param name="x">Sample abscissas (must be &gt; 0)</param>
+            <param name="y">Sample ordinates</param>
+            <param name="power">Degree in log-domain (≥ 1)</param>
+            <param name="cf">Output: coefficients in the log-domain</param>
+            <param name="error">Output: fit error on original y</param>
+            <param name="equation">Output: equation string using “* Log(x)^k”</param>
+            <returns>Fitted values ŷ at x</returns>
         </member>
         <member name="M:UMapx.Analysis.Approximation.expn(System.Single[],System.Single[],System.Int32,System.Single[]@,System.Single@,System.String@)">
             <summary>
-            
+            Exponential least-squares fit (real): y(x) ≈ exp( Σ_{k=0}^{power} c_k x^k ).
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="power"></param>
-            <param name="cf"></param>
-            <param name="error"></param>
-            <param name="equation"></param>
-            <returns></returns>
+            <remarks>
+            Applies a log transform to the response: v = log(y), fits a polynomial v ≈ Σ c_k x^k,
+            then maps back by exponentiation ŷ = exp( Σ c_k x^k ).
+            <para><b>Domain:</b> requires y[i] &gt; 0 for all i (log defined).</para>
+            </remarks>
+            <param name="x">Sample abscissas</param>
+            <param name="y">Sample ordinates (must be &gt; 0)</param>
+            <param name="power">Polynomial degree inside the exponent (≥ 1)</param>
+            <param name="cf">Output: polynomial coefficients for log(y)</param>
+            <param name="error">Output: fit error on original y</param>
+            <param name="equation">Output: equation string “Exp( … )”</param>
+            <returns>Fitted values ŷ at x</returns>
         </member>
         <member name="M:UMapx.Analysis.Approximation.expn(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32,UMapx.Core.Complex32[]@,UMapx.Core.Complex32@,System.String@)">
             <summary>
-            
+            Exponential least-squares fit (real): y(x) ≈ exp( Σ_{k=0}^{power} c_k x^k ).
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="power"></param>
-            <param name="cf"></param>
-            <param name="error"></param>
-            <param name="equation"></param>
-            <returns></returns>
+            <remarks>
+            Applies a log transform to the response: v = log(y), fits a polynomial v ≈ Σ c_k x^k,
+            then maps back by exponentiation ŷ = exp( Σ c_k x^k ).
+            <para><b>Domain:</b> requires y[i] &gt; 0 for all i (log defined).</para>
+            </remarks>
+            <param name="x">Sample abscissas</param>
+            <param name="y">Sample ordinates (must be &gt; 0)</param>
+            <param name="power">Polynomial degree inside the exponent (≥ 1)</param>
+            <param name="cf">Output: polynomial coefficients for log(y)</param>
+            <param name="error">Output: fit error on original y</param>
+            <param name="equation">Output: equation string “Exp( … )”</param>
+            <returns>Fitted values ŷ at x</returns>
         </member>
         <member name="M:UMapx.Analysis.Approximation.powr(System.Single[],System.Single[],System.Int32,System.Single[]@,System.Single@,System.String@)">
             <summary>
-            
+            Power-law–type least-squares fit (real): y(x) ≈ Exp( Σ_{k=0}^{power} c_k [Log(x)]^k ).
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="power"></param>
-            <param name="cf"></param>
-            <param name="error"></param>
-            <param name="equation"></param>
-            <returns></returns>
+            <remarks>
+            Applies log transforms to both variables: u = log(x), v = log(y), fits v ≈ Σ c_k u^k,
+            then maps back as ŷ = exp( Σ c_k [log(x)]^k ).
+            <para><b>Domain:</b> requires x[i] &gt; 0 and y[i] &gt; 0 for all i.</para>
+            </remarks>
+            <param name="x">Sample abscissas (must be &gt; 0)</param>
+            <param name="y">Sample ordinates (must be &gt; 0)</param>
+            <param name="power">Polynomial degree in log-log domain (≥ 1)</param>
+            <param name="cf">Output: coefficients in the log-log domain</param>
+            <param name="error">Output: fit error on original y</param>
+            <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”</param>
+            <returns>Fitted values ŷ at x</returns>
         </member>
         <member name="M:UMapx.Analysis.Approximation.powr(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32,UMapx.Core.Complex32[]@,UMapx.Core.Complex32@,System.String@)">
             <summary>
-            
+            Power-law–type least-squares fit (real): y(x) ≈ Exp( Σ_{k=0}^{power} c_k [Log(x)]^k ).
             </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="power"></param>
-            <param name="cf"></param>
-            <param name="error"></param>
-            <param name="equation"></param>
-            <returns></returns>
+            <remarks>
+            Applies log transforms to both variables: u = log(x), v = log(y), fits v ≈ Σ c_k u^k,
+            then maps back as ŷ = exp( Σ c_k [log(x)]^k ).
+            <para><b>Domain:</b> requires x[i] &gt; 0 and y[i] &gt; 0 for all i.</para>
+            </remarks>
+            <param name="x">Sample abscissas (must be &gt; 0)</param>
+            <param name="y">Sample ordinates (must be &gt; 0)</param>
+            <param name="power">Polynomial degree in log-log domain (≥ 1)</param>
+            <param name="cf">Output: coefficients in the log-log domain</param>
+            <param name="error">Output: fit error on original y</param>
+            <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”</param>
+            <returns>Fitted values ŷ at x</returns>
         </member>
         <member name="T:UMapx.Analysis.ApproximationMethod">
             <summary>
@@ -1171,23 +1211,43 @@
         </member>
         <member name="M:UMapx.Analysis.Optimization.goldenMin(UMapx.Core.IFloat,System.Single,System.Single,System.Single)">
             <summary>
-            
+            Golden-section search for the minimum of a unimodal function on [a, b].
             </summary>
-            <param name="f"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="eps"></param>
-            <returns></returns>
+            <remarks>
+            - Assumes <paramref name="f"/> is continuous and unimodal on the closed interval [a, b].
+            - Uses the golden ratio to reuse interval proportions for fast bracketing shrinkage.
+            - Terminates when the bracket length |b - a| becomes smaller than <paramref name="eps"/> 
+              or when the iteration cap (short.MaxValue) is reached.
+            - Returns the midpoint of the final bracket as the argmin approximation (not f at that point).
+            
+            Note: This implementation recomputes f(x1) and f(x2) each iteration for clarity.
+            It can be optimized to carry one evaluation forward per step.
+            </remarks>
+            <param name="f">Continuous objective function to minimize</param>
+            <param name="a">Left endpoint of the search interval</param>
+            <param name="b">Right endpoint of the search interval</param>
+            <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps.</param>
+            <returns>
+            Approximate minimizer x* ∈ [a, b] (the x-coordinate). To get the minimum value, evaluate f at the result.
+            </returns>
         </member>
         <member name="M:UMapx.Analysis.Optimization.goldenMax(UMapx.Core.IFloat,System.Single,System.Single,System.Single)">
             <summary>
-            
+            Golden-section search for the maximum of a unimodal function on [a, b].
             </summary>
-            <param name="f"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <param name="eps"></param>
-            <returns></returns>
+            <remarks>
+            - Assumes <paramref name="f"/> is continuous and unimodal on [a, b].
+            - Same scheme as <see cref="M:UMapx.Analysis.Optimization.goldenMin(UMapx.Core.IFloat,System.Single,System.Single,System.Single)"/>, but with the inequality flipped to seek the maximum.
+            - Terminates when |b - a| &lt; <paramref name="eps"/> or when the iteration cap is reached.
+            - Returns the midpoint of the final bracket as the argmax approximation (not f at that point).
+            </remarks>
+            <param name="f">Continuous objective function to maximize</param>
+            <param name="a">Left endpoint of the search interval</param>
+            <param name="b">Right endpoint of the search interval</param>
+            <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps</param>
+            <returns>
+            Approximate maximizer x* ∈ [a, b] (the x-coordinate). To get the maximum value, evaluate f at the result.
+            </returns>
         </member>
         <member name="T:UMapx.Analysis.Pade">
             <summary>

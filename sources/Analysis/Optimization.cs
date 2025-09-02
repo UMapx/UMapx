@@ -56,13 +56,25 @@ namespace UMapx.Analysis
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Golden-section search for the minimum of a unimodal function on [a, b].
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="eps"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// - Assumes <paramref name="f"/> is continuous and unimodal on the closed interval [a, b].
+        /// - Uses the golden ratio to reuse interval proportions for fast bracketing shrinkage.
+        /// - Terminates when the bracket length |b - a| becomes smaller than <paramref name="eps"/> 
+        ///   or when the iteration cap (short.MaxValue) is reached.
+        /// - Returns the midpoint of the final bracket as the argmin approximation (not f at that point).
+        /// 
+        /// Note: This implementation recomputes f(x1) and f(x2) each iteration for clarity.
+        /// It can be optimized to carry one evaluation forward per step.
+        /// </remarks>
+        /// <param name="f">Continuous objective function to minimize</param>
+        /// <param name="a">Left endpoint of the search interval</param>
+        /// <param name="b">Right endpoint of the search interval</param>
+        /// <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps.</param>
+        /// <returns>
+        /// Approximate minimizer x* ∈ [a, b] (the x-coordinate). To get the minimum value, evaluate f at the result.
+        /// </returns>
         private static float goldenMin(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1, x2;
@@ -82,13 +94,21 @@ namespace UMapx.Analysis
             return (a + b) / 2;
         }
         /// <summary>
-        /// 
+        /// Golden-section search for the maximum of a unimodal function on [a, b].
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="eps"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// - Assumes <paramref name="f"/> is continuous and unimodal on [a, b].
+        /// - Same scheme as <see cref="goldenMin"/>, but with the inequality flipped to seek the maximum.
+        /// - Terminates when |b - a| &lt; <paramref name="eps"/> or when the iteration cap is reached.
+        /// - Returns the midpoint of the final bracket as the argmax approximation (not f at that point).
+        /// </remarks>
+        /// <param name="f">Continuous objective function to maximize</param>
+        /// <param name="a">Left endpoint of the search interval</param>
+        /// <param name="b">Right endpoint of the search interval</param>
+        /// <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps</param>
+        /// <returns>
+        /// Approximate maximizer x* ∈ [a, b] (the x-coordinate). To get the maximum value, evaluate f at the result.
+        /// </returns>
         private static float goldenMax(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1, x2;
