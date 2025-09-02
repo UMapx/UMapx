@@ -148,6 +148,9 @@ namespace UMapx.Analysis
                 case IntegrationMethod.Simpson:
                     return Integration.simp(y, a, b, n);
 
+                case IntegrationMethod.Romberg:
+                    return Integration.romb(y, a, b, n);
+
                 default:
                     return Integration.rect(y, a, b, n);
             }
