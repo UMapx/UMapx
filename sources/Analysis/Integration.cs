@@ -338,7 +338,7 @@ namespace UMapx.Analysis
         /// <param name="maxK"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static float romb(IFloat f, float a, float b, int maxK, float eps = 1e-6f)
+        private static float romb(IFloat f, float a, float b, int maxK, float eps = 1e-8f)
         {
             if (maxK < 1) throw new ArgumentException();
             float[,] R = new float[maxK, maxK];
@@ -550,7 +550,7 @@ namespace UMapx.Analysis
         /// <param name="maxK"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex32 romb(IComplex32 f, Complex32 a, Complex32 b, int maxK, float eps = 1e-6f)
+        private static Complex32 romb(IComplex32 f, Complex32 a, Complex32 b, int maxK, float eps = 1e-8f)
         {
             if (maxK < 1) throw new ArgumentException();
             Complex32[,] R = new Complex32[maxK, maxK];
