@@ -72,11 +72,10 @@ namespace UMapx.Analysis
                     return Nonlinear.chord(function, a, b, this.eps);
                 case NonlinearMethod.FalsePosition:
                     return Nonlinear.falpo(function, a, b, this.eps);
-                case NonlinearMethod.Secant:
-                    return Nonlinear.secan(function, a, b, this.eps);
-
-                default:
+                case NonlinearMethod.Bisection:
                     return Nonlinear.bisec(function, a, b, this.eps);
+                default:
+                    return Nonlinear.secan(function, a, b, this.eps);
             }
         }
         /// <summary>
@@ -95,7 +94,8 @@ namespace UMapx.Analysis
                     return Nonlinear.chord(function, a, b, this.eps);
                 case NonlinearMethod.FalsePosition:
                     throw new NotSupportedException("False position is not defined for complex-valued functions");
-
+                case NonlinearMethod.Bisection:
+                    throw new NotSupportedException("Bisection is not defined for complex-valued functions");
                 default:
                     return Nonlinear.secan(function, a, b, this.eps);
             }

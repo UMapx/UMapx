@@ -229,12 +229,16 @@ namespace UMapx.Analysis
 
         #region Runge-Kutta
         /// <summary>
-        /// 
+        /// Explicit Euler method (1st order) for y' = f(x, y) on a given grid x.
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="x"></param>
-        /// <param name="y0"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Works with nonuniform grids. The returned array has length n = x.Length - 1
+        /// and contains y at x[1], x[2], ..., x[n]. The initial value y0 (at x[0]) is not included.
+        /// </remarks>
+        /// <param name="f">Right-hand side f(x, y)</param>
+        /// <param name="x">Monotone grid points</param>
+        /// <param name="y0">Initial value y(x[0])</param>
+        /// <returns>Solution values at x[1..n]</returns>
         private static float[] euler(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
@@ -251,12 +255,15 @@ namespace UMapx.Analysis
             return result;
         }
         /// <summary>
-        /// 
+        /// Runge–Kutta method of order 2 (midpoint form) on grid x.
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="x"></param>
-        /// <param name="y0"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Works with nonuniform grids. Returns y at x[1..n]; y0 is not included.
+        /// </remarks>
+        /// <param name="f">Right-hand side f(x, y)</param>
+        /// <param name="x">Grid points</param>
+        /// <param name="y0">Initial value y(x[0])</param>
+        /// <returns>Solution values at x[1..n]</returns>
         private static float[] rungeKutta2(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
@@ -276,12 +283,15 @@ namespace UMapx.Analysis
             return result;
         }
         /// <summary>
-        /// 
+        /// Classic Runge–Kutta method of order 4 (RK4) on grid x.
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="x"></param>
-        /// <param name="y0"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Works with nonuniform grids. Returns y at x[1..n]; y0 is not included.
+        /// </remarks>
+        /// <param name="f">Right-hand side f(x, y)</param>
+        /// <param name="x">Grid points</param>
+        /// <param name="y0">Initial value y(x[0])</param>
+        /// <returns>Solution values at x[1..n]</returns>
         private static float[] rungeKutta4(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
@@ -303,12 +313,16 @@ namespace UMapx.Analysis
             return result;
         }
         /// <summary>
-        /// 
+        /// Fehlberg (RKF45 scheme without stepsize adaptation): fixed-step 4th-order estimate.
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="x"></param>
-        /// <param name="y0"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Uses the embedded Runge–Kutta-Fehlberg coefficients on a fixed step.
+        /// No local error return or adaptive control. Returns y at x[1..n]; y0 is not included.
+        /// </remarks>
+        /// <param name="f">Right-hand side f(x, y)</param>
+        /// <param name="x">Grid points</param>
+        /// <param name="y0">Initial value y(x[0])</param>
+        /// <returns>Solution values at x[1..n]</returns>
         private static float[] fehlberg(IFloatMesh f, float[] x, float y0)
         {
             int n = x.Length - 1;
@@ -332,12 +346,16 @@ namespace UMapx.Analysis
             return result;
         }
         /// <summary>
-        /// 
+        /// Explicit Euler method (1st order) for y' = f(x, y) on a given grid x.
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="x"></param>
-        /// <param name="y0"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Works with nonuniform grids. The returned array has length n = x.Length - 1
+        /// and contains y at x[1], x[2], ..., x[n]. The initial value y0 (at x[0]) is not included.
+        /// </remarks>
+        /// <param name="f">Right-hand side f(x, y)</param>
+        /// <param name="x">Monotone grid points</param>
+        /// <param name="y0">Initial value y(x[0])</param>
+        /// <returns>Solution values at x[1..n]</returns>
         private static Complex32[] euler(IComplex32Mesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
@@ -354,12 +372,15 @@ namespace UMapx.Analysis
             return result;
         }
         /// <summary>
-        /// 
+        /// Runge–Kutta method of order 2 (midpoint form) on grid x.
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="x"></param>
-        /// <param name="y0"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Works with nonuniform grids. Returns y at x[1..n]; y0 is not included.
+        /// </remarks>
+        /// <param name="f">Right-hand side f(x, y)</param>
+        /// <param name="x">Grid points</param>
+        /// <param name="y0">Initial value y(x[0])</param>
+        /// <returns>Solution values at x[1..n]</returns>
         private static Complex32[] rungeKutta2(IComplex32Mesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
@@ -379,12 +400,15 @@ namespace UMapx.Analysis
             return result;
         }
         /// <summary>
-        /// 
+        /// Classic Runge–Kutta method of order 4 (RK4) on grid x.
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="x"></param>
-        /// <param name="y0"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Works with nonuniform grids. Returns y at x[1..n]; y0 is not included.
+        /// </remarks>
+        /// <param name="f">Right-hand side f(x, y)</param>
+        /// <param name="x">Grid points</param>
+        /// <param name="y0">Initial value y(x[0])</param>
+        /// <returns>Solution values at x[1..n]</returns>
         private static Complex32[] rungeKutta4(IComplex32Mesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
@@ -406,12 +430,16 @@ namespace UMapx.Analysis
             return result;
         }
         /// <summary>
-        /// 
+        /// Fehlberg (RKF45 scheme without stepsize adaptation): fixed-step 4th-order estimate.
         /// </summary>
-        /// <param name="f"></param>
-        /// <param name="x"></param>
-        /// <param name="y0"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Uses the embedded Runge–Kutta-Fehlberg coefficients on a fixed step.
+        /// No local error return or adaptive control. Returns y at x[1..n]; y0 is not included.
+        /// </remarks>
+        /// <param name="f">Right-hand side f(x, y)</param>
+        /// <param name="x">Grid points</param>
+        /// <param name="y0">Initial value y(x[0])</param>
+        /// <returns>Solution values at x[1..n]</returns>
         private static Complex32[] fehlberg(IComplex32Mesh f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
