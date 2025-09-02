@@ -6,7 +6,7 @@ namespace UMapx.Visualization
     /// Defines the pane type.
     /// </summary>
     [Serializable]
-    public enum Pane
+    public enum PaneType
     {
         #region Types
         /// <summary>

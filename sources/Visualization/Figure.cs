@@ -296,77 +296,77 @@ namespace UMapx.Visualization
                 {
                     radius = (current.Depth + r0) * 2;
 
-                    if (current.Pane == Pane.Plot)
+                    if (current.PaneType == PaneType.Plot)
                     {
-                        switch (current.Symbol)
+                        switch (current.GraphType)
                         {
-                            case Symbol.None:
+                            case GraphType.None:
                                 PlotLine(canvas_graphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
-                            case Symbol.Circle:
+                            case GraphType.Circle:
                                 PlotCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case Symbol.Ball:
+                            case GraphType.Ball:
                                 PlotCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
-                            case Symbol.Rectangle:
+                            case GraphType.Rectangle:
                                 PlotRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case Symbol.Polygon:
+                            case GraphType.Polygon:
                                 PlotRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
-                    else if (current.Pane == Pane.Stem)
+                    else if (current.PaneType == PaneType.Stem)
                     {
-                        switch (current.Symbol)
+                        switch (current.GraphType)
                         {
-                            case Symbol.None:
+                            case GraphType.None:
                                 StemLine(canvas_graphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
-                            case Symbol.Circle:
+                            case GraphType.Circle:
                                 StemCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case Symbol.Ball:
+                            case GraphType.Ball:
                                 StemCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
-                            case Symbol.Rectangle:
+                            case GraphType.Rectangle:
                                 StemRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case Symbol.Polygon:
+                            case GraphType.Polygon:
                                 StemRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
                     else
                     {
-                        switch (current.Symbol)
+                        switch (current.GraphType)
                         {
-                            case Symbol.None:
+                            case GraphType.None:
                                 ScatterLine(canvas_graphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
-                            case Symbol.Circle:
+                            case GraphType.Circle:
                                 ScatterCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case Symbol.Ball:
+                            case GraphType.Ball:
                                 ScatterCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
-                            case Symbol.Rectangle:
+                            case GraphType.Rectangle:
                                 ScatterRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case Symbol.Polygon:
+                            case GraphType.Polygon:
                                 ScatterRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
@@ -530,7 +530,7 @@ namespace UMapx.Visualization
         /// <param name="color"></param>
         /// <param name="type"></param>
         /// <param name="depth"></param>
-        private void DrawLegendMarker(Graphics g, int cx, int cy, int size, Color color, Symbol type, float depth)
+        private void DrawLegendMarker(Graphics g, int cx, int cy, int size, Color color, GraphType type, float depth)
         {
             int half = size / 2;
             var rect = new Rectangle(cx, cy - half, size, size);
@@ -540,20 +540,20 @@ namespace UMapx.Visualization
 
             switch (type)
             {
-                case Symbol.None:
+                case GraphType.None:
                     g.DrawLine(pen, cx, cy, cx + size, cy);
                     var r2 = new Rectangle(cx + size / 2 - 2, cy - 2, 4, 4);
                     g.FillRectangle(br, r2);
                     break;
 
-                case Symbol.Circle:
-                case Symbol.Ball:
+                case GraphType.Circle:
+                case GraphType.Ball:
                     if (IsFilled(type)) g.FillEllipse(br, rect);
                     else g.DrawEllipse(pen, rect);
                     break;
 
-                case Symbol.Rectangle:
-                case Symbol.Polygon:
+                case GraphType.Rectangle:
+                case GraphType.Polygon:
                     if (IsFilled(type)) g.FillRectangle(br, rect);
                     else g.DrawRectangle(pen, rect);
                     break;
@@ -563,9 +563,9 @@ namespace UMapx.Visualization
                     break;
             }
 
-            bool IsFilled(Symbol type)
+            bool IsFilled(GraphType type)
             {
-                return type == Symbol.Ball || type == Symbol.Polygon;
+                return type == GraphType.Ball || type == GraphType.Polygon;
             }
         }
         #endregion
@@ -926,7 +926,7 @@ namespace UMapx.Visualization
                 var it = _panes[idx];
                 int my = cy + idx * rowH + rowH / 2;
 
-                DrawLegendMarker(graphics, cx, my, marker, it.Color, it.Symbol, it.Depth);
+                DrawLegendMarker(graphics, cx, my, marker, it.Color, it.GraphType, it.Depth);
                 graphics.DrawString(it.Label, font, textBrush, cx + marker + Legend.MarkerGap, my - rowH / 2 + 1);
             }
         }

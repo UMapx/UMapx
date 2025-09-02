@@ -3,10 +3,10 @@
 namespace UMapx.Visualization
 {
     /// <summary>
-    /// Defines the symbol type.
+    /// Defines the graph type.
     /// </summary>
     [Serializable]
-    public enum Symbol
+    public enum GraphType
     {
         #region Types
         /// <summary>

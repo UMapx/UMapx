@@ -29753,7 +29753,7 @@
             <param name="width"></param>
             <param name="basePen"></param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.DrawLegendMarker(System.Drawing.Graphics,System.Int32,System.Int32,System.Int32,System.Drawing.Color,UMapx.Visualization.Symbol,System.Single)">
+        <member name="M:UMapx.Visualization.Figure.DrawLegendMarker(System.Drawing.Graphics,System.Int32,System.Int32,System.Int32,System.Drawing.Color,UMapx.Visualization.GraphType,System.Single)">
             <summary>
             
             </summary>
@@ -30056,7 +30056,7 @@
             Defines the graph pane.
             </summary>
         </member>
-        <member name="M:UMapx.Visualization.GraphPane.#ctor(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.Pane,UMapx.Visualization.Symbol,System.String)">
+        <member name="M:UMapx.Visualization.GraphPane.#ctor(System.Single[],System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.PaneType,UMapx.Visualization.GraphType,System.String)">
             <summary>
             Initializes the graph pane.
             </summary>
@@ -30064,7 +30064,7 @@
             <param name="y">Function</param>
             <param name="depth">Depth</param>
             <param name="color">Color</param>
-            <param name="symbol">Symbol type</param>
+            <param name="graph">Graph type</param>
             <param name="label">Label</param>
             <param name="pane">Pane type</param>
         </member>
@@ -30088,9 +30088,9 @@
             Gets or sets color.
             </summary>
         </member>
-        <member name="P:UMapx.Visualization.GraphPane.Symbol">
+        <member name="P:UMapx.Visualization.GraphPane.GraphType">
             <summary>
-            Gets or sets symbol type.
+            Gets or sets graph type.
             </summary>
         </member>
         <member name="P:UMapx.Visualization.GraphPane.Label">
@@ -30098,9 +30098,39 @@
             Gets or sets label.
             </summary>
         </member>
-        <member name="P:UMapx.Visualization.GraphPane.Pane">
+        <member name="P:UMapx.Visualization.GraphPane.PaneType">
             <summary>
             Gets or sets pane type.
+            </summary>
+        </member>
+        <member name="T:UMapx.Visualization.GraphType">
+            <summary>
+            Defines the graph type.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.GraphType.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.GraphType.Circle">
+            <summary>
+            Circle.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.GraphType.Ball">
+            <summary>
+            Ball.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.GraphType.Rectangle">
+            <summary>
+            Rectangle.
+            </summary>
+        </member>
+        <member name="F:UMapx.Visualization.GraphType.Polygon">
+            <summary>
+            Polygon.
             </summary>
         </member>
         <member name="T:UMapx.Visualization.Grid">
@@ -30347,22 +30377,22 @@
         <member name="M:UMapx.Visualization.Painter.Finalize">
             <inheritdoc/>
         </member>
-        <member name="T:UMapx.Visualization.Pane">
+        <member name="T:UMapx.Visualization.PaneType">
             <summary>
             Defines the pane type.
             </summary>
         </member>
-        <member name="F:UMapx.Visualization.Pane.Plot">
+        <member name="F:UMapx.Visualization.PaneType.Plot">
             <summary>
             Plot.
             </summary>
         </member>
-        <member name="F:UMapx.Visualization.Pane.Stem">
+        <member name="F:UMapx.Visualization.PaneType.Stem">
             <summary>
             Stem.
             </summary>
         </member>
-        <member name="F:UMapx.Visualization.Pane.Scatter">
+        <member name="F:UMapx.Visualization.PaneType.Scatter">
             <summary>
             Scatter.
             </summary>
@@ -30513,36 +30543,6 @@
             The step is rounded to 2 decimal places, which may cause the last tick
             to deviate slightly from <paramref name="max"/> for certain ranges.
             </remarks>
-        </member>
-        <member name="T:UMapx.Visualization.Symbol">
-            <summary>
-            Defines the symbol type.
-            </summary>
-        </member>
-        <member name="F:UMapx.Visualization.Symbol.None">
-            <summary>
-            None.
-            </summary>
-        </member>
-        <member name="F:UMapx.Visualization.Symbol.Circle">
-            <summary>
-            Circle.
-            </summary>
-        </member>
-        <member name="F:UMapx.Visualization.Symbol.Ball">
-            <summary>
-            Ball.
-            </summary>
-        </member>
-        <member name="F:UMapx.Visualization.Symbol.Rectangle">
-            <summary>
-            Rectangle.
-            </summary>
-        </member>
-        <member name="F:UMapx.Visualization.Symbol.Polygon">
-            <summary>
-            Polygon.
-            </summary>
         </member>
         <member name="T:UMapx.Wavelet.ComplexGaussianWavelet">
             <summary>

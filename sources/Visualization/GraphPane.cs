@@ -17,18 +17,18 @@ namespace UMapx.Visualization
         /// <param name="y">Function</param>
         /// <param name="depth">Depth</param>
         /// <param name="color">Color</param>
-        /// <param name="symbol">Symbol type</param>
+        /// <param name="graph">Graph type</param>
         /// <param name="label">Label</param>
         /// <param name="pane">Pane type</param>
-        public GraphPane(float[] x, float[] y, float depth, Color color, Pane pane, Symbol symbol, string label)
+        public GraphPane(float[] x, float[] y, float depth, Color color, PaneType pane, GraphType graph, string label)
         {
             X = x;
             Y = y;
             Depth = depth;
             Color = color;
-            Symbol = symbol;
+            GraphType = graph;
             Label = label;
-            Pane = pane;
+            PaneType = pane;
         }
         /// <summary>
         /// Gets or sets argument array.
@@ -47,9 +47,9 @@ namespace UMapx.Visualization
         /// </summary>
         public Color Color { get; set; }
         /// <summary>
-        /// Gets or sets symbol type.
+        /// Gets or sets graph type.
         /// </summary>
-        public Symbol Symbol { get; set; }
+        public GraphType GraphType { get; set; }
         /// <summary>
         /// Gets or sets label.
         /// </summary>
@@ -57,7 +57,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Gets or sets pane type.
         /// </summary>
-        public Pane Pane { get; set; }
+        public PaneType PaneType { get; set; }
         #endregion
     }
 }
