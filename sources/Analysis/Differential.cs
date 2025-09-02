@@ -93,7 +93,7 @@ namespace UMapx.Analysis
 
         #region Recompute voids
         /// <summary>
-        /// Returns the value of a differential equation calculated by the Adams-Bashfort method.
+        /// Returns the value of a differential equation calculated by the Adams-Bashforth method.
         /// </summary>
         /// <param name="function">The delegate of a continuous function depending on two variables</param>
         /// <param name="x">Array of values argument</param>
@@ -113,7 +113,6 @@ namespace UMapx.Analysis
                 float[] y = new float[n];
                 float[] r = new float[k];
                 float[] c = Differential.GetCoefficients(order);
-                float h, t, sum;
 
                 // compute first points by order
                 for (i = 0; i < k; i++)
@@ -129,13 +128,13 @@ namespace UMapx.Analysis
                 // for order
                 for (i = order; i < n; i++)
                 {
-                    sum = y[i - 1];
+                    float hnext = x[i + 1] - x[i];
+                    float sum = y[i - 1];
 
                     for (j = 0; j < order; j++)
                     {
-                        t = x[i - j];
-                        h = t - x[i - j - 1];
-                        sum += h * c[j] * function(t, y[i - j - 1]);
+                        float t = x[i - j];
+                        sum += hnext * c[j] * function(t, y[i - j - 1]);
                     }
 
                     y[i] = sum;
@@ -148,7 +147,7 @@ namespace UMapx.Analysis
             return this.Compute(function, x, y0);
         }
         /// <summary>
-        /// Returns the value of a differential equation calculated by the Adams-Bashfort method.
+        /// Returns the value of a differential equation calculated by the Adams-Bashforth method.
         /// </summary>
         /// <param name="function">The delegate of a continuous function depending on two variables</param>
         /// <param name="x">Array of values argument</param>
@@ -168,7 +167,6 @@ namespace UMapx.Analysis
                 Complex32[] y = new Complex32[n];
                 Complex32[] r = new Complex32[k];
                 float[] c = Differential.GetCoefficients(order);
-                Complex32 h, t, sum;
 
                 // compute first points by order
                 for (i = 0; i < k; i++)
@@ -184,13 +182,13 @@ namespace UMapx.Analysis
                 // for order
                 for (i = order; i < n; i++)
                 {
-                    sum = y[i - 1];
+                    Complex32 hnext = x[i + 1] - x[i];
+                    Complex32 sum = y[i - 1];
 
                     for (j = 0; j < order; j++)
                     {
-                        t = x[i - j];
-                        h = t - x[i - j - 1];
-                        sum += h * c[j] * function(t, y[i - j - 1]);
+                        Complex32 t = x[i - j];
+                        sum += hnext * c[j] * function(t, y[i - j - 1]);
                     }
 
                     y[i] = sum;
@@ -206,7 +204,7 @@ namespace UMapx.Analysis
 
         #region Adams-Bashforth
         /// <summary>
-        /// Returns an array of coefficient values for the Adams-Bashfort formula.
+        /// Returns an array of coefficient values for the Adams-Bashforth formula.
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>Array</returns>

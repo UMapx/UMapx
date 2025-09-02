@@ -228,69 +228,6 @@
             Power approximation.
             </summary>
         </member>
-        <member name="T:UMapx.Analysis.Differentation">
-            <summary>
-            Defines a class that implements numerical differentiation.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.Differentation.#ctor(System.Int32)">
-            <summary>
-            Initializes a class that implements numerical differentiation.
-            </summary>
-            <param name="points">Number of interpolation points</param>
-        </member>
-        <member name="P:UMapx.Analysis.Differentation.Points">
-            <summary>
-            Gets or sets the number of interpolation points.
-            </summary>
-        </member>
-        <member name="M:UMapx.Analysis.Differentation.Compute(UMapx.Core.IFloat,System.Single,System.Single,System.Int32)">
-            <summary>
-            Returns the value of a derived function.
-            </summary>
-            <param name="function">Continuous function delegate</param>
-            <param name="x">Argument value</param>
-            <param name="h">Step</param>
-            <param name="order">Order</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Analysis.Differentation.Compute(System.Single[],System.Int32,System.Single,System.Int32)">
-            <summary>
-            Returns the value of a derived function.
-            </summary>
-            <param name="y">Function vector</param>
-            <param name="index">Index of argument</param>
-            <param name="h">Step</param>
-            <param name="order">Order</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Analysis.Differentation.Compute(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
-            <summary>
-            Returns the value of a derived function.
-            </summary>
-            <param name="function">Continuous function delegate</param>
-            <param name="x">Argument value</param>
-            <param name="h">Step</param>
-            <param name="order">Order</param>
-            <returns>Complex number</returns>
-        </member>
-        <member name="M:UMapx.Analysis.Differentation.Compute(UMapx.Core.Complex32[],System.Int32,System.Single,System.Int32)">
-            <summary>
-            Returns the value of a derived function.
-            </summary>
-            <param name="y">Function vector</param>
-            <param name="index">Index of argument</param>
-            <param name="h">Step</param>
-            <param name="order">Order</param>
-            <returns>Complex number</returns>
-        </member>
-        <member name="M:UMapx.Analysis.Differentation.GetCoefficients(System.Int32)">
-            <summary>
-            Returns the matrix of interpolation coefficients.
-            </summary>
-            <param name="points">Number of points</param>
-            <returns>Matrix</returns>
-        </member>
         <member name="T:UMapx.Analysis.Differential">
             <summary>
             Defines a class that implements a solution to a differential equation.
@@ -330,7 +267,7 @@
         </member>
         <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IFloatMesh,System.Single[],System.Single,System.Int32)">
             <summary>
-            Returns the value of a differential equation calculated by the Adams-Bashfort method.
+            Returns the value of a differential equation calculated by the Adams-Bashforth method.
             </summary>
             <param name="function">The delegate of a continuous function depending on two variables</param>
             <param name="x">Array of values argument</param>
@@ -340,7 +277,7 @@
         </member>
         <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplexMesh,UMapx.Core.Complex32[],UMapx.Core.Complex32,System.Int32)">
             <summary>
-            Returns the value of a differential equation calculated by the Adams-Bashfort method.
+            Returns the value of a differential equation calculated by the Adams-Bashforth method.
             </summary>
             <param name="function">The delegate of a continuous function depending on two variables</param>
             <param name="x">Array of values argument</param>
@@ -350,7 +287,7 @@
         </member>
         <member name="M:UMapx.Analysis.Differential.GetCoefficients(System.Int32)">
             <summary>
-            Returns an array of coefficient values for the Adams-Bashfort formula.
+            Returns an array of coefficient values for the Adams-Bashforth formula.
             </summary>
             <param name="order">Order</param>
             <returns>Array</returns>
@@ -451,6 +388,69 @@
             <summary>
             Felberg's method.
             </summary>
+        </member>
+        <member name="T:UMapx.Analysis.Differentiation">
+            <summary>
+            Defines a class that implements numerical differentiation.
+            </summary>
+        </member>
+        <member name="M:UMapx.Analysis.Differentiation.#ctor(System.Int32)">
+            <summary>
+            Initializes a class that implements numerical differentiation.
+            </summary>
+            <param name="points">Number of interpolation points</param>
+        </member>
+        <member name="P:UMapx.Analysis.Differentiation.Points">
+            <summary>
+            Gets or sets the number of interpolation points.
+            </summary>
+        </member>
+        <member name="M:UMapx.Analysis.Differentiation.Compute(UMapx.Core.IFloat,System.Single,System.Single,System.Int32)">
+            <summary>
+            Returns the value of a derived function.
+            </summary>
+            <param name="function">Continuous function delegate</param>
+            <param name="x">Argument value</param>
+            <param name="h">Step</param>
+            <param name="order">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Differentiation.Compute(System.Single[],System.Int32,System.Single,System.Int32)">
+            <summary>
+            Returns the value of a derived function.
+            </summary>
+            <param name="y">Function vector</param>
+            <param name="index">Index of argument</param>
+            <param name="h">Step</param>
+            <param name="order">Order</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Differentiation.Compute(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
+            <summary>
+            Returns the value of a derived function.
+            </summary>
+            <param name="function">Continuous function delegate</param>
+            <param name="x">Argument value</param>
+            <param name="h">Step</param>
+            <param name="order">Order</param>
+            <returns>Complex number</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Differentiation.Compute(UMapx.Core.Complex32[],System.Int32,System.Single,System.Int32)">
+            <summary>
+            Returns the value of a derived function.
+            </summary>
+            <param name="y">Function vector</param>
+            <param name="index">Index of argument</param>
+            <param name="h">Step</param>
+            <param name="order">Order</param>
+            <returns>Complex number</returns>
+        </member>
+        <member name="M:UMapx.Analysis.Differentiation.GetCoefficients(System.Int32)">
+            <summary>
+            Returns the matrix of interpolation coefficients.
+            </summary>
+            <param name="points">Number of points</param>
+            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Analysis.Integration">
             <summary>
