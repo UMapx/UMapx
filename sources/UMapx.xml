@@ -29652,11 +29652,6 @@
             </summary>
             <param name="style">Figure style</param>
         </member>
-        <member name="P:UMapx.Visualization.Figure.Style">
-            <summary>
-            Gets or sets figure style.
-            </summary>
-        </member>
         <member name="P:UMapx.Visualization.Figure.LabelX">
             <summary>
             Gets or sets X label.

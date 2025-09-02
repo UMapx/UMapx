@@ -18,7 +18,7 @@ namespace UMapx.Visualization
         private float _xmin = -5, _xmax = 5;
         private float _ymin = -5, _ymax = 5;
         private float _scaling = 0.65f;
-        private FigureStyle _style;
+        private readonly FigureStyle _style;
         private readonly List<GraphPane> _panes = new List<GraphPane>();
         private Bitmap _imagePane;
         #endregion
@@ -30,25 +30,11 @@ namespace UMapx.Visualization
         /// <param name="style">Figure style</param>
         public Figure(FigureStyle style)
         {
-            Style = style;
+            _style = style;
         }
         #endregion
 
         #region Figure properties
-        /// <summary>
-        /// Gets or sets figure style.
-        /// </summary>
-        public FigureStyle Style
-        {
-            get
-            { 
-                return _style; 
-            }
-            set
-            {
-                _style = value;
-            }
-        }
         /// <summary>
         /// Gets or sets X label.
         /// </summary>
@@ -167,14 +153,14 @@ namespace UMapx.Visualization
             // encapsulation of figure and canvas graphics
             using var figure = new Bitmap(_figure_width, _figure_height);
             using Graphics figure_graphics = Graphics.FromImage(figure);
-            figure_graphics.Clear(Style.ColorFrame);
+            figure_graphics.Clear(_style.ColorFrame);
             figure_graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
             figure_graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
             figure_graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
             using var canvas = new Bitmap(_canvas_width, _canvas_height);
             using Graphics canvas_graphics = Graphics.FromImage(canvas);
-            canvas_graphics.Clear(Style.ColorBack);
+            canvas_graphics.Clear(_style.ColorBack);
             canvas_graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
             canvas_graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
             canvas_graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -223,9 +209,9 @@ namespace UMapx.Visualization
             float[] X = Points.GetPoints(_xmin, _xmax, _xscale);
             float[] Y = Points.GetPoints(_ymin, _ymax, _yscale);
 
-            using SolidBrush br = new SolidBrush(Style.ColorMarks);
-            using Pen pen1 = new Pen(Style.ColorGrid, Style.DepthShapes);
-            using Pen pen2 = new Pen(Style.ColorShapes, Style.DepthShapes);
+            using SolidBrush br = new SolidBrush(_style.ColorMarks);
+            using Pen pen1 = new Pen(_style.ColorGrid, _style.DepthShapes);
+            using Pen pen2 = new Pen(_style.ColorShapes, _style.DepthShapes);
             int min = Math.Min(dx, dy), s = min / 8;
             string numerics;
             int xlength, ylength, i;
@@ -240,7 +226,7 @@ namespace UMapx.Visualization
                 numX = X[i];
                 numerics = GetNumString(numX);
                 xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
-                figure_graphics.DrawString(numerics, Style.FontMarks, br, xpoint + dw - 5, _canvas_height + dh + 5);
+                figure_graphics.DrawString(numerics, _style.FontMarks, br, xpoint + dw - 5, _canvas_height + dh + 5);
             }
 
             ylength = Y.Length;
@@ -250,9 +236,9 @@ namespace UMapx.Visualization
             {
                 numY = Y[i];
                 numerics = GetNumString(numY);
-                numsize = figure_graphics.MeasureString(numerics, Style.FontMarks);
+                numsize = figure_graphics.MeasureString(numerics, _style.FontMarks);
                 ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
-                figure_graphics.DrawString(numerics, Style.FontMarks, br, dw - numsize.Width - 5, ypoint + dh - 10);
+                figure_graphics.DrawString(numerics, _style.FontMarks, br, dw - numsize.Width - 5, ypoint + dh - 10);
             }
             #endregion
 
@@ -875,8 +861,8 @@ namespace UMapx.Visualization
         {
             if (_panes.Count == 0) return;
 
-            using var textBrush = new SolidBrush(Style.ColorText);
-            var font = Style.FontMarks;
+            using var textBrush = new SolidBrush(_style.ColorText);
+            var font = _style.FontMarks;
             int marker = Legend.MarkerSize;
             int rowH = Math.Max(Legend.RowHeight, marker);
             int maxTextW = 0;
@@ -916,9 +902,9 @@ namespace UMapx.Visualization
                     break;
             }
 
-            var back = Color.FromArgb((int)(Legend.Opacity * 255), Style.ColorBack);
+            var back = Color.FromArgb((int)(Legend.Opacity * 255), _style.ColorBack);
             using var backBrush = new SolidBrush(back);
-            using var borderPen = new Pen(Style.ColorShapes, 1f);
+            using var borderPen = new Pen(_style.ColorShapes, 1f);
 
             graphics.FillRectangle(backBrush, x, y, boxW, boxH);
 
@@ -954,8 +940,8 @@ namespace UMapx.Visualization
                 Alignment = StringAlignment.Center
             };
 
-            using var br = new SolidBrush(Style.ColorText);
-            graphics.DrawString(title, Style.FontText, br, new PointF(sizeX / 2, dh / 2), format);
+            using var br = new SolidBrush(_style.ColorText);
+            graphics.DrawString(title, _style.FontText, br, new PointF(sizeX / 2, dh / 2), format);
         }
         /// <summary>
         /// 
@@ -974,9 +960,9 @@ namespace UMapx.Visualization
                 Alignment = StringAlignment.Center
             };
 
-            var size = graphics.MeasureString(xlabel, Style.FontText);
-            using var br = new SolidBrush(Style.ColorText);
-            graphics.DrawString(xlabel, Style.FontText, br, new PointF(sizeX / 2, sizeY - dh / 2 + size.Height / 4), format);
+            var size = graphics.MeasureString(xlabel, _style.FontText);
+            using var br = new SolidBrush(_style.ColorText);
+            graphics.DrawString(xlabel, _style.FontText, br, new PointF(sizeX / 2, sizeY - dh / 2 + size.Height / 4), format);
         }
         /// <summary>
         /// 
@@ -1000,10 +986,10 @@ namespace UMapx.Visualization
             float cx = dw / 2f;
             float cy = sizeY / 2f;
 
-            using var br = new SolidBrush(Style.ColorText);
+            using var br = new SolidBrush(_style.ColorText);
             graphics.TranslateTransform(cx, cy);
             graphics.RotateTransform(-90f);
-            graphics.DrawString(ylabel, Style.FontText, br, PointF.Empty, fmt);
+            graphics.DrawString(ylabel, _style.FontText, br, PointF.Empty, fmt);
             graphics.Restore(state);
         }
         #endregion
