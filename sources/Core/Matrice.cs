@@ -10052,7 +10052,7 @@ namespace UMapx.Core
         /// <param name="v">Array</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Array</returns>
-        public static Complex32[] Compute(this Complex32[] v, IComplex function)
+        public static Complex32[] Compute(this Complex32[] v, IComplex32 function)
         {
             int length = v.Length;
             Complex32[] H = new Complex32[length];
@@ -10092,7 +10092,7 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Compute(this float[] x, Complex32[] y, IComplexMesh function)
+        public static Complex32[,] Compute(this float[] x, Complex32[] y, IComplex32Mesh function)
         {
             int xlength = x.Length, ylength = y.Length;
             Complex32[,] z = new Complex32[xlength, ylength];
@@ -10114,7 +10114,7 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Compute(this Complex32[] x, float[] y, IComplexMesh function)
+        public static Complex32[,] Compute(this Complex32[] x, float[] y, IComplex32Mesh function)
         {
             int xlength = x.Length, ylength = y.Length;
             Complex32[,] z = new Complex32[xlength, ylength];
@@ -10136,7 +10136,7 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Compute(this Complex32[] x, Complex32[] y, IComplexMesh function)
+        public static Complex32[,] Compute(this Complex32[] x, Complex32[] y, IComplex32Mesh function)
         {
             int xlength = x.Length, ylength = y.Length;
             Complex32[,] z = new Complex32[xlength, ylength];
@@ -10178,7 +10178,7 @@ namespace UMapx.Core
         /// <param name="m">Matrix</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Compute(this Complex32[,] m, IComplex function)
+        public static Complex32[,] Compute(this Complex32[,] m, IComplex32 function)
         {
             int i, j;
             int ml = m.GetLength(1), mr = m.GetLength(0);

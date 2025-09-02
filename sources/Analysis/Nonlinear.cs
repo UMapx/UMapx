@@ -86,7 +86,7 @@ namespace UMapx.Analysis
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
         /// <returns>Value</returns>
-        public Complex32 Compute(IComplex function, Complex32 a, Complex32 b)
+        public Complex32 Compute(IComplex32 function, Complex32 a, Complex32 b)
         {
             // chose method of nonlinear
             switch (method)
@@ -214,7 +214,7 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex32 chord(IComplex f, Complex32 a, Complex32 b, float eps = 1e-8f)
+        private static Complex32 chord(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
             int n = 0;
             Complex32 x0 = (b - a) / 2.0;
@@ -236,7 +236,7 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex32 secan(IComplex f, Complex32 a, Complex32 b, float eps = 1e-8f)
+        private static Complex32 secan(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
             Complex32 x1 = a;
             Complex32 x2 = b;
@@ -262,7 +262,7 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex32 falpo(IComplex f, Complex32 a, Complex32 b, float eps = 1e-8f)
+        private static Complex32 falpo(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
             Complex32 x1 = a;
             Complex32 x2 = b;

@@ -102,7 +102,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
         /// <returns>Complex number</returns>
-        public Complex32 Compute(IComplex function, Complex32 a, Complex32 b, int n)
+        public Complex32 Compute(IComplex32 function, Complex32 a, Complex32 b, int n)
         {
             // chose method of integration
             switch (method)
@@ -274,23 +274,25 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float simp(IFloat f, float a, float b, int n)
         {
-            if (n < 3) return float.NaN; //Need at least 3 points
-            float sum = 0.0f;
+            if (n < 2) return float.NaN;
             float h = (b - a) / n;
-            if (n % 2 != 0)
+            float sum;
+
+            if (n % 2 == 0)
             {
-                for (int i = 0; i < n - 1; i += 2)
-                {
-                    sum += h * (f(a + i * h) + 4 * f(a + (i + 1) * h) + f(a + (i + 2) * h)) / 3;
-                }
+                float s_odd = 0f, s_even = 0f;
+                for (int i = 1; i < n; i += 2) s_odd += f(a + i * h);
+                for (int i = 2; i < n; i += 2) s_even += f(a + i * h);
+                sum = (h / 3f) * (f(a) + f(b) + 4f * s_odd + 2f * s_even);
             }
             else
             {
-                sum = 3 * h * (f(a) + 3 * f(a + h) + 3 * f(a + 2 * h) + f(a + 3 * h)) / 8;
-                for (int i = 3; i < n - 1; i += 2)
-                {
-                    sum += h * (f(a + i * h) + 4 * f(a + (i + 1) * h) + f(a + (i + 2) * h)) / 3;
-                }
+                sum = (3f * h / 8f) * (f(a) + 3f * f(a + h) + 3f * f(a + 2 * h) + f(a + 3 * h));
+                int m = n - 3;
+                float s_odd = 0f, s_even = 0f;
+                for (int j = 1; j < m; j += 2) s_odd += f(a + (3 + j) * h);
+                for (int j = 2; j < m; j += 2) s_even += f(a + (3 + j) * h);
+                sum += (h / 3f) * (f(a + 3 * h) + f(b) + 4f * s_odd + 2f * s_even);
             }
             return sum;
         }
@@ -304,24 +306,25 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static float simp(float[] y, float a, float b, int n)
         {
-            float h = (b - a) / n;
-            //Need at least 3 points
-            if (n < 3 || h == 0) return float.NaN;
-            float sum = 0.0f;
-            if (n % 2 != 0)
+            if (n < 3) return float.NaN;
+
+            float h = (b - a) / (n - 1);
+            float sum;
+
+            if ((n - 1) % 2 == 0)
             {
-                for (int i = 0; i < n - 1; i += 2)
-                {
-                    sum += h * (y[i] + 4 * y[i + 1] + y[i + 2]) / 3;
-                }
+                float s_odd = 0f, s_even = 0f;
+                for (int i = 1; i < n - 1; i += 2) s_odd += y[i];
+                for (int i = 2; i < n - 1; i += 2) s_even += y[i];
+                sum = (h / 3f) * (y[0] + y[n - 1] + 4f * s_odd + 2f * s_even);
             }
             else
             {
-                sum = 3 * h * (y[0] + 3 * y[1] + 3 * y[2] + y[3]) / 8;
-                for (int i = 3; i < n - 1; i += 2)
-                {
-                    sum += h * (y[i] + 4 * y[i + 1] + y[i + 2]) / 3;
-                }
+                sum = (3f * h / 8f) * (y[0] + 3f * y[1] + 3f * y[2] + y[3]);
+                float s_odd = 0f, s_even = 0f;
+                for (int i = 4; i < n - 1; i += 2) s_odd += y[i - 1];
+                for (int i = 5; i < n - 1; i += 2) s_even += y[i - 1];
+                sum += (h / 3f) * (y[3] + y[n - 1] + 4f * s_odd + 2f * s_even);
             }
             return sum;
         }
@@ -380,7 +383,7 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex32 rect(IComplex f, Complex32 a, Complex32 b, int n)
+        private static Complex32 rect(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
             Complex32 sum = 0.0;
             Complex32 h = (b - a) / n;
@@ -417,7 +420,7 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex32 midp(IComplex f, Complex32 a, Complex32 b, int n)
+        private static Complex32 midp(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
             // Midpoint
             Complex32 sum = 0.0;
@@ -455,7 +458,7 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex32 trap(IComplex f, Complex32 a, Complex32 b, int n)
+        private static Complex32 trap(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
             Complex32 sum = 0.0;
             Complex32 h = (b - a) / n;
@@ -492,25 +495,27 @@ namespace UMapx.Analysis
         /// <param name="b"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static Complex32 simp(IComplex f, Complex32 a, Complex32 b, int n)
+        private static Complex32 simp(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
-            if (n < 3) return float.NaN; //Need at least 3 points
-            Complex32 sum = 0.0;
+            if (n < 2) return Complex32.NaN;
             Complex32 h = (b - a) / n;
-            if (n % 2 != 0)
+            Complex32 sum;
+
+            if (n % 2 == 0)
             {
-                for (int i = 0; i < n - 1; i += 2)
-                {
-                    sum += h * (f(a + i * h) + 4 * f(a + (i + 1) * h) + f(a + (i + 2) * h)) / 3;
-                }
+                Complex32 s_odd = 0f, s_even = 0f;
+                for (int i = 1; i < n; i += 2) s_odd += f(a + i * h);
+                for (int i = 2; i < n; i += 2) s_even += f(a + i * h);
+                sum = (h / 3f) * (f(a) + f(b) + 4f * s_odd + 2f * s_even);
             }
             else
             {
-                sum = 3 * h * (f(a) + 3 * f(a + h) + 3 * f(a + 2 * h) + f(a + 3 * h)) / 8;
-                for (int i = 3; i < n - 1; i += 2)
-                {
-                    sum += h * (f(a + i * h) + 4 * f(a + (i + 1) * h) + f(a + (i + 2) * h)) / 3;
-                }
+                sum = (3f * h / 8f) * (f(a) + 3f * f(a + h) + 3f * f(a + 2 * h) + f(a + 3 * h));
+                int m = n - 3;
+                Complex32 s_odd = 0f, s_even = 0f;
+                for (int j = 1; j < m; j += 2) s_odd += f(a + (3 + j) * h);
+                for (int j = 2; j < m; j += 2) s_even += f(a + (3 + j) * h);
+                sum += (h / 3f) * (f(a + 3 * h) + f(b) + 4f * s_odd + 2f * s_even);
             }
             return sum;
         }
@@ -524,24 +529,25 @@ namespace UMapx.Analysis
         /// <returns></returns>
         private static Complex32 simp(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
-            Complex32 h = (b - a) / n;
-            //Need at least 3 points
-            if (n < 3 || h == 0) return float.NaN;
-            Complex32 sum = 0.0;
-            if (n % 2 != 0)
+            if (n < 3) return Complex32.NaN;
+
+            Complex32 h = (b - a) / (n - 1);
+            Complex32 sum;
+
+            if ((n - 1) % 2 == 0)
             {
-                for (int i = 0; i < n - 1; i += 2)
-                {
-                    sum += h * (y[i] + 4 * y[i + 1] + y[i + 2]) / 3;
-                }
+                Complex32 s_odd = 0f, s_even = 0f;
+                for (int i = 1; i < n - 1; i += 2) s_odd += y[i];
+                for (int i = 2; i < n - 1; i += 2) s_even += y[i];
+                sum = (h / 3f) * (y[0] + y[n - 1] + 4f * s_odd + 2f * s_even);
             }
             else
             {
-                sum = 3 * h * (y[0] + 3 * y[1] + 3 * y[2] + y[3]) / 8;
-                for (int i = 3; i < n - 1; i += 2)
-                {
-                    sum += h * (y[i] + 4 * y[i + 1] + y[i + 2]) / 3;
-                }
+                sum = (3f * h / 8f) * (y[0] + 3f * y[1] + 3f * y[2] + y[3]);
+                Complex32 s_odd = 0f, s_even = 0f;
+                for (int i = 4; i < n - 1; i += 2) s_odd += y[i - 1];
+                for (int i = 5; i < n - 1; i += 2) s_even += y[i - 1];
+                sum += (h / 3f) * (y[3] + y[n - 1] + 4f * s_odd + 2f * s_even);
             }
             return sum;
         }
@@ -555,7 +561,7 @@ namespace UMapx.Analysis
         /// <param name="iterations"></param>
         /// <param name="eps"></param>
         /// <returns></returns>
-        private static Complex32 romb(IComplex f, Complex32 a, Complex32 b, int iterations, float eps = 1e-8f)
+        private static Complex32 romb(IComplex32 f, Complex32 a, Complex32 b, int iterations, float eps = 1e-8f)
         {
             int n = 2;
             Complex32 h = b - a;

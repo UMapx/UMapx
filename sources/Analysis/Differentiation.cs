@@ -109,7 +109,7 @@ namespace UMapx.Analysis
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
         /// <returns>Complex number</returns>
-        public Complex32 Compute(IComplex function, Complex32 x, Complex32 h, int order)
+        public Complex32 Compute(IComplex32 function, Complex32 x, Complex32 h, int order)
         {
             // exception
             if (order > this.points)

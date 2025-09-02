@@ -256,7 +256,7 @@
             <param name="y0">Value</param>
             <returns>Array of function values</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplexMesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             Returns the value of a differential equation.
             </summary>
@@ -275,7 +275,7 @@
             <param name="order">Order</param>
             <returns>Array of function values</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplexMesh,UMapx.Core.Complex32[],UMapx.Core.Complex32,System.Int32)">
+        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32,System.Int32)">
             <summary>
             Returns the value of a differential equation calculated by the Adams-Bashforth method.
             </summary>
@@ -328,7 +328,7 @@
             <param name="y0"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.euler(UMapx.Core.IComplexMesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.euler(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             
             </summary>
@@ -337,7 +337,7 @@
             <param name="y0"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.rungeKutta2(UMapx.Core.IComplexMesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.rungeKutta2(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             
             </summary>
@@ -346,7 +346,7 @@
             <param name="y0"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.rungeKutta4(UMapx.Core.IComplexMesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.rungeKutta4(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             
             </summary>
@@ -355,7 +355,7 @@
             <param name="y0"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.fehlberg(UMapx.Core.IComplexMesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.fehlberg(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             
             </summary>
@@ -425,7 +425,7 @@
             <param name="order">Order</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differentiation.Compute(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
+        <member name="M:UMapx.Analysis.Differentiation.Compute(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
             <summary>
             Returns the value of a derived function.
             </summary>
@@ -491,7 +491,7 @@
             <param name="n">Number of splits</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.Compute(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.Compute(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
             <summary>
             Returns the value of the integral of a function.
             </summary>
@@ -602,7 +602,7 @@
             <param name="eps"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.rect(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.rect(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
             <summary>
             
             </summary>
@@ -622,7 +622,7 @@
             <param name="n"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.midp(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.midp(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
             <summary>
             
             </summary>
@@ -642,7 +642,7 @@
             <param name="n"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.trap(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.trap(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
             <summary>
             
             </summary>
@@ -662,7 +662,7 @@
             <param name="n"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.simp(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.simp(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32)">
             <summary>
             
             </summary>
@@ -682,7 +682,7 @@
             <param name="n"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.romb(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32,System.Single)">
+        <member name="M:UMapx.Analysis.Integration.romb(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Int32,System.Single)">
             <summary>
             
             </summary>
@@ -1046,7 +1046,7 @@
             <param name="b">End of line</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Analysis.Nonlinear.Compute(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Nonlinear.Compute(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Gets the root value of a nonlinear equation.
             </summary>
@@ -1095,7 +1095,7 @@
             <param name="eps"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Nonlinear.chord(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Single)">
+        <member name="M:UMapx.Analysis.Nonlinear.chord(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Single)">
             <summary>
             
             </summary>
@@ -1105,7 +1105,7 @@
             <param name="eps"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Nonlinear.secan(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Single)">
+        <member name="M:UMapx.Analysis.Nonlinear.secan(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Single)">
             <summary>
             
             </summary>
@@ -1115,7 +1115,7 @@
             <param name="eps"></param>
             <returns></returns>
         </member>
-        <member name="M:UMapx.Analysis.Nonlinear.falpo(UMapx.Core.IComplex,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Single)">
+        <member name="M:UMapx.Analysis.Nonlinear.falpo(UMapx.Core.IComplex32,UMapx.Core.Complex32,UMapx.Core.Complex32,System.Single)">
             <summary>
             
             </summary>
@@ -3901,7 +3901,7 @@
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="T:UMapx.Core.IComplex">
+        <member name="T:UMapx.Core.IComplex32">
             <summary>
             Defines the delegate of a continuous function that depends on a single argument.
             </summary>
@@ -3916,7 +3916,7 @@
             <param name="y">Second argument</param>
             <returns>Value</returns>
         </member>
-        <member name="T:UMapx.Core.IComplexMesh">
+        <member name="T:UMapx.Core.IComplex32Mesh">
             <summary>
             Defines the delegate of a continuous function that depends on two arguments.
             </summary>
@@ -10090,7 +10090,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],UMapx.Core.IComplex)">
+        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],UMapx.Core.IComplex32)">
             <summary>
             Returns an array of function values.
             </summary>
@@ -10107,7 +10107,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Compute(System.Single[],UMapx.Core.Complex32[],UMapx.Core.IComplexMesh)">
+        <member name="M:UMapx.Core.Matrice.Compute(System.Single[],UMapx.Core.Complex32[],UMapx.Core.IComplex32Mesh)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -10116,7 +10116,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],System.Single[],UMapx.Core.IComplexMesh)">
+        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],System.Single[],UMapx.Core.IComplex32Mesh)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -10125,7 +10125,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],UMapx.Core.Complex32[],UMapx.Core.IComplexMesh)">
+        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],UMapx.Core.Complex32[],UMapx.Core.IComplex32Mesh)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -10142,7 +10142,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[0:,0:],UMapx.Core.IComplex)">
+        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[0:,0:],UMapx.Core.IComplex32)">
             <summary>
             Returns a matrix of function values.
             </summary>
