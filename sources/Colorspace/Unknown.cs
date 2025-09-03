@@ -132,7 +132,7 @@ namespace UMapx.Colorspace
 
         #region Conversion operators
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from AHSL to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -141,7 +141,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Hue, value.Saturation, value.Lightness);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to AHSL.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -151,7 +151,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from LAB to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -160,7 +160,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.L, value.A, value.B);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to LAB.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -170,7 +170,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from XYZ to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -179,7 +179,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.X, value.Y, value.Z);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to XYZ.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -189,7 +189,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from CMYK to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -198,7 +198,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Cyan, value.Magenta, value.Yellow);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to CMYK.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -208,7 +208,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from HSB to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -217,7 +217,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Hue, value.Saturation, value.Brightness);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to HSB.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -227,7 +227,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from HSL to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -236,7 +236,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Hue, value.Saturation, value.Lightness);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to HSL.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -246,7 +246,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from RGB to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -255,7 +255,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Red, value.Green, value.Blue);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to RGB.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -265,7 +265,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from RYB to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -274,7 +274,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Red, value.Yellow, value.Blue);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to RYB.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -284,7 +284,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from sRGB to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -293,7 +293,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Red, value.Green, value.Blue);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to sRGB.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -303,7 +303,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from YCbCr to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -312,7 +312,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Y, value.Cb, value.Cr);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to YCbCr.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -322,7 +322,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from YCgCo to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -331,7 +331,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Y, value.Cg, value.Co);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to YCgCo.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -341,7 +341,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from YDbDr to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -350,7 +350,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Y, value.Db, value.Dr);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to YDbDr.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -360,7 +360,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from YIQ to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -369,7 +369,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Y, value.I, value.Q);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to YIQ.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -379,7 +379,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from YPbPr to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -388,7 +388,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Y, value.Pb, value.Pr);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to YPbPr.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -398,7 +398,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from YUV to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -407,7 +407,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.Y, value.U, value.V);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to YUV.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -417,7 +417,7 @@ namespace UMapx.Colorspace
         }
 
         /// <summary>
-        /// Defines an explicit conversion Space в Unknown.
+        /// Defines an implicit conversion from Color to Unknown.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
@@ -426,7 +426,7 @@ namespace UMapx.Colorspace
             return new Unknown(value.R, value.G, value.B);
         }
         /// <summary>
-        /// Defines an explicit conversion Unknown в Space.
+        /// Defines an implicit conversion from Unknown to Color.
         /// </summary>
         /// <param name="value">Structure</param>
         /// <returns>Structure</returns>
