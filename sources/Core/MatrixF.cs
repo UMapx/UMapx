@@ -117,7 +117,7 @@ namespace UMapx.Core
         {
             if (MatrixF.IsSquare(m))
             {
-                // ?A = A'
+                // A = Aᵀ
                 if (MatrixF.IsEquals(m, m.Transponate()))
                 {
                     return true;
@@ -134,7 +134,7 @@ namespace UMapx.Core
         {
             if (MatrixF.IsSquare(m))
             {
-                // ?A' = -A:
+                // Aᵀ = -A:
                 if (MatrixF.IsEquals(m.Transponate(), m.ToNegate()))
                 {
                     return true;
@@ -203,7 +203,7 @@ namespace UMapx.Core
         {
             if (MatrixF.IsSquare(m))
             {
-                // ?A = A'
+                // A = Aᵀ
                 if (MatrixF.IsEquals(m, MatrixF.Hermitian(m)))
                 {
                     return true;
@@ -220,7 +220,7 @@ namespace UMapx.Core
         {
             if (MatrixF.IsSquare(m))
             {
-                // ?A' = -A
+                // Aᵀ = -A
                 if (MatrixF.IsEquals(m.Hermitian(), m.ToNegate()))
                 {
                     return true;
