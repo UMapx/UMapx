@@ -15,11 +15,11 @@ namespace UMapx.Decomposition
     public class NNMF
     {
         #region Private data
-        private float[,] w;  // W is m x r (weights)
-        private float[,] h;  // H is r x n (transformed data) (transposed)
-        private int n;   // number of input data vectors
-        private int m;   // dimension of input vector
-        private int r;   // dimension of output vector (reduced dimension)
+        private float[,] w;       // W is m x r (weights)
+        private float[,] h;       // H is r x n (transformed data) (transposed)
+        private readonly int n;   // number of input data vectors
+        private readonly int m;   // dimension of input vector
+        private readonly int r;   // dimension of output vector (reduced dimension)
         #endregion
 
         #region Initialize
