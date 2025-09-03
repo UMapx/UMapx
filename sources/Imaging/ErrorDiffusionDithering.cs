@@ -148,12 +148,12 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Propagates quantization error to adjacent pixels.
         /// </summary>
-        /// <param name="rError"></param>
-        /// <param name="gError"></param>
-        /// <param name="bError"></param>
-        /// <param name="ptr"></param>
+        /// <param name="rError">Red channel error.</param>
+        /// <param name="gError">Green channel error.</param>
+        /// <param name="bError">Blue channel error.</param>
+        /// <param name="ptr">Pointer to the current pixel.</param>
         protected unsafe void Diffuse(int rError, int gError, int bError, byte* ptr)
         {
             float edR;	// error diffusion
@@ -214,13 +214,13 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// 
+        /// Maps quantized channel values through a lookup table to a color.
         /// </summary>
-        /// <param name="red"></param>
-        /// <param name="green"></param>
-        /// <param name="blue"></param>
-        /// <param name="table"></param>
-        /// <returns></returns>
+        /// <param name="red">Red channel index.</param>
+        /// <param name="green">Green channel index.</param>
+        /// <param name="blue">Blue channel index.</param>
+        /// <param name="table">Lookup table.</param>
+        /// <returns>Quantized color.</returns>
         private Color GetColor(int red, int green, int blue, float[] table)
         {
             byte r = Maths.Byte(table[red]);

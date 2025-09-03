@@ -306,7 +306,9 @@
             stopEvent = null;
         }
 
-        // Worker thread
+        /// <summary>
+        /// Captures frames from the screen in a background thread.
+        /// </summary>
         private void WorkerThread( )
         {
             int width = region.Width;

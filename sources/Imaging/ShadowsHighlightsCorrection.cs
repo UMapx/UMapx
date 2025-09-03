@@ -100,10 +100,10 @@ namespace UMapx.Imaging
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Converts an intensity value to its gamma-adjusted counterpart.
         /// </summary>
-        /// <param name="v"></param>
-        /// <returns></returns>
+        /// <param name="v">Input intensity value.</param>
+        /// <returns>Gamma-corrected value.</returns>
         private float value2gamma(float v)
         {
             return (v - Intensity.logEpsilon) / 2.0f;

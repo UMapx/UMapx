@@ -68,6 +68,11 @@
             get { return HasStart && HasEnd; }
         }
 
+        /// <summary>
+        /// Appends new data into the internal buffer.
+        /// </summary>
+        /// <param name="content">Source byte array.</param>
+        /// <param name="readBytes">Number of bytes read.</param>
         private void Add(byte[] content, int readBytes)
         {
             Array.Copy(content, 0, _buffer, _totalReadBytes, readBytes);
@@ -97,6 +102,9 @@
             return readBytes;
         }
 
+        /// <summary>
+        /// Prevents buffer pointers from exceeding the buffer size.
+        /// </summary>
         private void EnsurePositionInRange()
         {
             bool isOutOfRange = _totalReadBytes > BUFFER_SIZE - READ_SIZE;
@@ -178,6 +186,9 @@
             }
         }
 
+        /// <summary>
+        /// Advances the current position to the end of the buffer content.
+        /// </summary>
         private void PositionAtEnd()
         {
             if (_boundary.HasValue)
@@ -191,11 +202,19 @@
             }
         }
 
+        /// <summary>
+        /// Searches for the JPEG frame header within the buffer.
+        /// </summary>
+        /// <returns>Index of the header or -1.</returns>
         private int FindHeader()
         {
             return ByteArrayUtils.Find(_buffer, _header, _position, RemainingBytes);
         }
 
+        /// <summary>
+        /// Searches for the boundary marker in the buffer.
+        /// </summary>
+        /// <returns>Index of boundary or -1.</returns>
         private int FindBoundary()
         {
             byte[] imageDelimiter;
@@ -217,11 +236,17 @@
             return ByteArrayUtils.Find(_buffer, (byte[])_boundary, 0, RemainingBytes);
         }
 
+        /// <summary>
+        /// Moves the current position to the end of the detected image.
+        /// </summary>
         private void PositionAtImageEnd()
         {
             _position = _imageBoundaryIndex;
         }
 
+        /// <summary>
+        /// Advances the current position just after the JPEG header.
+        /// </summary>
         private void PositionAfterHeader()
         {
             _position = _imageHeaderIndex + _header.Length;

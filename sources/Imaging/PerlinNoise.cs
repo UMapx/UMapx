@@ -109,10 +109,10 @@ namespace UMapx.Imaging
 
         #region Private static voids
         /// <summary>
-        /// 
+        /// Generates a deterministic pseudo-random noise value for one dimension.
         /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
+        /// <param name="x">Input coordinate.</param>
+        /// <returns>Noise value in the range [-1, 1].</returns>
         private static double Noise(int x)
         {
             int n = (x << 13) ^ x;
@@ -120,11 +120,11 @@ namespace UMapx.Imaging
             return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0);
         }
         /// <summary>
-        /// 
+        /// Generates a deterministic pseudo-random noise value for two dimensions.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <returns>Noise value in the range [-1, 1].</returns>
         private static double Noise(int x, int y)
         {
             int n = x + y * 57;
@@ -133,10 +133,10 @@ namespace UMapx.Imaging
             return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0);
         }
         /// <summary>
-        /// 
+        /// Computes smoothed 1D noise using cosine interpolation.
         /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
+        /// <param name="x">Input coordinate.</param>
+        /// <returns>Smoothed noise value.</returns>
         private static double SmoothedNoise(double x)
         {
             int xInt = (int)x;
@@ -145,11 +145,11 @@ namespace UMapx.Imaging
             return PerlinNoise.CosineInterpolate(Noise(xInt), Noise(xInt + 1), xFrac);
         }
         /// <summary>
-        /// 
+        /// Computes smoothed 2D noise using cosine interpolation.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <returns>Smoothed noise value.</returns>
         private static double SmoothedNoise(double x, double y)
         {
             // params
@@ -171,7 +171,13 @@ namespace UMapx.Imaging
             // y interpolation
             return PerlinNoise.CosineInterpolate(v1, v2, yFrac);
         }
-        ///
+        /// <summary>
+        /// Performs cosine interpolation between two values.
+        /// </summary>
+        /// <param name="x1">First value.</param>
+        /// <param name="x2">Second value.</param>
+        /// <param name="a">Interpolation factor.</param>
+        /// <returns>Interpolated value.</returns>
         private static double CosineInterpolate(double x1, double x2, double a)
         {
             double f = (1 - Math.Cos(a * Math.PI)) * 0.5;

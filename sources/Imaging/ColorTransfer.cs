@@ -175,12 +175,12 @@ namespace UMapx.Imaging
 
         #region Specials
         /// <summary>
-        /// 
+        /// Applies Reinhard's color transfer between two image representations.
         /// </summary>
-        /// <param name="target"></param>
-        /// <param name="source"></param>
-        /// <param name="factor"></param>
-        /// <param name="inverted"></param>
+        /// <param name="target">Target image channels.</param>
+        /// <param name="source">Source image channels.</param>
+        /// <param name="factor">Blending factor.</param>
+        /// <param name="inverted">If true, inverts the transfer effect.</param>
         private static void Reinhard(float[][,] target, float[][,] source, float factor = 1.0f, bool inverted = false)
         {
             // do not use for alpha channel

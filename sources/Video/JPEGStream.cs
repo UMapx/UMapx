@@ -419,9 +419,11 @@ namespace UMapx.Video
 			stopEvent = null;
 		}
 
-        // Worker thread
+        /// <summary>
+        /// Thread loop that retrieves JPEG frames from the network stream.
+        /// </summary>
         private void WorkerThread( )
-		{
+        {
             // buffer to read stream
 			byte[] buffer = new byte[bufferSize];
             // HTTP web request
