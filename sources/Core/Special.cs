@@ -1188,7 +1188,7 @@ namespace UMapx.Core
         /// <summary>
         /// Evaluates the Dirichlet eta function for real inputs via an alternating series.
         /// </summary>
-        /// <param name="s">Function argument.</param>
+        /// <param name="s">Function argument</param>
         [Obsolete]
         private static float ZetaEta(float s)
         {
@@ -1213,7 +1213,7 @@ namespace UMapx.Core
         /// <summary>
         /// Evaluates the Dirichlet eta function for complex inputs using an alternating series.
         /// </summary>
-        /// <param name="s">Function argument.</param>
+        /// <param name="s">Function argument</param>
         [Obsolete]
         private static Complex32 ZetaEta(Complex32 s)
         {
@@ -1239,7 +1239,7 @@ namespace UMapx.Core
         /// <summary>
         /// Computes the Riemann zeta function for real inputs using Hasse's series.
         /// </summary>
-        /// <param name="s">Function argument.</param>
+        /// <param name="s">Function argument</param>
         private static float ZetaHasse(float s)
         {
             // ζ(s) = S(s) / (1 - 2^{1-s}), with S(s) the Hasse inner sum
@@ -1277,7 +1277,7 @@ namespace UMapx.Core
         /// <summary>
         /// Computes the Riemann zeta function for complex inputs using Hasse's series.
         /// </summary>
-        /// <param name="s">Function argument.</param>
+        /// <param name="s">Function argument</param>
         private static Complex32 ZetaHasse(Complex32 s)
         {
             Complex32 two = new Complex32(2f, 0f);
@@ -1918,8 +1918,8 @@ namespace UMapx.Core
         /// <summary>
         /// Series expansion for the lower regularized incomplete gamma function.
         /// </summary>
-        /// <param name="s">Shape parameter.</param>
-        /// <param name="x">Upper limit of integration.</param>
+        /// <param name="s">Shape parameter</param>
+        /// <param name="x">Upper limit of integration</param>
         private static float LowerRegGammaSeries(float s, float x)
         {
             float term = 1f / s;    // n=0
@@ -1941,8 +1941,8 @@ namespace UMapx.Core
         /// <summary>
         /// Series expansion for the lower regularized incomplete gamma function with complex parameters.
         /// </summary>
-        /// <param name="s">Shape parameter.</param>
-        /// <param name="x">Upper limit of integration.</param>
+        /// <param name="s">Shape parameter</param>
+        /// <param name="x">Upper limit of integration</param>
         private static Complex32 LowerRegGammaSeries(Complex32 s, Complex32 x)
         {
             Complex32 term = Complex32.One / s; // n=0
@@ -1969,8 +1969,8 @@ namespace UMapx.Core
         /// <summary>
         /// Continued fraction evaluation for the upper incomplete gamma function.
         /// </summary>
-        /// <param name="s">Shape parameter.</param>
-        /// <param name="x">Lower limit of integration.</param>
+        /// <param name="s">Shape parameter</param>
+        /// <param name="x">Lower limit of integration</param>
         private static float UpperGammaCF(float s, float x)
         {
             const float tiny = 1e-30f;
@@ -2001,8 +2001,8 @@ namespace UMapx.Core
         /// <summary>
         /// Continued fraction evaluation for the upper incomplete gamma function with complex parameters.
         /// </summary>
-        /// <param name="s">Shape parameter.</param>
-        /// <param name="x">Lower limit of integration.</param>
+        /// <param name="s">Shape parameter</param>
+        /// <param name="x">Lower limit of integration</param>
         private static Complex32 UpperGammaCF(Complex32 s, Complex32 x)
         {
             const float tiny = 1e-30f;
@@ -2493,7 +2493,7 @@ namespace UMapx.Core
         /// <summary>
         /// Approximates the error function for complex arguments.
         /// </summary>
-        /// <param name="z">Complex value.</param>
+        /// <param name="z">Complex value</param>
         private static Complex ErfApprox(Complex z)
         {
             double az = Complex.Abs(z);
@@ -3720,7 +3720,7 @@ namespace UMapx.Core
         /// <summary>
         /// Integrates a real function over [0, π] using 16-point Gauss–Legendre quadrature.
         /// </summary>
-        /// <param name="f">Function to integrate.</param>
+        /// <param name="f">Function to integrate</param>
         private static double GL0Pi(Func<double, double> f)
         {
             double[] u = new double[] {
@@ -3747,7 +3747,7 @@ namespace UMapx.Core
         /// <summary>
         /// Integrates a complex function over [0, π] using 16-point Gauss–Legendre quadrature.
         /// </summary>
-        /// <param name="f">Function to integrate.</param>
+        /// <param name="f">Function to integrate</param>
         private static Complex GL0PiC(Func<double, Complex> f)
         {
             double[] u = new double[] {
@@ -3775,8 +3775,8 @@ namespace UMapx.Core
         /// <summary>
         /// Integrates a real function over [0, T] using 16-point Gauss–Legendre quadrature.
         /// </summary>
-        /// <param name="f">Function to integrate.</param>
-        /// <param name="T">Upper integration limit.</param>
+        /// <param name="f">Function to integrate</param>
+        /// <param name="T">Upper integration limit</param>
         private static double GL0T(Func<double, double> f, double T)
         {
             double[] u = new double[] {

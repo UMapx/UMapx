@@ -12153,6 +12153,30 @@
             <param name="s">Value</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Special.ZetaEta(System.Single)">
+            <summary>
+            Evaluates the Dirichlet eta function for real inputs via an alternating series.
+            </summary>
+            <param name="s">Function argument</param>
+        </member>
+        <member name="M:UMapx.Core.Special.ZetaEta(UMapx.Core.Complex32)">
+            <summary>
+            Evaluates the Dirichlet eta function for complex inputs using an alternating series.
+            </summary>
+            <param name="s">Function argument</param>
+        </member>
+        <member name="M:UMapx.Core.Special.ZetaHasse(System.Single)">
+            <summary>
+            Computes the Riemann zeta function for real inputs using Hasse's series.
+            </summary>
+            <param name="s">Function argument</param>
+        </member>
+        <member name="M:UMapx.Core.Special.ZetaHasse(UMapx.Core.Complex32)">
+            <summary>
+            Computes the Riemann zeta function for complex inputs using Hasse's series.
+            </summary>
+            <param name="s">Function argument</param>
+        </member>
         <member name="M:UMapx.Core.Special.Gamma(System.Single)">
             <summary>
             Returns the value of the Euler Gamma function: Г(z).
@@ -12292,6 +12316,34 @@
             <summary>
             Lanczos log-gamma for complex z with Re(z) ≥ 0.5 (principal branch).
             </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.LowerRegGammaSeries(System.Single,System.Single)">
+            <summary>
+            Series expansion for the lower regularized incomplete gamma function.
+            </summary>
+            <param name="s">Shape parameter</param>
+            <param name="x">Upper limit of integration</param>
+        </member>
+        <member name="M:UMapx.Core.Special.LowerRegGammaSeries(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Series expansion for the lower regularized incomplete gamma function with complex parameters.
+            </summary>
+            <param name="s">Shape parameter</param>
+            <param name="x">Upper limit of integration</param>
+        </member>
+        <member name="M:UMapx.Core.Special.UpperGammaCF(System.Single,System.Single)">
+            <summary>
+            Continued fraction evaluation for the upper incomplete gamma function.
+            </summary>
+            <param name="s">Shape parameter</param>
+            <param name="x">Lower limit of integration</param>
+        </member>
+        <member name="M:UMapx.Core.Special.UpperGammaCF(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Continued fraction evaluation for the upper incomplete gamma function with complex parameters.
+            </summary>
+            <param name="s">Shape parameter</param>
+            <param name="x">Lower limit of integration</param>
         </member>
         <member name="M:UMapx.Core.Special.Gerf(System.Single,System.Int32)">
             <summary>
@@ -12508,6 +12560,12 @@
             <param name="a">The lower boundary of the normalization</param>
             <param name="b">The upper limit of the normalization</param>
             <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ErfApprox(System.Numerics.Complex)">
+            <summary>
+            Approximates the error function for complex arguments.
+            </summary>
+            <param name="z">Complex value</param>
         </member>
         <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
             <summary>
@@ -12819,6 +12877,25 @@
             <param name="x">Value</param>
             <param name="a">Value</param>
             <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GL0Pi(System.Func{System.Double,System.Double})">
+            <summary>
+            Integrates a real function over [0, π] using 16-point Gauss–Legendre quadrature.
+            </summary>
+            <param name="f">Function to integrate</param>
+        </member>
+        <member name="M:UMapx.Core.Special.GL0PiC(System.Func{System.Double,System.Numerics.Complex})">
+            <summary>
+            Integrates a complex function over [0, π] using 16-point Gauss–Legendre quadrature.
+            </summary>
+            <param name="f">Function to integrate</param>
+        </member>
+        <member name="M:UMapx.Core.Special.GL0T(System.Func{System.Double,System.Double},System.Double)">
+            <summary>
+            Integrates a real function over [0, T] using 16-point Gauss–Legendre quadrature.
+            </summary>
+            <param name="f">Function to integrate</param>
+            <param name="T">Upper integration limit</param>
         </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
             <summary>
@@ -29262,6 +29339,51 @@
         <member name="M:UMapx.Video.MJPEGStream.WorkerThread">
             <summary>
             Thread procedure that downloads and parses the MJPEG stream.
+            </summary>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.GetResponse">
+            <summary>
+            Creates and configures the HTTP request and returns its response.
+            </summary>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.SetUserAgent(System.Net.HttpWebRequest)">
+            <summary>
+            Assigns the User-Agent header if one is specified.
+            </summary>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.SetProxy(System.Net.HttpWebRequest)">
+            <summary>
+            Assigns the proxy to the request when provided.
+            </summary>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.SetRequestTimeout(System.Net.HttpWebRequest)">
+            <summary>
+            Applies the timeout value to the web request.
+            </summary>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.SetCredentials(System.Net.HttpWebRequest)">
+            <summary>
+            Sets network credentials on the request if username and password are specified.
+            </summary>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.SetConnectionGroupName(System.Net.HttpWebRequest)">
+            <summary>
+            Sets a unique connection group name when using separate connections.
+            </summary>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.SetBasicAuthentication(System.Net.HttpWebRequest)">
+            <summary>
+            Adds the HTTP Basic authentication header to the request.
+            </summary>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.GetResponseStream(System.Net.WebResponse)">
+            <summary>
+            Retrieves the response stream and wraps it with a timeout stream if required.
+            </summary>
+        </member>
+        <member name="M:UMapx.Video.MJPEGStream.SetTimeout(System.IO.Stream)">
+            <summary>
+            Configures read timeout for the specified stream.
             </summary>
         </member>
         <member name="M:UMapx.Video.MJPEGStream.Dispose">
