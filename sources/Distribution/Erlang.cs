@@ -152,7 +152,7 @@ namespace UMapx.Distribution
         {
             if (x < 0)
             {
-                return float.NaN;
+                return 0;
             }
             return (float)Math.Pow(lambda, k) * (float)Math.Pow(x, k - 1) * (float)Math.Exp(-lambda * x) / (float)Special.Factorial(k - 1);
         }
@@ -165,7 +165,7 @@ namespace UMapx.Distribution
         {
             if (x < 0)
             {
-                return float.NaN;
+                return 0;
             }
             return Special.GammaIncomplete(k, lambda * x) / (float)Special.Factorial(k - 1);
         }

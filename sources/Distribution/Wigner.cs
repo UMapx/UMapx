@@ -15,7 +15,7 @@ namespace UMapx.Distribution
     {
         #region Private data
         private float r;
-        #endregion;
+        #endregion
 
         #region Wigner components
         /// <summary>
@@ -120,10 +120,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            if (Math.Abs(x) > r)
-            {
-                return float.NaN;
-            }
+            if (x <= -r || x >= r) return 0f;
 
             float r2 = r * r, x2 = x * x;
             float a = (float)Math.Sqrt(r2 - x2);
@@ -137,10 +134,8 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            if (Math.Abs(x) > r)
-            {
-                return float.NaN;
-            }
+            if (x <= -r) return 0f;
+            if (x >= r) return 1f;
 
             float r2 = r * r, x2 = x * x;
             float a = (float)Math.Sqrt(r2 - x2);
