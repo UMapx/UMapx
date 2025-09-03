@@ -36,7 +36,7 @@ namespace UMapx.Analysis
             }
             set
             {
-                this.eps = Maths.Float(value);
+                this.eps = MathF.Float(value);
             }
         }
         /// <summary>
@@ -81,8 +81,8 @@ namespace UMapx.Analysis
 
             for (int i = 0; i < short.MaxValue; i++)
             {
-                x1 = b - (b - a) / Maths.Phi;
-                x2 = a + (b - a) / Maths.Phi;
+                x1 = b - (b - a) / MathF.Phi;
+                x2 = a + (b - a) / MathF.Phi;
 
                 if (f(x1) > f(x2))
                     a = x1;
@@ -115,8 +115,8 @@ namespace UMapx.Analysis
 
             for (int i = 0; i < short.MaxValue; i++)
             {
-                x1 = b - (b - a) / Maths.Phi;
-                x2 = a + (b - a) / Maths.Phi;
+                x1 = b - (b - a) / MathF.Phi;
+                x2 = a + (b - a) / MathF.Phi;
 
                 if (f(x1) < f(x2))
                     a = x1;

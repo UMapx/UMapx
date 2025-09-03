@@ -122,10 +122,10 @@ namespace UMapx.Imaging
                         k = jstride + i * 4;
 
                         // recording model:
-                        p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
-                        p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
-                        p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                        p[k + 0] = MathF.Byte(x[j, i] * 255.0f);
+                        p[k + 1] = MathF.Byte(y[j, i] * 255.0f);
+                        p[k + 2] = MathF.Byte(z[j, i] * 255.0f);
+                        p[k + 3] = MathF.Byte(a[j, i] * 255.0f);
                     }
                 });
             }
@@ -141,9 +141,9 @@ namespace UMapx.Imaging
                         k = jstride + i * 4;
 
                         // recording model:
-                        p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
-                        p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
-                        p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
+                        p[k + 0] = MathF.Byte(x[j, i] * 255.0f);
+                        p[k + 1] = MathF.Byte(y[j, i] * 255.0f);
+                        p[k + 2] = MathF.Byte(z[j, i] * 255.0f);
                         p[k + 3] = (byte)255;
                     }
                 });
@@ -187,10 +187,10 @@ namespace UMapx.Imaging
                         k = jstride + i * 4;
 
                         // recording model:
-                        p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
-                        p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
-                        p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                        p[k + 0] = MathF.Byte(x[j, i] * 255.0f);
+                        p[k + 1] = MathF.Byte(y[j, i] * 255.0f);
+                        p[k + 2] = MathF.Byte(z[j, i] * 255.0f);
+                        p[k + 3] = MathF.Byte(a[j, i] * 255.0f);
                     }
                 });
             }
@@ -206,9 +206,9 @@ namespace UMapx.Imaging
                         k = jstride + i * 4;
 
                         // recording model:
-                        p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
-                        p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
-                        p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
+                        p[k + 0] = MathF.Byte(x[j, i] * 255.0f);
+                        p[k + 1] = MathF.Byte(y[j, i] * 255.0f);
+                        p[k + 2] = MathF.Byte(z[j, i] * 255.0f);
                         p[k + 3] = (byte)255;
                     }
                 });
@@ -349,7 +349,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                        p[k + 3] = MathF.Byte(a[j, i] * 255.0f);
                     }
                 });
             }
@@ -421,7 +421,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                        p[k + 3] = MathF.Byte(a[j, i] * 255.0f);
                     }
                 });
             }
@@ -586,7 +586,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                        p[k + 3] = MathF.Byte(a[j, i] * 255.0f);
                     }
                 });
             }
@@ -658,7 +658,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                        p[k + 3] = MathF.Byte(a[j, i] * 255.0f);
                     }
                 });
             }
@@ -821,7 +821,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                        p[k + 3] = MathF.Byte(a[j, i] * 255.0f);
                     }
                 });
             }
@@ -893,7 +893,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                        p[k + 3] = MathF.Byte(a[j, i] * 255.0f);
                     }
                 });
             }
@@ -991,7 +991,7 @@ namespace UMapx.Imaging
                 for (i = 0; i < width; i++)
                 {
                     k = jstride + i * 4;
-                    p[k + 2] = p[k + 1] = p[k] = Maths.Byte(m[j, i] * 255.0f);
+                    p[k + 2] = p[k + 1] = p[k] = MathF.Byte(m[j, i] * 255.0f);
                     p[k + 3] = 255;
                 }
             });
@@ -1017,7 +1017,7 @@ namespace UMapx.Imaging
                 for (i = 0; i < width; i++)
                 {
                     k = jstride + i * 4;
-                    p[k + 2] = p[k + 1] = p[k] = Maths.Byte(m[j, i] * 255.0f);
+                    p[k + 2] = p[k + 1] = p[k] = MathF.Byte(m[j, i] * 255.0f);
                     p[k + 3] = 255;
                 }
             });

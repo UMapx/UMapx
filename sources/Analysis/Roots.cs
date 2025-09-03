@@ -39,7 +39,7 @@ namespace UMapx.Analysis
             }
             set
             {
-                this.eps = Maths.Float(value);
+                this.eps = MathF.Float(value);
             }
         }
         /// <summary>
@@ -84,7 +84,7 @@ namespace UMapx.Analysis
 
             // Eigen-value decomposition for
             // companion matrix:
-            eig = new EVD(Matrice.Companion(c), this.eps);
+            eig = new EVD(MatrixF.Companion(c), this.eps);
 
             // Complex result:
             return eig.D;

@@ -117,7 +117,7 @@ namespace UMapx.Transform
         private static float BesselZeroJ(int a, int k)
         {
             float nu = a;
-            float x = (k + 0.5f * nu - 0.25f) * Maths.Pi;
+            float x = (k + 0.5f * nu - 0.25f) * MathF.Pi;
             float eps = 1e-16f;
             int iterations = 120;
 
@@ -149,7 +149,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Matrice.Dot(A, U);
+            return MatrixF.Dot(A, U);
         }
         /// <summary>
         /// Backward Hankel transform.
@@ -160,7 +160,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Matrice.Dot(B, U.Transponate());
+            return MatrixF.Dot(B, U.Transponate());
         }
         /// <summary>
         /// Forward Hankel transform.
@@ -213,7 +213,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Matrice.Dot(A, U);
+            return MatrixF.Dot(A, U);
         }
         /// <summary>
         /// Backward Hankel transform.
@@ -224,7 +224,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Matrice.Dot(B, U.Transponate());
+            return MatrixF.Dot(B, U.Transponate());
         }
         /// <summary>
         /// Forward Hankel transform.

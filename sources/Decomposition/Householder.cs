@@ -34,7 +34,7 @@ namespace UMapx.Decomposition
         {
             // properties:
             this.n = v.Length;
-            this.Re = Matrice.One(n);
+            this.Re = MatrixF.One(n);
             this.Im = new float[n];
 
             // reflection to 
@@ -47,7 +47,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Symmetric matrix</param>
         public Householder(float[,] A)
         {
-            if (!Matrice.IsSymmetric(A))
+            if (!MatrixF.IsSymmetric(A))
                 throw new ArgumentException("The matrix must be symmetric");
 
             // properties:
@@ -112,7 +112,7 @@ namespace UMapx.Decomposition
             // [2] G. W. Stewart, Matrix Algorithms: Volume 1: Basic Decompositions, SIAM, xix+458, 1998.
             // 
             // Get Householder vector:
-            float[] w = Matrice.Householder(v);
+            float[] w = MatrixF.Householder(v);
 
             // Get Householder matrix:
             int n = w.Length, i, j;

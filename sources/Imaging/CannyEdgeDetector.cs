@@ -213,7 +213,7 @@ namespace UMapx.Imaging
                     float val = 0;
                     for (int k = -radius; k <= radius; k++)
                     {
-                        int xx = Maths.Range(x + k, 0, width - 1);
+                        int xx = MathF.Range(x + k, 0, width - 1);
                         val += src[y, xx] * kernel[k + radius];
                     }
                     temp[y, x] = val;
@@ -228,7 +228,7 @@ namespace UMapx.Imaging
                     float val = 0;
                     for (int k = -radius; k <= radius; k++)
                     {
-                        int yy = Maths.Range(y + k, 0, height - 1);
+                        int yy = MathF.Range(y + k, 0, height - 1);
                         val += temp[yy, x] * kernel[k + radius];
                     }
                     dst[y, x] = val;
@@ -278,7 +278,7 @@ namespace UMapx.Imaging
 
                     gx[y, x] = sumX;
                     gy[y, x] = sumY;
-                    magnitude[y, x] = Maths.Sqrt(sumX * sumX + sumY * sumY);
+                    magnitude[y, x] = MathF.Sqrt(sumX * sumX + sumY * sumY);
                     angle[y, x] = (float)Math.Atan2(sumY, sumX);
                 }
             });
@@ -299,7 +299,7 @@ namespace UMapx.Imaging
             {
                 for (int x = 1; x < width - 1; x++)
                 {
-                    float angle = dir[y, x] * (180f / Maths.Pi);
+                    float angle = dir[y, x] * (180f / MathF.Pi);
                     if (angle < 0) angle += 180f;
 
                     float current = mag[y, x];

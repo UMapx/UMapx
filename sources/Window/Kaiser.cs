@@ -50,7 +50,7 @@ namespace UMapx.Window
             float u = 2 * x / (frameSize - 1);
             float r = 1 - u * u;
             float v = r >= 0 ? (float)Math.Sqrt(1 - u * u) : 0;
-            float z = Maths.Pi * this.a;
+            float z = MathF.Pi * this.a;
             float q = Special.I(z * v, 0);
             return q / Special.I(z, 0);
         }
@@ -61,7 +61,7 @@ namespace UMapx.Window
         public override float[] GetWindow(int frameSize)
         {
             float t = (frameSize - 1) / 2.0f;
-            float[] x = Matrice.Compute(-t, t, 1);
+            float[] x = MatrixF.Compute(-t, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

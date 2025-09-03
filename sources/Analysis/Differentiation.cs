@@ -130,7 +130,7 @@ namespace UMapx.Analysis
             }
 
             // result
-            return sum / Maths.Pow(h, order);
+            return sum / MathF.Pow(h, order);
         }
         /// <summary>
         /// Returns the value of a derived function.
@@ -192,7 +192,7 @@ namespace UMapx.Analysis
             }
 
             // matrix invert
-            deltas = Matrice.Invert(deltas);
+            deltas = MatrixF.Invert(deltas);
 
             //// rounding
             //float fac = (float)Special.Factorial(points);

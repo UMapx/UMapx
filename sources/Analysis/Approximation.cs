@@ -349,7 +349,7 @@ namespace UMapx.Analysis
             // log-scale:
             for (i = 0; i < n; i++)
             {
-                xa[i] = Maths.Log(x[i]);
+                xa[i] = MathF.Log(x[i]);
             }
 
             // approximation:
@@ -384,7 +384,7 @@ namespace UMapx.Analysis
             // log-scale:
             for (i = 0; i < n; i++)
             {
-                xa[i] = Maths.Log(x[i]);
+                xa[i] = MathF.Log(x[i]);
             }
 
             // approximation:
@@ -419,7 +419,7 @@ namespace UMapx.Analysis
             // log-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Log(y[i], Maths.E);
+                ya[i] = MathF.Log(y[i], MathF.E);
             }
 
             // approximation:
@@ -429,7 +429,7 @@ namespace UMapx.Analysis
             // exponential-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Pow(Maths.E, p[i]);
+                ya[i] = MathF.Pow(MathF.E, p[i]);
             }
 
             error = LeastSquaresOptions.Error(ya, y);
@@ -461,7 +461,7 @@ namespace UMapx.Analysis
             // log-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Log(y[i], Maths.E);
+                ya[i] = MathF.Log(y[i], MathF.E);
             }
 
             // approximation:
@@ -471,7 +471,7 @@ namespace UMapx.Analysis
             // exponential-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Pow(Maths.E, p[i]);
+                ya[i] = MathF.Pow(MathF.E, p[i]);
             }
 
             error = LeastSquaresOptions.Error(ya, y);
@@ -504,8 +504,8 @@ namespace UMapx.Analysis
             // log-scale:
             for (i = 0; i < n; i++)
             {
-                xa[i] = Maths.Log(x[i]);
-                ya[i] = Maths.Log(y[i]);
+                xa[i] = MathF.Log(x[i]);
+                ya[i] = MathF.Log(y[i]);
             }
 
             // approximation:
@@ -515,7 +515,7 @@ namespace UMapx.Analysis
             // exponential-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Exp(p[i]);
+                ya[i] = MathF.Exp(p[i]);
             }
 
             error = LeastSquaresOptions.Error(ya, y);
@@ -548,8 +548,8 @@ namespace UMapx.Analysis
             // log-scale:
             for (i = 0; i < n; i++)
             {
-                xa[i] = Maths.Log(x[i]);
-                ya[i] = Maths.Log(y[i]);
+                xa[i] = MathF.Log(x[i]);
+                ya[i] = MathF.Log(y[i]);
             }
 
             // approximation:
@@ -559,7 +559,7 @@ namespace UMapx.Analysis
             // exponential-scale:
             for (i = 0; i < n; i++)
             {
-                ya[i] = Maths.Exp(p[i]);
+                ya[i] = MathF.Exp(p[i]);
             }
 
             error = LeastSquaresOptions.Error(ya, y);

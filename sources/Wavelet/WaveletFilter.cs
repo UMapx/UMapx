@@ -51,13 +51,13 @@ namespace UMapx.Wavelet
                 n = b.GetLength(0);
                 m = b.GetLength(1);
 
-                if (!Maths.IsEven(n)) n--; // ?
-                if (!Maths.IsEven(m)) m--; // ?
+                if (!MathF.IsEven(n)) n--; // ?
+                if (!MathF.IsEven(m)) m--; // ?
 
                 // visu_shrink
-                var bb = Matrice.Reshape(b, b.Length).ToAbs();
+                var bb = MatrixF.Reshape(b, b.Length).ToAbs();
                 Array.Sort(bb);
-                var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(Maths.Log2(n * m));
+                var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(MathF.Log2(n * m));
 
                 for (int y = 0; y < n; y++)
                 {
@@ -98,12 +98,12 @@ namespace UMapx.Wavelet
                 var b = B[i];
                 n = b.GetLength(0);
 
-                if (!Maths.IsEven(n)) n--; // ?
+                if (!MathF.IsEven(n)) n--; // ?
 
                 // visu_shrink
                 var bb = b.ToAbs();
                 Array.Sort(bb);
-                var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(Maths.Log2(n));
+                var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(MathF.Log2(n));
 
                 for (int y = 0; y < n; y++)
                 {
@@ -138,19 +138,19 @@ namespace UMapx.Wavelet
                 n = b.GetLength(0);
                 m = b.GetLength(1);
 
-                if (!Maths.IsEven(n)) n--; // ?
-                if (!Maths.IsEven(m)) m--; // ?
+                if (!MathF.IsEven(n)) n--; // ?
+                if (!MathF.IsEven(m)) m--; // ?
 
                 // visu_shrink
-                var bb = Matrice.Reshape(b, b.Length).ToAbs();
+                var bb = MatrixF.Reshape(b, b.Length).ToAbs();
                 Array.Sort(bb);
-                var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(Maths.Log2(n * m));
+                var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(MathF.Log2(n * m));
 
                 for (int y = 0; y < n; y++)
                 {
                     for (int x = 0; x < m; x++)
                     {
-                        b[y, x] = Maths.Abs(b[y, x]) > median ? b[y, x] : 0;
+                        b[y, x] = MathF.Abs(b[y, x]) > median ? b[y, x] : 0;
                     }
                 }
 
@@ -185,16 +185,16 @@ namespace UMapx.Wavelet
                 var b = B[i];
                 n = b.GetLength(0);
 
-                if (!Maths.IsEven(n)) n--; // ?
+                if (!MathF.IsEven(n)) n--; // ?
 
                 // visu_shrink
                 var bb = b.ToAbs();
                 Array.Sort(bb);
-                var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(Maths.Log2(n));
+                var median = Math.Sqrt(bb[bb.Length / 2]) * Math.Sqrt(MathF.Log2(n));
 
                 for (int y = 0; y < n; y++)
                 {
-                    b[y] = Maths.Abs(b[y]) > median ? b[y] : 0;
+                    b[y] = MathF.Abs(b[y]) > median ? b[y] : 0;
                 }
 
                 B[i] = b;

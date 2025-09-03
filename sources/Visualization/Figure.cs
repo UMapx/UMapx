@@ -69,7 +69,7 @@ namespace UMapx.Visualization
                 if (value.Min == value.Max)
                     throw new ArgumentOutOfRangeException("Start and end points cannot be the same");
 
-                if (Maths.IsSingular(value.Min) || Maths.IsSingular(value.Max))
+                if (MathF.IsSingular(value.Min) || MathF.IsSingular(value.Max))
                     throw new ArgumentOutOfRangeException("Start of end points cannot be singular");
 
                 _xmin = value.Min; _xmax = value.Max;
@@ -89,7 +89,7 @@ namespace UMapx.Visualization
                 if (value.Min == value.Max)
                     throw new ArgumentOutOfRangeException("Start and end points cannot be the same");
 
-                if (Maths.IsSingular(value.Min) || Maths.IsSingular(value.Max))
+                if (MathF.IsSingular(value.Min) || MathF.IsSingular(value.Max))
                     throw new ArgumentOutOfRangeException("Start of end points cannot be singular");
 
                 _ymin = value.Min; _ymax = value.Max;
@@ -193,10 +193,10 @@ namespace UMapx.Visualization
                     ymax = Math.Max(ymax, pane.Y.GetMax() ?? ymax);
                 }
 
-                _xmin = Maths.IsSingular(xmin) ? _xmin : xmin;
-                _xmax = Maths.IsSingular(xmax) ? _xmax : xmax;
-                _ymin = Maths.IsSingular(ymin) ? _ymin : ymin;
-                _ymax = Maths.IsSingular(ymax) ? _ymax : ymax;
+                _xmin = MathF.IsSingular(xmin) ? _xmin : xmin;
+                _xmax = MathF.IsSingular(xmax) ? _xmax : xmax;
+                _ymin = MathF.IsSingular(ymin) ? _ymin : ymin;
+                _ymax = MathF.IsSingular(ymax) ? _ymax : ymax;
             }
             else
             {
@@ -1066,7 +1066,7 @@ namespace UMapx.Visualization
             if (v == 0 /*|| Maths.Abs(v) < 1e-8f*/)
                 return "0";
 
-            float a = Maths.Abs(v);
+            float a = MathF.Abs(v);
 
             if (a >= 1e4f || (a > 0f && a < 1e-3f))
                 return v.ToString("0.##E+0");

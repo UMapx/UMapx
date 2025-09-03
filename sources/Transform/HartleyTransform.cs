@@ -74,7 +74,7 @@ namespace UMapx.Transform
         {
             int j, i;
             float[,] H = new float[n, n];
-            float s = (2.0f * Maths.Pi) / n;
+            float s = (2.0f * MathF.Pi) / n;
 
             for (i = 0; i < n; i++)
             {
@@ -98,11 +98,11 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HartleyTransform.Matrix(N);
-            float[] B = Matrice.Dot(A, U);
+            float[] B = MatrixF.Dot(A, U);
 
             if (normalized)
             {
-                B = Matrice.Div(B, Maths.Sqrt(N));
+                B = MatrixF.Div(B, MathF.Sqrt(N));
             }
 
             return B;
@@ -116,11 +116,11 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HartleyTransform.Matrix(N);
-            float[] A = Matrice.Dot(B, U.Transponate());
+            float[] A = MatrixF.Dot(B, U.Transponate());
 
             if (normalized)
             {
-                A = Matrice.Div(A, Maths.Sqrt(N));
+                A = MatrixF.Div(A, MathF.Sqrt(N));
             }
 
             return A;
@@ -140,17 +140,17 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transponate());
-                B = normalized ? B.Div(Maths.Sqrt(N * M)) : B;
+                B = normalized ? B.Div(MathF.Sqrt(N * M)) : B;
             }
             else if (direction == Direction.Vertical)
             {
                 B = U.Dot(A);
-                B = normalized ? B.Div(Maths.Sqrt(N)) : B;
+                B = normalized ? B.Div(MathF.Sqrt(N)) : B;
             }
             else
             {
                 B = A.Dot(V.Transponate());
-                B = normalized ? B.Div(Maths.Sqrt(M)) : B;
+                B = normalized ? B.Div(MathF.Sqrt(M)) : B;
             }
 
             return B;
@@ -170,17 +170,17 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 A = U.Transponate().Dot(B).Dot(V);
-                A = normalized ? A.Div(Maths.Sqrt(N * M)) : A;
+                A = normalized ? A.Div(MathF.Sqrt(N * M)) : A;
             }
             else if (direction == Direction.Vertical)
             {
                 A = U.Transponate().Dot(B);
-                A = normalized ? A.Div(Maths.Sqrt(N)) : A;
+                A = normalized ? A.Div(MathF.Sqrt(N)) : A;
             }
             else
             {
                 A = B.Dot(V);
-                A = normalized ? A.Div(Maths.Sqrt(M)) : A;
+                A = normalized ? A.Div(MathF.Sqrt(M)) : A;
             }
 
             return A;
@@ -194,11 +194,11 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HartleyTransform.Matrix(N);
-            Complex32[] B = Matrice.Dot(A, U);
+            Complex32[] B = MatrixF.Dot(A, U);
 
             if (normalized)
             {
-                B = Matrice.Div(B, Math.Sqrt(N));
+                B = MatrixF.Div(B, Math.Sqrt(N));
             }
 
             return B;
@@ -212,11 +212,11 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HartleyTransform.Matrix(N);
-            Complex32[] A = Matrice.Dot(B, U.Transponate());
+            Complex32[] A = MatrixF.Dot(B, U.Transponate());
 
             if (normalized)
             {
-                A = Matrice.Div(A, Math.Sqrt(N));
+                A = MatrixF.Div(A, Math.Sqrt(N));
             }
 
             return A;

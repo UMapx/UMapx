@@ -125,7 +125,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (1.0f + 3.0f * Maths.Gamma + (float)Math.Log(16 * Math.PI * scale * scale)) / 2.0f;
+                return (1.0f + 3.0f * MathF.Gamma + (float)Math.Log(16 * Math.PI * scale * scale)) / 2.0f;
             }
         }
         /// <summary>

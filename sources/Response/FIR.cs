@@ -93,7 +93,7 @@ namespace UMapx.Response
 
                 for (i = 0; i < length; i++)
                 {
-                    K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i);
+                    K1 += b[i] * MathF.Exp(-MathF.I * w[j] * i);
                 }
                 amplitude[j] = K1.Abs;
             }
@@ -116,7 +116,7 @@ namespace UMapx.Response
 
                 for (i = 0; i < length; i++)
                 {
-                    K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i);
+                    K1 += b[i] * MathF.Exp(-MathF.I * w[j] * i);
                 }
                 phase[j] = K1.Angle;
             }
@@ -135,7 +135,7 @@ namespace UMapx.Response
 
             for (i = 0; i < length; i++)
             {
-                K1 += b[i] * Maths.Exp(-Maths.I * w * i);
+                K1 += b[i] * MathF.Exp(-MathF.I * w * i);
             }
             return K1.Abs;
         }
@@ -152,7 +152,7 @@ namespace UMapx.Response
 
             for (i = 0; i < length; i++)
             {
-                K1 += b[i] * Maths.Exp(-Maths.I * w * i);
+                K1 += b[i] * MathF.Exp(-MathF.I * w * i);
             }
             return K1.Angle;
         }

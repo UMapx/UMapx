@@ -78,7 +78,7 @@ namespace UMapx.Core
             }
             else if (-a <= x && x < a)
             {
-                float pix = Maths.Pi * x;
+                float pix = MathF.Pi * x;
                 return a * (float)Math.Sin(pix) * (float)Math.Sin(pix / a) / (pix * pix);
             }
             return 0;
@@ -254,7 +254,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Sigmoid(float x)
         {
-            return 2.0f / Maths.Pi / (float)(Math.Exp(x) + Math.Exp(-x));
+            return 2.0f / MathF.Pi / (float)(Math.Exp(x) + Math.Exp(-x));
         }
         #endregion
 

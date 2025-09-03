@@ -117,7 +117,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                float a = Maths.Sqrt2 / 2;
+                float a = MathF.Sqrt2 / 2;
                 float b = ((2 * mu - 1) * omega) / mu;
                 return a * (float)Math.Sqrt(b);
             }

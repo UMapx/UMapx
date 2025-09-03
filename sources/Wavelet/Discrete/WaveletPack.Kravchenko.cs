@@ -96,7 +96,7 @@ namespace UMapx.Wavelet
                 };
 
                 // Kravchenko orthogonal wavelet:
-                return WaveletPack.Create(Matrice.Concat(left.Flip(), right));
+                return WaveletPack.Create(MatrixF.Concat(left.Flip(), right));
             }
         }
         #endregion

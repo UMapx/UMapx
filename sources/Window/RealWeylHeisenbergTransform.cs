@@ -43,7 +43,7 @@ namespace UMapx.Window
                 throw new ArgumentException("Number of frequency shifts not defined correctly");
 
             float[,] G = new float[2 * N, 2 * N];
-            Complex32 c = 2 * Maths.Pi * Maths.I;
+            Complex32 c = 2 * MathF.Pi * MathF.I;
             float a = M / 2.0f;
 
             Parallel.For(0, N, n =>
@@ -54,16 +54,16 @@ namespace UMapx.Window
 
                 for (k = 0; k < M; k++)
                 {
-                    exp = Maths.Exp(c * k / M * phase);
+                    exp = MathF.Exp(c * k / M * phase);
 
                     for (l = 0; l < L; l++)
                     {
                         u = l * M + k;
-                        i = Maths.Mod(n - l * M, N);
-                        j = Maths.Mod(n + M / 2 - l * M, N);
+                        i = MathF.Mod(n - l * M, N);
+                        j = MathF.Mod(n + M / 2 - l * M, N);
 
                         var G1 =           g0[i] * exp;
-                        var G2 = Maths.I * g0[j] * exp;
+                        var G2 = MathF.I * g0[j] * exp;
 
                         // implements the [2N, 2N] WH matrix
                         // https://github.com/asiryan/Weyl-Heisenberg-Toolbox/blob/master/matlab/toolbox_scripts/weylhzr.m
@@ -124,7 +124,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[] B = Matrice.Dot(A, U.Transponate());
+            float[] B = MatrixF.Dot(A, U.Transponate());
             return B;
         }
         /// <summary>
@@ -136,7 +136,7 @@ namespace UMapx.Window
         {
             int N = B.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[] A = Matrice.Dot(B, U);
+            float[] A = MatrixF.Dot(B, U);
             return A;
         }
         /// <summary>
@@ -200,7 +200,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] B = Matrice.Dot(A, U.Transponate());
+            Complex32[] B = MatrixF.Dot(A, U.Transponate());
             return B;
         }
         /// <summary>
@@ -212,7 +212,7 @@ namespace UMapx.Window
         {
             int N = B.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] A = Matrice.Dot(B, U);
+            Complex32[] A = MatrixF.Dot(B, U);
             return A;
         }
         /// <summary>

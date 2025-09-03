@@ -34,17 +34,17 @@ namespace UMapx.Decomposition
         /// <param name="eps">Epsilon [0, 1]</param>
         public EVD(float[,] A, float eps = 1e-16f)
         {
-            if (!Matrice.IsSquare(A))
+            if (!MatrixF.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             this.n = A.GetLength(0);
             this.Re = new float[n];
             this.Im = new float[n];
-            this.eps = Maths.Float(eps);
+            this.eps = MathF.Float(eps);
 
             // for symmetric matrices eigen-value decomposition
             // without Hessenberg form.
-            if (Matrice.IsSymmetric(A))
+            if (MatrixF.IsSymmetric(A))
             {
                 hessenberg = Jagged.Zero(n, n);
                 matrices = Jagged.ToJagged(A);
@@ -300,7 +300,7 @@ namespace UMapx.Decomposition
                         // Compute implicit shift
                         g = Re[l];
                         p = (Re[l + 1] - g) / (2 * Im[l]);
-                        r = Maths.Hypotenuse(p, 1);
+                        r = MathF.Hypotenuse(p, 1);
                         if (p < 0)
                         {
                             r = -r;
@@ -333,7 +333,7 @@ namespace UMapx.Decomposition
                             s2 = s;
                             g = c * Im[i];
                             h = c * p;
-                            r = Maths.Hypotenuse(p, Im[i]);
+                            r = MathF.Hypotenuse(p, Im[i]);
                             Im[i + 1] = s * r;
                             s = Im[i] / r;
                             c = p / r;

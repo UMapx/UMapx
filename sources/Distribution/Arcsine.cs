@@ -72,7 +72,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Entropy
         {
-            get { return Maths.Log(Maths.Pi / 4); }
+            get { return MathF.Log(MathF.Pi / 4); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -81,7 +81,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            return 2.0f / Maths.Pi * (float)Math.Asin(Math.Sqrt(x));
+            return 2.0f / MathF.Pi * (float)Math.Asin(Math.Sqrt(x));
         }
         /// <summary>
         /// Returns the value of the probability density function.

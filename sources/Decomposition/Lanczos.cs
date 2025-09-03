@@ -29,7 +29,7 @@ namespace UMapx.Decomposition
         public Lanczos(float[,] A, bool full = false)
         {
             // exception
-            if (!Matrice.IsSymmetric(A))
+            if (!MatrixF.IsSymmetric(A))
                 throw new ArgumentException("The matrix must be symmetrical");
 
             // lanczos decomposition
@@ -72,9 +72,9 @@ namespace UMapx.Decomposition
         {
             // params
             int i, j, y, k = n - 1;
-            float[] v = Matrice.Rand(n), z;
-            float[] u = v.Div(Matrice.Norm(v));
-            this.q = Matrice.Eye(n, n).SetCol(u, 0);
+            float[] v = MatrixF.Rand(n), z;
+            float[] u = v.Div(MatrixF.Norm(v));
+            this.q = MatrixF.Eye(n, n).SetCol(u, 0);
             this.t = new float[n, n];
             float beta, alpha;
 
@@ -111,9 +111,9 @@ namespace UMapx.Decomposition
                 // tridiagonal matrix
                 if (i < k)
                 {
-                    beta = Matrice.Norm(z);
+                    beta = MatrixF.Norm(z);
                     u = z.Div(beta);
-                    q = Matrice.SetCol(q, u, i + 1);
+                    q = MatrixF.SetCol(q, u, i + 1);
                     t[i, i + 1] = beta;
                     t[i + 1, i] = beta;
                 }

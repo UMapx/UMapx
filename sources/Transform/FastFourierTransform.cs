@@ -145,7 +145,7 @@ namespace UMapx.Transform
                     for (int i = 0; i < N; i++) B[i, j] = col[i];
                 });
 
-                if (normalized) B = Matrice.Div(B, (float)Math.Sqrt(N * (double)M));
+                if (normalized) B = MatrixF.Div(B, (float)Math.Sqrt(N * (double)M));
             }
             else if (direction == Direction.Vertical)
             {
@@ -160,7 +160,7 @@ namespace UMapx.Transform
                     for (int i = 0; i < N; i++) B[i, j] = col[i];
                 });
 
-                if (normalized) B = Matrice.Div(B, (float)Math.Sqrt(N));
+                if (normalized) B = MatrixF.Div(B, (float)Math.Sqrt(N));
             }
             else // Direction.Horizontal
             {
@@ -175,7 +175,7 @@ namespace UMapx.Transform
                     for (int j = 0; j < M; j++) B[i, j] = row[j];
                 });
 
-                if (normalized) B = Matrice.Div(B, (float)Math.Sqrt(M));
+                if (normalized) B = MatrixF.Div(B, (float)Math.Sqrt(M));
             }
 
             return B;
@@ -215,7 +215,7 @@ namespace UMapx.Transform
                     for (int j = 0; j < M; j++) A[i, j] = row[j];
                 });
 
-                if (normalized) A = Matrice.Div(A, (float)Math.Sqrt(N * (double)M));
+                if (normalized) A = MatrixF.Div(A, (float)Math.Sqrt(N * (double)M));
                 //else A = Matrice.Div(A, (float)(N * (double)M));
             }
             else if (direction == Direction.Vertical)
@@ -231,7 +231,7 @@ namespace UMapx.Transform
                     for (int i = 0; i < N; i++) A[i, j] = col[i];
                 });
 
-                if (normalized) A = Matrice.Div(A, (float)Math.Sqrt(N));
+                if (normalized) A = MatrixF.Div(A, (float)Math.Sqrt(N));
                 //else A = Matrice.Div(A, (float)N);
             }
             else // Direction.Horizontal
@@ -247,7 +247,7 @@ namespace UMapx.Transform
                     for (int j = 0; j < M; j++) A[i, j] = row[j];
                 });
 
-                if (normalized) A = Matrice.Div(A, (float)Math.Sqrt(M));
+                if (normalized) A = MatrixF.Div(A, (float)Math.Sqrt(M));
                 //else A = Matrice.Div(A, (float)M);
             }
 

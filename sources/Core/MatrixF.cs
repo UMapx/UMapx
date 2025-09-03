@@ -7,7 +7,7 @@ namespace UMapx.Core
     /// <summary>
     /// Used to implement standard algebraic operations on matrices and vectors.
     /// </summary>
-    public static class Matrice
+    public static class MatrixF
     {
         // Matrix voids
 
@@ -115,10 +115,10 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsSymmetric(this float[,] m)
         {
-            if (Matrice.IsSquare(m))
+            if (MatrixF.IsSquare(m))
             {
                 // ?A = A'
-                if (Matrice.IsEquals(m, m.Transponate()))
+                if (MatrixF.IsEquals(m, m.Transponate()))
                 {
                     return true;
                 }
@@ -132,10 +132,10 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsSkewSymmetric(this float[,] m)
         {
-            if (Matrice.IsSquare(m))
+            if (MatrixF.IsSquare(m))
             {
                 // ?A' = -A:
-                if (Matrice.IsEquals(m.Transponate(), m.ToNegate()))
+                if (MatrixF.IsEquals(m.Transponate(), m.ToNegate()))
                 {
                     return true;
                 }
@@ -201,10 +201,10 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsSymmetric(this Complex32[,] m)
         {
-            if (Matrice.IsSquare(m))
+            if (MatrixF.IsSquare(m))
             {
                 // ?A = A'
-                if (Matrice.IsEquals(m, Matrice.Hermitian(m)))
+                if (MatrixF.IsEquals(m, MatrixF.Hermitian(m)))
                 {
                     return true;
                 }
@@ -218,10 +218,10 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsSkewSymmetric(this Complex32[,] m)
         {
-            if (Matrice.IsSquare(m))
+            if (MatrixF.IsSquare(m))
             {
                 // ?A' = -A
-                if (Matrice.IsEquals(m.Hermitian(), m.ToNegate()))
+                if (MatrixF.IsEquals(m.Hermitian(), m.ToNegate()))
                 {
                     return true;
                 }
@@ -432,7 +432,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Trace(this float[,] m)
         {
-            if (!Matrice.IsSquare(m))
+            if (!MatrixF.IsSquare(m))
                 throw new ArgumentException("The matrix must be square");
 
             int d = m.GetLength(0);
@@ -486,7 +486,7 @@ namespace UMapx.Core
                 }
             }
 
-            return (float)Maths.Sqrt(norm, p);
+            return (float)MathF.Sqrt(norm, p);
         }
         /// <summary>
         /// Returns the norm of the matrix.
@@ -495,7 +495,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float Norm(this float[,] m)
         {
-            return Matrice.Norm(m, 2);
+            return MatrixF.Norm(m, 2);
         }
         /// <summary>
         /// Selects the integer part of the matrix.
@@ -527,12 +527,12 @@ namespace UMapx.Core
         /// <returns>Square matrix</returns>
         public static float[,] Permutation(this float[,] m)
         {
-            if (!Matrice.IsSquare(m))
+            if (!MatrixF.IsSquare(m))
                 throw new ArgumentException("The matrix must be square");
 
             int i, j, r, n = m.GetLength(0);
             float[] temp; float diagonal;
-            float[][] perm = Jagged.ToJagged(Matrice.Eye(n, n));
+            float[][] perm = Jagged.ToJagged(MatrixF.Eye(n, n));
 
             for (i = 0; i < n; i++)
             {
@@ -562,7 +562,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Trace(this Complex32[,] m)
         {
-            if (!Matrice.IsSquare(m))
+            if (!MatrixF.IsSquare(m))
                 throw new ArgumentException("The matrix must be square");
 
             int d = m.GetLength(0);
@@ -616,7 +616,7 @@ namespace UMapx.Core
                 }
             }
 
-            return (float)Maths.Sqrt(norm, p);
+            return (float)MathF.Sqrt(norm, p);
         }
         /// <summary>
         /// Returns the norm of the matrix.
@@ -625,7 +625,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float Norm(this Complex32[,] m)
         {
-            return Matrice.Norm(m, 2);
+            return MatrixF.Norm(m, 2);
         }
         /// <summary>
         /// Selects the integer part of the matrix.
@@ -1940,7 +1940,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Maths.Pow(m[i, j], pow);
+                    H[i, j] = MathF.Pow(m[i, j], pow);
                 }
             }
 
@@ -1962,7 +1962,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Maths.Pow(m[i, j], pow);
+                    H[i, j] = MathF.Pow(m[i, j], pow);
                 }
             }
 
@@ -2031,7 +2031,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Maths.Pow(a, m[i, j]);
+                    H[i, j] = MathF.Pow(a, m[i, j]);
                 }
             }
 
@@ -2054,7 +2054,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Maths.Pow(a, m[i, j]);
+                    H[i, j] = MathF.Pow(a, m[i, j]);
                 }
             }
 
@@ -2141,7 +2141,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Maths.Byte(m[i, j]);
+                    H[i, j] = MathF.Byte(m[i, j]);
                 }
             }
             return H;
@@ -2161,7 +2161,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = Maths.Float(m[i, j]);
+                    H[i, j] = MathF.Float(m[i, j]);
                 }
             }
             return H;
@@ -2181,7 +2181,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = (float)Maths.Abs(m[i, j]);
+                    H[i, j] = (float)MathF.Abs(m[i, j]);
                 }
             }
 
@@ -2421,7 +2421,7 @@ namespace UMapx.Core
                     kernel[j] = m[j, i];
                 }
 
-                h[i] = Matrice.Mode(kernel);
+                h[i] = MatrixF.Mode(kernel);
             }
             return h;
         }
@@ -2444,7 +2444,7 @@ namespace UMapx.Core
                     kernel[j] = m[j, i];
                 }
 
-                h[i] = Matrice.Mode(kernel);
+                h[i] = MatrixF.Mode(kernel);
             }
             return h;
         }
@@ -2587,7 +2587,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Mean(this float[,] m)
         {
-            return Matrice.Div(Matrice.Sum(m), m.GetLength(0));
+            return MatrixF.Div(MatrixF.Sum(m), m.GetLength(0));
         }
         /// <summary>
         /// Returns the vector of means of the matrix.
@@ -2596,7 +2596,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] Mean(this Complex32[,] m)
         {
-            return Matrice.Div(Matrice.Sum(m), m.GetLength(0));
+            return MatrixF.Div(MatrixF.Sum(m), m.GetLength(0));
         }
         /// <summary>
         /// Returns the vector of variances of the matrix.
@@ -2606,7 +2606,7 @@ namespace UMapx.Core
         public static float[] Var(this float[,] m)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
-            float[] u = Matrice.Mean(m);
+            float[] u = MatrixF.Mean(m);
             float[] v = new float[mr];
             int i, j;
 
@@ -2617,7 +2617,7 @@ namespace UMapx.Core
                     v[i] += (float)Math.Pow(m[j, i] - u[i], 2);
                 }
             }
-            return Matrice.Div(v, ml - 1);
+            return MatrixF.Div(v, ml - 1);
         }
         /// <summary>
         /// Returns the vector of variances of the matrix.
@@ -2627,7 +2627,7 @@ namespace UMapx.Core
         public static Complex32[] Var(this Complex32[,] m)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
-            Complex32[] u = Matrice.Mean(m);
+            Complex32[] u = MatrixF.Mean(m);
             Complex32[] v = new Complex32[mr];
             int i, j;
 
@@ -2635,10 +2635,10 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ml; j++)
                 {
-                    v[i] += Maths.Pow(m[j, i] - u[i], 2);
+                    v[i] += MathF.Pow(m[j, i] - u[i], 2);
                 }
             }
-            return Matrice.Div(v, ml - 1);
+            return MatrixF.Div(v, ml - 1);
         }
         /// <summary>
         /// Returns the vector of variances of matrices.
@@ -2659,7 +2659,7 @@ namespace UMapx.Core
                     v[i] += (float)Math.Pow(m[j, i] - n[j, i], 2);
                 }
             }
-            return Matrice.Div(v, ml - 1);
+            return MatrixF.Div(v, ml - 1);
         }
         /// <summary>
         /// Returns the vector of variances of matrices.
@@ -2677,10 +2677,10 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ml; j++)
                 {
-                    v[i] += Maths.Pow(m[j, i] - n[j, i], 2);
+                    v[i] += MathF.Pow(m[j, i] - n[j, i], 2);
                 }
             }
-            return Matrice.Div(v, ml - 1);
+            return MatrixF.Div(v, ml - 1);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrix.
@@ -2689,7 +2689,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] StnDev(this float[,] m)
         {
-            return Matrice.Pow(Matrice.Var(m), 0.5f);
+            return MatrixF.Pow(MatrixF.Var(m), 0.5f);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrix.
@@ -2698,7 +2698,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] StnDev(this Complex32[,] m)
         {
-            return Matrice.Pow(Matrice.Var(m), 0.5f);
+            return MatrixF.Pow(MatrixF.Var(m), 0.5f);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrices.
@@ -2708,7 +2708,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] StnDev(this float[,] m, float[,] n)
         {
-            return Matrice.Pow(Matrice.Var(m, n), 0.5f);
+            return MatrixF.Pow(MatrixF.Var(m, n), 0.5f);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrices.
@@ -2718,7 +2718,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] StnDev(this Complex32[,] m, Complex32[,] n)
         {
-            return Matrice.Pow(Matrice.Var(m, n), 0.5f);
+            return MatrixF.Pow(MatrixF.Var(m, n), 0.5f);
         }
         /// <summary>
         /// Returns the covariance matrix.
@@ -2727,7 +2727,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Cov(this float[,] m)
         {
-            float[] v = Matrice.Mean(m);
+            float[] v = MatrixF.Mean(m);
             int width = m.GetLength(1), height = m.GetLength(0);
             float[,] H = (float[,])m.Clone();
             int i, j;
@@ -2749,7 +2749,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Cov(this Complex32[,] m)
         {
-            Complex32[] v = Matrice.Mean(m);
+            Complex32[] v = MatrixF.Mean(m);
             int width = m.GetLength(1), height = m.GetLength(0);
             Complex32[,] H = (Complex32[,])m.Clone();
             int i, j;
@@ -2781,7 +2781,7 @@ namespace UMapx.Core
                 {
                     if (m[j, i] > 0)
                     {
-                        v[i] += -m[j, i] * (float)Maths.Log2(m[j, i]);
+                        v[i] += -m[j, i] * (float)MathF.Log2(m[j, i]);
                     }
                 }
             }
@@ -3463,7 +3463,7 @@ namespace UMapx.Core
             {
                 norm += (float)Math.Pow(Math.Abs(a[i]), p);
             }
-            return (float)Maths.Sqrt(norm, p);
+            return (float)MathF.Sqrt(norm, p);
         }
         /// <summary>
         /// Returns the norm of the vector.
@@ -3487,9 +3487,9 @@ namespace UMapx.Core
 
             for (i = 0; i < length; i++)
             {
-                norm += (float)Maths.Pow(Maths.Abs(a[i]), p);
+                norm += (float)MathF.Pow(MathF.Abs(a[i]), p);
             }
-            return (float)Maths.Sqrt(norm, p);
+            return (float)MathF.Sqrt(norm, p);
         }
         /// <summary>
         /// Returns the norm of the vector.
@@ -3553,7 +3553,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Angle(this float[] a, float[] b)
         {
-            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
+            return MatrixF.Dot(a, b) / MatrixF.Norm(a) / MatrixF.Norm(b);
         }
         /// <summary>
         /// Returns the angle between two vectors.
@@ -3563,7 +3563,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Angle(this Complex32[] a, float[] b)
         {
-            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
+            return MatrixF.Dot(a, b) / MatrixF.Norm(a) / MatrixF.Norm(b);
         }
         /// <summary>
         /// Returns the angle between two vectors.
@@ -3573,7 +3573,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Angle(this float[] a, Complex32[] b)
         {
-            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
+            return MatrixF.Dot(a, b) / MatrixF.Norm(a) / MatrixF.Norm(b);
         }
         /// <summary>
         /// Returns the angle between two vectors.
@@ -3583,7 +3583,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Angle(this Complex32[] a, Complex32[] b)
         {
-            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
+            return MatrixF.Dot(a, b) / MatrixF.Norm(a) / MatrixF.Norm(b);
         }
 
         /// <summary>
@@ -3594,7 +3594,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Proj(this float[] a, float[] b)
         {
-            return Matrice.Dot(a, b) / Matrice.Norm(b);
+            return MatrixF.Dot(a, b) / MatrixF.Norm(b);
         }
         /// <summary>
         /// Returns the projection of two vectors.
@@ -3604,7 +3604,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Proj(this Complex32[] a, float[] b)
         {
-            return Matrice.Dot(a, b) / Matrice.Norm(b);
+            return MatrixF.Dot(a, b) / MatrixF.Norm(b);
         }
         /// <summary>
         /// Returns the projection of two vectors.
@@ -3614,7 +3614,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Proj(this float[] a, Complex32[] b)
         {
-            return Matrice.Dot(a, b) / Matrice.Norm(b);
+            return MatrixF.Dot(a, b) / MatrixF.Norm(b);
         }
         /// <summary>
         /// Returns the projection of two vectors.
@@ -3624,7 +3624,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Proj(this Complex32[] a, Complex32[] b)
         {
-            return Matrice.Dot(a, b) / Matrice.Norm(b);
+            return MatrixF.Dot(a, b) / MatrixF.Norm(b);
         }
 
         /// <summary>
@@ -3752,7 +3752,7 @@ namespace UMapx.Core
         public static float[] Cosines(this float[] v)
         {
             int length = v.Length, i;
-            float abs = Matrice.Norm(v);
+            float abs = MatrixF.Norm(v);
             float[] cos = new float[length];
 
             for (i = 0; i < length; i++)
@@ -3769,7 +3769,7 @@ namespace UMapx.Core
         public static Complex32[] Cosines(this Complex32[] v)
         {
             int length = v.Length, i;
-            Complex32 abs = Matrice.Norm(v);
+            Complex32 abs = MatrixF.Norm(v);
             Complex32[] cos = new Complex32[length];
 
             for (i = 0; i < length; i++)
@@ -4645,7 +4645,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                H[i] = Maths.Pow(v[i], power);
+                H[i] = MathF.Pow(v[i], power);
             }
             return H;
         }
@@ -4662,7 +4662,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                H[i] = Maths.Pow(v[i], power);
+                H[i] = MathF.Pow(v[i], power);
             }
             return H;
         }
@@ -4700,7 +4700,7 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
-                H[i] = Maths.Pow(a, v[i]);
+                H[i] = MathF.Pow(a, v[i]);
             }
 
             return H;
@@ -4719,7 +4719,7 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
-                H[i] = Maths.Pow(a, v[i]);
+                H[i] = MathF.Pow(a, v[i]);
             }
 
             return H;
@@ -4735,8 +4735,8 @@ namespace UMapx.Core
         public static float[] ToFloat(this float[] v)
         {
             int length = v.Length;
-            float max = Matrice.Max(v);
-            float min = Matrice.Min(v);
+            float max = MatrixF.Max(v);
+            float min = MatrixF.Min(v);
             float range = max - min;
             float[] u = new float[length];
 
@@ -4758,7 +4758,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                u[i] = Maths.Byte(v[i]);
+                u[i] = MathF.Byte(v[i]);
             }
             return u;
         }
@@ -5018,7 +5018,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Mean(this float[] v)
         {
-            return Matrice.Sum(v) / v.Length;
+            return MatrixF.Sum(v) / v.Length;
         }
         /// <summary>
         /// Returns the average value of a vector.
@@ -5027,7 +5027,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Mean(this Complex32[] v)
         {
-            return Matrice.Sum(v) / v.Length;
+            return MatrixF.Sum(v) / v.Length;
         }
         /// <summary>
         /// Returns the variance value.
@@ -5037,7 +5037,7 @@ namespace UMapx.Core
         public static float Var(this float[] v)
         {
             int length = v.Length;
-            float mean = Matrice.Mean(v);
+            float mean = MatrixF.Mean(v);
             float sum = 0;
 
             for (int i = 0; i < length; i++)
@@ -5055,12 +5055,12 @@ namespace UMapx.Core
         public static Complex32 Var(this Complex32[] v)
         {
             int length = v.Length;
-            Complex32 mean = Matrice.Mean(v);
+            Complex32 mean = MatrixF.Mean(v);
             Complex32 sum = 0;
 
             for (int i = 0; i < length; i++)
             {
-                sum += Maths.Pow(v[i] - mean, 2);
+                sum += MathF.Pow(v[i] - mean, 2);
             }
 
             return sum / (length - 1);
@@ -5096,7 +5096,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                sum += Maths.Pow(x[i] - y[i], 2);
+                sum += MathF.Pow(x[i] - y[i], 2);
             }
 
             return sum / (length - 1);
@@ -5108,7 +5108,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float StnDev(this float[] v)
         {
-            return (float)Math.Sqrt(Matrice.Var(v));
+            return (float)Math.Sqrt(MatrixF.Var(v));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -5117,7 +5117,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 StnDev(this Complex32[] v)
         {
-            return Maths.Sqrt(Matrice.Var(v));
+            return MathF.Sqrt(MatrixF.Var(v));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -5127,7 +5127,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float StnDev(this float[] x, float[] y)
         {
-            return (float)Math.Sqrt(Matrice.Var(x, y));
+            return (float)Math.Sqrt(MatrixF.Var(x, y));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -5137,7 +5137,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 StnDev(this Complex32[] x, Complex32[] y)
         {
-            return Maths.Sqrt(Matrice.Var(x, y));
+            return MathF.Sqrt(MatrixF.Var(x, y));
         }
         /// <summary>
         /// Returns the value of the vector mode.
@@ -5292,7 +5292,7 @@ namespace UMapx.Core
         public static float Cov(this float[] v)
         {
             int xlength = v.Length;
-            float xv = Matrice.Mean(v);
+            float xv = MatrixF.Mean(v);
             float total = 0;
             int i;
 
@@ -5310,7 +5310,7 @@ namespace UMapx.Core
         public static Complex32 Cov(this Complex32[] v)
         {
             int xlength = v.Length;
-            Complex32 xv = Matrice.Mean(v);
+            Complex32 xv = MatrixF.Mean(v);
             Complex32 total = 0;
             int i;
 
@@ -5334,7 +5334,7 @@ namespace UMapx.Core
             {
                 if (v[i] > 0)
                 {
-                    H += -v[i] * (float)Maths.Log2(v[i]);
+                    H += -v[i] * (float)MathF.Log2(v[i]);
                 }
             }
             return H;
@@ -6690,9 +6690,9 @@ namespace UMapx.Core
             float newYradius = (float)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            float angleRad = -angle * Maths.Pi / 180.0f;
-            float angleCos = Maths.Cos(angleRad);
-            float angleSin = Maths.Sin(angleRad);
+            float angleRad = -angle * MathF.Pi / 180.0f;
+            float angleCos = MathF.Cos(angleRad);
+            float angleSin = MathF.Sin(angleRad);
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
@@ -7084,9 +7084,9 @@ namespace UMapx.Core
             float newYradius = (float)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            float angleRad = -angle * Maths.Pi / 180.0f;
-            float angleCos = Maths.Cos(angleRad);
-            float angleSin = Maths.Sin(angleRad);
+            float angleRad = -angle * MathF.Pi / 180.0f;
+            float angleCos = MathF.Cos(angleRad);
+            float angleSin = MathF.Sin(angleRad);
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
@@ -8027,7 +8027,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < l1; j++)
                 {
-                    temp[i, j] = a[Maths.Mod(i - m, l1), Maths.Mod(j - l, l0)];
+                    temp[i, j] = a[MathF.Mod(i - m, l1), MathF.Mod(j - l, l0)];
                 }
             }
             return temp;
@@ -8049,7 +8049,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < l1; j++)
                 {
-                    temp[i, j] = a[Maths.Mod(i - m, l1), Maths.Mod(j - l, l0)];
+                    temp[i, j] = a[MathF.Mod(i - m, l1), MathF.Mod(j - l, l0)];
                 }
             }
             return temp;
@@ -8067,7 +8067,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < N; i++)
             {
-                temp[i] = v[Maths.Mod(i - l, N)];
+                temp[i] = v[MathF.Mod(i - l, N)];
             }
 
             return temp;
@@ -8085,7 +8085,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < N; i++)
             {
-                temp[i] = v[Maths.Mod(i - l, N)];
+                temp[i] = v[MathF.Mod(i - l, N)];
             }
 
             return temp;
@@ -8240,8 +8240,8 @@ namespace UMapx.Core
             int _length = a.GetLength(0);
 
             // range processing
-            int y = clamp ? Maths.Range(start, 0, a.Length) : start;
-            int h = clamp ? Maths.Range(length, 0, a.Length - start) : length;
+            int y = clamp ? MathF.Range(start, 0, a.Length) : start;
+            int h = clamp ? MathF.Range(length, 0, a.Length - start) : length;
 
             float[] v = new float[h];
 
@@ -8270,8 +8270,8 @@ namespace UMapx.Core
             int _length = a.GetLength(0);
 
             // range processing
-            int y = clamp ? Maths.Range(start, 0, a.Length) : start;
-            int h = clamp ? Maths.Range(length, 0, a.Length - start) : length;
+            int y = clamp ? MathF.Range(start, 0, a.Length) : start;
+            int h = clamp ? MathF.Range(length, 0, a.Length - start) : length;
 
             Complex32[] v = new Complex32[h];
 
@@ -8303,10 +8303,10 @@ namespace UMapx.Core
             int _height = m.GetLength(0);
 
             // range processing
-            int xx = clamp ? Maths.Range(x, 0, m.GetLength(1)) : x;
-            int yy = clamp ? Maths.Range(y, 0, m.GetLength(0)) : y;
-            int ww = clamp ? Maths.Range(width, 0, m.GetLength(1) - xx) : width;
-            int hh = clamp ? Maths.Range(height, 0, m.GetLength(0) - yy) : height;
+            int xx = clamp ? MathF.Range(x, 0, m.GetLength(1)) : x;
+            int yy = clamp ? MathF.Range(y, 0, m.GetLength(0)) : y;
+            int ww = clamp ? MathF.Range(width, 0, m.GetLength(1) - xx) : width;
+            int hh = clamp ? MathF.Range(height, 0, m.GetLength(0) - yy) : height;
 
             float[,] array = new float[hh, ww];
 
@@ -8345,10 +8345,10 @@ namespace UMapx.Core
             int _height = m.GetLength(0);
 
             // range processing
-            int xx = clamp ? Maths.Range(x, 0, m.GetLength(1)) : x;
-            int yy = clamp ? Maths.Range(y, 0, m.GetLength(0)) : y;
-            int ww = clamp ? Maths.Range(width, 0, m.GetLength(1) - xx) : width;
-            int hh = clamp ? Maths.Range(height, 0, m.GetLength(0) - yy) : height;
+            int xx = clamp ? MathF.Range(x, 0, m.GetLength(1)) : x;
+            int yy = clamp ? MathF.Range(y, 0, m.GetLength(0)) : y;
+            int ww = clamp ? MathF.Range(width, 0, m.GetLength(1) - xx) : width;
+            int hh = clamp ? MathF.Range(height, 0, m.GetLength(0) - yy) : height;
 
             Complex32[,] array = new Complex32[hh, ww];
 
@@ -8646,7 +8646,7 @@ namespace UMapx.Core
             if (squared)
                 return v;
 
-            return Maths.Sqrt(v);
+            return MathF.Sqrt(v);
         }
         /// <summary>
         /// Returns matrix module.
@@ -9832,9 +9832,9 @@ namespace UMapx.Core
             int c = m.GetLength(1);
 
             if (height > r)
-                m = Matrice.ExtendVertical(m, height);
+                m = MatrixF.ExtendVertical(m, height);
             if (width > c)
-                m = Matrice.ExtendHorizontal(m, width);
+                m = MatrixF.ExtendHorizontal(m, width);
 
             return m;
         }
@@ -9856,7 +9856,7 @@ namespace UMapx.Core
             // do job
             for (i = 0; i < length; i++)
                 for (j = 0; j < c0; j++)
-                    B[i, j] = m[Maths.Mod(rr - i - 1, r0), Maths.Mod(j, c0)];
+                    B[i, j] = m[MathF.Mod(rr - i - 1, r0), MathF.Mod(j, c0)];
 
 
             for (i = 0; i < r0; i++)
@@ -9883,7 +9883,7 @@ namespace UMapx.Core
             // do job
             for (i = 0; i < r0; i++)
                 for (j = 0; j < length; j++)
-                    B[i, j] = m[Maths.Mod(i, r0), Maths.Mod(cc - j - 1, c0)];
+                    B[i, j] = m[MathF.Mod(i, r0), MathF.Mod(cc - j - 1, c0)];
 
 
             for (i = 0; i < r0; i++)
@@ -9931,9 +9931,9 @@ namespace UMapx.Core
             int c = m.GetLength(1);
 
             if (height > r)
-                m = Matrice.ExtendVertical(m, height);
+                m = MatrixF.ExtendVertical(m, height);
             if (width > c)
-                m = Matrice.ExtendHorizontal(m, width);
+                m = MatrixF.ExtendHorizontal(m, width);
 
             return m;
         }
@@ -9955,7 +9955,7 @@ namespace UMapx.Core
             // do job
             for (i = 0; i < length; i++)
                 for (j = 0; j < c0; j++)
-                    B[i, j] = m[Maths.Mod(rr - i - 1, r0), Maths.Mod(j, c0)];
+                    B[i, j] = m[MathF.Mod(rr - i - 1, r0), MathF.Mod(j, c0)];
 
 
             for (i = 0; i < r0; i++)
@@ -9982,7 +9982,7 @@ namespace UMapx.Core
             // do job
             for (i = 0; i < r0; i++)
                 for (j = 0; j < length; j++)
-                    B[i, j] = m[Maths.Mod(i, r0), Maths.Mod(cc - j - 1, c0)];
+                    B[i, j] = m[MathF.Mod(i, r0), MathF.Mod(cc - j - 1, c0)];
 
 
             for (i = 0; i < r0; i++)
@@ -10243,7 +10243,7 @@ namespace UMapx.Core
                 if (norm != 0)
                 {
                     u[0] = v[0] / norm;
-                    u[0] = u[0] + Maths.Sign(u[0]);
+                    u[0] = u[0] + MathF.Sign(u[0]);
                     u[0] = u[0] / (float)Math.Sqrt(Math.Abs(u[0]));
 
                     for (int i = 1; i < length; i++)
@@ -10255,7 +10255,7 @@ namespace UMapx.Core
                 else
                 {
                     u = v;
-                    u[0] = (float)Maths.Sqrt2;
+                    u[0] = (float)MathF.Sqrt2;
                 }
                 return u;
             }
@@ -10362,7 +10362,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    H[i, j] = v[MathF.Mod(j - i, n)];
                 }
             }
 
@@ -10407,7 +10407,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    H[i, j] = v[MathF.Mod(j - i, n)];
                 }
             }
             return H;
@@ -10427,7 +10427,7 @@ namespace UMapx.Core
             {
                 for (j = i; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    H[i, j] = v[MathF.Mod(j - i, n)];
                 }
                 for (j = 0; j < i; j++)
                 {
@@ -10474,7 +10474,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = Maths.Pow(v[i], j);
+                    H[i, j] = MathF.Pow(v[i], j);
                 }
             }
 
@@ -10537,7 +10537,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    H[i, j] = v[MathF.Mod(j - i, n)];
                 }
             }
 
@@ -10582,7 +10582,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    H[i, j] = v[MathF.Mod(j - i, n)];
                 }
             }
             return H;
@@ -10602,7 +10602,7 @@ namespace UMapx.Core
             {
                 for (j = i; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    H[i, j] = v[MathF.Mod(j - i, n)];
                 }
                 for (j = 0; j < i; j++)
                 {
@@ -10775,7 +10775,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = Maths.Mod(j - i, n);
+                    H[i, j] = MathF.Mod(j - i, n);
                 }
             }
             return H;
@@ -10794,7 +10794,7 @@ namespace UMapx.Core
             {
                 for (j = i; j < n; j++)
                 {
-                    H[i, j] = Maths.Mod(j - i, n);
+                    H[i, j] = MathF.Mod(j - i, n);
                 }
                 for (j = 0; j < i; j++)
                 {
@@ -10817,7 +10817,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = Maths.Gcd(i + 1, j + 1);
+                    H[i, j] = MathF.Gcd(i + 1, j + 1);
                 }
             }
             return H;
@@ -10880,7 +10880,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Magic(int n)
         {
-            if (Maths.Mod(n, 2) != 1)
+            if (MathF.Mod(n, 2) != 1)
                 throw new ArgumentException("Dimension of the matrix must be an odd number");
 
             float[,] m = new float[n, n];
@@ -10892,7 +10892,7 @@ namespace UMapx.Core
             {
                 for (j = 1; j <= n; j++)
                 {
-                    m[i - 1, j - 1] = n * Maths.Mod(i + j - (n + 3) / 2, n) + Maths.Mod(i + 2 * (j - 1), n) + 1;
+                    m[i - 1, j - 1] = n * MathF.Mod(i + j - (n + 3) / 2, n) + MathF.Mod(i + 2 * (j - 1), n) + 1;
                 }
             }
             return m;
@@ -11156,7 +11156,7 @@ namespace UMapx.Core
             float[,] zero = null;
             try
             {
-                result = Matrice.Parse(zero, s);
+                result = MatrixF.Parse(zero, s);
                 return true;
             }
             catch (FormatException)
@@ -11213,7 +11213,7 @@ namespace UMapx.Core
             Complex32[,] zero = null;
             try
             {
-                result = Matrice.Parse(zero, s);
+                result = MatrixF.Parse(zero, s);
                 return true;
             }
             catch (FormatException)
@@ -11267,7 +11267,7 @@ namespace UMapx.Core
             float[] zero = null;
             try
             {
-                result = Matrice.Parse(zero, s);
+                result = MatrixF.Parse(zero, s);
                 return true;
             }
             catch (FormatException)
@@ -11320,7 +11320,7 @@ namespace UMapx.Core
             Complex32[] zero = null;
             try
             {
-                result = Matrice.Parse(zero, s);
+                result = MatrixF.Parse(zero, s);
                 return true;
             }
             catch (FormatException)
@@ -11473,7 +11473,7 @@ namespace UMapx.Core
                 int max = p;
                 for (int i = p + 1; i < N; i++)
                 {
-                    if (Maths.Abs(a[i][p]) > Maths.Abs(a[max][p]))
+                    if (MathF.Abs(a[i][p]) > MathF.Abs(a[max][p]))
                     {
                         max = i;
                     }
@@ -11481,7 +11481,7 @@ namespace UMapx.Core
                 Complex32[] temp = a[p]; a[p] = a[max]; a[max] = temp;
                 Complex32 t = q[p]; q[p] = q[max]; q[max] = t;
 
-                if (Maths.Abs(a[p][p]) <= eps)
+                if (MathF.Abs(a[p][p]) <= eps)
                 {
                     return b;
                 }

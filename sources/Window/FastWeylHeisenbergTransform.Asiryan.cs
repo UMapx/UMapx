@@ -105,8 +105,8 @@ namespace UMapx.Window
 
                 for (int q = 0; q < L; q++)
                 {
-                    float ang = 2f * Maths.Pi * q * carry / L;
-                    var shiftPhase = Maths.Exp(-Complex32.I * ang); // exp(-j*2π*q/L) when carry=1
+                    float ang = 2f * MathF.Pi * q * carry / L;
+                    var shiftPhase = MathF.Exp(-Complex32.I * ang); // exp(-j*2π*q/L) when carry=1
 
                     tmp[q] = T_hat[n0, q].Conjugate * Xhat[n0, q] * shiftPhase;
                 }
@@ -132,7 +132,7 @@ namespace UMapx.Window
             var Sp_main = new Complex32[Mloc];
             var Sp_half = new Complex32[Mloc];
 
-            float gain = Maths.Sqrt(Mloc) / Maths.Sqrt(N);
+            float gain = MathF.Sqrt(Mloc) / MathF.Sqrt(N);
 
             for (int l = 0; l < L; l++)
             {
@@ -213,7 +213,7 @@ namespace UMapx.Window
 
             // gain used in the forward
             // hence inverse gain:
-            float invGain = 1.0f / (2 * Maths.Sqrt(L));
+            float invGain = 1.0f / (2 * MathF.Sqrt(L));
 
             for (int l = 0; l < L; l++)
             {
@@ -244,7 +244,7 @@ namespace UMapx.Window
                 FFT(Y_main, true);
                 FFT(Y_half, true);
 
-                float cM = Maths.Sqrt(Mloc); // compensates the internal 1/√M from IFFT
+                float cM = MathF.Sqrt(Mloc); // compensates the internal 1/√M from IFFT
                 for (int n0 = 0; n0 < Mloc; n0++)
                 {
                     Cmain[n0, l] = Y_main[n0] * cM;
@@ -284,8 +284,8 @@ namespace UMapx.Window
                     // half branch adjoint (conjugate of forward’s carry-phase)
                     if (carry != 0)
                     {
-                        float ang = 2f * Maths.Pi * q * carry / L;
-                        var shiftPhaseAdj = Maths.Exp(Complex32.I * ang); // exp(+j*2π*q/L)
+                        float ang = 2f * MathF.Pi * q * carry / L;
+                        var shiftPhaseAdj = MathF.Exp(Complex32.I * ang); // exp(+j*2π*q/L)
                         Xhat[n0, q] += T_hat[n0, q] * shiftPhaseAdj * bufL2[q];
                     }
                     else
@@ -498,7 +498,7 @@ namespace UMapx.Window
                 var b = fastFourierTransform.Backward(a);
 
                 // Apply orthonormal scaling by sqrt(1 / N) to match analysis/synthesis norms
-                float inv = Maths.Sqrt(1f / n);
+                float inv = MathF.Sqrt(1f / n);
 
                 for (int i = 0; i < n; i++)
                 {

@@ -379,7 +379,7 @@ namespace UMapx.Wavelet
             // • With N = 2^n and n ≥ 2 we have R = gcd(M, N/2) = 2 (stable two-coset Zak orthogonalization).
             // • This discrete wavelet filter bank was found and introduced by Valery Asiryan (Yerevan, Armenia, 2025).
 
-            var N = (int)Maths.Pow(2, n);
+            var N = (int)MathF.Pow(2, n);
             var window = Gabor.Scaled(frameSize: N);
             var zak = new FastZakTransform(m: 2);
             var g0 = window.GetWindow();

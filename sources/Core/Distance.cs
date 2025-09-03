@@ -67,10 +67,10 @@ namespace UMapx.Core
 
             for (int k = 0; k < n; k++)
             {
-                sum += Maths.Pow(p[k] - q[k], 2);
+                sum += MathF.Pow(p[k] - q[k], 2);
             }
 
-            return Maths.Sqrt(sum);
+            return MathF.Sqrt(sum);
         }
         /// <summary>
         /// Returns distance value. 
@@ -160,12 +160,12 @@ namespace UMapx.Core
         public static Complex32 Chebyshev(this Complex32[] p, Complex32[] q)
         {
             int n = p.Length;
-            float max = Maths.Abs(p[0] - q[0]);
+            float max = MathF.Abs(p[0] - q[0]);
             float tmp;
 
             for (int k = 1; k < n; k++)
             {
-                tmp = Maths.Abs(p[k] - q[k]);
+                tmp = MathF.Abs(p[k] - q[k]);
                 max = tmp > max ? tmp : max;
             }
 
@@ -261,7 +261,7 @@ namespace UMapx.Core
 
             for (int k = 0; k < n; k++)
             {
-                sum += Maths.Abs(p[k] - q[k]);
+                sum += MathF.Abs(p[k] - q[k]);
             }
 
             return sum;
@@ -370,10 +370,10 @@ namespace UMapx.Core
                 y += q[i] * q[i];
             }
 
-            Complex32 den = Maths.Sqrt(x) * Maths.Sqrt(y);
+            Complex32 den = MathF.Sqrt(x) * MathF.Sqrt(y);
             Complex32 similarity = s == 0 ? 1.0f : 1.0f - (s / den);
 
-            return Maths.Acos(similarity);
+            return MathF.Acos(similarity);
         }
         /// <summary>
         /// Returns distance value. 
@@ -468,8 +468,8 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                y += Maths.Abs(p[i] - q[i]);
-                x += Maths.Abs(p[i] + q[i]);
+                y += MathF.Abs(p[i] - q[i]);
+                x += MathF.Abs(p[i] + q[i]);
             }
 
             return y / x;
@@ -563,7 +563,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                sum += Maths.Abs(p[i] - q[i]) / (Maths.Abs(p[i]) + Maths.Abs(q[i]));
+                sum += MathF.Abs(p[i] - q[i]) / (MathF.Abs(p[i]) + MathF.Abs(q[i]));
             }
             return sum;
         }
@@ -717,7 +717,7 @@ namespace UMapx.Core
                 sum += (float)Math.Pow(Math.Sqrt(p[i]) - Math.Sqrt(q[i]), 2);
             }
 
-            return sum / Maths.Sqrt2;
+            return sum / MathF.Sqrt2;
         }
         /// <summary>
         /// Returns distance value. 
@@ -760,10 +760,10 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                sum += Maths.Pow(Maths.Sqrt(p[i]) - Maths.Sqrt(q[i]), 2);
+                sum += MathF.Pow(MathF.Sqrt(p[i]) - MathF.Sqrt(q[i]), 2);
             }
 
-            return sum / Maths.Sqrt2;
+            return sum / MathF.Sqrt2;
         }
         /// <summary>
         /// Returns distance value. 
@@ -1071,9 +1071,9 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                sum += Maths.Pow(Maths.Abs(p[i] - q[i]), order);
+                sum += MathF.Pow(MathF.Abs(p[i] - q[i]), order);
             }
-            return Maths.Pow(sum, 1 / order);
+            return MathF.Pow(sum, 1 / order);
         }
         /// <summary>
         /// Returns distance value. 
@@ -1633,8 +1633,8 @@ namespace UMapx.Core
         public static float Cosine(this float[] p, float[] b)
         {
             int length = p.Length;
-            float A = Matrice.Abs(p, false);
-            float B = Matrice.Abs(b, false);
+            float A = MatrixF.Abs(p, false);
+            float B = MatrixF.Abs(b, false);
             float s = 0;
 
             for (int i = 0; i < length; i++)
@@ -1679,8 +1679,8 @@ namespace UMapx.Core
         public static Complex32 Cosine(this Complex32[] p, Complex32[] b)
         {
             int length = p.Length;
-            Complex32 A = Matrice.Abs(p, false);
-            Complex32 B = Matrice.Abs(b, false);
+            Complex32 A = MatrixF.Abs(p, false);
+            Complex32 B = MatrixF.Abs(b, false);
             Complex32 s = 0;
 
             for (int i = 0; i < length; i++)

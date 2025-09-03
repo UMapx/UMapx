@@ -79,7 +79,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = Maths.Exp(-2 * Maths.Pi * Maths.I * i * j / n);
+                    H[i, j] = MathF.Exp(-2 * MathF.Pi * MathF.I * i * j / n);
                 }
             }
             return H;
@@ -96,11 +96,11 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             Complex32[,] U = FourierTransform.Matrix(N);
-            Complex32[] B = Matrice.Dot(A, U);
+            Complex32[] B = MatrixF.Dot(A, U);
 
             if (normalized)
             {
-                B = Matrice.Div(B, Math.Sqrt(N));
+                B = MatrixF.Div(B, Math.Sqrt(N));
             }
 
             return B;
@@ -114,11 +114,11 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             Complex32[,] U = FourierTransform.Matrix(N);
-            Complex32[] A = Matrice.Dot(B, U.Hermitian());
+            Complex32[] A = MatrixF.Dot(B, U.Hermitian());
 
             if (normalized)
             {
-                A = Matrice.Div(A, Math.Sqrt(N));
+                A = MatrixF.Div(A, Math.Sqrt(N));
             }
 
             return A;

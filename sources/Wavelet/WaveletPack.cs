@@ -127,8 +127,8 @@ namespace UMapx.Wavelet
         {
             float[] lp = scaling;
             float[] hp = CQF(lp);
-            float[] ilp = Matrice.Flip(lp);
-            float[] ihp = Matrice.Flip(hp);
+            float[] ilp = MatrixF.Flip(lp);
+            float[] ihp = MatrixF.Flip(hp);
 
             return new WaveletPack(lp, hp, ilp, ihp);
         }
@@ -142,8 +142,8 @@ namespace UMapx.Wavelet
         {
             float[] lp = scaling;
             float[] hp = wavelet;
-            float[] ilp = Matrice.Flip(lp);
-            float[] ihp = Matrice.Flip(hp);
+            float[] ilp = MatrixF.Flip(lp);
+            float[] ihp = MatrixF.Flip(hp);
 
             return new WaveletPack(lp, hp, ilp, ihp);
         }

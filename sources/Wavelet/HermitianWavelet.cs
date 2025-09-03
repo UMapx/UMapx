@@ -57,7 +57,7 @@ namespace UMapx.Wavelet
         {
             float x2 = x * x;
             Complex32 psi = 0;
-            Complex32 f0 = Math.Pow(Math.PI, -0.25) * Maths.Exp(-x2 / 2);
+            Complex32 f0 = Math.Pow(Math.PI, -0.25) * MathF.Exp(-x2 / 2);
 
             switch (derivative)
             {

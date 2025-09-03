@@ -286,10 +286,10 @@ namespace UMapx.Imaging
                         }
                     }
 
-                    dst[3] = Maths.Byte(a);
-                    dst[2] = Maths.Byte(r);
-                    dst[1] = Maths.Byte(g);
-                    dst[0] = Maths.Byte(b);
+                    dst[3] = MathF.Byte(a);
+                    dst[2] = MathF.Byte(r);
+                    dst[1] = MathF.Byte(g);
+                    dst[0] = MathF.Byte(b);
                 }
                 dst += dstOffset;
             }

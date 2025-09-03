@@ -91,7 +91,7 @@ namespace UMapx.Decomposition
 
                 for (i = k; i < m; i++)
                 {
-                    nrm = Maths.Hypotenuse(nrm, qr[i][k]);
+                    nrm = MathF.Hypotenuse(nrm, qr[i][k]);
                 }
 
                 if (nrm != 0.0)

@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Square symmetric matrix</param>
         public UDL(float[,] A)
         {
-            if (!Matrice.IsSquare(A))
+            if (!MatrixF.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             udldecomp(A);

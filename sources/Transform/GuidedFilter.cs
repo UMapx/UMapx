@@ -61,7 +61,7 @@ namespace UMapx.Transform
             }
             set
             {
-                this.eps = Maths.Float(value);
+                this.eps = MathF.Float(value);
             }
         }
         /// <summary>
@@ -209,7 +209,7 @@ namespace UMapx.Transform
 
             // Calculating μ(I) and μ(I^2):
             float[,] x = (float[,])input.Clone();
-            float[,] y = Matrice.Pow(input, 2.0f);
+            float[,] y = MatrixF.Pow(input, 2.0f);
 
             // Applying fast box filter:
             x = x.Mean(r, r);
@@ -256,7 +256,7 @@ namespace UMapx.Transform
 
             // Calculating μ(I) and μ(I^2):
             Complex32[,] x = (Complex32[,])input.Clone();
-            Complex32[,] y = Matrice.Pow(input, 2.0f);
+            Complex32[,] y = MatrixF.Pow(input, 2.0f);
 
             // Applying fast box filter:
             x = x.Mean(r, r);
@@ -301,7 +301,7 @@ namespace UMapx.Transform
 
             // Calculating μ(I) and μ(I^2):
             float[] x = (float[])input.Clone();
-            float[] y = Matrice.Pow(input, 2.0f);
+            float[] y = MatrixF.Pow(input, 2.0f);
 
             // Applying fast box filter:
             x = x.Mean(r);
@@ -343,7 +343,7 @@ namespace UMapx.Transform
 
             // Calculating μ(I) and μ(I^2):
             Complex32[] x = (Complex32[])input.Clone();
-            Complex32[] y = Matrice.Pow(input, 2.0f);
+            Complex32[] y = MatrixF.Pow(input, 2.0f);
 
             // Applying fast box filter:
             x = x.Mean(r);

@@ -38,7 +38,7 @@ namespace UMapx.Imaging
         /// </summary>
         public Convolution()
         {
-            Matrix = Matrice.One(3, 3); Offset = 0; Bilateral = false;
+            Matrix = MatrixF.One(3, 3); Offset = 0; Bilateral = false;
         }
         /// <summary>
         /// Gets or sets the convolution matrix.
@@ -169,9 +169,9 @@ namespace UMapx.Imaging
                         #endregion
 
                         #region Recording pixel
-                        dst[v + 2] = Maths.Byte(red);
-                        dst[v + 1] = Maths.Byte(green);
-                        dst[v] = Maths.Byte(blue);
+                        dst[v + 2] = MathF.Byte(red);
+                        dst[v + 1] = MathF.Byte(green);
+                        dst[v] = MathF.Byte(blue);
                         #endregion
                     }
                 });
@@ -246,9 +246,9 @@ namespace UMapx.Imaging
                         #endregion
 
                         #region Recording pixel
-                        dst[v + 2] = Maths.Byte(G(red1, red2));
-                        dst[v + 1] = Maths.Byte(G(green1, green2));
-                        dst[v] = Maths.Byte(G(blue1, blue2));
+                        dst[v + 2] = MathF.Byte(G(red1, red2));
+                        dst[v + 1] = MathF.Byte(G(green1, green2));
+                        dst[v] = MathF.Byte(G(blue1, blue2));
                         #endregion
                     }
                 });

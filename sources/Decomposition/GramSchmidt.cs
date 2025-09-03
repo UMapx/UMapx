@@ -29,7 +29,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Square matrix</param>
         public GramSchmidt(float[,] A)
         {
-            if (!Matrice.IsSquare(A))
+            if (!MatrixF.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             // UMapx.NET
@@ -40,17 +40,17 @@ namespace UMapx.Decomposition
 
             for (j = 0; j < n; j++)
             {
-                u = Matrice.GetCol(A, j); // get j-column of matrix A,
+                u = MatrixF.GetCol(A, j); // get j-column of matrix A,
                 v2 = u;                   // copy this column for the second Matrice.
 
                 for (i = 0; i < j; i++)
                 {
-                    v1 = Matrice.GetCol(q, i); // get i-column of matrix Q
-                    u = Matrice.Sub(u, Matrice.GramProj(v1, v2)); // calculate: u - proj'<v1, v2>, 
+                    v1 = MatrixF.GetCol(q, i); // get i-column of matrix Q
+                    u = MatrixF.Sub(u, MatrixF.GramProj(v1, v2)); // calculate: u - proj'<v1, v2>, 
                     // where ' - means transponate operator for projection.
                 }
 
-                q = Matrice.SetCol(q, Matrice.Div(u, Matrice.Norm(u)), j); // set j-column of matrix Q.
+                q = MatrixF.SetCol(q, MatrixF.Div(u, MatrixF.Norm(u)), j); // set j-column of matrix Q.
             }
         }
         #endregion

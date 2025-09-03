@@ -53,7 +53,7 @@ namespace UMapx.Analysis
             }
             set
             {
-                this.eps = Maths.Float(value);
+                this.eps = MathF.Float(value);
             }
         }
         /// <summary>
@@ -262,13 +262,13 @@ namespace UMapx.Analysis
             while (n++ < short.MaxValue)
             {
                 Complex32 fx = f(x0);
-                if (Maths.Abs(fx) <= eps) return x0;
+                if (MathF.Abs(fx) <= eps) return x0;
 
                 Complex32 denom = (fa - fx);
-                if (Maths.Abs(denom) == 0f) break;
+                if (MathF.Abs(denom) == 0f) break;
 
                 Complex32 x1 = x0 - fx * (a - x0) / denom;
-                if (Maths.Abs(x1 - x0) <= eps) return x1;
+                if (MathF.Abs(x1 - x0) <= eps) return x1;
                 x0 = x1;
             }
             return x0;
@@ -292,10 +292,10 @@ namespace UMapx.Analysis
             Complex32 f1 = f(x1), f2 = f(x2);
             int n = 0;
 
-            while (Maths.Abs(f2) > eps && Maths.Abs(x2 - x1) > eps && n++ < short.MaxValue)
+            while (MathF.Abs(f2) > eps && MathF.Abs(x2 - x1) > eps && n++ < short.MaxValue)
             {
                 Complex32 denom = (f2 - f1);
-                if (Maths.Abs(denom) == 0f) break;
+                if (MathF.Abs(denom) == 0f) break;
                 Complex32 x3 = x2 - (x2 - x1) * f2 / denom;
 
                 x1 = x2; f1 = f2;

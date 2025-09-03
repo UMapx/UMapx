@@ -122,7 +122,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (p - q) / Maths.Sqrt(p * q);
+                return (p - q) / MathF.Sqrt(p * q);
             }
         }
         /// <summary>
@@ -173,7 +173,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return -q * Maths.Log(q) - p * Maths.Log(p);
+                return -q * MathF.Log(q) - p * MathF.Log(p);
             }
         }
         #endregion

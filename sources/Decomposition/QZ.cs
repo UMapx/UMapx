@@ -48,7 +48,7 @@ namespace UMapx.Decomposition
             for (int i = 0; i < n; i++) zMat[i][i] = 1f;
             int ierr = 0;
 
-            GEVD.qzdecomp(a, b, Maths.Float(eps), zMat, ref ierr);
+            GEVD.qzdecomp(a, b, MathF.Float(eps), zMat, ref ierr);
 
             if (ierr != 0)
                 throw new Exception("QZ decomposition failed to converge");
@@ -57,9 +57,9 @@ namespace UMapx.Decomposition
             this.t = Jagged.FromJagged(b);
             this.z = Jagged.FromJagged(zMat);
 
-            float[,] bz = Matrice.Dot(B, this.z);
+            float[,] bz = MatrixF.Dot(B, this.z);
             float[,] tinv = InvertUpperTriangular(this.t);
-            this.q = Matrice.Dot(bz, tinv);
+            this.q = MatrixF.Dot(bz, tinv);
         }
         #endregion
 

@@ -117,8 +117,8 @@ namespace UMapx.Response
                 K1 = Complex32.Zero;
                 K2 = Complex32.One;
 
-                for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
-                for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (i = 0; i < P; i++) { K1 += b[i] * MathF.Exp(-MathF.I * w[j] * i); }
+                for (i = 0; i < Q; i++) { K2 -= a[i] * MathF.Exp(-MathF.I * w[j] * i); }
 
                 amplitude[j] = K1.Abs / K2.Abs;
             }
@@ -143,8 +143,8 @@ namespace UMapx.Response
                 K1 = Complex32.Zero;
                 K2 = Complex32.One;
 
-                for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
-                for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (i = 0; i < P; i++) { K1 += b[i] * MathF.Exp(-MathF.I * w[j] * i); }
+                for (i = 0; i < Q; i++) { K2 -= a[i] * MathF.Exp(-MathF.I * w[j] * i); }
 
                 phase[j] = K1.Angle - K2.Angle;
             }
@@ -161,8 +161,8 @@ namespace UMapx.Response
             Complex32 K1 = new Complex32(0, 0);
             Complex32 K2 = new Complex32(1, 0);
 
-            for (i = 0; i < b.Length; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
-            for (i = 0; i < a.Length; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
+            for (i = 0; i < b.Length; i++) { K1 += b[i] * MathF.Exp(-MathF.I * w * i); }
+            for (i = 0; i < a.Length; i++) { K2 -= a[i] * MathF.Exp(-MathF.I * w * i); }
 
             return K1.Abs / K2.Abs;
         }
@@ -178,8 +178,8 @@ namespace UMapx.Response
             Complex32 K2 = new Complex32(1, 0);
             int P = b.Length, Q = a.Length;
 
-            for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
-            for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
+            for (i = 0; i < P; i++) { K1 += b[i] * MathF.Exp(-MathF.I * w * i); }
+            for (i = 0; i < Q; i++) { K2 -= a[i] * MathF.Exp(-MathF.I * w * i); }
 
             return K1.Angle - K2.Angle;
         }
@@ -191,7 +191,7 @@ namespace UMapx.Response
             get
             {
                 Complex32 sum = Complex32.Zero;
-                Complex32 exp = Maths.Exp(-Maths.I);
+                Complex32 exp = MathF.Exp(-MathF.I);
                 int length = a.Length;
 
                 for (int j = 0; j < length; j++)

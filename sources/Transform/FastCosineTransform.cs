@@ -73,14 +73,14 @@ namespace UMapx.Transform
 
             float[] C = new float[N];
 
-            Complex32 c = -Maths.I * Maths.Pi / ( 2 * N );
+            Complex32 c = -MathF.I * MathF.Pi / ( 2 * N );
 
             for (k = 0; k < N; k++)
             {
-                C[k] = 2.0f * (B[k] * Maths.Exp(c * k)).Real / Maths.Sqrt( 2 * N );
+                C[k] = 2.0f * (B[k] * MathF.Exp(c * k)).Real / MathF.Sqrt( 2 * N );
             }
 
-            C[0] = C[0] / Maths.Sqrt2; // DCT-I
+            C[0] = C[0] / MathF.Sqrt2; // DCT-I
 
             return C;
         }
@@ -93,11 +93,11 @@ namespace UMapx.Transform
         {
             int N = B.Length, N2 = N / 2, i, k;
             Complex32[] A = new Complex32[N];
-            Complex32 c = Maths.I * Maths.Pi / ( 2 * N );
+            Complex32 c = MathF.I * MathF.Pi / ( 2 * N );
 
             for (k = 0; k < N; k++)
             {
-                A[k] = B[k] * Maths.Exp(c * k) * Math.Sqrt(2 * N);
+                A[k] = B[k] * MathF.Exp(c * k) * Math.Sqrt(2 * N);
             }
 
             A[0] /= Math.Sqrt(2); // DCT-I

@@ -60,7 +60,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.sigma = Maths.Float(value);
+                this.sigma = MathF.Float(value);
             }
         }
         /// <summary>
@@ -85,7 +85,7 @@ namespace UMapx.Imaging
 
             // initialize weights
             for (int i = 0; i < N; i++)
-                weights[i] = Matrice.One(height, width);
+                weights[i] = MatrixF.One(height, width);
 
             // applying params
             weights = Mul(weights, Exp(data, this.sigma));
@@ -161,7 +161,7 @@ namespace UMapx.Imaging
 
             // initialize weights
             for (int i = 0; i < N; i++)
-                weights[i] = Matrice.One(height, width);
+                weights[i] = MatrixF.One(height, width);
 
             // applying params
             weights = Mul(weights, Exp(data, this.sigma));

@@ -26,7 +26,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Square matrix</param>
         public Hessenberg(float[,] A)
         {
-            if (!Matrice.IsSquare(A))
+            if (!MatrixF.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             // Reduce to Hessenberg form.

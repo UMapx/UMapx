@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Square symmetric positive definite matrix</param>
         public Cholesky(float[,] A)
         {
-            if (!Matrice.IsSquare(A))
+            if (!MatrixF.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             // Cholesky decomposition:
@@ -46,7 +46,7 @@ namespace UMapx.Decomposition
         /// </summary>
         public float[,] U
         {
-            get { return Matrice.Transponate(L); }
+            get { return MatrixF.Transponate(L); }
         }
         #endregion
 

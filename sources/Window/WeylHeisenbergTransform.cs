@@ -100,7 +100,7 @@ namespace UMapx.Window
                 throw new ArgumentException("Number of frequency shifts not defined correctly");
 
             Complex32[,] G = new Complex32[N, 2 * N];
-            Complex32 c = 2 * Maths.Pi * Maths.I;
+            Complex32 c = 2 * MathF.Pi * MathF.I;
             float a = M / 2.0f;
 
             Parallel.For(0, N, n =>
@@ -111,19 +111,19 @@ namespace UMapx.Window
 
                 for (k = 0; k < M; k++)
                 {
-                    exp = Maths.Exp(c * k / M * phase);
+                    exp = MathF.Exp(c * k / M * phase);
 
                     for (l = 0; l < L; l++)
                     {
                         u = l * M + k;
-                        i = Maths.Mod(n - l * M, N);
-                        j = Maths.Mod(n + M / 2 - l * M, N);
+                        i = MathF.Mod(n - l * M, N);
+                        j = MathF.Mod(n + M / 2 - l * M, N);
 
                         // implements the [N, 2N] WH matrix
                         // https://github.com/asiryan/Weyl-Heisenberg-Toolbox/blob/master/matlab/toolbox_scripts/weylhzf.m
 
                         G[n, u + 0] =           g0[i] * exp;
-                        G[n, u + N] = Maths.I * g0[j] * exp;
+                        G[n, u + N] = MathF.I * g0[j] * exp;
                     }
                 }
             });
@@ -218,7 +218,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            Complex32[] B = Matrice.Dot(A, U.Hermitian());
+            Complex32[] B = MatrixF.Dot(A, U.Hermitian());
             return B;
         }
         /// <summary>
@@ -230,7 +230,7 @@ namespace UMapx.Window
         {
             int N = B.Length;
             Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] A = Matrice.Dot(B, U);
+            Complex32[] A = MatrixF.Dot(B, U);
             return A.Div(2);
         }
         /// <summary>

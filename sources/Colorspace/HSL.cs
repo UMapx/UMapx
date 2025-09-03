@@ -165,8 +165,8 @@ namespace UMapx.Colorspace
             float g = green / 255.0f;
             float b = blue / 255.0f;
 
-            float max = Maths.Max(r, g, b);
-            float min = Maths.Min(r, g, b);
+            float max = MathF.Max(r, g, b);
+            float min = MathF.Min(r, g, b);
 
             if (max == min)
             {

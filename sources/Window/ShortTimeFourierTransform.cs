@@ -96,7 +96,7 @@ namespace UMapx.Window
                 Complex32[] data = new Complex32[frame];
 
                 for (j = 0; j < frame; j++)
-                    data[j] = A[i + j] * coefs[Maths.Mod(i - frame / 2, frame)];
+                    data[j] = A[i + j] * coefs[MathF.Mod(i - frame / 2, frame)];
 
                 data = DFT.Forward(data);
 
@@ -130,7 +130,7 @@ namespace UMapx.Window
 
                 for (j = 0; j < frame; j++)
                 {
-                    A[i + j] = data[j] / coefs[Maths.Mod(i - frame / 2, frame)];
+                    A[i + j] = data[j] / coefs[MathF.Mod(i - frame / 2, frame)];
                 }
             }
 

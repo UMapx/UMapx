@@ -55,9 +55,9 @@ namespace UMapx.Transform
         {
             int j, i;
             float[,] H = new float[n, n];
-            float c = Maths.Pi / (2.0f * n);
-            float g1 = Maths.Sqrt(1.0f / n);
-            float g2 = Maths.Sqrt(2.0f / n);
+            float c = MathF.Pi / (2.0f * n);
+            float g1 = MathF.Sqrt(1.0f / n);
+            float g2 = MathF.Sqrt(2.0f / n);
 
             for (i = 0; i < n; i++)
             {
@@ -81,7 +81,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return Matrice.Dot(A, U);
+            return MatrixF.Dot(A, U);
         }
         /// <summary>
         /// Backward cosine transform.
@@ -92,7 +92,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return Matrice.Dot(B, U.Transponate());
+            return MatrixF.Dot(B, U.Transponate());
         }
         /// <summary>
         /// Forward cosine transform.
@@ -145,7 +145,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return Matrice.Dot(A, U);
+            return MatrixF.Dot(A, U);
         }
         /// <summary>
         /// Backward cosine transform.
@@ -156,7 +156,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return Matrice.Dot(B, U.Transponate());
+            return MatrixF.Dot(B, U.Transponate());
         }
         /// <summary>
         /// Forward cosine transform.

@@ -145,9 +145,9 @@ namespace UMapx.Imaging
                     k = ystride + x * 4;
                     rgb = new RGB(p[k + 2], p[k + 1], p[k]);
 
-                    rgb.Red = Maths.Byte(values[rgb.Red] * length);
-                    rgb.Green = Maths.Byte(values[rgb.Green] * length);
-                    rgb.Blue = Maths.Byte(values[rgb.Blue] * length);
+                    rgb.Red = MathF.Byte(values[rgb.Red] * length);
+                    rgb.Green = MathF.Byte(values[rgb.Green] * length);
+                    rgb.Blue = MathF.Byte(values[rgb.Blue] * length);
 
                     p[k + 2] = rgb.Red; p[k + 1] = rgb.Green; p[k] = rgb.Blue;
                 }
@@ -255,7 +255,7 @@ namespace UMapx.Imaging
                 {
                     k = ystride + x * 4;
                     luma = RGB.Average(p[k + 2], p[k + 1], p[k]);
-                    p[k + 2] = p[k + 1] = p[k] = Maths.Byte(values[luma] * length);
+                    p[k + 2] = p[k + 1] = p[k] = MathF.Byte(values[luma] * length);
                 }
             });
         }

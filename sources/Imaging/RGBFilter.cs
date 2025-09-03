@@ -92,9 +92,9 @@ namespace UMapx.Imaging
             {
                 for (x = 0; x < width; x++, p += 4)
                 {
-                    p[2] = Maths.Byte(p[2] + red);
-                    p[1] = Maths.Byte(p[1] + green);
-                    p[0] = Maths.Byte(p[0] + blue);
+                    p[2] = MathF.Byte(p[2] + red);
+                    p[1] = MathF.Byte(p[1] + green);
+                    p[0] = MathF.Byte(p[0] + blue);
                 }
             }
         }

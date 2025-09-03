@@ -419,7 +419,7 @@ namespace UMapx.Imaging
                 total += hits;
             }
 
-            return (total == 0) ? 0 : Maths.Sqrt(stddev / total);
+            return (total == 0) ? 0 : MathF.Sqrt(stddev / total);
         }
         /// <summary>
         /// Returns the median of a histogram.
@@ -513,7 +513,7 @@ namespace UMapx.Imaging
                     p = (float)values[i] / total;
                     // calculate entropy
                     if (p != 0)
-                        entropy += -p * Maths.Log2(p);
+                        entropy += -p * MathF.Log2(p);
                 }
             }
             return entropy;

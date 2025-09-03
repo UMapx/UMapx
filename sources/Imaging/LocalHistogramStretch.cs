@@ -114,7 +114,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.contrast = Maths.Float(value);
+                this.contrast = MathF.Float(value);
             }
         }
         /// <summary>
@@ -252,8 +252,8 @@ namespace UMapx.Imaging
                         if (num1 < required)
                         {
                             num2 = min + (required - num1) * min / (num1 - 1f);
-                            min = Maths.Float(num2);
-                            max = Maths.Float(num2 + required);
+                            min = MathF.Float(num2);
+                            max = MathF.Float(num2 + required);
                         }
 
                         num1 = max - min;
@@ -261,7 +261,7 @@ namespace UMapx.Imaging
 
                         if (num1 > 0)
                         {
-                            p[v] = Maths.Byte(255 * num3 / num1);
+                            p[v] = MathF.Byte(255 * num3 / num1);
                         }
                     }
                     // end local function.
@@ -307,8 +307,8 @@ namespace UMapx.Imaging
                     if (num1 < required)
                     {
                         num2 = min + (required - num1) * min / (num1 - 1f);
-                        min = Maths.Float(num2);
-                        max = Maths.Float(num2 + required);
+                        min = MathF.Float(num2);
+                        max = MathF.Float(num2 + required);
                     }
 
                     num1 = max - min;
@@ -363,8 +363,8 @@ namespace UMapx.Imaging
                     if (num1 < required)
                     {
                         num2 = min + (required - num1) * min / (num1 - 1f);
-                        min = Maths.Float(num2);
-                        max = Maths.Float(num2 + required);
+                        min = MathF.Float(num2);
+                        max = MathF.Float(num2 + required);
                     }
 
                     num1 = max - min;
@@ -419,8 +419,8 @@ namespace UMapx.Imaging
                     if (num1 < required)
                     {
                         num2 = min + (required - num1) * min / (num1 - 1f);
-                        min = Maths.Float(num2);
-                        max = Maths.Float(num2 + required);
+                        min = MathF.Float(num2);
+                        max = MathF.Float(num2 + required);
                     }
 
                     num1 = max - min;
@@ -473,8 +473,8 @@ namespace UMapx.Imaging
                     if (num1 < required)
                     {
                         num2 = min + (required - num1) * min / (num1 - 1f);
-                        min = Maths.Float(num2);
-                        max = Maths.Float(num2 + required);
+                        min = MathF.Float(num2);
+                        max = MathF.Float(num2 + required);
                     }
 
                     num1 = max - min;
@@ -482,7 +482,7 @@ namespace UMapx.Imaging
 
                     if (num1 > 0)
                     {
-                        p[v] = p[v + 1] = p[v + 2] = Maths.Byte(255 * num3 / num1);
+                        p[v] = p[v + 1] = p[v + 2] = MathF.Byte(255 * num3 / num1);
                     }
                     // end local function.
                 }

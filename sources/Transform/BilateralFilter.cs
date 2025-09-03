@@ -228,11 +228,11 @@ namespace UMapx.Transform
                     for (int x = 0; x < width; x++)
                     {
                         float diff = array[y, x] - level;
-                        rangeWeight[y, x] = Maths.Exp(-diff * diff / rangeSigma2);
+                        rangeWeight[y, x] = MathF.Exp(-diff * diff / rangeSigma2);
                     }
                 }
 
-                float[,] blurred = Matrice.Mean(array, rangeWeight, r, r);
+                float[,] blurred = MatrixF.Mean(array, rangeWeight, r, r);
 
                 float[,] outputLocal = new float[height, width];
                 float[,] normLocal = new float[height, width];
@@ -311,11 +311,11 @@ namespace UMapx.Transform
                     for (int x = 0; x < width; x++)
                     {
                         Complex32 diff = array[y, x] - level;
-                        rangeWeight[y, x] = Maths.Exp(-diff * diff / rangeSigma2);
+                        rangeWeight[y, x] = MathF.Exp(-diff * diff / rangeSigma2);
                     }
                 }
 
-                Complex32[,] blurred = Matrice.Mean(array, rangeWeight, r, r);
+                Complex32[,] blurred = MatrixF.Mean(array, rangeWeight, r, r);
 
                 Complex32[,] outputLocal = new Complex32[height, width];
                 Complex32[,] normLocal = new Complex32[height, width];
@@ -390,10 +390,10 @@ namespace UMapx.Transform
                 for (int i = 0; i < length; i++)
                 {
                     float diff = input[i] - level;
-                    rangeWeight[i] = Maths.Exp(-diff * diff / rangeSigma2);
+                    rangeWeight[i] = MathF.Exp(-diff * diff / rangeSigma2);
                 }
 
-                float[] blurred = Matrice.Mean(input, rangeWeight, r);
+                float[] blurred = MatrixF.Mean(input, rangeWeight, r);
 
                 float[] outputLocal = new float[length];
                 float[] normLocal = new float[length];
@@ -459,10 +459,10 @@ namespace UMapx.Transform
                 for (int i = 0; i < length; i++)
                 {
                     Complex32 diff = input[i] - level;
-                    rangeWeight[i] = Maths.Exp(-diff * diff / rangeSigma2);
+                    rangeWeight[i] = MathF.Exp(-diff * diff / rangeSigma2);
                 }
 
-                Complex32[] blurred = Matrice.Mean(input, rangeWeight, r);
+                Complex32[] blurred = MatrixF.Mean(input, rangeWeight, r);
 
                 Complex32[] outputLocal = new Complex32[length];
                 Complex32[] normLocal = new Complex32[length];

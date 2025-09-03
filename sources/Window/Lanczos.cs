@@ -27,7 +27,7 @@ namespace UMapx.Window
         public override float Function(float x, int frameSize)
         {
             // Lanczos function:
-            return Special.Sinc(2 * x / (frameSize - 1) - 1, Maths.Pi);
+            return Special.Sinc(2 * x / (frameSize - 1) - 1, MathF.Pi);
         }
         /// <summary>
         /// Returns the window function.
@@ -36,7 +36,7 @@ namespace UMapx.Window
         public override float[] GetWindow(int frameSize)
         {
             float t = (frameSize - 1);
-            float[] x = Matrice.Compute(0, t, 1);
+            float[] x = MatrixF.Compute(0, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

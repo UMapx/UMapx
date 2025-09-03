@@ -377,7 +377,7 @@ namespace UMapx.Core
 
                 for (j = 0; j < r1; j++)
                 {
-                    H[i][j] = Maths.Byte(v[j]);
+                    H[i][j] = MathF.Byte(v[j]);
                 }
             }
 
