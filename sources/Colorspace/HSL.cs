@@ -240,8 +240,8 @@ namespace UMapx.Colorspace
                     float[] T = new float[3];
 
                     T[0] = Hk + 0.3333f;	// Tr
-                    T[1] = Hk;				// Tb
-                    T[2] = Hk - 0.3333f;	// Tg
+                    T[1] = Hk;				// Tg
+                    T[2] = Hk - 0.3333f;	// Tb
 
                     for (int i = 0; i < 3; i++)
                     {
