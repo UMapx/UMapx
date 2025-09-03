@@ -163,7 +163,7 @@ namespace UMapx.Colorspace
 
         #region Conversion operators
         /// <summary>
-        /// Defines an explicit conversion RGB в System.Drawing.Color.
+        /// Defines an implicit conversion from RGB to System.Drawing.Color.
         /// </summary>
         /// <param name="value">RGB structure</param>
         /// <returns>Color in terms of red, green and blue</returns>
@@ -172,7 +172,7 @@ namespace UMapx.Colorspace
             return Color.FromArgb(value.Red, value.Green, value.Blue);
         }
         /// <summary>
-        /// Defines an explicit conversion RGB в System.Drawing.Color.
+        /// Defines an implicit conversion from System.Drawing.Color to RGB.
         /// </summary>
         /// <param name="value">Color in terms of red, green and blue</param>
         /// <returns>RGB structure</returns>
