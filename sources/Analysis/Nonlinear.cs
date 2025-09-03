@@ -85,7 +85,7 @@ namespace UMapx.Analysis
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
         /// <returns>Value</returns>
-        public ComplexF Compute(IComplex32 function, ComplexF a, ComplexF b)
+        public ComplexF Compute(IComplexF function, ComplexF a, ComplexF b)
         {
             // chose method of nonlinear
             switch (method)
@@ -253,7 +253,7 @@ namespace UMapx.Analysis
         /// <param name="b">Second endpoint used only to initialize the first iterate</param>
         /// <param name="eps">Absolute tolerance for residual and step size</param>
         /// <returns>Approximate root</returns>
-        private static ComplexF Chord(IComplex32 f, ComplexF a, ComplexF b, float eps = 1e-8f)
+        private static ComplexF Chord(IComplexF f, ComplexF a, ComplexF b, float eps = 1e-8f)
         {
             ComplexF x0 = 0.5f * (a + b);
             ComplexF fa = f(a);
@@ -286,7 +286,7 @@ namespace UMapx.Analysis
         /// <param name="b">Second initial guess</param>
         /// <param name="eps">Absolute tolerance for residual and step size</param>
         /// <returns>Approximate root</returns>
-        private static ComplexF Secan(IComplex32 f, ComplexF a, ComplexF b, float eps = 1e-8f)
+        private static ComplexF Secan(IComplexF f, ComplexF a, ComplexF b, float eps = 1e-8f)
         {
             ComplexF x1 = a, x2 = b;
             ComplexF f1 = f(x1), f2 = f(x2);

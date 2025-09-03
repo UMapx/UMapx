@@ -432,7 +432,7 @@ namespace UMapx.Transform
         {
             int n = xre.Length;
 
-            // pack to Complex32
+            // pack to Complex
             var X = new ComplexF[n];
             var Y = new ComplexF[n];
 

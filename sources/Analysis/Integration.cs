@@ -105,7 +105,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
         /// <returns>Complex number</returns>
-        public ComplexF Compute(IComplex32 function, ComplexF a, ComplexF b, int n)
+        public ComplexF Compute(IComplexF function, ComplexF a, ComplexF b, int n)
         {
             // chose method of integration
             switch (method)
@@ -478,7 +478,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals (rectangles)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static ComplexF Rect(IComplex32 f, ComplexF a, ComplexF b, int n)
+        private static ComplexF Rect(IComplexF f, ComplexF a, ComplexF b, int n)
         {
             ComplexF sum = 0.0;
             ComplexF h = (b - a) / n;
@@ -523,7 +523,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static ComplexF Midp(IComplex32 f, ComplexF a, ComplexF b, int n)
+        private static ComplexF Midp(IComplexF f, ComplexF a, ComplexF b, int n)
         {
             // Midpoint
             ComplexF sum = 0.0;
@@ -569,7 +569,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static ComplexF Trap(IComplex32 f, ComplexF a, ComplexF b, int n)
+        private static ComplexF Trap(IComplexF f, ComplexF a, ComplexF b, int n)
         {
             ComplexF sum = 0.0;
             ComplexF h = (b - a) / n;
@@ -615,7 +615,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals (even for pure Simpson 1/3)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx (NaN if n &lt; 2)</returns>
-        private static ComplexF Simp(IComplex32 f, ComplexF a, ComplexF b, int n)
+        private static ComplexF Simp(IComplexF f, ComplexF a, ComplexF b, int n)
         {
             if (n < 2) return ComplexF.NaN;
             ComplexF h = (b - a) / n;
@@ -692,7 +692,7 @@ namespace UMapx.Analysis
         /// <param name="maxK">Maximum number of Romberg levels (table size)</param>
         /// <param name="eps">Relative tolerance for early stopping</param>
         /// <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
-        private static ComplexF Romb(IComplex32 f, ComplexF a, ComplexF b, int maxK, float eps = 1e-8f)
+        private static ComplexF Romb(IComplexF f, ComplexF a, ComplexF b, int maxK, float eps = 1e-8f)
         {
             if (maxK < 1) throw new ArgumentException();
             ComplexF[,] R = new ComplexF[maxK, maxK];
@@ -730,7 +730,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit (complex), corresponds to y[N-1]</param>
         /// <param name="maxK">Maximum number of Romberg levels (≥ 1)</param>
         /// <param name="eps">Relative tolerance for early stopping</param>
-        /// <returns>Romberg estimate of ∫_a^b f(x) dx in Complex32</returns>
+        /// <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
         private static ComplexF Romb(ComplexF[] y, ComplexF a, ComplexF b, int maxK, float eps = 1e-8f)
         {
             if (y == null || y.Length < 2) throw new ArgumentException("y must have at least 2 samples.");

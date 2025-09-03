@@ -296,7 +296,7 @@
             <param name="y0">Value</param>
             <returns>Array of function values</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplex32Mesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
+        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplexFMesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
             <summary>
             Returns the value of a differential equation.
             </summary>
@@ -315,7 +315,7 @@
             <param name="order">Order</param>
             <returns>Array of function values</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplex32Mesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF,System.Int32)">
+        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplexFMesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF,System.Int32)">
             <summary>
             Returns the value of a differential equation calculated by the Adams-Bashforth method.
             </summary>
@@ -382,7 +382,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Euler(UMapx.Core.IComplex32Mesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
+        <member name="M:UMapx.Analysis.Differential.Euler(UMapx.Core.IComplexFMesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
             <summary>
             Explicit Euler method (1st order) for y' = f(x, y) on a given grid x.
             </summary>
@@ -395,7 +395,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.RungeKutta2(UMapx.Core.IComplex32Mesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
+        <member name="M:UMapx.Analysis.Differential.RungeKutta2(UMapx.Core.IComplexFMesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
             <summary>
             Runge–Kutta method of order 2 (midpoint form) on grid x.
             </summary>
@@ -407,7 +407,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.RungeKutta4(UMapx.Core.IComplex32Mesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
+        <member name="M:UMapx.Analysis.Differential.RungeKutta4(UMapx.Core.IComplexFMesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
             <summary>
             Classic Runge–Kutta method of order 4 (RK4) on grid x.
             </summary>
@@ -419,7 +419,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Fehlberg(UMapx.Core.IComplex32Mesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
+        <member name="M:UMapx.Analysis.Differential.Fehlberg(UMapx.Core.IComplexFMesh,UMapx.Core.ComplexF[],UMapx.Core.ComplexF)">
             <summary>
             Fehlberg (RKF45 scheme without stepsize adaptation): fixed-step 4th-order estimate.
             </summary>
@@ -493,7 +493,7 @@
             <param name="order">Order</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differentiation.Compute(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
+        <member name="M:UMapx.Analysis.Differentiation.Compute(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
             <summary>
             Returns the value of a derived function.
             </summary>
@@ -559,7 +559,7 @@
             <param name="n">Number of splits</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.Compute(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.Compute(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
             <summary>
             Returns the value of the integral of a function.
             </summary>
@@ -728,7 +728,7 @@
             <param name="eps">Relative tolerance for early stopping</param>
             <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.Rect(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.Rect(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
             <summary>
             Left Riemann sum (rectangle rule) over a function f on [a, b] with n subintervals.
             </summary>
@@ -756,7 +756,7 @@
             <param name="n">Number of subintervals/samples used (left endpoints)</param>
             <returns>Approximation of ∫_a^b f(x) dx</returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.Midp(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.Midp(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
             <summary>
             Midpoint rule over a function f on [a, b] with n subintervals.
             </summary>
@@ -784,7 +784,7 @@
             <param name="n">Number of samples (grid points)</param>
             <returns>Approximation of ∫_a^b f(x) dx</returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.Trap(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.Trap(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
             <summary>
             Trapezoidal rule over a function f on [a, b] with n subintervals.
             </summary>
@@ -812,7 +812,7 @@
             <param name="n">Number of samples (grid points)</param>
             <returns>Approximation of ∫_a^b f(x) dx</returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.Simp(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
+        <member name="M:UMapx.Analysis.Integration.Simp(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32)">
             <summary>
             Simpson's rule over a function f on [a, b] with n subintervals (n even preferred).
             </summary>
@@ -843,7 +843,7 @@
             <param name="n">Number of samples (grid points)</param>
             <returns>Approximation of ∫_a^b f(x) dx (NaN if n &lt; 3)</returns>
         </member>
-        <member name="M:UMapx.Analysis.Integration.Romb(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32,System.Single)">
+        <member name="M:UMapx.Analysis.Integration.Romb(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Int32,System.Single)">
             <summary>
             Romberg integration over a function f on [a, b] using Richardson extrapolation.
             </summary>
@@ -873,7 +873,7 @@
             <param name="b">Upper limit (complex), corresponds to y[N-1]</param>
             <param name="maxK">Maximum number of Romberg levels (≥ 1)</param>
             <param name="eps">Relative tolerance for early stopping</param>
-            <returns>Romberg estimate of ∫_a^b f(x) dx in Complex32</returns>
+            <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
         </member>
         <member name="T:UMapx.Analysis.IntegrationMethod">
             <summary>
@@ -1268,7 +1268,7 @@
             <param name="b">End of line</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Analysis.Nonlinear.Compute(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF)">
+        <member name="M:UMapx.Analysis.Nonlinear.Compute(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF)">
             <summary>
             Gets the root value of a nonlinear equation.
             </summary>
@@ -1340,7 +1340,7 @@
             <param name="eps">Absolute tolerance for residual and step size</param>
             <returns>Approximate root</returns>
         </member>
-        <member name="M:UMapx.Analysis.Nonlinear.Chord(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Single)">
+        <member name="M:UMapx.Analysis.Nonlinear.Chord(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Single)">
             <summary>
             One-endpoint chord method (fixed endpoint secant) for solving f(x) = 0.
             </summary>
@@ -1355,7 +1355,7 @@
             <param name="eps">Absolute tolerance for residual and step size</param>
             <returns>Approximate root</returns>
         </member>
-        <member name="M:UMapx.Analysis.Nonlinear.Secan(UMapx.Core.IComplex32,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Single)">
+        <member name="M:UMapx.Analysis.Nonlinear.Secan(UMapx.Core.IComplexF,UMapx.Core.ComplexF,UMapx.Core.ComplexF,System.Single)">
             <summary>
             Secant method (open method) for solving f(x) = 0 using two initial guesses.
             </summary>
@@ -4166,7 +4166,7 @@
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="T:UMapx.Core.IComplex32">
+        <member name="T:UMapx.Core.IComplexF">
             <summary>
             Defines the delegate of a continuous function that depends on a single argument.
             </summary>
@@ -4181,7 +4181,7 @@
             <param name="y">Second argument</param>
             <returns>Value</returns>
         </member>
-        <member name="T:UMapx.Core.IComplex32Mesh">
+        <member name="T:UMapx.Core.IComplexFMesh">
             <summary>
             Defines the delegate of a continuous function that depends on two arguments.
             </summary>
@@ -10355,7 +10355,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.MatrixF.Compute(UMapx.Core.ComplexF[],UMapx.Core.IComplex32)">
+        <member name="M:UMapx.Core.MatrixF.Compute(UMapx.Core.ComplexF[],UMapx.Core.IComplexF)">
             <summary>
             Returns an array of function values.
             </summary>
@@ -10372,7 +10372,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.MatrixF.Compute(System.Single[],UMapx.Core.ComplexF[],UMapx.Core.IComplex32Mesh)">
+        <member name="M:UMapx.Core.MatrixF.Compute(System.Single[],UMapx.Core.ComplexF[],UMapx.Core.IComplexFMesh)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -10381,7 +10381,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.MatrixF.Compute(UMapx.Core.ComplexF[],System.Single[],UMapx.Core.IComplex32Mesh)">
+        <member name="M:UMapx.Core.MatrixF.Compute(UMapx.Core.ComplexF[],System.Single[],UMapx.Core.IComplexFMesh)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -10390,7 +10390,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.MatrixF.Compute(UMapx.Core.ComplexF[],UMapx.Core.ComplexF[],UMapx.Core.IComplex32Mesh)">
+        <member name="M:UMapx.Core.MatrixF.Compute(UMapx.Core.ComplexF[],UMapx.Core.ComplexF[],UMapx.Core.IComplexFMesh)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -10407,7 +10407,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.MatrixF.Compute(UMapx.Core.ComplexF[0:,0:],UMapx.Core.IComplex32)">
+        <member name="M:UMapx.Core.MatrixF.Compute(UMapx.Core.ComplexF[0:,0:],UMapx.Core.IComplexF)">
             <summary>
             Returns a matrix of function values.
             </summary>
