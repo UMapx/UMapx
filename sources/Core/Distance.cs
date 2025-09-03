@@ -797,7 +797,7 @@ namespace UMapx.Core
 
         #region Jaccard distance
         /// <summary>
-        /// Returns distance value".
+        /// Returns distance value.
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
@@ -849,7 +849,7 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Returns distance value".
+        /// Returns distance value.
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
