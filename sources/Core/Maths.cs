@@ -1302,12 +1302,12 @@ namespace UMapx.Core
             return rightmodexp(a, x, p);
         }
         /// <summary>
-        /// 
+        /// Computes modular exponentiation using the left-to-right binary method.
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="x"></param>
-        /// <param name="p"></param>
-        /// <returns></returns>
+        /// <param name="a">Base value</param>
+        /// <param name="x">Exponent</param>
+        /// <param name="p">Modulus</param>
+        /// <returns>Result of a^x mod p</returns>
         private static long leftmodexp(long a, long x, long p)
         {
             int[] X = Maths.Decimal2Base(x, 2);
@@ -1325,12 +1325,12 @@ namespace UMapx.Core
             return y;
         }
         /// <summary>
-        /// 
+        /// Computes modular exponentiation using the right-to-left binary method.
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="x"></param>
-        /// <param name="p"></param>
-        /// <returns></returns>
+        /// <param name="a">Base value</param>
+        /// <param name="x">Exponent</param>
+        /// <param name="p">Modulus</param>
+        /// <returns>Result of a^x mod p</returns>
         private static long rightmodexp(long a, long x, long p)
         {
             int[] X = Maths.Decimal2Base(x, 2);

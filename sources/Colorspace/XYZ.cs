@@ -220,10 +220,10 @@ namespace UMapx.Colorspace
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Computes the nonlinear helper function used in CIE XYZ to LAB conversion.
         /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
+        /// <param name="t">Input value</param>
+        /// <returns>Transformed value</returns>
         private static float Fxyz(float t)
         {
             return ((t > 0.008856) ? (float)Math.Pow(t, (1.0 / 3.0)) : (float)(7.787 * t + 16.0 / 116.0));

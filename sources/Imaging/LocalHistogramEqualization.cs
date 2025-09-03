@@ -64,9 +64,9 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// 
+        /// Sets internal dimensions based on the processing window size.
         /// </summary>
-        /// <param name="size">Radius</param>
+        /// <param name="size">Neighborhood size</param>
         private void Data(SizeInt size)
         {
             this.l0 = size.Width;
