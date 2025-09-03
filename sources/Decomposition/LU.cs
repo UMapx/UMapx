@@ -53,9 +53,9 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// 
+        /// Performs LU decomposition of the specified matrix.
         /// </summary>
-        /// <param name="a"></param>
+        /// <param name="a">Square matrix to factorize</param>
         private void ludecomp(float[][] a)
         {
             int i, j, k;
