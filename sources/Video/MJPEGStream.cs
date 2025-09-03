@@ -531,6 +531,9 @@ namespace UMapx.Video
             }
         }
 
+        /// <summary>
+        /// Creates and configures the HTTP request and returns its response.
+        /// </summary>
         private WebResponse GetResponse()
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_source);
@@ -562,6 +565,9 @@ namespace UMapx.Video
             }
         }
 
+        /// <summary>
+        /// Assigns the User-Agent header if one is specified.
+        /// </summary>
         private void SetUserAgent(HttpWebRequest request)
         {
             if (_userAgent != null)
@@ -570,6 +576,9 @@ namespace UMapx.Video
             }
         }
 
+        /// <summary>
+        /// Assigns the proxy to the request when provided.
+        /// </summary>
         private void SetProxy(HttpWebRequest request)
         {
             if (_proxy != null)
@@ -578,17 +587,26 @@ namespace UMapx.Video
             }
         }
 
+        /// <summary>
+        /// Applies the timeout value to the web request.
+        /// </summary>
         private void SetRequestTimeout(HttpWebRequest request)
         {
             request.Timeout = _requestTimeout;
         }
 
+        /// <summary>
+        /// Sets network credentials on the request if username and password are specified.
+        /// </summary>
         private void SetCredentials(HttpWebRequest request)
         {
             if (!string.IsNullOrEmpty(_userName) && _password != null)
                 request.Credentials = new NetworkCredential(_userName, _password);
         }
 
+        /// <summary>
+        /// Sets a unique connection group name when using separate connections.
+        /// </summary>
         private void SetConnectionGroupName(HttpWebRequest request)
         {
 #if !NETSTANDARD2_0
@@ -597,6 +615,9 @@ namespace UMapx.Video
 #endif
         }
 
+        /// <summary>
+        /// Adds the HTTP Basic authentication header to the request.
+        /// </summary>
         private void SetBasicAuthentication(HttpWebRequest request)
         {
             const string HEADER_KEY = "Authorization";
@@ -609,6 +630,9 @@ namespace UMapx.Video
             request.Headers[HEADER_KEY] = string.Format("{0} {1}", "Basic", encodedPayload);
         }
 
+        /// <summary>
+        /// Retrieves the response stream and wraps it with a timeout stream if required.
+        /// </summary>
         private Stream GetResponseStream(WebResponse response)
         {
             Stream stream = response.GetResponseStream();
@@ -623,6 +647,9 @@ namespace UMapx.Video
             return stream;
         }
 
+        /// <summary>
+        /// Configures read timeout for the specified stream.
+        /// </summary>
         private void SetTimeout(Stream stream)
         {
             if (stream.CanTimeout)
