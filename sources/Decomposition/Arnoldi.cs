@@ -35,7 +35,7 @@ namespace UMapx.Decomposition
                 throw new ArgumentException("The matrix must be square");
 
             // arnoldi decomposition
-            arnoldi(A, n, m);
+            ArnoldiDcmp(A, n, m);
         }
         /// <summary>
         /// Returns the orthogonal matrix.
@@ -66,7 +66,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Matrix</param>
         /// <param name="n">Dimension</param>
         /// <param name="m">Dimension</param>
-        private void arnoldi(float[,] a, int n, int m)
+        private void ArnoldiDcmp(float[,] a, int n, int m)
         {
             // vectors and matrices:
             this.q = new float[n, m];

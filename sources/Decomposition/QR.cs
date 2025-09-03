@@ -31,7 +31,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Matrix</param>
         public QR(float[,] A)
         {
-            qrdecomp(A);
+            QrDcmp(A);
         }
         #endregion
 
@@ -73,7 +73,7 @@ namespace UMapx.Decomposition
         /// Computes a QR decomposition for the matrix A.
         /// </summary>
         /// <param name="A">Matrix</param>
-        private void qrdecomp(float[,] A)
+        private void QrDcmp(float[,] A)
         {
             // params
             this.m = A.GetLength(0);

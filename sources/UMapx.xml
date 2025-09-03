@@ -13044,7 +13044,7 @@
             Returns the upper triangular Hessenberg matrix.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.Arnoldi.arnoldi(System.Single[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Decomposition.Arnoldi.ArnoldiDcmp(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
             Computes Arnoldi transform for the input matrix.
             </summary>
@@ -13084,7 +13084,7 @@
             Gets the orthogonal matrix V.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.Bidiagonal.decompose(System.Single[0:,0:])">
+        <member name="M:UMapx.Decomposition.Bidiagonal.BidiagDcmp(System.Single[0:,0:])">
             <summary>
             Performs bidiagonal decomposition using Householder transformations.
             </summary>
@@ -13116,7 +13116,7 @@
             Gets the upper triangular matrix U.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.Cholesky.chol(System.Single[][])">
+        <member name="M:UMapx.Decomposition.Cholesky.CholDcmp(System.Single[][])">
             <summary>
             Computes Cholesky decomposition for the matrix A.
             </summary>
@@ -13557,7 +13557,7 @@
             Returns a tridiagonal matrix.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.Lanczos.lanczos(System.Single[0:,0:],System.Int32,System.Boolean)">
+        <member name="M:UMapx.Decomposition.Lanczos.LanczosDcmp(System.Single[0:,0:],System.Int32,System.Boolean)">
             <summary>
             This function uses the Lanczos algorithm with full
             re-orthogonalization to compute k x k symmetric tridiagonal
@@ -13835,7 +13835,7 @@
             Returns the orthogonal matrix Q.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.QR.qrdecomp(System.Single[0:,0:])">
+        <member name="M:UMapx.Decomposition.QR.QrDcmp(System.Single[0:,0:])">
             <summary>
             Computes a QR decomposition for the matrix A.
             </summary>

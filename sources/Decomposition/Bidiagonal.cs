@@ -29,7 +29,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Matrix</param>
         public Bidiagonal(float[,] A)
         {
-            decompose(A);
+            BidiagDcmp(A);
         }
         #endregion
 
@@ -62,7 +62,7 @@ namespace UMapx.Decomposition
         /// Performs bidiagonal decomposition using Householder transformations.
         /// </summary>
         /// <param name="A">Matrix</param>
-        private void decompose(float[,] A)
+        private void BidiagDcmp(float[,] A)
         {
             m = A.GetLength(0);
             n = A.GetLength(1);

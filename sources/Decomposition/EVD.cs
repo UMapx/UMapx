@@ -959,7 +959,6 @@ namespace UMapx.Decomposition
                 cdivi = (r * xi - xr) / d;
             }
         }
-
         #endregion
     }
 }

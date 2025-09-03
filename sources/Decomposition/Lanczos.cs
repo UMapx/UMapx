@@ -34,7 +34,7 @@ namespace UMapx.Decomposition
 
             // lanczos decomposition
             int n = A.GetLength(0);
-            lanczos(A, n, full);
+            LanczosDcmp(A, n, full);
         }
         /// <summary>
         /// Returns the orthogonal matrix.
@@ -68,7 +68,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Matrix</param>
         /// <param name="n">Dimension</param>
         /// <param name="full">Full or not</param>
-        private void lanczos(float[,] a, int n, bool full)
+        private void LanczosDcmp(float[,] a, int n, bool full)
         {
             // params
             int i, j, y, k = n - 1;

@@ -29,7 +29,7 @@ namespace UMapx.Decomposition
                 throw new ArgumentException("The matrix must be square");
 
             // Cholesky decomposition:
-            chol(Jagged.ToJagged(A));
+            CholDcmp(Jagged.ToJagged(A));
         }
         #endregion
 
@@ -55,7 +55,7 @@ namespace UMapx.Decomposition
         /// Computes Cholesky decomposition for the matrix A.
         /// </summary>
         /// <param name="a">Matrix</param>
-        private void chol(float[][] a)
+        private void CholDcmp(float[][] a)
         {
             // Cholesky decomposition
             int n = a.GetLength(0);
