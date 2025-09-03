@@ -193,7 +193,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Converts a color model RGB in model HSB.
+        /// Converts a color model RGB to the CMYK model.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>CMYK structure</returns>
