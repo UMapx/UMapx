@@ -32971,7 +32971,7 @@
             <param name="frameSize">Window size</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Window.Cosine.cosinefunc(System.Single,System.Int32)">
+        <member name="M:UMapx.Window.Cosine.Cosinefunc(System.Single,System.Int32)">
             <summary>
             Returns the value of a window function.
             </summary>
@@ -33148,42 +33148,13 @@
             Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
             </remarks>
             </summary>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
             <summary>
-            Initializes fast Weyl-Heisenberg transform.
+            Defines fast Weyl-Heisenberg transform.
+            <remarks>
+            The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
+            Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
+            </remarks>
             </summary>
-            <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N/2]</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
              <summary>
@@ -33348,6 +33319,42 @@
             <summary>
             UMapx fast Fourier transform.
             </summary>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes fast Weyl-Heisenberg transform.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Window.FastZakTransform">
             <summary>
@@ -34014,7 +34021,7 @@
             <param name="frameSize">Window size</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Window.Sine.sinefunc(System.Single,System.Int32)">
+        <member name="M:UMapx.Window.Sine.Sinefunc(System.Single,System.Int32)">
             <summary>
             Returns the value of a window function.
             </summary>

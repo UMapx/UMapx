@@ -26,7 +26,7 @@ namespace UMapx.Window
         /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
-            return (float)Math.Pow(Sine.sinefunc(x, frameSize), 2);
+            return (float)Math.Pow(Sine.Sinefunc(x, frameSize), 2);
         }
         /// <summary>
         /// Returns the window function.

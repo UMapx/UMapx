@@ -48,7 +48,7 @@ namespace UMapx.Window
         /// <param name="x">Value</param>
         /// <param name="frameSize">Window size</param>
         /// <returns>Value</returns>
-        internal static float sinefunc(float x, int frameSize)
+        internal static float Sinefunc(float x, int frameSize)
         {
             return (float)Math.Sin(Math.PI * x / (frameSize - 1));
         }

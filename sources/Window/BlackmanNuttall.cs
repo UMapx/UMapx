@@ -26,7 +26,7 @@ namespace UMapx.Window
         /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
-            return 0.3635819f - 0.4891775f * Cosine.cosinefunc(2 * x, frameSize) + 0.1365995f * Cosine.cosinefunc(4 * x, frameSize) - 0.0106411f * Cosine.cosinefunc(6 * x, frameSize);
+            return 0.3635819f - 0.4891775f * Cosine.Cosinefunc(2 * x, frameSize) + 0.1365995f * Cosine.Cosinefunc(4 * x, frameSize) - 0.0106411f * Cosine.Cosinefunc(6 * x, frameSize);
         }
         /// <summary>
         /// Returns the window function.

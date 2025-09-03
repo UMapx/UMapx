@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using UMapx.Core;
 
 namespace UMapx.Window
@@ -50,7 +48,7 @@ namespace UMapx.Window
         /// <param name="x">Value</param>
         /// <param name="frameSize">Window size</param>
         /// <returns>Factor</returns>
-        internal static float cosinefunc(float x, int frameSize)
+        internal static float Cosinefunc(float x, int frameSize)
         {
             return (float)Math.Cos(Maths.Pi * x / (frameSize - 1));
         }

@@ -297,7 +297,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
-        internal static void BluesteinFFT(Complex32[] data, bool inverse)
+        private static void BluesteinFFT(Complex32[] data, bool inverse)
         {
             if (data == null || data.Length <= 1) return;
 
@@ -310,12 +310,12 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
-        internal static void CooleyTukeyFFT(Complex32[] data, bool inverse)
+        private static void CooleyTukeyFFT(Complex32[] data, bool inverse)
         {
             if (data == null || data.Length <= 1) return;
             int n = data.Length;
             if ((n & (n - 1)) != 0)
-                throw new ArgumentException("Length must be a power of two.");
+                throw new ArgumentException("Length must be a power of 2");
 
             if (inverse) SwapRealImagInPlace(data);   // conj trick
             TransformRadix2(data);                    // forward kernel
