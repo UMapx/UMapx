@@ -527,7 +527,7 @@ namespace UMapx.Colorspace
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
-        /// <param name="v">Saturation</param>
+        /// <param name="v">Vibrance</param>
         /// <returns>RGB structure</returns>
         public static RGB Vibrance(int red, int green, int blue, float v)
         {
@@ -551,7 +551,7 @@ namespace UMapx.Colorspace
         /// Corrects color vibrance.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
-        /// <param name="s">Saturation</param>
+        /// <param name="s">Vibrance</param>
         /// <returns>RGB structure</returns>
         public static RGB Vibrance(RGB rgb, float s)
         {
