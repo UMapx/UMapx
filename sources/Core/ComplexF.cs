@@ -276,7 +276,7 @@ namespace UMapx.Core
 
         #region Conversion operators
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -285,7 +285,7 @@ namespace UMapx.Core
             return new ComplexF((float)value.Real, (float)value.Imaginary);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -294,7 +294,7 @@ namespace UMapx.Core
             return new Complex(value.Real, value.Imag);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -303,7 +303,7 @@ namespace UMapx.Core
             return new ComplexF((float)value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -312,7 +312,7 @@ namespace UMapx.Core
             return new ComplexF(value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -321,7 +321,7 @@ namespace UMapx.Core
             return new ComplexF(value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -330,7 +330,7 @@ namespace UMapx.Core
             return new ComplexF(value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -339,7 +339,7 @@ namespace UMapx.Core
             return new ComplexF(value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -348,7 +348,7 @@ namespace UMapx.Core
             return new ComplexF(value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -357,7 +357,7 @@ namespace UMapx.Core
             return new ComplexF(value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -366,7 +366,7 @@ namespace UMapx.Core
             return new ComplexF(value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -375,7 +375,7 @@ namespace UMapx.Core
             return new ComplexF(value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
@@ -384,7 +384,7 @@ namespace UMapx.Core
             return new ComplexF(value, 0);
         }
         /// <summary>
-        /// Defines an explicit conversion of a number to complex number.
+        /// Defines an implicit conversion of a number to complex number.
         /// </summary>
         /// <param name="value">Value to be converted to complex number</param>
         /// <returns>Complex number</returns>
