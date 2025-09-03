@@ -69,13 +69,13 @@ namespace UMapx.Decomposition
         /// <param name="iterations">Iterations</param>
         private void NnmfDcmp(float[,] A, int iterations = 100)
         {
-            // chose W and H randomly, W with unit norm
+            // choose W and H randomly, W with unit norm
             w = Matrice.Rand(m, r);
             h = Matrice.Rand(r, n);
             var Z = new float[r, r];
 
             // a small epsilon is added to the
-            //  denominator to avoid overflow.
+            // denominator to avoid overflow.
             float eps = 10e-9f;
             int i, j, l, t;
             float s, d;
