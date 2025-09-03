@@ -265,7 +265,7 @@ namespace UMapx.Video
         /// <summary>
         /// Checks whether the worker thread is active.
         /// </summary>
-        /// <returns><c>true</c> if running; otherwise, false.</returns>
+        /// <returns><c>true</c> if running; otherwise, false</returns>
         private bool IsThreadRunning()
         {
             bool isRunning = false;

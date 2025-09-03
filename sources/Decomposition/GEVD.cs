@@ -1389,7 +1389,7 @@ namespace UMapx.Decomposition
         ///   and is is equivalent to C++'s std::copysign function.
         /// </remarks>
         /// 
-        /// <returns>If B > 0 then the result is ABS(A), else it is -ABS(A).</returns>
+        /// <returns>If B > 0 then the result is ABS(A), else it is -ABS(A)</returns>
         /// 
         /// <param name="a"></param>
         /// <param name="b"></param>

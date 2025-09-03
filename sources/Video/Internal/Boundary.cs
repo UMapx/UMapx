@@ -144,7 +144,7 @@
         /// Locates the boundary parameter position in a content type string.
         /// </summary>
         /// <param name="contentType">Content type header</param>
-        /// <returns>Index of boundary parameter or -1.</returns>
+        /// <returns>Index of boundary parameter or -1</returns>
         private static int GetBoundaryIndex(string contentType)
         {
             int boundaryIndex = contentType.IndexOf("boundary", 0);
@@ -161,7 +161,7 @@
         /// </summary>
         /// <param name="contentType">Content type header</param>
         /// <param name="boundaryIndex">Index of the boundary token</param>
-        /// <returns>Parsed boundary instance.</returns>
+        /// <returns>Parsed boundary instance</returns>
         private static Boundary TrimBoundary(string contentType, int boundaryIndex)
         {
             string boundary = contentType.Substring(boundaryIndex + 1);
@@ -174,7 +174,7 @@
         /// Determines whether the content type is multipart/mixed.
         /// </summary>
         /// <param name="contentType">Content type header</param>
-        /// <returns><c>true</c> if multipart/mixed; otherwise, false.</returns>
+        /// <returns><c>true</c> if multipart/mixed; otherwise, false</returns>
         private static bool IsMultipartContent(string contentType)
         {
             return contentType.StartsWith("multipart") && contentType.Contains("mixed");
@@ -184,7 +184,7 @@
         /// Determines whether the content type is an octet-stream.
         /// </summary>
         /// <param name="contentType">Content type header</param>
-        /// <returns><c>true</c> if octet-stream; otherwise, false.</returns>
+        /// <returns><c>true</c> if octet-stream; otherwise, false</returns>
         private static bool IsOctetStream(string contentType)
         {
             return contentType.StartsWith("application/octet-stream");

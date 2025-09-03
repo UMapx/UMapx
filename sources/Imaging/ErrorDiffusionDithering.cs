@@ -220,7 +220,7 @@ namespace UMapx.Imaging
         /// <param name="green">Green channel index</param>
         /// <param name="blue">Blue channel index</param>
         /// <param name="table">Lookup table</param>
-        /// <returns>Quantized color.</returns>
+        /// <returns>Quantized color</returns>
         private Color GetColor(int red, int green, int blue, float[] table)
         {
             byte r = Maths.Byte(table[red]);

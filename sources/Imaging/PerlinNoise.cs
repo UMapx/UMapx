@@ -112,7 +112,7 @@ namespace UMapx.Imaging
         /// Generates a deterministic pseudo-random noise value for one dimension.
         /// </summary>
         /// <param name="x">Input coordinate</param>
-        /// <returns>Noise value in the range [-1, 1].</returns>
+        /// <returns>Noise value in the range [-1, 1]</returns>
         private static double Noise(int x)
         {
             int n = (x << 13) ^ x;
@@ -124,7 +124,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
-        /// <returns>Noise value in the range [-1, 1].</returns>
+        /// <returns>Noise value in the range [-1, 1]</returns>
         private static double Noise(int x, int y)
         {
             int n = x + y * 57;
@@ -136,7 +136,7 @@ namespace UMapx.Imaging
         /// Computes smoothed 1D noise using cosine interpolation.
         /// </summary>
         /// <param name="x">Input coordinate</param>
-        /// <returns>Smoothed noise value.</returns>
+        /// <returns>Smoothed noise value</returns>
         private static double SmoothedNoise(double x)
         {
             int xInt = (int)x;
@@ -149,7 +149,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
-        /// <returns>Smoothed noise value.</returns>
+        /// <returns>Smoothed noise value</returns>
         private static double SmoothedNoise(double x, double y)
         {
             // params
@@ -177,7 +177,7 @@ namespace UMapx.Imaging
         /// <param name="x1">First value</param>
         /// <param name="x2">Second value</param>
         /// <param name="a">Interpolation factor</param>
-        /// <returns>Interpolated value.</returns>
+        /// <returns>Interpolated value</returns>
         private static double CosineInterpolate(double x1, double x2, double a)
         {
             double f = (1 - Math.Cos(a * Math.PI)) * 0.5;

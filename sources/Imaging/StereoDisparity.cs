@@ -52,7 +52,7 @@ namespace UMapx.Imaging
             var right = BitmapMatrix.ToGrayscale(bmSrc);
 
             // apply filter
-            var output = disparity_estimator(left, right, Window, Disparity, Weight);
+            var output = DisparityEstimator(left, right, Window, Disparity, Weight);
 
             // return result
             return output;
@@ -84,8 +84,8 @@ namespace UMapx.Imaging
         /// <param name="max_dis">Maximum disparity value</param>
         /// <param name="weight">Gradient weight</param>
         /// <param name="apply_median">Apply median filtering or not</param>
-        /// <returns>Disparity matrix.</returns>
-        private float[,] disparity_estimator(float[,] left, float[,] right, int win, int max_dis, float weight, bool apply_median = false)
+        /// <returns>Disparity matrix</returns>
+        private float[,] DisparityEstimator(float[,] left, float[,] right, int win, int max_dis, float weight, bool apply_median = false)
         {
             int x = left.GetLength(1);
             int y = left.GetLength(0);
@@ -102,7 +102,7 @@ namespace UMapx.Imaging
             var im_r = new float[][,] { right, right_x, right_y };
 
             var even_win = Maths.IsEven(win) ? win : win + 1;
-            var disparity = disparity_processor(im_l, im_r, even_win, max_dis, weight, x, y, z);
+            var disparity = DisparityEstimator(im_l, im_r, even_win, max_dis, weight, x, y, z);
 
             if (apply_median)
             {
@@ -123,8 +123,8 @@ namespace UMapx.Imaging
         /// <param name="dim_x">Image width</param>
         /// <param name="dim_y">Image height</param>
         /// <param name="dim_z">Number of channels</param>
-        /// <returns>Disparity matrix.</returns>
-        private float[,] disparity_processor(float[][,] im_l, float[][,] im_r, int win, int max_dis, float weight, int dim_x, int dim_y, int dim_z)
+        /// <returns>Disparity matrix</returns>
+        private float[,] DisparityEstimator(float[][,] im_l, float[][,] im_r, int win, int max_dis, float weight, int dim_x, int dim_y, int dim_z)
         {
             var disparity = new float[dim_y, dim_x];
             var min2_dis = new float[dim_y, dim_x].Add(float.MaxValue);

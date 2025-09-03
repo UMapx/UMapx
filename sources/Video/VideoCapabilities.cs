@@ -64,7 +64,7 @@ namespace UMapx.Video
         /// 
         /// <param name="obj">Object to compare with</param>
         /// 
-        /// <returns>Returns true if both are equal are equal or false otherwise.</returns>
+        /// <returns>Returns true if both are equal are equal or false otherwise</returns>
         /// 
         public override bool Equals(object obj)
         {
@@ -77,7 +77,7 @@ namespace UMapx.Video
         /// 
         /// <param name="vc2">Second video capability to compare with</param>
         /// 
-        /// <returns>Returns true if both video capabilities are equal or false otherwise.</returns>
+        /// <returns>Returns true if both video capabilities are equal or false otherwise</returns>
         /// 
         public bool Equals(VideoCapabilities vc2)
         {
@@ -106,7 +106,7 @@ namespace UMapx.Video
         /// <param name="a">First object to check</param>
         /// <param name="b">Seconds object to check</param>
         /// 
-        /// <returns>Return true if both objects are equal or false otherwise.</returns>
+        /// <returns>Return true if both objects are equal or false otherwise</returns>
         public static bool operator ==(VideoCapabilities a, VideoCapabilities b)
         {
             // if both are null, or both are same instance, return true.
@@ -131,7 +131,7 @@ namespace UMapx.Video
         /// <param name="a">First object to check</param>
         /// <param name="b">Seconds object to check</param>
         /// 
-        /// <returns>Return true if both objects are not equal or false otherwise.</returns>
+        /// <returns>Return true if both objects are not equal or false otherwise</returns>
         public static bool operator !=(VideoCapabilities a, VideoCapabilities b)
         {
             return !(a == b);
@@ -140,7 +140,7 @@ namespace UMapx.Video
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
-        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        /// <returns>A <see cref="System.String" /> that represents this instance</returns>
         public override string ToString()
         {
             return String.Format("{0}x{1}, {2} fps ({3} max fps), {4} bpp",

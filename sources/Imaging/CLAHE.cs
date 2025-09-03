@@ -177,7 +177,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="size">Axis length in pixels (width or height)</param>
         /// <param name="tiles">Number of tiles along this axis (>= 1)</param>
-        /// <returns>Array of length <c>tiles+1</c> with cumulative borders; segment i is [br[i], br[i+1]).</returns>
+        /// <returns>Array of length <c>tiles+1</c> with cumulative borders; segment i is [br[i], br[i+1])</returns>
         private static int[] MakeBreaks(int size, int tiles)
         {
             var br = new int[tiles + 1];
@@ -201,7 +201,7 @@ namespace UMapx.Imaging
         /// mid([a, b)) ≈ (a + b - 1) / 2.
         /// </summary>
         /// <param name="br">Breaks as produced by <see cref="MakeBreaks"/></param>
-        /// <returns>Array of tile center positions (float) aligned to pixel coordinates.</returns>
+        /// <returns>Array of tile center positions (float) aligned to pixel coordinates</returns>
         private static float[] MakeCenters(int[] br)
         {
             int tiles = br.Length - 1;
@@ -282,7 +282,7 @@ namespace UMapx.Imaging
         /// Relative clip limit factor. Absolute limit per bin is
         /// <c>clip = clipLimitFactor * (tileArea / Bins)</c>. Use 0 to disable clipping.
         /// </param>
-        /// <returns>Byte LUT of length 256 mapping input luminance → equalized luminance.</returns>
+        /// <returns>Byte LUT of length 256 mapping input luminance → equalized luminance</returns>
         private unsafe static byte[] BuildTileLUT(
             byte* basePtr, int stride,
             int x0, int x1, int y0, int y1,

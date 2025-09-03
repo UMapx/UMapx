@@ -13417,7 +13417,7 @@
               and is is equivalent to C++'s std::copysign function.
             </remarks>
             
-            <returns>If B > 0 then the result is ABS(A), else it is -ABS(A).</returns>
+            <returns>If B > 0 then the result is ABS(A), else it is -ABS(A)</returns>
             
             <param name="a"></param>
             <param name="b"></param>
@@ -16984,7 +16984,7 @@
             Computes the natural logarithm of the probability density function.
             </summary>
             <param name="x">Input value</param>
-            <returns>Logarithm of the density.</returns>
+            <returns>Logarithm of the density</returns>
         </member>
         <member name="T:UMapx.Distribution.Triangular">
             <summary>
@@ -18641,7 +18641,7 @@
             </summary>
             <param name="size">Axis length in pixels (width or height)</param>
             <param name="tiles">Number of tiles along this axis (>= 1)</param>
-            <returns>Array of length <c>tiles+1</c> with cumulative borders; segment i is [br[i], br[i+1]).</returns>
+            <returns>Array of length <c>tiles+1</c> with cumulative borders; segment i is [br[i], br[i+1])</returns>
         </member>
         <member name="M:UMapx.Imaging.CLAHE.MakeCenters(System.Int32[])">
             <summary>
@@ -18650,7 +18650,7 @@
             mid([a, b)) ≈ (a + b - 1) / 2.
             </summary>
             <param name="br">Breaks as produced by <see cref="M:UMapx.Imaging.CLAHE.MakeBreaks(System.Int32,System.Int32)"/></param>
-            <returns>Array of tile center positions (float) aligned to pixel coordinates.</returns>
+            <returns>Array of tile center positions (float) aligned to pixel coordinates</returns>
         </member>
         <member name="M:UMapx.Imaging.CLAHE.PrecomputeAxis(System.Int32,System.Single[])">
             <summary>
@@ -18687,7 +18687,7 @@
             Relative clip limit factor. Absolute limit per bin is
             <c>clip = clipLimitFactor * (tileArea / Bins)</c>. Use 0 to disable clipping.
             </param>
-            <returns>Byte LUT of length 256 mapping input luminance → equalized luminance.</returns>
+            <returns>Byte LUT of length 256 mapping input luminance → equalized luminance</returns>
         </member>
         <member name="T:UMapx.Imaging.Closing">
             <summary>
@@ -19737,7 +19737,7 @@
             <param name="green">Green channel index</param>
             <param name="blue">Blue channel index</param>
             <param name="table">Lookup table</param>
-            <returns>Quantized color.</returns>
+            <returns>Quantized color</returns>
         </member>
         <member name="P:UMapx.Imaging.ErrorDiffusionDithering.Atkinson">
             <summary>
@@ -20255,7 +20255,7 @@
             </summary>
             <param name="sigma">Target standard deviation (pixels)</param>
             <param name="n">Number of boxes (>=1), typically 3</param>
-            <returns>Array of odd box widths of length <paramref name="n"/>.</returns>
+            <returns>Array of odd box widths of length <paramref name="n"/></returns>
         </member>
         <member name="T:UMapx.Imaging.Grayscale">
             <summary>
@@ -22485,7 +22485,7 @@
             Generates a deterministic pseudo-random noise value for one dimension.
             </summary>
             <param name="x">Input coordinate</param>
-            <returns>Noise value in the range [-1, 1].</returns>
+            <returns>Noise value in the range [-1, 1]</returns>
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.Noise(System.Int32,System.Int32)">
             <summary>
@@ -22493,14 +22493,14 @@
             </summary>
             <param name="x">X coordinate</param>
             <param name="y">Y coordinate</param>
-            <returns>Noise value in the range [-1, 1].</returns>
+            <returns>Noise value in the range [-1, 1]</returns>
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.SmoothedNoise(System.Double)">
             <summary>
             Computes smoothed 1D noise using cosine interpolation.
             </summary>
             <param name="x">Input coordinate</param>
-            <returns>Smoothed noise value.</returns>
+            <returns>Smoothed noise value</returns>
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.SmoothedNoise(System.Double,System.Double)">
             <summary>
@@ -22508,7 +22508,7 @@
             </summary>
             <param name="x">X coordinate</param>
             <param name="y">Y coordinate</param>
-            <returns>Smoothed noise value.</returns>
+            <returns>Smoothed noise value</returns>
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.CosineInterpolate(System.Double,System.Double,System.Double)">
             <summary>
@@ -22517,7 +22517,7 @@
             <param name="x1">First value</param>
             <param name="x2">Second value</param>
             <param name="a">Interpolation factor</param>
-            <returns>Interpolated value.</returns>
+            <returns>Interpolated value</returns>
         </member>
         <member name="T:UMapx.Imaging.PerspectiveWarp">
             <summary>
@@ -23575,7 +23575,7 @@
             Converts an intensity value to its gamma-adjusted counterpart.
             </summary>
             <param name="v">Input intensity value</param>
-            <returns>Gamma-corrected value.</returns>
+            <returns>Gamma-corrected value</returns>
         </member>
         <member name="T:UMapx.Imaging.Shift">
             <summary>
@@ -24221,7 +24221,7 @@
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.StereoDisparity.disparity_estimator(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32,System.Single,System.Boolean)">
+        <member name="M:UMapx.Imaging.StereoDisparity.DisparityEstimator(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32,System.Single,System.Boolean)">
             <summary>
             Estimates a disparity map from stereo image pairs.
             </summary>
@@ -24231,9 +24231,9 @@
             <param name="max_dis">Maximum disparity value</param>
             <param name="weight">Gradient weight</param>
             <param name="apply_median">Apply median filtering or not</param>
-            <returns>Disparity matrix.</returns>
+            <returns>Disparity matrix</returns>
         </member>
-        <member name="M:UMapx.Imaging.StereoDisparity.disparity_processor(System.Single[0:,0:][],System.Single[0:,0:][],System.Int32,System.Int32,System.Single,System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Imaging.StereoDisparity.DisparityEstimator(System.Single[0:,0:][],System.Single[0:,0:][],System.Int32,System.Int32,System.Single,System.Int32,System.Int32,System.Int32)">
             <summary>
             Aggregates matching costs to produce the final disparity map.
             </summary>
@@ -24245,7 +24245,7 @@
             <param name="dim_x">Image width</param>
             <param name="dim_y">Image height</param>
             <param name="dim_z">Number of channels</param>
-            <returns>Disparity matrix.</returns>
+            <returns>Disparity matrix</returns>
         </member>
         <member name="T:UMapx.Imaging.TemperatureCorrection">
             <summary>
@@ -28290,7 +28290,7 @@
             <param name="startIndex">Start index in source array</param>
             
             <returns>Returns <b>true</b> if the source array contains the needle at
-            the specified index. Otherwise it returns <b>false</b>.</returns>
+            the specified index. Otherwise it returns <b>false</b></returns>
             
         </member>
         <member name="M:UMapx.Video.ByteArrayUtils.Find(System.Byte[],System.Byte[],System.Int32,System.Int32)">
@@ -28303,7 +28303,7 @@
             <param name="startIndex">Start index in source array</param>
             <param name="sourceLength">Number of bytes in source array, where the needle is searched for</param>
             
-            <returns>Returns starting position of the needle if it was found or <b>-1</b> otherwise.</returns>
+            <returns>Returns starting position of the needle if it was found or <b>-1</b> otherwise</returns>
             
         </member>
         <member name="T:UMapx.Video.NewDepthEventHandler">
@@ -28396,7 +28396,7 @@
             Locates the boundary parameter position in a content type string.
             </summary>
             <param name="contentType">Content type header</param>
-            <returns>Index of boundary parameter or -1.</returns>
+            <returns>Index of boundary parameter or -1</returns>
         </member>
         <member name="M:UMapx.Video.Boundary.TrimBoundary(System.String,System.Int32)">
             <summary>
@@ -28404,21 +28404,21 @@
             </summary>
             <param name="contentType">Content type header</param>
             <param name="boundaryIndex">Index of the boundary token</param>
-            <returns>Parsed boundary instance.</returns>
+            <returns>Parsed boundary instance</returns>
         </member>
         <member name="M:UMapx.Video.Boundary.IsMultipartContent(System.String)">
             <summary>
             Determines whether the content type is multipart/mixed.
             </summary>
             <param name="contentType">Content type header</param>
-            <returns><c>true</c> if multipart/mixed; otherwise, false.</returns>
+            <returns><c>true</c> if multipart/mixed; otherwise, false</returns>
         </member>
         <member name="M:UMapx.Video.Boundary.IsOctetStream(System.String)">
             <summary>
             Determines whether the content type is an octet-stream.
             </summary>
             <param name="contentType">Content type header</param>
-            <returns><c>true</c> if octet-stream; otherwise, false.</returns>
+            <returns><c>true</c> if octet-stream; otherwise, false</returns>
         </member>
         <member name="M:UMapx.Video.Boundary.op_Explicit(UMapx.Video.Boundary)~System.String">
             <summary>
@@ -28499,13 +28499,13 @@
             <summary>
             Searches for the JPEG frame header within the buffer.
             </summary>
-            <returns>Index of the header or -1.</returns>
+            <returns>Index of the header or -1</returns>
         </member>
         <member name="M:UMapx.Video.MJPEGStreamParser.FindBoundary">
             <summary>
             Searches for the boundary marker in the buffer.
             </summary>
-            <returns>Index of boundary or -1.</returns>
+            <returns>Index of boundary or -1</returns>
         </member>
         <member name="M:UMapx.Video.MJPEGStreamParser.PositionAtImageEnd">
             <summary>
@@ -29179,7 +29179,7 @@
             <summary>
             Checks whether the worker thread is active.
             </summary>
-            <returns><c>true</c> if running; otherwise, false.</returns>
+            <returns><c>true</c> if running; otherwise, false</returns>
         </member>
         <member name="P:UMapx.Video.MJPEGStream.ForceBasicAuthentication">
             <summary>
@@ -29599,7 +29599,7 @@
             
             <param name="obj">Object to compare with</param>
             
-            <returns>Returns true if both are equal are equal or false otherwise.</returns>
+            <returns>Returns true if both are equal are equal or false otherwise</returns>
             
         </member>
         <member name="M:UMapx.Video.VideoCapabilities.Equals(UMapx.Video.VideoCapabilities)">
@@ -29609,7 +29609,7 @@
             
             <param name="vc2">Second video capability to compare with</param>
             
-            <returns>Returns true if both video capabilities are equal or false otherwise.</returns>
+            <returns>Returns true if both video capabilities are equal or false otherwise</returns>
             
         </member>
         <member name="M:UMapx.Video.VideoCapabilities.GetHashCode">
@@ -29627,7 +29627,7 @@
             <param name="a">First object to check</param>
             <param name="b">Seconds object to check</param>
             
-            <returns>Return true if both objects are equal or false otherwise.</returns>
+            <returns>Return true if both objects are equal or false otherwise</returns>
         </member>
         <member name="M:UMapx.Video.VideoCapabilities.op_Inequality(UMapx.Video.VideoCapabilities,UMapx.Video.VideoCapabilities)">
             <summary>
@@ -29637,13 +29637,13 @@
             <param name="a">First object to check</param>
             <param name="b">Seconds object to check</param>
             
-            <returns>Return true if both objects are not equal or false otherwise.</returns>
+            <returns>Return true if both objects are not equal or false otherwise</returns>
         </member>
         <member name="M:UMapx.Video.VideoCapabilities.ToString">
             <summary>
             Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
-            <returns>A <see cref="T:System.String" /> that represents this instance.</returns>
+            <returns>A <see cref="T:System.String" /> that represents this instance</returns>
         </member>
         <member name="T:UMapx.Video.NewFrameEventHandler">
             <summary>
@@ -33155,7 +33155,7 @@
               3 → −j   (−90°)
             </summary>
             <param name="k">Frequency index (integer)</param>
-            <returns>Complex value of e^{+j * π * k / 2}.</returns>
+            <returns>Complex value of e^{+j * π * k / 2}</returns>
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FFT(UMapx.Core.Complex32[],System.Boolean)">
             <summary>

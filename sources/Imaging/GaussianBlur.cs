@@ -348,7 +348,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="sigma">Target standard deviation (pixels)</param>
         /// <param name="n">Number of boxes (>=1), typically 3</param>
-        /// <returns>Array of odd box widths of length <paramref name="n"/>.</returns>
+        /// <returns>Array of odd box widths of length <paramref name="n"/></returns>
         private static int[] BoxesForGauss(float sigma, int n)
         {
             n = Math.Max(1, n);

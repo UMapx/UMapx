@@ -17,7 +17,7 @@ namespace UMapx.Video
         /// <param name="startIndex">Start index in source array</param>
         /// 
         /// <returns>Returns <b>true</b> if the source array contains the needle at
-        /// the specified index. Otherwise it returns <b>false</b>.</returns>
+        /// the specified index. Otherwise it returns <b>false</b></returns>
         /// 
         public static bool Compare(byte[] array, byte[] needle, int startIndex)
         {
@@ -42,7 +42,7 @@ namespace UMapx.Video
         /// <param name="startIndex">Start index in source array</param>
         /// <param name="sourceLength">Number of bytes in source array, where the needle is searched for</param>
         /// 
-        /// <returns>Returns starting position of the needle if it was found or <b>-1</b> otherwise.</returns>
+        /// <returns>Returns starting position of the needle if it was found or <b>-1</b> otherwise</returns>
         /// 
         public static int Find(byte[] array, byte[] needle, int startIndex, int sourceLength)
         {

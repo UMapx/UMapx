@@ -205,7 +205,7 @@
         /// <summary>
         /// Searches for the JPEG frame header within the buffer.
         /// </summary>
-        /// <returns>Index of the header or -1.</returns>
+        /// <returns>Index of the header or -1</returns>
         private int FindHeader()
         {
             return ByteArrayUtils.Find(_buffer, _header, _position, RemainingBytes);
@@ -214,7 +214,7 @@
         /// <summary>
         /// Searches for the boundary marker in the buffer.
         /// </summary>
-        /// <returns>Index of boundary or -1.</returns>
+        /// <returns>Index of boundary or -1</returns>
         private int FindBoundary()
         {
             byte[] imageDelimiter;
