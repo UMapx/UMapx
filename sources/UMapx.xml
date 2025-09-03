@@ -20086,6 +20086,99 @@
             Ported from gimp. See gimpmatrix.c and gimp-transform-utils.c.
             </summary>
         </member>
+        <member name="F:UMapx.Imaging.Float3x3.Identity">
+            <summary>
+            Identity matrix (cached).
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Float3x3.#cctor">
+            <summary>
+            Static initializer builds the identity matrix.
+            </summary>
+        </member>
+        <member name="M:UMapx.Imaging.Float3x3.#ctor">
+            <summary>
+            Creates a zero-initialized 3×3 matrix.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:UMapx.Imaging.Float3x3.Perspective(System.Drawing.Rectangle,UMapx.Core.PointFloat,UMapx.Core.PointFloat,UMapx.Core.PointFloat,UMapx.Core.PointFloat)" -->
+        <member name="M:UMapx.Imaging.Float3x3.Determinant">
+            <summary>
+            Computes the determinant of the 3×3 matrix.
+            </summary>
+            <returns>Determinant value.</returns>
+            <remarks>
+            Implementation expands along the first column.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Imaging.Float3x3.Invert">
+            <summary>
+            Returns the inverse matrix using the classical adjugate / determinant formula.
+            </summary>
+            <returns>Inverse matrix.</returns>
+            <remarks>
+            <para>
+            Numerical note: if the matrix is singular or nearly singular (|det| ≈ 0),
+            this operation is unstable. Consider checking the determinant magnitude and
+            handling the case appropriately.
+            </para>
+            <para>
+            ⚠ NOTE in original code: the conditional
+            <c>if (EpsilonEquals(det, 0, 1e-5f)) det = 1.0f / det;</c>
+            is suspicious: typically you would <b>throw</b> when det ≈ 0, and otherwise
+            set <c>invDet = 1.0f / det</c>. Kept as-is to preserve behavior.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:UMapx.Imaging.Float3x3.TransformPoint(UMapx.Core.PointFloat)">
+            <summary>
+            Applies the homography to a 2D point (with a perspective divide).
+            </summary>
+            <param name="point">Input point</param>
+            <returns>Transformed point after perspective division</returns>
+            <remarks>
+            If the homogeneous w becomes (near) zero, the result is undefined.
+            This implementation guards only against exact zero; consider using an epsilon.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Imaging.Float3x3.Translate(System.Single,System.Single)">
+            <summary>
+            Post-multiplies the current matrix by a translation T(x, y).
+            </summary>
+            <param name="x">Translation along X</param>
+            <param name="y">Translation along Y</param>
+            <returns>New matrix equal to <c>this * T(x,y)</c></returns>
+        </member>
+        <member name="M:UMapx.Imaging.Float3x3.Scale(System.Single,System.Single)">
+            <summary>
+            Post-multiplies the current matrix by a non-uniform scale S(x, y).
+            </summary>
+            <param name="x">Scale on X</param>
+            <param name="y">Scale on Y</param>
+            <returns>New matrix equal to <c>this * S(x,y)</c></returns>
+        </member>
+        <member name="M:UMapx.Imaging.Float3x3.Clone">
+            <summary>
+            Deep copy of the matrix.
+            </summary>
+            <returns>Cloned matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Float3x3.Multiply(UMapx.Imaging.Float3x3)">
+            <summary>
+            Matrix product: <c>this * other</c>.
+            </summary>
+            <param name="other">Right-hand matrix</param>
+            <returns>Product matrix</returns>
+        </member>
+        <member name="M:UMapx.Imaging.Float3x3.EpsilonEquals(System.Single,System.Single,System.Single)">
+            <summary>
+            Absolute-ε equality check for floats: |f - other| ≤ ε.
+            </summary>
+            <param name="f">First value</param>
+            <param name="other">Second value</param>
+            <param name="epsilon">Tolerance</param>
+            <returns>True if within epsilon</returns>
+        </member>
         <member name="T:UMapx.Imaging.FreiChen">
             <summary>
             Defines Frei-Chen convolution filter.

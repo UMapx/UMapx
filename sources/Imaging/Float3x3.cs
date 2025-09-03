@@ -17,8 +17,14 @@ namespace UMapx.Imaging
 
         #region Static
 
+        /// <summary>
+        /// Identity matrix (cached).
+        /// </summary>
         private static readonly Float3x3 Identity;
 
+        /// <summary>
+        /// Static initializer builds the identity matrix.
+        /// </summary>
         static Float3x3()
         {
             Identity = new Float3x3();
@@ -31,6 +37,9 @@ namespace UMapx.Imaging
 
         #region Constructor
 
+        /// <summary>
+        /// Creates a zero-initialized 3×3 matrix.
+        /// </summary>
         public Float3x3()
         {
             coefficients = new float[3][];
@@ -44,6 +53,23 @@ namespace UMapx.Imaging
 
         #region Public methods
 
+        /// <summary>
+        /// Builds a perspective transform that maps a source axis-aligned
+        /// rectangle to an arbitrary quadrilateral (t1..t4), then normalizes
+        /// the source by translating to the rectangle origin and scaling
+        /// into [0,1]×[0,1] prior to the warp.
+        /// </summary>
+        /// <param name="rectangle">Source rectangle in input coordinates</param>
+        /// <param name="t1">Destination corner corresponding to source (0,0)</param>
+        /// <param name="t2">Destination corner corresponding to source (1,0)</param>
+        /// <param name="t3">Destination corner corresponding to source (1,1)</param>
+        /// <param name="t4">Destination corner corresponding to source (0,1)</param>
+        /// <returns>
+        /// Homography matrix H such that dest ≈ H · norm(src), with a perspective divide
+        /// </returns>
+        /// <remarks>
+        /// If the destination quad is (nearly) affine, a simplified affine mapping is used.
+        /// Otherwise the full projective warp is constructed. Based on GIMP’s homography derivation.
         public static Float3x3 Perspective(Rectangle rectangle, PointFloat t1, PointFloat t2, PointFloat t3, PointFloat t4)
         {
 
@@ -116,6 +142,13 @@ namespace UMapx.Imaging
             return trafo.Multiply(matrix);
         }
 
+        /// <summary>
+        /// Computes the determinant of the 3×3 matrix.
+        /// </summary>
+        /// <returns>Determinant value.</returns>
+        /// <remarks>
+        /// Implementation expands along the first column.
+        /// </remarks>
         public float Determinant()
         {
             var matrix = this;
@@ -129,6 +162,23 @@ namespace UMapx.Imaging
             return determinant;
         }
 
+        /// <summary>
+        /// Returns the inverse matrix using the classical adjugate / determinant formula.
+        /// </summary>
+        /// <returns>Inverse matrix.</returns>
+        /// <remarks>
+        /// <para>
+        /// Numerical note: if the matrix is singular or nearly singular (|det| ≈ 0),
+        /// this operation is unstable. Consider checking the determinant magnitude and
+        /// handling the case appropriately.
+        /// </para>
+        /// <para>
+        /// ⚠ NOTE in original code: the conditional
+        /// <c>if (EpsilonEquals(det, 0, 1e-5f)) det = 1.0f / det;</c>
+        /// is suspicious: typically you would <b>throw</b> when det ≈ 0, and otherwise
+        /// set <c>invDet = 1.0f / det</c>. Kept as-is to preserve behavior.
+        /// </para>
+        /// </remarks>
         public Float3x3 Invert()
         {
             var inv = new Float3x3();
@@ -169,6 +219,15 @@ namespace UMapx.Imaging
             return inv;
         }
 
+        /// <summary>
+        /// Applies the homography to a 2D point (with a perspective divide).
+        /// </summary>
+        /// <param name="point">Input point</param>
+        /// <returns>Transformed point after perspective division</returns>
+        /// <remarks>
+        /// If the homogeneous w becomes (near) zero, the result is undefined.
+        /// This implementation guards only against exact zero; consider using an epsilon.
+        /// </remarks>
         public PointFloat TransformPoint(PointFloat point)
         {
             var x = point.X;
@@ -191,6 +250,12 @@ namespace UMapx.Imaging
             return new PointFloat(newx, newy);
         }
 
+        /// <summary>
+        /// Post-multiplies the current matrix by a translation T(x, y).
+        /// </summary>
+        /// <param name="x">Translation along X</param>
+        /// <param name="y">Translation along Y</param>
+        /// <returns>New matrix equal to <c>this * T(x,y)</c></returns>
         public Float3x3 Translate(float x, float y)
         {
             var matrix = Clone();
@@ -206,6 +271,12 @@ namespace UMapx.Imaging
             return matrix;
         }
 
+        /// <summary>
+        /// Post-multiplies the current matrix by a non-uniform scale S(x, y).
+        /// </summary>
+        /// <param name="x">Scale on X</param>
+        /// <param name="y">Scale on Y</param>
+        /// <returns>New matrix equal to <c>this * S(x,y)</c></returns>
         public Float3x3 Scale(float x, float y)
         {
             var matrix = Clone();
@@ -220,6 +291,10 @@ namespace UMapx.Imaging
             return matrix;
         }
 
+        /// <summary>
+        /// Deep copy of the matrix.
+        /// </summary>
+        /// <returns>Cloned matrix</returns>
         public Float3x3 Clone()
         {
             var r = new Float3x3();
@@ -233,6 +308,11 @@ namespace UMapx.Imaging
             return r;
         }
 
+        /// <summary>
+        /// Matrix product: <c>this * other</c>.
+        /// </summary>
+        /// <param name="other">Right-hand matrix</param>
+        /// <returns>Product matrix</returns>
         public Float3x3 Multiply(Float3x3 other)
         {
             var tmp = new Float3x3();
@@ -260,6 +340,13 @@ namespace UMapx.Imaging
 
         #region Private methods
 
+        /// <summary>
+        /// Absolute-ε equality check for floats: |f - other| ≤ ε.
+        /// </summary>
+        /// <param name="f">First value</param>
+        /// <param name="other">Second value</param>
+        /// <param name="epsilon">Tolerance</param>
+        /// <returns>True if within epsilon</returns>
         internal static bool EpsilonEquals(float f, float other, float epsilon)
         {
             return Math.Abs(f - other) <= epsilon;
