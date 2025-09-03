@@ -12,7 +12,7 @@ namespace UMapx.Decomposition
     /// </remarks>
     /// </summary>
     [Serializable]
-    public class NMF
+    public class NNMF
     {
         #region Private data
         private float[,] w;  // W is m x r (weights)
@@ -29,7 +29,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Non-negative matrix</param>
         /// <param name="r">The dimension of new matrices</param>
         /// <param name="iterations">Number of iterations</param>
-        public NMF(float[,] A, int r, int iterations = 100)
+        public NNMF(float[,] A, int r, int iterations = 100)
         {
             this.m = A.GetLength(0);
             this.n = A.GetLength(1);
@@ -40,7 +40,7 @@ namespace UMapx.Decomposition
             this.r = r;
 
             // decompose
-            nnmf(A, iterations);
+            NnmfDcmp(A, iterations);
         }
         #endregion
 
@@ -67,7 +67,7 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <param name="iterations">Iterations</param>
-        private void nnmf(float[,] A, int iterations = 100)
+        private void NnmfDcmp(float[,] A, int iterations = 100)
         {
             // chose W and H randomly, W with unit norm
             w = Matrice.Rand(m, r);

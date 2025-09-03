@@ -3141,10 +3141,10 @@
         </member>
         <member name="M:UMapx.Colorspace.XYZ.Fxyz(System.Single)">
             <summary>
-            
+            Computes the nonlinear helper function used in CIE XYZ to LAB conversion.
             </summary>
-            <param name="t"></param>
-            <returns></returns>
+            <param name="t">Input value</param>
+            <returns>Transformed value</returns>
         </member>
         <member name="P:UMapx.Colorspace.XYZ.ToRGB">
             <summary>
@@ -6594,21 +6594,21 @@
         </member>
         <member name="M:UMapx.Core.Maths.leftmodexp(System.Int64,System.Int64,System.Int64)">
             <summary>
-            
+            Computes modular exponentiation using the left-to-right binary method.
             </summary>
-            <param name="a"></param>
-            <param name="x"></param>
-            <param name="p"></param>
-            <returns></returns>
+            <param name="a">Base value</param>
+            <param name="x">Exponent</param>
+            <param name="p">Modulus</param>
+            <returns>Result of a^x mod p</returns>
         </member>
         <member name="M:UMapx.Core.Maths.rightmodexp(System.Int64,System.Int64,System.Int64)">
             <summary>
-            
+            Computes modular exponentiation using the right-to-left binary method.
             </summary>
-            <param name="a"></param>
-            <param name="x"></param>
-            <param name="p"></param>
-            <returns></returns>
+            <param name="a">Base value</param>
+            <param name="x">Exponent</param>
+            <param name="p">Modulus</param>
+            <returns>Result of a^x mod p</returns>
         </member>
         <member name="M:UMapx.Core.Maths.ModInv(System.Int32,System.Int32)">
             <summary>
@@ -13760,13 +13760,13 @@
             Gets the upper triangular matrix.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.LU.ludecomp(System.Single[][])">
+        <member name="M:UMapx.Decomposition.LU.LuDcmp(System.Single[][])">
             <summary>
-            
+            Performs LU decomposition of the specified matrix.
             </summary>
-            <param name="a"></param>
+            <param name="a">Square matrix to factorize</param>
         </member>
-        <member name="T:UMapx.Decomposition.NMF">
+        <member name="T:UMapx.Decomposition.NNMF">
             <summary>
             Defines non-negative matrix factorization.
             <remarks>
@@ -13776,7 +13776,7 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.NMF.#ctor(System.Single[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Decomposition.NNMF.#ctor(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
             Initializes non-negative matrix factorization.
             </summary>
@@ -13784,17 +13784,17 @@
             <param name="r">The dimension of new matrices</param>
             <param name="iterations">Number of iterations</param>
         </member>
-        <member name="P:UMapx.Decomposition.NMF.W">
+        <member name="P:UMapx.Decomposition.NNMF.W">
             <summary>
             Gets the left matrix.
             </summary>
         </member>
-        <member name="P:UMapx.Decomposition.NMF.H">
+        <member name="P:UMapx.Decomposition.NNMF.H">
             <summary>
             Gets the right matrix.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.NMF.nnmf(System.Single[0:,0:],System.Int32)">
+        <member name="M:UMapx.Decomposition.NNMF.NnmfDcmp(System.Single[0:,0:],System.Int32)">
             <summary>
             Computes non-negative matrix factorization for input matrix.
             </summary>
@@ -21724,9 +21724,9 @@
         </member>
         <member name="M:UMapx.Imaging.LocalHistogramEqualization.Data(UMapx.Core.SizeInt)">
             <summary>
-            
+            Sets internal dimensions based on the processing window size.
             </summary>
-            <param name="size">Radius</param>
+            <param name="size">Neighborhood size</param>
         </member>
         <member name="M:UMapx.Imaging.LocalHistogramEqualization.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
             <summary>

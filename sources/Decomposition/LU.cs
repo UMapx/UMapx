@@ -30,7 +30,7 @@ namespace UMapx.Decomposition
                 throw new ArgumentException("The matrix must be square");
 
             // LU-decomposition:
-            ludecomp(Jagged.ToJagged(A));
+            LuDcmp(Jagged.ToJagged(A));
         }
         #endregion
 
@@ -56,7 +56,7 @@ namespace UMapx.Decomposition
         /// Performs LU decomposition of the specified matrix.
         /// </summary>
         /// <param name="a">Square matrix to factorize</param>
-        private void ludecomp(float[][] a)
+        private void LuDcmp(float[][] a)
         {
             int i, j, k;
             int n = a.GetLength(0);
