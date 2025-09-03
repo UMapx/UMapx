@@ -521,7 +521,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Returns the not number.
+        /// Returns a complex 'Not a Number' value.
         /// </summary>
         public static ComplexF NaN
         {
