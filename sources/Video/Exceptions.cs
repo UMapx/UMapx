@@ -15,7 +15,7 @@
         /// Initializes a new instance of the <see cref="VideoException"/> class.
         /// </summary>
         /// 
-        /// <param name="message">Exception's message.</param>
+        /// <param name="message">Exception's message</param>
         /// 
         public VideoException( string message ) :
             base( message ) { }

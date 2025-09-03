@@ -165,7 +165,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Computes the natural logarithm of the probability density function.
         /// </summary>
-        /// <param name="x">Input value.</param>
+        /// <param name="x">Input value</param>
         /// <returns>Logarithm of the density.</returns>
         private float LogFunction(float x)
         {

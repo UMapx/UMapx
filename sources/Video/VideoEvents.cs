@@ -4,8 +4,8 @@ namespace UMapx.Video
     /// Delegate for new frame event handler.
     /// </summary>
     /// 
-    /// <param name="sender">Sender object.</param>
-    /// <param name="eventArgs">Event arguments.</param>
+    /// <param name="sender">Sender object</param>
+    /// <param name="eventArgs">Event arguments</param>
     /// 
     public delegate void NewFrameEventHandler(object sender, NewFrameEventArgs eventArgs);
 
@@ -13,8 +13,8 @@ namespace UMapx.Video
     /// Delegate for video source error event handler.
     /// </summary>
     /// 
-    /// <param name="sender">Sender object.</param>
-    /// <param name="eventArgs">Event arguments.</param>
+    /// <param name="sender">Sender object</param>
+    /// <param name="eventArgs">Event arguments</param>
     /// 
     public delegate void VideoSourceErrorEventHandler(object sender, VideoSourceErrorEventArgs eventArgs);
 
@@ -22,8 +22,8 @@ namespace UMapx.Video
     /// Delegate for playing finished event handler.
     /// </summary>
     /// 
-    /// <param name="sender">Sender object.</param>
-    /// <param name="reason">Reason of finishing video playing.</param>
+    /// <param name="sender">Sender object</param>
+    /// <param name="reason">Reason of finishing video playing</param>
     /// 
     public delegate void PlayingFinishedEventHandler(object sender, ReasonToFinishPlaying reason);
 

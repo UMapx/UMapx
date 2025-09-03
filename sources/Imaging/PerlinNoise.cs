@@ -111,7 +111,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Generates a deterministic pseudo-random noise value for one dimension.
         /// </summary>
-        /// <param name="x">Input coordinate.</param>
+        /// <param name="x">Input coordinate</param>
         /// <returns>Noise value in the range [-1, 1].</returns>
         private static double Noise(int x)
         {
@@ -122,8 +122,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Generates a deterministic pseudo-random noise value for two dimensions.
         /// </summary>
-        /// <param name="x">X coordinate.</param>
-        /// <param name="y">Y coordinate.</param>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
         /// <returns>Noise value in the range [-1, 1].</returns>
         private static double Noise(int x, int y)
         {
@@ -135,7 +135,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Computes smoothed 1D noise using cosine interpolation.
         /// </summary>
-        /// <param name="x">Input coordinate.</param>
+        /// <param name="x">Input coordinate</param>
         /// <returns>Smoothed noise value.</returns>
         private static double SmoothedNoise(double x)
         {
@@ -147,8 +147,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Computes smoothed 2D noise using cosine interpolation.
         /// </summary>
-        /// <param name="x">X coordinate.</param>
-        /// <param name="y">Y coordinate.</param>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
         /// <returns>Smoothed noise value.</returns>
         private static double SmoothedNoise(double x, double y)
         {
@@ -174,9 +174,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Performs cosine interpolation between two values.
         /// </summary>
-        /// <param name="x1">First value.</param>
-        /// <param name="x2">Second value.</param>
-        /// <param name="a">Interpolation factor.</param>
+        /// <param name="x1">First value</param>
+        /// <param name="x2">Second value</param>
+        /// <param name="a">Interpolation factor</param>
         /// <returns>Interpolated value.</returns>
         private static double CosineInterpolate(double x1, double x2, double a)
         {

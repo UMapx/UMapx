@@ -27,7 +27,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the salt and pepper noise filter.
         /// </summary>
-        /// <param name="amount">Amount [0, 100].</param>
+        /// <param name="amount">Amount [0, 100]</param>
         public SaltAndPepper(double amount)
         {
             Amount = amount;

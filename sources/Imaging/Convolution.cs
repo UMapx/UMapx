@@ -85,7 +85,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Prepares kernel dimensions and internal buffers.
         /// </summary>
-        /// <param name="m">Convolution kernel.</param>
+        /// <param name="m">Convolution kernel</param>
         private void Data(float[,] m)
         {
             this.l0 = m.GetLength(0);

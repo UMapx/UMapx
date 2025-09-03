@@ -83,9 +83,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates point by angle.
         /// </summary>
-        /// <param name="pointToRotate">The point to rotate.</param>
-        /// <param name="centerPoint">The center point of rotation.</param>
-        /// <param name="angleInDegrees">The rotation angle in degrees.</param>
+        /// <param name="pointToRotate">The point to rotate</param>
+        /// <param name="centerPoint">The center point of rotation</param>
+        /// <param name="angleInDegrees">The rotation angle in degrees</param>
         /// <returns>Rotated point</returns>
         public static Point Rotate(this Point pointToRotate, Point centerPoint, double angleInDegrees)
         {

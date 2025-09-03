@@ -928,12 +928,12 @@ namespace UMapx.Decomposition
         /// Complex scalar division using a numerically stable branch (Smith’s method).
         /// Computes (xr + i·xi) / (yr + i·yi) and stores the real/imag parts in <paramref name="cdivr"/> / <paramref name="cdivi"/>.
         /// </summary>
-        /// <param name="xr">Real part of the numerator.</param>
-        /// <param name="xi">Imag part of the numerator.</param>
-        /// <param name="yr">Real part of the denominator.</param>
-        /// <param name="yi">Imag part of the denominator.</param>
-        /// <param name="cdivr">[out] Real part of the quotient.</param>
-        /// <param name="cdivi">[out] Imag part of the quotient.</param>
+        /// <param name="xr">Real part of the numerator</param>
+        /// <param name="xi">Imag part of the numerator</param>
+        /// <param name="yr">Real part of the denominator</param>
+        /// <param name="yi">Imag part of the denominator</param>
+        /// <param name="cdivr">[out] Real part of the quotient</param>
+        /// <param name="cdivi">[out] Imag part of the quotient</param>
         /// <remarks>
         /// Chooses the scaling branch by comparing |yr| and |yi| to avoid overflow/underflow.
         /// If both <paramref name="yr"/> and <paramref name="yi"/> are zero, the result follows IEEE-754 (Inf/NaN).

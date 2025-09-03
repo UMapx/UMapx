@@ -62,7 +62,7 @@ namespace UMapx.Video
         /// Check if the video capability equals to the specified object.
         /// </summary>
         /// 
-        /// <param name="obj">Object to compare with.</param>
+        /// <param name="obj">Object to compare with</param>
         /// 
         /// <returns>Returns true if both are equal are equal or false otherwise.</returns>
         /// 
@@ -75,7 +75,7 @@ namespace UMapx.Video
         /// Check if two video capabilities are equal.
         /// </summary>
         /// 
-        /// <param name="vc2">Second video capability to compare with.</param>
+        /// <param name="vc2">Second video capability to compare with</param>
         /// 
         /// <returns>Returns true if both video capabilities are equal or false otherwise.</returns>
         /// 
@@ -103,8 +103,8 @@ namespace UMapx.Video
         /// Equality operator.
         /// </summary>
         /// 
-        /// <param name="a">First object to check.</param>
-        /// <param name="b">Seconds object to check.</param>
+        /// <param name="a">First object to check</param>
+        /// <param name="b">Seconds object to check</param>
         /// 
         /// <returns>Return true if both objects are equal or false otherwise.</returns>
         public static bool operator ==(VideoCapabilities a, VideoCapabilities b)
@@ -128,8 +128,8 @@ namespace UMapx.Video
         /// Inequality operator.
         /// </summary>
         /// 
-        /// <param name="a">First object to check.</param>
-        /// <param name="b">Seconds object to check.</param>
+        /// <param name="a">First object to check</param>
+        /// <param name="b">Seconds object to check</param>
         /// 
         /// <returns>Return true if both objects are not equal or false otherwise.</returns>
         public static bool operator !=(VideoCapabilities a, VideoCapabilities b)

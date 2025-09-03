@@ -78,12 +78,12 @@ namespace UMapx.Imaging
         /// <summary>
         /// Estimates a disparity map from stereo image pairs.
         /// </summary>
-        /// <param name="left">Left image matrix.</param>
-        /// <param name="right">Right image matrix.</param>
-        /// <param name="win">Window size.</param>
-        /// <param name="max_dis">Maximum disparity value.</param>
-        /// <param name="weight">Gradient weight.</param>
-        /// <param name="apply_median">Apply median filtering or not.</param>
+        /// <param name="left">Left image matrix</param>
+        /// <param name="right">Right image matrix</param>
+        /// <param name="win">Window size</param>
+        /// <param name="max_dis">Maximum disparity value</param>
+        /// <param name="weight">Gradient weight</param>
+        /// <param name="apply_median">Apply median filtering or not</param>
         /// <returns>Disparity matrix.</returns>
         private float[,] disparity_estimator(float[,] left, float[,] right, int win, int max_dis, float weight, bool apply_median = false)
         {
@@ -115,14 +115,14 @@ namespace UMapx.Imaging
         /// <summary>
         /// Aggregates matching costs to produce the final disparity map.
         /// </summary>
-        /// <param name="im_l">Left image stack.</param>
-        /// <param name="im_r">Right image stack.</param>
-        /// <param name="win">Window size.</param>
-        /// <param name="max_dis">Maximum disparity value.</param>
-        /// <param name="weight">Gradient weight.</param>
-        /// <param name="dim_x">Image width.</param>
-        /// <param name="dim_y">Image height.</param>
-        /// <param name="dim_z">Number of channels.</param>
+        /// <param name="im_l">Left image stack</param>
+        /// <param name="im_r">Right image stack</param>
+        /// <param name="win">Window size</param>
+        /// <param name="max_dis">Maximum disparity value</param>
+        /// <param name="weight">Gradient weight</param>
+        /// <param name="dim_x">Image width</param>
+        /// <param name="dim_y">Image height</param>
+        /// <param name="dim_z">Number of channels</param>
         /// <returns>Disparity matrix.</returns>
         private float[,] disparity_processor(float[][,] im_l, float[][,] im_r, int win, int max_dis, float weight, int dim_x, int dim_y, int dim_z)
         {

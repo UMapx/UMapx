@@ -175,8 +175,8 @@ namespace UMapx.Imaging
         /// Remainder pixels are distributed by adding +1 to the first <c>rem</c> tiles.
         /// Example: size=10, tiles=3 → breaks: [0, 4, 7, 10].
         /// </summary>
-        /// <param name="size">Axis length in pixels (width or height).</param>
-        /// <param name="tiles">Number of tiles along this axis (>= 1).</param>
+        /// <param name="size">Axis length in pixels (width or height)</param>
+        /// <param name="tiles">Number of tiles along this axis (>= 1)</param>
         /// <returns>Array of length <c>tiles+1</c> with cumulative borders; segment i is [br[i], br[i+1]).</returns>
         private static int[] MakeBreaks(int size, int tiles)
         {
@@ -200,7 +200,7 @@ namespace UMapx.Imaging
         /// Center is computed as the midpoint between inclusive pixel indices:
         /// mid([a, b)) ≈ (a + b - 1) / 2.
         /// </summary>
-        /// <param name="br">Breaks as produced by <see cref="MakeBreaks"/>.</param>
+        /// <param name="br">Breaks as produced by <see cref="MakeBreaks"/></param>
         /// <returns>Array of tile center positions (float) aligned to pixel coordinates.</returns>
         private static float[] MakeCenters(int[] br)
         {
@@ -218,8 +218,8 @@ namespace UMapx.Imaging
         /// tile centers and their interpolation weights. This is used for bilinear interpolation across tiles.
         /// Complexity: O(n), no per-pixel binary search required.
         /// </summary>
-        /// <param name="n">Axis length in pixels (width or height).</param>
-        /// <param name="centers">Tile center coordinates from <see cref="MakeCenters"/> (sorted ascending).</param>
+        /// <param name="n">Axis length in pixels (width or height)</param>
+        /// <param name="centers">Tile center coordinates from <see cref="MakeCenters"/> (sorted ascending)</param>
         /// <returns>
         /// Tuple of:
         /// <list type="bullet">
@@ -272,12 +272,12 @@ namespace UMapx.Imaging
         /// 2) applies contrast limiting with excess redistribution,
         /// 3) converts clipped histogram to equalization LUT via CDF normalization.
         /// </summary>
-        /// <param name="basePtr">Pointer to the first byte of the bitmap data.</param>
-        /// <param name="stride">Stride in bytes of the bitmap row (may be &gt; width*4).</param>
-        /// <param name="x0">Inclusive left bound of the tile.</param>
-        /// <param name="x1">Exclusive right bound of the tile.</param>
-        /// <param name="y0">Inclusive top bound of the tile.</param>
-        /// <param name="y1">Exclusive bottom bound of the tile.</param>
+        /// <param name="basePtr">Pointer to the first byte of the bitmap data</param>
+        /// <param name="stride">Stride in bytes of the bitmap row (may be &gt; width*4)</param>
+        /// <param name="x0">Inclusive left bound of the tile</param>
+        /// <param name="x1">Exclusive right bound of the tile</param>
+        /// <param name="y0">Inclusive top bound of the tile</param>
+        /// <param name="y1">Exclusive bottom bound of the tile</param>
         /// <param name="clipLimitFactor">
         /// Relative clip limit factor. Absolute limit per bin is
         /// <c>clip = clipLimitFactor * (tileArea / Bins)</c>. Use 0 to disable clipping.

@@ -15,7 +15,7 @@ namespace UMapx.Video
         /// Initializes a new instance of the <see cref="NewFrameEventArgs"/> class.
         /// </summary>
         /// 
-        /// <param name="frame">New frame.</param>
+        /// <param name="frame">New frame</param>
         /// 
         public NewFrameEventArgs(Bitmap frame)
         {

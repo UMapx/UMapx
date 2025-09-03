@@ -23,7 +23,7 @@ namespace UMapx.Distribution
         /// Initializes the Gumbel distribution.
         /// </summary>
         /// <param name="mu">Shear rate μ ∈ (-inf, +inf)</param>
-        /// <param name="beta">Scale factor β ∈ (0, +inf).</param>
+        /// <param name="beta">Scale factor β ∈ (0, +inf)</param>
         public Gumbel(float mu, float beta)
         {
             Mu = mu; Beta = beta;

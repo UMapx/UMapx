@@ -56,7 +56,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Maps a data-space X value to the corresponding horizontal pixel coordinate.
         /// </summary>
-        /// <param name="a">Data-space X value to convert.</param>
+        /// <param name="a">Data-space X value to convert</param>
         /// <param name="amin">Data-space minimum (left bound) of the X axis</param>
         /// <param name="amax">Data-space maximum (right bound) of the X axis</param>
         /// <param name="width">Total drawable width in pixels (must be &gt; 0)</param>

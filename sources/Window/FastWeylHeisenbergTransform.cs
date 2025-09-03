@@ -761,7 +761,7 @@ namespace UMapx.Window
         ///   2 → −1   (180°)
         ///   3 → −j   (−90°)
         /// </summary>
-        /// <param name="k">Frequency index (integer).</param>
+        /// <param name="k">Frequency index (integer)</param>
         /// <returns>Complex value of e^{+j * π * k / 2}.</returns>
         private static Complex32 PhasePlusPiOver2(int k)
         {

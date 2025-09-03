@@ -71,8 +71,8 @@
         /// <summary>
         /// Appends new data into the internal buffer.
         /// </summary>
-        /// <param name="content">Source byte array.</param>
-        /// <param name="readBytes">Number of bytes read.</param>
+        /// <param name="content">Source byte array</param>
+        /// <param name="readBytes">Number of bytes read</param>
         private void Add(byte[] content, int readBytes)
         {
             Array.Copy(content, 0, _buffer, _totalReadBytes, readBytes);

@@ -102,7 +102,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an intensity value to its gamma-adjusted counterpart.
         /// </summary>
-        /// <param name="v">Input intensity value.</param>
+        /// <param name="v">Input intensity value</param>
         /// <returns>Gamma-corrected value.</returns>
         private float value2gamma(float v)
         {

@@ -324,7 +324,7 @@ namespace UMapx.Video
         /// Initializes a new instance of the <see cref="MJPEGStream"/> class.
         /// </summary>
         /// 
-        /// <param name="source">URL, which provides MJPEG stream.</param>
+        /// <param name="source">URL, which provides MJPEG stream</param>
         /// 
         public MJPEGStream(string source)
         {
