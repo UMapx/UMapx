@@ -24,7 +24,7 @@ namespace UMapx.Distribution
         /// Initializes the Birnbaum-Saunders distribution.
         /// </summary>
         /// <param name="mu">Shear rate μ ∈ (0, +inf)</param>
-        /// <param name="beta">Scale factor β ∈ (0, +inf).</param>
+        /// <param name="beta">Scale factor β ∈ (0, +inf)</param>
         /// <param name="gamma">Shape factor γ ∈ (0, +inf)</param>
         public BirnbaumSaunders(float mu, float beta, float gamma)
         {

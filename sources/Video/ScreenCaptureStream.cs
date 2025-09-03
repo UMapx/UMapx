@@ -187,7 +187,7 @@
         /// Initializes a new instance of the <see cref="ScreenCaptureStream"/> class.
         /// </summary>
         /// 
-        /// <param name="region">Screen's rectangle to capture (the rectangle may cover multiple displays).</param>
+        /// <param name="region">Screen's rectangle to capture (the rectangle may cover multiple displays)</param>
         /// 
         public ScreenCaptureStream( Rectangle region )
         {
@@ -198,8 +198,8 @@
         /// Initializes a new instance of the <see cref="ScreenCaptureStream"/> class.
         /// </summary>
         /// 
-        /// <param name="region">Screen's rectangle to capture (the rectangle may cover multiple displays).</param>
-        /// <param name="frameInterval">Time interval between making screen shots, ms.</param>
+        /// <param name="region">Screen's rectangle to capture (the rectangle may cover multiple displays)</param>
+        /// <param name="frameInterval">Time interval between making screen shots, ms</param>
         /// 
         public ScreenCaptureStream( Rectangle region, int frameInterval )
         {
@@ -306,7 +306,9 @@
             stopEvent = null;
         }
 
-        // Worker thread
+        /// <summary>
+        /// Captures frames from the screen in a background thread.
+        /// </summary>
         private void WorkerThread( )
         {
             int width = region.Width;

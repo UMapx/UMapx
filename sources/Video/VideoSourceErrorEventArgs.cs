@@ -14,7 +14,7 @@ namespace UMapx.Video
         /// <summary>
         /// Initializes a new instance of the <see cref="VideoSourceErrorEventArgs"/> class.
         /// </summary>
-        /// <param name="description">Error description.</param>
+        /// <param name="description">Error description</param>
         public VideoSourceErrorEventArgs(string description)
             : this(description, null) { }
 
@@ -22,8 +22,8 @@ namespace UMapx.Video
         /// Initializes a new instance of the <see cref="VideoSourceErrorEventArgs"/> class.
         /// </summary>
         /// 
-        /// <param name="description">Error description.</param>
-        /// <param name="exception">Error exception.</param>
+        /// <param name="description">Error description</param>
+        /// <param name="exception">Error exception</param>
         /// 
         public VideoSourceErrorEventArgs(string description, Exception exception)
         {

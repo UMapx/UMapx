@@ -128,6 +128,9 @@ namespace UMapx.Video
             }
         }
 
+        /// <summary>
+        /// Signals the worker thread to restart the connection.
+        /// </summary>
         private void ReloadThread()
         {
             if (_thread != null)
@@ -259,6 +262,10 @@ namespace UMapx.Video
             }
         }
 
+        /// <summary>
+        /// Checks whether the worker thread is active.
+        /// </summary>
+        /// <returns><c>true</c> if running; otherwise, false.</returns>
         private bool IsThreadRunning()
         {
             bool isRunning = false;
@@ -317,7 +324,7 @@ namespace UMapx.Video
         /// Initializes a new instance of the <see cref="MJPEGStream"/> class.
         /// </summary>
         /// 
-        /// <param name="source">URL, which provides MJPEG stream.</param>
+        /// <param name="source">URL, which provides MJPEG stream</param>
         /// 
         public MJPEGStream(string source)
         {
@@ -431,6 +438,9 @@ namespace UMapx.Video
             _reloadEvent = null;
         }
 
+        /// <summary>
+        /// Thread procedure that downloads and parses the MJPEG stream.
+        /// </summary>
         private void WorkerThread()
         {
             while (!IsStopRequested)

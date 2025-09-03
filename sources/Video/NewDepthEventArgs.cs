@@ -11,7 +11,7 @@ namespace UMapx.Video
         /// Initializes a new instance of the <see cref="NewDepthEventArgs"/> class.
         /// </summary>
         /// 
-        /// <param name="depth">New depth.</param>
+        /// <param name="depth">New depth</param>
         /// 
         public NewDepthEventArgs(ushort[,] depth)
         {

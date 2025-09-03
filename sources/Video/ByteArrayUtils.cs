@@ -12,9 +12,9 @@ namespace UMapx.Video
         /// Check if the array contains needle at specified position.
         /// </summary>
         /// 
-        /// <param name="array">Source array to check for needle.</param>
-        /// <param name="needle">Needle we are searching for.</param>
-        /// <param name="startIndex">Start index in source array.</param>
+        /// <param name="array">Source array to check for needle</param>
+        /// <param name="needle">Needle we are searching for</param>
+        /// <param name="startIndex">Start index in source array</param>
         /// 
         /// <returns>Returns <b>true</b> if the source array contains the needle at
         /// the specified index. Otherwise it returns <b>false</b>.</returns>
@@ -37,10 +37,10 @@ namespace UMapx.Video
         /// Find subarray in the source array.
         /// </summary>
         /// 
-        /// <param name="array">Source array to search for needle.</param>
-        /// <param name="needle">Needle we are searching for.</param>
-        /// <param name="startIndex">Start index in source array.</param>
-        /// <param name="sourceLength">Number of bytes in source array, where the needle is searched for.</param>
+        /// <param name="array">Source array to search for needle</param>
+        /// <param name="needle">Needle we are searching for</param>
+        /// <param name="startIndex">Start index in source array</param>
+        /// <param name="sourceLength">Number of bytes in source array, where the needle is searched for</param>
         /// 
         /// <returns>Returns starting position of the needle if it was found or <b>-1</b> otherwise.</returns>
         /// 

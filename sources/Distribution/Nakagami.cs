@@ -39,10 +39,10 @@ namespace UMapx.Distribution
             Initialize(mu, omega);
         }
         /// <summary>
-        /// 
+        /// Configures distribution parameters and precomputes constants.
         /// </summary>
-        /// <param name="mu"></param>
-        /// <param name="omega"></param>
+        /// <param name="mu">Shape factor</param>
+        /// <param name="omega">Spread coefficient</param>
         private void Initialize(float mu, float omega)
         {
             Mu = mu;

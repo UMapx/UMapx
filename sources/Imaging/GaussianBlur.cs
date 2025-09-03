@@ -180,12 +180,12 @@ namespace UMapx.Imaging
         /// If a radius on a pass is 0, the source buffer is simply copied through for that direction.
         /// The final result remains in <paramref name="src"/>.
         /// </summary>
-        /// <param name="src">Working buffer (and final destination) of size w*h.</param>
-        /// <param name="tmp">Temporary buffer of size w*h (reused across passes).</param>
-        /// <param name="w">Image width (pixels).</param>
-        /// <param name="h">Image height (pixels).</param>
-        /// <param name="radsX">Per-pass horizontal radii (length >= number of passes).</param>
-        /// <param name="radsY">Per-pass vertical radii (length >= number of passes).</param>
+        /// <param name="src">Working buffer (and final destination) of size w*h</param>
+        /// <param name="tmp">Temporary buffer of size w*h (reused across passes)</param>
+        /// <param name="w">Image width (pixels)</param>
+        /// <param name="h">Image height (pixels)</param>
+        /// <param name="radsX">Per-pass horizontal radii (length >= number of passes)</param>
+        /// <param name="radsY">Per-pass vertical radii (length >= number of passes)</param>
         private static void BoxBlurN(float[] src, float[] tmp, int w, int h, int[] radsX, int[] radsY)
         {
             int passes = Math.Min(radsX.Length, radsY.Length);
@@ -208,11 +208,11 @@ namespace UMapx.Imaging
         /// One horizontal box blur pass with edge clamping (replicate).
         /// Uses a sliding window (running sum) to achieve O(w) per row.
         /// </summary>
-        /// <param name="src">Source buffer (w*h).</param>
-        /// <param name="dst">Destination buffer (w*h).</param>
-        /// <param name="w">Width.</param>
-        /// <param name="h">Height.</param>
-        /// <param name="r">Radius (window width = 2*r+1).</param>
+        /// <param name="src">Source buffer (w*h)</param>
+        /// <param name="dst">Destination buffer (w*h)</param>
+        /// <param name="w">Width</param>
+        /// <param name="h">Height</param>
+        /// <param name="r">Radius (window width = 2*r+1)</param>
         private static void BoxBlurH(float[] src, float[] dst, int w, int h, int r)
         {
             float div = 2 * r + 1;
@@ -246,11 +246,11 @@ namespace UMapx.Imaging
         /// One vertical box blur pass with edge clamping (replicate).
         /// Uses a sliding window (running sum) to achieve O(h) per column.
         /// </summary>
-        /// <param name="src">Source buffer (w*h).</param>
-        /// <param name="dst">Destination buffer (w*h).</param>
-        /// <param name="w">Width.</param>
-        /// <param name="h">Height.</param>
-        /// <param name="r">Radius (window height = 2*r+1).</param>
+        /// <param name="src">Source buffer (w*h)</param>
+        /// <param name="dst">Destination buffer (w*h)</param>
+        /// <param name="w">Width</param>
+        /// <param name="h">Height</param>
+        /// <param name="r">Radius (window height = 2*r+1)</param>
         private static void BoxBlurV(float[] src, float[] dst, int w, int h, int r)
         {
             float div = 2 * r + 1;
@@ -282,11 +282,11 @@ namespace UMapx.Imaging
         /// Read 32bpp ARGB bitmap data into 4 float channel planes (BGRA order).
         /// Channels are stored as [0..255] floats, no normalization or gamma applied.
         /// </summary>
-        /// <param name="bm">Locked 32bpp bitmap data.</param>
-        /// <param name="B">Destination Blue plane (w*h).</param>
-        /// <param name="G">Destination Green plane (w*h).</param>
-        /// <param name="R">Destination Red plane (w*h).</param>
-        /// <param name="A">Destination Alpha plane (w*h).</param>
+        /// <param name="bm">Locked 32bpp bitmap data</param>
+        /// <param name="B">Destination Blue plane (w*h)</param>
+        /// <param name="G">Destination Green plane (w*h)</param>
+        /// <param name="R">Destination Red plane (w*h)</param>
+        /// <param name="A">Destination Alpha plane (w*h)</param>
         private static unsafe void ExtractToFloats(BitmapData bm, float[] B, float[] G, float[] R, float[] A)
         {
             int w = bm.Width, h = bm.Height, stride = bm.Stride;
@@ -312,11 +312,11 @@ namespace UMapx.Imaging
         /// Values are clamped to [0,255] and rounded to nearest (0.5 up).
         /// No gamma correction is applied.
         /// </summary>
-        /// <param name="bm">Locked 32bpp bitmap data.</param>
-        /// <param name="B">Blue plane.</param>
-        /// <param name="G">Green plane.</param>
-        /// <param name="R">Red plane.</param>
-        /// <param name="A">Alpha plane.</param>
+        /// <param name="bm">Locked 32bpp bitmap data</param>
+        /// <param name="B">Blue plane</param>
+        /// <param name="G">Green plane</param>
+        /// <param name="R">Red plane</param>
+        /// <param name="A">Alpha plane</param>
         private static unsafe void WriteBack(BitmapData bm, float[] B, float[] G, float[] R, float[] A)
         {
             int w = bm.Width, h = bm.Height, stride = bm.Stride;
@@ -346,8 +346,8 @@ namespace UMapx.Imaging
         /// and the rest are the higher odd width (wu = wl + 2). This is the classic
         /// "fast almost-Gaussian" 3-box generalization.
         /// </summary>
-        /// <param name="sigma">Target standard deviation (pixels).</param>
-        /// <param name="n">Number of boxes (>=1), typically 3.</param>
+        /// <param name="sigma">Target standard deviation (pixels)</param>
+        /// <param name="n">Number of boxes (>=1), typically 3</param>
         /// <returns>Array of odd box widths of length <paramref name="n"/>.</returns>
         private static int[] BoxesForGauss(float sigma, int n)
         {

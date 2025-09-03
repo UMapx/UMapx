@@ -71,7 +71,7 @@ namespace UMapx.Analysis
         /// <param name="f">Continuous objective function to minimize</param>
         /// <param name="a">Left endpoint of the search interval</param>
         /// <param name="b">Right endpoint of the search interval</param>
-        /// <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps.</param>
+        /// <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps</param>
         /// <returns>
         /// Approximate minimizer x* ∈ [a, b] (the x-coordinate). To get the minimum value, evaluate f at the result.
         /// </returns>

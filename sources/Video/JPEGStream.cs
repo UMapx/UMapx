@@ -307,7 +307,7 @@ namespace UMapx.Video
         /// Initializes a new instance of the <see cref="JPEGStream"/> class.
         /// </summary>
         /// 
-        /// <param name="source">URL, which provides JPEG files.</param>
+        /// <param name="source">URL, which provides JPEG files</param>
         /// 
         public JPEGStream( string source )
         {
@@ -419,9 +419,11 @@ namespace UMapx.Video
 			stopEvent = null;
 		}
 
-        // Worker thread
+        /// <summary>
+        /// Thread loop that retrieves JPEG frames from the network stream.
+        /// </summary>
         private void WorkerThread( )
-		{
+        {
             // buffer to read stream
 			byte[] buffer = new byte[bufferSize];
             // HTTP web request

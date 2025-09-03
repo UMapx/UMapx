@@ -163,10 +163,10 @@ namespace UMapx.Distribution
             return (float)Math.Exp(LogFunction(x));
         }
         /// <summary>
-        /// 
+        /// Computes the natural logarithm of the probability density function.
         /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
+        /// <param name="x">Input value</param>
+        /// <returns>Logarithm of the density.</returns>
         private float LogFunction(float x)
         {
             return lambda - ((degrees + 1) / 2.0f) * (float)Math.Log((x * x) / degrees);
