@@ -37,7 +37,7 @@ namespace UMapx.Window
             Window = function;
 
             // sampling window function:
-            this.coefs = function.GetWindow().Add(1e-16f);
+            this.coefs = function.GetWindow().Add(1e-3f);
         }
         /// <summary>
         /// Normalized transform or not.
@@ -85,22 +85,22 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public ComplexF[] Forward(ComplexF[] A)
         {
-            // params
-            int N = A.Length, i, j;
-            ComplexF[] B = new ComplexF[N];
-            int frame = coefs.Length;
+            int N = A.Length, frame = coefs.Length;
+            if (N % frame != 0)
+                throw new ArgumentException("Length N must be a multiple of the frame (window) length");
 
-            // Short-Time Fourier Transform
-            for (i = 0; i < N; i += frame)
+            ComplexF[] B = new ComplexF[N];
+
+            for (int i = 0; i < N; i += frame)
             {
                 ComplexF[] data = new ComplexF[frame];
 
-                for (j = 0; j < frame; j++)
-                    data[j] = A[i + j] * coefs[MathF.Mod(i - frame / 2, frame)];
+                for (int j = 0; j < frame; j++)
+                    data[j] = A[i + j] * coefs[j];
 
-                data = DFT.Forward(data);
+                data = this.DFT.Forward(data);
 
-                for (j = 0; j < frame; j++)
+                for (int j = 0; j < frame; j++)
                     B[i + j] = data[j];
             }
 
@@ -113,25 +113,23 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public ComplexF[] Backward(ComplexF[] B)
         {
-            int N = B.Length, i, j;
-            ComplexF[] A = new ComplexF[N];
-            int frame = coefs.Length;
+            int N = B.Length, frame = coefs.Length;
+            if (N % frame != 0)
+                throw new ArgumentException("Length N must be a multiple of the frame (window) length");
 
-            for (i = 0; i < N; i += frame)
+            ComplexF[] A = new ComplexF[N];
+
+            for (int i = 0; i < N; i += frame)
             {
                 ComplexF[] data = new ComplexF[frame];
 
-                for (j = 0; j < frame; j++)
-                {
+                for (int j = 0; j < frame; j++)
                     data[j] = B[i + j];
-                }
 
-                data = DFT.Backward(data);
+                data = this.DFT.Backward(data);
 
-                for (j = 0; j < frame; j++)
-                {
-                    A[i + j] = data[j] / coefs[MathF.Mod(i - frame / 2, frame)];
-                }
+                for (int j = 0; j < frame; j++)
+                    A[i + j] = data[j] / coefs[j];
             }
 
             return A;
