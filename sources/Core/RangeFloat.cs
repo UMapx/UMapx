@@ -57,7 +57,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Boolean</returns>
-        public bool IsOnRange(double x)
+        public readonly bool IsOnRange(float x)
         {
             if ((x >= this.min) && (x <= this.max))
             {

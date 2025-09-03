@@ -99,7 +99,7 @@ namespace UMapx.Imaging
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
             byte* dst = (byte*)bmData.Scan0.ToPointer();
             double strength = this.depth * 255.0;
-            double strenghtGlobal = this.depth / 3.0;
+            double strengthGlobal = this.depth / 3.0;
             #endregion
 
             Parallel.For(0, height, y =>
@@ -137,7 +137,7 @@ namespace UMapx.Imaging
 
                             p = &src[ir * stride + jr * 4];
                             red = p[2]; green = p[1]; blue = p[0];
-                            intensity = (int)((red + green + blue) * strenghtGlobal);
+                            intensity = (int)((red + green + blue) * strengthGlobal);
 
                             Red[intensity] += red;
                             Green[intensity] += green;

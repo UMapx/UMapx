@@ -11383,7 +11383,7 @@
             Gets or sets the upper bound of the line segment.
             </summary>
         </member>
-        <member name="M:UMapx.Core.RangeFloat.IsOnRange(System.Double)">
+        <member name="M:UMapx.Core.RangeFloat.IsOnRange(System.Single)">
             <summary>
             Checks if the value is in the specified interval.
             </summary>
