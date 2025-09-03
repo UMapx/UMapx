@@ -28093,7 +28093,7 @@
         </member>
         <member name="F:UMapx.Transform.ThresholdFilter.type">
             <summary>
-            Threshold type.
+            Threshold mode.
             </summary>
         </member>
         <member name="M:UMapx.Transform.ThresholdFilter.#ctor">
@@ -28101,16 +28101,16 @@
             Initializes the threshold filter.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.ThresholdFilter.#ctor(System.Single,UMapx.Transform.ThresholdFilter.ThresholdType)">
+        <member name="M:UMapx.Transform.ThresholdFilter.#ctor(System.Single,UMapx.Transform.ThresholdMode)">
             <summary>
             Initializes the threshold filter.
             </summary>
             <param name="threshold">Threshold value</param>
-            <param name="type">Compress type</param>
+            <param name="mode">Threshold mode</param>
         </member>
         <member name="P:UMapx.Transform.ThresholdFilter.Type">
             <summary>
-            Gets or sets the threshold type.
+            Gets or sets the threshold mode.
             </summary>
         </member>
         <member name="P:UMapx.Transform.ThresholdFilter.Threshold">
@@ -28142,22 +28142,22 @@
             </summary>
             <param name="data">Matrix</param>
         </member>
-        <member name="T:UMapx.Transform.ThresholdFilter.ThresholdType">
+        <member name="T:UMapx.Transform.ThresholdMode">
             <summary>
-            Defines the threshold type.
+            Defines the threshold mode.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.ThresholdFilter.ThresholdType.Abs">
+        <member name="F:UMapx.Transform.ThresholdMode.Abs">
             <summary>
             Absolute.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.ThresholdFilter.ThresholdType.Under">
+        <member name="F:UMapx.Transform.ThresholdMode.Under">
             <summary>
             Under.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.ThresholdFilter.ThresholdType.Over">
+        <member name="F:UMapx.Transform.ThresholdMode.Over">
             <summary>
             Over.
             </summary>

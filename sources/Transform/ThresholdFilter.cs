@@ -15,9 +15,9 @@ namespace UMapx.Transform
         /// </summary>
         private float threshold = 0;
         /// <summary>
-        /// Threshold type.
+        /// Threshold mode.
         /// </summary>
-        private ThresholdType type = ThresholdType.Abs;
+        private ThresholdMode type = ThresholdMode.Abs;
         #endregion
 
         #region Filter components
@@ -29,16 +29,16 @@ namespace UMapx.Transform
         /// Initializes the threshold filter.
         /// </summary>
         /// <param name="threshold">Threshold value</param>
-        /// <param name="type">Compress type</param>
-        public ThresholdFilter(float threshold, ThresholdType type = ThresholdType.Abs)
+        /// <param name="mode">Threshold mode</param>
+        public ThresholdFilter(float threshold, ThresholdMode mode = ThresholdMode.Abs)
         {
             this.Threshold = threshold;
-            this.Type = type;
+            this.Type = mode;
         }
         /// <summary>
-        /// Gets or sets the threshold type.
+        /// Gets or sets the threshold mode.
         /// </summary>
-        public ThresholdType Type
+        public ThresholdMode Type
         {
             get
             {
@@ -72,7 +72,7 @@ namespace UMapx.Transform
             int length = data.Length;
             int i;
 
-            if (this.type == ThresholdType.Abs)
+            if (this.type == ThresholdMode.Abs)
             {
                 for (i = 0; i < length; i++)
                 {
@@ -82,7 +82,7 @@ namespace UMapx.Transform
                     }
                 }
             }
-            else if (this.type == ThresholdType.Over)
+            else if (this.type == ThresholdMode.Over)
             {
                 for (i = 0; i < length; i++)
                 {
@@ -112,7 +112,7 @@ namespace UMapx.Transform
             int length = data.Length;
             int i;
 
-            if (this.type == ThresholdType.Abs)
+            if (this.type == ThresholdMode.Abs)
             {
                 for (i = 0; i < length; i++)
                 {
@@ -122,7 +122,7 @@ namespace UMapx.Transform
                     }
                 }
             }
-            else if (this.type == ThresholdType.Over)
+            else if (this.type == ThresholdMode.Over)
             {
                 for (i = 0; i < length; i++)
                 {
@@ -161,7 +161,7 @@ namespace UMapx.Transform
             int height = data.GetLength(0);
             int i, j;
 
-            if (this.type == ThresholdType.Abs)
+            if (this.type == ThresholdMode.Abs)
             {
                 for (i = 0; i < height; i++)
                 {
@@ -174,7 +174,7 @@ namespace UMapx.Transform
                     }
                 }
             }
-            else if (this.type == ThresholdType.Over)
+            else if (this.type == ThresholdMode.Over)
             {
                 for (i = 0; i < height; i++)
                 {
@@ -211,7 +211,7 @@ namespace UMapx.Transform
             int height = data.GetLength(0);
             int i, j;
 
-            if (this.type == ThresholdType.Abs)
+            if (this.type == ThresholdMode.Abs)
             {
                 for (i = 0; i < height; i++)
                 {
@@ -224,7 +224,7 @@ namespace UMapx.Transform
                     }
                 }
             }
-            else if (this.type == ThresholdType.Over)
+            else if (this.type == ThresholdMode.Over)
             {
                 for (i = 0; i < height; i++)
                 {
@@ -258,29 +258,6 @@ namespace UMapx.Transform
                     }
                 }
             }
-        }
-        #endregion
-
-        #region Threshold type
-        /// <summary>
-        /// Defines the threshold type.
-        /// </summary>
-        public enum ThresholdType
-        {
-            #region Types
-            /// <summary>
-            /// Absolute.
-            /// </summary>
-            Abs,
-            /// <summary>
-            /// Under.
-            /// </summary>
-            Under,
-            /// <summary>
-            /// Over.
-            /// </summary>
-            Over,
-            #endregion
         }
         #endregion
     }
