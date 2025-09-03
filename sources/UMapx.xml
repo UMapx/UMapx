@@ -20101,7 +20101,26 @@
             Creates a zero-initialized 3×3 matrix.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:UMapx.Imaging.Float3x3.Perspective(System.Drawing.Rectangle,UMapx.Core.PointFloat,UMapx.Core.PointFloat,UMapx.Core.PointFloat,UMapx.Core.PointFloat)" -->
+        <member name="M:UMapx.Imaging.Float3x3.Perspective(System.Drawing.Rectangle,UMapx.Core.PointFloat,UMapx.Core.PointFloat,UMapx.Core.PointFloat,UMapx.Core.PointFloat)">
+            <summary>
+            Builds a perspective transform that maps a source axis-aligned
+            rectangle to an arbitrary quadrilateral (t1..t4), then normalizes
+            the source by translating to the rectangle origin and scaling
+            into [0,1]×[0,1] prior to the warp.
+            </summary>
+            <param name="rectangle">Source rectangle in input coordinates</param>
+            <param name="t1">Destination corner corresponding to source (0,0)</param>
+            <param name="t2">Destination corner corresponding to source (1,0)</param>
+            <param name="t3">Destination corner corresponding to source (1,1)</param>
+            <param name="t4">Destination corner corresponding to source (0,1)</param>
+            <returns>
+            Homography matrix H such that dest ≈ H · norm(src), with a perspective divide
+            </returns>
+            <remarks>
+            If the destination quad is (nearly) affine, a simplified affine mapping is used.
+            Otherwise the full projective warp is constructed. Based on GIMP’s homography derivation.
+            </remarks>
+        </member>
         <member name="M:UMapx.Imaging.Float3x3.Determinant">
             <summary>
             Computes the determinant of the 3×3 matrix.
