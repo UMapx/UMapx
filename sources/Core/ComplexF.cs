@@ -42,7 +42,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Gets the value of the module * module.
+        /// Gets the squared magnitude (Real² + Imag²).
         /// </summary>
         public float Abs2
         {
