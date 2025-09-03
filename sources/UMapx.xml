@@ -11118,7 +11118,7 @@
             </summary>
             <returns>Pair of numbers</returns>
         </member>
-        <member name="T:UMapx.Core.Quaternion32">
+        <member name="T:UMapx.Core.QuaternionF">
             <summary>
             Defines a quaternion.
             <remarks>
@@ -11126,27 +11126,27 @@
             </remarks>
             </summary>
         </member>
-        <member name="F:UMapx.Core.Quaternion32.X">
+        <member name="F:UMapx.Core.QuaternionF.X">
             <summary>
             X coordinate.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Quaternion32.Y">
+        <member name="F:UMapx.Core.QuaternionF.Y">
             <summary>
             Y coordinate.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Quaternion32.Z">
+        <member name="F:UMapx.Core.QuaternionF.Z">
             <summary>
             Z coordinate.
             </summary>
         </member>
-        <member name="F:UMapx.Core.Quaternion32.W">
+        <member name="F:UMapx.Core.QuaternionF.W">
             <summary>
             W coordinate.
             </summary>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.#ctor(System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:UMapx.Core.QuaternionF.#ctor(System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Creates a quaternion based on the given coordinates.
             </summary>
@@ -11155,42 +11155,42 @@
             <param name="z">Coordinate Z</param>
             <param name="w">Coordinate W</param>
         </member>
-        <member name="P:UMapx.Core.Quaternion32.Identity">
+        <member name="P:UMapx.Core.QuaternionF.Identity">
             <summary>
             Gets a quaternion that represents a lack of rotation.
             </summary>
         </member>
-        <member name="P:UMapx.Core.Quaternion32.IsIdentity">
+        <member name="P:UMapx.Core.QuaternionF.IsIdentity">
             <summary>
             Gets a value indicating whether the current instance is a single Quaternion.
             </summary>
         </member>
-        <member name="P:UMapx.Core.Quaternion32.Abs">
+        <member name="P:UMapx.Core.QuaternionF.Abs">
             <summary>
             Returns the value of the quaternion module.
             </summary>
         </member>
-        <member name="P:UMapx.Core.Quaternion32.SquaredAbs">
+        <member name="P:UMapx.Core.QuaternionF.SquaredAbs">
             <summary>
             Calculates the quaternion modulus squared.
             </summary>
         </member>
-        <member name="P:UMapx.Core.Quaternion32.Normalize">
+        <member name="P:UMapx.Core.QuaternionF.Normalize">
             <summary>
             Divides each coordinate of the specified quaternion by its length.
             </summary>
         </member>
-        <member name="P:UMapx.Core.Quaternion32.Conjugate">
+        <member name="P:UMapx.Core.QuaternionF.Conjugate">
             <summary>
             Returns the conjugate object of the specified quaternion.
             </summary>
         </member>
-        <member name="P:UMapx.Core.Quaternion32.Inverse">
+        <member name="P:UMapx.Core.QuaternionF.Inverse">
             <summary>
             Returns the inverse object of the quaternion.
             </summary>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.FromYPR(System.Single,System.Single,System.Single)">
+        <member name="M:UMapx.Core.QuaternionF.FromYPR(System.Single,System.Single,System.Single)">
             <summary>
             Creates a new quaternion based on a given value of nutation, precession, and proper rotation.
             </summary>
@@ -11199,7 +11199,7 @@
             <param name="roll">The angle of rotation around the Z axis in radians</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.Dot(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+        <member name="M:UMapx.Core.QuaternionF.Dot(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF)">
             <summary>
             Computes the scalar product of two quaternion.
             </summary>
@@ -11207,7 +11207,7 @@
             <param name="b">Quaternion</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.Slerp(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32,System.Single)">
+        <member name="M:UMapx.Core.QuaternionF.Slerp(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF,System.Single)">
             <summary>
             Performs interpolation between two quaternions using spherical linear interpolation.
             </summary>
@@ -11216,7 +11216,7 @@
             <param name="amount">Relative weight of the second quaternion in interpolation</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.Lerp(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32,System.Single)">
+        <member name="M:UMapx.Core.QuaternionF.Lerp(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF,System.Single)">
             <summary>
             Performs linear interpolation between two quaternions based on a value indicating the weighting of the second quaternion.
             </summary>
@@ -11225,7 +11225,7 @@
             <param name="amount">Relative weight of the second quaternion in interpolation</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.Concatenate(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+        <member name="M:UMapx.Core.QuaternionF.Concatenate(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF)">
             <summary>
             Concatenates two quaternions.
             </summary>
@@ -11233,14 +11233,14 @@
             <param name="b">Quaternion</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_UnaryNegation(UMapx.Core.Quaternion32)">
+        <member name="M:UMapx.Core.QuaternionF.op_UnaryNegation(UMapx.Core.QuaternionF)">
             <summary>
             Reverses the sign of each quaternion coordinate.
             </summary>
             <param name="q">Quaternion</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Addition(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+        <member name="M:UMapx.Core.QuaternionF.op_Addition(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF)">
             <summary>
             Adds each element in one quaternion with the corresponding element in the second quaternion.
             </summary>
@@ -11248,7 +11248,7 @@
             <param name="b">Quaternion</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Subtraction(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+        <member name="M:UMapx.Core.QuaternionF.op_Subtraction(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF)">
             <summary>
             Subtracts each element in the second quaternion from the corresponding element in the first quaternion.
             </summary>
@@ -11256,7 +11256,7 @@
             <param name="b">Quaternion</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Multiply(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+        <member name="M:UMapx.Core.QuaternionF.op_Multiply(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF)">
             <summary>
             Returns the quaternion resulting from the multiplication of two quaternions.
             </summary>
@@ -11264,7 +11264,7 @@
             <param name="b">Quaternion</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Multiply(UMapx.Core.Quaternion32,System.Single)">
+        <member name="M:UMapx.Core.QuaternionF.op_Multiply(UMapx.Core.QuaternionF,System.Single)">
             <summary>
             Returns the quaternion obtained by scaling all the coordinates of the specified quaternion by a scalar factor.
             </summary>
@@ -11272,7 +11272,7 @@
             <param name="b">Factor</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Division(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+        <member name="M:UMapx.Core.QuaternionF.op_Division(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF)">
             <summary>
             Divides one quaternion into a second quaternion.
             </summary>
@@ -11280,7 +11280,7 @@
             <param name="b">Quaternion</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Division(UMapx.Core.Quaternion32,System.Single)">
+        <member name="M:UMapx.Core.QuaternionF.op_Division(UMapx.Core.QuaternionF,System.Single)">
             <summary>
             Returns the quaternion obtained by scaling all the coordinates of the specified quaternion by a scalar factor.
             </summary>
@@ -11288,7 +11288,7 @@
             <param name="b">Factor</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Equality(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+        <member name="M:UMapx.Core.QuaternionF.op_Equality(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF)">
             <summary>
             Checks if two quaternions are equal.
             </summary>
@@ -11296,7 +11296,7 @@
             <param name="b">Quaternion</param>
             <returns>Boolean</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Inequality(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+        <member name="M:UMapx.Core.QuaternionF.op_Inequality(UMapx.Core.QuaternionF,UMapx.Core.QuaternionF)">
             <summary>
             Checks if two quaternions are not equal.
             </summary>
@@ -11304,45 +11304,45 @@
             <param name="b">Quaternion</param>
             <returns>Boolean</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.Equals(System.Object)">
+        <member name="M:UMapx.Core.QuaternionF.Equals(System.Object)">
             <summary>
             Gets a value indicating whether this instance is equal to the specified value of type quaternion.
             </summary>
             <param name="obj">Object</param>
             <returns>Boolean</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.ToString">
+        <member name="M:UMapx.Core.QuaternionF.ToString">
             <summary>
             Converts quaternion to its corresponding string representation.
             </summary>
             <returns>Text as a sequence of Unicode characters</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.ToString(System.String)">
+        <member name="M:UMapx.Core.QuaternionF.ToString(System.String)">
             <summary>
             Converts quaternion to its corresponding string representation.
             </summary>
             <param name="format">Format string</param>
             <returns>Text as a sequence of Unicode characters</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.GetHashCode">
+        <member name="M:UMapx.Core.QuaternionF.GetHashCode">
             <summary>
             Returns the hash code for this object.
             </summary>
             <returns>Integer number</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.System#ICloneable#Clone">
+        <member name="M:UMapx.Core.QuaternionF.System#ICloneable#Clone">
             <summary>
             Creates a copy of quaternion.
             </summary>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.Clone">
+        <member name="M:UMapx.Core.QuaternionF.Clone">
             <summary>
             Creates a copy of quaternion.
             </summary>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.Parse(System.String)">
+        <member name="M:UMapx.Core.QuaternionF.Parse(System.String)">
             <summary>
             Parses the string to quaternion.
             </summary>
@@ -11353,7 +11353,7 @@
             <param name="s">Input string</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.TryParse(System.String,UMapx.Core.Quaternion32@)">
+        <member name="M:UMapx.Core.QuaternionF.TryParse(System.String,UMapx.Core.QuaternionF@)">
             <summary>
             Tries to parse the string into Quaternion.
             </summary>

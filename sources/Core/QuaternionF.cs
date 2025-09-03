@@ -9,7 +9,7 @@ namespace UMapx.Core
     /// </remarks>
     /// </summary>
     [Serializable]
-    public struct Quaternion32 : ICloneable
+    public struct QuaternionF : ICloneable
     {
         #region Public data
         /// <summary>
@@ -38,7 +38,7 @@ namespace UMapx.Core
         /// <param name="y">Coordinate Y</param>
         /// <param name="z">Coordinate Z</param>
         /// <param name="w">Coordinate W</param>
-        public Quaternion32(float x, float y, float z, float w)
+        public QuaternionF(float x, float y, float z, float w)
         {
             this.X = x;
             this.Y = y;
@@ -48,12 +48,12 @@ namespace UMapx.Core
         /// <summary>
         /// Gets a quaternion that represents a lack of rotation.
         /// </summary>
-        public static Quaternion32 Identity
+        public static QuaternionF Identity
         {
 
             get
             {
-                return new Quaternion32(0, 0, 0, 1);
+                return new QuaternionF(0, 0, 0, 1);
             }
         }
         /// <summary>
@@ -92,33 +92,33 @@ namespace UMapx.Core
         /// <summary>
         /// Divides each coordinate of the specified quaternion by its length.
         /// </summary>
-        public Quaternion32 Normalize
+        public QuaternionF Normalize
         {
             get
             {
                 float norm = 1.0f / this.Abs;
-                return new Quaternion32(this.X * norm, this.Y * norm, this.Z * norm, this.W * norm);
+                return new QuaternionF(this.X * norm, this.Y * norm, this.Z * norm, this.W * norm);
             }
         }
         /// <summary>
         /// Returns the conjugate object of the specified quaternion.
         /// </summary>
-        public Quaternion32 Conjugate
+        public QuaternionF Conjugate
         {
             get
             {
-                return new Quaternion32(-this.X, -this.Y, -this.Z, this.W);
+                return new QuaternionF(-this.X, -this.Y, -this.Z, this.W);
             }
         }
         /// <summary>
         /// Returns the inverse object of the quaternion.
         /// </summary>
-        public Quaternion32 Inverse
+        public QuaternionF Inverse
         {
             get
             {
                 float norm = 1.0f / this.SquaredAbs;
-                return new Quaternion32(-this.X * norm, -this.Y * norm, -this.Z * norm, this.W * norm);
+                return new QuaternionF(-this.X * norm, -this.Y * norm, -this.Z * norm, this.W * norm);
             }
         }
         /// <summary>
@@ -128,7 +128,7 @@ namespace UMapx.Core
         /// <param name="pitch">The precession angle around the X axis in radians</param>
         /// <param name="roll">The angle of rotation around the Z axis in radians</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 FromYPR(float yaw, float pitch, float roll)
+        public static QuaternionF FromYPR(float yaw, float pitch, float roll)
         {
             float a = roll * 0.5f;
             float b = (float)Math.Sin(a);
@@ -140,7 +140,7 @@ namespace UMapx.Core
             float h = (float)Math.Sin(g);
             float i = (float)Math.Cos(g);
 
-            return new Quaternion32(
+            return new QuaternionF(
                 i * e * c + h * f * b,
                 h * f * c - i * e * b,
                 i * f * b - h * e * c,
@@ -152,7 +152,7 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Quaternion</param>
         /// <returns>Quaternion</returns>
-        public static float Dot(Quaternion32 a, Quaternion32 b)
+        public static float Dot(QuaternionF a, QuaternionF b)
         {
             return a.X * b.X + a.Y * b.Y + a.Z * b.Z + a.W * b.W;
         }
@@ -163,9 +163,9 @@ namespace UMapx.Core
         /// <param name="b">Quaternion</param>
         /// <param name="amount">Relative weight of the second quaternion in interpolation</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 Slerp(Quaternion32 a, Quaternion32 b, float amount)
+        public static QuaternionF Slerp(QuaternionF a, QuaternionF b, float amount)
         {
-            float d, e, dot = Quaternion32.Dot(a, b);
+            float d, e, dot = QuaternionF.Dot(a, b);
             bool flag = false;
 
             if (dot < 0.0)
@@ -186,7 +186,7 @@ namespace UMapx.Core
                 e = (float)(flag ? ((-Math.Sin((amount * f))) * g) : (Math.Sin((amount * f)) * g));
             }
 
-            return new Quaternion32(
+            return new QuaternionF(
                 d * a.X + e * b.X,
                 d * a.Y + e * b.Y,
                 d * a.Z + e * b.Z,
@@ -199,10 +199,10 @@ namespace UMapx.Core
         /// <param name="b">Quaternion</param>
         /// <param name="amount">Relative weight of the second quaternion in interpolation</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 Lerp(Quaternion32 a, Quaternion32 b, float amount)
+        public static QuaternionF Lerp(QuaternionF a, QuaternionF b, float amount)
         {
             float f = 1.0f - amount;
-            Quaternion32 quaternion3 = default(Quaternion32);
+            QuaternionF quaternion3 = default(QuaternionF);
             float dot = Dot(a, b);
 
             if (dot >= 0.0)
@@ -233,7 +233,7 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Quaternion</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 Concatenate(Quaternion32 a, Quaternion32 b)
+        public static QuaternionF Concatenate(QuaternionF a, QuaternionF b)
         {
             float x = b.X, y = b.Y, z = b.Z, w = b.W;
             float x2 = a.X, y2 = a.Y, z2 = a.Z, w2 = a.W;
@@ -243,7 +243,7 @@ namespace UMapx.Core
             float c = x * y2 - y * x2;
             float d = x * x2 + y * y2 + z * z2;
 
-            return new Quaternion32(
+            return new QuaternionF(
                 x * w2 + x2 * w + e,
                 y * w2 + y2 * w + f,
                 z * w2 + z2 * w + c,
@@ -257,9 +257,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="q">Quaternion</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 operator -(Quaternion32 q)
+        public static QuaternionF operator -(QuaternionF q)
         {
-            return new Quaternion32(-q.X, -q.Y, -q.Z, -q.W);
+            return new QuaternionF(-q.X, -q.Y, -q.Z, -q.W);
         }
         /// <summary>
         /// Adds each element in one quaternion with the corresponding element in the second quaternion.
@@ -267,9 +267,9 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Quaternion</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 operator +(Quaternion32 a, Quaternion32 b)
+        public static QuaternionF operator +(QuaternionF a, QuaternionF b)
         {
-            return new Quaternion32(
+            return new QuaternionF(
                 a.X + b.X,
                 a.Y + b.Y,
                 a.Z + b.Z,
@@ -281,9 +281,9 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Quaternion</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 operator -(Quaternion32 a, Quaternion32 b)
+        public static QuaternionF operator -(QuaternionF a, QuaternionF b)
         {
-            return new Quaternion32(
+            return new QuaternionF(
                 a.X - b.X,
                 a.Y - b.Y,
                 a.Z - b.Z,
@@ -295,7 +295,7 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Quaternion</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 operator *(Quaternion32 a, Quaternion32 b)
+        public static QuaternionF operator *(QuaternionF a, QuaternionF b)
         {
             float x = a.X;
             float y = a.Y;
@@ -310,7 +310,7 @@ namespace UMapx.Core
             float g = x * y2 - y * x2;
             float h = x * x2 + y * y2 + z * z2;
 
-            return new Quaternion32(
+            return new QuaternionF(
                  x * w2 + x2 * w + d,
                  y * w2 + y2 * w + e,
                  z * w2 + z2 * w + g,
@@ -323,9 +323,9 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Factor</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 operator *(Quaternion32 a, float b)
+        public static QuaternionF operator *(QuaternionF a, float b)
         {
-            return new Quaternion32(
+            return new QuaternionF(
                 a.X * b,
                 a.Y * b,
                 a.Z * b,
@@ -337,7 +337,7 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Quaternion</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 operator /(Quaternion32 a, Quaternion32 b)
+        public static QuaternionF operator /(QuaternionF a, QuaternionF b)
         {
             float x = a.X;
             float y = a.Y;
@@ -353,7 +353,7 @@ namespace UMapx.Core
             float l = x * f - y * e;
             float m = x * e + y * f + z * g;
 
-            return new Quaternion32(
+            return new QuaternionF(
                 x * i + e * w + j,
                 y * i + f * w + k,
                 z * i + g * w + l,
@@ -365,9 +365,9 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Factor</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 operator /(Quaternion32 a, float b)
+        public static QuaternionF operator /(QuaternionF a, float b)
         {
-            return new Quaternion32(
+            return new QuaternionF(
                 a.X / b,
                 a.Y / b,
                 a.Z / b,
@@ -382,7 +382,7 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Quaternion</param>
         /// <returns>Boolean</returns>
-        public static bool operator ==(Quaternion32 a, Quaternion32 b)
+        public static bool operator ==(QuaternionF a, QuaternionF b)
         {
             return a.X == b.X && a.Y == b.Y && a.Z == b.Z && a.W == b.W;
         }
@@ -392,7 +392,7 @@ namespace UMapx.Core
         /// <param name="a">Quaternion</param>
         /// <param name="b">Quaternion</param>
         /// <returns>Boolean</returns>
-        public static bool operator !=(Quaternion32 a, Quaternion32 b)
+        public static bool operator !=(QuaternionF a, QuaternionF b)
         {
             return !(a == b);
         }
@@ -403,7 +403,7 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
-            return (obj is Quaternion32) ? (this == (Quaternion32)obj) : false;
+            return (obj is QuaternionF) ? (this == (QuaternionF)obj) : false;
         }
         /// <summary>
         /// Converts quaternion to its corresponding string representation.
@@ -439,15 +439,15 @@ namespace UMapx.Core
         /// <returns>Quaternion</returns>
         object ICloneable.Clone()
         {
-            return new Quaternion32(this.X, this.Y, this.Z, this.W);
+            return new QuaternionF(this.X, this.Y, this.Z, this.W);
         }
         /// <summary>
         /// Creates a copy of quaternion.
         /// </summary>
         /// <returns>Quaternion</returns>
-        public Quaternion32 Clone()
+        public QuaternionF Clone()
         {
-            return new Quaternion32(this.X, this.Y, this.Z, this.W);
+            return new QuaternionF(this.X, this.Y, this.Z, this.W);
         }
         #endregion
 
@@ -461,7 +461,7 @@ namespace UMapx.Core
         /// </remarks>
         /// <param name="s">Input string</param>
         /// <returns>Quaternion</returns>
-        public static Quaternion32 Parse(string s)
+        public static QuaternionF Parse(string s)
         {
             string[] cols = StringOptions.Matpar(s);
             string[] nums = cols[0].Split('|');
@@ -469,7 +469,7 @@ namespace UMapx.Core
             if (cols.Length > 1 || nums.Length != 4)
                 throw new ArgumentException("The input string was in the wrong format");
 
-            return new Quaternion32(float.Parse(nums[0]),
+            return new QuaternionF(float.Parse(nums[0]),
                                   float.Parse(nums[1]),
                                   float.Parse(nums[2]),
                                   float.Parse(nums[3]));
@@ -480,16 +480,16 @@ namespace UMapx.Core
         /// <param name="quaternion">Input string</param>
         /// <param name="result">Quaternion</param>
         /// <returns>Boolean</returns>
-        public static bool TryParse(string quaternion, ref Quaternion32 result)
+        public static bool TryParse(string quaternion, ref QuaternionF result)
         {
             try
             {
-                result = Quaternion32.Parse(quaternion);
+                result = QuaternionF.Parse(quaternion);
                 return true;
             }
             catch (FormatException)
             {
-                result = new Quaternion32();
+                result = new QuaternionF();
                 return false;
             }
         }
