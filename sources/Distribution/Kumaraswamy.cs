@@ -83,8 +83,8 @@ namespace UMapx.Distribution
         {
             get
             {
-                float alpha = momentGeneratingFunction(2, a, b);
-                float beta = (float)Math.Pow(momentGeneratingFunction(1, a, b), 2);
+                float alpha = MomentGeneratingFunction(2, a, b);
+                float beta = (float)Math.Pow(MomentGeneratingFunction(1, a, b), 2);
                 return alpha - beta;
             }
         }
@@ -176,15 +176,31 @@ namespace UMapx.Distribution
             return a * b * (float)Math.Pow(x, a - 1) * (float)Math.Pow(1 - Math.Pow(x, a), b - 1);
         }
         /// <summary>
-        /// 
+        /// Returns the n-th raw moment expressed via the Euler Beta function.
         /// </summary>
-        /// <param name="n"></param>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        protected static float momentGeneratingFunction(int n, float a, float b)
+        /// <remarks>
+        /// This method computes <c>b · B(1 + n / a, b)</c>, where <c>B(·,·)</c> is the Euler Beta function.
+        /// Despite the name, this is not an MGF <c>M_X(t)=E[e^{tX}]</c>; it returns the coefficient
+        /// related to the n-th raw moment <c>E[X^n]</c> for distributions whose moments admit this Beta form.
+        /// <para/>
+        /// Preconditions:
+        /// <list type="bullet">
+        ///   <item><description><paramref name="n"/> ≥ 0 (integer).</description></item>
+        ///   <item><description><paramref name="a"/> &gt; 0 and <paramref name="b"/> &gt; 0 so that the Beta function is defined.</description></item>
+        /// </list>
+        /// Numerical notes:
+        /// <list type="bullet">
+        ///   <item><description>Large <paramref name="n"/> may overflow or lose precision due to Gamma/Beta evaluations.</description></item>
+        ///   <item><description>Domain violations (e.g., nonpositive Beta arguments) may yield NaN/Inf from <c>Special.Beta</c>.</description></item>
+        /// </list>
+        /// </remarks>
+        /// <param name="n">Moment order (non-negative integer)</param>
+        /// <param name="a">Shape parameter (must be positive)</param>
+        /// <param name="b">Shape/scale parameter depending on context (must be positive)</param>
+        /// <returns>The value <c>b · B(1 + n / a, b)</c></returns>
+        private static float MomentGeneratingFunction(int n, float a, float b)
         {
-            return (b * Special.Beta(1.0f + ((float)n) / a, b));
+            return b * Special.Beta(1.0f + ((float)n) / a, b);
         }
         #endregion
     }

@@ -12,18 +12,9 @@ namespace UMapx.Imaging
     public class ColorTransfer : IBitmapFilter2
     {
         #region Private data
-        /// <summary>
-        /// Factor.
-        /// </summary>
-        protected float factor;
-        /// <summary>
-        /// Inverted or not.
-        /// </summary>
-        protected bool inverted;
-        /// <summary>
-        /// Color space.
-        /// </summary>
-        protected Space space;
+        private float factor;
+        private bool inverted;
+        private Space space;
         #endregion
 
         #region Filter components

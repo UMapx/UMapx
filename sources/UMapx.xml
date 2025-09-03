@@ -15970,14 +15970,30 @@
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Distribution.Kumaraswamy.momentGeneratingFunction(System.Int32,System.Single,System.Single)">
+        <member name="M:UMapx.Distribution.Kumaraswamy.MomentGeneratingFunction(System.Int32,System.Single,System.Single)">
             <summary>
-            
+            Returns the n-th raw moment expressed via the Euler Beta function.
             </summary>
-            <param name="n"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <returns></returns>
+            <remarks>
+            This method computes <c>b · B(1 + n / a, b)</c>, where <c>B(·,·)</c> is the Euler Beta function.
+            Despite the name, this is not an MGF <c>M_X(t)=E[e^{tX}]</c>; it returns the coefficient
+            related to the n-th raw moment <c>E[X^n]</c> for distributions whose moments admit this Beta form.
+            <para/>
+            Preconditions:
+            <list type="bullet">
+              <item><description><paramref name="n"/> ≥ 0 (integer).</description></item>
+              <item><description><paramref name="a"/> &gt; 0 and <paramref name="b"/> &gt; 0 so that the Beta function is defined.</description></item>
+            </list>
+            Numerical notes:
+            <list type="bullet">
+              <item><description>Large <paramref name="n"/> may overflow or lose precision due to Gamma/Beta evaluations.</description></item>
+              <item><description>Domain violations (e.g., nonpositive Beta arguments) may yield NaN/Inf from <c>Special.Beta</c>.</description></item>
+            </list>
+            </remarks>
+            <param name="n">Moment order (non-negative integer)</param>
+            <param name="a">Shape parameter (must be positive)</param>
+            <param name="b">Shape/scale parameter depending on context (must be positive)</param>
+            <returns>The value <c>b · B(1 + n / a, b)</c></returns>
         </member>
         <member name="T:UMapx.Distribution.Laplace">
             <summary>
@@ -18821,21 +18837,6 @@
         <member name="T:UMapx.Imaging.ColorTransfer">
             <summary>
             Defines the color transfer filter.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.ColorTransfer.factor">
-            <summary>
-            Factor.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.ColorTransfer.inverted">
-            <summary>
-            Inverted or not.
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.ColorTransfer.space">
-            <summary>
-            Color space.
             </summary>
         </member>
         <member name="M:UMapx.Imaging.ColorTransfer.#ctor(System.Single,System.Boolean,UMapx.Imaging.Space)">
