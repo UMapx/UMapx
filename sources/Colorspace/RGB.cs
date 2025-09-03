@@ -232,7 +232,8 @@ namespace UMapx.Colorspace
         {
             string r, g, b;
 
-            hexColor = hexColor.Trim();
+            // Trim and normalize to uppercase to handle case-insensitive HEX values
+            hexColor = hexColor.Trim().ToUpperInvariant();
             if (hexColor[0] == '#') hexColor = hexColor.Substring(1, hexColor.Length - 1);
 
             r = hexColor.Substring(0, 2);
