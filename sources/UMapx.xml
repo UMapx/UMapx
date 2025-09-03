@@ -11487,7 +11487,7 @@
         </member>
         <member name="M:UMapx.Core.RangeInt.op_Equality(UMapx.Core.RangeInt,UMapx.Core.RangeInt)">
             <summary>
-            Checks if two RangeFloat objects are equal.
+            Checks if two RangeInt objects are equal.
             </summary>
             <param name="a">Pair of numbers</param>
             <param name="b">Pair of numbers</param>
@@ -11495,7 +11495,7 @@
         </member>
         <member name="M:UMapx.Core.RangeInt.op_Inequality(UMapx.Core.RangeInt,UMapx.Core.RangeInt)">
             <summary>
-            Checks if two RangeFloat objects are not equal.
+            Checks if two RangeInt objects are not equal.
             </summary>
             <param name="a">Pair of numbers</param>
             <param name="b">Pair of numbers</param>
