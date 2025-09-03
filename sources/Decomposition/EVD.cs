@@ -6,10 +6,12 @@ namespace UMapx.Decomposition
     /// <summary>
     /// Defines eigenvalue decomposition.
     /// <remarks>
-    /// The eigenvalue decomposition is the representation of the square matrix A in the form of the product of three matrices A = V * D * inv (V), where V is the matrix of spectral vectors and D is the diagonal (generally complex) matrix of eigenvalues.
-    /// The matrix A can also be represented as the product of three matrices: A = V * R * inv (V), where R is a real almost diagonal eigenvalue matrix.
+    /// The eigenvalue decomposition is the representation of the square matrix A in the form of the product of three matrices A = V * D * inv(V), 
+    /// where V is the matrix of spectral vectors and D is the diagonal (generally complex) matrix of eigenvalues.
+    /// The matrix A can also be represented as the product of three matrices: A = V * R * inv(V), where R is a real almost diagonal eigenvalue matrix.
     /// Not all matrices can be represented in this form, but only those that have a complete set of eigenvectors.
-    /// Eigenvalue decomposition can be used to find the eigenvalues ​​and eigenvectors of the matrix, solve linear systems of equations, invert the matrix, find the determinant of the matrix, and calculate the analytic functions of the matrices.
+    /// Eigenvalue decomposition can be used to find the eigenvalues ​​and eigenvectors of the matrix, solve linear systems of equations, 
+    /// invert the matrix, find the determinant of the matrix, and calculate the analytic functions of the matrices.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix
     /// </remarks>

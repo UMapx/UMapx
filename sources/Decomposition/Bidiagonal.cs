@@ -6,7 +6,7 @@ namespace UMapx.Decomposition
     /// <summary>
     /// Defines bidiagonal decomposition.
     /// <remarks>
-    /// This is a representation of a matrix in the form A = U * B * V', where U and V are orthogonal matrices
+    /// This is a representation of a matrix in the form A = U * B * Vᵀ, where U and V are orthogonal matrices
     /// obtained using Householder transformations and B is a bidiagonal matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Bidiagonalization

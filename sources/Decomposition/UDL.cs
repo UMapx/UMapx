@@ -6,7 +6,8 @@ namespace UMapx.Decomposition
     /// <summary>
     /// Defines UDL decomposition.
     /// <remarks>
-    /// This is the representation of a symmetric square matrix as the product of three matrices: A = U * D * L, where U is the upper triangular matrix, D is the diagonal matrix, and L is the lower triangular matrix.
+    /// This is the representation of a symmetric square matrix as the product of three matrices: A = U * D * L, 
+    /// where U is the upper triangular matrix, D is the diagonal matrix, and L is the lower triangular matrix.
     /// This decomposition is a specific form of Cholesky decomposition.
     /// </remarks>
     /// </summary>

@@ -6,7 +6,8 @@ namespace UMapx.Decomposition
     /// <summary>
     /// Defines QR decomposition.
     /// <remarks>
-    /// This is a matrix representation in the form of a product of two matrices: A = Q * R, where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
+    /// This is a matrix representation in the form of a product of two matrices: A = Q * R, 
+    /// where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
     /// QR decomposition is the basis of one of the search methods for eigenvectors and matrix numbers - the QR algorithm.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QR_decomposition

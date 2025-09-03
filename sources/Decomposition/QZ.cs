@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UMapx.Core;
 
 namespace UMapx.Decomposition
@@ -7,7 +7,7 @@ namespace UMapx.Decomposition
     /// Defines QZ decomposition (generalized Schur decomposition).
     /// <remarks>
     /// This is a matrix representation for a pair of matrices A and B such that
-    /// A = Q * S * Z' and B = Q * T * Z', where Q and Z are orthogonal and
+    /// A = Q * S * Zᵀ and B = Q * T * Zᵀ, where Q and Z are orthogonal and
     /// S and T are upper (quasi) triangular matrices.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QZ_decomposition

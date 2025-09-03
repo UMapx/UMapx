@@ -6,7 +6,8 @@ namespace UMapx.Decomposition
     /// <summary>
     /// Defines decomposition with a cast to Hessenberg form.
     /// <remarks>
-    /// This is a representation of a square matrix in the form of a product of three matrices: A = P * H * P', where H is the Hessenberg form and P is the unitary matrix.
+    /// This is a representation of a square matrix in the form of a product of three matrices: A = P * H * Pᵀ, 
+    /// where H is the Hessenberg form and P is the unitary matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Hessenberg_matrix
     /// </remarks>

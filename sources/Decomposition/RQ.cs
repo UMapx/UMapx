@@ -6,7 +6,8 @@ namespace UMapx.Decomposition
     /// <summary>
     /// Defines RQ decomposition.
     /// <remarks>
-    /// This is a matrix representation in the form of a product of two matrices: A = R * Q, where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
+    /// This is a matrix representation in the form of a product of two matrices: A = R * Q, 
+    /// where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
     /// RQ decomposition is one of the modifications of the QR algorithm.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QR_decomposition

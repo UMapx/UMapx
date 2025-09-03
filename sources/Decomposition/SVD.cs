@@ -6,7 +6,7 @@ namespace UMapx.Decomposition
     /// <summary>
     /// Defines singular value decomposition.
     /// <remarks>
-    /// This is a representation of a rectangular matrix A in the form of the product of three matrices A = U * S * V', 
+    /// This is a representation of a rectangular matrix A in the form of the product of three matrices A = U * S * Vᵀ, 
     /// where U are left vectors, V are right vectors, and S are singular values.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Singular_value_decomposition

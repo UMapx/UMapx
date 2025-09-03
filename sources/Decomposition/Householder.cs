@@ -7,11 +7,13 @@ namespace UMapx.Decomposition
     /// Defines Householder transformation.
     /// <remarks>
     /// This is a linear transformation H (u) of the vector space V, which describes its mapping with respect to the hyperplane,
-    /// which passes through the origin. It was proposed in 1958 by the American mathematician Elston Scott Householder. Widely used in linear algebra for QR decomposition of a matrix.
+    /// which passes through the origin. It was proposed in 1958 by the American mathematician Elston Scott Householder. 
+    /// Widely used in linear algebra for QR decomposition of a matrix.
     /// In addition, the Householder transform is actively used for orthogonalization of bases; ultimately, the Householder matrix has the following properties:
-    /// H = H', H' * H = I; det(H) = -1.
-    /// In this class, two types of the Householder transform are implemented: reduction to a three-diagonal matrix and construction of the Householder matrix from a given vector.
-    /// In the first case, the original square matrix is defined as: A = H * T * H '.
+    /// H = Hᵀ, Hᵀ * H = I; det(H) = -1.
+    /// In this class, two types of the Householder transform are implemented: reduction to a three-diagonal matrix and construction of the 
+    /// Householder matrix from a given vector.
+    /// In the first case, the original square matrix is defined as: A = H * T * Hᵀ.
     /// More information can be found on the website: 
     /// https://en.wikipedia.org/wiki/Householder_transformation
     /// </remarks>

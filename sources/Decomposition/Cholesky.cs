@@ -6,7 +6,8 @@ namespace UMapx.Decomposition
     /// <summary>
     /// Defines Cholesky decomposition.
     /// <remarks>
-    /// This is a representation of a symmetric positive definite square matrix in the form of a product: A = L * L ', where L is a lower triangular matrix with strictly positive elements on the diagonal.
+    /// This is a representation of a symmetric positive definite square matrix in the form of a product: A = L * Lᵀ, 
+    /// where L is a lower triangular matrix with strictly positive elements on the diagonal.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Cholesky_decomposition
     /// </remarks>

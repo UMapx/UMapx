@@ -7,7 +7,7 @@ namespace UMapx.Decomposition
     /// Defines Arnoldi transform.
     /// <remarks>
     /// This transformation is used to reduce the square matrix to the Hessenberg form.
-    /// The matrix A is represented as the product of three matrices: A = Q * H * Q', where H is the upper Hessenberg triangular matrix, Q is the orthogonal matrix.
+    /// The matrix A is represented as the product of three matrices: A = Q * H * Qᵀ, where H is the upper Hessenberg triangular matrix, Q is the orthogonal matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Arnoldi_iteration
     /// </remarks>
