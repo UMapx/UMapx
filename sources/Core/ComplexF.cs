@@ -184,7 +184,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static ComplexF operator -(float a, ComplexF b)
         {
-            return new ComplexF(a - b.Real, b.Imag);
+            return new ComplexF(a - b.Real, -b.Imag);
         }
         /// <summary>
         /// Inverts complex number.
