@@ -44,7 +44,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        public Complex32 Scaling(float x)
+        public ComplexF Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -53,13 +53,13 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        public Complex32 Wavelet(float x)
+        public ComplexF Wavelet(float x)
         {
             float x2 = x * x;
-            Complex32 f0 = MathF.Exp(-x2);
-            Complex32 f1 = MathF.Exp(-MathF.I * x);
-            Complex32 f2 = (f1 * f0) / Math.Pow(Math.Exp(-1 / 2) * Math.Pow(2, 0.5) * Math.Pow(MathF.Pi, 0.5), 0.5);
-            Complex32 psi = 0;
+            ComplexF f0 = MathF.Exp(-x2);
+            ComplexF f1 = MathF.Exp(-MathF.I * x);
+            ComplexF f2 = (f1 * f0) / Math.Pow(Math.Exp(-1 / 2) * Math.Pow(2, 0.5) * Math.Pow(MathF.Pi, 0.5), 0.5);
+            ComplexF psi = 0;
 
             // Gaussian wavelet ('):
             switch (derivative)

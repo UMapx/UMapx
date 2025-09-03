@@ -327,13 +327,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public ComplexF[] Forward(ComplexF[] A)
         {
             int N = A.Length;
             if (!MathF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            Complex32[] B = (Complex32[])A.Clone();
+            ComplexF[] B = (ComplexF[])A.Clone();
             FWHT(B);
 
             if (normalized)
@@ -348,13 +348,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public ComplexF[] Backward(ComplexF[] B)
         {
             int N = B.Length;
             if (!MathF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            Complex32[] A = (Complex32[])B.Clone();
+            ComplexF[] A = (ComplexF[])B.Clone();
             FWHT(A);
 
             if (normalized)
@@ -369,9 +369,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
+        public ComplexF[,] Forward(ComplexF[,] A)
         {
-            Complex32[,] B = (Complex32[,])A.Clone();
+            ComplexF[,] B = (ComplexF[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -379,7 +379,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
+                    ComplexF[] row = new ComplexF[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -398,7 +398,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
+                    ComplexF[] col = new ComplexF[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -424,7 +424,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
+                    ComplexF[] col = new ComplexF[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -450,7 +450,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
+                    ComplexF[] row = new ComplexF[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -479,9 +479,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
+        public ComplexF[,] Backward(ComplexF[,] B)
         {
-            Complex32[,] A = (Complex32[,])B.Clone();
+            ComplexF[,] A = (ComplexF[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -489,7 +489,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
+                    ComplexF[] col = new ComplexF[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -506,7 +506,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
+                    ComplexF[] row = new ComplexF[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -531,7 +531,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    Complex32[] col = new Complex32[N];
+                    ComplexF[] col = new ComplexF[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -555,7 +555,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    Complex32[] row = new Complex32[M];
+                    ComplexF[] row = new ComplexF[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -623,7 +623,7 @@ namespace UMapx.Transform
         /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
-        private void FWHT(Complex32[] data)
+        private void FWHT(ComplexF[] data)
         {
             int N = data.Length;
 
@@ -631,7 +631,7 @@ namespace UMapx.Transform
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             int log2N = (int)MathF.Log2(N);
-            Complex32 x_even, x_odd;
+            ComplexF x_even, x_odd;
 
             int k0 = N, k1 = 1, k2 = N / 2;
             int x, y, z, i, j, l;

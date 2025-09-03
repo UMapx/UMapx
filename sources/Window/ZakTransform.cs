@@ -53,15 +53,15 @@ namespace UMapx.Window
         /// <param name="input">Array</param>
         /// <returns>Matrix</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        public Complex32[,] Forward(Complex32[] input)
+        public ComplexF[,] Forward(ComplexF[] input)
         {
             int N = input.Length;
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
-            var result = new Complex32[N, L];
+            var result = new ComplexF[N, L];
 
-            Complex32[] buffer = new Complex32[L];
+            ComplexF[] buffer = new ComplexF[L];
 
             for (int m = 0; m < N; m++)
             {
@@ -89,15 +89,15 @@ namespace UMapx.Window
         /// <param name="input">Array</param>
         /// <returns>Matrix</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        public Complex32[,] Forward(float[] input)
+        public ComplexF[,] Forward(float[] input)
         {
             int N = input.Length;
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
-            var result = new Complex32[N, L];
+            var result = new ComplexF[N, L];
 
-            Complex32[] buffer = new Complex32[L];
+            ComplexF[] buffer = new ComplexF[L];
 
             for (int m = 0; m < N; m++)
             {
@@ -126,17 +126,17 @@ namespace UMapx.Window
         /// <param name="matrix">Matrix</param>
         /// <returns>Array</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        public Complex32[] Backward(Complex32[,] matrix)
+        public ComplexF[] Backward(ComplexF[,] matrix)
         {
             int N = matrix.GetLength(0);
             int L = matrix.GetLength(1);
             if (N % M != 0 || L != N / M) throw new ArgumentException("The dimensions of matrix do not correspond to the M parameter");
 
-            var output = new Complex32[N];
+            var output = new ComplexF[N];
 
             for (int m = 0; m < N; m++)
             {
-                Complex32 sum = Complex32.Zero;
+                ComplexF sum = ComplexF.Zero;
 
                 for (int n = 0; n < L; n++)
                 {
@@ -168,7 +168,7 @@ namespace UMapx.Window
             const float eps = 1e-8f;
 
             // 1) Build G (RL x N) by circular shifts with step Δ = M/R
-            var G = new Complex32[RL, N];
+            var G = new ComplexF[RL, N];
             for (int i = 0; i < RL; i++)
             {
                 int shift = delta * i % N;
@@ -206,7 +206,7 @@ namespace UMapx.Window
             var outR = new float[N];
             for (int j = 0; j < N; j++)
             {
-                Complex32 sum = Complex32.Zero;
+                ComplexF sum = ComplexF.Zero;
                 for (int i = 0; i < RL; i++)
                     sum += Z[i, j];
                 outR[j] = (sum / RL).Real;
@@ -218,7 +218,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="input">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Orthogonalize(Complex32[] input)
+        public ComplexF[] Orthogonalize(ComplexF[] input)
         {
             int N = input.Length;
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
@@ -230,7 +230,7 @@ namespace UMapx.Window
             const float eps = 1e-8f;
 
             // 1) Build G (RL x N) by circular shifts with step Δ = M/R
-            var G = new Complex32[RL, N];
+            var G = new ComplexF[RL, N];
             for (int i = 0; i < RL; i++)
             {
                 int shift = delta * i % N;
@@ -263,10 +263,10 @@ namespace UMapx.Window
             }
 
             // 4) Take DC over the vertical axis (average across RL rows)
-            var outC = new Complex32[N];
+            var outC = new ComplexF[N];
             for (int j = 0; j < N; j++)
             {
-                Complex32 sum = Complex32.Zero;
+                ComplexF sum = ComplexF.Zero;
                 for (int i = 0; i < RL; i++)
                     sum += Z[i, j];
                 outC[j] = sum / RL;

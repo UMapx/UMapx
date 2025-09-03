@@ -44,10 +44,10 @@ namespace UMapx.Window
         /// <param name="A">Input signal (length N)</param>
         /// <param name="C">Polyphase cache (built for N,M,window)</param>
         /// <returns>B of length 2N: main (0..N-1) and half (N..2N-1) branches</returns>
-        internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
+        internal static ComplexF[] FWHT(ComplexF[] A, PolyphaseCache C)
         {
             int N = A.Length;
-            var B = new Complex32[2 * N];
+            var B = new ComplexF[2 * N];
 
             int Mloc = C.M;
             int L = N / Mloc;
@@ -62,8 +62,8 @@ namespace UMapx.Window
 
             // 1) Polyphase split over residue n0 (mod M). For each n0 we FFT along r (length L):
             //    Xhat[n0,q] = FFT_L{ A[r*M + n0] }_r
-            var Xhat = new Complex32[Mloc, L];
-            var tmp = new Complex32[L];
+            var Xhat = new ComplexF[Mloc, L];
+            var tmp = new ComplexF[L];
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
@@ -87,8 +87,8 @@ namespace UMapx.Window
             // carry phase:
             //   when (n0 + M/2) >= M, the half-branch index wraps and induces a +1 shift in r.
             //   A +1 shift in r corresponds in frequency to multiplication by exp(-j*2π*q/L).
-            var Cmain = new Complex32[Mloc, L];
-            var Chalf = new Complex32[Mloc, L];
+            var Cmain = new ComplexF[Mloc, L];
+            var Chalf = new ComplexF[Mloc, L];
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
@@ -106,7 +106,7 @@ namespace UMapx.Window
                 for (int q = 0; q < L; q++)
                 {
                     float ang = 2f * MathF.Pi * q * carry / L;
-                    var shiftPhase = MathF.Exp(-Complex32.I * ang); // exp(-j*2π*q/L) when carry=1
+                    var shiftPhase = MathF.Exp(-ComplexF.I * ang); // exp(-j*2π*q/L) when carry=1
 
                     tmp[q] = T_hat[n0, q].Conjugate * Xhat[n0, q] * shiftPhase;
                 }
@@ -129,8 +129,8 @@ namespace UMapx.Window
             //   B_main[u] =  P * gain
             //   B_half[u] = (-j) Q * gain
             // where P, Q are the assembled complex contributions of main/half branches.
-            var Sp_main = new Complex32[Mloc];
-            var Sp_half = new Complex32[Mloc];
+            var Sp_main = new ComplexF[Mloc];
+            var Sp_half = new ComplexF[Mloc];
 
             float gain = MathF.Sqrt(Mloc) / MathF.Sqrt(N);
 
@@ -157,7 +157,7 @@ namespace UMapx.Window
 
                     // Two-channel output that matches the slow matrix reference (G^H A):
                     B[u + 0] = P * gain;   // main channel
-                    B[u + N] = -Complex32.I * Q * gain;   // half channel (−j factor)
+                    B[u + N] = -ComplexF.I * Q * gain;   // half channel (−j factor)
                 }
             }
 
@@ -188,7 +188,7 @@ namespace UMapx.Window
         /// <param name="B">Input coefficients of length 2N (main first, then half)</param>
         /// <param name="C">Polyphase cache (built for N, M, window)</param>
         /// <returns>Reconstructed signal A of length N</returns>
-        internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
+        internal static ComplexF[] IFWHT(ComplexF[] B, PolyphaseCache C)
         {
             int N = C.N;
             if (B.Length != 2 * N) throw new ArgumentException("Expect 2N coefficients (main + half)");
@@ -205,11 +205,11 @@ namespace UMapx.Window
             //
             // From B_main/B_half recover P,Q, remove quarter-phase, and
             // invert the DFT over n0 (IFFT_M) to obtain Cmain[:,l], Chalf[:,l].
-            var Cmain = new Complex32[Mloc, L];
-            var Chalf = new Complex32[Mloc, L];
+            var Cmain = new ComplexF[Mloc, L];
+            var Chalf = new ComplexF[Mloc, L];
 
-            var Y_main = new Complex32[Mloc]; // spectra over k for a fixed l
-            var Y_half = new Complex32[Mloc];
+            var Y_main = new ComplexF[Mloc]; // spectra over k for a fixed l
+            var Y_half = new ComplexF[Mloc];
 
             // gain used in the forward
             // hence inverse gain:
@@ -229,11 +229,11 @@ namespace UMapx.Window
                     //   P =      B_main / gain
                     //   Q =  j * B_half / gain
                     var P = bMain * invGain;
-                    var Q = Complex32.I * bHalf * invGain;
+                    var Q = ComplexF.I * bHalf * invGain;
 
                     // Remove quarter-phase e^{+jπk/2} → multiply by its conjugate
                     var phase = PhasePlusPiOver2(k);
-                    var phaseConj = new Complex32(phase.Real, -phase.Imag);
+                    var phaseConj = new ComplexF(phase.Real, -phase.Imag);
 
                     Y_main[k] = phaseConj * P;
                     Y_half[k] = phaseConj * Q;
@@ -261,9 +261,9 @@ namespace UMapx.Window
             // Adjoint (backward) therefore uses:
             //   Xhat += S_hat * FFT_L{ Cmain }
             //   Xhat += T_hat * FFT_L{ Chalf } * conj(phase_carry)
-            var Xhat = new Complex32[Mloc, L];
-            var bufL = new Complex32[L];
-            var bufL2 = new Complex32[L];
+            var Xhat = new ComplexF[Mloc, L];
+            var bufL = new ComplexF[L];
+            var bufL2 = new ComplexF[L];
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
@@ -285,7 +285,7 @@ namespace UMapx.Window
                     if (carry != 0)
                     {
                         float ang = 2f * MathF.Pi * q * carry / L;
-                        var shiftPhaseAdj = MathF.Exp(Complex32.I * ang); // exp(+j*2π*q/L)
+                        var shiftPhaseAdj = MathF.Exp(ComplexF.I * ang); // exp(+j*2π*q/L)
                         Xhat[n0, q] += T_hat[n0, q] * shiftPhaseAdj * bufL2[q];
                     }
                     else
@@ -299,7 +299,7 @@ namespace UMapx.Window
             //
             // For each residue n0, take IFFT_L over q to obtain samples along r:
             //   A[r*M + n0] = IFFT_L{ Xhat[n0, q] }_q
-            var Arec = new Complex32[N];
+            var Arec = new ComplexF[N];
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
@@ -359,12 +359,12 @@ namespace UMapx.Window
             /// <summary>
             /// FFT<sub>L</sub> of the main branch polyphase components [M, L].
             /// </summary>
-            public readonly Complex32[,] S_hat;
+            public readonly ComplexF[,] S_hat;
 
             /// <summary>
             /// FFT<sub>L</sub> of the half-shifted branch polyphase components [M, L].
             /// </summary>
-            public readonly Complex32[,] T_hat;
+            public readonly ComplexF[,] T_hat;
 
             /// <summary>
             /// Creates a new instance of the polyphase cache.
@@ -374,7 +374,7 @@ namespace UMapx.Window
             /// <param name="L">Number of time shifts</param>
             /// <param name="S">FFT of the main branch polyphase components</param>
             /// <param name="T">FFT of the half-shifted branch polyphase components</param>
-            public PolyphaseCache(int N, int M, int L, Complex32[,] S, Complex32[,] T)
+            public PolyphaseCache(int N, int M, int L, ComplexF[,] S, ComplexF[,] T)
             {
                 this.N = N;
                 this.M = M;
@@ -411,17 +411,17 @@ namespace UMapx.Window
                 // Allocate caches for the FFTs of polyphase components:
                 // S_hat[n0, q] = FFT_L over r of polyphase component g[r*M + n0]
                 // T_hat[n0, q] = FFT_L over r of polyphase component g[r*M + (n0 + M/2) % M]
-                var S_hat = new Complex32[Mloc, L];
-                var T_hat = new Complex32[Mloc, L];
+                var S_hat = new ComplexF[Mloc, L];
+                var T_hat = new ComplexF[Mloc, L];
 
-                var s = new Complex32[L]; // temporary buffer for length-L FFT
+                var s = new ComplexF[L]; // temporary buffer for length-L FFT
 
                 for (int n0 = 0; n0 < Mloc; n0++)
                 {
                     // --- Main branch polyphase component ---
                     // s[r] = g[r*M + n0], r = 0..L-1
                     for (int r = 0; r < L; r++)
-                        s[r] = new Complex32(g[r * Mloc + n0], 0);
+                        s[r] = new ComplexF(g[r * Mloc + n0], 0);
 
                     // Forward FFT along r (length L)
                     FFT(s, false);
@@ -435,7 +435,7 @@ namespace UMapx.Window
                     int n1 = (n0 + Mloc / 2) % Mloc;
 
                     for (int r = 0; r < L; r++)
-                        s[r] = new Complex32(g[r * Mloc + n1], 0);
+                        s[r] = new ComplexF(g[r * Mloc + n1], 0);
 
                     // Forward FFT along r
                     FFT(s, false);
@@ -471,15 +471,15 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="k">Frequency index (integer)</param>
         /// <returns>Complex value of e^{+j * π * k / 2}</returns>
-        private static Complex32 PhasePlusPiOver2(int k)
+        private static ComplexF PhasePlusPiOver2(int k)
         {
             // Fast k % 4 using bitwise AND with 3 (0b11).
             return (k & 3) switch
             {
-                0 => new Complex32(+1, 0),  //   0°
-                1 => new Complex32(0, +1),  // +90°
-                2 => new Complex32(-1, 0),  // 180°
-                _ => new Complex32(0, -1),  // −90°
+                0 => new ComplexF(+1, 0),  //   0°
+                1 => new ComplexF(0, +1),  // +90°
+                2 => new ComplexF(-1, 0),  // 180°
+                _ => new ComplexF(0, -1),  // −90°
             };
         }
 
@@ -488,7 +488,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="a">Input</param>
         /// <param name="inverse">Inverse or not</param>
-        private static void FFT(Complex32[] a, bool inverse)
+        private static void FFT(ComplexF[] a, bool inverse)
         {
             var n = a.Length;
 

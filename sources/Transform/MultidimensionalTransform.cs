@@ -64,10 +64,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public Complex32[][] Forward(params Complex32[][] A)
+        public ComplexF[][] Forward(params ComplexF[][] A)
         {
             int count = A.Length;
-            Complex32[][] B = new Complex32[count][];
+            ComplexF[][] B = new ComplexF[count][];
 
             for (int i = 0; i < count; i++)
             {
@@ -81,10 +81,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Jagged matrix</param>
         /// <returns>Jagged matrix</returns>
-        public Complex32[][,] Forward(params Complex32[][,] A)
+        public ComplexF[][,] Forward(params ComplexF[][,] A)
         {
             int count = A.Length;
-            Complex32[][,] B = new Complex32[count][,];
+            ComplexF[][,] B = new ComplexF[count][,];
 
             for (int i = 0; i < count; i++)
             {
@@ -132,10 +132,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public Complex32[][] Backward(params Complex32[][] B)
+        public ComplexF[][] Backward(params ComplexF[][] B)
         {
             int count = B.Length;
-            Complex32[][] A = new Complex32[count][];
+            ComplexF[][] A = new ComplexF[count][];
 
             for (int i = 0; i < count; i++)
             {
@@ -149,10 +149,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Jagged matrix</param>
         /// <returns>Jagged matrix</returns>
-        public Complex32[][,] Backward(params Complex32[][,] B)
+        public ComplexF[][,] Backward(params ComplexF[][,] B)
         {
             int count = B.Length;
-            Complex32[][,] A = new Complex32[count][,];
+            ComplexF[][,] A = new ComplexF[count][,];
 
             for (int i = 0; i < count; i++)
             {

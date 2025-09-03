@@ -70,9 +70,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Matrix(int n)
+        public static ComplexF[,] Matrix(int n)
         {
-            Complex32[,] H = new Complex32[n, n];
+            ComplexF[,] H = new ComplexF[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
@@ -92,11 +92,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public ComplexF[] Forward(ComplexF[] A)
         {
             int N = A.Length;
-            Complex32[,] U = FourierTransform.Matrix(N);
-            Complex32[] B = MatrixF.Dot(A, U);
+            ComplexF[,] U = FourierTransform.Matrix(N);
+            ComplexF[] B = MatrixF.Dot(A, U);
 
             if (normalized)
             {
@@ -110,11 +110,11 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public ComplexF[] Backward(ComplexF[] B)
         {
             int N = B.Length;
-            Complex32[,] U = FourierTransform.Matrix(N);
-            Complex32[] A = MatrixF.Dot(B, U.Hermitian());
+            ComplexF[,] U = FourierTransform.Matrix(N);
+            ComplexF[] A = MatrixF.Dot(B, U.Hermitian());
 
             if (normalized)
             {
@@ -128,12 +128,12 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
+        public ComplexF[,] Forward(ComplexF[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            Complex32[,] U = FourierTransform.Matrix(N);
-            Complex32[,] V = FourierTransform.Matrix(M);
-            Complex32[,] B;
+            ComplexF[,] U = FourierTransform.Matrix(N);
+            ComplexF[,] V = FourierTransform.Matrix(M);
+            ComplexF[,] B;
 
             if (direction == Direction.Both)
             {
@@ -158,12 +158,12 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
+        public ComplexF[,] Backward(ComplexF[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            Complex32[,] U = FourierTransform.Matrix(N);
-            Complex32[,] V = FourierTransform.Matrix(M);
-            Complex32[,] A;
+            ComplexF[,] U = FourierTransform.Matrix(N);
+            ComplexF[,] V = FourierTransform.Matrix(M);
+            ComplexF[,] A;
 
             if (direction == Direction.Both)
             {

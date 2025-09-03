@@ -84,12 +84,12 @@ namespace UMapx.Response
         public float[] Amplitude(float[] w)
         {
             int i, j, length = b.Length;
-            Complex32 K1;
+            ComplexF K1;
             float[] amplitude = new float[w.Length];
 
             for (j = 0; j < w.Length; j++)
             {
-                K1 = Complex32.Zero;
+                K1 = ComplexF.Zero;
 
                 for (i = 0; i < length; i++)
                 {
@@ -107,12 +107,12 @@ namespace UMapx.Response
         public float[] Phase(float[] w)
         {
             int j, i, length = b.Length;
-            Complex32 K1;
+            ComplexF K1;
             float[] phase = new float[w.Length];
 
             for (j = 0; j < w.Length; j++)
             {
-                K1 = Complex32.Zero;
+                K1 = ComplexF.Zero;
 
                 for (i = 0; i < length; i++)
                 {
@@ -131,7 +131,7 @@ namespace UMapx.Response
         {
             int i;
             int length = b.Length;
-            Complex32 K1 = new Complex32(0, 0);
+            ComplexF K1 = new ComplexF(0, 0);
 
             for (i = 0; i < length; i++)
             {
@@ -148,7 +148,7 @@ namespace UMapx.Response
         {
             int i;
             int length = b.Length;
-            Complex32 K1 = new Complex32(0, 0);
+            ComplexF K1 = new ComplexF(0, 0);
 
             for (i = 0; i < length; i++)
             {

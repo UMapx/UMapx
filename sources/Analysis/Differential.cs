@@ -71,7 +71,7 @@ namespace UMapx.Analysis
         /// <param name="x">Array of values argument</param>
         /// <param name="y0">Value</param>
         /// <returns>Array of function values</returns>
-        public Complex32[] Compute(IComplex32Mesh function, Complex32[] x, Complex32 y0)
+        public ComplexF[] Compute(IComplex32Mesh function, ComplexF[] x, ComplexF y0)
         {
             // chose method of differentiation
             switch (method)
@@ -154,7 +154,7 @@ namespace UMapx.Analysis
         /// <param name="y0">Value</param>
         /// <param name="order">Order</param>
         /// <returns>Array of function values</returns>
-        public Complex32[] Compute(IComplex32Mesh function, Complex32[] x, Complex32 y0, int order = 2)
+        public ComplexF[] Compute(IComplex32Mesh function, ComplexF[] x, ComplexF y0, int order = 2)
         {
             int n = x.Length - 1;
 
@@ -164,8 +164,8 @@ namespace UMapx.Analysis
             {
                 // params
                 int i, j, k = order + 1;
-                Complex32[] y = new Complex32[n];
-                Complex32[] r = new Complex32[k];
+                ComplexF[] y = new ComplexF[n];
+                ComplexF[] r = new ComplexF[k];
                 float[] c = Differential.GetCoefficients(order);
 
                 // compute first points by order
@@ -182,12 +182,12 @@ namespace UMapx.Analysis
                 // for order
                 for (i = order; i < n; i++)
                 {
-                    Complex32 hnext = x[i + 1] - x[i];
-                    Complex32 sum = y[i - 1];
+                    ComplexF hnext = x[i + 1] - x[i];
+                    ComplexF sum = y[i - 1];
 
                     for (j = 0; j < order; j++)
                     {
-                        Complex32 t = x[i - j];
+                        ComplexF t = x[i - j];
                         sum += hnext * c[j] * function(t, y[i - j - 1]);
                     }
 
@@ -356,11 +356,11 @@ namespace UMapx.Analysis
         /// <param name="x">Monotone grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static Complex32[] Euler(IComplex32Mesh f, Complex32[] x, Complex32 y0)
+        private static ComplexF[] Euler(IComplex32Mesh f, ComplexF[] x, ComplexF y0)
         {
             int n = x.Length - 1;
-            Complex32 xnew, ynew = y0, h;
-            Complex32[] result = new Complex32[n];
+            ComplexF xnew, ynew = y0, h;
+            ComplexF[] result = new ComplexF[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -381,11 +381,11 @@ namespace UMapx.Analysis
         /// <param name="x">Grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static Complex32[] RungeKutta2(IComplex32Mesh f, Complex32[] x, Complex32 y0)
+        private static ComplexF[] RungeKutta2(IComplex32Mesh f, ComplexF[] x, ComplexF y0)
         {
             int n = x.Length - 1;
-            Complex32 xnew, ynew = y0, h, k1, k2;
-            Complex32[] result = new Complex32[n];
+            ComplexF xnew, ynew = y0, h, k1, k2;
+            ComplexF[] result = new ComplexF[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -409,11 +409,11 @@ namespace UMapx.Analysis
         /// <param name="x">Grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static Complex32[] RungeKutta4(IComplex32Mesh f, Complex32[] x, Complex32 y0)
+        private static ComplexF[] RungeKutta4(IComplex32Mesh f, ComplexF[] x, ComplexF y0)
         {
             int n = x.Length - 1;
-            Complex32 xnew, ynew = y0, h, k1, k2, k3, k4;
-            Complex32[] result = new Complex32[n];
+            ComplexF xnew, ynew = y0, h, k1, k2, k3, k4;
+            ComplexF[] result = new ComplexF[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -440,11 +440,11 @@ namespace UMapx.Analysis
         /// <param name="x">Grid points</param>
         /// <param name="y0">Initial value y(x[0])</param>
         /// <returns>Solution values at x[1..n]</returns>
-        private static Complex32[] Fehlberg(IComplex32Mesh f, Complex32[] x, Complex32 y0)
+        private static ComplexF[] Fehlberg(IComplex32Mesh f, ComplexF[] x, ComplexF y0)
         {
             int n = x.Length - 1;
-            Complex32 xnew, ynew = y0, h, k1, k2, k3, k4, k5, k6;
-            Complex32[] result = new Complex32[n];
+            ComplexF xnew, ynew = y0, h, k1, k2, k3, k4, k5, k6;
+            ComplexF[] result = new ComplexF[n];
 
             for (int i = 0; i < n; i++)
             {

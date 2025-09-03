@@ -106,16 +106,16 @@ namespace UMapx.Response
         public float[] Amplitude(float[] w)
         {
             int i, j;
-            Complex32 K1;
-            Complex32 K2;
+            ComplexF K1;
+            ComplexF K2;
             int length = w.Length;
             int P = b.Length, Q = a.Length;
             float[] amplitude = new float[length];
 
             for (j = 0; j < length; j++)
             {
-                K1 = Complex32.Zero;
-                K2 = Complex32.One;
+                K1 = ComplexF.Zero;
+                K2 = ComplexF.One;
 
                 for (i = 0; i < P; i++) { K1 += b[i] * MathF.Exp(-MathF.I * w[j] * i); }
                 for (i = 0; i < Q; i++) { K2 -= a[i] * MathF.Exp(-MathF.I * w[j] * i); }
@@ -132,16 +132,16 @@ namespace UMapx.Response
         public float[] Phase(float[] w)
         {
             int i, j;
-            Complex32 K1;
-            Complex32 K2;
+            ComplexF K1;
+            ComplexF K2;
             int length = w.Length;
             int P = b.Length, Q = a.Length;
             float[] phase = new float[length];
 
             for (j = 0; j < w.Length; j++)
             {
-                K1 = Complex32.Zero;
-                K2 = Complex32.One;
+                K1 = ComplexF.Zero;
+                K2 = ComplexF.One;
 
                 for (i = 0; i < P; i++) { K1 += b[i] * MathF.Exp(-MathF.I * w[j] * i); }
                 for (i = 0; i < Q; i++) { K2 -= a[i] * MathF.Exp(-MathF.I * w[j] * i); }
@@ -158,8 +158,8 @@ namespace UMapx.Response
         public float Amplitude(float w)
         {
             int i;
-            Complex32 K1 = new Complex32(0, 0);
-            Complex32 K2 = new Complex32(1, 0);
+            ComplexF K1 = new ComplexF(0, 0);
+            ComplexF K2 = new ComplexF(1, 0);
 
             for (i = 0; i < b.Length; i++) { K1 += b[i] * MathF.Exp(-MathF.I * w * i); }
             for (i = 0; i < a.Length; i++) { K2 -= a[i] * MathF.Exp(-MathF.I * w * i); }
@@ -174,8 +174,8 @@ namespace UMapx.Response
         public float Phase(float w)
         {
             int i;
-            Complex32 K1 = new Complex32(0, 0);
-            Complex32 K2 = new Complex32(1, 0);
+            ComplexF K1 = new ComplexF(0, 0);
+            ComplexF K2 = new ComplexF(1, 0);
             int P = b.Length, Q = a.Length;
 
             for (i = 0; i < P; i++) { K1 += b[i] * MathF.Exp(-MathF.I * w * i); }
@@ -190,8 +190,8 @@ namespace UMapx.Response
         {
             get
             {
-                Complex32 sum = Complex32.Zero;
-                Complex32 exp = MathF.Exp(-MathF.I);
+                ComplexF sum = ComplexF.Zero;
+                ComplexF exp = MathF.Exp(-MathF.I);
                 int length = a.Length;
 
                 for (int j = 0; j < length; j++)
@@ -199,7 +199,7 @@ namespace UMapx.Response
                     sum += a[j] * exp;
                 }
 
-                if (sum == Complex32.Zero)
+                if (sum == ComplexF.Zero)
                 {
                     return true;
                 }

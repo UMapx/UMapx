@@ -85,7 +85,7 @@ namespace UMapx.Analysis
         /// <param name="a">Start of line</param>
         /// <param name="b">End of line</param>
         /// <returns>Value</returns>
-        public Complex32 Compute(IComplex32 function, Complex32 a, Complex32 b)
+        public ComplexF Compute(IComplex32 function, ComplexF a, ComplexF b)
         {
             // chose method of nonlinear
             switch (method)
@@ -253,21 +253,21 @@ namespace UMapx.Analysis
         /// <param name="b">Second endpoint used only to initialize the first iterate</param>
         /// <param name="eps">Absolute tolerance for residual and step size</param>
         /// <returns>Approximate root</returns>
-        private static Complex32 Chord(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
+        private static ComplexF Chord(IComplex32 f, ComplexF a, ComplexF b, float eps = 1e-8f)
         {
-            Complex32 x0 = 0.5f * (a + b);
-            Complex32 fa = f(a);
+            ComplexF x0 = 0.5f * (a + b);
+            ComplexF fa = f(a);
             int n = 0;
 
             while (n++ < short.MaxValue)
             {
-                Complex32 fx = f(x0);
+                ComplexF fx = f(x0);
                 if (MathF.Abs(fx) <= eps) return x0;
 
-                Complex32 denom = (fa - fx);
+                ComplexF denom = (fa - fx);
                 if (MathF.Abs(denom) == 0f) break;
 
-                Complex32 x1 = x0 - fx * (a - x0) / denom;
+                ComplexF x1 = x0 - fx * (a - x0) / denom;
                 if (MathF.Abs(x1 - x0) <= eps) return x1;
                 x0 = x1;
             }
@@ -286,17 +286,17 @@ namespace UMapx.Analysis
         /// <param name="b">Second initial guess</param>
         /// <param name="eps">Absolute tolerance for residual and step size</param>
         /// <returns>Approximate root</returns>
-        private static Complex32 Secan(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
+        private static ComplexF Secan(IComplex32 f, ComplexF a, ComplexF b, float eps = 1e-8f)
         {
-            Complex32 x1 = a, x2 = b;
-            Complex32 f1 = f(x1), f2 = f(x2);
+            ComplexF x1 = a, x2 = b;
+            ComplexF f1 = f(x1), f2 = f(x2);
             int n = 0;
 
             while (MathF.Abs(f2) > eps && MathF.Abs(x2 - x1) > eps && n++ < short.MaxValue)
             {
-                Complex32 denom = (f2 - f1);
+                ComplexF denom = (f2 - f1);
                 if (MathF.Abs(denom) == 0f) break;
-                Complex32 x3 = x2 - (x2 - x1) * f2 / denom;
+                ComplexF x3 = x2 - (x2 - x1) * f2 / denom;
 
                 x1 = x2; f1 = f2;
                 x2 = x3; f2 = f(x2);

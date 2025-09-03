@@ -109,7 +109,7 @@ namespace UMapx.Analysis
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
         /// <returns>Complex number</returns>
-        public Complex32 Compute(IComplex32 function, Complex32 x, Complex32 h, int order)
+        public ComplexF Compute(IComplex32 function, ComplexF x, ComplexF h, int order)
         {
             // exception
             if (order > this.points)
@@ -120,7 +120,7 @@ namespace UMapx.Analysis
             // Create the interpolation points
             int length = this.points + 1;
             float[,] coefficients = Differentiation.GetCoefficients(length);
-            Complex32 sum = 0.0;
+            ComplexF sum = 0.0;
 
             // do job
             for (int i = 0, center = 0; i < length; i++)
@@ -140,7 +140,7 @@ namespace UMapx.Analysis
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
         /// <returns>Complex number</returns>
-        public Complex32 Compute(Complex32[] y, int index, float h, int order)
+        public ComplexF Compute(ComplexF[] y, int index, float h, int order)
         {
             // exception
             if (order > this.points)
@@ -151,7 +151,7 @@ namespace UMapx.Analysis
             // Create the interpolation points
             int length = this.points + 1;
             float[,] coefficients = Differentiation.GetCoefficients(length);
-            Complex32 sum = 0.0;
+            ComplexF sum = 0.0;
 
             // do job
             for (int i = 0, center = 0; i < length; i++)

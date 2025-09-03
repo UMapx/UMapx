@@ -58,7 +58,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Jagged array</param>
         /// <returns>Jagged array</returns>
-        public void Apply(params Complex32[][] A)
+        public void Apply(params ComplexF[][] A)
         {
             int count = A.Length;
 
@@ -72,7 +72,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Jagged matrix</param>
         /// <returns>Jagged matrix</returns>
-        public void Apply(params Complex32[][,] A)
+        public void Apply(params ComplexF[][,] A)
         {
             int count = A.Length;
 

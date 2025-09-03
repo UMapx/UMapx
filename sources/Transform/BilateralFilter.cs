@@ -146,7 +146,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(Complex32[] data)
+        public void Apply(ComplexF[] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -156,7 +156,7 @@ namespace UMapx.Transform
                 int i;
 
                 // guided filter
-                Complex32[] copy = (Complex32[])data.Clone();
+                ComplexF[] copy = (ComplexF[])data.Clone();
                 BilateralFilter.Bilateralfilter(copy, this.radius, this.sigma, this.levels);
 
                 // process
@@ -168,7 +168,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(Complex32[,] data)
+        public void Apply(ComplexF[,] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -179,7 +179,7 @@ namespace UMapx.Transform
                 int i, j;
 
                 // guided filter
-                Complex32[,] copy = (Complex32[,])data.Clone();
+                ComplexF[,] copy = (ComplexF[,])data.Clone();
                 BilateralFilter.Bilateralfilter(copy, this.radius, this.sigma, this.levels);
 
                 // process
@@ -282,27 +282,27 @@ namespace UMapx.Transform
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
         /// <returns>Filtered image</returns>
-        private static void Bilateralfilter(Complex32[,] array, int r, float s = 0.1f, int samples = 32)
+        private static void Bilateralfilter(ComplexF[,] array, int r, float s = 0.1f, int samples = 32)
         {
             int height = array.GetLength(0);
             int width = array.GetLength(1);
 
-            Complex32[] levels = new Complex32[samples];
+            ComplexF[] levels = new ComplexF[samples];
 
             for (int i = 0; i < samples; i++)
             {
                 levels[i] = i / (float)(samples - 1);
             }
 
-            Complex32[,] output = new Complex32[height, width];
-            Complex32[,] norm = new Complex32[height, width];
-            Complex32[][,] outputLocals = new Complex32[samples][,];
-            Complex32[][,] normLocals = new Complex32[samples][,];
+            ComplexF[,] output = new ComplexF[height, width];
+            ComplexF[,] norm = new ComplexF[height, width];
+            ComplexF[][,] outputLocals = new ComplexF[samples][,];
+            ComplexF[][,] normLocals = new ComplexF[samples][,];
 
             Parallel.For(0, samples, l =>
             {
-                Complex32[,] rangeWeight = new Complex32[height, width];
-                Complex32 level = levels[l];
+                ComplexF[,] rangeWeight = new ComplexF[height, width];
+                ComplexF level = levels[l];
 
                 float rangeSigma2 = 2 * s * s;
 
@@ -310,21 +310,21 @@ namespace UMapx.Transform
                 {
                     for (int x = 0; x < width; x++)
                     {
-                        Complex32 diff = array[y, x] - level;
+                        ComplexF diff = array[y, x] - level;
                         rangeWeight[y, x] = MathF.Exp(-diff * diff / rangeSigma2);
                     }
                 }
 
-                Complex32[,] blurred = MatrixF.Mean(array, rangeWeight, r, r);
+                ComplexF[,] blurred = MatrixF.Mean(array, rangeWeight, r, r);
 
-                Complex32[,] outputLocal = new Complex32[height, width];
-                Complex32[,] normLocal = new Complex32[height, width];
+                ComplexF[,] outputLocal = new ComplexF[height, width];
+                ComplexF[,] normLocal = new ComplexF[height, width];
 
                 for (int y = 0; y < height; y++)
                 {
                     for (int x = 0; x < width; x++)
                     {
-                        Complex32 w = rangeWeight[y, x];
+                        ComplexF w = rangeWeight[y, x];
                         outputLocal[y, x] = blurred[y, x] * w;
                         normLocal[y, x] = w;
                     }
@@ -434,42 +434,42 @@ namespace UMapx.Transform
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
         /// <returns>Filtered image</returns>
-        private static void Bilateralfilter(Complex32[] input, int r, float s = 0.1f, int samples = 32)
+        private static void Bilateralfilter(ComplexF[] input, int r, float s = 0.1f, int samples = 32)
         {
             int length = input.Length;
-            Complex32[] levels = new Complex32[samples];
+            ComplexF[] levels = new ComplexF[samples];
 
             for (int i = 0; i < samples; i++)
             {
                 levels[i] = i / (float)(samples - 1);
             }
 
-            Complex32[] output = new Complex32[length];
-            Complex32[] norm = new Complex32[length];
-            Complex32[][] outputLocals = new Complex32[samples][];
-            Complex32[][] normLocals = new Complex32[samples][];
+            ComplexF[] output = new ComplexF[length];
+            ComplexF[] norm = new ComplexF[length];
+            ComplexF[][] outputLocals = new ComplexF[samples][];
+            ComplexF[][] normLocals = new ComplexF[samples][];
 
             float rangeSigma2 = 2 * s * s;
 
             Parallel.For(0, samples, l =>
             {
-                Complex32 level = levels[l];
-                Complex32[] rangeWeight = new Complex32[length];
+                ComplexF level = levels[l];
+                ComplexF[] rangeWeight = new ComplexF[length];
 
                 for (int i = 0; i < length; i++)
                 {
-                    Complex32 diff = input[i] - level;
+                    ComplexF diff = input[i] - level;
                     rangeWeight[i] = MathF.Exp(-diff * diff / rangeSigma2);
                 }
 
-                Complex32[] blurred = MatrixF.Mean(input, rangeWeight, r);
+                ComplexF[] blurred = MatrixF.Mean(input, rangeWeight, r);
 
-                Complex32[] outputLocal = new Complex32[length];
-                Complex32[] normLocal = new Complex32[length];
+                ComplexF[] outputLocal = new ComplexF[length];
+                ComplexF[] normLocal = new ComplexF[length];
 
                 for (int i = 0; i < length; i++)
                 {
-                    Complex32 w = rangeWeight[i];
+                    ComplexF w = rangeWeight[i];
                     outputLocal[i] = blurred[i] * w;
                     normLocal[i] = w;
                 }

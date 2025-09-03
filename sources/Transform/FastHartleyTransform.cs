@@ -69,7 +69,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public float[] Forward(float[] A)
         {
-            Complex32[] B = MatrixF.ToComplex(A);
+            ComplexF[] B = MatrixF.ToComplex(A);
             B = FFT.Forward(B);
 
             int length = A.Length, i;
@@ -89,7 +89,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public float[] Backward(float[] B)
         {
-            Complex32[] A = MatrixF.ToComplex(B);
+            ComplexF[] A = MatrixF.ToComplex(B);
             A = FFT.Backward(A);
 
             int length = B.Length, i;
@@ -288,7 +288,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public ComplexF[] Forward(ComplexF[] A)
         {
             int n = A.Length;
             var re = new float[n];
@@ -304,9 +304,9 @@ namespace UMapx.Transform
             var Hr = Forward(re);
             var Hi = Forward(im);
 
-            var H = new Complex32[n];
+            var H = new ComplexF[n];
             for (int i = 0; i < n; i++)
-                H[i] = new Complex32(Hr[i], Hi[i]);
+                H[i] = new ComplexF(Hr[i], Hi[i]);
 
             return H;
         }
@@ -315,7 +315,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public ComplexF[] Backward(ComplexF[] B)
         {
             int n = B.Length;
             var re = new float[n];
@@ -330,9 +330,9 @@ namespace UMapx.Transform
             var xr = Backward(re);
             var xi = Backward(im);
 
-            var X = new Complex32[n];
+            var X = new ComplexF[n];
             for (int i = 0; i < n; i++)
-                X[i] = new Complex32(xr[i], xi[i]);
+                X[i] = new ComplexF(xr[i], xi[i]);
 
             return X;
         }
@@ -341,7 +341,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
+        public ComplexF[,] Forward(ComplexF[,] A)
         {
             int N = A.GetLength(0);
             int M = A.GetLength(1);
@@ -362,10 +362,10 @@ namespace UMapx.Transform
             var HI = Forward(I);
 
             // combine back into complex result
-            var H = new Complex32[N, M];
+            var H = new ComplexF[N, M];
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < M; j++)
-                    H[i, j] = new Complex32(HR[i, j], HI[i, j]);
+                    H[i, j] = new ComplexF(HR[i, j], HI[i, j]);
 
             return H;
         }
@@ -374,7 +374,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
+        public ComplexF[,] Backward(ComplexF[,] B)
         {
             int N = B.GetLength(0);
             int M = B.GetLength(1);
@@ -392,10 +392,10 @@ namespace UMapx.Transform
             var XR = Backward(R);
             var XI = Backward(I);
 
-            var X = new Complex32[N, M];
+            var X = new ComplexF[N, M];
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < M; j++)
-                    X[i, j] = new Complex32(XR[i, j], XI[i, j]);
+                    X[i, j] = new ComplexF(XR[i, j], XI[i, j]);
 
             return X;
         }

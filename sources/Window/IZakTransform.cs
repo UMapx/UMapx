@@ -15,21 +15,21 @@ namespace UMapx.Window
         /// <param name="input">Array</param>
         /// <returns>Matrix</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        Complex32[,] Forward(Complex32[] input);
+        ComplexF[,] Forward(ComplexF[] input);
         /// <summary>
         /// Forward Zak transform.
         /// </summary>
         /// <param name="input">Array</param>
         /// <returns>Matrix</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        Complex32[,] Forward(float[] input);
+        ComplexF[,] Forward(float[] input);
         /// <summary>
         /// Backward Zak transform.
         /// </summary>
         /// <param name="matrix">Matrix</param>
         /// <returns>Array</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        Complex32[] Backward(Complex32[,] matrix);
+        ComplexF[] Backward(ComplexF[,] matrix);
         #endregion
     }
 }

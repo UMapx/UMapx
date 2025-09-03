@@ -60,9 +60,9 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Euclidean(this Complex32[] p, Complex32[] q)
+        public static ComplexF Euclidean(this ComplexF[] p, ComplexF[] q)
         {
-            Complex32 sum = 0;
+            ComplexF sum = 0;
             int n = p.Length;
 
             for (int k = 0; k < n; k++)
@@ -78,16 +78,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Euclidean(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Euclidean(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -157,7 +157,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Chebyshev(this Complex32[] p, Complex32[] q)
+        public static ComplexF Chebyshev(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
             float max = MathF.Abs(p[0] - q[0]);
@@ -177,16 +177,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Chebyshev(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Chebyshev(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -254,7 +254,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Manhattan(this Complex32[] p, Complex32[] q)
+        public static ComplexF Manhattan(this ComplexF[] p, ComplexF[] q)
         {
             float sum = 0;
             int n = p.Length;
@@ -272,16 +272,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Manhattan(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Manhattan(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -356,12 +356,12 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Angular(this Complex32[] p, Complex32[] q)
+        public static ComplexF Angular(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
-            Complex32 s = 0;
-            Complex32 x = 0;
-            Complex32 y = 0;
+            ComplexF s = 0;
+            ComplexF x = 0;
+            ComplexF y = 0;
 
             for (int i = 0; i < n; i++)
             {
@@ -370,8 +370,8 @@ namespace UMapx.Core
                 y += q[i] * q[i];
             }
 
-            Complex32 den = MathF.Sqrt(x) * MathF.Sqrt(y);
-            Complex32 similarity = s == 0 ? 1.0f : 1.0f - (s / den);
+            ComplexF den = MathF.Sqrt(x) * MathF.Sqrt(y);
+            ComplexF similarity = s == 0 ? 1.0f : 1.0f - (s / den);
 
             return MathF.Acos(similarity);
         }
@@ -381,16 +381,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Angular(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Angular(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -460,11 +460,11 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 BrayCurtis(this Complex32[] p, Complex32[] q)
+        public static ComplexF BrayCurtis(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
-            Complex32 x = 0;
-            Complex32 y = 0;
+            ComplexF x = 0;
+            ComplexF y = 0;
 
             for (int i = 0; i < n; i++)
             {
@@ -480,16 +480,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] BrayCurtis(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] BrayCurtis(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -556,10 +556,10 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Canberra(this Complex32[] p, Complex32[] q)
+        public static ComplexF Canberra(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
-            Complex32 sum = 0;
+            ComplexF sum = 0;
 
             for (int i = 0; i < n; i++)
             {
@@ -573,16 +573,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Canberra(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Canberra(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -654,7 +654,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Dice(this Complex32[] p, Complex32[] q)
+        public static ComplexF Dice(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -676,16 +676,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Dice(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Dice(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -753,10 +753,10 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Hellinger(this Complex32[] p, Complex32[] q)
+        public static ComplexF Hellinger(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
-            Complex32 sum = 0;
+            ComplexF sum = 0;
 
             for (int i = 0; i < n; i++)
             {
@@ -771,16 +771,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Hellinger(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Hellinger(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -854,7 +854,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Jaccard(this Complex32[] p, Complex32[] q)
+        public static ComplexF Jaccard(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
             int inter = 0;
@@ -878,16 +878,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Jaccard(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Jaccard(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -961,7 +961,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Kulczynski(this Complex32[] p, Complex32[] q)
+        public static ComplexF Kulczynski(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -985,16 +985,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Kulczynski(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Kulczynski(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -1064,7 +1064,7 @@ namespace UMapx.Core
         /// <param name="q">Array</param>
         /// <param name="order">Order</param>
         /// <returns>Value</returns>
-        public static Complex32 Minkowski(this Complex32[] p, Complex32[] q, float order)
+        public static ComplexF Minkowski(this ComplexF[] p, ComplexF[] q, float order)
         {
             int n = p.Length;
             float sum = 0;
@@ -1082,16 +1082,16 @@ namespace UMapx.Core
         /// <param name="q">Matrix</param>
         /// <param name="order">Order</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Minkowski(this Complex32[,] p, Complex32[,] q, float order)
+        public static ComplexF[] Minkowski(this ComplexF[,] p, ComplexF[,] q, float order)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -1159,7 +1159,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 RusselRao(this Complex32[] p, Complex32[] q)
+        public static ComplexF RusselRao(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
             int tt = 0;
@@ -1177,16 +1177,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] RusselRao(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] RusselRao(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -1261,7 +1261,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 SokalMichener(this Complex32[] p, Complex32[] q)
+        public static ComplexF SokalMichener(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -1286,16 +1286,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] SokalMichener(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] SokalMichener(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -1368,7 +1368,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 SokalSneath(this Complex32[] p, Complex32[] q)
+        public static ComplexF SokalSneath(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -1391,16 +1391,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] SokalSneath(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] SokalSneath(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -1475,7 +1475,7 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 Yule(this Complex32[] p, Complex32[] q)
+        public static ComplexF Yule(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
             int tf = 0;
@@ -1500,16 +1500,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Yule(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Yule(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -1579,11 +1579,11 @@ namespace UMapx.Core
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
         /// <returns>Value</returns>
-        public static Complex32 SquareEuclidian(this Complex32[] p, Complex32[] q)
+        public static ComplexF SquareEuclidian(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
-            Complex32 sum = 0.0f;
-            Complex32 u;
+            ComplexF sum = 0.0f;
+            ComplexF u;
 
             for (int i = 0; i < n; i++)
             {
@@ -1599,16 +1599,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] SquareEuclidian(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] SquareEuclidian(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {
@@ -1676,12 +1676,12 @@ namespace UMapx.Core
         /// <param name="p">Vector</param>
         /// <param name="b">Vector</param>
         /// <returns>Value</returns>
-        public static Complex32 Cosine(this Complex32[] p, Complex32[] b)
+        public static ComplexF Cosine(this ComplexF[] p, ComplexF[] b)
         {
             int length = p.Length;
-            Complex32 A = MatrixF.Abs(p, false);
-            Complex32 B = MatrixF.Abs(b, false);
-            Complex32 s = 0;
+            ComplexF A = MatrixF.Abs(p, false);
+            ComplexF B = MatrixF.Abs(b, false);
+            ComplexF s = 0;
 
             for (int i = 0; i < length; i++)
                 s += p[i] * b[i];
@@ -1694,16 +1694,16 @@ namespace UMapx.Core
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
-        public static Complex32[] Cosine(this Complex32[,] p, Complex32[,] q)
+        public static ComplexF[] Cosine(this ComplexF[,] p, ComplexF[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            ComplexF[] v = new ComplexF[r];
 
             for (int i = 0; i < r; i++)
             {
-                Complex32[] t = new Complex32[c];
-                Complex32[] u = new Complex32[c];
+                ComplexF[] t = new ComplexF[c];
+                ComplexF[] u = new ComplexF[c];
 
                 for (int j = 0; j < c; j++)
                 {

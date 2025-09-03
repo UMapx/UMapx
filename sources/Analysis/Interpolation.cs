@@ -88,7 +88,7 @@ namespace UMapx.Analysis
         /// <param name="y">Array of values of the function</param>
         /// <param name="xl">The value of the argument to calculate</param>
         /// <returns>Complex number</returns>
-        public Complex32 Compute(Complex32[] x, Complex32[] y, Complex32 xl)
+        public ComplexF Compute(ComplexF[] x, ComplexF[] y, ComplexF xl)
         {
             // chose method of interpolation
             switch (method)
@@ -293,15 +293,15 @@ namespace UMapx.Analysis
         /// <param name="y">Function samples y[i] = f(x[i])</param>
         /// <param name="xval">Query point</param>
         /// <returns>Interpolated value at xval</returns>
-        private static Complex32 Lagra(Complex32[] x, Complex32[] y, Complex32 xval)
+        private static ComplexF Lagra(ComplexF[] x, ComplexF[] y, ComplexF xval)
         {
-            Complex32 yval = 0.0;
+            ComplexF yval = 0.0;
             int length = x.Length;
             int i, j;
 
             for (i = 0; i < length; i++)
             {
-                Complex32 products = y[i];
+                ComplexF products = y[i];
                 for (j = 0; j < length; j++)
                 {
                     if (i != j)
@@ -324,15 +324,15 @@ namespace UMapx.Analysis
         /// <param name="y">Function samples y[i] = f(x[i])</param>
         /// <param name="xval">Query point</param>
         /// <returns>Interpolated value at xval</returns>
-        private static Complex32 Newto(Complex32[] x, Complex32[] y, Complex32 xval)
+        private static ComplexF Newto(ComplexF[] x, ComplexF[] y, ComplexF xval)
         {
             int n = x.Length;
-            var a = (Complex32[])y.Clone();
+            var a = (ComplexF[])y.Clone();
             for (int i = 1; i < n; i++)
                 for (int j = n - 1; j >= i; j--)
                     a[j] = (a[j] - a[j - 1]) / (x[j] - x[j - i]);
 
-            Complex32 res = a[n - 1];
+            ComplexF res = a[n - 1];
             for (int i = n - 2; i >= 0; i--)
                 res = a[i] + (xval - x[i]) * res;
             return res;
@@ -349,24 +349,24 @@ namespace UMapx.Analysis
         /// <param name="xval">Query point; if equal to a node, returns the corresponding sample exactly</param>
         /// <returns>Interpolated value at xval</returns>
         /// <exception cref="ArgumentException">Thrown when duplicate nodes are detected</exception>
-        private static Complex32 Baryc(Complex32[] x, Complex32[] y, Complex32 xval)
+        private static ComplexF Baryc(ComplexF[] x, ComplexF[] y, ComplexF xval)
         {
             int n = x.Length;
             for (int i = 0; i < n; i++) if (xval == x[i]) return y[i];
 
-            var w = new Complex32[n];
+            var w = new ComplexF[n];
             for (int i = 0; i < n; i++)
             {
-                Complex32 prod = 1f;
+                ComplexF prod = 1f;
                 for (int j = 0; j < n; j++) if (i != j) prod *= (x[i] - x[j]);
                 if (prod == 0f) throw new ArgumentException("Duplicate nodes");
                 w[i] = 1f / prod;
             }
-            Complex32 num = 0f, den = 0f;
+            ComplexF num = 0f, den = 0f;
             for (int i = 0; i < n; i++)
             {
-                Complex32 d = xval - x[i];
-                Complex32 wi = w[i] / d;
+                ComplexF d = xval - x[i];
+                ComplexF wi = w[i] / d;
                 num += wi * y[i];
                 den += wi;
             }

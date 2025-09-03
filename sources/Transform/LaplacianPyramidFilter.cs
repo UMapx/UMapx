@@ -92,10 +92,10 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(Complex32[,] data)
+        public void Apply(ComplexF[,] data)
         {
             // forward pyramid transform
-            Complex32[][,] pA = lap.Forward(data);
+            ComplexF[][,] pA = lap.Forward(data);
 
             int r = data.GetLength(0), c = data.GetLength(1);
             int nlev = pA.Length - 1, i, j;
@@ -106,7 +106,7 @@ namespace UMapx.Transform
             }
 
             // backward pyramid transform
-            Complex32[,] dummy = lap.Backward(pA);
+            ComplexF[,] dummy = lap.Backward(pA);
 
             for (i = 0; i < r; i++)
             {
@@ -145,10 +145,10 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(Complex32[] data)
+        public void Apply(ComplexF[] data)
         {
             // forward pyramid transform
-            Complex32[][] pA = lap.Forward(data);
+            ComplexF[][] pA = lap.Forward(data);
 
             int r = data.GetLength(0);
             int nlev = pA.Length - 1, i;
@@ -159,7 +159,7 @@ namespace UMapx.Transform
             }
 
             // backward pyramid transform
-            Complex32[] dummy = lap.Backward(pA);
+            ComplexF[] dummy = lap.Backward(pA);
 
             for (i = 0; i < r; i++)
             {

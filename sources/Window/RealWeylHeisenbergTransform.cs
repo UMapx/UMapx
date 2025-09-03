@@ -43,14 +43,14 @@ namespace UMapx.Window
                 throw new ArgumentException("Number of frequency shifts not defined correctly");
 
             float[,] G = new float[2 * N, 2 * N];
-            Complex32 c = 2 * MathF.Pi * MathF.I;
+            ComplexF c = 2 * MathF.Pi * MathF.I;
             float a = M / 2.0f;
 
             Parallel.For(0, N, n =>
             {
                 float phase = n - a / 2.0f;
                 int k, l, u, i, j;
-                Complex32 exp;
+                ComplexF exp;
 
                 for (k = 0; k < M; k++)
                 {
@@ -196,11 +196,11 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public override Complex32[] Forward(Complex32[] A)
+        public override ComplexF[] Forward(ComplexF[] A)
         {
             int N = A.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] B = MatrixF.Dot(A, U.Transponate());
+            ComplexF[] B = MatrixF.Dot(A, U.Transponate());
             return B;
         }
         /// <summary>
@@ -208,11 +208,11 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public override Complex32[] Backward(Complex32[] B)
+        public override ComplexF[] Backward(ComplexF[] B)
         {
             int N = B.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] A = MatrixF.Dot(B, U);
+            ComplexF[] A = MatrixF.Dot(B, U);
             return A;
         }
         /// <summary>
@@ -220,12 +220,12 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public override Complex32[,] Forward(Complex32[,] A)
+        public override ComplexF[,] Forward(ComplexF[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
             float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
-            Complex32[,] B;
+            ComplexF[,] B;
 
             if (direction == Direction.Both)
             {
@@ -246,12 +246,12 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public override Complex32[,] Backward(Complex32[,] B)
+        public override ComplexF[,] Backward(ComplexF[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
             float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
-            Complex32[,] A;
+            ComplexF[,] A;
 
             if (direction == Direction.Both)
             {

@@ -19,7 +19,7 @@ namespace UMapx.Visualization
         private float _ymin = -5, _ymax = 5;
         private float _scaling = 0.65f;
         private readonly FigureStyle _style;
-        private readonly List<GraphPane> _panes = new List<GraphPane>();
+        private readonly List<PlotSeries> _plotSeries = new List<PlotSeries>();
         private Bitmap _imagePane;
         #endregion
 
@@ -180,12 +180,12 @@ namespace UMapx.Visualization
                 _xmax = _imagePane.Width;
                 _ymax = _imagePane.Height;
             }
-            else if (AutoRange && _panes.Count != 0)
+            else if (AutoRange && _plotSeries.Count != 0)
             {
                 var xmin = float.PositiveInfinity; var xmax = float.NegativeInfinity;
                 var ymin = float.PositiveInfinity; var ymax = float.NegativeInfinity;
 
-                foreach (var pane in _panes)
+                foreach (var pane in _plotSeries)
                 {
                     xmin = Math.Min(xmin, pane.X.GetMin() ?? xmin);
                     xmax = Math.Max(xmax, pane.X.GetMax() ?? xmax);
@@ -285,81 +285,81 @@ namespace UMapx.Visualization
                 float radius;
 
                 // Plotting:
-                foreach (var current in _panes)
+                foreach (var current in _plotSeries)
                 {
                     radius = (current.Depth + r0) * 2;
 
-                    if (current.PaneType == PaneType.Plot)
+                    if (current.SeriesType == SeriesType.Plot)
                     {
-                        switch (current.GraphType)
+                        switch (current.ShapeType)
                         {
-                            case GraphType.None:
+                            case ShapeType.None:
                                 PlotLine(canvas_graphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
-                            case GraphType.Circle:
+                            case ShapeType.Circle:
                                 PlotCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case GraphType.Ball:
+                            case ShapeType.Ball:
                                 PlotCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
-                            case GraphType.Rectangle:
+                            case ShapeType.Rectangle:
                                 PlotRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case GraphType.Polygon:
+                            case ShapeType.Polygon:
                                 PlotRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
-                    else if (current.PaneType == PaneType.Stem)
+                    else if (current.SeriesType == SeriesType.Stem)
                     {
-                        switch (current.GraphType)
+                        switch (current.ShapeType)
                         {
-                            case GraphType.None:
+                            case ShapeType.None:
                                 StemLine(canvas_graphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
-                            case GraphType.Circle:
+                            case ShapeType.Circle:
                                 StemCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case GraphType.Ball:
+                            case ShapeType.Ball:
                                 StemCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
-                            case GraphType.Rectangle:
+                            case ShapeType.Rectangle:
                                 StemRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case GraphType.Polygon:
+                            case ShapeType.Polygon:
                                 StemRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
                     }
                     else
                     {
-                        switch (current.GraphType)
+                        switch (current.ShapeType)
                         {
-                            case GraphType.None:
+                            case ShapeType.None:
                                 ScatterLine(canvas_graphics, current.X, current.Y, current.Depth, current.Color);
                                 break;
 
-                            case GraphType.Circle:
+                            case ShapeType.Circle:
                                 ScatterCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case GraphType.Ball:
+                            case ShapeType.Ball:
                                 ScatterCircle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
 
-                            case GraphType.Rectangle:
+                            case ShapeType.Rectangle:
                                 ScatterRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, false);
                                 break;
 
-                            case GraphType.Polygon:
+                            case ShapeType.Polygon:
                                 ScatterRectangle(canvas_graphics, current.X, current.Y, current.Depth, current.Color, radius, true);
                                 break;
                         }
@@ -416,22 +416,22 @@ namespace UMapx.Visualization
             _imagePane = bitmap;
         }
         /// <summary>
-        /// Adds a graph pane.
+        /// Adds the plot series to the figure.
         /// </summary>
-        /// <param name="pane">Graph pane</param>
-        public void Graph(GraphPane pane)
+        /// <param name="plotSeries">Plot series</param>
+        public void Graph(PlotSeries plotSeries)
         {
-            if (pane.X.Length != pane.Y.Length)
+            if (plotSeries.X.Length != plotSeries.Y.Length)
                 throw new ArgumentException("Vectors must be of the same length");
 
-            _panes.Add(pane);
+            _plotSeries.Add(plotSeries);
         }
         /// <summary>
-        /// Removes all graphs from the figure. 
+        /// Removes all plot series from the figure. 
         /// </summary>
         public void Clear()
         {
-            _panes.Clear();
+            _plotSeries.Clear();
             _imagePane = null;
             _xmin = -5; _xmax = 5;
             _ymin = -5; _ymax = 5;
@@ -526,7 +526,7 @@ namespace UMapx.Visualization
         /// </summary>
         /// <remarks>
         /// - Marker appearance depends on <paramref name="type"/>; filled variants use <paramref name="depth"/> as stroke width.<br/>
-        /// - For <see cref="GraphType.None"/> a short line sample with a small square is drawn.
+        /// - For <see cref="ShapeType.None"/> a short line sample with a small square is drawn.
         /// </remarks>
         /// <param name="g">Target <see cref="Graphics"/> surface</param>
         /// <param name="cx">Left X pixel of the marker box</param>
@@ -535,7 +535,7 @@ namespace UMapx.Visualization
         /// <param name="color">Marker color</param>
         /// <param name="type">Graph marker type</param>
         /// <param name="depth">Stroke thickness for outline</param>
-        private void DrawLegendMarker(Graphics g, int cx, int cy, int size, Color color, GraphType type, float depth)
+        private void DrawLegendMarker(Graphics g, int cx, int cy, int size, Color color, ShapeType type, float depth)
         {
             int half = size / 2;
             var rect = new Rectangle(cx, cy - half, size, size);
@@ -545,20 +545,20 @@ namespace UMapx.Visualization
 
             switch (type)
             {
-                case GraphType.None:
+                case ShapeType.None:
                     g.DrawLine(pen, cx, cy, cx + size, cy);
                     var r2 = new Rectangle(cx + size / 2 - 2, cy - 2, 4, 4);
                     g.FillRectangle(br, r2);
                     break;
 
-                case GraphType.Circle:
-                case GraphType.Ball:
+                case ShapeType.Circle:
+                case ShapeType.Ball:
                     if (IsFilled(type)) g.FillEllipse(br, rect);
                     else g.DrawEllipse(pen, rect);
                     break;
 
-                case GraphType.Rectangle:
-                case GraphType.Polygon:
+                case ShapeType.Rectangle:
+                case ShapeType.Polygon:
                     if (IsFilled(type)) g.FillRectangle(br, rect);
                     else g.DrawRectangle(pen, rect);
                     break;
@@ -568,9 +568,9 @@ namespace UMapx.Visualization
                     break;
             }
 
-            bool IsFilled(GraphType type)
+            bool IsFilled(ShapeType type)
             {
-                return type == GraphType.Ball || type == GraphType.Polygon;
+                return type == ShapeType.Ball || type == ShapeType.Polygon;
             }
         }
         #endregion
@@ -912,7 +912,7 @@ namespace UMapx.Visualization
         /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
         private void Paint_Legend(Graphics graphics)
         {
-            if (_panes.Count == 0) return;
+            if (_plotSeries.Count == 0) return;
 
             using var textBrush = new SolidBrush(_style.ColorText);
             var font = _style.FontMarks;
@@ -920,7 +920,7 @@ namespace UMapx.Visualization
             int rowH = Math.Max(Legend.RowHeight, marker);
             int maxTextW = 0;
 
-            foreach (var it in _panes)
+            foreach (var it in _plotSeries)
             {
                 var sz = graphics.MeasureString(it.Label, font);
                 if (sz.Width > maxTextW) maxTextW = (int)Math.Ceiling(sz.Width);
@@ -928,7 +928,7 @@ namespace UMapx.Visualization
 
             int innerPad = 8;
             int contentW = marker + Legend.MarkerGap + maxTextW;
-            int contentH = _panes.Count * rowH;
+            int contentH = _plotSeries.Count * rowH;
             int boxW = contentW + innerPad * 2;
             int boxH = contentH + innerPad * 2;
 
@@ -967,12 +967,12 @@ namespace UMapx.Visualization
             int cx = x + innerPad;
             int cy = y + innerPad;
 
-            for (int idx = 0; idx < _panes.Count; idx++)
+            for (int idx = 0; idx < _plotSeries.Count; idx++)
             {
-                var it = _panes[idx];
+                var it = _plotSeries[idx];
                 int my = cy + idx * rowH + rowH / 2;
 
-                DrawLegendMarker(graphics, cx, my, marker, it.Color, it.GraphType, it.Depth);
+                DrawLegendMarker(graphics, cx, my, marker, it.Color, it.ShapeType, it.Depth);
                 graphics.DrawString(it.Label, font, textBrush, cx + marker + Legend.MarkerGap, my - rowH / 2 + 1);
             }
         }

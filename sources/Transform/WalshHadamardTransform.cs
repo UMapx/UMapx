@@ -218,7 +218,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public ComplexF[] Forward(ComplexF[] A)
         {
             int N = A.Length;
 
@@ -227,7 +227,7 @@ namespace UMapx.Transform
 
             int n = (int)MathF.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
-            Complex32[] B = MatrixF.Dot(A, U);
+            ComplexF[] B = MatrixF.Dot(A, U);
 
             if (normalized)
             {
@@ -241,7 +241,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public ComplexF[] Backward(ComplexF[] B)
         {
             int N = B.Length;
 
@@ -250,7 +250,7 @@ namespace UMapx.Transform
 
             int n = (int)MathF.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
-            Complex32[] A = MatrixF.Dot(B, U.Transponate());
+            ComplexF[] A = MatrixF.Dot(B, U.Transponate());
 
             if (normalized)
             {
@@ -264,7 +264,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
+        public ComplexF[,] Forward(ComplexF[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
 
@@ -273,7 +273,7 @@ namespace UMapx.Transform
 
             float[,] U = WalshHadamardTransform.Matrix((int)MathF.Log2(N));
             float[,] V = WalshHadamardTransform.Matrix((int)MathF.Log2(M));
-            Complex32[,] B;
+            ComplexF[,] B;
 
             if (direction == Direction.Both)
             {
@@ -298,7 +298,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
+        public ComplexF[,] Backward(ComplexF[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
 
@@ -307,7 +307,7 @@ namespace UMapx.Transform
 
             float[,] U = WalshHadamardTransform.Matrix((int)MathF.Log2(N));
             float[,] V = WalshHadamardTransform.Matrix((int)MathF.Log2(M));
-            Complex32[,] A;
+            ComplexF[,] A;
 
             if (direction == Direction.Both)
             {

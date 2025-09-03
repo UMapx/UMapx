@@ -3,10 +3,10 @@
 namespace UMapx.Visualization
 {
     /// <summary>
-    /// Defines the pane type.
+    /// Defines the series type.
     /// </summary>
     [Serializable]
-    public enum PaneType
+    public enum SeriesType
     {
         #region Types
         /// <summary>

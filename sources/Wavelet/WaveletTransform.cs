@@ -176,11 +176,11 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public ComplexF[] Forward(ComplexF[] A)
         {
             var packs = waveletDecomposition.Forward(A);
             int N = A.Length;
-            var y = new Complex32[N];
+            var y = new ComplexF[N];
             int pos = 0;
 
             for (int i = 0; i < packs.Length; i++)
@@ -197,20 +197,20 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public ComplexF[] Backward(ComplexF[] B)
         {
             int N = B.Length, L = Math.Min((int)MathF.Log2(N), waveletDecomposition.Levels);
             int aLen = N >> L;
             int pos = 0;
-            var coeffs = new Complex32[L + 1][];
-            coeffs[0] = new Complex32[aLen];
+            var coeffs = new ComplexF[L + 1][];
+            coeffs[0] = new ComplexF[aLen];
             Array.Copy(B, pos, coeffs[0], 0, aLen);
             pos += aLen;
 
             for (int lev = L; lev >= 1; lev--)
             {
                 int dLen = N >> lev;
-                var d = new Complex32[dLen];
+                var d = new ComplexF[dLen];
                 Array.Copy(B, pos, d, 0, dLen);
                 pos += dLen;
                 coeffs[L - lev + 1] = d;
@@ -223,13 +223,13 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
+        public ComplexF[,] Forward(ComplexF[,] A)
         {
             var packs = waveletDecomposition.Forward(A);
             int L = (packs.Length - 1) / 3;
             int rows = packs[0].GetLength(0) << L;
             int cols = packs[0].GetLength(1) << L;
-            var Y = new Complex32[rows, cols];
+            var Y = new ComplexF[rows, cols];
 
             for (int r = 0; r < packs[0].GetLength(0); r++)
             {
@@ -264,13 +264,13 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
+        public ComplexF[,] Backward(ComplexF[,] B)
         {
             int R = B.GetLength(0), C = B.GetLength(1);
             int L = Math.Min(Math.Min((int)MathF.Log2(R), (int)MathF.Log2(C)), waveletDecomposition.Levels);
-            var packs = new Complex32[1 + 3 * L][,];
+            var packs = new ComplexF[1 + 3 * L][,];
             int hL = R >> L, wL = C >> L;
-            var LL = new Complex32[hL, wL];
+            var LL = new ComplexF[hL, wL];
 
             for (int r = 0; r < hL; r++)
             {
@@ -285,9 +285,9 @@ namespace UMapx.Wavelet
             for (int lev = L; lev >= 1; lev--)
             {
                 int h = R >> (lev - 1), w = C >> (lev - 1), hr = h >> 1, wc = w >> 1;
-                var LH = new Complex32[hr, wc];
-                var HL = new Complex32[hr, wc];
-                var HH = new Complex32[hr, wc];
+                var LH = new ComplexF[hr, wc];
+                var HL = new ComplexF[hr, wc];
+                var HH = new ComplexF[hr, wc];
 
                 for (int r = 0; r < hr; r++)
                 {

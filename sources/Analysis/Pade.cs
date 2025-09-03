@@ -125,13 +125,13 @@ namespace UMapx.Analysis
         /// <param name="taylorCoeffs">Taylor series coefficients</param>
         /// <exception cref="ArgumentException">Exception</exception>
         /// <returns>Coeffs</returns>
-        public (Complex32[] NumeratorCoeffs, Complex32[] DenominatorCoeffs) Compute(Complex32[] taylorCoeffs)
+        public (ComplexF[] NumeratorCoeffs, ComplexF[] DenominatorCoeffs) Compute(ComplexF[] taylorCoeffs)
         {
             if (taylorCoeffs.Length < m + n + 1)
                 throw new ArgumentException("Not enough Taylor series coefficients for the specified orders");
 
-            Complex32[,] A = new Complex32[n, n];
-            Complex32[] b = new Complex32[n];
+            ComplexF[,] A = new ComplexF[n, n];
+            ComplexF[] b = new ComplexF[n];
 
             for (int i = 0; i < n; i++)
             {
@@ -143,9 +143,9 @@ namespace UMapx.Analysis
                 }
             }
 
-            Complex32[] q = MatrixF.Solve(A, b);
+            ComplexF[] q = MatrixF.Solve(A, b);
 
-            Complex32[] denominatorCoeffs = new Complex32[n + 1];
+            ComplexF[] denominatorCoeffs = new ComplexF[n + 1];
             denominatorCoeffs[0] = 1.0f;
 
             for (int i = 0; i < n; i++)
@@ -153,11 +153,11 @@ namespace UMapx.Analysis
                 denominatorCoeffs[i + 1] = q[i];
             }
 
-            Complex32[] numeratorCoeffs = new Complex32[m + 1];
+            ComplexF[] numeratorCoeffs = new ComplexF[m + 1];
 
             for (int k = 0; k <= m; k++)
             {
-                Complex32 sum = 0.0f;
+                ComplexF sum = 0.0f;
 
                 for (int j = 0; j <= Math.Min(k, n); j++)
                 {
@@ -199,10 +199,10 @@ namespace UMapx.Analysis
         /// <param name="numeratorCoeffs">Numerator coeffs</param>
         /// <param name="denominatorCoeffs">Denominator coeffs</param>
         /// <returns>Value</returns>
-        public Complex32 Compute(Complex32 x, float[] numeratorCoeffs, float[] denominatorCoeffs)
+        public ComplexF Compute(ComplexF x, float[] numeratorCoeffs, float[] denominatorCoeffs)
         {
-            Complex32 num = 0;
-            Complex32 den = 0;
+            ComplexF num = 0;
+            ComplexF den = 0;
 
             for (int i = numeratorCoeffs.Length - 1; i >= 0; i--)
             {
@@ -223,10 +223,10 @@ namespace UMapx.Analysis
         /// <param name="numeratorCoeffs">Numerator coeffs</param>
         /// <param name="denominatorCoeffs">Denominator coeffs</param>
         /// <returns>Value</returns>
-        public Complex32 Compute(float x, Complex32[] numeratorCoeffs, Complex32[] denominatorCoeffs)
+        public ComplexF Compute(float x, ComplexF[] numeratorCoeffs, ComplexF[] denominatorCoeffs)
         {
-            Complex32 num = 0;
-            Complex32 den = 0;
+            ComplexF num = 0;
+            ComplexF den = 0;
 
             for (int i = numeratorCoeffs.Length - 1; i >= 0; i--)
             {
@@ -247,10 +247,10 @@ namespace UMapx.Analysis
         /// <param name="numeratorCoeffs">Numerator coeffs</param>
         /// <param name="denominatorCoeffs">Denominator coeffs</param>
         /// <returns>Value</returns>
-        public Complex32 Compute(Complex32 x, Complex32[] numeratorCoeffs, Complex32[] denominatorCoeffs)
+        public ComplexF Compute(ComplexF x, ComplexF[] numeratorCoeffs, ComplexF[] denominatorCoeffs)
         {
-            Complex32 num = 0;
-            Complex32 den = 0;
+            ComplexF num = 0;
+            ComplexF den = 0;
 
             for (int i = numeratorCoeffs.Length - 1; i >= 0; i--)
             {
@@ -346,7 +346,7 @@ namespace UMapx.Analysis
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Exception</exception>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        public string Equation(Complex32[] numeratorCoeffs, Complex32[] denominatorCoeffs)
+        public string Equation(ComplexF[] numeratorCoeffs, ComplexF[] denominatorCoeffs)
         {
             if (numeratorCoeffs == null || denominatorCoeffs == null)
                 throw new ArgumentNullException();
@@ -368,7 +368,7 @@ namespace UMapx.Analysis
         /// <param name="var">Variable</param>
         /// <param name="eps">Epsilon</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        private static string FormatPolynomial(Complex32[] c, string var, float eps)
+        private static string FormatPolynomial(ComplexF[] c, string var, float eps)
         {
             var sb = new StringBuilder();
 
@@ -460,7 +460,7 @@ namespace UMapx.Analysis
         /// <param name="z">Value</param>
         /// <param name="eps">Epsilon</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        private static string FormatComplex(Complex32 z, float eps)
+        private static string FormatComplex(ComplexF z, float eps)
         {
             float re = z.Real;
             float im = z.Imag;
@@ -488,7 +488,7 @@ namespace UMapx.Analysis
         /// <param name="z">Value</param>
         /// <param name="eps">Epsilon</param>
         /// <returns>Boolean</returns>
-        private static bool IsZero(Complex32 z, float eps) => Math.Abs(z.Real) <= eps && Math.Abs(z.Imag) <= eps;
+        private static bool IsZero(ComplexF z, float eps) => Math.Abs(z.Real) <= eps && Math.Abs(z.Imag) <= eps;
         /// <summary>
         /// True if |x - 1| ≤ eps.
         /// </summary>

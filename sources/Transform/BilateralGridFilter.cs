@@ -130,7 +130,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(Complex32[] data)
+        public void Apply(ComplexF[] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -140,7 +140,7 @@ namespace UMapx.Transform
                 int i;
 
                 // guided filter
-                Complex32[] copy = (Complex32[])data.Clone();
+                ComplexF[] copy = (ComplexF[])data.Clone();
                 BilateralGridFilter.Bilateralgridfilter(copy, this.sigmaSpatial, this.sigmaRange);
 
                 // process
@@ -152,7 +152,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(Complex32[,] data)
+        public void Apply(ComplexF[,] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -163,7 +163,7 @@ namespace UMapx.Transform
                 int i, j;
 
                 // guided filter
-                Complex32[,] copy = (Complex32[,])data.Clone();
+                ComplexF[,] copy = (ComplexF[,])data.Clone();
                 BilateralGridFilter.Bilateralgridfilter(copy, this.sigmaSpatial, this.sigmaRange);
 
                 // process
@@ -326,15 +326,15 @@ namespace UMapx.Transform
         /// <param name="input">Input</param>
         /// <param name="sigmaSpatial">Spatial smoothing factor</param>
         /// <param name="sigmaRange">Range smoothing factor</param>
-        internal static void Bilateralgridfilter(Complex32[] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
+        internal static void Bilateralgridfilter(ComplexF[] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
         {
             int length = input.Length;
 
             int gridZ = (int)(1.0f / sigmaRange) + 1;
             int gridX = (int)Math.Ceiling(length / sigmaSpatial) + 2;
 
-            Complex32[,] gridData = new Complex32[gridZ, gridX];
-            Complex32[,] gridWeight = new Complex32[gridZ, gridX];
+            ComplexF[,] gridData = new ComplexF[gridZ, gridX];
+            ComplexF[,] gridWeight = new ComplexF[gridZ, gridX];
 
             // SPLAT step
             for (int x = 0; x < length; x++)
@@ -364,7 +364,7 @@ namespace UMapx.Transform
                 float dz = z - z0;
                 float dx = gx - x0;
 
-                Complex32 v = 0f, w = 0f;
+                ComplexF v = 0f, w = 0f;
 
                 for (int zz = 0; zz <= 1; zz++)
                 {
@@ -389,7 +389,7 @@ namespace UMapx.Transform
         /// <param name="input">Input</param>
         /// <param name="sigmaSpatial">Spatial smoothing factor</param>
         /// <param name="sigmaRange">Range smoothing factor</param>
-        internal static void Bilateralgridfilter(Complex32[,] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
+        internal static void Bilateralgridfilter(ComplexF[,] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
         {
             int height = input.GetLength(0);
             int width = input.GetLength(1);
@@ -398,8 +398,8 @@ namespace UMapx.Transform
             int gridY = (int)Math.Ceiling(height / sigmaSpatial) + 2;
             int gridX = (int)Math.Ceiling(width / sigmaSpatial) + 2;
 
-            Complex32[,,] gridData = new Complex32[gridZ, gridY, gridX];
-            Complex32[,,] gridWeight = new Complex32[gridZ, gridY, gridX];
+            ComplexF[,,] gridData = new ComplexF[gridZ, gridY, gridX];
+            ComplexF[,,] gridWeight = new ComplexF[gridZ, gridY, gridX];
 
             // SPLAT step: accumulate data into the grid
             for (int y = 0; y < height; y++)
@@ -439,7 +439,7 @@ namespace UMapx.Transform
                     float dy = gy - y0;
                     float dx = gx - x0;
 
-                    Complex32 v = 0f, w = 0f;
+                    ComplexF v = 0f, w = 0f;
 
                     for (int zz = 0; zz <= 1; zz++)
                     {
@@ -549,18 +549,18 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="grid">Grid</param>
         /// <param name="radius">Radius</param>
-        private static void Boxblur2d(Complex32[,] grid, int radius)
+        private static void Boxblur2d(ComplexF[,] grid, int radius)
         {
             int depth = grid.GetLength(0);
             int width = grid.GetLength(1);
 
-            Complex32[,] temp = (Complex32[,])grid.Clone();
+            ComplexF[,] temp = (ComplexF[,])grid.Clone();
 
             for (int z = 0; z < depth; z++)
             {
                 for (int x = 0; x < width; x++)
                 {
-                    Complex32 sum = 0f;
+                    ComplexF sum = 0f;
                     int count = 0;
 
                     for (int dz = -radius; dz <= radius; dz++)
@@ -584,13 +584,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="grid">Grid</param>
         /// <param name="radius">Radius</param>
-        private static void Boxblur3d(Complex32[,,] grid, int radius)
+        private static void Boxblur3d(ComplexF[,,] grid, int radius)
         {
             int depth = grid.GetLength(0);
             int height = grid.GetLength(1);
             int width = grid.GetLength(2);
 
-            Complex32[,,] temp = (Complex32[,,])grid.Clone();
+            ComplexF[,,] temp = (ComplexF[,,])grid.Clone();
 
             for (int z = 0; z < depth; z++)
             {
@@ -598,7 +598,7 @@ namespace UMapx.Transform
                 {
                     for (int x = 0; x < width; x++)
                     {
-                        Complex32 sum = 0f;
+                        ComplexF sum = 0f;
                         int count = 0;
 
                         for (int dz = -radius; dz <= radius; dz++)

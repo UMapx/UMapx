@@ -107,7 +107,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(Complex32[] data)
+        public void Apply(ComplexF[] data)
         {
             int length = data.Length;
             int i;
@@ -205,7 +205,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(Complex32[,] data)
+        public void Apply(ComplexF[,] data)
         {
             int width = data.GetLength(1);
             int height = data.GetLength(0);

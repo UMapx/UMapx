@@ -76,15 +76,15 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets eigenvalues.
         /// </summary>
-        public Complex32[] D
+        public ComplexF[] D
         {
             get
             {
-                Complex32[] D = new Complex32[n];
+                ComplexF[] D = new ComplexF[n];
 
                 for (int i = 0; i < n; i++)
                 {
-                    D[i] = new Complex32(Re[i], Im[i]);
+                    D[i] = new ComplexF(Re[i], Im[i]);
                 }
 
                 return D;

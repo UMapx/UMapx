@@ -4,31 +4,31 @@ using System.Drawing;
 namespace UMapx.Visualization
 {
     /// <summary>
-    /// Defines the graph pane.
+    /// Defines the plot series.
     /// </summary>
     [Serializable]
-    public class GraphPane
+    public class PlotSeries
     {
         #region Class components
         /// <summary>
-        /// Initializes the graph pane.
+        /// Initializes the plot series.
         /// </summary>
         /// <param name="x">Value</param>
         /// <param name="y">Function</param>
         /// <param name="depth">Depth</param>
         /// <param name="color">Color</param>
-        /// <param name="graph">Graph type</param>
+        /// <param name="shapeType">Shape type</param>
         /// <param name="label">Label</param>
-        /// <param name="pane">Pane type</param>
-        public GraphPane(float[] x, float[] y, float depth, Color color, PaneType pane, GraphType graph, string label)
+        /// <param name="seriesType">Series type</param>
+        public PlotSeries(float[] x, float[] y, float depth, Color color, SeriesType seriesType, ShapeType shapeType, string label)
         {
             X = x;
             Y = y;
             Depth = depth;
             Color = color;
-            GraphType = graph;
+            ShapeType = shapeType;
             Label = label;
-            PaneType = pane;
+            SeriesType = seriesType;
         }
         /// <summary>
         /// Gets or sets argument array.
@@ -47,17 +47,17 @@ namespace UMapx.Visualization
         /// </summary>
         public Color Color { get; set; }
         /// <summary>
-        /// Gets or sets graph type.
+        /// Gets or sets shape type.
         /// </summary>
-        public GraphType GraphType { get; set; }
+        public ShapeType ShapeType { get; set; }
         /// <summary>
         /// Gets or sets label.
         /// </summary>
         public string Label { get; set; }
         /// <summary>
-        /// Gets or sets pane type.
+        /// Gets or sets series type.
         /// </summary>
-        public PaneType PaneType { get; set; }
+        public SeriesType SeriesType { get; set; }
         #endregion
     }
 }

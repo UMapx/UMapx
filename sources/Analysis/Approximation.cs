@@ -173,7 +173,7 @@ namespace UMapx.Analysis
         /// <param name="x">Array of argument values</param>
         /// <param name="y">Array of function values</param>
         /// <returns>Array</returns>
-        public Complex32[] Compute(Complex32[] x, Complex32[] y)
+        public ComplexF[] Compute(ComplexF[] x, ComplexF[] y)
         {
             // chose method of approximation
             switch (method)
@@ -198,7 +198,7 @@ namespace UMapx.Analysis
         /// <param name="y">Array of function values</param>
         /// <param name="cf">Approximation coefficients</param>
         /// <returns>Array</returns>
-        public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf)
+        public ComplexF[] Compute(ComplexF[] x, ComplexF[] y, out ComplexF[] cf)
         {
             // chose method of approximation
             switch (method)
@@ -224,7 +224,7 @@ namespace UMapx.Analysis
         /// <param name="cf">Approximation coefficients</param>
         /// <param name="similarity">Similarity</param>
         /// <returns>Array</returns>
-        public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf, out Complex32 similarity)
+        public ComplexF[] Compute(ComplexF[] x, ComplexF[] y, out ComplexF[] cf, out ComplexF similarity)
         {
             // chose method of approximation
             switch (method)
@@ -251,7 +251,7 @@ namespace UMapx.Analysis
         /// <param name="similarity">Similarity</param>
         /// <param name="equation">Equation</param>
         /// <returns>Array</returns>
-        public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf, out Complex32 similarity, out string equation)
+        public ComplexF[] Compute(ComplexF[] x, ComplexF[] y, out ComplexF[] cf, out ComplexF similarity, out string equation)
         {
             // chose method of approximation
             switch (method)
@@ -314,12 +314,12 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error)</param>
         /// <param name="equation">Output: formatted equation string</param>
         /// <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>)</returns>
-        private static Complex32[] Poly(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
+        private static ComplexF[] Poly(ComplexF[] x, ComplexF[] y, int power, out ComplexF[] cf, out ComplexF error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
             cf = LeastSquaresOptions.Coefficients(x, y, m);
-            Complex32[] ya = LeastSquaresOptions.Polynomial(x, cf);
+            ComplexF[] ya = LeastSquaresOptions.Polynomial(x, cf);
             error = LeastSquaresOptions.Error(ya, y);
             equation = LeastSquaresOptions.Equation(cf);
             return ya;
@@ -373,13 +373,13 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error on original y</param>
         /// <param name="equation">Output: equation string using “* Log(x)^k”</param>
         /// <returns>Fitted values ŷ at x</returns>
-        private static Complex32[] Logc(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
+        private static ComplexF[] Logc(ComplexF[] x, ComplexF[] y, int power, out ComplexF[] cf, out ComplexF error, out string equation)
         {
             // Options:
             int n = x.Length, i;
             int m = (power < 1) ? 2 : power + 1;
-            Complex32[] xa = new Complex32[n];
-            Complex32[] ya;
+            ComplexF[] xa = new ComplexF[n];
+            ComplexF[] ya;
 
             // log-scale:
             for (i = 0; i < n; i++)
@@ -451,12 +451,12 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error on original y</param>
         /// <param name="equation">Output: equation string “Exp( … )”</param>
         /// <returns>Fitted values ŷ at x</returns>
-        private static Complex32[] Expn(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
+        private static ComplexF[] Expn(ComplexF[] x, ComplexF[] y, int power, out ComplexF[] cf, out ComplexF error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
             int n = x.Length, i;
-            Complex32[] ya = new Complex32[n];
+            ComplexF[] ya = new ComplexF[n];
 
             // log-scale:
             for (i = 0; i < n; i++)
@@ -466,7 +466,7 @@ namespace UMapx.Analysis
 
             // approximation:
             cf = LeastSquaresOptions.Coefficients(x, ya, m);
-            Complex32[] p = LeastSquaresOptions.Polynomial(x, cf);
+            ComplexF[] p = LeastSquaresOptions.Polynomial(x, cf);
 
             // exponential-scale:
             for (i = 0; i < n; i++)
@@ -537,13 +537,13 @@ namespace UMapx.Analysis
         /// <param name="error">Output: fit error on original y</param>
         /// <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”</param>
         /// <returns>Fitted values ŷ at x</returns>
-        private static Complex32[] Powr(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
+        private static ComplexF[] Powr(ComplexF[] x, ComplexF[] y, int power, out ComplexF[] cf, out ComplexF error, out string equation)
         {
             // Options:
             int m = (power < 1) ? 2 : power + 1;
             int n = x.Length, i;
-            Complex32[] xa = new Complex32[n];
-            Complex32[] ya = new Complex32[n];
+            ComplexF[] xa = new ComplexF[n];
+            ComplexF[] ya = new ComplexF[n];
 
             // log-scale:
             for (i = 0; i < n; i++)
@@ -554,7 +554,7 @@ namespace UMapx.Analysis
 
             // approximation:
             cf = LeastSquaresOptions.Coefficients(xa, ya, m);
-            Complex32[] p = LeastSquaresOptions.Polynomial(xa, cf);
+            ComplexF[] p = LeastSquaresOptions.Polynomial(xa, cf);
 
             // exponential-scale:
             for (i = 0; i < n; i++)

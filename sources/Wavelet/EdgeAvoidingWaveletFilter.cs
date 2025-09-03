@@ -104,7 +104,7 @@ namespace UMapx.Wavelet
         /// Applies edge-avoiding wavelet filter.
         /// </summary>
         /// <param name="input">Input</param>
-        public void Apply(Complex32[] input)
+        public void Apply(ComplexF[] input)
         {
             var dcmp = waveletDecomposition.Forward(input);
             var levels = dcmp.Length;
@@ -123,7 +123,7 @@ namespace UMapx.Wavelet
         /// Applies edge-avoiding wavelet filter.
         /// </summary>
         /// <param name="input">Input</param>
-        public void Apply(Complex32[,] input)
+        public void Apply(ComplexF[,] input)
         {
             var dcmp = waveletDecomposition.Forward(input);
             var levels = dcmp.Length;
