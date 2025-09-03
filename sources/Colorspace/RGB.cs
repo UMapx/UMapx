@@ -314,9 +314,9 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region PAL/NTC
+        #region PAL/NTSC
         /// <summary>
-        /// Calculates the brightness value in the standard (PAL/NTC).
+        /// Calculates the brightness value in the standard (PAL/NTSC).
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -327,7 +327,7 @@ namespace UMapx.Colorspace
             return (int)(0.299 * red + 0.587 * green + 0.114 * blue);
         }
         /// <summary>
-        /// Calculates the brightness value in the standard (PAL/NTC).
+        /// Calculates the brightness value in the standard (PAL/NTSC).
         /// </summary>
         /// <param name="red">Red</param>
         /// <param name="green">Green</param>
@@ -338,7 +338,7 @@ namespace UMapx.Colorspace
             return 0.299f * red + 0.587f * green + 0.114f * blue;
         }
         /// <summary>
-        /// Calculates the brightness value in the standard (PAL/NTC).
+        /// Calculates the brightness value in the standard (PAL/NTSC).
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>Value</returns>
@@ -347,7 +347,7 @@ namespace UMapx.Colorspace
             return PAL(rgb.Red, rgb.Green, rgb.Blue);
         }
         /// <summary>
-        /// Calculates the brightness value in the standard (PAL/NTC).
+        /// Calculates the brightness value in the standard (PAL/NTSC).
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>Value</returns>
