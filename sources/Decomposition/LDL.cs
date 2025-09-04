@@ -30,7 +30,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Square symmetric positive definite matrix</param>
         public LDL(float[,] A)
         {
-            if (!Matrix.IsSquare(A))
+            if (!Matrice.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             // LDL'-decomposition algorithm
@@ -44,7 +44,7 @@ namespace UMapx.Decomposition
             diag = diagdecomp.D;
 
             // D = d^2:
-            diag = Matrix.Mul(diag, diag);
+            diag = Matrice.Mul(diag, diag);
         }
         #endregion
 
@@ -61,7 +61,7 @@ namespace UMapx.Decomposition
         /// </summary>
         public float[,] U
         {
-            get { return Matrix.Transponate(lower); }
+            get { return Matrice.Transponate(lower); }
         }
         /// <summary>
         /// Gets the diagonal matrix.

@@ -81,7 +81,7 @@ namespace UMapx.Transform
 
                 for (int i = 0; i < iterations; i++)
                 {
-                    H = Core.Matrix.Kronecker(H, hadamard);
+                    H = Core.Matrice.Kronecker(H, hadamard);
                 }
                 return H;
             }
@@ -113,11 +113,11 @@ namespace UMapx.Transform
 
             int n = (int)Maths.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
-            float[] B = Core.Matrix.Dot(A, U);
+            float[] B = Core.Matrice.Dot(A, U);
 
             if (normalized)
             {
-                B = Core.Matrix.Div(B, Maths.Sqrt(N));
+                B = Core.Matrice.Div(B, Maths.Sqrt(N));
             }
 
             return B;
@@ -136,11 +136,11 @@ namespace UMapx.Transform
 
             int n = (int)Maths.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
-            float[] A = Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
+            float[] A = Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
 
             if (normalized)
             {
-                A = Core.Matrix.Div(A, Maths.Sqrt(N));
+                A = Core.Matrice.Div(A, Maths.Sqrt(N));
             }
 
             return A;
@@ -227,11 +227,11 @@ namespace UMapx.Transform
 
             int n = (int)Maths.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
-            Complex32[] B = Core.Matrix.Dot(A, U);
+            Complex32[] B = Core.Matrice.Dot(A, U);
 
             if (normalized)
             {
-                B = Core.Matrix.Div(B, Math.Sqrt(N));
+                B = Core.Matrice.Div(B, Math.Sqrt(N));
             }
 
             return B;
@@ -250,11 +250,11 @@ namespace UMapx.Transform
 
             int n = (int)Maths.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
-            Complex32[] A = Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
+            Complex32[] A = Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
 
             if (normalized)
             {
-                A = Core.Matrix.Div(A, Math.Sqrt(N));
+                A = Core.Matrice.Div(A, Math.Sqrt(N));
             }
 
             return A;

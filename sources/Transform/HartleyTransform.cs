@@ -98,11 +98,11 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HartleyTransform.Matrix(N);
-            float[] B = Core.Matrix.Dot(A, U);
+            float[] B = Core.Matrice.Dot(A, U);
 
             if (normalized)
             {
-                B = Core.Matrix.Div(B, Maths.Sqrt(N));
+                B = Core.Matrice.Div(B, Maths.Sqrt(N));
             }
 
             return B;
@@ -116,11 +116,11 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HartleyTransform.Matrix(N);
-            float[] A = Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
+            float[] A = Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
 
             if (normalized)
             {
-                A = Core.Matrix.Div(A, Maths.Sqrt(N));
+                A = Core.Matrice.Div(A, Maths.Sqrt(N));
             }
 
             return A;
@@ -194,11 +194,11 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HartleyTransform.Matrix(N);
-            Complex32[] B = Core.Matrix.Dot(A, U);
+            Complex32[] B = Core.Matrice.Dot(A, U);
 
             if (normalized)
             {
-                B = Core.Matrix.Div(B, Math.Sqrt(N));
+                B = Core.Matrice.Div(B, Math.Sqrt(N));
             }
 
             return B;
@@ -212,11 +212,11 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HartleyTransform.Matrix(N);
-            Complex32[] A = Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
+            Complex32[] A = Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
 
             if (normalized)
             {
-                A = Core.Matrix.Div(A, Math.Sqrt(N));
+                A = Core.Matrice.Div(A, Math.Sqrt(N));
             }
 
             return A;

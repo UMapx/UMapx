@@ -232,7 +232,7 @@ namespace UMapx.Transform
                     }
                 }
 
-                float[,] blurred = Matrix.Mean(array, rangeWeight, r, r);
+                float[,] blurred = Matrice.Mean(array, rangeWeight, r, r);
 
                 float[,] outputLocal = new float[height, width];
                 float[,] normLocal = new float[height, width];
@@ -315,7 +315,7 @@ namespace UMapx.Transform
                     }
                 }
 
-                Complex32[,] blurred = Matrix.Mean(array, rangeWeight, r, r);
+                Complex32[,] blurred = Matrice.Mean(array, rangeWeight, r, r);
 
                 Complex32[,] outputLocal = new Complex32[height, width];
                 Complex32[,] normLocal = new Complex32[height, width];
@@ -393,7 +393,7 @@ namespace UMapx.Transform
                     rangeWeight[i] = Maths.Exp(-diff * diff / rangeSigma2);
                 }
 
-                float[] blurred = Matrix.Mean(input, rangeWeight, r);
+                float[] blurred = Matrice.Mean(input, rangeWeight, r);
 
                 float[] outputLocal = new float[length];
                 float[] normLocal = new float[length];
@@ -462,7 +462,7 @@ namespace UMapx.Transform
                     rangeWeight[i] = Maths.Exp(-diff * diff / rangeSigma2);
                 }
 
-                Complex32[] blurred = Matrix.Mean(input, rangeWeight, r);
+                Complex32[] blurred = Matrice.Mean(input, rangeWeight, r);
 
                 Complex32[] outputLocal = new Complex32[length];
                 Complex32[] normLocal = new Complex32[length];

@@ -74,7 +74,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = Matrix.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
+                pA[i] = Matrice.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
             }
 
             // backward pyramid transform
@@ -102,7 +102,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = Matrix.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
+                pA[i] = Matrice.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
             }
 
             // backward pyramid transform
@@ -130,7 +130,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = Matrix.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
+                pA[i] = Matrice.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
             }
 
             // backward pyramid transform
@@ -155,7 +155,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = Matrix.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
+                pA[i] = Matrice.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
             }
 
             // backward pyramid transform

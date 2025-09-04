@@ -82,7 +82,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                B = Matrix.Div(B, Maths.Sqrt(N));
+                B = Matrice.Div(B, Maths.Sqrt(N));
             }
 
             return B;
@@ -103,7 +103,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                A = Matrix.Div(A, Maths.Sqrt(N));
+                A = Matrice.Div(A, Maths.Sqrt(N));
             }
 
             return A;
@@ -161,7 +161,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = Matrix.Div(B, Maths.Sqrt(N * M));
+                    B = Matrice.Div(B, Maths.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
@@ -187,7 +187,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = Matrix.Div(B, Maths.Sqrt(N));
+                    B = Matrice.Div(B, Maths.Sqrt(N));
                 }
             }
             else
@@ -212,7 +212,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = Matrix.Div(B, Maths.Sqrt(M));
+                    B = Matrice.Div(B, Maths.Sqrt(M));
                 }
             }
 
@@ -268,7 +268,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = Matrix.Div(A, Maths.Sqrt(N * M));
+                    A = Matrice.Div(A, Maths.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
@@ -292,7 +292,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = Matrix.Div(A, Maths.Sqrt(N));
+                    A = Matrice.Div(A, Maths.Sqrt(N));
                 }
             }
             else
@@ -316,7 +316,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = Matrix.Div(A, Maths.Sqrt(M));
+                    A = Matrice.Div(A, Maths.Sqrt(M));
                 }
             }
 
@@ -338,7 +338,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                B = Matrix.Div(B, Math.Sqrt(N));
+                B = Matrice.Div(B, Math.Sqrt(N));
             }
 
             return B;
@@ -359,7 +359,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                A = Matrix.Div(A, Math.Sqrt(N));
+                A = Matrice.Div(A, Math.Sqrt(N));
             }
 
             return A;
@@ -417,7 +417,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = Matrix.Div(B, Math.Sqrt(N * M));
+                    B = Matrice.Div(B, Math.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
@@ -443,7 +443,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = Matrix.Div(B, Math.Sqrt(N));
+                    B = Matrice.Div(B, Math.Sqrt(N));
                 }
             }
             else
@@ -468,7 +468,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = Matrix.Div(B, Math.Sqrt(M));
+                    B = Matrice.Div(B, Math.Sqrt(M));
                 }
             }
 
@@ -524,7 +524,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = Matrix.Div(A, Math.Sqrt(N * M));
+                    A = Matrice.Div(A, Math.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
@@ -548,7 +548,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = Matrix.Div(A, Math.Sqrt(N));
+                    A = Matrice.Div(A, Math.Sqrt(N));
                 }
             }
             else
@@ -572,7 +572,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = Matrix.Div(A, Math.Sqrt(M));
+                    A = Matrice.Div(A, Math.Sqrt(M));
                 }
             }
 

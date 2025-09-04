@@ -57,9 +57,9 @@ namespace UMapx.Decomposition
             this.t = Jagged.FromJagged(b);
             this.z = Jagged.FromJagged(zMat);
 
-            float[,] bz = Matrix.Dot(B, this.z);
+            float[,] bz = Matrice.Dot(B, this.z);
             float[,] tinv = InvertUpperTriangular(this.t);
-            this.q = Matrix.Dot(bz, tinv);
+            this.q = Matrice.Dot(bz, tinv);
         }
         #endregion
 

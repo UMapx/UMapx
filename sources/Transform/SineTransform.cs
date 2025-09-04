@@ -80,7 +80,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = SineTransform.Matrix(N);
-            return Core.Matrix.Dot(A, U);
+            return Core.Matrice.Dot(A, U);
         }
         /// <summary>
         /// Backward sine transform.
@@ -91,7 +91,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = SineTransform.Matrix(N);
-            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
+            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
         }
         /// <summary>
         /// Forward sine transform.
@@ -144,7 +144,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = SineTransform.Matrix(N);
-            return Core.Matrix.Dot(A, U);
+            return Core.Matrice.Dot(A, U);
         }
         /// <summary>
         /// Backward sine transform.
@@ -155,7 +155,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = SineTransform.Matrix(N);
-            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
+            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
         }
         /// <summary>
         /// Forward sine transform.

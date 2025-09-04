@@ -92,11 +92,11 @@ namespace UMapx.Imaging
             int z = 3;
 
             var gradient = new float[] { 1, -1 };
-            var left_x = Matrix.Conv(left, gradient, Direction.Horizontal);
-            var left_y = Matrix.Conv(left, gradient, Direction.Vertical);
+            var left_x = Matrice.Conv(left, gradient, Direction.Horizontal);
+            var left_y = Matrice.Conv(left, gradient, Direction.Vertical);
 
-            var right_x = Matrix.Conv(right, gradient, Direction.Horizontal);
-            var right_y = Matrix.Conv(right, gradient, Direction.Vertical);
+            var right_x = Matrice.Conv(right, gradient, Direction.Horizontal);
+            var right_y = Matrice.Conv(right, gradient, Direction.Vertical);
 
             var im_l = new float[][,] { left, left_x, left_y };
             var im_r = new float[][,] { right, right_x, right_y };
@@ -107,7 +107,7 @@ namespace UMapx.Imaging
             if (apply_median)
             {
                 // NOT USED
-                disparity = Matrix.Morph(disparity, even_win, even_win, MorphologyMode.Median);
+                disparity = Matrice.Morph(disparity, even_win, even_win, MorphologyMode.Median);
             }
 
             return disparity;
@@ -171,7 +171,7 @@ namespace UMapx.Imaging
                 // box filter
                 if (win > 1)
                 {
-                    flat_dis = Matrix.Mean(flat_dis, win, win);
+                    flat_dis = Matrice.Mean(flat_dis, win, win);
                 }
 
                 // mapping

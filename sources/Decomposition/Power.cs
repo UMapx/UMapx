@@ -25,12 +25,12 @@ namespace UMapx.Decomposition
         /// <param name="iterations">Number of iterations</param>
         public Power(float[,] A, int iterations = 10)
         {
-            if (!Matrix.IsSquare(A))
+            if (!Matrice.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             // eigenvalue power algorithm:
             int n = A.GetLength(0);
-            this.v = Matrix.Rand(n);
+            this.v = Matrice.Rand(n);
             float[] w;
             float beta;
 
@@ -39,9 +39,9 @@ namespace UMapx.Decomposition
             {
                 // formula:
                 // v[j] = (v[j-1] * A) / || v[j-1] * A ||
-                w = Matrix.Dot(v, A);
-                beta = Matrix.Norm(w);
-                v = Matrix.Div(w, beta);
+                w = Matrice.Dot(v, A);
+                beta = Matrice.Norm(w);
+                v = Matrice.Div(w, beta);
             }
         }
         /// <summary>
@@ -61,7 +61,7 @@ namespace UMapx.Decomposition
         {
             get
             {
-                return Matrix.Diag(v);
+                return Matrice.Diag(v);
             }
         }
         #endregion

@@ -144,11 +144,11 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             Complex32[,] U = LaplaceTransform.Matrix(N, sigma);
-            Complex32[] B = Core.Matrix.Dot(A, U);
+            Complex32[] B = Core.Matrice.Dot(A, U);
 
             if (normalized)
             {
-                B = Core.Matrix.Div(B, Math.Sqrt(N));
+                B = Core.Matrice.Div(B, Math.Sqrt(N));
             }
 
             return B;
@@ -162,11 +162,11 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             Complex32[,] U = LaplaceTransform.Matrix(N, sigma, true);
-            Complex32[] A = Core.Matrix.Dot(B, Core.Matrix.Hermitian(U));
+            Complex32[] A = Core.Matrice.Dot(B, Core.Matrice.Hermitian(U));
 
             if (normalized)
             {
-                A = Core.Matrix.Div(A, Math.Sqrt(N));
+                A = Core.Matrice.Div(A, Math.Sqrt(N));
             }
 
             return A;

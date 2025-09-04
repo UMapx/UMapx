@@ -7,7 +7,7 @@ namespace UMapx.Core
     /// <summary>
     /// Used to implement standard algebraic operations on matrices and vectors.
     /// </summary>
-    public static class Matrix
+    public static class Matrice
     {
         // Matrix voids
 
@@ -115,10 +115,10 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsSymmetric(this float[,] m)
         {
-            if (Matrix.IsSquare(m))
+            if (Matrice.IsSquare(m))
             {
                 // A = Aᵀ
-                if (Matrix.IsEquals(m, m.Transponate()))
+                if (Matrice.IsEquals(m, m.Transponate()))
                 {
                     return true;
                 }
@@ -132,10 +132,10 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsSkewSymmetric(this float[,] m)
         {
-            if (Matrix.IsSquare(m))
+            if (Matrice.IsSquare(m))
             {
                 // Aᵀ = -A:
-                if (Matrix.IsEquals(m.Transponate(), m.ToNegate()))
+                if (Matrice.IsEquals(m.Transponate(), m.ToNegate()))
                 {
                     return true;
                 }
@@ -201,10 +201,10 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsSymmetric(this Complex32[,] m)
         {
-            if (Matrix.IsSquare(m))
+            if (Matrice.IsSquare(m))
             {
                 // A = Aᵀ
-                if (Matrix.IsEquals(m, Matrix.Hermitian(m)))
+                if (Matrice.IsEquals(m, Matrice.Hermitian(m)))
                 {
                     return true;
                 }
@@ -218,10 +218,10 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsSkewSymmetric(this Complex32[,] m)
         {
-            if (Matrix.IsSquare(m))
+            if (Matrice.IsSquare(m))
             {
                 // Aᵀ = -A
-                if (Matrix.IsEquals(m.Hermitian(), m.ToNegate()))
+                if (Matrice.IsEquals(m.Hermitian(), m.ToNegate()))
                 {
                     return true;
                 }
@@ -432,7 +432,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Trace(this float[,] m)
         {
-            if (!Matrix.IsSquare(m))
+            if (!Matrice.IsSquare(m))
                 throw new ArgumentException("The matrix must be square");
 
             int d = m.GetLength(0);
@@ -495,7 +495,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float Norm(this float[,] m)
         {
-            return Matrix.Norm(m, 2);
+            return Matrice.Norm(m, 2);
         }
         /// <summary>
         /// Selects the integer part of the matrix.
@@ -527,12 +527,12 @@ namespace UMapx.Core
         /// <returns>Square matrix</returns>
         public static float[,] Permutation(this float[,] m)
         {
-            if (!Matrix.IsSquare(m))
+            if (!Matrice.IsSquare(m))
                 throw new ArgumentException("The matrix must be square");
 
             int i, j, r, n = m.GetLength(0);
             float[] temp; float diagonal;
-            float[][] perm = Jagged.ToJagged(Matrix.Eye(n, n));
+            float[][] perm = Jagged.ToJagged(Matrice.Eye(n, n));
 
             for (i = 0; i < n; i++)
             {
@@ -562,7 +562,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Trace(this Complex32[,] m)
         {
-            if (!Matrix.IsSquare(m))
+            if (!Matrice.IsSquare(m))
                 throw new ArgumentException("The matrix must be square");
 
             int d = m.GetLength(0);
@@ -625,7 +625,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float Norm(this Complex32[,] m)
         {
-            return Matrix.Norm(m, 2);
+            return Matrice.Norm(m, 2);
         }
         /// <summary>
         /// Selects the integer part of the matrix.
@@ -2421,7 +2421,7 @@ namespace UMapx.Core
                     kernel[j] = m[j, i];
                 }
 
-                h[i] = Matrix.Mode(kernel);
+                h[i] = Matrice.Mode(kernel);
             }
             return h;
         }
@@ -2444,7 +2444,7 @@ namespace UMapx.Core
                     kernel[j] = m[j, i];
                 }
 
-                h[i] = Matrix.Mode(kernel);
+                h[i] = Matrice.Mode(kernel);
             }
             return h;
         }
@@ -2587,7 +2587,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Mean(this float[,] m)
         {
-            return Matrix.Div(Matrix.Sum(m), m.GetLength(0));
+            return Matrice.Div(Matrice.Sum(m), m.GetLength(0));
         }
         /// <summary>
         /// Returns the vector of means of the matrix.
@@ -2596,7 +2596,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] Mean(this Complex32[,] m)
         {
-            return Matrix.Div(Matrix.Sum(m), m.GetLength(0));
+            return Matrice.Div(Matrice.Sum(m), m.GetLength(0));
         }
         /// <summary>
         /// Returns the vector of variances of the matrix.
@@ -2606,7 +2606,7 @@ namespace UMapx.Core
         public static float[] Var(this float[,] m)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
-            float[] u = Matrix.Mean(m);
+            float[] u = Matrice.Mean(m);
             float[] v = new float[mr];
             int i, j;
 
@@ -2617,7 +2617,7 @@ namespace UMapx.Core
                     v[i] += (float)Math.Pow(m[j, i] - u[i], 2);
                 }
             }
-            return Matrix.Div(v, ml - 1);
+            return Matrice.Div(v, ml - 1);
         }
         /// <summary>
         /// Returns the vector of variances of the matrix.
@@ -2627,7 +2627,7 @@ namespace UMapx.Core
         public static Complex32[] Var(this Complex32[,] m)
         {
             int mr = m.GetLength(1), ml = m.GetLength(0);
-            Complex32[] u = Matrix.Mean(m);
+            Complex32[] u = Matrice.Mean(m);
             Complex32[] v = new Complex32[mr];
             int i, j;
 
@@ -2638,7 +2638,7 @@ namespace UMapx.Core
                     v[i] += Maths.Pow(m[j, i] - u[i], 2);
                 }
             }
-            return Matrix.Div(v, ml - 1);
+            return Matrice.Div(v, ml - 1);
         }
         /// <summary>
         /// Returns the vector of variances of matrices.
@@ -2659,7 +2659,7 @@ namespace UMapx.Core
                     v[i] += (float)Math.Pow(m[j, i] - n[j, i], 2);
                 }
             }
-            return Matrix.Div(v, ml - 1);
+            return Matrice.Div(v, ml - 1);
         }
         /// <summary>
         /// Returns the vector of variances of matrices.
@@ -2680,7 +2680,7 @@ namespace UMapx.Core
                     v[i] += Maths.Pow(m[j, i] - n[j, i], 2);
                 }
             }
-            return Matrix.Div(v, ml - 1);
+            return Matrice.Div(v, ml - 1);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrix.
@@ -2689,7 +2689,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] StnDev(this float[,] m)
         {
-            return Matrix.Pow(Matrix.Var(m), 0.5f);
+            return Matrice.Pow(Matrice.Var(m), 0.5f);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrix.
@@ -2698,7 +2698,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] StnDev(this Complex32[,] m)
         {
-            return Matrix.Pow(Matrix.Var(m), 0.5f);
+            return Matrice.Pow(Matrice.Var(m), 0.5f);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrices.
@@ -2708,7 +2708,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] StnDev(this float[,] m, float[,] n)
         {
-            return Matrix.Pow(Matrix.Var(m, n), 0.5f);
+            return Matrice.Pow(Matrice.Var(m, n), 0.5f);
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrices.
@@ -2718,7 +2718,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] StnDev(this Complex32[,] m, Complex32[,] n)
         {
-            return Matrix.Pow(Matrix.Var(m, n), 0.5f);
+            return Matrice.Pow(Matrice.Var(m, n), 0.5f);
         }
         /// <summary>
         /// Returns the covariance matrix.
@@ -2727,7 +2727,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Cov(this float[,] m)
         {
-            float[] v = Matrix.Mean(m);
+            float[] v = Matrice.Mean(m);
             int width = m.GetLength(1), height = m.GetLength(0);
             float[,] H = (float[,])m.Clone();
             int i, j;
@@ -2749,7 +2749,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Cov(this Complex32[,] m)
         {
-            Complex32[] v = Matrix.Mean(m);
+            Complex32[] v = Matrice.Mean(m);
             int width = m.GetLength(1), height = m.GetLength(0);
             Complex32[,] H = (Complex32[,])m.Clone();
             int i, j;
@@ -3553,7 +3553,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Angle(this float[] a, float[] b)
         {
-            return Matrix.Dot(a, b) / Matrix.Norm(a) / Matrix.Norm(b);
+            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
         /// <summary>
         /// Returns the angle between two vectors.
@@ -3563,7 +3563,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Angle(this Complex32[] a, float[] b)
         {
-            return Matrix.Dot(a, b) / Matrix.Norm(a) / Matrix.Norm(b);
+            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
         /// <summary>
         /// Returns the angle between two vectors.
@@ -3573,7 +3573,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Angle(this float[] a, Complex32[] b)
         {
-            return Matrix.Dot(a, b) / Matrix.Norm(a) / Matrix.Norm(b);
+            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
         /// <summary>
         /// Returns the angle between two vectors.
@@ -3583,7 +3583,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Angle(this Complex32[] a, Complex32[] b)
         {
-            return Matrix.Dot(a, b) / Matrix.Norm(a) / Matrix.Norm(b);
+            return Matrice.Dot(a, b) / Matrice.Norm(a) / Matrice.Norm(b);
         }
 
         /// <summary>
@@ -3594,7 +3594,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Proj(this float[] a, float[] b)
         {
-            return Matrix.Dot(a, b) / Matrix.Norm(b);
+            return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
         /// <summary>
         /// Returns the projection of two vectors.
@@ -3604,7 +3604,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Proj(this Complex32[] a, float[] b)
         {
-            return Matrix.Dot(a, b) / Matrix.Norm(b);
+            return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
         /// <summary>
         /// Returns the projection of two vectors.
@@ -3614,7 +3614,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Proj(this float[] a, Complex32[] b)
         {
-            return Matrix.Dot(a, b) / Matrix.Norm(b);
+            return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
         /// <summary>
         /// Returns the projection of two vectors.
@@ -3624,7 +3624,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Proj(this Complex32[] a, Complex32[] b)
         {
-            return Matrix.Dot(a, b) / Matrix.Norm(b);
+            return Matrice.Dot(a, b) / Matrice.Norm(b);
         }
 
         /// <summary>
@@ -3752,7 +3752,7 @@ namespace UMapx.Core
         public static float[] Cosines(this float[] v)
         {
             int length = v.Length, i;
-            float abs = Matrix.Norm(v);
+            float abs = Matrice.Norm(v);
             float[] cos = new float[length];
 
             for (i = 0; i < length; i++)
@@ -3769,7 +3769,7 @@ namespace UMapx.Core
         public static Complex32[] Cosines(this Complex32[] v)
         {
             int length = v.Length, i;
-            Complex32 abs = Matrix.Norm(v);
+            Complex32 abs = Matrice.Norm(v);
             Complex32[] cos = new Complex32[length];
 
             for (i = 0; i < length; i++)
@@ -4735,8 +4735,8 @@ namespace UMapx.Core
         public static float[] ToFloat(this float[] v)
         {
             int length = v.Length;
-            float max = Matrix.Max(v);
-            float min = Matrix.Min(v);
+            float max = Matrice.Max(v);
+            float min = Matrice.Min(v);
             float range = max - min;
             float[] u = new float[length];
 
@@ -5018,7 +5018,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Mean(this float[] v)
         {
-            return Matrix.Sum(v) / v.Length;
+            return Matrice.Sum(v) / v.Length;
         }
         /// <summary>
         /// Returns the average value of a vector.
@@ -5027,7 +5027,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Mean(this Complex32[] v)
         {
-            return Matrix.Sum(v) / v.Length;
+            return Matrice.Sum(v) / v.Length;
         }
         /// <summary>
         /// Returns the variance value.
@@ -5037,7 +5037,7 @@ namespace UMapx.Core
         public static float Var(this float[] v)
         {
             int length = v.Length;
-            float mean = Matrix.Mean(v);
+            float mean = Matrice.Mean(v);
             float sum = 0;
 
             for (int i = 0; i < length; i++)
@@ -5055,7 +5055,7 @@ namespace UMapx.Core
         public static Complex32 Var(this Complex32[] v)
         {
             int length = v.Length;
-            Complex32 mean = Matrix.Mean(v);
+            Complex32 mean = Matrice.Mean(v);
             Complex32 sum = 0;
 
             for (int i = 0; i < length; i++)
@@ -5108,7 +5108,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float StnDev(this float[] v)
         {
-            return (float)Math.Sqrt(Matrix.Var(v));
+            return (float)Math.Sqrt(Matrice.Var(v));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -5117,7 +5117,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 StnDev(this Complex32[] v)
         {
-            return Maths.Sqrt(Matrix.Var(v));
+            return Maths.Sqrt(Matrice.Var(v));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -5127,7 +5127,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float StnDev(this float[] x, float[] y)
         {
-            return (float)Math.Sqrt(Matrix.Var(x, y));
+            return (float)Math.Sqrt(Matrice.Var(x, y));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -5137,7 +5137,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 StnDev(this Complex32[] x, Complex32[] y)
         {
-            return Maths.Sqrt(Matrix.Var(x, y));
+            return Maths.Sqrt(Matrice.Var(x, y));
         }
         /// <summary>
         /// Returns the value of the vector mode.
@@ -5292,7 +5292,7 @@ namespace UMapx.Core
         public static float Cov(this float[] v)
         {
             int xlength = v.Length;
-            float xv = Matrix.Mean(v);
+            float xv = Matrice.Mean(v);
             float total = 0;
             int i;
 
@@ -5310,7 +5310,7 @@ namespace UMapx.Core
         public static Complex32 Cov(this Complex32[] v)
         {
             int xlength = v.Length;
-            Complex32 xv = Matrix.Mean(v);
+            Complex32 xv = Matrice.Mean(v);
             Complex32 total = 0;
             int i;
 
@@ -9832,9 +9832,9 @@ namespace UMapx.Core
             int c = m.GetLength(1);
 
             if (height > r)
-                m = Matrix.ExtendVertical(m, height);
+                m = Matrice.ExtendVertical(m, height);
             if (width > c)
-                m = Matrix.ExtendHorizontal(m, width);
+                m = Matrice.ExtendHorizontal(m, width);
 
             return m;
         }
@@ -9931,9 +9931,9 @@ namespace UMapx.Core
             int c = m.GetLength(1);
 
             if (height > r)
-                m = Matrix.ExtendVertical(m, height);
+                m = Matrice.ExtendVertical(m, height);
             if (width > c)
-                m = Matrix.ExtendHorizontal(m, width);
+                m = Matrice.ExtendHorizontal(m, width);
 
             return m;
         }
@@ -11156,7 +11156,7 @@ namespace UMapx.Core
             float[,] zero = null;
             try
             {
-                result = Matrix.Parse(zero, s);
+                result = Matrice.Parse(zero, s);
                 return true;
             }
             catch (FormatException)
@@ -11213,7 +11213,7 @@ namespace UMapx.Core
             Complex32[,] zero = null;
             try
             {
-                result = Matrix.Parse(zero, s);
+                result = Matrice.Parse(zero, s);
                 return true;
             }
             catch (FormatException)
@@ -11267,7 +11267,7 @@ namespace UMapx.Core
             float[] zero = null;
             try
             {
-                result = Matrix.Parse(zero, s);
+                result = Matrice.Parse(zero, s);
                 return true;
             }
             catch (FormatException)
@@ -11320,7 +11320,7 @@ namespace UMapx.Core
             Complex32[] zero = null;
             try
             {
-                result = Matrix.Parse(zero, s);
+                result = Matrice.Parse(zero, s);
                 return true;
             }
             catch (FormatException)

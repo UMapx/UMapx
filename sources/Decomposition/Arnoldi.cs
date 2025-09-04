@@ -76,22 +76,22 @@ namespace UMapx.Decomposition
             int i, j, k;
 
             // random 0-vector and norm:
-            v = Matrix.Rand(n);
-            p = Matrix.SetCol(p, v, 0);
-            p = Matrix.Div(p, Matrix.Norm(v));
+            v = Matrice.Rand(n);
+            p = Matrice.SetCol(p, v, 0);
+            p = Matrice.Div(p, Matrice.Norm(v));
 
             // Start calculating
             // Arnoldi decomposition:
             for (k = 1; k <= m; k++)
             {
                 // previous k-1-vector:
-                v = Matrix.Dot(Matrix.GetCol(p, k - 1), a);
+                v = Matrice.Dot(Matrice.GetCol(p, k - 1), a);
 
                 for (j = 0; j < k; j++)
                 {
                     // calculating α:
-                    w = Matrix.GetCol(p, j);
-                    float alpha = Matrix.Dot(w, v);
+                    w = Matrice.GetCol(p, j);
+                    float alpha = Matrice.Dot(w, v);
                     h[j, k - 1] = alpha;
 
                     // finding k-vector:
@@ -105,8 +105,8 @@ namespace UMapx.Decomposition
                 if (k < m)
                 {
                     // calculating β:
-                    float beta = Matrix.Norm(v);
-                    p = Matrix.SetCol(p, Matrix.Div(v, beta), k);
+                    float beta = Matrice.Norm(v);
+                    p = Matrice.SetCol(p, Matrice.Div(v, beta), k);
                     h[k, k - 1] = beta;
                 }
             }

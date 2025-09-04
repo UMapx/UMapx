@@ -38,7 +38,7 @@ namespace UMapx.Imaging
         /// </summary>
         public Convolution()
         {
-            Matrix = Core.Matrix.One(3, 3); Offset = 0; Bilateral = false;
+            Matrix = Core.Matrice.One(3, 3); Offset = 0; Bilateral = false;
         }
         /// <summary>
         /// Gets or sets the convolution matrix.

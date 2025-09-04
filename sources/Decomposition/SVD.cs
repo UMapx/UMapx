@@ -93,7 +93,7 @@ namespace UMapx.Decomposition
             {
                 // Moore–Penrose inverse:
                 // P = V * (I / S) * U'
-                return V.Dot(Matrix.One(m).Div(S)).Dot(U.Transponate());
+                return V.Dot(Matrice.One(m).Div(S)).Dot(U.Transponate());
             }
         }
         #endregion

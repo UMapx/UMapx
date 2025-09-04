@@ -1633,8 +1633,8 @@ namespace UMapx.Core
         public static float Cosine(this float[] p, float[] b)
         {
             int length = p.Length;
-            float A = Matrix.Abs(p, false);
-            float B = Matrix.Abs(b, false);
+            float A = Matrice.Abs(p, false);
+            float B = Matrice.Abs(b, false);
             float s = 0;
 
             for (int i = 0; i < length; i++)
@@ -1679,8 +1679,8 @@ namespace UMapx.Core
         public static Complex32 Cosine(this Complex32[] p, Complex32[] b)
         {
             int length = p.Length;
-            Complex32 A = Matrix.Abs(p, false);
-            Complex32 B = Matrix.Abs(b, false);
+            Complex32 A = Matrice.Abs(p, false);
+            Complex32 B = Matrice.Abs(b, false);
             Complex32 s = 0;
 
             for (int i = 0; i < length; i++)

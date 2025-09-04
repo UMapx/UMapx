@@ -66,7 +66,7 @@ namespace UMapx.Analysis
                 matrix[i, m] = LeastSquaresOptions.SummaryPow(y, x, 1, i);
             }
 
-            return Matrix.Solve(matrix);
+            return Matrice.Solve(matrix);
         }
         /// <summary>
         /// Returns the value of the expression: s += v(i) ^ pow.
@@ -112,8 +112,8 @@ namespace UMapx.Analysis
         /// <returns>Value</returns>
         public static float Error(float[] a, float[] b)
         {
-            float vara = Matrix.Var(a);
-            float varb = Matrix.Var(b);
+            float vara = Matrice.Var(a);
+            float varb = Matrice.Var(b);
 
             if (vara < varb)
             {
@@ -216,7 +216,7 @@ namespace UMapx.Analysis
                 matrix[i, m] = LeastSquaresOptions.SummaryPow(y, x, 1, i);
             }
 
-            return Matrix.Solve(matrix);
+            return Matrice.Solve(matrix);
         }
         /// <summary>
         /// Returns the value of the expression: s += v(i) ^ pow.
@@ -262,8 +262,8 @@ namespace UMapx.Analysis
         /// <returns>Value</returns>
         public static Complex32 Error(Complex32[] a, Complex32[] b)
         {
-            Complex32 vara = Matrix.Var(a);
-            Complex32 varb = Matrix.Var(b);
+            Complex32 vara = Matrice.Var(a);
+            Complex32 varb = Matrice.Var(b);
 
             if (vara.Abs < varb.Abs)
             {

@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Square matrix</param>
         public Diagonal(float[,] A)
         {
-            if (!Matrix.IsSquare(A))
+            if (!Matrice.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             int n = A.GetLength(0), i;
@@ -34,7 +34,7 @@ namespace UMapx.Decomposition
             for (i = 0; i < n; i++)
                 diag[i] = A[i, i];
 
-            this.matrix = Matrix.Dot(A, diag, true);
+            this.matrix = Matrice.Dot(A, diag, true);
         }
         #endregion
 

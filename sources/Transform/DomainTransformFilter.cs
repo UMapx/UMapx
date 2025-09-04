@@ -218,8 +218,8 @@ namespace UMapx.Transform
             int i, j;
 
             // get differences
-            float[,] dIcdx = Matrix.Diff(I, 1, Direction.Horizontal);
-            float[,] dIcdy = Matrix.Diff(I, 1, Direction.Vertical);
+            float[,] dIcdx = Matrice.Diff(I, 1, Direction.Horizontal);
+            float[,] dIcdy = Matrice.Diff(I, 1, Direction.Vertical);
 
             // shift patterns
             float[,] dIdx = new float[h, w];
@@ -269,8 +269,8 @@ namespace UMapx.Transform
             int i, j;
 
             // get differences
-            Complex32[,] dIcdx = Matrix.Diff(I, 1, Direction.Horizontal);
-            Complex32[,] dIcdy = Matrix.Diff(I, 1, Direction.Vertical);
+            Complex32[,] dIcdx = Matrice.Diff(I, 1, Direction.Horizontal);
+            Complex32[,] dIcdy = Matrice.Diff(I, 1, Direction.Vertical);
 
             // shift patterns
             Complex32[,] dIdx = new Complex32[h, w];
@@ -319,7 +319,7 @@ namespace UMapx.Transform
             int i;
 
             // get differences
-            float[] dIcdy = Matrix.Diff(I, 1);
+            float[] dIcdy = Matrice.Diff(I, 1);
 
             // shift patterns
             float[] dIdy = new float[h];
@@ -357,7 +357,7 @@ namespace UMapx.Transform
             int i;
 
             // get differences
-            Complex32[] dIcdy = Matrix.Diff(I, 1);
+            Complex32[] dIcdy = Matrice.Diff(I, 1);
 
             // shift patterns
             Complex32[] dIdy = new Complex32[h];
@@ -391,7 +391,7 @@ namespace UMapx.Transform
         {
             // params
             float a = (float)Math.Exp(-Math.Sqrt(2) / sigma);
-            float[,] V = Matrix.Pow(a, D);
+            float[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -416,7 +416,7 @@ namespace UMapx.Transform
         {
             // params
             float a = Maths.Exp(-Maths.Sqrt2 / sigma);
-            float[,] V = Matrix.Pow(a, D);
+            float[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -441,7 +441,7 @@ namespace UMapx.Transform
         {
             // params
             float a = Maths.Exp(-Maths.Sqrt2 / sigma);
-            Complex32[,] V = Matrix.Pow(a, D);
+            Complex32[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -466,7 +466,7 @@ namespace UMapx.Transform
         {
             // params
             float a = Maths.Exp(-Maths.Sqrt2 / sigma);
-            Complex32[,] V = Matrix.Pow(a, D);
+            Complex32[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);
             int i, j;
@@ -492,7 +492,7 @@ namespace UMapx.Transform
         {
             // params
             float a = Maths.Exp(-Maths.Sqrt2 / sigma);
-            float[] V = Matrix.Pow(a, D);
+            float[] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int i;
 
@@ -514,7 +514,7 @@ namespace UMapx.Transform
         {
             // params
             float a = Maths.Exp(-Maths.Sqrt2 / sigma);
-            Complex32[] V = Matrix.Pow(a, D);
+            Complex32[] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int i;
 

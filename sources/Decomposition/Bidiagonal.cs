@@ -67,8 +67,8 @@ namespace UMapx.Decomposition
             m = A.GetLength(0);
             n = A.GetLength(1);
             b = Jagged.ToJagged(A);
-            u = Jagged.ToJagged(Matrix.Eye(m, m));
-            v = Jagged.ToJagged(Matrix.Eye(n, n));
+            u = Jagged.ToJagged(Matrice.Eye(m, m));
+            v = Jagged.ToJagged(Matrice.Eye(n, n));
             int p = Math.Min(m, n);
 
             for (int k = 0; k < p; k++)

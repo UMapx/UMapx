@@ -149,7 +149,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrix.Dot(A, U);
+            return Core.Matrice.Dot(A, U);
         }
         /// <summary>
         /// Backward Hankel transform.
@@ -160,7 +160,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
+            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
         }
         /// <summary>
         /// Forward Hankel transform.
@@ -213,7 +213,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrix.Dot(A, U);
+            return Core.Matrice.Dot(A, U);
         }
         /// <summary>
         /// Backward Hankel transform.
@@ -224,7 +224,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
+            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
         }
         /// <summary>
         /// Forward Hankel transform.

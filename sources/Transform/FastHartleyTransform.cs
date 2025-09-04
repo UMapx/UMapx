@@ -69,7 +69,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public float[] Forward(float[] A)
         {
-            Complex32[] B = Matrix.ToComplex(A);
+            Complex32[] B = Matrice.ToComplex(A);
             B = FFT.Forward(B);
 
             int length = A.Length, i;
@@ -89,7 +89,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public float[] Backward(float[] B)
         {
-            Complex32[] A = Matrix.ToComplex(B);
+            Complex32[] A = Matrice.ToComplex(B);
             A = FFT.Backward(A);
 
             int length = B.Length, i;

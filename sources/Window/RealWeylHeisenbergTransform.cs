@@ -124,7 +124,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[] B = Core.Matrix.Dot(A, (float[,])Core.Matrix.Transponate(U));
+            float[] B = Core.Matrice.Dot(A, (float[,])Core.Matrice.Transponate(U));
             return B;
         }
         /// <summary>
@@ -136,7 +136,7 @@ namespace UMapx.Window
         {
             int N = B.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[] A = Core.Matrix.Dot(B, U);
+            float[] A = Core.Matrice.Dot(B, U);
             return A;
         }
         /// <summary>
@@ -200,7 +200,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] B = Core.Matrix.Dot(A, (float[,])Core.Matrix.Transponate(U));
+            Complex32[] B = Core.Matrice.Dot(A, (float[,])Core.Matrice.Transponate(U));
             return B;
         }
         /// <summary>
@@ -212,7 +212,7 @@ namespace UMapx.Window
         {
             int N = B.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] A = Core.Matrix.Dot(B, U);
+            Complex32[] A = Core.Matrice.Dot(B, U);
             return A;
         }
         /// <summary>

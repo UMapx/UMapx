@@ -31,7 +31,7 @@ namespace UMapx.Decomposition
         /// <param name="eps">Epsilon [0, 1]</param>
         public Schur(float[,] A, float eps = 1e-16f)
         {
-            if (!Matrix.IsSquare(A))
+            if (!Matrice.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             this.n = A.GetLength(0);

@@ -62,7 +62,7 @@ namespace UMapx.Window
         public override float[] GetWindow(int frameSize)
         {
             float t = (frameSize - 1) / 2.0f;
-            float[] x = Matrix.Compute(-t, t, 1);
+            float[] x = Matrice.Compute(-t, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

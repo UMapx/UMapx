@@ -70,8 +70,8 @@ namespace UMapx.Decomposition
         private void NnmfDcmp(float[,] A, int iterations = 100)
         {
             // choose W and H randomly, W with unit norm
-            w = Matrix.Rand(m, r);
-            h = Matrix.Rand(r, n);
+            w = Matrice.Rand(m, r);
+            h = Matrice.Rand(r, n);
             var Z = new float[r, r];
 
             // a small epsilon is added to the

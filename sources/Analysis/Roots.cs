@@ -84,7 +84,7 @@ namespace UMapx.Analysis
 
             // Eigen-value decomposition for
             // companion matrix:
-            eig = new EVD(Matrix.Companion(c), this.eps);
+            eig = new EVD(Matrice.Companion(c), this.eps);
 
             // Complex result:
             return eig.D;

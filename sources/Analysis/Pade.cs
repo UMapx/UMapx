@@ -94,7 +94,7 @@ namespace UMapx.Analysis
                 }
             }
 
-            float[] q = Matrix.Solve(A, b);
+            float[] q = Matrice.Solve(A, b);
 
             float[] denominatorCoeffs = new float[n + 1];
             denominatorCoeffs[0] = 1.0f;
@@ -143,7 +143,7 @@ namespace UMapx.Analysis
                 }
             }
 
-            Complex32[] q = Matrix.Solve(A, b);
+            Complex32[] q = Matrice.Solve(A, b);
 
             Complex32[] denominatorCoeffs = new Complex32[n + 1];
             denominatorCoeffs[0] = 1.0f;

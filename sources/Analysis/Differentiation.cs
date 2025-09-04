@@ -192,7 +192,7 @@ namespace UMapx.Analysis
             }
 
             // matrix invert
-            deltas = Matrix.Invert(deltas);
+            deltas = Matrice.Invert(deltas);
 
             //// rounding
             //float fac = (float)Special.Factorial(points);
