@@ -4937,7 +4937,7 @@
         </member>
         <member name="M:UMapx.Core.Jagged.Rand(System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a vector of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+            Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
@@ -4945,7 +4945,7 @@
         </member>
         <member name="M:UMapx.Core.Jagged.Randc(System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a vector of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+            Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
@@ -10645,21 +10645,21 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Rand(System.Int32)">
             <summary>
-            Implements the construction of a vector of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+            Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
             </summary>
             <param name="n">Dimension</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Randc(System.Int32)">
             <summary>
-            Implements the construction of a vector of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+            Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
             </summary>
             <param name="n">Dimension</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Rand(System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a matrix of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+            Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
@@ -10667,7 +10667,7 @@
         </member>
         <member name="M:UMapx.Core.Matrice.Randc(System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a matrix of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+            Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>

@@ -10908,7 +10908,7 @@ namespace UMapx.Core
 
         #region Rand and randc voids
         /// <summary>
-        /// Implements the construction of a vector of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+        /// Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
         /// </summary>
         /// <param name="n">Dimension</param>
         /// <returns>Array</returns>
@@ -10924,7 +10924,7 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Implements the construction of a vector of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+        /// Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
         /// </summary>
         /// <param name="n">Dimension</param>
         /// <returns>Array</returns>
@@ -10940,7 +10940,7 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Implements the construction of a matrix of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+        /// Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
@@ -10961,7 +10961,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements the construction of a matrix of random numbers, the values of which are distributed UMapxing to a uniform distribution.
+        /// Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
