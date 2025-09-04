@@ -777,6 +777,8 @@ namespace UMapx.Visualization
         /// <param name="dh">Top/bottom drawable-area offset (margin/padding) in pixels</param>
         private void Paint_Numerics(Graphics graphics, float[] X, float[] Y, int dw, int dh)
         {
+            if (X.Length == 0) return; if (Y.Length == 0) return;
+
             using SolidBrush br = new SolidBrush(_style.ColorMarks);
             string numerics;
             int xpoint, ypoint;
@@ -819,6 +821,8 @@ namespace UMapx.Visualization
         /// <param name="dy">Vertical padding/margin in pixels affecting tick sizing</param>
         private void Paint_Shapes(Graphics graphics, float[] X, float[] Y, int dx, int dy)
         {
+            if (X.Length == 0) return; if (Y.Length == 0) return;
+
             using var pen = new Pen(_style.ColorShapes, _style.DepthShapes);
             int min = Math.Min(dx, dy), s = min / 8;
             var xlength = X.Length;
