@@ -16,7 +16,7 @@ namespace UMapx.Wavelet
     [Serializable]
     public class WaveletDecomposition : IPyramidTransform
     {
-        #region Prviate data
+        #region Private data
         private float[] lp, hp, ilp, ihp;
         private bool normalized;
         private int levels;

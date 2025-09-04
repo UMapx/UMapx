@@ -29,7 +29,7 @@ namespace UMapx.Video
         /// <param name="image">Image</param>
         public VideoImageSource(Bitmap image)
         {
-            _image = image ?? throw new ArgumentNullException();
+            _image = image ?? throw new ArgumentNullException(nameof(image));
             _videoResolution = new VideoCapabilities(
                 new Size(640, 480),
                 30,

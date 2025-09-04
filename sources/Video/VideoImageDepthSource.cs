@@ -32,8 +32,8 @@ namespace UMapx.Video
         /// <param name="depth">Depth</param>
         public VideoImageDepthSource(Bitmap image, ushort[,] depth)
         {
-            _image = image ?? throw new ArgumentNullException();
-            _depth = depth ?? throw new ArgumentNullException();
+            _image = image ?? throw new ArgumentNullException(nameof(image));
+            _depth = depth ?? throw new ArgumentNullException(nameof(depth));
             _videoResolution = 
                 _depthResolution = 
                 new VideoCapabilities(
