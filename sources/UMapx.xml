@@ -17637,6 +17637,65 @@
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
         </member>
+        <member name="T:UMapx.Imaging.AnaglyphMode">
+            <summary>
+            Defines the stereo effect creation algorithm.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            http://www.3dtv.at/Knowhow/AnaglyphComparison_en.aspx
+            </remarks>
+        </member>
+        <member name="F:UMapx.Imaging.AnaglyphMode.True">
+            <summary>
+            Create a stereo effect for a pair of images using the following calculations:
+            <list type="bullet">
+            <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
+            <item>G<sub>a</sub>=0;</item>
+            <item>B<sub>a</sub>=0.299*R<sub>r</sub>+0.587*G<sub>r</sub>+0.114*B<sub>r</sub>.</item>
+            </list>
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.AnaglyphMode.Gray">
+            <summary>
+            Create a stereo effect for a pair of images using the following calculations:
+            <list type="bullet">
+            <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
+            <item>G<sub>a</sub>=0.299*R<sub>r</sub>+0.587*G<sub>r</sub>+0.114*B<sub>r</sub>;</item>
+            <item>B<sub>a</sub>=0.299*R<sub>r</sub>+0.587*G<sub>r</sub>+0.114*B<sub>r</sub>.</item>
+            </list>
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.AnaglyphMode.Color">
+            <summary>
+            Create a stereo effect for a pair of images using the following calculations:
+            <list type="bullet">
+            <item>R<sub>a</sub>=R<sub>l</sub>;</item>
+            <item>G<sub>a</sub>=G<sub>r</sub>;</item>
+            <item>B<sub>a</sub>=B<sub>r</sub>.</item>
+            </list>
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.AnaglyphMode.HalfColor">
+            <summary>
+            Create a stereo effect for a pair of images using the following calculations:
+            <list type="bullet">
+            <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
+            <item>G<sub>a</sub>=G<sub>r</sub>;</item>
+            <item>B<sub>a</sub>=B<sub>r</sub>.</item>
+            </list>
+            </summary>
+        </member>
+        <member name="F:UMapx.Imaging.AnaglyphMode.Optimized">
+            <summary>
+            Create a stereo effect for a pair of images using the following calculations:
+            <list type="bullet">
+            <item>R<sub>a</sub>=0.7*G<sub>l</sub>+0.3*B<sub>l</sub>;</item>
+            <item>G<sub>a</sub>=G<sub>r</sub>;</item>
+            <item>B<sub>a</sub>=B<sub>r</sub>.</item>
+            </list>
+            </summary>
+        </member>
         <member name="T:UMapx.Imaging.BitmapFilter">
             <summary>
             Defines the bitmap filter.
@@ -22580,7 +22639,7 @@
             <summary>
             Defines the linear operation filter.
             <remarks>
-            This filter works UMapxing to the following algorithm: C (x, y) = a * A (x, y) + b * B (x, y), where A, B are the original images,
+            This filter works by applying the following algorithm: C (x, y) = a * A (x, y) + b * B (x, y), where A, B are the original images,
             a, b are the coefficients.
             </remarks>
             </summary>
@@ -24295,7 +24354,7 @@
             </remarks>
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.StereoAnaglyph.#ctor(UMapx.Imaging.StereoAnaglyph.Anaglyph)">
+        <member name="M:UMapx.Imaging.StereoAnaglyph.#ctor(UMapx.Imaging.AnaglyphMode)">
             <summary>
             Initializes the stereo effect filter for a pair of images.
             </summary>
@@ -24319,65 +24378,6 @@
             </summary>
             <param name="Data">Bitmap</param>
             <param name="Src">Bitmap</param>
-        </member>
-        <member name="T:UMapx.Imaging.StereoAnaglyph.Anaglyph">
-            <summary>
-            Defines the stereo effect creation algorithm.
-            </summary>
-            <remarks>
-            More information can be found on the website:
-            http://www.3dtv.at/Knowhow/AnaglyphComparison_en.aspx
-            </remarks>
-        </member>
-        <member name="F:UMapx.Imaging.StereoAnaglyph.Anaglyph.True">
-            <summary>
-            Creates a stereo effect for a pair of images UMapxing to the following calculations:
-            <list type="bullet">
-            <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
-            <item>G<sub>a</sub>=0;</item>
-            <item>B<sub>a</sub>=0.299*R<sub>r</sub>+0.587*G<sub>r</sub>+0.114*B<sub>r</sub>.</item>
-            </list>
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.StereoAnaglyph.Anaglyph.Gray">
-            <summary>
-            Creates a stereo effect for a pair of images UMapxing to the following calculations:
-            <list type="bullet">
-            <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
-            <item>G<sub>a</sub>=0.299*R<sub>r</sub>+0.587*G<sub>r</sub>+0.114*B<sub>r</sub>;</item>
-            <item>B<sub>a</sub>=0.299*R<sub>r</sub>+0.587*G<sub>r</sub>+0.114*B<sub>r</sub>.</item>
-            </list>
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.StereoAnaglyph.Anaglyph.Color">
-            <summary>
-            Creates a stereo effect for a pair of images UMapxing to the following calculations:
-            <list type="bullet">
-            <item>R<sub>a</sub>=R<sub>l</sub>;</item>
-            <item>G<sub>a</sub>=G<sub>r</sub>;</item>
-            <item>B<sub>a</sub>=B<sub>r</sub>.</item>
-            </list>
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.StereoAnaglyph.Anaglyph.HalfColor">
-            <summary>
-            Creates a stereo effect for a pair of images UMapxing to the following calculations:
-            <list type="bullet">
-            <item>R<sub>a</sub>=0.299*R<sub>l</sub>+0.587*G<sub>l</sub>+0.114*B<sub>l</sub>;</item>
-            <item>G<sub>a</sub>=G<sub>r</sub>;</item>
-            <item>B<sub>a</sub>=B<sub>r</sub>.</item>
-            </list>
-            </summary>
-        </member>
-        <member name="F:UMapx.Imaging.StereoAnaglyph.Anaglyph.Optimized">
-            <summary>
-            Creates a stereo effect for a pair of images UMapxing to the following calculations:
-            <list type="bullet">
-            <item>R<sub>a</sub>=0.7*G<sub>l</sub>+0.3*B<sub>l</sub>;</item>
-            <item>G<sub>a</sub>=G<sub>r</sub>;</item>
-            <item>B<sub>a</sub>=B<sub>r</sub>.</item>
-            </list>
-            </summary>
         </member>
         <member name="T:UMapx.Imaging.StereoDisparity">
             <summary>
