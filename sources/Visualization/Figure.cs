@@ -137,14 +137,25 @@ namespace UMapx.Visualization
 
         #region Figure methods
         /// <summary>
-        /// Draws figure to graphics object.
+        /// Draw figure to bitmap.
+        /// </summary>
+        /// <param name="bitmap">Bitmap</param>
+        public void To(Bitmap bitmap)
+        {
+            using var graphics = Graphics.FromImage(bitmap);
+            this.To(graphics);
+        }
+        /// <summary>
+        /// Draw figure to graphics object.
         /// </summary>
         /// <param name="graphics">Graphics</param>
-        public void Draw(Graphics graphics)
+        public void To(Graphics graphics)
         {
-            #region Figure data
-            // figure and canvas options
+            #region Figure
+
+            // figure and canvas sizes
             var size = graphics.VisibleClipBounds.Size;
+
             _figure_width  = (int)size.Width;
             _figure_height = (int)size.Height;
             _canvas_width  = (int)(_figure_width * _scaling);
@@ -170,9 +181,15 @@ namespace UMapx.Visualization
             int dy = _canvas_height / _yscale;
             int dw = (_figure_width - _canvas_width) / 2;
             int dh = (_figure_height - _canvas_height) / 2;
+
+            // points
+            float[] X = Points.GetPoints(_xmin, _xmax, _xscale);
+            float[] Y = Points.GetPoints(_ymin, _ymax, _yscale);
+
             #endregion
 
             #region Autorange
+
             //autorange or not?
             if (_imagePane is object)
             {
@@ -202,77 +219,23 @@ namespace UMapx.Visualization
             {
                 // user defined rangeX and rangeY
             }
+
             #endregion
 
-            #region Numeric marks
-            // points:
-            float[] X = Points.GetPoints(_xmin, _xmax, _xscale);
-            float[] Y = Points.GetPoints(_ymin, _ymax, _yscale);
+            #region Paint
 
-            using SolidBrush br = new SolidBrush(_style.ColorMarks);
-            using Pen pen1 = new Pen(_style.ColorGrid, _style.DepthShapes);
-            using Pen pen2 = new Pen(_style.ColorShapes, _style.DepthShapes);
-            int min = Math.Min(dx, dy), s = min / 8;
-            string numerics;
-            int xlength, ylength, i;
-            int xpoint, ypoint;
-            SizeF numsize;
+            Paint_Numerics(figure_graphics, X, Y, dw, dh);
 
-            xlength = X.Length;
-            float numX;
-
-            for (i = 0; i < xlength; i++)
+            if (Grid != null && Grid.Show)
             {
-                numX = X[i];
-                numerics = GetNumString(numX);
-                xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
-                figure_graphics.DrawString(numerics, _style.FontMarks, br, xpoint + dw - 5, _canvas_height + dh + 5);
+                Paint_Grid(canvas_graphics, X, Y);
             }
 
-            ylength = Y.Length;
-            float numY;
-
-            for (i = 0; i < ylength; i++)
-            {
-                numY = Y[i];
-                numerics = GetNumString(numY);
-                numsize = figure_graphics.MeasureString(numerics, _style.FontMarks);
-                ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
-                figure_graphics.DrawString(numerics, _style.FontMarks, br, dw - numsize.Width - 5, ypoint + dh - 10);
-            }
-            #endregion
-
-            #region Grid painting
-            if (Grid.Show)
-            {
-                xlength = X.Length;
-
-                for (i = 0; i < xlength; i++)
-                {
-                    numX = X[i];
-                    xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
-                    DrawGridVertical(canvas_graphics, xpoint, _canvas_height, pen1);
-                }
-
-                ylength = Y.Length;
-
-                for (i = 0; i < ylength; i++)
-                {
-                    numY = Y[i];
-                    ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
-                    DrawGridHorizontal(canvas_graphics, ypoint, _canvas_width, pen1);
-                }
-            }
-            #endregion
-
-            #region Title and labels
             Paint_Title(figure_graphics, Title, _figure_width, _figure_height, dw, dh);
             Paint_LabelX(figure_graphics, LabelX, _figure_width, _figure_height, dw, dh);
             Paint_LabelY(figure_graphics, LabelY, _figure_width, _figure_height, dw, dh);
-            #endregion
 
-            #region Graph painting
-            if (_imagePane is object)
+            if (_imagePane != null)
             {
                 // 2D plotting
                 var rectangle = new Rectangle(0, 0, _canvas_width, _canvas_height);
@@ -366,45 +329,20 @@ namespace UMapx.Visualization
                     }
                 }
             }
-            #endregion
 
-            #region Shapes
-            if (Grid.Shapes)
+            if (Grid != null && Grid.Shapes)
             {
-                xlength = X.Length;
-
-                for (i = 0; i < xlength; i++)
-                {
-                    numX = X[i];
-                    xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
-                    canvas_graphics.DrawLine(pen2, xpoint, _canvas_height, xpoint, _canvas_height - s);
-                    canvas_graphics.DrawLine(pen2, xpoint, 0, xpoint, s);
-                }
-
-                ylength = Y.Length;
-
-                for (i = 0; i < ylength; i++)
-                {
-                    numY = Y[i];
-                    ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
-                    canvas_graphics.DrawLine(pen2, 0, ypoint, s, ypoint);
-                    canvas_graphics.DrawLine(pen2, _canvas_width, ypoint, _canvas_width - s, ypoint);
-                }
+                Paint_Shapes(canvas_graphics, X, Y, dx, dy);
             }
 
-            canvas_graphics.DrawRectangle(pen2, 0, 0, _canvas_width - 1, _canvas_height - 1);
-            #endregion
-
-            #region Legend
             if (Legend != null && Legend.Show)
             {
                 Paint_Legend(canvas_graphics);
             }
-            #endregion
 
-            #region Merging
             graphics.DrawImage(figure, new Point(0, 0));
             graphics.DrawImage(canvas, new Point(dw, dh));
+
             #endregion
         }
         /// <summary>
@@ -416,10 +354,10 @@ namespace UMapx.Visualization
             _imagePane = bitmap;
         }
         /// <summary>
-        /// Adds the plot series to the figure.
+        /// Add the plot series to the figure.
         /// </summary>
         /// <param name="plotSeries">Plot series</param>
-        public void Graph(PlotSeries plotSeries)
+        public void Plot(PlotSeries plotSeries)
         {
             if (plotSeries.X.Length != plotSeries.Y.Length)
                 throw new ArgumentException("Vectors must be of the same length");
@@ -427,7 +365,7 @@ namespace UMapx.Visualization
             _plotSeries.Add(plotSeries);
         }
         /// <summary>
-        /// Removes all plot series from the figure. 
+        /// Remove all plot series from the figure. 
         /// </summary>
         public void Clear()
         {
@@ -439,86 +377,6 @@ namespace UMapx.Visualization
         #endregion
 
         #region Private voids
-
-        #region Grid voids
-        /// <summary>
-        /// Draws a vertical grid line at the specified x pixel using the configured grid style.
-        /// </summary>
-        /// <remarks>
-        /// - Uses <see cref="Grid.Style"/> to choose between solid, dashed (custom pattern), or dotted lines.<br/>
-        /// - Clones <paramref name="basePen"/> when style customization is required to avoid mutating the caller's pen.
-        /// </remarks>
-        /// <param name="g">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X pixel coordinate where the grid line is drawn</param>
-        /// <param name="height">Total canvas height in pixels</param>
-        /// <param name="basePen">Base pen (color/width) to use; will be cloned for style-specific tweaks</param>
-        private void DrawGridVertical(Graphics g, int x, int height, Pen basePen)
-        {
-            switch (Grid.Style)
-            {
-                case GridStyle.Solid:
-                    g.DrawLine(basePen, x, 0, x, height);
-                    break;
-
-                case GridStyle.Dashed:
-                    using (var pen = (Pen)basePen.Clone())
-                    {
-                        pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Custom;
-                        pen.DashPattern = new float[] { Math.Max(1f, Grid.DashLength), Math.Max(1f, Grid.GapLength) };
-                        g.DrawLine(pen, x, 0, x, height);
-                    }
-                    break;
-
-                case GridStyle.Dot:
-                    using (var pen = (Pen)basePen.Clone())
-                    {
-                        pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-                        pen.DashCap = System.Drawing.Drawing2D.DashCap.Round;
-                        g.DrawLine(pen, x, 0, x, height);
-                    }
-                    break;
-            }
-        }
-        /// <summary>
-        /// Draws a horizontal grid line at the specified y pixel using the configured grid style.
-        /// </summary>
-        /// <remarks>
-        /// - Uses <see cref="Grid.Style"/> to choose between solid, dashed (custom pattern), or dotted lines.<br/>
-        /// - Clones <paramref name="basePen"/> when style customization is required to avoid mutating the caller's pen.
-        /// </remarks>
-        /// <param name="g">Target <see cref="Graphics"/> surface</param>
-        /// <param name="y">Y pixel coordinate where the grid line is drawn</param>
-        /// <param name="width">Total canvas width in pixels</param>
-        /// <param name="basePen">Base pen (color/width) to use; will be cloned for style-specific tweaks</param>
-        private void DrawGridHorizontal(Graphics g, int y, int width, Pen basePen)
-        {
-            switch (Grid.Style)
-            {
-                case GridStyle.Solid:
-                    g.DrawLine(basePen, 0, y, width, y);
-                    break;
-
-                case GridStyle.Dashed:
-                    using (var pen = (Pen)basePen.Clone())
-                    {
-                        pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Custom;
-                        pen.DashPattern = new float[] { Math.Max(1f, Grid.DashLength), Math.Max(1f, Grid.GapLength) };
-                        g.DrawLine(pen, 0, y, width, y);
-                    }
-                    break;
-
-                case GridStyle.Dot:
-                    using (var pen = (Pen)basePen.Clone())
-                    {
-                        pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-                        pen.DashCap = System.Drawing.Drawing2D.DashCap.Round;
-                        g.DrawLine(pen, 0, y, width, y);
-                    }
-                    break;
-            }
-        }
-
-        #endregion
 
         #region Legend voids
         /// <summary>
@@ -902,6 +760,138 @@ namespace UMapx.Visualization
         #endregion
 
         #region Painter voids
+        /// <summary>
+        /// Renders numeric tick labels for the provided X and Y tick arrays.
+        /// </summary>
+        /// <remarks>
+        /// - Converts world coordinates to device pixels via <c>Points.X2Point</c>/<c>Points.Y2Point</c> and draws
+        ///   formatted numbers produced by <see cref="GetNumString(float)"/>.
+        /// - X labels are drawn below the plot area using the horizontal offset <paramref name="dw"/> and vertical
+        ///   offset <paramref name="dh"/>; Y labels are drawn to the left of the plot area, right-aligned to avoid overlap.
+        /// - Singular values (NaN/Inf) are converted to empty strings by <c>GetNumString</c>.
+        /// </remarks>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
+        /// <param name="X">X-axis tick positions in world coordinates</param>
+        /// <param name="Y">Y-axis tick positions in world coordinates</param>
+        /// <param name="dw">Left/right drawable-area offset (margin/padding) in pixels</param>
+        /// <param name="dh">Top/bottom drawable-area offset (margin/padding) in pixels</param>
+        private void Paint_Numerics(Graphics graphics, float[] X, float[] Y, int dw, int dh)
+        {
+            using SolidBrush br = new SolidBrush(_style.ColorMarks);
+            string numerics;
+            int xlength, ylength, i;
+            int xpoint, ypoint;
+            SizeF numsize;
+
+            xlength = X.Length;
+            float numX;
+
+            for (i = 0; i < xlength; i++)
+            {
+                numX = X[i];
+                numerics = GetNumString(numX);
+                xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
+                graphics.DrawString(numerics, _style.FontMarks, br, xpoint + dw - 5, _canvas_height + dh + 5);
+            }
+
+            ylength = Y.Length;
+            float numY;
+
+            for (i = 0; i < ylength; i++)
+            {
+                numY = Y[i];
+                numerics = GetNumString(numY);
+                numsize = graphics.MeasureString(numerics, _style.FontMarks);
+                ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
+                graphics.DrawString(numerics, _style.FontMarks, br, dw - numsize.Width - 5, ypoint + dh - 10);
+            }
+        }
+        /// <summary>
+        /// Draws axis tick marks and an outer border rectangle around the plot area.
+        /// </summary>
+        /// <remarks>
+        /// - For each X tick, draws two short vertical ticks: one at the bottom edge and one at the top edge of the plot area.
+        /// - For each Y tick, draws two short horizontal ticks: one at the left edge and one at the right edge of the plot area.
+        /// - The tick length is derived from the minimum of <paramref name="dx"/> and <paramref name="dy"/> (1/8 of that value).<br/>
+        /// - Finally, draws a 1-pixel border rectangle enclosing the drawable plot area.
+        /// </remarks>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
+        /// <param name="X">X-axis tick positions in world coordinates</param>
+        /// <param name="Y">Y-axis tick positions in world coordinates</param>
+        /// <param name="dx">Horizontal padding/margin in pixels affecting tick sizing</param>
+        /// <param name="dy">Vertical padding/margin in pixels affecting tick sizing</param>
+        private void Paint_Shapes(Graphics graphics, float[] X, float[] Y, int dx, int dy)
+        {
+            using var pen = new Pen(_style.ColorShapes, _style.DepthShapes);
+            int min = Math.Min(dx, dy), s = min / 8;
+            var xlength = X.Length;
+
+            for (var i = 0; i < xlength; i++)
+            {
+                var numX = X[i];
+                var xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
+                graphics.DrawLine(pen, xpoint, _canvas_height, xpoint, _canvas_height - s);
+                graphics.DrawLine(pen, xpoint, 0, xpoint, s);
+            }
+
+            var ylength = Y.Length;
+
+            for (var i = 0; i < ylength; i++)
+            {
+                var numY = Y[i];
+                var ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
+                graphics.DrawLine(pen, 0, ypoint, s, ypoint);
+                graphics.DrawLine(pen, _canvas_width, ypoint, _canvas_width - s, ypoint);
+            }
+
+            graphics.DrawRectangle(pen, 0, 0, _canvas_width - 1, _canvas_height - 1);
+        }
+        /// <summary>
+        /// Draws the background grid lines for the given X and Y tick arrays using the configured grid style.
+        /// </summary>
+        /// <remarks>
+        /// - Returns immediately if either tick array is empty.<br/>
+        /// - Applies <see cref="Grid.Style"/>: solid, dashed with custom dash/gap lengths, or dotted with rounded caps.<br/>
+        /// - For each X tick draws a full-height vertical grid line; for each Y tick draws a full-width horizontal line.
+        /// </remarks>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
+        /// <param name="X">X-axis tick positions in world coordinates</param>
+        /// <param name="Y">Y-axis tick positions in world coordinates</param>
+        private void Paint_Grid(Graphics graphics, float[] X, float[] Y)
+        {
+            if (X.Length == 0) return; if (Y.Length == 0) return;
+
+            using var pen = new Pen(_style.ColorGrid, _style.DepthShapes);
+
+            if (Grid.Style == GridStyle.Dashed)
+            {
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Custom;
+                pen.DashPattern = new float[] { Math.Max(1f, Grid.DashLength), Math.Max(1f, Grid.GapLength) };
+            }
+            else if (Grid.Style == GridStyle.Dot)
+            {
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+                pen.DashCap = System.Drawing.Drawing2D.DashCap.Round;
+            }
+
+            var xlength = X.Length;
+
+            for (var i = 0; i < xlength; i++)
+            {
+                var numX = X[i];
+                var xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
+                graphics.DrawLine(pen, xpoint, 0, xpoint, _canvas_height);
+            }
+
+            var ylength = Y.Length;
+
+            for (var i = 0; i < ylength; i++)
+            {
+                var numY = Y[i];
+                var ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
+                graphics.DrawLine(pen, 0, ypoint, _canvas_width, ypoint);
+            }
+        }
         /// <summary>
         /// Paints the plot legend box with marker samples and labels for each pane/series.
         /// </summary>

@@ -30317,9 +30317,15 @@
             Gets or sets property of auto range axes.
             </summary>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Draw(System.Drawing.Graphics)">
+        <member name="M:UMapx.Visualization.Figure.To(System.Drawing.Bitmap)">
             <summary>
-            Draws figure to graphics object.
+            Draw figure to bitmap.
+            </summary>
+            <param name="bitmap">Bitmap</param>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.To(System.Drawing.Graphics)">
+            <summary>
+            Draw figure to graphics object.
             </summary>
             <param name="graphics">Graphics</param>
         </member>
@@ -30329,42 +30335,16 @@
             </summary>
             <param name="bitmap">Bitmap</param>
         </member>
-        <member name="M:UMapx.Visualization.Figure.Graph(UMapx.Visualization.PlotSeries)">
+        <member name="M:UMapx.Visualization.Figure.Plot(UMapx.Visualization.PlotSeries)">
             <summary>
-            Adds the plot series to the figure.
+            Add the plot series to the figure.
             </summary>
             <param name="plotSeries">Plot series</param>
         </member>
         <member name="M:UMapx.Visualization.Figure.Clear">
             <summary>
-            Removes all plot series from the figure. 
+            Remove all plot series from the figure. 
             </summary>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.DrawGridVertical(System.Drawing.Graphics,System.Int32,System.Int32,System.Drawing.Pen)">
-            <summary>
-            Draws a vertical grid line at the specified x pixel using the configured grid style.
-            </summary>
-            <remarks>
-            - Uses <see cref="P:UMapx.Visualization.Grid.Style"/> to choose between solid, dashed (custom pattern), or dotted lines.<br/>
-            - Clones <paramref name="basePen"/> when style customization is required to avoid mutating the caller's pen.
-            </remarks>
-            <param name="g">Target <see cref="T:System.Drawing.Graphics"/> surface</param>
-            <param name="x">X pixel coordinate where the grid line is drawn</param>
-            <param name="height">Total canvas height in pixels</param>
-            <param name="basePen">Base pen (color/width) to use; will be cloned for style-specific tweaks</param>
-        </member>
-        <member name="M:UMapx.Visualization.Figure.DrawGridHorizontal(System.Drawing.Graphics,System.Int32,System.Int32,System.Drawing.Pen)">
-            <summary>
-            Draws a horizontal grid line at the specified y pixel using the configured grid style.
-            </summary>
-            <remarks>
-            - Uses <see cref="P:UMapx.Visualization.Grid.Style"/> to choose between solid, dashed (custom pattern), or dotted lines.<br/>
-            - Clones <paramref name="basePen"/> when style customization is required to avoid mutating the caller's pen.
-            </remarks>
-            <param name="g">Target <see cref="T:System.Drawing.Graphics"/> surface</param>
-            <param name="y">Y pixel coordinate where the grid line is drawn</param>
-            <param name="width">Total canvas width in pixels</param>
-            <param name="basePen">Base pen (color/width) to use; will be cloned for style-specific tweaks</param>
         </member>
         <member name="M:UMapx.Visualization.Figure.DrawLegendMarker(System.Drawing.Graphics,System.Int32,System.Int32,System.Int32,System.Drawing.Color,UMapx.Visualization.ShapeType,System.Single)">
             <summary>
@@ -30529,6 +30509,52 @@
             <param name="color">Marker color</param>
             <param name="radius">Marker side length in pixels</param>
             <param name="fill">Whether to fill the markers</param>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.Paint_Numerics(System.Drawing.Graphics,System.Single[],System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Renders numeric tick labels for the provided X and Y tick arrays.
+            </summary>
+            <remarks>
+            - Converts world coordinates to device pixels via <c>Points.X2Point</c>/<c>Points.Y2Point</c> and draws
+              formatted numbers produced by <see cref="M:UMapx.Visualization.Figure.GetNumString(System.Single)"/>.
+            - X labels are drawn below the plot area using the horizontal offset <paramref name="dw"/> and vertical
+              offset <paramref name="dh"/>; Y labels are drawn to the left of the plot area, right-aligned to avoid overlap.
+            - Singular values (NaN/Inf) are converted to empty strings by <c>GetNumString</c>.
+            </remarks>
+            <param name="graphics">Target <see cref="T:System.Drawing.Graphics"/> surface</param>
+            <param name="X">X-axis tick positions in world coordinates</param>
+            <param name="Y">Y-axis tick positions in world coordinates</param>
+            <param name="dw">Left/right drawable-area offset (margin/padding) in pixels</param>
+            <param name="dh">Top/bottom drawable-area offset (margin/padding) in pixels</param>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.Paint_Shapes(System.Drawing.Graphics,System.Single[],System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Draws axis tick marks and an outer border rectangle around the plot area.
+            </summary>
+            <remarks>
+            - For each X tick, draws two short vertical ticks: one at the bottom edge and one at the top edge of the plot area.
+            - For each Y tick, draws two short horizontal ticks: one at the left edge and one at the right edge of the plot area.
+            - The tick length is derived from the minimum of <paramref name="dx"/> and <paramref name="dy"/> (1/8 of that value).<br/>
+            - Finally, draws a 1-pixel border rectangle enclosing the drawable plot area.
+            </remarks>
+            <param name="graphics">Target <see cref="T:System.Drawing.Graphics"/> surface</param>
+            <param name="X">X-axis tick positions in world coordinates</param>
+            <param name="Y">Y-axis tick positions in world coordinates</param>
+            <param name="dx">Horizontal padding/margin in pixels affecting tick sizing</param>
+            <param name="dy">Vertical padding/margin in pixels affecting tick sizing</param>
+        </member>
+        <member name="M:UMapx.Visualization.Figure.Paint_Grid(System.Drawing.Graphics,System.Single[],System.Single[])">
+            <summary>
+            Draws the background grid lines for the given X and Y tick arrays using the configured grid style.
+            </summary>
+            <remarks>
+            - Returns immediately if either tick array is empty.<br/>
+            - Applies <see cref="P:UMapx.Visualization.Grid.Style"/>: solid, dashed with custom dash/gap lengths, or dotted with rounded caps.<br/>
+            - For each X tick draws a full-height vertical grid line; for each Y tick draws a full-width horizontal line.
+            </remarks>
+            <param name="graphics">Target <see cref="T:System.Drawing.Graphics"/> surface</param>
+            <param name="X">X-axis tick positions in world coordinates</param>
+            <param name="Y">Y-axis tick positions in world coordinates</param>
         </member>
         <member name="M:UMapx.Visualization.Figure.Paint_Legend(System.Drawing.Graphics)">
             <summary>
