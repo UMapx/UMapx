@@ -31,8 +31,8 @@ namespace UMapx.Wavelet
         public ComplexF Wavelet(float x)
         {
             float x2 = x * x;
-            float cf = 2.0f / MathF.Sqrt(5) * (float)Math.Pow(Math.PI, -0.25);
-            return cf * (1 - x2 + MathF.I * x) * MathF.Exp(-0.5 * x2);
+            float cf = 2.0f / MathsF.Sqrt(5) * (float)Math.Pow(Math.PI, -0.25);
+            return cf * (1 - x2 + MathsF.I * x) * MathsF.Exp(-0.5 * x2);
         }
         #endregion
     }

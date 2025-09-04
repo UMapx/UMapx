@@ -60,7 +60,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.s = MathF.Float(value);
+                this.s = MathsF.Float(value);
             }
         }
         /// <summary>
@@ -93,9 +93,9 @@ namespace UMapx.Imaging
                     rgb = AddColor(nYUV, iYUV).ToRGB;
                     nR = rgb.Red; nG = rgb.Green; nB = rgb.Blue;
 
-                    p[k + 2] = MathF.Byte(nR * s + iR * z);
-                    p[k + 1] = MathF.Byte(nG * s + iG * z);
-                    p[k] = MathF.Byte(nB * s + iB * z);
+                    p[k + 2] = MathsF.Byte(nR * s + iR * z);
+                    p[k + 1] = MathsF.Byte(nG * s + iG * z);
+                    p[k] = MathsF.Byte(nB * s + iB * z);
                 }
             });
         }

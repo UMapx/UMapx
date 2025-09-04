@@ -132,7 +132,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            return 1.0f / (MathF.Pi * g * (1.0f + MathF.Pow((x - x0) / g)));
+            return 1.0f / (MathsF.Pi * g * (1.0f + MathsF.Pow((x - x0) / g)));
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -141,7 +141,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            return 1.0f / MathF.Pi * MathF.Atan((x - x0) / g) + 0.5f;
+            return 1.0f / MathsF.Pi * MathsF.Atan((x - x0) / g) + 0.5f;
         }
         /// <summary>
         /// Returns the value of differential entropy.
@@ -151,7 +151,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return MathF.Log(4 * MathF.Pi * g);
+                return MathsF.Log(4 * MathsF.Pi * g);
             }
         }
         #endregion

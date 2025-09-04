@@ -35,7 +35,7 @@ namespace UMapx.Window
             }
             set
             {
-                this.a = MathF.Float(value);
+                this.a = MathsF.Float(value);
             }
         }
         /// <summary>

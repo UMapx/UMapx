@@ -27,7 +27,7 @@ namespace UMapx.Window
         public override float Function(float x, int frameSize)
         {
             // Lanczos function:
-            return Special.Sinc(2 * x / (frameSize - 1) - 1, MathF.Pi);
+            return Special.Sinc(2 * x / (frameSize - 1) - 1, MathsF.Pi);
         }
         /// <summary>
         /// Returns the window function.

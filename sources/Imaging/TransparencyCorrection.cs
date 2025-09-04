@@ -74,7 +74,7 @@ namespace UMapx.Imaging
             {
                 for (x = 0; x < width; x++, p += 4)
                 {
-                    p[3] = MathF.Byte(values[p[3]] * length);
+                    p[3] = MathsF.Byte(values[p[3]] * length);
                 }
             }
         }

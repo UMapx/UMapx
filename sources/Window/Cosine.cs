@@ -26,7 +26,7 @@ namespace UMapx.Window
         /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
-            return (float)Math.Cos(MathF.Pi * x / (frameSize - 1));
+            return (float)Math.Cos(MathsF.Pi * x / (frameSize - 1));
         }
         /// <summary>
         /// Returns the window function.
@@ -50,7 +50,7 @@ namespace UMapx.Window
         /// <returns>Factor</returns>
         internal static float Cosinefunc(float x, int frameSize)
         {
-            return (float)Math.Cos(MathF.Pi * x / (frameSize - 1));
+            return (float)Math.Cos(MathsF.Pi * x / (frameSize - 1));
         }
         #endregion
     }

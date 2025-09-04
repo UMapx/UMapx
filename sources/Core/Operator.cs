@@ -295,7 +295,7 @@ namespace UMapx.Core
             int size = radius;
             int radius2 = size / 2;
             float[,] m = new float[size, size];
-            double theta = angle * MathF.Pi / 180.0;
+            double theta = angle * MathsF.Pi / 180.0;
             double cos = Math.Cos(theta);
             double sin = Math.Sin(theta);
 

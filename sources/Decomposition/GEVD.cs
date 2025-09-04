@@ -59,7 +59,7 @@ namespace UMapx.Decomposition
             // reduces the Hessenberg matrix A to quasi-triangular form
             // using orthogonal transformations while maintaining the
             // triangular form of the B matrix.
-            qzit(n, A, B, MathF.Float(eps), matz, Z, ref ierr);
+            qzit(n, A, B, MathsF.Float(eps), matz, Z, ref ierr);
 
             // reduces the quasi-triangular matrix further, so that any
             // remaining 2-by-2 blocks correspond to pairs of complex

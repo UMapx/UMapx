@@ -76,7 +76,7 @@ namespace UMapx.Decomposition
                 // -------- Left Householder (zero below diagonal in column k) --------
                 float norm = 0f;
                 for (int i = k; i < m; i++)
-                    norm = MathF.Hypotenuse(norm, b[i][k]);
+                    norm = MathsF.Hypotenuse(norm, b[i][k]);
 
                 if (norm != 0f)
                 {
@@ -128,7 +128,7 @@ namespace UMapx.Decomposition
                     // -------- Right Householder (zero beyond superdiagonal in row k) --------
                     norm = 0f;
                     for (int j = k + 1; j < n; j++)
-                        norm = MathF.Hypotenuse(norm, b[k][j]);
+                        norm = MathsF.Hypotenuse(norm, b[k][j]);
 
                     if (norm != 0f)
                     {

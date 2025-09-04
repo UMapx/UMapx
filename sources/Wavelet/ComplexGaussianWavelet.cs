@@ -56,44 +56,44 @@ namespace UMapx.Wavelet
         public ComplexF Wavelet(float x)
         {
             float x2 = x * x;
-            ComplexF f0 = MathF.Exp(-x2);
-            ComplexF f1 = MathF.Exp(-MathF.I * x);
-            ComplexF f2 = (f1 * f0) / Math.Pow(Math.Exp(-1 / 2) * Math.Pow(2, 0.5) * Math.Pow(MathF.Pi, 0.5), 0.5);
+            ComplexF f0 = MathsF.Exp(-x2);
+            ComplexF f1 = MathsF.Exp(-MathsF.I * x);
+            ComplexF f2 = (f1 * f0) / Math.Pow(Math.Exp(-1 / 2) * Math.Pow(2, 0.5) * Math.Pow(MathsF.Pi, 0.5), 0.5);
             ComplexF psi = 0;
 
             // Gaussian wavelet ('):
             switch (derivative)
             {
                 case 1:
-                    psi = f2 * (-MathF.I - 2 * x) * Math.Pow(2, 0.5);
+                    psi = f2 * (-MathsF.I - 2 * x) * Math.Pow(2, 0.5);
                     break;
 
                 case 2:
-                    psi = 1.0 / 3 * f2 * (-3 + 4 * MathF.I * x + 4 * x2) * Math.Pow(6, 0.5);
+                    psi = 1.0 / 3 * f2 * (-3 + 4 * MathsF.I * x + 4 * x2) * Math.Pow(6, 0.5);
                     break;
 
                 case 3:
-                    psi = 1.0 / 15 * f2 * (7 * MathF.I + 18 * x - 12 * MathF.I * x * x - 8 * Math.Pow(x, 3)) * Math.Pow(30, 0.5);
+                    psi = 1.0 / 15 * f2 * (7 * MathsF.I + 18 * x - 12 * MathsF.I * x * x - 8 * Math.Pow(x, 3)) * Math.Pow(30, 0.5);
                     break;
 
                 case 4:
-                    psi = 1.0 / 105 * f2 * (25 - 56 * MathF.I * x - 72 * x * x + 32 * MathF.I * Math.Pow(x, 3) + 16 * Math.Pow(x, 4)) * Math.Pow(210, 0.5);
+                    psi = 1.0 / 105 * f2 * (25 - 56 * MathsF.I * x - 72 * x * x + 32 * MathsF.I * Math.Pow(x, 3) + 16 * Math.Pow(x, 4)) * Math.Pow(210, 0.5);
                     break;
 
                 case 5:
-                    psi = 1.0 / 315 * f2 * (-81 * MathF.I - 250 * x + 280 * MathF.I * x * x + 240 * MathF.Pow(x, 3) - 80 * MathF.I * Math.Pow(x, 4) - 32 * Math.Pow(x, 5)) * Math.Pow(210, 0.5);
+                    psi = 1.0 / 315 * f2 * (-81 * MathsF.I - 250 * x + 280 * MathsF.I * x * x + 240 * MathsF.Pow(x, 3) - 80 * MathsF.I * Math.Pow(x, 4) - 32 * Math.Pow(x, 5)) * Math.Pow(210, 0.5);
                     break;
 
                 case 6:
-                    psi = 1.0 / 3465 * f2 * (-331 + 972 * MathF.I * x + 1500 * x * x - 1120 * MathF.I * Math.Pow(x, 3) - 720 * Math.Pow(x, 4) + 192 * MathF.I * Math.Pow(x, 5) + 64 * Math.Pow(x, 6)) * Math.Pow(2310, 0.5);
+                    psi = 1.0 / 3465 * f2 * (-331 + 972 * MathsF.I * x + 1500 * x * x - 1120 * MathsF.I * Math.Pow(x, 3) - 720 * Math.Pow(x, 4) + 192 * MathsF.I * Math.Pow(x, 5) + 64 * Math.Pow(x, 6)) * Math.Pow(2310, 0.5);
                     break;
 
                 case 7:
-                    psi = 1.0 / 45045 * f2 * (1303 * MathF.I + 4634 * x - 6804 * MathF.I * x * x - 7000 * Math.Pow(x, 3) + 3920 * MathF.I * Math.Pow(x, 4) + 2016 * Math.Pow(x, 5) - 448 * MathF.I * Math.Pow(x, 6) - 128 * Math.Pow(x, 7)) * MathF.Pow(30030, 0.5);
+                    psi = 1.0 / 45045 * f2 * (1303 * MathsF.I + 4634 * x - 6804 * MathsF.I * x * x - 7000 * Math.Pow(x, 3) + 3920 * MathsF.I * Math.Pow(x, 4) + 2016 * Math.Pow(x, 5) - 448 * MathsF.I * Math.Pow(x, 6) - 128 * Math.Pow(x, 7)) * MathsF.Pow(30030, 0.5);
                     break;
 
                 case 8:
-                    psi = 1.0 / 45045 * f2 * (5937 - 20848 * MathF.I * x - 37072 * x * x + 36288 * MathF.I * Math.Pow(x, 3) + 28000 * Math.Pow(x, 4) - 12544 * MathF.I * Math.Pow(x, 5) - 5376 * Math.Pow(x, 6) + 1024 * MathF.I * Math.Pow(x, 7) + 256 * Math.Pow(x, 8)) * Math.Pow(20021, 0.5);
+                    psi = 1.0 / 45045 * f2 * (5937 - 20848 * MathsF.I * x - 37072 * x * x + 36288 * MathsF.I * Math.Pow(x, 3) + 28000 * Math.Pow(x, 4) - 12544 * MathsF.I * Math.Pow(x, 5) - 5376 * Math.Pow(x, 6) + 1024 * MathsF.I * Math.Pow(x, 7) + 256 * Math.Pow(x, 8)) * Math.Pow(20021, 0.5);
                     break;
             }
 

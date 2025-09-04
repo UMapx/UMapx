@@ -78,7 +78,7 @@ namespace UMapx.Imaging
                 for (y = 0; y < height; y++)
                 {
 
-                    matrix[x, y].X = MathF.Mod(x + value, width);
+                    matrix[x, y].X = MathsF.Mod(x + value, width);
                     matrix[x, y].Y = y;
                 }
             }
@@ -105,7 +105,7 @@ namespace UMapx.Imaging
                 {
 
                     matrix[x, y].X = x;
-                    matrix[x, y].Y = MathF.Mod(y + value, height);
+                    matrix[x, y].Y = MathsF.Mod(y + value, height);
                 }
             }
             );
@@ -234,21 +234,21 @@ namespace UMapx.Imaging
         public static PointInt[,] Water(int width, int height, int value)
         {
             PointInt[,] water = new PointInt[width, height];
-            float pix = 2.0f * MathF.Pi / 127.5f;
+            float pix = 2.0f * MathsF.Pi / 127.5f;
 
             Parallel.For(0, width, x =>
             {
                 int y;
                 float x0, y0;
 
-                y0 = value * MathF.Cos(pix * x);
+                y0 = value * MathsF.Cos(pix * x);
 
                 for (y = 0; y < height; y++)
                 {
-                    x0 = value * MathF.Sin(pix * y);
+                    x0 = value * MathsF.Sin(pix * y);
 
-                    water[x, y].X = (int)MathF.Mod(x + x0, width);
-                    water[x, y].Y = (int)MathF.Mod(y + y0, height);
+                    water[x, y].X = (int)MathsF.Mod(x + x0, width);
+                    water[x, y].Y = (int)MathsF.Mod(y + y0, height);
                 }
             }
             );

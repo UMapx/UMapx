@@ -68,7 +68,7 @@ namespace UMapx.Wavelet
         /// <returns>Function</returns>
         public ComplexF Wavelet(float x)
         {
-            return Math.Pow(MathF.Pi * fb, -0.5) * MathF.Exp(2 * MathF.Pi * MathF.I * fc * x) * Math.Exp(-(x * x) / fb);
+            return Math.Pow(MathsF.Pi * fb, -0.5) * MathsF.Exp(2 * MathsF.Pi * MathsF.I * fc * x) * Math.Exp(-(x * x) / fb);
         }
         #endregion
     }

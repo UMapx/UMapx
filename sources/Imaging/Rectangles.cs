@@ -383,10 +383,10 @@ namespace UMapx.Imaging
         {
             return new Rectangle
             {
-                X = MathF.Range(first.X, second.X, second.Width),
-                Y = MathF.Range(first.Y, second.Y, second.Height),
-                Width = MathF.Range(first.Width, second.X, second.Width),
-                Height = MathF.Range(first.Height, second.Y, second.Height)
+                X = MathsF.Range(first.X, second.X, second.Width),
+                Y = MathsF.Range(first.Y, second.Y, second.Height),
+                Width = MathsF.Range(first.Width, second.X, second.Width),
+                Height = MathsF.Range(first.Height, second.Y, second.Height)
             };
         }
 

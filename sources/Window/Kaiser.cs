@@ -50,7 +50,7 @@ namespace UMapx.Window
             float u = 2 * x / (frameSize - 1);
             float r = 1 - u * u;
             float v = r >= 0 ? (float)Math.Sqrt(1 - u * u) : 0;
-            float z = MathF.Pi * this.a;
+            float z = MathsF.Pi * this.a;
             float q = Special.I(z * v, 0);
             return q / Special.I(z, 0);
         }

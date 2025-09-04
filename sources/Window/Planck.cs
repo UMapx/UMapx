@@ -35,7 +35,7 @@ namespace UMapx.Window
             }
             set
             {
-                this.a = MathF.Range(value, 0, 0.5f);
+                this.a = MathsF.Range(value, 0, 0.5f);
             }
         }
         /// <summary>

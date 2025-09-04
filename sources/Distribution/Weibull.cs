@@ -60,7 +60,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                this.k = MathF.Max(0.0000001f, value);
+                this.k = MathsF.Max(0.0000001f, value);
             }
         }
         /// <summary>
@@ -100,7 +100,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return l * MathF.Pow(k - 1, 1.0f / k) / MathF.Pow(k, 1.0f / k);
+                return l * MathsF.Pow(k - 1, 1.0f / k) / MathsF.Pow(k, 1.0f / k);
             }
         }
         /// <summary>
@@ -110,7 +110,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return l * MathF.Pow(MathF.Log(2), 1.0f / k);
+                return l * MathsF.Pow(MathsF.Log(2), 1.0f / k);
             }
         }
         /// <summary>
@@ -120,7 +120,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (Special.Gamma(1.0f + 3.0f / k) * MathF.Pow(l, 3) - 3 * Mean * Special.Gamma(1 + 2.0f / k) * MathF.Pow(l, 2) + 2 * MathF.Pow(Mean, 3)) / (Variance * MathF.Sqrt(Variance));
+                return (Special.Gamma(1.0f + 3.0f / k) * MathsF.Pow(l, 3) - 3 * Mean * Special.Gamma(1 + 2.0f / k) * MathsF.Pow(l, 2) + 2 * MathsF.Pow(Mean, 3)) / (Variance * MathsF.Sqrt(Variance));
             }
         }
         /// <summary>
@@ -130,7 +130,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (Special.Gamma(1.0f + 4.0f / k) * MathF.Pow(l, 4) - 4 * Mean * Special.Gamma(1 + 3.0f / k) * MathF.Pow(l, 3) + 6 * MathF.Pow(Mean, 2) * MathF.Pow(l, 2) * Special.Gamma(1.0f + 2.0f / k) - 3 * MathF.Pow(Mean, 4)) / (Variance * Variance);
+                return (Special.Gamma(1.0f + 4.0f / k) * MathsF.Pow(l, 4) - 4 * Mean * Special.Gamma(1 + 3.0f / k) * MathsF.Pow(l, 3) + 6 * MathsF.Pow(Mean, 2) * MathsF.Pow(l, 2) * Special.Gamma(1.0f + 2.0f / k) - 3 * MathsF.Pow(Mean, 4)) / (Variance * Variance);
             }
         }
         /// <summary>
@@ -144,7 +144,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return (k / l) * MathF.Pow(x / l, k - 1) * MathF.Exp(-MathF.Pow(x / l, k));
+            return (k / l) * MathsF.Pow(x / l, k - 1) * MathsF.Exp(-MathsF.Pow(x / l, k));
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -157,7 +157,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return 1 - MathF.Exp(-MathF.Pow(x / l, k));
+            return 1 - MathsF.Exp(-MathsF.Pow(x / l, k));
         }
         /// <summary>
         /// Returns the value of differential entropy.
@@ -167,7 +167,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return MathF.Gamma * (1.0f - 1.0f / k) + MathF.Pow(l / k, k) + MathF.Log(l / k);
+                return MathsF.Gamma * (1.0f - 1.0f / k) + MathsF.Pow(l / k, k) + MathsF.Log(l / k);
             }
         }
         #endregion

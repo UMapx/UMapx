@@ -117,7 +117,7 @@ namespace UMapx.Transform
         private static float BesselZeroJ(int a, int k)
         {
             float nu = a;
-            float x = (k + 0.5f * nu - 0.25f) * MathF.Pi;
+            float x = (k + 0.5f * nu - 0.25f) * MathsF.Pi;
             float eps = 1e-16f;
             int iterations = 120;
 

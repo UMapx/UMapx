@@ -74,7 +74,7 @@ namespace UMapx.Transform
         public float[] Forward(float[] A)
         {
             int N = A.Length;
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[] B = (float[])A.Clone();
@@ -82,7 +82,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                B = MatrixF.Div(B, MathF.Sqrt(N));
+                B = MatrixF.Div(B, MathsF.Sqrt(N));
             }
 
             return B;
@@ -95,7 +95,7 @@ namespace UMapx.Transform
         public float[] Backward(float[] B)
         {
             int N = B.Length;
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[] A = (float[])B.Clone();
@@ -103,7 +103,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                A = MatrixF.Div(A, MathF.Sqrt(N));
+                A = MatrixF.Div(A, MathsF.Sqrt(N));
             }
 
             return A;
@@ -161,7 +161,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = MatrixF.Div(B, MathF.Sqrt(N * M));
+                    B = MatrixF.Div(B, MathsF.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
@@ -187,7 +187,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = MatrixF.Div(B, MathF.Sqrt(N));
+                    B = MatrixF.Div(B, MathsF.Sqrt(N));
                 }
             }
             else
@@ -212,7 +212,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = MatrixF.Div(B, MathF.Sqrt(M));
+                    B = MatrixF.Div(B, MathsF.Sqrt(M));
                 }
             }
 
@@ -268,7 +268,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = MatrixF.Div(A, MathF.Sqrt(N * M));
+                    A = MatrixF.Div(A, MathsF.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
@@ -292,7 +292,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = MatrixF.Div(A, MathF.Sqrt(N));
+                    A = MatrixF.Div(A, MathsF.Sqrt(N));
                 }
             }
             else
@@ -316,7 +316,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = MatrixF.Div(A, MathF.Sqrt(M));
+                    A = MatrixF.Div(A, MathsF.Sqrt(M));
                 }
             }
 
@@ -330,7 +330,7 @@ namespace UMapx.Transform
         public ComplexF[] Forward(ComplexF[] A)
         {
             int N = A.Length;
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             ComplexF[] B = (ComplexF[])A.Clone();
@@ -351,7 +351,7 @@ namespace UMapx.Transform
         public ComplexF[] Backward(ComplexF[] B)
         {
             int N = B.Length;
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             ComplexF[] A = (ComplexF[])B.Clone();
@@ -589,10 +589,10 @@ namespace UMapx.Transform
         {
             int N = data.Length;
 
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            int log2N = (int)MathF.Log2(N);
+            int log2N = (int)MathsF.Log2(N);
             float x_even, x_odd;
 
             int k0 = N, k1 = 1, k2 = N / 2;
@@ -627,10 +627,10 @@ namespace UMapx.Transform
         {
             int N = data.Length;
 
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            int log2N = (int)MathF.Log2(N);
+            int log2N = (int)MathsF.Log2(N);
             ComplexF x_even, x_odd;
 
             int k0 = N, k1 = 1, k2 = N / 2;

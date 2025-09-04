@@ -149,12 +149,12 @@ namespace UMapx.Imaging
 
                     for (int j = -halfH; j <= halfH; j++)
                     {
-                        int yy = MathF.Range(y + j, 0, height - 1);
+                        int yy = MathsF.Range(y + j, 0, height - 1);
                         byte* pRow = src + yy * stride;
 
                         for (int i = -halfW; i <= halfW; i++)
                         {
-                            int xx = MathF.Range(x + i, 0, width - 1);
+                            int xx = MathsF.Range(x + i, 0, width - 1);
                             byte* p = pRow + xx * 4;
 
                             double b = p[0];
@@ -187,9 +187,9 @@ namespace UMapx.Imaging
                     double gainG = (varG > 0.0) ? Math.Max(0.0, varG - nv) / varG : 0.0;
                     double gainB = (varB > 0.0) ? Math.Max(0.0, varB - nv) / varB : 0.0;
 
-                    pDst[2] = MathF.Byte((float)(meanR + gainR * (r0 - meanR)));
-                    pDst[1] = MathF.Byte((float)(meanG + gainG * (g0 - meanG)));
-                    pDst[0] = MathF.Byte((float)(meanB + gainB * (b0 - meanB)));
+                    pDst[2] = MathsF.Byte((float)(meanR + gainR * (r0 - meanR)));
+                    pDst[1] = MathsF.Byte((float)(meanG + gainG * (g0 - meanG)));
+                    pDst[0] = MathsF.Byte((float)(meanB + gainB * (b0 - meanB)));
                     pDst[3] = pSrc[3];
                 }
             });

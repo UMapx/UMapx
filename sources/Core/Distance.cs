@@ -67,10 +67,10 @@ namespace UMapx.Core
 
             for (int k = 0; k < n; k++)
             {
-                sum += MathF.Pow(p[k] - q[k], 2);
+                sum += MathsF.Pow(p[k] - q[k], 2);
             }
 
-            return MathF.Sqrt(sum);
+            return MathsF.Sqrt(sum);
         }
         /// <summary>
         /// Returns distance value. 
@@ -160,12 +160,12 @@ namespace UMapx.Core
         public static ComplexF Chebyshev(this ComplexF[] p, ComplexF[] q)
         {
             int n = p.Length;
-            float max = MathF.Abs(p[0] - q[0]);
+            float max = MathsF.Abs(p[0] - q[0]);
             float tmp;
 
             for (int k = 1; k < n; k++)
             {
-                tmp = MathF.Abs(p[k] - q[k]);
+                tmp = MathsF.Abs(p[k] - q[k]);
                 max = tmp > max ? tmp : max;
             }
 
@@ -261,7 +261,7 @@ namespace UMapx.Core
 
             for (int k = 0; k < n; k++)
             {
-                sum += MathF.Abs(p[k] - q[k]);
+                sum += MathsF.Abs(p[k] - q[k]);
             }
 
             return sum;
@@ -370,10 +370,10 @@ namespace UMapx.Core
                 y += q[i] * q[i];
             }
 
-            ComplexF den = MathF.Sqrt(x) * MathF.Sqrt(y);
+            ComplexF den = MathsF.Sqrt(x) * MathsF.Sqrt(y);
             ComplexF similarity = s == 0 ? 1.0f : 1.0f - (s / den);
 
-            return MathF.Acos(similarity);
+            return MathsF.Acos(similarity);
         }
         /// <summary>
         /// Returns distance value. 
@@ -468,8 +468,8 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                y += MathF.Abs(p[i] - q[i]);
-                x += MathF.Abs(p[i] + q[i]);
+                y += MathsF.Abs(p[i] - q[i]);
+                x += MathsF.Abs(p[i] + q[i]);
             }
 
             return y / x;
@@ -563,7 +563,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                sum += MathF.Abs(p[i] - q[i]) / (MathF.Abs(p[i]) + MathF.Abs(q[i]));
+                sum += MathsF.Abs(p[i] - q[i]) / (MathsF.Abs(p[i]) + MathsF.Abs(q[i]));
             }
             return sum;
         }
@@ -717,7 +717,7 @@ namespace UMapx.Core
                 sum += (float)Math.Pow(Math.Sqrt(p[i]) - Math.Sqrt(q[i]), 2);
             }
 
-            return sum / MathF.Sqrt2;
+            return sum / MathsF.Sqrt2;
         }
         /// <summary>
         /// Returns distance value. 
@@ -760,10 +760,10 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                sum += MathF.Pow(MathF.Sqrt(p[i]) - MathF.Sqrt(q[i]), 2);
+                sum += MathsF.Pow(MathsF.Sqrt(p[i]) - MathsF.Sqrt(q[i]), 2);
             }
 
-            return sum / MathF.Sqrt2;
+            return sum / MathsF.Sqrt2;
         }
         /// <summary>
         /// Returns distance value. 
@@ -1071,9 +1071,9 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                sum += MathF.Pow(MathF.Abs(p[i] - q[i]), order);
+                sum += MathsF.Pow(MathsF.Abs(p[i] - q[i]), order);
             }
-            return MathF.Pow(sum, 1 / order);
+            return MathsF.Pow(sum, 1 / order);
         }
         /// <summary>
         /// Returns distance value. 

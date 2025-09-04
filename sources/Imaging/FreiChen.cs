@@ -94,15 +94,15 @@ namespace UMapx.Imaging
                     switch (mode)
                     {
                         case FreiChenMode.Gradient:
-                            v = MathF.Sqrt(g[0] * g[0] + g[1] * g[1]);
+                            v = MathsF.Sqrt(g[0] * g[0] + g[1] * g[1]);
                             break;
 
                         case FreiChenMode.Edge:
-                            v = MathF.Sqrt(g[0] * g[0] + g[1] * g[1] + g[2] * g[2] + g[3] * g[3]);
+                            v = MathsF.Sqrt(g[0] * g[0] + g[1] * g[1] + g[2] * g[2] + g[3] * g[3]);
                             break;
 
                         case FreiChenMode.Line:
-                            v = MathF.Sqrt(g[4] * g[4] + g[5] * g[5] + g[6] * g[6] + g[7] * g[7]);
+                            v = MathsF.Sqrt(g[4] * g[4] + g[5] * g[5] + g[6] * g[6] + g[7] * g[7]);
                             break;
 
                         default: // FreiChenComponent.Average
@@ -111,7 +111,7 @@ namespace UMapx.Imaging
                             break;
                     }
 
-                    byte val = MathF.Byte(v);
+                    byte val = MathsF.Byte(v);
                     int pos = ys + (x * 4);
                     dst[pos + 0] = val; // B
                     dst[pos + 1] = val; // G
@@ -166,7 +166,7 @@ namespace UMapx.Imaging
         /// <returns>Jagged array</returns>
         private static float[][] CreateMasks()
         {
-            float s2 = MathF.Sqrt2;
+            float s2 = MathsF.Sqrt2;
             float a = 0.5f;
             float b = 1.0f / 6.0f;
             return new float[][]

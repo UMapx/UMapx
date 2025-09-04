@@ -70,10 +70,10 @@ namespace UMapx.Imaging
             byte* dst, src, p;
 
             // source pixel's coordinates from rectangle:
-            int startX = MathF.Range(rectangle.X, 0, width);
-            int startY = MathF.Range(rectangle.Y, 0, height);
-            int endX = MathF.Range(rectangle.Width - startX, 0, width);
-            int endY = MathF.Range(rectangle.Height - startY, 0, height);
+            int startX = MathsF.Range(rectangle.X, 0, width);
+            int startY = MathsF.Range(rectangle.Y, 0, height);
+            int endX = MathsF.Range(rectangle.Width - startX, 0, width);
+            int endY = MathsF.Range(rectangle.Height - startY, 0, height);
 
             // pixel offsets:
             int x, y, i;

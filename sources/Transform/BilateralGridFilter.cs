@@ -225,8 +225,8 @@ namespace UMapx.Transform
                 {
                     for (int xx = 0; xx <= 1; xx++)
                     {
-                        int zi = MathF.Range(z0 + zz, 0, gridZ - 1);
-                        int xi = MathF.Range(x0 + xx, 0, gridX - 1);
+                        int zi = MathsF.Range(z0 + zz, 0, gridZ - 1);
+                        int xi = MathsF.Range(x0 + xx, 0, gridX - 1);
 
                         float weight = (1 - Math.Abs(dz - zz)) * (1 - Math.Abs(dx - xx));
 
@@ -302,9 +302,9 @@ namespace UMapx.Transform
                         {
                             for (int xx = 0; xx <= 1; xx++)
                             {
-                                int zi = MathF.Range(z0 + zz, 0, gridZ - 1);
-                                int yi = MathF.Range(y0 + yy, 0, gridY - 1);
-                                int xi = MathF.Range(x0 + xx, 0, gridX - 1);
+                                int zi = MathsF.Range(z0 + zz, 0, gridZ - 1);
+                                int yi = MathsF.Range(y0 + yy, 0, gridY - 1);
+                                int xi = MathsF.Range(x0 + xx, 0, gridX - 1);
 
                                 float weight = (1 - Math.Abs(dz - zz)) *
                                                (1 - Math.Abs(dy - yy)) *
@@ -370,8 +370,8 @@ namespace UMapx.Transform
                 {
                     for (int xx = 0; xx <= 1; xx++)
                     {
-                        int zi = MathF.Range(z0 + zz, 0, gridZ - 1);
-                        int xi = MathF.Range(x0 + xx, 0, gridX - 1);
+                        int zi = MathsF.Range(z0 + zz, 0, gridZ - 1);
+                        int xi = MathsF.Range(x0 + xx, 0, gridX - 1);
 
                         float weight = (1 - Math.Abs(dz - zz)) * (1 - Math.Abs(dx - xx));
 
@@ -447,9 +447,9 @@ namespace UMapx.Transform
                         {
                             for (int xx = 0; xx <= 1; xx++)
                             {
-                                int zi = MathF.Range(z0 + zz, 0, gridZ - 1);
-                                int yi = MathF.Range(y0 + yy, 0, gridY - 1);
-                                int xi = MathF.Range(x0 + xx, 0, gridX - 1);
+                                int zi = MathsF.Range(z0 + zz, 0, gridZ - 1);
+                                int yi = MathsF.Range(y0 + yy, 0, gridY - 1);
+                                int xi = MathsF.Range(x0 + xx, 0, gridX - 1);
 
                                 float weight = (1 - Math.Abs(dz - zz)) *
                                                (1 - Math.Abs(dy - yy)) *
@@ -489,8 +489,8 @@ namespace UMapx.Transform
                     {
                         for (int dx = -radius; dx <= radius; dx++)
                         {
-                            int zi = MathF.Range(z + dz, 0, depth - 1);
-                            int xi = MathF.Range(x + dx, 0, width - 1);
+                            int zi = MathsF.Range(z + dz, 0, depth - 1);
+                            int xi = MathsF.Range(x + dx, 0, width - 1);
 
                             sum += temp[zi, xi];
                             count++;
@@ -529,9 +529,9 @@ namespace UMapx.Transform
                             {
                                 for (int dx = -radius; dx <= radius; dx++)
                                 {
-                                    int zi = MathF.Range(z + dz, 0, depth - 1);
-                                    int yi = MathF.Range(y + dy, 0, height - 1);
-                                    int xi = MathF.Range(x + dx, 0, width - 1);
+                                    int zi = MathsF.Range(z + dz, 0, depth - 1);
+                                    int yi = MathsF.Range(y + dy, 0, height - 1);
+                                    int xi = MathsF.Range(x + dx, 0, width - 1);
 
                                     sum += temp[zi, yi, xi];
                                     count++;
@@ -567,8 +567,8 @@ namespace UMapx.Transform
                     {
                         for (int dx = -radius; dx <= radius; dx++)
                         {
-                            int zi = MathF.Range(z + dz, 0, depth - 1);
-                            int xi = MathF.Range(x + dx, 0, width - 1);
+                            int zi = MathsF.Range(z + dz, 0, depth - 1);
+                            int xi = MathsF.Range(x + dx, 0, width - 1);
 
                             sum += temp[zi, xi];
                             count++;
@@ -607,9 +607,9 @@ namespace UMapx.Transform
                             {
                                 for (int dx = -radius; dx <= radius; dx++)
                                 {
-                                    int zi = MathF.Range(z + dz, 0, depth - 1);
-                                    int yi = MathF.Range(y + dy, 0, height - 1);
-                                    int xi = MathF.Range(x + dx, 0, width - 1);
+                                    int zi = MathsF.Range(z + dz, 0, depth - 1);
+                                    int yi = MathsF.Range(y + dy, 0, height - 1);
+                                    int xi = MathsF.Range(x + dx, 0, width - 1);
 
                                     sum += temp[zi, yi, xi];
                                     count++;

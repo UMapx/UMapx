@@ -137,15 +137,15 @@ namespace UMapx.Imaging
 
                     if (pSrc[k + 2] != 0)
                     {
-                        p[k + 2] = MathF.Byte(p[k + 2] * mR / pSrc[k + 2]);
+                        p[k + 2] = MathsF.Byte(p[k + 2] * mR / pSrc[k + 2]);
                     }
                     if (pSrc[k + 1] != 0)
                     {
-                        p[k + 1] = MathF.Byte(p[k + 1] * mR / pSrc[k + 1]);
+                        p[k + 1] = MathsF.Byte(p[k + 1] * mR / pSrc[k + 1]);
                     }
                     if (pSrc[k] != 0)
                     {
-                        p[k] = MathF.Byte(p[k] * mR / pSrc[k]);
+                        p[k] = MathsF.Byte(p[k] * mR / pSrc[k]);
                     }
                 }
             });

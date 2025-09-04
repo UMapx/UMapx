@@ -79,7 +79,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = MathF.Exp(-2 * MathF.Pi * MathF.I * i * j / n);
+                    H[i, j] = MathsF.Exp(-2 * MathsF.Pi * MathsF.I * i * j / n);
                 }
             }
             return H;

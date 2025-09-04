@@ -64,7 +64,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return MathF.Pow(l, -1);
+                return MathsF.Pow(l, -1);
             }
         }
         /// <summary>
@@ -74,7 +74,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return MathF.Pow(l, -2);
+                return MathsF.Pow(l, -2);
             }
         }
         /// <summary>
@@ -94,7 +94,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return MathF.Log(2) / l;
+                return MathsF.Log(2) / l;
             }
         }
         /// <summary>
@@ -128,7 +128,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return l * MathF.Exp(-l * x);
+            return l * MathsF.Exp(-l * x);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -141,7 +141,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return 1 - MathF.Exp(-l * x);
+            return 1 - MathsF.Exp(-l * x);
         }
         /// <summary>
         /// Returns the value of differential entropy.
@@ -151,7 +151,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 1 - MathF.Log(l);
+                return 1 - MathsF.Log(l);
             }
         }
         #endregion

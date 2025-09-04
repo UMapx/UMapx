@@ -55,9 +55,9 @@ namespace UMapx.Transform
         {
             int j, i;
             float[,] H = new float[n, n];
-            float c = MathF.Pi / (2.0f * n);
-            float g1 = MathF.Sqrt(1.0f / n);
-            float g2 = MathF.Sqrt(2.0f / n);
+            float c = MathsF.Pi / (2.0f * n);
+            float g1 = MathsF.Sqrt(1.0f / n);
+            float g2 = MathsF.Sqrt(2.0f / n);
 
             for (i = 0; i < n; i++)
             {

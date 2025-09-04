@@ -139,8 +139,8 @@ namespace UMapx.Distribution
 
             float r2 = r * r, x2 = x * x;
             float a = (float)Math.Sqrt(r2 - x2);
-            float b = x / (MathF.Pi * r2);
-            float c = (float)Math.Asin(x / r) / MathF.Pi;
+            float b = x / (MathsF.Pi * r2);
+            float c = (float)Math.Asin(x / r) / MathsF.Pi;
             return 0.5f + b * a + c;
         }
         /// <summary>
@@ -151,7 +151,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return MathF.Log(MathF.Pi * r) - 1.0f / 2;
+                return MathsF.Log(MathsF.Pi * r) - 1.0f / 2;
             }
         }
         #endregion

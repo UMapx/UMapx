@@ -64,7 +64,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return MathF.Sqrt(MathF.Pi / 2.0f) * sigma;
+                return MathsF.Sqrt(MathsF.Pi / 2.0f) * sigma;
             }
         }
         /// <summary>
@@ -74,7 +74,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (2.0f - MathF.Pi / 2.0f) * MathF.Pow(sigma);
+                return (2.0f - MathsF.Pi / 2.0f) * MathsF.Pow(sigma);
             }
         }
         /// <summary>
@@ -84,7 +84,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return sigma * MathF.Sqrt(MathF.Log(4));
+                return sigma * MathsF.Sqrt(MathsF.Log(4));
             }
         }
         /// <summary>
@@ -104,7 +104,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 2 * MathF.Sqrt(MathF.Pi) * (MathF.Pi - 3) / MathF.Pow(4 - MathF.Pi, 1.5f);
+                return 2 * MathsF.Sqrt(MathsF.Pi) * (MathsF.Pi - 3) / MathsF.Pow(4 - MathsF.Pi, 1.5f);
             }
         }
         /// <summary>
@@ -114,7 +114,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return -(6 * MathF.Pi - 24 * MathF.Pi + 16) / MathF.Pow(4 - MathF.Pi);
+                return -(6 * MathsF.Pi - 24 * MathsF.Pi + 16) / MathsF.Pow(4 - MathsF.Pi);
             }
         }
         /// <summary>
@@ -128,7 +128,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return x / sigma / sigma * MathF.Exp(-(x * x) / (2 * sigma * sigma));
+            return x / sigma / sigma * MathsF.Exp(-(x * x) / (2 * sigma * sigma));
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -141,7 +141,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return 1 - MathF.Exp(-(x * x) / (2 * sigma * sigma));
+            return 1 - MathsF.Exp(-(x * x) / (2 * sigma * sigma));
         }
         /// <summary>
         /// Returns the value of differential entropy.
@@ -151,7 +151,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 1 + MathF.Log(sigma / MathF.Log(2)) + MathF.Gamma / 2;
+                return 1 + MathsF.Log(sigma / MathsF.Log(2)) + MathsF.Gamma / 2;
             }
         }
         #endregion

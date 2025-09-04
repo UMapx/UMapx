@@ -42,7 +42,7 @@ namespace UMapx.Decomposition
             this.n = A.GetLength(0);
             this.Re = new float[n];
             this.Im = new float[n];
-            this.eps = MathF.Float(eps);
+            this.eps = MathsF.Float(eps);
 
             // for symmetric matrices eigen-value decomposition
             // without Hessenberg form.
@@ -302,7 +302,7 @@ namespace UMapx.Decomposition
                         // Compute implicit shift
                         g = Re[l];
                         p = (Re[l + 1] - g) / (2 * Im[l]);
-                        r = MathF.Hypotenuse(p, 1);
+                        r = MathsF.Hypotenuse(p, 1);
                         if (p < 0)
                         {
                             r = -r;
@@ -335,7 +335,7 @@ namespace UMapx.Decomposition
                             s2 = s;
                             g = c * Im[i];
                             h = c * p;
-                            r = MathF.Hypotenuse(p, Im[i]);
+                            r = MathsF.Hypotenuse(p, Im[i]);
                             Im[i + 1] = s * r;
                             s = Im[i] / r;
                             c = p / r;

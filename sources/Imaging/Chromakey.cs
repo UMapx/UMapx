@@ -49,7 +49,7 @@ namespace UMapx.Imaging
                         var luma = RGB.PAL(p[k + 2], p[k + 1], p[k]);
                         var diff = p[k + 2] - luma;
 
-                        p[k] = p[k + 1] = p[k + 2] = MathF.Byte(127.5f + diff);
+                        p[k] = p[k + 1] = p[k + 2] = MathsF.Byte(127.5f + diff);
                     }
                 });
             }
@@ -66,7 +66,7 @@ namespace UMapx.Imaging
                         var luma = RGB.PAL(p[k + 2], p[k + 1], p[k]);
                         var diff = p[k + 1] - luma;
 
-                        p[k] = p[k + 1] = p[k + 2] = MathF.Byte(127.5f + diff);
+                        p[k] = p[k + 1] = p[k + 2] = MathsF.Byte(127.5f + diff);
                     }
                 });
             }
@@ -83,7 +83,7 @@ namespace UMapx.Imaging
                         var luma = RGB.PAL(p[k + 2], p[k + 1], p[k]);
                         var diff = p[k] - luma;
 
-                        p[k] = p[k + 1] = p[k + 2] = MathF.Byte(127.5f + diff);
+                        p[k] = p[k + 1] = p[k + 2] = MathsF.Byte(127.5f + diff);
                     }
                 });
             }

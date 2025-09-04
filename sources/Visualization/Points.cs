@@ -101,7 +101,7 @@ namespace UMapx.Visualization
         /// </remarks>
         public static bool IsSingularPoint(float a)
         {
-            return MathF.IsSingular(a);
+            return MathsF.IsSingular(a);
         }
         /// <summary>
         /// Clips a value to a half-open range, returning a sentinel just outside if out of bounds.
@@ -145,7 +145,7 @@ namespace UMapx.Visualization
         /// </remarks>
         public static float? GetMin(this float[] v)
         {
-            var w = v.Where(x => !MathF.IsSingular(x)).ToArray();
+            var w = v.Where(x => !MathsF.IsSingular(x)).ToArray();
             if (w.Length > 0) return w.Min();
             return null;
         }
@@ -162,7 +162,7 @@ namespace UMapx.Visualization
         /// </remarks>
         public static float? GetMax(this float[] v)
         {
-            var w = v.Where(x => !MathF.IsSingular(x)).ToArray();
+            var w = v.Where(x => !MathsF.IsSingular(x)).ToArray();
             if (w.Length > 0) return w.Max();
             return null;
         }

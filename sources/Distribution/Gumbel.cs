@@ -76,7 +76,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return mu + beta * MathF.Gamma;
+                return mu + beta * MathsF.Gamma;
             }
         }
         /// <summary>
@@ -131,7 +131,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Entropy
         {
-            get { return (float)Math.Log(beta) + MathF.Gamma + 1; }
+            get { return (float)Math.Log(beta) + MathsF.Gamma + 1; }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.

@@ -156,9 +156,9 @@ namespace UMapx.Imaging
                     }
 
                     int q = y * stride + x * 4;
-                    dst[q + 2] = MathF.Byte((float)outR);
-                    dst[q + 1] = MathF.Byte((float)outG);
-                    dst[q] = MathF.Byte((float)outB);
+                    dst[q + 2] = MathsF.Byte((float)outR);
+                    dst[q + 1] = MathsF.Byte((float)outG);
+                    dst[q] = MathsF.Byte((float)outB);
                 }
             });
         }

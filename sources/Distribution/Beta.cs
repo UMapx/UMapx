@@ -87,7 +87,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (a * b) / MathF.Pow(a + b) / (a + b + 1);
+                return (a * b) / MathsF.Pow(a + b) / (a + b + 1);
             }
         }
         /// <summary>

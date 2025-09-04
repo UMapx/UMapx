@@ -78,7 +78,7 @@ namespace UMapx.Transform
             }
             set
             {
-                this.sigma = MathF.Float(value);
+                this.sigma = MathsF.Float(value);
             }
         }
         /// <summary>
@@ -221,7 +221,7 @@ namespace UMapx.Transform
                 {
                     for (x = 0; x < width; x++)
                     {
-                        I_temp[y, x] = T[MathF.Byte(input[y, x] * (length - 1))];
+                        I_temp[y, x] = T[MathsF.Byte(input[y, x] * (length - 1))];
                     }
                 }
 
@@ -241,7 +241,7 @@ namespace UMapx.Transform
                     {
                         for (x = 0; x < width; x++)
                         {
-                            I_outp[y, x] += T[MathF.Byte(I_gaus[y, x] * (length - 1))] * I_temp[y, x];
+                            I_outp[y, x] += T[MathsF.Byte(I_gaus[y, x] * (length - 1))] * I_temp[y, x];
                         }
                     }
 
@@ -305,7 +305,7 @@ namespace UMapx.Transform
                 // remapping function
                 for (y = 0; y < height; y++)
                 {
-                    I_temp[y] = T[MathF.Byte(input[y] * (length - 1))];
+                    I_temp[y] = T[MathsF.Byte(input[y] * (length - 1))];
                 }
 
                 temp_laplace_pyr = lpt.Forward(I_temp);
@@ -321,7 +321,7 @@ namespace UMapx.Transform
 
                     for (y = 0; y < height; y++)
                     {
-                        I_outp[y] += T[MathF.Byte(I_gaus[y] * (length - 1))] * I_temp[y];
+                        I_outp[y] += T[MathsF.Byte(I_gaus[y] * (length - 1))] * I_temp[y];
                     }
 
                     output_laplace_pyr[level] = I_outp;
@@ -379,7 +379,7 @@ namespace UMapx.Transform
         {
             float z = 2 * sigma * sigma;
             float y = x - i;
-            return factor * y * MathF.Exp(-y * y / z);
+            return factor * y * MathsF.Exp(-y * y / z);
         }
         /// <summary>
         /// Remapping function.

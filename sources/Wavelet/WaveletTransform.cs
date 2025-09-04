@@ -73,7 +73,7 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public float[] Backward(float[] B)
         {
-            int N = B.Length, L = Math.Min((int)MathF.Log2(N), waveletDecomposition.Levels);
+            int N = B.Length, L = Math.Min((int)MathsF.Log2(N), waveletDecomposition.Levels);
             int aLen = N >> L; int pos = 0;
             var coeffs = new float[L + 1][];
             coeffs[0] = new float[aLen];
@@ -135,7 +135,7 @@ namespace UMapx.Wavelet
         public float[,] Backward(float[,] B)
         {
             int R = B.GetLength(0), C = B.GetLength(1);
-            int L = Math.Min(Math.Min((int)MathF.Log2(R), (int)MathF.Log2(C)), waveletDecomposition.Levels);
+            int L = Math.Min(Math.Min((int)MathsF.Log2(R), (int)MathsF.Log2(C)), waveletDecomposition.Levels);
             var packs = new float[1 + 3 * L][,];
             int hL = R >> L, wL = C >> L; var LL = new float[hL, wL];
 
@@ -199,7 +199,7 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public ComplexF[] Backward(ComplexF[] B)
         {
-            int N = B.Length, L = Math.Min((int)MathF.Log2(N), waveletDecomposition.Levels);
+            int N = B.Length, L = Math.Min((int)MathsF.Log2(N), waveletDecomposition.Levels);
             int aLen = N >> L;
             int pos = 0;
             var coeffs = new ComplexF[L + 1][];
@@ -267,7 +267,7 @@ namespace UMapx.Wavelet
         public ComplexF[,] Backward(ComplexF[,] B)
         {
             int R = B.GetLength(0), C = B.GetLength(1);
-            int L = Math.Min(Math.Min((int)MathF.Log2(R), (int)MathF.Log2(C)), waveletDecomposition.Levels);
+            int L = Math.Min(Math.Min((int)MathsF.Log2(R), (int)MathsF.Log2(C)), waveletDecomposition.Levels);
             var packs = new ComplexF[1 + 3 * L][,];
             int hL = R >> L, wL = C >> L;
             var LL = new ComplexF[hL, wL];

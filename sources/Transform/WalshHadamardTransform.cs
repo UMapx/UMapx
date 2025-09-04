@@ -108,16 +108,16 @@ namespace UMapx.Transform
         {
             int N = A.Length;
 
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            int n = (int)MathF.Log2(N);
+            int n = (int)MathsF.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
             float[] B = MatrixF.Dot(A, U);
 
             if (normalized)
             {
-                B = MatrixF.Div(B, MathF.Sqrt(N));
+                B = MatrixF.Div(B, MathsF.Sqrt(N));
             }
 
             return B;
@@ -131,16 +131,16 @@ namespace UMapx.Transform
         {
             int N = B.Length;
 
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            int n = (int)MathF.Log2(N);
+            int n = (int)MathsF.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
             float[] A = MatrixF.Dot(B, U.Transponate());
 
             if (normalized)
             {
-                A = MatrixF.Div(A, MathF.Sqrt(N));
+                A = MatrixF.Div(A, MathsF.Sqrt(N));
             }
 
             return A;
@@ -154,27 +154,27 @@ namespace UMapx.Transform
         {
             int N = A.GetLength(0), M = A.GetLength(1);
 
-            if (!MathF.IsPower(N, 2) || !MathF.IsPower(M, 2))
+            if (!MathsF.IsPower(N, 2) || !MathsF.IsPower(M, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            float[,] U = WalshHadamardTransform.Matrix((int)MathF.Log2(N));
-            float[,] V = WalshHadamardTransform.Matrix((int)MathF.Log2(M));
+            float[,] U = WalshHadamardTransform.Matrix((int)MathsF.Log2(N));
+            float[,] V = WalshHadamardTransform.Matrix((int)MathsF.Log2(M));
             float[,] B;
 
             if (direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transponate());
-                B = normalized ? B.Div(MathF.Sqrt(N * M)) : B;
+                B = normalized ? B.Div(MathsF.Sqrt(N * M)) : B;
             }
             else if (direction == Direction.Vertical)
             {
                 B = U.Dot(A);
-                B = normalized ? B.Div(MathF.Sqrt(N)) : B;
+                B = normalized ? B.Div(MathsF.Sqrt(N)) : B;
             }
             else
             {
                 B = A.Dot(V.Transponate());
-                B = normalized ? B.Div(MathF.Sqrt(M)) : B;
+                B = normalized ? B.Div(MathsF.Sqrt(M)) : B;
             }
 
             return B;
@@ -188,27 +188,27 @@ namespace UMapx.Transform
         {
             int N = B.GetLength(0), M = B.GetLength(1);
 
-            if (!MathF.IsPower(N, 2) || !MathF.IsPower(M, 2))
+            if (!MathsF.IsPower(N, 2) || !MathsF.IsPower(M, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            float[,] U = WalshHadamardTransform.Matrix((int)MathF.Log2(N));
-            float[,] V = WalshHadamardTransform.Matrix((int)MathF.Log2(M));
+            float[,] U = WalshHadamardTransform.Matrix((int)MathsF.Log2(N));
+            float[,] V = WalshHadamardTransform.Matrix((int)MathsF.Log2(M));
             float[,] A;
 
             if (direction == Direction.Both)
             {
                 A = U.Transponate().Dot(B).Dot(V);
-                A = normalized ? A.Div(MathF.Sqrt(N * M)) : A;
+                A = normalized ? A.Div(MathsF.Sqrt(N * M)) : A;
             }
             else if (direction == Direction.Vertical)
             {
                 A = U.Transponate().Dot(B);
-                A = normalized ? A.Div(MathF.Sqrt(N)) : A;
+                A = normalized ? A.Div(MathsF.Sqrt(N)) : A;
             }
             else
             {
                 A = B.Dot(V);
-                A = normalized ? A.Div(MathF.Sqrt(M)) : A;
+                A = normalized ? A.Div(MathsF.Sqrt(M)) : A;
             }
 
             return A;
@@ -222,10 +222,10 @@ namespace UMapx.Transform
         {
             int N = A.Length;
 
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            int n = (int)MathF.Log2(N);
+            int n = (int)MathsF.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
             ComplexF[] B = MatrixF.Dot(A, U);
 
@@ -245,10 +245,10 @@ namespace UMapx.Transform
         {
             int N = B.Length;
 
-            if (!MathF.IsPower(N, 2))
+            if (!MathsF.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            int n = (int)MathF.Log2(N);
+            int n = (int)MathsF.Log2(N);
             float[,] U = WalshHadamardTransform.Matrix(n);
             ComplexF[] A = MatrixF.Dot(B, U.Transponate());
 
@@ -268,11 +268,11 @@ namespace UMapx.Transform
         {
             int N = A.GetLength(0), M = A.GetLength(1);
 
-            if (!MathF.IsPower(N, 2) || !MathF.IsPower(M, 2))
+            if (!MathsF.IsPower(N, 2) || !MathsF.IsPower(M, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            float[,] U = WalshHadamardTransform.Matrix((int)MathF.Log2(N));
-            float[,] V = WalshHadamardTransform.Matrix((int)MathF.Log2(M));
+            float[,] U = WalshHadamardTransform.Matrix((int)MathsF.Log2(N));
+            float[,] V = WalshHadamardTransform.Matrix((int)MathsF.Log2(M));
             ComplexF[,] B;
 
             if (direction == Direction.Both)
@@ -302,11 +302,11 @@ namespace UMapx.Transform
         {
             int N = B.GetLength(0), M = B.GetLength(1);
 
-            if (!MathF.IsPower(N, 2) || !MathF.IsPower(M, 2))
+            if (!MathsF.IsPower(N, 2) || !MathsF.IsPower(M, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            float[,] U = WalshHadamardTransform.Matrix((int)MathF.Log2(N));
-            float[,] V = WalshHadamardTransform.Matrix((int)MathF.Log2(M));
+            float[,] U = WalshHadamardTransform.Matrix((int)MathsF.Log2(N));
+            float[,] V = WalshHadamardTransform.Matrix((int)MathsF.Log2(M));
             ComplexF[,] A;
 
             if (direction == Direction.Both)

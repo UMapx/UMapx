@@ -50,7 +50,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.hue = MathF.Scale(value, 0, 360);
+                this.hue = MathsF.Scale(value, 0, 360);
             }
         }
         /// <summary>
@@ -101,7 +101,7 @@ namespace UMapx.Imaging
 
                     hsb = HSB.FromRGB(p[k + 2], p[k + 1], p[k + 0]);
 
-                    hsb.Hue = MathF.Scale(hsb.Hue + hue, 0, 360);
+                    hsb.Hue = MathsF.Scale(hsb.Hue + hue, 0, 360);
                     hsb.Saturation += saturation;
                     hsb.Brightness += brightness;
                     rgb = hsb.ToRGB;

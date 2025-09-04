@@ -87,7 +87,7 @@ namespace UMapx.Wavelet
         public ComplexF Wavelet(float x)
         {
             float d = x - x0;
-            return Math.Exp(-d * d / a2) * MathF.Exp(-MathF.I * k0 * d);
+            return Math.Exp(-d * d / a2) * MathsF.Exp(-MathsF.I * k0 * d);
         }
         /// <summary>
         /// Returns the value of the wavelet function.

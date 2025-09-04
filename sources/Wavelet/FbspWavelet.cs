@@ -91,7 +91,7 @@ namespace UMapx.Wavelet
             float b = x / (float)Math.Pow(fb, m);
             float c = Special.Sinc(b, 1);
             float d = (float)Math.Pow(c, m);
-            ComplexF e = MathF.Exp(MathF.I * 2 * MathF.Pi * fc * x);
+            ComplexF e = MathsF.Exp(MathsF.I * 2 * MathsF.Pi * fc * x);
             return a * d * e;
         }
         #endregion

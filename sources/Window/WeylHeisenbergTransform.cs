@@ -100,7 +100,7 @@ namespace UMapx.Window
                 throw new ArgumentException("Number of frequency shifts not defined correctly");
 
             ComplexF[,] G = new ComplexF[N, 2 * N];
-            ComplexF c = 2 * MathF.Pi * MathF.I;
+            ComplexF c = 2 * MathsF.Pi * MathsF.I;
             float a = M / 2.0f;
 
             Parallel.For(0, N, n =>
@@ -111,19 +111,19 @@ namespace UMapx.Window
 
                 for (k = 0; k < M; k++)
                 {
-                    exp = MathF.Exp(c * k / M * phase);
+                    exp = MathsF.Exp(c * k / M * phase);
 
                     for (l = 0; l < L; l++)
                     {
                         u = l * M + k;
-                        i = MathF.Mod(n - l * M, N);
-                        j = MathF.Mod(n + M / 2 - l * M, N);
+                        i = MathsF.Mod(n - l * M, N);
+                        j = MathsF.Mod(n + M / 2 - l * M, N);
 
                         // implements the [N, 2N] WH matrix
                         // https://github.com/asiryan/Weyl-Heisenberg-Toolbox/blob/master/matlab/toolbox_scripts/weylhzf.m
 
                         G[n, u + 0] =           g0[i] * exp;
-                        G[n, u + N] = MathF.I * g0[j] * exp;
+                        G[n, u + N] = MathsF.I * g0[j] * exp;
                     }
                 }
             });

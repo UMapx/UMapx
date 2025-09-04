@@ -86,10 +86,10 @@ namespace UMapx.Imaging
             int srcStride = bmSrc.Stride, dstStride = bmData.Stride;
 
             // source pixel's coordinates from rectangle:
-            int startX = (int)MathF.Max(point.X, 0);
-            int startY = (int)MathF.Max(point.Y, 0);
-            int endX = (int)MathF.Min(bmSrc.Width, bmData.Width - startX);
-            int endY = (int)MathF.Min(bmSrc.Height, bmData.Height - startY);
+            int startX = (int)MathsF.Max(point.X, 0);
+            int startY = (int)MathsF.Max(point.Y, 0);
+            int endX = (int)MathsF.Min(bmSrc.Width, bmData.Width - startX);
+            int endY = (int)MathsF.Min(bmSrc.Height, bmData.Height - startY);
 
             // do the job:
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
@@ -150,7 +150,7 @@ namespace UMapx.Imaging
         /// <returns></returns>
         internal static byte merge(byte x, byte y, int a0, int a1)
         {
-            return MathF.Byte((x * a0 + y * a1) / 255);
+            return MathsF.Byte((x * a0 + y * a1) / 255);
         }
 
         #endregion

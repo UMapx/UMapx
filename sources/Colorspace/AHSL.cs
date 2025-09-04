@@ -160,8 +160,8 @@ namespace UMapx.Colorspace
         {
             float s = 0, l = 0, h = 0;
 
-            float max = MathF.Max(red, green, blue);
-            float min = MathF.Min(red, green, blue);
+            float max = MathsF.Max(red, green, blue);
+            float min = MathsF.Min(red, green, blue);
 
             if (max == min)
             {

@@ -60,7 +60,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.sigma = MathF.Float(value);
+                this.sigma = MathsF.Float(value);
             }
         }
         /// <summary>

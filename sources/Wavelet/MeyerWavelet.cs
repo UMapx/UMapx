@@ -25,10 +25,10 @@ namespace UMapx.Wavelet
             // the explicit expressions of Meyer wavelet and scale functions:
             if (x == 0)
             {
-                return 2.0f / 3 + 4.0f / (3 * MathF.Pi);
+                return 2.0f / 3 + 4.0f / (3 * MathsF.Pi);
             }
-            float phiupper = (float)Math.Sin(2.0 * MathF.Pi / 3 * x) + 4.0f / 3 * x * (float)Math.Cos(4 * MathF.Pi / 3 * x);
-            float phidown = MathF.Pi * x - 16 * MathF.Pi / 9 * (float)Math.Pow(x, 3);
+            float phiupper = (float)Math.Sin(2.0 * MathsF.Pi / 3 * x) + 4.0f / 3 * x * (float)Math.Cos(4 * MathsF.Pi / 3 * x);
+            float phidown = MathsF.Pi * x - 16 * MathsF.Pi / 9 * (float)Math.Pow(x, 3);
             return phiupper / phidown;
         }
         /// <summary>
@@ -44,10 +44,10 @@ namespace UMapx.Wavelet
             // Kernel value:
             float t = x - 0.5f;
             // Finding ψ1(t):
-            float psi1upper = 4.0f / (3 * MathF.Pi) * t * (float)Math.Cos(2 * MathF.Pi / 3 * t) - 1.0f / MathF.Pi * (float)Math.Sin(4 * MathF.Pi / 3 * t);
+            float psi1upper = 4.0f / (3 * MathsF.Pi) * t * (float)Math.Cos(2 * MathsF.Pi / 3 * t) - 1.0f / MathsF.Pi * (float)Math.Sin(4 * MathsF.Pi / 3 * t);
             float psi1down = t - 16.0f / 9 * (float)Math.Pow(t, 3);
             // Finding ψ2(t):
-            float psi2upper = 8.0f / (3 * MathF.Pi) * t * (float)Math.Cos(8 * MathF.Pi / 3 * t) + 1.0f / MathF.Pi * (float)Math.Sin(4 * MathF.Pi / 3 * t);
+            float psi2upper = 8.0f / (3 * MathsF.Pi) * t * (float)Math.Cos(8 * MathsF.Pi / 3 * t) + 1.0f / MathsF.Pi * (float)Math.Sin(4 * MathsF.Pi / 3 * t);
             float psi2down = t - 64.0f / 9 * (float)Math.Pow(t, 3);
             // Finding ψ(t) = ψ1(t) + ψ2(t):
             return psi1upper / psi1down + psi2upper / psi2down;

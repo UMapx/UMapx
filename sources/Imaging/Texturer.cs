@@ -49,7 +49,7 @@ namespace UMapx.Imaging
         public float Depth
         {
             get { return this.depth; }
-            set { this.depth = MathF.Float(value); }
+            set { this.depth = MathsF.Float(value); }
         }
         /// <summary>
         /// Apply filter.
@@ -77,9 +77,9 @@ namespace UMapx.Imaging
                     red = p[k + 2]; green = p[k + 1]; blue = p[k];
                     t = texture[y, x];
 
-                    p[k + 2] = MathF.Byte((z * red) + (this.depth * red) * t);
-                    p[k + 1] = MathF.Byte((z * green) + (this.depth * green) * t);
-                    p[k] = MathF.Byte((z * blue) + (this.depth * blue) * t);
+                    p[k + 2] = MathsF.Byte((z * red) + (this.depth * red) * t);
+                    p[k + 1] = MathsF.Byte((z * green) + (this.depth * green) * t);
+                    p[k] = MathsF.Byte((z * blue) + (this.depth * blue) * t);
                 }
             });
         }

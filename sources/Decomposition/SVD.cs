@@ -149,7 +149,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][i];
-                        g = -MathF.Sign((float)Math.Sqrt(e), f);
+                        g = -MathsF.Sign((float)Math.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][i] = f - g;
 
@@ -197,7 +197,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][l];
-                        g = -MathF.Sign((float)Math.Sqrt(e), f);
+                        g = -MathsF.Sign((float)Math.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][l] = f - g;
 
@@ -349,7 +349,7 @@ namespace UMapx.Decomposition
                             if (Math.Abs(f) + anorm != anorm)
                             {
                                 g = Sr[i];
-                                h = MathF.Hypotenuse(f, g);
+                                h = MathsF.Hypotenuse(f, g);
                                 Sr[i] = h;
                                 h = 1.0f / h;
                                 c = g * h;
@@ -397,8 +397,8 @@ namespace UMapx.Decomposition
                     g = rv1[nm];
                     h = rv1[k];
                     f = ((y - z) * (y + z) + (g - h) * (g + h)) / (2.0f * h * y);
-                    g = MathF.Hypotenuse(f, 1.0f);
-                    f = ((x - z) * (x + z) + h * ((y / (f + MathF.Sign(g, f))) - h)) / x;
+                    g = MathsF.Hypotenuse(f, 1.0f);
+                    f = ((x - z) * (x + z) + h * ((y / (f + MathsF.Sign(g, f))) - h)) / x;
 
                     // next QR transformation
                     c = e = 1.0f;
@@ -410,7 +410,7 @@ namespace UMapx.Decomposition
                         y = Sr[i];
                         h = e * g;
                         g = c * g;
-                        z = MathF.Hypotenuse(f, h);
+                        z = MathsF.Hypotenuse(f, h);
                         rv1[j] = z;
                         c = f / z;
                         e = h / z;
@@ -427,7 +427,7 @@ namespace UMapx.Decomposition
                             Vr[jj][i] = z * c - x * e;
                         }
 
-                        z = MathF.Hypotenuse(f, h);
+                        z = MathsF.Hypotenuse(f, h);
                         Sr[j] = z;
 
                         if (z != 0)

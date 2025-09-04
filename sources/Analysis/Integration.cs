@@ -712,7 +712,7 @@ namespace UMapx.Analysis
                 for (int j = 1; j <= k; j++, factor *= 4f)
                     R[k, j] = (factor * R[k, j - 1] - R[k - 1, j - 1]) / (factor - 1f);
 
-                if (MathF.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * MathF.Abs(R[k, k]))
+                if (MathsF.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * MathsF.Abs(R[k, k]))
                     return R[k, k];
             }
             return R[maxK - 1, maxK - 1];
@@ -761,7 +761,7 @@ namespace UMapx.Analysis
                 for (int j = 1; j <= k; j++, factor *= 4.0)
                     R[k, j] = (factor * R[k, j - 1] - R[k - 1, j - 1]) / (factor - 1.0);
 
-                if (k > 0 && MathF.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * MathF.Abs(R[k, k]))
+                if (k > 0 && MathsF.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * MathsF.Abs(R[k, k]))
                     return R[k, k];
             }
 

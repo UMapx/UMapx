@@ -101,9 +101,9 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         // transform
-                        _ix0[z] = MathF.Byte(255 * bmData[2][j, i]);
-                        _ix1[z] = MathF.Byte(255 * bmData[1][j, i]);
-                        _ix2[z] = MathF.Byte(255 * bmData[0][j, i]);
+                        _ix0[z] = MathsF.Byte(255 * bmData[2][j, i]);
+                        _ix1[z] = MathsF.Byte(255 * bmData[1][j, i]);
+                        _ix2[z] = MathsF.Byte(255 * bmData[0][j, i]);
                     }
                 }
             }
@@ -114,9 +114,9 @@ namespace UMapx.Imaging
                     for (int i = 0; i < width; i++, z++)
                     {
                         // transform
-                        _ix0[z] = MathF.Byte(255 * bmData[0][j, i]);
-                        _ix1[z] = MathF.Byte(255 * bmData[1][j, i]);
-                        _ix2[z] = MathF.Byte(255 * bmData[2][j, i]);
+                        _ix0[z] = MathsF.Byte(255 * bmData[0][j, i]);
+                        _ix1[z] = MathsF.Byte(255 * bmData[1][j, i]);
+                        _ix2[z] = MathsF.Byte(255 * bmData[2][j, i]);
                     }
                 }
             }

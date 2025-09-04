@@ -231,7 +231,7 @@ namespace UMapx.Analysis
 
             for (int i = 0; i < length; i++)
             {
-                sum += MathF.Pow(v[i], pow);
+                sum += MathsF.Pow(v[i], pow);
             }
             return sum;
         }
@@ -250,7 +250,7 @@ namespace UMapx.Analysis
 
             for (int i = 0; i < length; i++)
             {
-                sum += MathF.Pow(x[i], powx) * MathF.Pow(y[i], powy);
+                sum += MathsF.Pow(x[i], powx) * MathsF.Pow(y[i], powy);
             }
             return sum;
         }

@@ -87,14 +87,14 @@ namespace UMapx.Core
                 {
                     {
 
-                        val = (ComplexF)MathF.Abs(*(mtx_ii_j = element));
+                        val = (ComplexF)MathsF.Abs(*(mtx_ii_j = element));
                         for (mtx_u_ii = element + n; mtx_u_ii < mtx_end; mtx_u_ii += n)
                         {
-                            if (val.Abs < (MathF.Abs(*mtx_u_ii)))
-                                val = (ComplexF)MathF.Abs(*(mtx_ii_j = mtx_u_ii));
+                            if (val.Abs < (MathsF.Abs(*mtx_u_ii)))
+                                val = (ComplexF)MathsF.Abs(*(mtx_ii_j = mtx_u_ii));
                         }
 
-                        if (MathF.Abs(val - 0) < float.Epsilon) return (ComplexF)float.NaN;
+                        if (MathsF.Abs(val - 0) < float.Epsilon) return (ComplexF)float.NaN;
 
                         if (mtx_ii_j != element)
                         {
@@ -156,7 +156,7 @@ namespace UMapx.Core
                     float biggestSoFar = 0.0f; int biggestRow = currentRow;
                     for (int x = currentRow; x < dimension; x++)
                     {
-                        float sizeOfThis = (float)MathF.Abs(working[x][currentRow]);
+                        float sizeOfThis = (float)MathsF.Abs(working[x][currentRow]);
                         if (sizeOfThis > biggestSoFar)
                         {
                             biggestSoFar = sizeOfThis;
@@ -2524,10 +2524,10 @@ namespace UMapx.Core
                     int t = 0;
                     for (int di = -r0; di <= r0; di++)
                     {
-                        int ni = MathF.Range(i + di, 0, height - 1);
+                        int ni = MathsF.Range(i + di, 0, height - 1);
                         for (int dj = -r1; dj <= r1; dj++)
                         {
-                            int nj = MathF.Range(0 + dj, 0, width - 1);
+                            int nj = MathsF.Range(0 + dj, 0, width - 1);
                             win[t++] = data[ni, nj];
                         }
                     }
@@ -2539,12 +2539,12 @@ namespace UMapx.Core
 
                     for (int j = 1; j < width; j++)
                     {
-                        int outCol = MathF.Range(j - r1 - 1, 0, width - 1);
-                        int inCol = MathF.Range(j + r1, 0, width - 1);
+                        int outCol = MathsF.Range(j - r1 - 1, 0, width - 1);
+                        int inCol = MathsF.Range(j + r1, 0, width - 1);
 
                         for (int di = -r0; di <= r0; di++)
                         {
-                            int ni = MathF.Range(i + di, 0, height - 1);
+                            int ni = MathsF.Range(i + di, 0, height - 1);
 
                             float outVal = data[ni, outCol];
                             float inVal = data[ni, inCol];
@@ -2585,7 +2585,7 @@ namespace UMapx.Core
                 int t = 0;
                 for (int off = -r; off <= r; off++)
                 {
-                    int idx = MathF.Range(0 + off, 0, n - 1);
+                    int idx = MathsF.Range(0 + off, 0, n - 1);
                     win[t++] = data[idx];
                 }
 
@@ -2596,8 +2596,8 @@ namespace UMapx.Core
 
                 for (int i = 1; i < n; i++)
                 {
-                    int outIdx = MathF.Range(i - r - 1, 0, n - 1);
-                    int inIdx = MathF.Range(i + r, 0, n - 1);
+                    int outIdx = MathsF.Range(i - r - 1, 0, n - 1);
+                    int inIdx = MathsF.Range(i + r, 0, n - 1);
 
                     float outVal = data[outIdx];
                     float inVal = data[inIdx];
@@ -2728,10 +2728,10 @@ namespace UMapx.Core
 
                         for (int di = -r0; di <= r0; di++)
                         {
-                            int ni = MathF.Range(i + di, 0, height - 1);
+                            int ni = MathsF.Range(i + di, 0, height - 1);
                             for (int dj = -r1; dj <= r1; dj++)
                             {
-                                int nj = MathF.Range(j + dj, 0, width - 1);
+                                int nj = MathsF.Range(j + dj, 0, width - 1);
                                 set.Add(data[ni, nj]);
                             }
                         }
@@ -2766,7 +2766,7 @@ namespace UMapx.Core
 
                     for (int offset = -r; offset <= r; offset++)
                     {
-                        int idx = MathF.Range(i + offset, 0, N - 1);
+                        int idx = MathsF.Range(i + offset, 0, N - 1);
                         set.Add(data[idx]);
                     }
 
@@ -2827,11 +2827,11 @@ namespace UMapx.Core
 
                         for (int di = -r0; di <= r0; di++)
                         {
-                            int ni = MathF.Range(i + di, 0, height - 1);
+                            int ni = MathsF.Range(i + di, 0, height - 1);
 
                             for (int dj = -r1; dj <= r1; dj++)
                             {
-                                int nj = MathF.Range(j + dj, 0, width - 1);
+                                int nj = MathsF.Range(j + dj, 0, width - 1);
                                 byte val = data[ni, nj];
                                 histogram[val]++;
                             }
@@ -2879,7 +2879,7 @@ namespace UMapx.Core
 
                     for (int offset = -r; offset <= r; offset++)
                     {
-                        int idx = MathF.Range(i + offset, 0, length - 1);
+                        int idx = MathsF.Range(i + offset, 0, length - 1);
                         histogram[data[idx]]++;
                     }
 
@@ -2950,11 +2950,11 @@ namespace UMapx.Core
 
                     for (int di = -r0; di <= r0; di++)
                     {
-                        int ni = MathF.Range(i + di, 0, height - 1);
+                        int ni = MathsF.Range(i + di, 0, height - 1);
 
                         for (int dj = -r1; dj <= r1; dj++)
                         {
-                            int nj = MathF.Range(0 + dj, 0, width - 1);
+                            int nj = MathsF.Range(0 + dj, 0, width - 1);
                             histogram[data[ni, nj]]++;
                         }
                     }
@@ -2963,12 +2963,12 @@ namespace UMapx.Core
 
                     for (int j = 1; j < width; j++)
                     {
-                        int outCol = MathF.Range(j - r1 - 1, 0, width - 1);
-                        int inCol = MathF.Range(j + r1, 0, width - 1);
+                        int outCol = MathsF.Range(j - r1 - 1, 0, width - 1);
+                        int inCol = MathsF.Range(j + r1, 0, width - 1);
 
                         for (int di = -r0; di <= r0; di++)
                         {
-                            int ni = MathF.Range(i + di, 0, height - 1);
+                            int ni = MathsF.Range(i + di, 0, height - 1);
 
                             byte outVal = data[ni, outCol];
                             histogram[outVal]--;
@@ -3003,7 +3003,7 @@ namespace UMapx.Core
 
                 for (int i = 0; i < windowSize && i < length; i++)
                 {
-                    int idx = MathF.Range(i, 0, length - 1);
+                    int idx = MathsF.Range(i, 0, length - 1);
                     histogram[data[idx]]++;
                 }
 
@@ -3011,8 +3011,8 @@ namespace UMapx.Core
 
                 for (int i = 1; i < length; i++)
                 {
-                    int outIdx = MathF.Range(i - r - 1, 0, length - 1);
-                    int inIdx = MathF.Range(i + r, 0, length - 1);
+                    int outIdx = MathsF.Range(i - r - 1, 0, length - 1);
+                    int inIdx = MathsF.Range(i + r, 0, length - 1);
 
                     histogram[data[outIdx]]--;
                     histogram[data[inIdx]]++;

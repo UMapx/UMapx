@@ -78,7 +78,7 @@ namespace UMapx.Transform
             extended[n + 1] = Complex.Zero;
             extended = FFT.Forward(extended);
 
-            float scale = MathF.Sqrt(1.0f / m);
+            float scale = MathsF.Sqrt(1.0f / m);
             float[] output = new float[n];
 
             for (int i = 0; i < n; i++)
@@ -110,7 +110,7 @@ namespace UMapx.Transform
             spectrum[n + 1] = Complex.Zero;
             spectrum = FFT.Backward(spectrum);
 
-            float scale = MathF.Sqrt(1.0f / m);
+            float scale = MathsF.Sqrt(1.0f / m);
             float[] output = new float[n];
 
             for (int i = 0; i < n; i++)

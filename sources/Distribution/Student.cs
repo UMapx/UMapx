@@ -27,7 +27,7 @@ namespace UMapx.Distribution
         {
             this.N = n;
             float num = Special.LogGamma((n + 1) / 2.0f);
-            float den = 0.5f * (float)Math.Log(n * MathF.Pi) + Special.LogGamma(n / 2.0f);
+            float den = 0.5f * (float)Math.Log(n * MathsF.Pi) + Special.LogGamma(n / 2.0f);
             this.lambda = num - den;
         }
         /// <summary>

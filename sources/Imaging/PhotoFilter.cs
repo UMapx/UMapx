@@ -91,7 +91,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.s = MathF.Float(value);
+                this.s = MathsF.Float(value);
             }
         }
         /// <summary>
@@ -135,9 +135,9 @@ namespace UMapx.Imaging
                     bb = this.blendf(lm, bf) * 255.0f;
 
                     // recording
-                    p[k + 2] = MathF.Byte(rb * s + p[k + 2] * (1.0f - s));
-                    p[k + 1] = MathF.Byte(gb * s + p[k + 1] * (1.0f - s));
-                    p[k    ] = MathF.Byte(bb * s + p[k    ] * (1.0f - s));
+                    p[k + 2] = MathsF.Byte(rb * s + p[k + 2] * (1.0f - s));
+                    p[k + 1] = MathsF.Byte(gb * s + p[k + 1] * (1.0f - s));
+                    p[k    ] = MathsF.Byte(bb * s + p[k    ] * (1.0f - s));
                 }
             });
         }

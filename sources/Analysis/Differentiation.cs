@@ -130,7 +130,7 @@ namespace UMapx.Analysis
             }
 
             // result
-            return sum / MathF.Pow(h, order);
+            return sum / MathsF.Pow(h, order);
         }
         /// <summary>
         /// Returns the value of a derived function.

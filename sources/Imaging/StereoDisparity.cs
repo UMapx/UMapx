@@ -101,7 +101,7 @@ namespace UMapx.Imaging
             var im_l = new float[][,] { left, left_x, left_y };
             var im_r = new float[][,] { right, right_x, right_y };
 
-            var even_win = MathF.IsEven(win) ? win : win + 1;
+            var even_win = MathsF.IsEven(win) ? win : win + 1;
             var disparity = DisparityEstimator(im_l, im_r, even_win, max_dis, weight, x, y, z);
 
             if (apply_median)
@@ -147,11 +147,11 @@ namespace UMapx.Imaging
 
                             if (j < 0)
                             {
-                                min3_dis[z][y, x] = MathF.Pow(im_l[z][y, x] - 0.0000000001f, 2);
+                                min3_dis[z][y, x] = MathsF.Pow(im_l[z][y, x] - 0.0000000001f, 2);
                             }
                             else
                             {
-                                min3_dis[z][y, x] = MathF.Pow(im_l[z][y, x] - im_r[z][y, j], 2);
+                                min3_dis[z][y, x] = MathsF.Pow(im_l[z][y, x] - im_r[z][y, j], 2);
                             }
                         }
                     }

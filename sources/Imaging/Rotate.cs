@@ -368,9 +368,9 @@ namespace UMapx.Imaging
             float newYradius = (float)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            float angleRad = -angle * MathF.Pi / 180.0f;
-            float angleCos = MathF.Cos(angleRad);
-            float angleSin = MathF.Sin(angleRad);
+            float angleRad = -angle * MathsF.Pi / 180.0f;
+            float angleCos = MathsF.Cos(angleRad);
+            float angleSin = MathsF.Sin(angleRad);
 
             int srcStride = bmSrc.Stride;
             int dstOffset = bmData.Stride - newWidth * 4;
@@ -461,10 +461,10 @@ namespace UMapx.Imaging
                             }
                         }
 
-                        dst[3] = MathF.Byte(a);
-                        dst[2] = MathF.Byte(r);
-                        dst[1] = MathF.Byte(g);
-                        dst[0] = MathF.Byte(b);
+                        dst[3] = MathsF.Byte(a);
+                        dst[2] = MathsF.Byte(r);
+                        dst[1] = MathsF.Byte(g);
+                        dst[0] = MathsF.Byte(b);
                     }
                     cx++;
                 }

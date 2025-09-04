@@ -217,9 +217,9 @@ namespace UMapx.Imaging
                 {
                     k = jstride + i * 4; k1 = k + 1; k2 = k + 2;
 
-                    p[k2] = MathF.Byte(this.values[p[k2], pSrc[k2]] * length);
-                    p[k1] = MathF.Byte(this.values[p[k1], pSrc[k1]] * length);
-                    p[k] = MathF.Byte(this.values[p[k], pSrc[k]] * length);
+                    p[k2] = MathsF.Byte(this.values[p[k2], pSrc[k2]] * length);
+                    p[k1] = MathsF.Byte(this.values[p[k1], pSrc[k1]] * length);
+                    p[k] = MathsF.Byte(this.values[p[k], pSrc[k]] * length);
                 }
             });
         }
@@ -332,7 +332,7 @@ namespace UMapx.Imaging
                     lumax = RGB.Average(p[k + 2], p[k + 1], p[k]);
                     lumay = RGB.Average(pSrc[k + 2], pSrc[k + 1], pSrc[k]);
 
-                    p[k + 2] = p[k + 1] = p[k] = MathF.Byte(this.values[lumax, lumay] * length);
+                    p[k + 2] = p[k + 1] = p[k] = MathsF.Byte(this.values[lumax, lumay] * length);
                 }
             });
         }

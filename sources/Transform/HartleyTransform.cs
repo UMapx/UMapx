@@ -74,7 +74,7 @@ namespace UMapx.Transform
         {
             int j, i;
             float[,] H = new float[n, n];
-            float s = (2.0f * MathF.Pi) / n;
+            float s = (2.0f * MathsF.Pi) / n;
 
             for (i = 0; i < n; i++)
             {
@@ -102,7 +102,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                B = MatrixF.Div(B, MathF.Sqrt(N));
+                B = MatrixF.Div(B, MathsF.Sqrt(N));
             }
 
             return B;
@@ -120,7 +120,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                A = MatrixF.Div(A, MathF.Sqrt(N));
+                A = MatrixF.Div(A, MathsF.Sqrt(N));
             }
 
             return A;
@@ -140,17 +140,17 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transponate());
-                B = normalized ? B.Div(MathF.Sqrt(N * M)) : B;
+                B = normalized ? B.Div(MathsF.Sqrt(N * M)) : B;
             }
             else if (direction == Direction.Vertical)
             {
                 B = U.Dot(A);
-                B = normalized ? B.Div(MathF.Sqrt(N)) : B;
+                B = normalized ? B.Div(MathsF.Sqrt(N)) : B;
             }
             else
             {
                 B = A.Dot(V.Transponate());
-                B = normalized ? B.Div(MathF.Sqrt(M)) : B;
+                B = normalized ? B.Div(MathsF.Sqrt(M)) : B;
             }
 
             return B;
@@ -170,17 +170,17 @@ namespace UMapx.Transform
             if (direction == Direction.Both)
             {
                 A = U.Transponate().Dot(B).Dot(V);
-                A = normalized ? A.Div(MathF.Sqrt(N * M)) : A;
+                A = normalized ? A.Div(MathsF.Sqrt(N * M)) : A;
             }
             else if (direction == Direction.Vertical)
             {
                 A = U.Transponate().Dot(B);
-                A = normalized ? A.Div(MathF.Sqrt(N)) : A;
+                A = normalized ? A.Div(MathsF.Sqrt(N)) : A;
             }
             else
             {
                 A = B.Dot(V);
-                A = normalized ? A.Div(MathF.Sqrt(M)) : A;
+                A = normalized ? A.Div(MathsF.Sqrt(M)) : A;
             }
 
             return A;

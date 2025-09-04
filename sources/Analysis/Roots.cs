@@ -39,7 +39,7 @@ namespace UMapx.Analysis
             }
             set
             {
-                this.eps = MathF.Float(value);
+                this.eps = MathsF.Float(value);
             }
         }
         /// <summary>

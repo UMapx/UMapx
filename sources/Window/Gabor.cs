@@ -75,7 +75,7 @@ namespace UMapx.Window
         /// <returns>Gabor window function</returns>
         public static Gabor Scaled(int frameSize)
         {
-            var s = 1.0f / MathF.Sqrt(frameSize / 4.0f);
+            var s = 1.0f / MathsF.Sqrt(frameSize / 4.0f);
             return new Gabor(frameSize, s);
         }
         #endregion

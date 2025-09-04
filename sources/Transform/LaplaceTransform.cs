@@ -110,11 +110,11 @@ namespace UMapx.Transform
             {
                 for (i = 0; i < n; i++)
                 {
-                    factor = MathF.Exp(-sigma * i);
+                    factor = MathsF.Exp(-sigma * i);
 
                     for (j = 0; j < n; j++)
                     {
-                        H[i, j] = MathF.Exp(-2 * MathF.Pi * MathF.I * j / n * i) / factor;
+                        H[i, j] = MathsF.Exp(-2 * MathsF.Pi * MathsF.I * j / n * i) / factor;
                     }
                 }
             }
@@ -122,11 +122,11 @@ namespace UMapx.Transform
             {
                 for (i = 0; i < n; i++)
                 {
-                    factor = MathF.Exp(-sigma * i);
+                    factor = MathsF.Exp(-sigma * i);
 
                     for (j = 0; j < n; j++)
                     {
-                        H[i, j] = factor * MathF.Exp(-2 * MathF.Pi * MathF.I * j / n * i);
+                        H[i, j] = factor * MathsF.Exp(-2 * MathsF.Pi * MathsF.I * j / n * i);
                     }
                 }
             }

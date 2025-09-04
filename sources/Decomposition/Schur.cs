@@ -37,7 +37,7 @@ namespace UMapx.Decomposition
             this.n = A.GetLength(0);
             this.Re = new float[n];
             this.Im = new float[n];
-            this.eps = MathF.Float(eps);
+            this.eps = MathsF.Float(eps);
 
             // reduce to Hessenberg form using existing decomposition
             var h = new Hessenberg(A);

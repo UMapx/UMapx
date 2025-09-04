@@ -61,9 +61,9 @@ namespace UMapx.Imaging
             {
                 for (x = 0; x < width; x++, p += 4)
                 {
-                    p[2] = MathF.Byte(p[2] + generator.Next(-amount, amount));
-                    p[1] = MathF.Byte(p[1] + generator.Next(-amount, amount));
-                    p[0] = MathF.Byte(p[0] + generator.Next(-amount, amount));
+                    p[2] = MathsF.Byte(p[2] + generator.Next(-amount, amount));
+                    p[1] = MathsF.Byte(p[1] + generator.Next(-amount, amount));
+                    p[0] = MathsF.Byte(p[0] + generator.Next(-amount, amount));
                 }
             }
         }

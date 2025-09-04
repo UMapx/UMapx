@@ -228,7 +228,7 @@ namespace UMapx.Transform
                     for (int x = 0; x < width; x++)
                     {
                         float diff = array[y, x] - level;
-                        rangeWeight[y, x] = MathF.Exp(-diff * diff / rangeSigma2);
+                        rangeWeight[y, x] = MathsF.Exp(-diff * diff / rangeSigma2);
                     }
                 }
 
@@ -311,7 +311,7 @@ namespace UMapx.Transform
                     for (int x = 0; x < width; x++)
                     {
                         ComplexF diff = array[y, x] - level;
-                        rangeWeight[y, x] = MathF.Exp(-diff * diff / rangeSigma2);
+                        rangeWeight[y, x] = MathsF.Exp(-diff * diff / rangeSigma2);
                     }
                 }
 
@@ -390,7 +390,7 @@ namespace UMapx.Transform
                 for (int i = 0; i < length; i++)
                 {
                     float diff = input[i] - level;
-                    rangeWeight[i] = MathF.Exp(-diff * diff / rangeSigma2);
+                    rangeWeight[i] = MathsF.Exp(-diff * diff / rangeSigma2);
                 }
 
                 float[] blurred = MatrixF.Mean(input, rangeWeight, r);
@@ -459,7 +459,7 @@ namespace UMapx.Transform
                 for (int i = 0; i < length; i++)
                 {
                     ComplexF diff = input[i] - level;
-                    rangeWeight[i] = MathF.Exp(-diff * diff / rangeSigma2);
+                    rangeWeight[i] = MathsF.Exp(-diff * diff / rangeSigma2);
                 }
 
                 ComplexF[] blurred = MatrixF.Mean(input, rangeWeight, r);

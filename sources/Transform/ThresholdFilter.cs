@@ -116,7 +116,7 @@ namespace UMapx.Transform
             {
                 for (i = 0; i < length; i++)
                 {
-                    if (MathF.Abs(data[i]) < threshold)
+                    if (MathsF.Abs(data[i]) < threshold)
                     {
                         data[i] = 0;
                     }
@@ -217,7 +217,7 @@ namespace UMapx.Transform
                 {
                     for (j = 0; j < width; j++)
                     {
-                        if (MathF.Abs(data[i, j]) < threshold)
+                        if (MathsF.Abs(data[i, j]) < threshold)
                         {
                             data[i, j] = 0;
                         }

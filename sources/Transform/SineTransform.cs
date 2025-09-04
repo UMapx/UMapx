@@ -56,13 +56,13 @@ namespace UMapx.Transform
             int j, i;
             float[,] H = new float[n, n];
             float n1 = n + 1;
-            float scale = MathF.Sqrt(2.0f / n1);
+            float scale = MathsF.Sqrt(2.0f / n1);
 
             for (i = 0; i < n; i++)
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = MathF.Sin(MathF.Pi * (j + 1) * (i + 1) / n1) * scale;
+                    H[i, j] = MathsF.Sin(MathsF.Pi * (j + 1) * (i + 1) / n1) * scale;
                 }
             }
 
