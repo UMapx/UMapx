@@ -56,13 +56,13 @@ namespace UMapx.Transform
             int j, i;
             float[,] H = new float[n, n];
             float n1 = n + 1;
-            float scale = MathsF.Sqrt(2.0f / n1);
+            float scale = Maths.Sqrt(2.0f / n1);
 
             for (i = 0; i < n; i++)
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = MathsF.Sin(MathsF.Pi * (j + 1) * (i + 1) / n1) * scale;
+                    H[i, j] = Maths.Sin(Maths.Pi * (j + 1) * (i + 1) / n1) * scale;
                 }
             }
 
@@ -80,7 +80,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = SineTransform.Matrix(N);
-            return MatrixF.Dot(A, U);
+            return Core.Matrix.Dot(A, U);
         }
         /// <summary>
         /// Backward sine transform.
@@ -91,7 +91,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = SineTransform.Matrix(N);
-            return MatrixF.Dot(B, U.Transponate());
+            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
         }
         /// <summary>
         /// Forward sine transform.
@@ -140,29 +140,29 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Forward(ComplexF[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
             float[,] U = SineTransform.Matrix(N);
-            return MatrixF.Dot(A, U);
+            return Core.Matrix.Dot(A, U);
         }
         /// <summary>
         /// Backward sine transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
             float[,] U = SineTransform.Matrix(N);
-            return MatrixF.Dot(B, U.Transponate());
+            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
         }
         /// <summary>
         /// Forward sine transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Forward(ComplexF[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
             float[,] U = SineTransform.Matrix(N);
@@ -183,7 +183,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
             float[,] U = SineTransform.Matrix(N);

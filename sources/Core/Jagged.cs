@@ -56,16 +56,16 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Jagged array</returns>
-        public static ComplexF[][] ToJagged(this ComplexF[,] m)
+        public static Complex32[][] ToJagged(this Complex32[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
-            ComplexF[][] jagged = new ComplexF[ml][];
-            ComplexF[] data;
+            Complex32[][] jagged = new Complex32[ml][];
+            Complex32[] data;
             int i, j;
 
             for (i = 0; i < ml; i++)
             {
-                data = new ComplexF[mr];
+                data = new Complex32[mr];
                 for (j = 0; j < mr; j++)
                 {
                     data[j] = m[i, j];
@@ -79,10 +79,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="jagged">Jagged array</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[,] FromJagged(this ComplexF[][] jagged)
+        public static Complex32[,] FromJagged(this Complex32[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
-            ComplexF[,] m = new ComplexF[ml, mr];
+            Complex32[,] m = new Complex32[ml, mr];
             int i, j;
 
             for (i = 0; i < ml; i++)
@@ -130,17 +130,17 @@ namespace UMapx.Core
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[][] Randc(int m, int l)
+        public static Complex32[][] Randc(int m, int l)
         {
-            ComplexF[][] H = new ComplexF[m][];
+            Complex32[][] H = new Complex32[m][];
             int i, j;
 
             for (i = 0; i < m; i++)
             {
-                H[i] = new ComplexF[l];
+                H[i] = new Complex32[l];
                 for (j = 0; j < l; j++)
                 {
-                    H[i][j] = new ComplexF((float)rnd.NextDouble(), (float)rnd.NextDouble());
+                    H[i][j] = new Complex32((float)rnd.NextDouble(), (float)rnd.NextDouble());
                 }
             }
 
@@ -188,7 +188,7 @@ namespace UMapx.Core
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[][] Randic(int m, int l)
+        public static Complex32[][] Randic(int m, int l)
         {
             return Randic(m, l, 1, l + 1);
         }
@@ -200,18 +200,18 @@ namespace UMapx.Core
         /// <param name="a">Lower bound</param>
         /// <param name="b">Upper bound</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[][] Randic(int m, int l, int a, int b)
+        public static Complex32[][] Randic(int m, int l, int a, int b)
         {
-            ComplexF[][] H = new ComplexF[m][];
+            Complex32[][] H = new Complex32[m][];
             int i, j;
 
             for (i = 0; i < m; i++)
             {
-                H[i] = new ComplexF[l];
+                H[i] = new Complex32[l];
 
                 for (j = 0; j < l; j++)
                 {
-                    H[i][j] = new ComplexF(rnd.Next(a, b), rnd.Next(a, b));
+                    H[i][j] = new Complex32(rnd.Next(a, b), rnd.Next(a, b));
                 }
             }
 
@@ -311,18 +311,18 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[][] Negate(this ComplexF[][] m)
+        public static Complex32[][] Negate(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
-            ComplexF[][] H = new ComplexF[r0][];
-            ComplexF[] v;
+            Complex32[][] H = new Complex32[r0][];
+            Complex32[] v;
             int i, j;
 
             for (i = 0; i < r0; i++)
             {
                 v = m[i];
                 r1 = v.GetLength(0);
-                H[i] = new ComplexF[r1];
+                H[i] = new Complex32[r1];
 
                 for (j = 0; j < r1; j++)
                 {
@@ -337,10 +337,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[][] ToComplex(this float[][] m)
+        public static Complex32[][] ToComplex(this float[][] m)
         {
             int r0 = m.GetLength(0), r1;
-            ComplexF[][] H = new ComplexF[r0][];
+            Complex32[][] H = new Complex32[r0][];
             float[] v;
             int i, j;
 
@@ -348,7 +348,7 @@ namespace UMapx.Core
             {
                 v = m[i];
                 r1 = v.GetLength(0);
-                H[i] = new ComplexF[r1];
+                H[i] = new Complex32[r1];
 
                 for (j = 0; j < r1; j++)
                 {
@@ -377,7 +377,7 @@ namespace UMapx.Core
 
                 for (j = 0; j < r1; j++)
                 {
-                    H[i][j] = MathsF.Byte(v[j]);
+                    H[i][j] = Maths.Byte(v[j]);
                 }
             }
 
@@ -458,11 +458,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[][] Abs(this ComplexF[][] m)
+        public static float[][] Abs(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
             float[][] H = new float[r0][];
-            ComplexF[] v;
+            Complex32[] v;
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -484,11 +484,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[][] Angle(this ComplexF[][] m)
+        public static float[][] Angle(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
             float[][] H = new float[r0][];
-            ComplexF[] v;
+            Complex32[] v;
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -510,11 +510,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[][] Real(this ComplexF[][] m)
+        public static float[][] Real(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
             float[][] H = new float[r0][];
-            ComplexF[] v;
+            Complex32[] v;
             int i, j;
 
             for (i = 0; i < r0; i++)
@@ -536,11 +536,11 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[][] Imag(this ComplexF[][] m)
+        public static float[][] Imag(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
             float[][] H = new float[r0][];
-            ComplexF[] v;
+            Complex32[] v;
             int i, j;
 
             for (i = 0; i < r0; i++)

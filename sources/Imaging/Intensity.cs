@@ -333,7 +333,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float LogStretch(float x, float mu, float s, float l)
         {
-            return Intensity.LogPow(x, MathsF.Range(Intensity.log05 / (float)Math.Log(mu), s, l));
+            return Intensity.LogPow(x, Maths.Range(Intensity.log05 / (float)Math.Log(mu), s, l));
         }
         /// <summary>
         /// Returns the correction mask.
@@ -673,7 +673,7 @@ namespace UMapx.Imaging
             float a = max - min;
             float b = x - min;
             float c = (a != 0) ? b / a : x;
-            return MathsF.Float(c);
+            return Maths.Float(c);
         }
         /// <summary>
         /// Returns the correction mask.

@@ -34,7 +34,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.offset = MathsF.Range(value, -0.49998f, 0.49998f);
+                this.offset = Maths.Range(value, -0.49998f, 0.49998f);
                 this.rebuild = true;
             }
         }

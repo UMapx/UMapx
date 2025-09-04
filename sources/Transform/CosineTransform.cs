@@ -55,9 +55,9 @@ namespace UMapx.Transform
         {
             int j, i;
             float[,] H = new float[n, n];
-            float c = MathsF.Pi / (2.0f * n);
-            float g1 = MathsF.Sqrt(1.0f / n);
-            float g2 = MathsF.Sqrt(2.0f / n);
+            float c = Maths.Pi / (2.0f * n);
+            float g1 = Maths.Sqrt(1.0f / n);
+            float g2 = Maths.Sqrt(2.0f / n);
 
             for (i = 0; i < n; i++)
             {
@@ -81,7 +81,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return MatrixF.Dot(A, U);
+            return Core.Matrix.Dot(A, U);
         }
         /// <summary>
         /// Backward cosine transform.
@@ -92,7 +92,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return MatrixF.Dot(B, U.Transponate());
+            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
         }
         /// <summary>
         /// Forward cosine transform.
@@ -141,29 +141,29 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Forward(ComplexF[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return MatrixF.Dot(A, U);
+            return Core.Matrix.Dot(A, U);
         }
         /// <summary>
         /// Backward cosine transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return MatrixF.Dot(B, U.Transponate());
+            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
         }
         /// <summary>
         /// Forward cosine transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Forward(ComplexF[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
             float[,] U = CosineTransform.Matrix(N);
@@ -184,7 +184,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
             float[,] U = CosineTransform.Matrix(N);

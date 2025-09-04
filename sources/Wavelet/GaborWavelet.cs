@@ -75,7 +75,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        public ComplexF Scaling(float x)
+        public Complex32 Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -84,10 +84,10 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        public ComplexF Wavelet(float x)
+        public Complex32 Wavelet(float x)
         {
             float d = x - x0;
-            return Math.Exp(-d * d / a2) * MathsF.Exp(-MathsF.I * k0 * d);
+            return Math.Exp(-d * d / a2) * Maths.Exp(-Maths.I * k0 * d);
         }
         /// <summary>
         /// Returns the value of the wavelet function.

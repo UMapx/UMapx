@@ -107,8 +107,8 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float eta, float tau)
         {
-            float ksi = MathsF.Pi * eta * tau;
-            float psi = (float)Math.Exp(-2 * MathsF.Pi * a * tau * tau);
+            float ksi = Maths.Pi * eta * tau;
+            float psi = (float)Math.Exp(-2 * Maths.Pi * a * tau * tau);
             return (float)Math.Sin(ksi) / ksi * psi;
         }
         /// <summary>
@@ -121,7 +121,7 @@ namespace UMapx.Distribution
         {
             if (Math.Abs(tau) >= 2 * Math.Abs(t))
             {
-                return 1.0f / tau * (float)Math.Exp(-2 * MathsF.Pi * a * tau * tau);
+                return 1.0f / tau * (float)Math.Exp(-2 * Maths.Pi * a * tau * tau);
             }
             return 0;
         }

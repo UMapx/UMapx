@@ -501,13 +501,13 @@ namespace UMapx.Colorspace
         /// <returns>RGB structure</returns>
         public static RGB Saturation(int red, int green, int blue, float s)
         {
-            float max = MathsF.Max(red, green, blue);
+            float max = Maths.Max(red, green, blue);
 
             // Result color:
             return new RGB(
-                MathsF.Byte(red + (red - max) * s),
-                MathsF.Byte(green + (green - max) * s),
-                MathsF.Byte(blue + (blue - max) * s));
+                Maths.Byte(red + (red - max) * s),
+                Maths.Byte(green + (green - max) * s),
+                Maths.Byte(blue + (blue - max) * s));
         }
         /// <summary>
         /// Corrects color saturation.
@@ -533,7 +533,7 @@ namespace UMapx.Colorspace
         public static RGB Vibrance(int red, int green, int blue, float v)
         {
             // Result color:
-            float max = MathsF.Max(red, green, blue);
+            float max = Maths.Max(red, green, blue);
 
             // Estimate "dullness": high when all components are close to each other
             float dullness = 1.0f - (Math.Abs(red - max) + Math.Abs(green - max) + Math.Abs(blue - max)) / (3.0f * 255.0f);
@@ -542,9 +542,9 @@ namespace UMapx.Colorspace
             float boost = v * dullness;
 
             // Apply boost like in Saturation
-            byte nr = MathsF.Byte(red + (red - max) * boost);
-            byte ng = MathsF.Byte(green + (green - max) * boost);
-            byte nb = MathsF.Byte(blue + (blue - max) * boost);
+            byte nr = Maths.Byte(red + (red - max) * boost);
+            byte ng = Maths.Byte(green + (green - max) * boost);
+            byte nb = Maths.Byte(blue + (blue - max) * boost);
 
             return new RGB(nr, ng, nb);
         }

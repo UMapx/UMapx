@@ -70,16 +70,16 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[,] Matrix(int n)
+        public static Complex32[,] Matrix(int n)
         {
-            ComplexF[,] H = new ComplexF[n, n];
+            Complex32[,] H = new Complex32[n, n];
             int i, j;
 
             for (i = 0; i < n; i++)
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = MathsF.Exp(-2 * MathsF.Pi * MathsF.I * i * j / n);
+                    H[i, j] = Maths.Exp(-2 * Maths.Pi * Maths.I * i * j / n);
                 }
             }
             return H;
@@ -92,15 +92,15 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Forward(ComplexF[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            ComplexF[,] U = FourierTransform.Matrix(N);
-            ComplexF[] B = MatrixF.Dot(A, U);
+            Complex32[,] U = FourierTransform.Matrix(N);
+            Complex32[] B = Core.Matrix.Dot(A, U);
 
             if (normalized)
             {
-                B = MatrixF.Div(B, Math.Sqrt(N));
+                B = Core.Matrix.Div(B, Math.Sqrt(N));
             }
 
             return B;
@@ -110,15 +110,15 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            ComplexF[,] U = FourierTransform.Matrix(N);
-            ComplexF[] A = MatrixF.Dot(B, U.Hermitian());
+            Complex32[,] U = FourierTransform.Matrix(N);
+            Complex32[] A = Core.Matrix.Dot(B, Core.Matrix.Hermitian(U));
 
             if (normalized)
             {
-                A = MatrixF.Div(A, Math.Sqrt(N));
+                A = Core.Matrix.Div(A, Math.Sqrt(N));
             }
 
             return A;
@@ -128,12 +128,12 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Forward(ComplexF[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            ComplexF[,] U = FourierTransform.Matrix(N);
-            ComplexF[,] V = FourierTransform.Matrix(M);
-            ComplexF[,] B;
+            Complex32[,] U = FourierTransform.Matrix(N);
+            Complex32[,] V = FourierTransform.Matrix(M);
+            Complex32[,] B;
 
             if (direction == Direction.Both)
             {
@@ -158,12 +158,12 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            ComplexF[,] U = FourierTransform.Matrix(N);
-            ComplexF[,] V = FourierTransform.Matrix(M);
-            ComplexF[,] A;
+            Complex32[,] U = FourierTransform.Matrix(N);
+            Complex32[,] V = FourierTransform.Matrix(M);
+            Complex32[,] A;
 
             if (direction == Direction.Both)
             {

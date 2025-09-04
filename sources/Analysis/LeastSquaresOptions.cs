@@ -66,7 +66,7 @@ namespace UMapx.Analysis
                 matrix[i, m] = LeastSquaresOptions.SummaryPow(y, x, 1, i);
             }
 
-            return MatrixF.Solve(matrix);
+            return Matrix.Solve(matrix);
         }
         /// <summary>
         /// Returns the value of the expression: s += v(i) ^ pow.
@@ -112,8 +112,8 @@ namespace UMapx.Analysis
         /// <returns>Value</returns>
         public static float Error(float[] a, float[] b)
         {
-            float vara = MatrixF.Var(a);
-            float varb = MatrixF.Var(b);
+            float vara = Matrix.Var(a);
+            float varb = Matrix.Var(b);
 
             if (vara < varb)
             {
@@ -166,10 +166,10 @@ namespace UMapx.Analysis
         /// <param name="x">Value</param>
         /// <param name="c">Approximation coefficients</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Polynomial(ComplexF x, ComplexF[] c)
+        public static Complex32 Polynomial(Complex32 x, Complex32[] c)
         {
             int n = c.Length, i;
-            ComplexF p = 1, s = 0;
+            Complex32 p = 1, s = 0;
 
             for (i = 0; i < n; i++, p *= x)
             {
@@ -183,10 +183,10 @@ namespace UMapx.Analysis
         /// <param name="x">Value</param>
         /// <param name="c">Approximation coefficients</param>
         /// <returns>Array</returns>
-        public static ComplexF[] Polynomial(ComplexF[] x, ComplexF[] c)
+        public static Complex32[] Polynomial(Complex32[] x, Complex32[] c)
         {
             int n = x.Length, i;
-            ComplexF[] y = new ComplexF[n];
+            Complex32[] y = new Complex32[n];
 
             for (i = 0; i < n; i++)
             {
@@ -201,11 +201,11 @@ namespace UMapx.Analysis
         /// <param name="y">Function</param>
         /// <param name="iterations">Number of iterations</param>
         /// <returns>Array</returns>
-        public static ComplexF[] Coefficients(ComplexF[] x, ComplexF[] y, int iterations)
+        public static Complex32[] Coefficients(Complex32[] x, Complex32[] y, int iterations)
         {
             int i, j;
             int m = iterations < 1 ? 1 : iterations;
-            ComplexF[,] matrix = new ComplexF[m, m + 1];
+            Complex32[,] matrix = new Complex32[m, m + 1];
 
             for (i = 0; i < m; i++)
             {
@@ -216,7 +216,7 @@ namespace UMapx.Analysis
                 matrix[i, m] = LeastSquaresOptions.SummaryPow(y, x, 1, i);
             }
 
-            return MatrixF.Solve(matrix);
+            return Matrix.Solve(matrix);
         }
         /// <summary>
         /// Returns the value of the expression: s += v(i) ^ pow.
@@ -224,14 +224,14 @@ namespace UMapx.Analysis
         /// <param name="v">Array</param>
         /// <param name="pow">Power</param>
         /// <returns>Value</returns>
-        public static ComplexF SummaryPow(ComplexF[] v, float pow)
+        public static Complex32 SummaryPow(Complex32[] v, float pow)
         {
-            ComplexF sum = 0;
+            Complex32 sum = 0;
             int length = v.Length;
 
             for (int i = 0; i < length; i++)
             {
-                sum += MathsF.Pow(v[i], pow);
+                sum += Maths.Pow(v[i], pow);
             }
             return sum;
         }
@@ -243,14 +243,14 @@ namespace UMapx.Analysis
         /// <param name="powx">Power of x</param>
         /// <param name="powy">Power of y</param>
         /// <returns>Value</returns>
-        public static ComplexF SummaryPow(ComplexF[] x, ComplexF[] y, float powx, float powy)
+        public static Complex32 SummaryPow(Complex32[] x, Complex32[] y, float powx, float powy)
         {
-            ComplexF sum = 0;
+            Complex32 sum = 0;
             int length = x.Length;
 
             for (int i = 0; i < length; i++)
             {
-                sum += MathsF.Pow(x[i], powx) * MathsF.Pow(y[i], powy);
+                sum += Maths.Pow(x[i], powx) * Maths.Pow(y[i], powy);
             }
             return sum;
         }
@@ -260,10 +260,10 @@ namespace UMapx.Analysis
         /// <param name="a">Approximation</param>
         /// <param name="b">Function</param>
         /// <returns>Value</returns>
-        public static ComplexF Error(ComplexF[] a, ComplexF[] b)
+        public static Complex32 Error(Complex32[] a, Complex32[] b)
         {
-            ComplexF vara = MatrixF.Var(a);
-            ComplexF varb = MatrixF.Var(b);
+            Complex32 vara = Matrix.Var(a);
+            Complex32 varb = Matrix.Var(b);
 
             if (vara.Abs < varb.Abs)
             {
@@ -276,7 +276,7 @@ namespace UMapx.Analysis
         /// </summary>
         /// <param name="p">Polynomial coefficients</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        public static string Equation(ComplexF[] p) => Equation(p, " * X^");
+        public static string Equation(Complex32[] p) => Equation(p, " * X^");
 
         /// <summary>
         /// Returns the equation of a polynomial represented as a string.
@@ -285,7 +285,7 @@ namespace UMapx.Analysis
         /// <param name="p">Polynomial coefficients</param>
         /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^")</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
-        public static string Equation(ComplexF[] p, string function)
+        public static string Equation(Complex32[] p, string function)
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
             if (function == null) throw new ArgumentNullException(nameof(function));

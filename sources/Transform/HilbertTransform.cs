@@ -74,7 +74,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Forward(ComplexF[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             var F = DFT.Forward(A);
             ApplyHilbertOperatorMaskInplace(F);
@@ -85,7 +85,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             var Hx = Forward(B);
             for (int i = 0; i < Hx.Length; i++) Hx[i] = -Hx[i];
@@ -96,9 +96,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Forward(ComplexF[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
-            ComplexF[,] B = (ComplexF[,])A.Clone();
+            Complex32[,] B = (Complex32[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -106,7 +106,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    ComplexF[] row = new ComplexF[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -125,7 +125,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    ComplexF[] col = new ComplexF[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -145,7 +145,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    ComplexF[] col = new ComplexF[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -165,7 +165,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    ComplexF[] row = new ComplexF[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -189,9 +189,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
-            ComplexF[,] A = (ComplexF[,])B.Clone();
+            Complex32[,] A = (Complex32[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -199,7 +199,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    ComplexF[] col = new ComplexF[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -216,7 +216,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    ComplexF[] row = new ComplexF[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -235,7 +235,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    ComplexF[] col = new ComplexF[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -253,7 +253,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    ComplexF[] row = new ComplexF[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -314,34 +314,34 @@ namespace UMapx.Transform
         /// Applies Hilber spectrum operator.
         /// </summary>
         /// <param name="F">Array</param>
-        internal static void ApplyHilbertOperatorMaskInplace(ComplexF[] F)
+        internal static void ApplyHilbertOperatorMaskInplace(Complex32[] F)
         {
             int N = F.Length;
             if (N == 0) return;
 
             // DC
-            F[0] = ComplexF.Zero;
+            F[0] = Complex32.Zero;
 
             if ((N & 1) == 0)
             {
                 int half = N / 2;
 
                 // Nyquist
-                F[half] = ComplexF.Zero;
+                F[half] = Complex32.Zero;
 
                 // positive freqs: 1..half-1  -> -i
-                for (int k = 1; k < half; k++) F[k] *= new ComplexF(0f, -1f);
+                for (int k = 1; k < half; k++) F[k] *= new Complex32(0f, -1f);
 
                 // negative freqs: half+1..N-1 -> +i
-                for (int k = half + 1; k < N; k++) F[k] *= new ComplexF(0f, +1f);
+                for (int k = half + 1; k < N; k++) F[k] *= new Complex32(0f, +1f);
             }
             else
             {
                 int half = N / 2; // floor
                                   // positive: 1..half -> -i
-                for (int k = 1; k <= half; k++) F[k] *= new ComplexF(0f, -1f);
+                for (int k = 1; k <= half; k++) F[k] *= new Complex32(0f, -1f);
                 // negative: half+1..N-1 -> +i
-                for (int k = half + 1; k < N; k++) F[k] *= new ComplexF(0f, +1f);
+                for (int k = half + 1; k < N; k++) F[k] *= new Complex32(0f, +1f);
             }
         }
         #endregion

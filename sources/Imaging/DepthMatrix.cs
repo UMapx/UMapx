@@ -57,7 +57,7 @@ namespace UMapx.Imaging
                 for (int y = 0; y < height; y++)
                 {
                     var k = x * 3 + y * stride;
-                    dst[k + 0] = dst[k + 1] = dst[k + 2] = MathsF.Byte((float)depth[y, x] / byte.MaxValue);
+                    dst[k + 0] = dst[k + 1] = dst[k + 2] = Maths.Byte((float)depth[y, x] / byte.MaxValue);
                 }
             }
 

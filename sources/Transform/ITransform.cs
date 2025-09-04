@@ -37,25 +37,25 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Array</returns>
-        ComplexF[] Forward(ComplexF[] data);
+        Complex32[] Forward(Complex32[] data);
         /// <summary>
         /// Forward transform.
         /// </summary>
         /// <param name="data">Matrix</param>
         /// <returns>Array</returns>
-        ComplexF[,] Forward(ComplexF[,] data);
+        Complex32[,] Forward(Complex32[,] data);
         /// <summary>
         /// Backward transform.
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Array</returns>
-        ComplexF[] Backward(ComplexF[] data);
+        Complex32[] Backward(Complex32[] data);
         /// <summary>
         /// Backward transform.
         /// </summary>
         /// <param name="data">Matrix</param>
         /// <returns>Matrix</returns>
-        ComplexF[,] Backward(ComplexF[,] data);
+        Complex32[,] Backward(Complex32[,] data);
         #endregion
     }
 }

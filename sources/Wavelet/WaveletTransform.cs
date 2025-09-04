@@ -73,7 +73,7 @@ namespace UMapx.Wavelet
         /// <returns>Array</returns>
         public float[] Backward(float[] B)
         {
-            int N = B.Length, L = Math.Min((int)MathsF.Log2(N), waveletDecomposition.Levels);
+            int N = B.Length, L = Math.Min((int)Maths.Log2(N), waveletDecomposition.Levels);
             int aLen = N >> L; int pos = 0;
             var coeffs = new float[L + 1][];
             coeffs[0] = new float[aLen];
@@ -135,7 +135,7 @@ namespace UMapx.Wavelet
         public float[,] Backward(float[,] B)
         {
             int R = B.GetLength(0), C = B.GetLength(1);
-            int L = Math.Min(Math.Min((int)MathsF.Log2(R), (int)MathsF.Log2(C)), waveletDecomposition.Levels);
+            int L = Math.Min(Math.Min((int)Maths.Log2(R), (int)Maths.Log2(C)), waveletDecomposition.Levels);
             var packs = new float[1 + 3 * L][,];
             int hL = R >> L, wL = C >> L; var LL = new float[hL, wL];
 
@@ -176,11 +176,11 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Forward(ComplexF[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             var packs = waveletDecomposition.Forward(A);
             int N = A.Length;
-            var y = new ComplexF[N];
+            var y = new Complex32[N];
             int pos = 0;
 
             for (int i = 0; i < packs.Length; i++)
@@ -197,20 +197,20 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
-            int N = B.Length, L = Math.Min((int)MathsF.Log2(N), waveletDecomposition.Levels);
+            int N = B.Length, L = Math.Min((int)Maths.Log2(N), waveletDecomposition.Levels);
             int aLen = N >> L;
             int pos = 0;
-            var coeffs = new ComplexF[L + 1][];
-            coeffs[0] = new ComplexF[aLen];
+            var coeffs = new Complex32[L + 1][];
+            coeffs[0] = new Complex32[aLen];
             Array.Copy(B, pos, coeffs[0], 0, aLen);
             pos += aLen;
 
             for (int lev = L; lev >= 1; lev--)
             {
                 int dLen = N >> lev;
-                var d = new ComplexF[dLen];
+                var d = new Complex32[dLen];
                 Array.Copy(B, pos, d, 0, dLen);
                 pos += dLen;
                 coeffs[L - lev + 1] = d;
@@ -223,13 +223,13 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Forward(ComplexF[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             var packs = waveletDecomposition.Forward(A);
             int L = (packs.Length - 1) / 3;
             int rows = packs[0].GetLength(0) << L;
             int cols = packs[0].GetLength(1) << L;
-            var Y = new ComplexF[rows, cols];
+            var Y = new Complex32[rows, cols];
 
             for (int r = 0; r < packs[0].GetLength(0); r++)
             {
@@ -264,13 +264,13 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             int R = B.GetLength(0), C = B.GetLength(1);
-            int L = Math.Min(Math.Min((int)MathsF.Log2(R), (int)MathsF.Log2(C)), waveletDecomposition.Levels);
-            var packs = new ComplexF[1 + 3 * L][,];
+            int L = Math.Min(Math.Min((int)Maths.Log2(R), (int)Maths.Log2(C)), waveletDecomposition.Levels);
+            var packs = new Complex32[1 + 3 * L][,];
             int hL = R >> L, wL = C >> L;
-            var LL = new ComplexF[hL, wL];
+            var LL = new Complex32[hL, wL];
 
             for (int r = 0; r < hL; r++)
             {
@@ -285,9 +285,9 @@ namespace UMapx.Wavelet
             for (int lev = L; lev >= 1; lev--)
             {
                 int h = R >> (lev - 1), w = C >> (lev - 1), hr = h >> 1, wc = w >> 1;
-                var LH = new ComplexF[hr, wc];
-                var HL = new ComplexF[hr, wc];
-                var HH = new ComplexF[hr, wc];
+                var LH = new Complex32[hr, wc];
+                var HL = new Complex32[hr, wc];
+                var HH = new Complex32[hr, wc];
 
                 for (int r = 0; r < hr; r++)
                 {

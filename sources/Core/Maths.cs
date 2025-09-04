@@ -7,7 +7,7 @@ namespace UMapx.Core
     /// <summary>
     /// Used to implement basic algebraic, trigonometric and hyperbolic operations.
     /// </summary>
-    public static class MathsF
+    public static class Maths
     {
         #region Constant
         /// <summary>
@@ -45,7 +45,7 @@ namespace UMapx.Core
         /// <summary>   
         /// Imaginary one.
         /// </summary>
-        public static readonly ComplexF I = ComplexF.I;
+        public static readonly Complex32 I = Complex32.I;
         #endregion
 
         #region Types and ranges
@@ -239,7 +239,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Boolean</returns>
-        public static bool IsSingular(ComplexF a)
+        public static bool IsSingular(Complex32 a)
         {
             if (IsSingular(a.Real) || IsSingular(a.Imag))
             {
@@ -269,7 +269,7 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsPower(float a, float b)
         {
-            float log = MathsF.Log(a, b);
+            float log = Maths.Log(a, b);
             if (IsInteger(log))
             {
                 return true;
@@ -283,7 +283,7 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsInteger(float a)
         {
-            if (a == MathsF.Round(a))
+            if (a == Maths.Round(a))
             {
                 return true;
             }
@@ -520,7 +520,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static float Abs(ComplexF a)
+        public static float Abs(Complex32 a)
         {
             return a.Abs;
         }
@@ -529,7 +529,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static float Angle(ComplexF a)
+        public static float Angle(Complex32 a)
         {
             return a.Angle;
         }
@@ -538,7 +538,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Log(ComplexF a)
+        public static Complex32 Log(Complex32 a)
         {
             return Log(a, E);
         }
@@ -547,7 +547,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Log10(ComplexF a)
+        public static Complex32 Log10(Complex32 a)
         {
             return Log(a, 10.0f);
         }
@@ -556,7 +556,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Log2(ComplexF a)
+        public static Complex32 Log2(Complex32 a)
         {
             return Log(a, 2.0f);
         }
@@ -566,16 +566,16 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Base</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Log(ComplexF a, float b)
+        public static Complex32 Log(Complex32 a, float b)
         {
-            return new ComplexF((float)Math.Log(a.Abs), a.Angle) / Math.Log(b);
+            return new Complex32((float)Math.Log(a.Abs), a.Angle) / Math.Log(b);
         }
         /// <summary>
         /// Returns the exponent raised to a complex degree.
         /// </summary>
         /// <param name="a">Power</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Exp(ComplexF a)
+        public static Complex32 Exp(Complex32 a)
         {
             return Pow(E, a);
         }
@@ -585,10 +585,10 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Power</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Pow(float a, ComplexF b)
+        public static Complex32 Pow(float a, Complex32 b)
         {
             float r = (float)Math.Pow(a, b.Real);
-            return new ComplexF(r * (float)Math.Cos(b.Imag), r * (float)Math.Sin(b.Imag));
+            return new Complex32(r * (float)Math.Cos(b.Imag), r * (float)Math.Sin(b.Imag));
         }
         /// <summary>
         /// Returns the number raised to the power.
@@ -596,9 +596,9 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Power</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Pow(ComplexF a, float b)
+        public static Complex32 Pow(Complex32 a, float b)
         {
-            return Math.Pow(a.Abs, b) * new ComplexF((float)Math.Cos(b * a.Angle), (float)Math.Sin(b * a.Angle));
+            return Math.Pow(a.Abs, b) * new Complex32((float)Math.Cos(b * a.Angle), (float)Math.Sin(b * a.Angle));
         }
         /// <summary>
         /// Returns the number raised to the power.
@@ -606,18 +606,18 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Power</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Pow(ComplexF a, ComplexF b)
+        public static Complex32 Pow(Complex32 a, Complex32 b)
         {
-            return MathsF.Exp(b * MathsF.Log(a));
+            return Maths.Exp(b * Maths.Log(a));
         }
         /// <summary>
         /// Returns the square root of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Sqrt(ComplexF a)
+        public static Complex32 Sqrt(Complex32 a)
         {
-            return MathsF.Sqrt(a, 2);
+            return Maths.Sqrt(a, 2);
         }
         /// <summary>
         /// Returns the root of a number.
@@ -625,9 +625,9 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Power</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Sqrt(ComplexF a, float b)
+        public static Complex32 Sqrt(Complex32 a, float b)
         {
-            return MathsF.FromPolar((float)Math.Sqrt(a.Abs), a.Angle / b);
+            return Maths.FromPolar((float)Math.Sqrt(a.Abs), a.Angle / b);
         }
         /// <summary>
         /// Returns the root of a number.
@@ -635,9 +635,9 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="b">Power</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Sqrt(ComplexF a, ComplexF b)
+        public static Complex32 Sqrt(Complex32 a, Complex32 b)
         {
-            return MathsF.Exp(MathsF.Log(a) / b);
+            return Maths.Exp(Maths.Log(a) / b);
         }
         /// <summary>
         /// Returns complex number.
@@ -645,18 +645,18 @@ namespace UMapx.Core
         /// <param name="abs">Module</param>
         /// <param name="angle">Angle</param>
         /// <returns>Complex number</returns>
-        public static ComplexF FromPolar(float abs, float angle)
+        public static Complex32 FromPolar(float abs, float angle)
         {
-            return new ComplexF(abs * (float)Math.Cos(angle), abs * (float)Math.Sin(angle));
+            return new Complex32(abs * (float)Math.Cos(angle), abs * (float)Math.Sin(angle));
         }
         /// <summary>
         /// Returns the rounded number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Round(ComplexF a)
+        public static Complex32 Round(Complex32 a)
         {
-            return MathsF.Round(a, 0);
+            return Maths.Round(a, 0);
         }
         /// <summary>
         /// Returns the rounded number.
@@ -664,9 +664,9 @@ namespace UMapx.Core
         /// <param name="a">Complex number</param>
         /// <param name="dig">Digits</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Round(ComplexF a, int dig)
+        public static Complex32 Round(Complex32 a, int dig)
         {
-            return new ComplexF((float)Math.Round(a.Real, dig), (float)Math.Round(a.Imag, dig));
+            return new Complex32((float)Math.Round(a.Real, dig), (float)Math.Round(a.Imag, dig));
         }
         #endregion
         #endregion
@@ -789,108 +789,108 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Cos(ComplexF a)
+        public static Complex32 Cos(Complex32 a)
         {
-            return new ComplexF((float)Math.Cos(a.Real) * (float)Math.Cosh(a.Imag), -((float)Math.Sin(a.Real) * (float)Math.Sinh(a.Imag)));
+            return new Complex32((float)Math.Cos(a.Real) * (float)Math.Cosh(a.Imag), -((float)Math.Sin(a.Real) * (float)Math.Sinh(a.Imag)));
         }
         /// <summary>
         /// Returns the sine of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Sin(ComplexF a)
+        public static Complex32 Sin(Complex32 a)
         {
-            return new ComplexF((float)Math.Sin(a.Real) * (float)Math.Cosh(a.Imag), (float)Math.Cos(a.Real) * (float)Math.Sinh(a.Imag));
+            return new Complex32((float)Math.Sin(a.Real) * (float)Math.Cosh(a.Imag), (float)Math.Cos(a.Real) * (float)Math.Sinh(a.Imag));
         }
         /// <summary>
         /// Returns the tangent of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Tan(ComplexF a)
+        public static Complex32 Tan(Complex32 a)
         {
-            return MathsF.Sin(a) / MathsF.Cos(a);
+            return Maths.Sin(a) / Maths.Cos(a);
         }
         /// <summary>
         /// Returns the cotangent of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Ctan(ComplexF a)
+        public static Complex32 Ctan(Complex32 a)
         {
-            return MathsF.Cos(a) / MathsF.Sin(a);
+            return Maths.Cos(a) / Maths.Sin(a);
         }
         /// <summary>
         /// Returns the secant of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Sec(ComplexF a)
+        public static Complex32 Sec(Complex32 a)
         {
-            return 1.0 / MathsF.Cos(a);
+            return 1.0 / Maths.Cos(a);
         }
         /// <summary>
         /// Returns the cosecant of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Cosc(ComplexF a)
+        public static Complex32 Cosc(Complex32 a)
         {
-            return 1.0 / MathsF.Sin(a);
+            return 1.0 / Maths.Sin(a);
         }
         /// <summary>
         /// Returns the arccosine of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Acos(ComplexF a)
+        public static Complex32 Acos(Complex32 a)
         {
-            return -I * MathsF.Log(a + I * MathsF.Sqrt(1.0 - a * a));
+            return -I * Maths.Log(a + I * Maths.Sqrt(1.0 - a * a));
         }
         /// <summary>
         /// Returns the arcsine of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Asin(ComplexF a)
+        public static Complex32 Asin(Complex32 a)
         {
-            return -I * MathsF.Log(I * a + MathsF.Sqrt(1.0 - a * a));
+            return -I * Maths.Log(I * a + Maths.Sqrt(1.0 - a * a));
         }
         /// <summary>
         /// Returns the arctangent of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Atan(ComplexF a)
+        public static Complex32 Atan(Complex32 a)
         {
-            return I / 2.0 * (MathsF.Log(1.0 - I * a) - MathsF.Log(1.0 + I * a));
+            return I / 2.0 * (Maths.Log(1.0 - I * a) - Maths.Log(1.0 + I * a));
         }
         /// <summary>
         /// Returns the arccotangent of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Actan(ComplexF a)
+        public static Complex32 Actan(Complex32 a)
         {
-            return I / 2.0 * (MathsF.Log((a - I) / a) - MathsF.Log((a + I) / a));
+            return I / 2.0 * (Maths.Log((a - I) / a) - Maths.Log((a + I) / a));
         }
         /// <summary>
         /// Returns the arcsecance of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Asec(ComplexF a)
+        public static Complex32 Asec(Complex32 a)
         {
-            return MathsF.Acos(1.0 / a);
+            return Maths.Acos(1.0 / a);
         }
         /// <summary>
         /// Returns the arccosecant of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Acosc(ComplexF a)
+        public static Complex32 Acosc(Complex32 a)
         {
-            return MathsF.Asin(1.0 / a);
+            return Maths.Asin(1.0 / a);
         }
         #endregion
         #endregion
@@ -1025,108 +1025,108 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Sinh(ComplexF a)
+        public static Complex32 Sinh(Complex32 a)
         {
-            return new ComplexF((float)Math.Sinh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Cosh(a.Real) * (float)Math.Sin(a.Imag));
+            return new Complex32((float)Math.Sinh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Cosh(a.Real) * (float)Math.Sin(a.Imag));
         }
         /// <summary>
         /// Returns the hyperbolic cosine of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Cosh(ComplexF a)
+        public static Complex32 Cosh(Complex32 a)
         {
-            return new ComplexF((float)Math.Cosh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Sinh(a.Real) * (float)Math.Sin(a.Imag));
+            return new Complex32((float)Math.Cosh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Sinh(a.Real) * (float)Math.Sin(a.Imag));
         }
         /// <summary>
         /// Returns the hyperbolic tangent of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Tanh(ComplexF a)
+        public static Complex32 Tanh(Complex32 a)
         {
-            return MathsF.Sinh(a) / MathsF.Cosh(a);
+            return Maths.Sinh(a) / Maths.Cosh(a);
         }
         /// <summary>
         /// Returns the hyperbolic cotangent of an angle.
         /// </summary>
         /// <param name="a">Angle in radians</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Ctanh(ComplexF a)
+        public static Complex32 Ctanh(Complex32 a)
         {
-            return MathsF.Cosh(a) / MathsF.Sinh(a);
+            return Maths.Cosh(a) / Maths.Sinh(a);
         }
         /// <summary>
         /// Returns the hyperbolic secant of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Sech(ComplexF a)
+        public static Complex32 Sech(Complex32 a)
         {
-            return 1.0 / MathsF.Cosh(a);
+            return 1.0 / Maths.Cosh(a);
         }
         /// <summary>
         /// Returns the hyperbolic cosecant of an angle.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Cosch(ComplexF a)
+        public static Complex32 Cosch(Complex32 a)
         {
-            return 1.0 / MathsF.Sinh(a);
+            return 1.0 / Maths.Sinh(a);
         }
         /// <summary>
         /// Returns the hyperbolic arcsine of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Asinh(ComplexF a)
+        public static Complex32 Asinh(Complex32 a)
         {
-            return MathsF.Log(a + MathsF.Sqrt(a * a + 1.0));
+            return Maths.Log(a + Maths.Sqrt(a * a + 1.0));
         }
         /// <summary>
         /// Returns the hyperbolic arccosine of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Acosh(ComplexF a)
+        public static Complex32 Acosh(Complex32 a)
         {
-            return MathsF.Log(a + MathsF.Sqrt(a * a - 1.0));
+            return Maths.Log(a + Maths.Sqrt(a * a - 1.0));
         }
         /// <summary>
         /// Returns the hyperbolic arctangent of a number.
         /// </summary>
         /// <param name="a">Value</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Atanh(ComplexF a)
+        public static Complex32 Atanh(Complex32 a)
         {
-            return 1.0 / 2.0 * MathsF.Log((1.0 + a) / (1.0 - a));
+            return 1.0 / 2.0 * Maths.Log((1.0 + a) / (1.0 - a));
         }
         /// <summary>
         /// Returns the hyperbolic arccotangent of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Actanh(ComplexF a)
+        public static Complex32 Actanh(Complex32 a)
         {
-            return 1.0 / 2.0 * MathsF.Log((a + 1.0) / (a - 1.0));
+            return 1.0 / 2.0 * Maths.Log((a + 1.0) / (a - 1.0));
         }
         /// <summary>
         /// Returns the hyperbolic arcsecance of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Asech(ComplexF a)
+        public static Complex32 Asech(Complex32 a)
         {
-            return MathsF.Log(1.0 / a + MathsF.Sqrt(1.0 / a + 1.0) + MathsF.Sqrt(1.0 / a - 1.0));
+            return Maths.Log(1.0 / a + Maths.Sqrt(1.0 / a + 1.0) + Maths.Sqrt(1.0 / a - 1.0));
         }
         /// <summary>
         /// Returns the hyperbolic arccosecant of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
-        public static ComplexF Acosch(ComplexF a)
+        public static Complex32 Acosch(Complex32 a)
         {
-            return MathsF.Log(1.0 / a + MathsF.Sqrt(1.0 / a / a + 1.0));
+            return Maths.Log(1.0 / a + Maths.Sqrt(1.0 / a / a + 1.0));
         }
         #endregion
         #endregion
@@ -1155,7 +1155,7 @@ namespace UMapx.Core
             else
             {
                 // prime or not?
-                int x = MathsF.Pollard(p);
+                int x = Maths.Pollard(p);
                 return x == p;
             }
         }
@@ -1182,7 +1182,7 @@ namespace UMapx.Core
             else
             {
                 // prime or not?
-                long x = MathsF.Pollard(p);
+                long x = Maths.Pollard(p);
                 return x == p;
             }
         }
@@ -1200,7 +1200,7 @@ namespace UMapx.Core
 
             while (x != 1)
             {
-                x = MathsF.Gcd(a, p);
+                x = Maths.Gcd(a, p);
                 p++;
             }
 
@@ -1219,7 +1219,7 @@ namespace UMapx.Core
 
             while (x != 1)
             {
-                x = MathsF.Gcd(a, p);
+                x = Maths.Gcd(a, p);
                 p++;
             }
 
@@ -1310,16 +1310,16 @@ namespace UMapx.Core
         /// <returns>Result of a^x mod p</returns>
         private static long leftmodexp(long a, long x, long p)
         {
-            int[] X = MathsF.Decimal2Base(x, 2);
+            int[] X = Maths.Decimal2Base(x, 2);
             int t = X.Length, i;
             long y = 1;
 
             for (i = t - 1; i >= 0; i--)
             {
-                y = MathsF.Mod(y * y, p);
+                y = Maths.Mod(y * y, p);
                 if (X[i] == 1)
                 {
-                    y = MathsF.Mod(y * a, p);
+                    y = Maths.Mod(y * a, p);
                 }
             }
             return y;
@@ -1333,7 +1333,7 @@ namespace UMapx.Core
         /// <returns>Result of a^x mod p</returns>
         private static long rightmodexp(long a, long x, long p)
         {
-            int[] X = MathsF.Decimal2Base(x, 2);
+            int[] X = Maths.Decimal2Base(x, 2);
             int t = X.Length, i;
             long y = 1, s = a;
 
@@ -1341,9 +1341,9 @@ namespace UMapx.Core
             {
                 if (X[i] == 1)
                 {
-                    y = MathsF.Mod(y * s, p);
+                    y = Maths.Mod(y * s, p);
                 }
-                s = MathsF.Mod(s * s, p);
+                s = Maths.Mod(s * s, p);
             }
             return y;
         }
@@ -1361,7 +1361,7 @@ namespace UMapx.Core
 
             if (gcd == 1)
             {
-                return (x < 0) ? MathsF.Mod(x, n) : x;
+                return (x < 0) ? Maths.Mod(x, n) : x;
             }
             return 0;
         }
@@ -1378,7 +1378,7 @@ namespace UMapx.Core
 
             if (gcd == 1)
             {
-                return (x < 0) ? MathsF.Mod(x, n) : x;
+                return (x < 0) ? Maths.Mod(x, n) : x;
             }
             return 0;
         }
@@ -1398,8 +1398,8 @@ namespace UMapx.Core
 
             while (V[0] != 0)
             {
-                q = (int)MathsF.Floor(U[0] / V[0]);
-                T = new int[3] { MathsF.Mod(U[0], V[0]), U[1] - q * V[1], U[2] - q * V[2] };
+                q = (int)Maths.Floor(U[0] / V[0]);
+                T = new int[3] { Maths.Mod(U[0], V[0]), U[1] - q * V[1], U[2] - q * V[2] };
                 U = V;
                 V = T;
             }
@@ -1421,8 +1421,8 @@ namespace UMapx.Core
 
             while (V[0] != 0)
             {
-                q = (long)MathsF.Floor(U[0] / V[0]);
-                T = new long[3] { MathsF.Mod(U[0], V[0]), U[1] - q * V[1], U[2] - q * V[2] };
+                q = (long)Maths.Floor(U[0] / V[0]);
+                T = new long[3] { Maths.Mod(U[0], V[0]), U[1] - q * V[1], U[2] - q * V[2] };
                 U = V;
                 V = T;
             }
@@ -1438,12 +1438,12 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int Gcd(int a, int b)
         {
-            int q = MathsF.Mod(a, b);
+            int q = Maths.Mod(a, b);
             while (q != 0)
             {
                 a = b;
                 b = q;
-                q = MathsF.Mod(a, b);
+                q = Maths.Mod(a, b);
             }
             return b;
         }
@@ -1455,12 +1455,12 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static long Gcd(long a, long b)
         {
-            long q = MathsF.Mod(a, b);
+            long q = Maths.Mod(a, b);
             while (q != 0)
             {
                 a = b;
                 b = q;
-                q = MathsF.Mod(a, b);
+                q = Maths.Mod(a, b);
             }
             return b;
         }
@@ -1473,7 +1473,7 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int Lcm(int a, int b)
         {
-            return (int)MathsF.Abs(a * b) / Gcd(a, b);
+            return (int)Maths.Abs(a * b) / Gcd(a, b);
         }
         /// <summary>
         /// Returns the value of the least common multiple of two numbers.
@@ -1483,7 +1483,7 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static long Lcm(long a, long b)
         {
-            return (long)MathsF.Abs(a * b) / Gcd(a, b);
+            return (long)Maths.Abs(a * b) / Gcd(a, b);
         }
 
         /// <summary>
@@ -1518,7 +1518,7 @@ namespace UMapx.Core
 
             while (p > 1)
             {
-                div = MathsF.Pollard(p);
+                div = Maths.Pollard(p);
                 a.Add(div);
                 p /= div;
             }
@@ -1563,7 +1563,7 @@ namespace UMapx.Core
 
             while (p > 1)
             {
-                div = MathsF.Pollard(p);
+                div = Maths.Pollard(p);
                 a.Add(div);
                 p /= div;
             }
@@ -1592,7 +1592,7 @@ namespace UMapx.Core
                 for (count = 1; count <= c && factor <= 1; count++)
                 {
                     x = (x * x + 1) % n;
-                    factor = MathsF.Gcd(x - y, n);
+                    factor = Maths.Gcd(x - y, n);
                 }
 
                 c *= 2;
@@ -1616,7 +1616,7 @@ namespace UMapx.Core
                 for (count = 1; count <= c && factor <= 1; count++)
                 {
                     x = (x * x + 1) % n;
-                    factor = MathsF.Gcd(x - y, n);
+                    factor = Maths.Gcd(x - y, n);
                 }
 
                 c *= 2;
@@ -1634,7 +1634,7 @@ namespace UMapx.Core
         public static int Etf(int n)
         {
             // factorization with only primes
-            int[] itf = MathsF.Itf(n, true);
+            int[] itf = Maths.Itf(n, true);
             float radical = 1;
             int length = itf.Length;
 
@@ -1653,7 +1653,7 @@ namespace UMapx.Core
         public static long Etf(long n)
         {
             // factorization with only primes
-            long[] itf = MathsF.Itf(n, true);
+            long[] itf = Maths.Itf(n, true);
             float radical = 1;
             int length = itf.Length;
 
@@ -1801,7 +1801,7 @@ namespace UMapx.Core
         public static int Radical(int n)
         {
             // factorization
-            int[] itf = MathsF.Itf(n, true);
+            int[] itf = Maths.Itf(n, true);
             int radical = 1;
             int length = itf.Length;
 
@@ -1821,7 +1821,7 @@ namespace UMapx.Core
         public static long Radical(long n)
         {
             // factorization
-            long[] itf = MathsF.Itf(n, true);
+            long[] itf = Maths.Itf(n, true);
             long radical = 1;
             int length = itf.Length;
 
@@ -1858,7 +1858,7 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
-                X[i] = (int)(MathsF.Mod(xc, newbase));
+                X[i] = (int)(Maths.Mod(xc, newbase));
                 xc = xc / newbase;
             }
 
@@ -1880,7 +1880,7 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
-                a += (long)(x[i] * MathsF.Pow(thisbase, i));
+                a += (long)(x[i] * Maths.Pow(thisbase, i));
             }
 
             return a;
@@ -1900,7 +1900,7 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
-                a += (long)(x[i] * MathsF.Pow(base10, n - i - 1));
+                a += (long)(x[i] * Maths.Pow(base10, n - i - 1));
             }
             return a;
         }
@@ -1924,7 +1924,7 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int NumLength(long x, int numbase)
         {
-            return (int)MathsF.Floor(MathsF.Log(x, numbase)) + 1;
+            return (int)Maths.Floor(Maths.Log(x, numbase)) + 1;
         }
         #endregion
 
@@ -1959,7 +1959,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Hypotenuse(ComplexF z) => MathsF.Hypotenuse(z.Real, z.Imag);
+        public static Complex32 Hypotenuse(Complex32 z) => Maths.Hypotenuse(z.Real, z.Imag);
 
         /// <summary>
         /// Implements the solution of a cubic equation of the form:
@@ -1969,9 +1969,9 @@ namespace UMapx.Core
         /// <param name="b">Coefficient "b"</param>
         /// <param name="c">Coefficient "c"</param>
         /// <returns>Array</returns>
-        public static ComplexF[] Cubic(float a, float b, float c)
+        public static Complex32[] Cubic(float a, float b, float c)
         {
-            ComplexF x1 = 0, x2 = 0, x3 = 0;
+            Complex32 x1 = 0, x2 = 0, x3 = 0;
             float Q = (a * a - 3.0f * b) / 9.0f;
             float R = (2.0f * a * a * a - 9.0f * a * b + 27.0f * c) / 54.0f;
             float S = Q * Q * Q - R * R;
@@ -1992,29 +1992,29 @@ namespace UMapx.Core
             {
                 if (Q > 0)
                 {
-                    fi = MathsF.Acosh(Math.Abs(R) / (float)Math.Pow(Math.Abs(Q), 3.0f / 2.0f)) / 3.0f;
-                    v0 = Math.Sign(R) * MathsF.Sqrt(Q) * MathsF.Cosh(fi);
-                    v1 = MathsF.Sqrt(3) * MathsF.Sqrt(Q) * MathsF.Sinh(fi);
+                    fi = Maths.Acosh(Math.Abs(R) / (float)Math.Pow(Math.Abs(Q), 3.0f / 2.0f)) / 3.0f;
+                    v0 = Math.Sign(R) * Maths.Sqrt(Q) * Maths.Cosh(fi);
+                    v1 = Maths.Sqrt(3) * Maths.Sqrt(Q) * Maths.Sinh(fi);
 
                     x1 = -2 * v0 - a3;
-                    x2 = v0 - a3 + MathsF.I * v1;
+                    x2 = v0 - a3 + Maths.I * v1;
                     x3 = x2.Conjugate;
                 }
                 else if (Q < 0)
                 {
-                    fi = MathsF.Asinh(Math.Abs(R) / MathsF.Pow(Math.Abs(Q), 3.0f / 2.0f)) / 3.0f;
-                    v0 = Math.Sign(R) * MathsF.Sqrt(Math.Abs(Q)) * MathsF.Sinh(fi);
-                    v1 = MathsF.Sqrt(3) * MathsF.Sqrt(Math.Abs(Q)) * MathsF.Cosh(fi);
+                    fi = Maths.Asinh(Math.Abs(R) / Maths.Pow(Math.Abs(Q), 3.0f / 2.0f)) / 3.0f;
+                    v0 = Math.Sign(R) * Maths.Sqrt(Math.Abs(Q)) * Maths.Sinh(fi);
+                    v1 = Maths.Sqrt(3) * Maths.Sqrt(Math.Abs(Q)) * Maths.Cosh(fi);
 
                     x1 = -2 * v0 - a3;
-                    x2 = v0 - a3 + MathsF.I * v1;
+                    x2 = v0 - a3 + Maths.I * v1;
                     x3 = x2.Conjugate;
                 }
                 else if (Q == 0)
                 {
-                    x1 = -MathsF.Sqrt(c - a * a * a / 27.0f, 3.0f) - a3;
-                    v0 = MathsF.Abs((a - 3 * x1) * (a + x1) - 4 * b);
-                    x2 = MathsF.I / 2.0 * Math.Sqrt(v0) - (a + x1) / 2.0;
+                    x1 = -Maths.Sqrt(c - a * a * a / 27.0f, 3.0f) - a3;
+                    v0 = Maths.Abs((a - 3 * x1) * (a + x1) - 4 * b);
+                    x2 = Maths.I / 2.0 * Math.Sqrt(v0) - (a + x1) / 2.0;
                     x3 = x2.Conjugate;
                 }
             }
@@ -2024,7 +2024,7 @@ namespace UMapx.Core
                 x1 = -2 * v0 - a3;
                 x2 = x3 = v0 - a3;
             }
-            return new ComplexF[] { x1, x2, x3 };
+            return new Complex32[] { x1, x2, x3 };
         }
         /// <summary>
         /// Implements a solution to a quadratic equation of the form: 
@@ -2034,13 +2034,13 @@ namespace UMapx.Core
         /// <param name="b">Coefficient "b"</param>
         /// <param name="c">Coefficient "c"</param>
         /// <returns>Array</returns>
-        public static ComplexF[] Quadratic(float a, float b, float c)
+        public static Complex32[] Quadratic(float a, float b, float c)
         {
             float dis = b * b - 4 * a * c;
             float abs = (float)Math.Sqrt(Math.Abs(dis));
-            ComplexF root = dis < 0 ? new ComplexF(0, abs) : new ComplexF(abs, 0);
-            ComplexF q = -0.5 * (b + Math.Sign(b) * root);
-            return new ComplexF[] { q / a, c / q };
+            Complex32 root = dis < 0 ? new Complex32(0, abs) : new Complex32(abs, 0);
+            Complex32 q = -0.5 * (b + Math.Sign(b) * root);
+            return new Complex32[] { q / a, c / q };
         }
         /// <summary>
         /// Implements the solution of a biquadratic equation of the form:
@@ -2050,13 +2050,13 @@ namespace UMapx.Core
         /// <param name="b">Coefficient "b"</param>
         /// <param name="c">Coefficient "c"</param>
         /// <returns>Array</returns>
-        public static ComplexF[] BiQuadratic(float a, float b, float c)
+        public static Complex32[] BiQuadratic(float a, float b, float c)
         {
             var s = Quadratic(a, b, c);
-            return new ComplexF[] {     MathsF.Sqrt(s[0]),
-                                      -MathsF.Sqrt(s[0]),
-                                       MathsF.Sqrt(s[1]),
-                                      -MathsF.Sqrt(s[1]) };
+            return new Complex32[] {     Maths.Sqrt(s[0]),
+                                      -Maths.Sqrt(s[0]),
+                                       Maths.Sqrt(s[1]),
+                                      -Maths.Sqrt(s[1]) };
         }
         #endregion
 
@@ -2072,7 +2072,7 @@ namespace UMapx.Core
             // MATLAB version of
             // Givens rotations:
             float c, s;
-            float absx = MathsF.Abs(a);
+            float absx = Maths.Abs(a);
 
             if (absx == 0)
             {
@@ -2095,12 +2095,12 @@ namespace UMapx.Core
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[,] Rotation(ComplexF a, ComplexF b)
+        public static Complex32[,] Rotation(Complex32 a, Complex32 b)
         {
             // MATLAB version of
             // Givens rotations:
-            ComplexF c, s;
-            ComplexF absx = MathsF.Abs(a);
+            Complex32 c, s;
+            Complex32 absx = Maths.Abs(a);
 
             if (absx == 0)
             {
@@ -2109,13 +2109,13 @@ namespace UMapx.Core
             }
             else
             {
-                ComplexF[] v = new ComplexF[] { a, b };
+                Complex32[] v = new Complex32[] { a, b };
                 float norm = v.Norm();
                 c = absx / norm;
                 s = a / absx * (b.Conjugate / norm);
             }
 
-            return new ComplexF[,] { { c, s }, { -s.Conjugate, c } };
+            return new Complex32[,] { { c, s }, { -s.Conjugate, c } };
         }
         #endregion
 
@@ -2135,12 +2135,12 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Complex value</param>
         /// <returns>Value</returns>
-        public static ComplexF Sign(ComplexF z)
+        public static Complex32 Sign(Complex32 z)
         {
             float re = z.Real, im = z.Imag;
             float r = (float)Math.Sqrt(re * re + im * im);
-            if (r == 0f) return new ComplexF(0f, 0f);
-            return new ComplexF(re / r, im / r);
+            if (r == 0f) return new Complex32(0f, 0f);
+            return new Complex32(re / r, im / r);
         }
 
         /// <summary>
@@ -2160,14 +2160,14 @@ namespace UMapx.Core
         /// <param name="magnitude">Value providing the magnitude</param>
         /// <param name="sign">Value providing the sign</param>
         /// <returns>Value</returns>
-        public static ComplexF CopySign(float magnitude, ComplexF sign)
+        public static Complex32 CopySign(float magnitude, Complex32 sign)
         {
             float mag = Math.Abs(magnitude);
             float re = sign.Real, im = sign.Imag;
             float r = (float)Math.Sqrt(re * re + im * im);
-            if (r == 0f) return new ComplexF(mag, 0f);
+            if (r == 0f) return new Complex32(mag, 0f);
             float s = mag / r;
-            return new ComplexF(re * s, im * s);
+            return new Complex32(re * s, im * s);
         }
         /// <summary>
         /// Copy phase from 'sign' to the magnitude |magnitude| of a complex number.
@@ -2176,14 +2176,14 @@ namespace UMapx.Core
         /// <param name="magnitude">Value providing the magnitude</param>
         /// <param name="sign">Value providing the sign</param>
         /// <returns>Value</returns>
-        public static ComplexF CopySign(ComplexF magnitude, ComplexF sign)
+        public static Complex32 CopySign(Complex32 magnitude, Complex32 sign)
         {
             float mag = (float)Math.Sqrt(magnitude.Real * magnitude.Real + magnitude.Imag * magnitude.Imag);
             float re = sign.Real, im = sign.Imag;
             float r = (float)Math.Sqrt(re * re + im * im);
-            if (r == 0f) return new ComplexF(mag, 0f);
+            if (r == 0f) return new Complex32(mag, 0f);
             float s = mag / r;
-            return new ComplexF(re * s, im * s);
+            return new Complex32(re * s, im * s);
         }
         /// <summary>
         /// Copy phase from 'sign' to the magnitude |magnitude| of a complex number.
@@ -2192,15 +2192,15 @@ namespace UMapx.Core
         /// <param name="magnitude">Value providing the magnitude</param>
         /// <param name="sign">Value providing the sign</param>
         /// <returns>Value</returns>
-        public static ComplexF CopySign(ComplexF magnitude, float sign)
+        public static Complex32 CopySign(Complex32 magnitude, float sign)
         {
             if (float.IsNaN(sign))
-                return ComplexF.NaN;
+                return Complex32.NaN;
 
             int s = Math.Sign(sign);
             if (s > 0) return magnitude;
             if (s < 0) return -magnitude;
-            return ComplexF.Zero;
+            return Complex32.Zero;
         }
 
         /// <summary>

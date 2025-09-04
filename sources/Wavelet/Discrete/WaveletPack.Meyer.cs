@@ -227,8 +227,8 @@ namespace UMapx.Wavelet
                0.000000000000000f
                 };
 
-                float[] ilp = MatrixF.Flip(lp);
-                float[] ihp = MatrixF.Flip(hp);
+                float[] ilp = Matrix.Flip(lp);
+                float[] ihp = Matrix.Flip(hp);
                 return new WaveletPack(lp, hp, ilp, ihp);
             }
         }

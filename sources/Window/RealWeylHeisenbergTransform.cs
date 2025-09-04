@@ -43,27 +43,27 @@ namespace UMapx.Window
                 throw new ArgumentException("Number of frequency shifts not defined correctly");
 
             float[,] G = new float[2 * N, 2 * N];
-            ComplexF c = 2 * MathsF.Pi * MathsF.I;
+            Complex32 c = 2 * Maths.Pi * Maths.I;
             float a = M / 2.0f;
 
             Parallel.For(0, N, n =>
             {
                 float phase = n - a / 2.0f;
                 int k, l, u, i, j;
-                ComplexF exp;
+                Complex32 exp;
 
                 for (k = 0; k < M; k++)
                 {
-                    exp = MathsF.Exp(c * k / M * phase);
+                    exp = Maths.Exp(c * k / M * phase);
 
                     for (l = 0; l < L; l++)
                     {
                         u = l * M + k;
-                        i = MathsF.Mod(n - l * M, N);
-                        j = MathsF.Mod(n + M / 2 - l * M, N);
+                        i = Maths.Mod(n - l * M, N);
+                        j = Maths.Mod(n + M / 2 - l * M, N);
 
                         var G1 =           g0[i] * exp;
-                        var G2 = MathsF.I * g0[j] * exp;
+                        var G2 = Maths.I * g0[j] * exp;
 
                         // implements the [2N, 2N] WH matrix
                         // https://github.com/asiryan/Weyl-Heisenberg-Toolbox/blob/master/matlab/toolbox_scripts/weylhzr.m
@@ -124,7 +124,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[] B = MatrixF.Dot(A, U.Transponate());
+            float[] B = Core.Matrix.Dot(A, (float[,])Core.Matrix.Transponate(U));
             return B;
         }
         /// <summary>
@@ -136,7 +136,7 @@ namespace UMapx.Window
         {
             int N = B.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[] A = MatrixF.Dot(B, U);
+            float[] A = Core.Matrix.Dot(B, U);
             return A;
         }
         /// <summary>
@@ -196,11 +196,11 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public override ComplexF[] Forward(ComplexF[] A)
+        public override Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            ComplexF[] B = MatrixF.Dot(A, U.Transponate());
+            Complex32[] B = Core.Matrix.Dot(A, (float[,])Core.Matrix.Transponate(U));
             return B;
         }
         /// <summary>
@@ -208,11 +208,11 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public override ComplexF[] Backward(ComplexF[] B)
+        public override Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            ComplexF[] A = MatrixF.Dot(B, U);
+            Complex32[] A = Core.Matrix.Dot(B, U);
             return A;
         }
         /// <summary>
@@ -220,12 +220,12 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public override ComplexF[,] Forward(ComplexF[,] A)
+        public override Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
             float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
-            ComplexF[,] B;
+            Complex32[,] B;
 
             if (direction == Direction.Both)
             {
@@ -246,12 +246,12 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public override ComplexF[,] Backward(ComplexF[,] B)
+        public override Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
             float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
-            ComplexF[,] A;
+            Complex32[,] A;
 
             if (direction == Direction.Both)
             {

@@ -176,12 +176,12 @@ namespace UMapx.Colorspace
             //
 
             float r = red, g = green, b = blue;
-            float w = MathsF.Min(r, g, b);
+            float w = Maths.Min(r, g, b);
 
             r -= w; g -= w; b -= w;
 
-            float mg = MathsF.Max(r, g, b);
-            float y = MathsF.Min(r, g);
+            float mg = Maths.Max(r, g, b);
+            float y = Maths.Min(r, g);
 
             r -= y;
             g -= y;
@@ -195,7 +195,7 @@ namespace UMapx.Colorspace
             y += g;
             b += g;
 
-            float my = MathsF.Max(r, y, b);
+            float my = Maths.Max(r, y, b);
 
             //if (my > 0)
             {
@@ -241,15 +241,15 @@ namespace UMapx.Colorspace
                 float yy = y;
                 float bb = b;
 
-                float w = MathsF.Min(rr, yy, bb);
+                float w = Maths.Min(rr, yy, bb);
                 rr -= w;
                 yy -= w;
                 bb -= w;
 
-                float my = MathsF.Max(rr, yy, bb);
+                float my = Maths.Max(rr, yy, bb);
 
                 // Get the green out of the yellow and blue
-                float gg = MathsF.Min(yy, bb);
+                float gg = Maths.Min(yy, bb);
                 yy -= gg;
                 bb -= gg;
 
@@ -261,7 +261,7 @@ namespace UMapx.Colorspace
                 gg += yy;
 
                 // Normalize to values.
-                float mg = MathsF.Max(rr, gg, bb);
+                float mg = Maths.Max(rr, gg, bb);
                 float n = my / mg;
                 rr *= n;
                 gg *= n;

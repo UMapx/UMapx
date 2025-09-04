@@ -172,13 +172,13 @@ namespace UMapx.Imaging
                     break;
 
                 edR = ptr[jP + 2] + (rError * row[jC]) / summary;
-                ptr[jP + 2] = MathsF.Byte(edR);
+                ptr[jP + 2] = Maths.Byte(edR);
 
                 edG = ptr[jP + 1] + (gError * row[jC]) / summary;
-                ptr[jP + 1] = MathsF.Byte(edG);
+                ptr[jP + 1] = Maths.Byte(edG);
 
                 edB = ptr[jP + 0] + (bError * row[jC]) / summary;
-                ptr[jP + 0] = MathsF.Byte(edB);
+                ptr[jP + 0] = Maths.Byte(edB);
             }
 
             // do error diffusion to bottom neighbors
@@ -202,13 +202,13 @@ namespace UMapx.Imaging
                         continue;
 
                     edR = ptr[jP + 2] + (rError * row[jC]) / summary;
-                    ptr[jP + 2] = MathsF.Byte(edR);
+                    ptr[jP + 2] = Maths.Byte(edR);
 
                     edG = ptr[jP + 1] + (gError * row[jC]) / summary;
-                    ptr[jP + 1] = MathsF.Byte(edG);
+                    ptr[jP + 1] = Maths.Byte(edG);
 
                     edB = ptr[jP + 0] + (bError * row[jC]) / summary;
-                    ptr[jP + 0] = MathsF.Byte(edB);
+                    ptr[jP + 0] = Maths.Byte(edB);
 
                 }
             }
@@ -223,9 +223,9 @@ namespace UMapx.Imaging
         /// <returns>Quantized color</returns>
         private Color GetColor(int red, int green, int blue, float[] table)
         {
-            byte r = MathsF.Byte(table[red]);
-            byte g = MathsF.Byte(table[green]);
-            byte b = MathsF.Byte(table[blue]);
+            byte r = Maths.Byte(table[red]);
+            byte g = Maths.Byte(table[green]);
+            byte b = Maths.Byte(table[blue]);
             return Color.FromArgb(r, g, b);
         }
         #endregion

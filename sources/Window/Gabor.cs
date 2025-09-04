@@ -62,7 +62,7 @@ namespace UMapx.Window
         public override float[] GetWindow(int frameSize)
         {
             float t = (frameSize - 1) / 2.0f;
-            float[] x = MatrixF.Compute(-t, t, 1);
+            float[] x = Matrix.Compute(-t, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion
@@ -75,7 +75,7 @@ namespace UMapx.Window
         /// <returns>Gabor window function</returns>
         public static Gabor Scaled(int frameSize)
         {
-            var s = 1.0f / MathsF.Sqrt(frameSize / 4.0f);
+            var s = 1.0f / Maths.Sqrt(frameSize / 4.0f);
             return new Gabor(frameSize, s);
         }
         #endregion

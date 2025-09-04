@@ -154,7 +154,7 @@ namespace UMapx.Imaging
                         difference += Math.Abs(dst[k] - src[k]) / 3.0f;
                     }
 
-                    var summary = MathsF.Byte(difference);
+                    var summary = Maths.Byte(difference);
 
                     if (summary > Threshold)
                     {
@@ -187,7 +187,7 @@ namespace UMapx.Imaging
                     for (k = 0; k < 3; k++)
                     {
                         var difference = Math.Abs(dst[k] - src[k]);
-                        dst[k] = MathsF.Byte(difference);
+                        dst[k] = Maths.Byte(difference);
                     }
 
                     var summary = RGB.Average(dst[2], dst[1], dst[0]);

@@ -92,22 +92,22 @@ namespace UMapx.Imaging
             int z = 3;
 
             var gradient = new float[] { 1, -1 };
-            var left_x = MatrixF.Conv(left, gradient, Direction.Horizontal);
-            var left_y = MatrixF.Conv(left, gradient, Direction.Vertical);
+            var left_x = Matrix.Conv(left, gradient, Direction.Horizontal);
+            var left_y = Matrix.Conv(left, gradient, Direction.Vertical);
 
-            var right_x = MatrixF.Conv(right, gradient, Direction.Horizontal);
-            var right_y = MatrixF.Conv(right, gradient, Direction.Vertical);
+            var right_x = Matrix.Conv(right, gradient, Direction.Horizontal);
+            var right_y = Matrix.Conv(right, gradient, Direction.Vertical);
 
             var im_l = new float[][,] { left, left_x, left_y };
             var im_r = new float[][,] { right, right_x, right_y };
 
-            var even_win = MathsF.IsEven(win) ? win : win + 1;
+            var even_win = Maths.IsEven(win) ? win : win + 1;
             var disparity = DisparityEstimator(im_l, im_r, even_win, max_dis, weight, x, y, z);
 
             if (apply_median)
             {
                 // NOT USED
-                disparity = MatrixF.Morph(disparity, even_win, even_win, MorphologyMode.Median);
+                disparity = Matrix.Morph(disparity, even_win, even_win, MorphologyMode.Median);
             }
 
             return disparity;
@@ -147,11 +147,11 @@ namespace UMapx.Imaging
 
                             if (j < 0)
                             {
-                                min3_dis[z][y, x] = MathsF.Pow(im_l[z][y, x] - 0.0000000001f, 2);
+                                min3_dis[z][y, x] = Maths.Pow(im_l[z][y, x] - 0.0000000001f, 2);
                             }
                             else
                             {
-                                min3_dis[z][y, x] = MathsF.Pow(im_l[z][y, x] - im_r[z][y, j], 2);
+                                min3_dis[z][y, x] = Maths.Pow(im_l[z][y, x] - im_r[z][y, j], 2);
                             }
                         }
                     }
@@ -171,7 +171,7 @@ namespace UMapx.Imaging
                 // box filter
                 if (win > 1)
                 {
-                    flat_dis = MatrixF.Mean(flat_dis, win, win);
+                    flat_dis = Matrix.Mean(flat_dis, win, win);
                 }
 
                 // mapping

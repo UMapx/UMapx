@@ -72,7 +72,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Entropy
         {
-            get { return (4.0f / MathsF.Pi) * MathsF.G; }
+            get { return (4.0f / Maths.Pi) * Maths.G; }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -82,7 +82,7 @@ namespace UMapx.Distribution
         public float Distribution(float x)
         {
             float angle = (float)Math.Atan(Math.Exp(x * Math.PI / 2.0));
-            return 2 * angle / MathsF.Pi;
+            return 2 * angle / Maths.Pi;
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -91,7 +91,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            return 0.5f * MathsF.Sech(x * (MathsF.Pi / 2.0f));
+            return 0.5f * Maths.Sech(x * (Maths.Pi / 2.0f));
         }
         #endregion
     }

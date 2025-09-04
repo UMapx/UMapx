@@ -133,10 +133,10 @@ namespace UMapx.Imaging
 
                     for (int dy = -r1; dy <= r1; dy++)
                     {
-                        int ny = MathsF.Range(y + dy, 0, height - 1);
+                        int ny = Maths.Range(y + dy, 0, height - 1);
                         for (int dx = -r0; dx <= r0; dx++)
                         {
-                            int nx = MathsF.Range(x + dx, 0, width - 1);
+                            int nx = Maths.Range(x + dx, 0, width - 1);
 
                             byte* p = &src[ny * stride + nx * 4];
 
@@ -145,7 +145,7 @@ namespace UMapx.Imaging
                             int r = p[2];
 
                             int intensity = (r + g + b) * levels / (3 * 256);
-                            intensity = MathsF.Range(intensity, 0, levels - 1);
+                            intensity = Maths.Range(intensity, 0, levels - 1);
 
                             intensityCount[intensity]++;
                             rSum[intensity] += r;
@@ -173,9 +173,9 @@ namespace UMapx.Imaging
                     bb = (int)(bb + sharpening * (bb - orig[0]));
 
                     byte* d = &dst[y * stride + x * 4];
-                    d[2] = (byte)MathsF.Range(rr, 0, 255);
-                    d[1] = (byte)MathsF.Range(gg, 0, 255);
-                    d[0] = (byte)MathsF.Range(bb, 0, 255);
+                    d[2] = (byte)Maths.Range(rr, 0, 255);
+                    d[1] = (byte)Maths.Range(gg, 0, 255);
+                    d[0] = (byte)Maths.Range(bb, 0, 255);
                     d[3] = 255;
                 }
             });

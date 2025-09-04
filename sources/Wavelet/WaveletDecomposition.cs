@@ -93,7 +93,7 @@ namespace UMapx.Wavelet
         {
             if (A == null) throw new ArgumentNullException(nameof(A));
             int N = A.Length;
-            int L = Math.Min((int)MathsF.Log2(N), Levels);
+            int L = Math.Min((int)Maths.Log2(N), Levels);
             if (L < 1) throw new ArgumentException("Signal length must allow at least 1 level");
 
             var details = new float[L][];
@@ -102,7 +102,7 @@ namespace UMapx.Wavelet
             for (int lev = 1; lev <= L; lev++)
             {
                 int bound = a.Length;
-                if (!MathsF.IsEven(bound)) throw new ArgumentException("Size must be even per level");
+                if (!Maths.IsEven(bound)) throw new ArgumentException("Size must be even per level");
                 var work = new float[bound];
                 DWT1D(a, bound, work);
                 int half = bound >> 1;
@@ -135,7 +135,7 @@ namespace UMapx.Wavelet
                 var d = B[i];
                 int half = a.Length; 
                 int bound = half << 1; 
-                if (!MathsF.IsEven(bound)) throw new ArgumentException("Invalid pair lengths");
+                if (!Maths.IsEven(bound)) throw new ArgumentException("Invalid pair lengths");
                 // Compose [a|d]
                 var a_d = new float[bound];
                 Array.Copy(a, 0, a_d, 0, half);
@@ -155,7 +155,7 @@ namespace UMapx.Wavelet
         {
             if (A == null) throw new ArgumentNullException(nameof(A));
             int R = A.GetLength(0), C = A.GetLength(1);
-            int L = Math.Min(Math.Min((int)MathsF.Log2(R), (int)MathsF.Log2(C)), Levels);
+            int L = Math.Min(Math.Min((int)Maths.Log2(R), (int)Maths.Log2(C)), Levels);
             if (L < 1) throw new ArgumentException("Image size must allow at least 1 level");
 
             var W = (float[,])A.Clone();
@@ -287,30 +287,30 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[][] Forward(ComplexF[] A)
+        public Complex32[][] Forward(Complex32[] A)
         {
             if (A == null) throw new ArgumentNullException(nameof(A));
             int N = A.Length;
-            int L = Math.Min((int)MathsF.Log2(N), Levels);
+            int L = Math.Min((int)Maths.Log2(N), Levels);
             if (L < 1) throw new ArgumentException("Signal length must allow at least 1 level");
-            var details = new ComplexF[L][];
-            ComplexF[] a = (ComplexF[])A.Clone();
+            var details = new Complex32[L][];
+            Complex32[] a = (Complex32[])A.Clone();
 
             for (int lev = 1; lev <= L; lev++)
             {
-                int bound = a.Length; if (!MathsF.IsEven(bound)) throw new ArgumentException("Size must be even per level");
-                var work = new ComplexF[bound];
+                int bound = a.Length; if (!Maths.IsEven(bound)) throw new ArgumentException("Size must be even per level");
+                var work = new Complex32[bound];
                 DWT1D(a, bound, work);
                 int half = bound >> 1;
-                var aNext = new ComplexF[half];
-                var dLev = new ComplexF[half];
+                var aNext = new Complex32[half];
+                var dLev = new Complex32[half];
                 Array.Copy(work, 0, aNext, 0, half);
                 Array.Copy(work, half, dLev, 0, half);
                 details[L - lev] = dLev;
                 a = aNext;
             }
 
-            var outArr = new ComplexF[L + 1][];
+            var outArr = new Complex32[L + 1][];
             outArr[0] = a;
             for (int i = 0; i < L; i++) outArr[i + 1] = details[i];
             return outArr;
@@ -320,23 +320,23 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[][] B)
+        public Complex32[] Backward(Complex32[][] B)
         {
             if (B == null || B.Length < 2) throw new ArgumentException("Expect at least {A_L, D_L}");
             int L = B.Length - 1;
-            ComplexF[] a = B[0];
+            Complex32[] a = B[0];
 
             for (int i = 1; i <= L; i++)
             {
                 var d = B[i];
                 int half = a.Length; 
                 int bound = half << 1; 
-                if (!MathsF.IsEven(bound)) throw new ArgumentException("Invalid pair lengths");
+                if (!Maths.IsEven(bound)) throw new ArgumentException("Invalid pair lengths");
                 // Compose [a|d]
-                var a_d = new ComplexF[bound];
+                var a_d = new Complex32[bound];
                 Array.Copy(a, 0, a_d, 0, half);
                 Array.Copy(d, 0, a_d, half, half);
-                var dest = new ComplexF[bound];
+                var dest = new Complex32[bound];
                 IDWT1D(a_d, bound, dest);
                 a = dest;
             }
@@ -347,20 +347,20 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[][,] Forward(ComplexF[,] A)
+        public Complex32[][,] Forward(Complex32[,] A)
         {
             if (A == null) throw new ArgumentNullException(nameof(A));
             int R = A.GetLength(0), C = A.GetLength(1);
-            int L = Math.Min(Math.Min((int)MathsF.Log2(R), (int)MathsF.Log2(C)), Levels);
+            int L = Math.Min(Math.Min((int)Maths.Log2(R), (int)Maths.Log2(C)), Levels);
             if (L < 1) throw new ArgumentException("Image size must allow at least 1 level");
 
-            var W = (ComplexF[,])A.Clone();
-            var packs = new ComplexF[1 + 3 * L][,];
+            var W = (Complex32[,])A.Clone();
+            var packs = new Complex32[1 + 3 * L][,];
 
             // local working buffers sized to full extent once per call
-            var rowBuf = new ComplexF[C];
-            var colBuf = new ComplexF[R];
-            var work = new ComplexF[Math.Max(R, C)];
+            var rowBuf = new Complex32[C];
+            var colBuf = new Complex32[R];
+            var work = new Complex32[Math.Max(R, C)];
 
             int h = R, w = C;
             for (int lev = 1; lev <= L; lev++)
@@ -383,9 +383,9 @@ namespace UMapx.Wavelet
                     for (int r = 0; r < halfH; r++) W[halfH + r, c] = work[halfH + r];
                 }
                 // slice details
-                var LH = new ComplexF[halfH, halfW];
-                var HL = new ComplexF[halfH, halfW];
-                var HH = new ComplexF[halfH, halfW];
+                var LH = new Complex32[halfH, halfW];
+                var HL = new Complex32[halfH, halfW];
+                var HH = new Complex32[halfH, halfW];
                 for (int r = 0; r < halfH; r++)
                 {
                     for (int c = 0; c < halfW; c++)
@@ -404,7 +404,7 @@ namespace UMapx.Wavelet
 
             // coarsest LL
             int hL2 = R >> L, wL2 = C >> L;
-            var LL = new ComplexF[hL2, wL2];
+            var LL = new Complex32[hL2, wL2];
 
             for (int r = 0; r < hL2; r++)
             {
@@ -421,19 +421,19 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[][,] B)
+        public Complex32[,] Backward(Complex32[][,] B)
         {
             if (B == null || B.Length < 4) throw new ArgumentException("Expect at least {LL_1, LH_1, HL_1, HH_1}");
             if ((B.Length - 1) % 3 != 0) throw new ArgumentException("Invalid pyramid length");
             int L = (B.Length - 1) / 3;
             int h = B[0].GetLength(0), w = B[0].GetLength(1);
             int R = h << L, C = w << L;
-            var W = new ComplexF[R, C];
+            var W = new Complex32[R, C];
 
             // local working buffers sized to full extent once per call
-            var rowBuf = new ComplexF[C];
-            var colBuf = new ComplexF[R];
-            var work = new ComplexF[Math.Max(R, C)];
+            var rowBuf = new Complex32[C];
+            var colBuf = new Complex32[R];
+            var work = new Complex32[Math.Max(R, C)];
 
             // place coarsest LL
             for (int r = 0; r < h; r++)
@@ -501,7 +501,7 @@ namespace UMapx.Wavelet
         /// </remarks>
         private void DWT1D(float[] input, int bound, float[] output)
         {
-            if (!MathsF.IsEven(bound)) bound--;
+            if (!Maths.IsEven(bound)) bound--;
             int h = bound >> 1;
             int lpLen = lp.Length, hpLen = hp.Length;
             int lpStart = -((lpLen >> 1) - 1);
@@ -515,7 +515,7 @@ namespace UMapx.Wavelet
                 for (int k = 0; k < lpLen; k++) { a += lp[k] * input[cL]; if (++cL == bound) cL = 0; }
                 for (int k = 0; k < hpLen; k++) { b += hp[k] * input[cH]; if (++cH == bound) cH = 0; }
                 cL0 += 2; if (cL0 >= bound) cL0 -= bound; cH0 += 2; if (cH0 >= bound) cH0 -= bound;
-                if (normalized) { output[r] = a / MathsF.Sqrt2; output[r + h] = b / MathsF.Sqrt2; }
+                if (normalized) { output[r] = a / Maths.Sqrt2; output[r + h] = b / Maths.Sqrt2; }
                 else { output[r] = a; output[r + h] = b; }
             }
         }
@@ -534,7 +534,7 @@ namespace UMapx.Wavelet
         /// </remarks>
         private void IDWT1D(float[] a_d, int bound, float[] dest)
         {
-            if (!MathsF.IsEven(bound)) bound--;
+            if (!Maths.IsEven(bound)) bound--;
             int h = bound >> 1;
             var upL = new float[bound];
             var upH = new float[bound];
@@ -553,7 +553,7 @@ namespace UMapx.Wavelet
                 float s = 0f; int cL = cL0, cH = cH0;
                 for (int k = 0; k < lpLen; k++) { s += ilp[k] * upL[cL]; if (++cL == bound) cL = 0; }
                 for (int k = 0; k < hpLen; k++) { s += ihp[k] * upH[cH]; if (++cH == bound) cH = 0; }
-                dest[i] = normalized ? s * MathsF.Sqrt2 : s;
+                dest[i] = normalized ? s * Maths.Sqrt2 : s;
                 cL0++; if (cL0 == bound) cL0 = 0; cH0++; if (cH0 == bound) cH0 = 0;
             }
         }
@@ -570,9 +570,9 @@ namespace UMapx.Wavelet
         /// If <see cref="Normalized"/> is true, the output bands are scaled by <c>1/√2</c> to match orthonormal energy.
         /// Complexity: O(bound · (|lp| + |hp|)).
         /// </remarks>
-        private void DWT1D(ComplexF[] input, int bound, ComplexF[] output)
+        private void DWT1D(Complex32[] input, int bound, Complex32[] output)
         {
-            if (!MathsF.IsEven(bound)) bound--;
+            if (!Maths.IsEven(bound)) bound--;
             int h = bound >> 1;
             int lpLen = lp.Length, hpLen = hp.Length;
             int lpStart = -((lpLen >> 1) - 1);
@@ -581,12 +581,12 @@ namespace UMapx.Wavelet
             int cH0 = ModBound(hpStart, bound);
             for (int r = 0; r < h; r++)
             {
-                ComplexF a = 0, b = 0; int cL = cL0, cH = cH0;
+                Complex32 a = 0, b = 0; int cL = cL0, cH = cH0;
                 for (int k = 0; k < lpLen; k++) { a += lp[k] * input[cL]; if (++cL == bound) cL = 0; }
                 for (int k = 0; k < hpLen; k++) { b += hp[k] * input[cH]; if (++cH == bound) cH = 0; }
                 cL0 += 2; if (cL0 >= bound) cL0 -= bound; cH0 += 2; if (cH0 >= bound) cH0 -= bound;
-                output[r] = normalized ? a / MathsF.Sqrt2 : a;
-                output[r + h] = normalized ? b / MathsF.Sqrt2 : b;
+                output[r] = normalized ? a / Maths.Sqrt2 : a;
+                output[r + h] = normalized ? b / Maths.Sqrt2 : b;
             }
         }
         /// <summary>
@@ -602,12 +602,12 @@ namespace UMapx.Wavelet
         /// If <see cref="Normalized"/> is true, the result is scaled by <c>√2</c> (inverse of analysis scaling).
         /// Complexity: O(bound · (|ilp| + |ihp|)).
         /// </remarks>
-        private void IDWT1D(ComplexF[] a_d, int bound, ComplexF[] dest)
+        private void IDWT1D(Complex32[] a_d, int bound, Complex32[] dest)
         {
-            if (!MathsF.IsEven(bound)) bound--;
+            if (!Maths.IsEven(bound)) bound--;
             int h = bound >> 1;
-            var upL = new ComplexF[bound];
-            var upH = new ComplexF[bound];
+            var upL = new Complex32[bound];
+            var upH = new Complex32[bound];
 
             Array.Clear(upL, 0, bound); Array.Clear(upH, 0, bound);
             for (int j = 0, i = 0; j < h; j++, i += 2) { upL[i + 1] = a_d[j]; upH[i + 1] = a_d[h + j]; }
@@ -616,10 +616,10 @@ namespace UMapx.Wavelet
             int cL0 = ModBound(lpStart, bound); int cH0 = ModBound(hpStart, bound);
             for (int i = 0; i < bound; i++)
             {
-                ComplexF s = 0; int cL = cL0, cH = cH0;
+                Complex32 s = 0; int cL = cL0, cH = cH0;
                 for (int k = 0; k < lpLen; k++) { s += ilp[k] * upL[cL]; if (++cL == bound) cL = 0; }
                 for (int k = 0; k < hpLen; k++) { s += ihp[k] * upH[cH]; if (++cH == bound) cH = 0; }
-                dest[i] = normalized ? s * MathsF.Sqrt2 : s;
+                dest[i] = normalized ? s * Maths.Sqrt2 : s;
                 cL0++; if (cL0 == bound) cL0 = 0; cH0++; if (cH0 == bound) cH0 = 0;
             }
         }

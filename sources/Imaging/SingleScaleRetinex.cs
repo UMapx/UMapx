@@ -28,7 +28,7 @@ namespace UMapx.Imaging
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
         /// <param name="nbase">Logarithm base</param>
-        public SingleScaleRetinex(int radius, Space space, float a = 1, float b = 0, float nbase = MathsF.Pi)
+        public SingleScaleRetinex(int radius, Space space, float a = 1, float b = 0, float nbase = Maths.Pi)
         {
             gb = new BoxBlur(radius);
             Space = space; A = a; B = b; Base = nbase;
@@ -42,7 +42,7 @@ namespace UMapx.Imaging
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
         /// <param name="nbase">Logarithm base</param>
-        public SingleScaleRetinex(int width, int height, Space space, float a = 1, float b = 0, float nbase = MathsF.Pi)
+        public SingleScaleRetinex(int width, int height, Space space, float a = 1, float b = 0, float nbase = Maths.Pi)
         {
             gb = new BoxBlur(width, height);
             Space = space; A = a; B = b; Base = nbase;
@@ -55,7 +55,7 @@ namespace UMapx.Imaging
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset (0, 1]</param>
         /// <param name="nbase">Logarithm base</param>
-        public SingleScaleRetinex(SizeInt size, Space space, float a = 1, float b = 0, float nbase = MathsF.Pi)
+        public SingleScaleRetinex(SizeInt size, Space space, float a = 1, float b = 0, float nbase = Maths.Pi)
         {
             gb = new BoxBlur(size);
             Space = space; A = a; B = b; Base = nbase;

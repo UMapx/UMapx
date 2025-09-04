@@ -134,9 +134,9 @@ namespace UMapx.Imaging
             float newYradius = (float)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            float angleRad = -angle * MathsF.Pi / 180.0f;
-            float angleCos = MathsF.Cos(angleRad);
-            float angleSin = MathsF.Sin(angleRad);
+            float angleRad = -angle * Maths.Pi / 180.0f;
+            float angleCos = Maths.Cos(angleRad);
+            float angleSin = Maths.Sin(angleRad);
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
@@ -205,7 +205,7 @@ namespace UMapx.Imaging
                                 g += k2 * depth[oy2, ox2];
                             }
                         }
-                        H[y, x] = (ushort)MathsF.Range(g, ushort.MinValue, ushort.MaxValue);
+                        H[y, x] = (ushort)Maths.Range(g, ushort.MinValue, ushort.MaxValue);
                     }
                     cx++;
                 }
@@ -322,10 +322,10 @@ namespace UMapx.Imaging
             int height = depth.GetLength(0);
 
             // check section params
-            int x = MathsF.Range(rectangle.X, 0, width);
-            int y = MathsF.Range(rectangle.Y, 0, height);
-            int w = MathsF.Range(rectangle.Width, 0, width - x);
-            int h = MathsF.Range(rectangle.Height, 0, height - y);
+            int x = Maths.Range(rectangle.X, 0, width);
+            int y = Maths.Range(rectangle.Y, 0, height);
+            int w = Maths.Range(rectangle.Width, 0, width - x);
+            int h = Maths.Range(rectangle.Height, 0, height - y);
 
             // exception
             if (x == 0 &&
@@ -423,7 +423,7 @@ namespace UMapx.Imaging
                         }
                     }
 
-                    H[y, x] = (ushort)MathsF.Range(g, ushort.MinValue, ushort.MaxValue);
+                    H[y, x] = (ushort)Maths.Range(g, ushort.MinValue, ushort.MaxValue);
                 }
             }
 
@@ -449,7 +449,7 @@ namespace UMapx.Imaging
             {
                 for (j = 0; j < l1; j++)
                 {
-                    temp[i, j] = a[MathsF.Mod(i - h, l1), MathsF.Mod(j - w, l0)];
+                    temp[i, j] = a[Maths.Mod(i - h, l1), Maths.Mod(j - w, l0)];
                 }
             }
             return temp;

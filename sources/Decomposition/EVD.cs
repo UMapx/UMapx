@@ -36,17 +36,17 @@ namespace UMapx.Decomposition
         /// <param name="eps">Epsilon [0, 1]</param>
         public EVD(float[,] A, float eps = 1e-16f)
         {
-            if (!MatrixF.IsSquare(A))
+            if (!Matrix.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             this.n = A.GetLength(0);
             this.Re = new float[n];
             this.Im = new float[n];
-            this.eps = MathsF.Float(eps);
+            this.eps = Maths.Float(eps);
 
             // for symmetric matrices eigen-value decomposition
             // without Hessenberg form.
-            if (MatrixF.IsSymmetric(A))
+            if (Matrix.IsSymmetric(A))
             {
                 hessenberg = Jagged.Zero(n, n);
                 matrices = Jagged.ToJagged(A);
@@ -78,15 +78,15 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Gets eigenvalues.
         /// </summary>
-        public ComplexF[] D
+        public Complex32[] D
         {
             get
             {
-                ComplexF[] D = new ComplexF[n];
+                Complex32[] D = new Complex32[n];
 
                 for (int i = 0; i < n; i++)
                 {
-                    D[i] = new ComplexF(Re[i], Im[i]);
+                    D[i] = new Complex32(Re[i], Im[i]);
                 }
 
                 return D;
@@ -302,7 +302,7 @@ namespace UMapx.Decomposition
                         // Compute implicit shift
                         g = Re[l];
                         p = (Re[l + 1] - g) / (2 * Im[l]);
-                        r = MathsF.Hypotenuse(p, 1);
+                        r = Maths.Hypotenuse(p, 1);
                         if (p < 0)
                         {
                             r = -r;
@@ -335,7 +335,7 @@ namespace UMapx.Decomposition
                             s2 = s;
                             g = c * Im[i];
                             h = c * p;
-                            r = MathsF.Hypotenuse(p, Im[i]);
+                            r = Maths.Hypotenuse(p, Im[i]);
                             Im[i + 1] = s * r;
                             s = Im[i] / r;
                             c = p / r;

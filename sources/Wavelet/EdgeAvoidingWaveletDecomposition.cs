@@ -164,21 +164,21 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="input">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[][] Forward(ComplexF[] input)
+        public Complex32[][] Forward(Complex32[] input)
         {
-            var current = (ComplexF[])input.Clone();
-            var details = new ComplexF[levels - 1][];
+            var current = (Complex32[])input.Clone();
+            var details = new Complex32[levels - 1][];
 
             for (int i = 0; i < levels - 1; i++)
             {
-                var baseI = (ComplexF[])current.Clone();
+                var baseI = (Complex32[])current.Clone();
                 BilateralGridFilter.Bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
                 var detailI = current.Sub(baseI);
                 details[i] = detailI;
                 current = baseI;
             }
 
-            var output = new ComplexF[levels][];
+            var output = new Complex32[levels][];
             output[0] = current;
 
             for (int i = 0; i < details.Length; i++)
@@ -191,9 +191,9 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="input">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[][] input)
+        public Complex32[] Backward(Complex32[][] input)
         {
-            var result = (ComplexF[])input[0].Clone();
+            var result = (Complex32[])input[0].Clone();
             for (int i = 1; i < input.Length; i++)
                 result = result.Add(input[i]);
             return result;
@@ -203,21 +203,21 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="input">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[][,] Forward(ComplexF[,] input)
+        public Complex32[][,] Forward(Complex32[,] input)
         {
-            var current = (ComplexF[,])input.Clone();
-            var details = new ComplexF[levels - 1][,];
+            var current = (Complex32[,])input.Clone();
+            var details = new Complex32[levels - 1][,];
 
             for (int i = 0; i < levels - 1; i++)
             {
-                var baseI = (ComplexF[,])current.Clone();
+                var baseI = (Complex32[,])current.Clone();
                 BilateralGridFilter.Bilateralgridfilter(baseI, sigmaSpatial, sigmaRange);
                 var detailI = current.Sub(baseI);
                 details[i] = detailI;
                 current = baseI;
             }
 
-            var output = new ComplexF[levels][,];
+            var output = new Complex32[levels][,];
             output[0] = current;
 
             for (int i = 0; i < details.Length; i++)
@@ -230,9 +230,9 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="input">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[][,] input)
+        public Complex32[,] Backward(Complex32[][,] input)
         {
-            var result = (ComplexF[,])input[0].Clone();
+            var result = (Complex32[,])input[0].Clone();
             for (int i = 1; i < input.Length; i++)
                 result = result.Add(input[i]);
             return result;

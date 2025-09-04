@@ -137,9 +137,9 @@ namespace UMapx.Imaging
                     #endregion
 
                     #region Recording pixel
-                    dst[v + 2] = MathsF.Byte(cdf[src[v + 2]] * dn);
-                    dst[v + 1] = MathsF.Byte(cdf[src[v + 1]] * dn);
-                    dst[v] = MathsF.Byte(cdf[src[v]] * dn);
+                    dst[v + 2] = Maths.Byte(cdf[src[v + 2]] * dn);
+                    dst[v + 1] = Maths.Byte(cdf[src[v + 1]] * dn);
+                    dst[v] = Maths.Byte(cdf[src[v]] * dn);
                     #endregion
 
                     #region Clear data

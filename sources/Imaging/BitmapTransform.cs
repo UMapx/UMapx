@@ -151,10 +151,10 @@ namespace UMapx.Imaging
             int height = image.Height;
 
             // check section params
-            int x = clamp ? MathsF.Range(rectangle.X, 0, width) : rectangle.X;
-            int y = clamp ? MathsF.Range(rectangle.Y, 0, height) : rectangle.Y;
-            int w = clamp ? MathsF.Range(rectangle.Width, 0, width - x) : rectangle.Width;
-            int h = clamp ? MathsF.Range(rectangle.Height, 0, height - y) : rectangle.Height;
+            int x = clamp ? Maths.Range(rectangle.X, 0, width) : rectangle.X;
+            int y = clamp ? Maths.Range(rectangle.Y, 0, height) : rectangle.Y;
+            int w = clamp ? Maths.Range(rectangle.Width, 0, width - x) : rectangle.Width;
+            int h = clamp ? Maths.Range(rectangle.Height, 0, height - y) : rectangle.Height;
 
             // exception
             if (x == 0 &&

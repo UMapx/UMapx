@@ -59,7 +59,7 @@ namespace UMapx.Decomposition
             // reduces the Hessenberg matrix A to quasi-triangular form
             // using orthogonal transformations while maintaining the
             // triangular form of the B matrix.
-            qzit(n, A, B, MathsF.Float(eps), matz, Z, ref ierr);
+            qzit(n, A, B, Maths.Float(eps), matz, Z, ref ierr);
 
             // reduces the quasi-triangular matrix further, so that any
             // remaining 2-by-2 blocks correspond to pairs of complex
@@ -77,14 +77,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns vector α.
         /// </summary>
-        public ComplexF[] Alpha
+        public Complex32[] Alpha
         {
             get
             {
-                ComplexF[] a = new ComplexF[n];
+                Complex32[] a = new Complex32[n];
 
                 for (int i = 0; i < n; i++)
-                    a[i] = new ComplexF(ar[i], ai[i]);
+                    a[i] = new Complex32(ar[i], ai[i]);
 
                 return a;
             }
@@ -99,14 +99,14 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns a vector of eigenvalues.
         /// </summary>
-        public ComplexF[] Eigenvalues
+        public Complex32[] Eigenvalues
         {
             get
             {
                 // c = (ar + j*ai) / beta
-                ComplexF[] c = new ComplexF[n];
+                Complex32[] c = new Complex32[n];
                 for (int i = 0; i < n; i++)
-                    c[i] = new ComplexF(ar[i], ai[i]) / beta[i];
+                    c[i] = new Complex32(ar[i], ai[i]) / beta[i];
 
                 return c;
             }

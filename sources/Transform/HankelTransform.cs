@@ -117,7 +117,7 @@ namespace UMapx.Transform
         private static float BesselZeroJ(int a, int k)
         {
             float nu = a;
-            float x = (k + 0.5f * nu - 0.25f) * MathsF.Pi;
+            float x = (k + 0.5f * nu - 0.25f) * Maths.Pi;
             float eps = 1e-16f;
             int iterations = 120;
 
@@ -149,7 +149,7 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return MatrixF.Dot(A, U);
+            return Core.Matrix.Dot(A, U);
         }
         /// <summary>
         /// Backward Hankel transform.
@@ -160,7 +160,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return MatrixF.Dot(B, U.Transponate());
+            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
         }
         /// <summary>
         /// Forward Hankel transform.
@@ -209,29 +209,29 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Forward(ComplexF[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return MatrixF.Dot(A, U);
+            return Core.Matrix.Dot(A, U);
         }
         /// <summary>
         /// Backward Hankel transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return MatrixF.Dot(B, U.Transponate());
+            return Core.Matrix.Dot(B, (float[,])Core.Matrix.Transponate(U));
         }
         /// <summary>
         /// Forward Hankel transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Forward(ComplexF[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
             float[,] U = HankelTransform.Matrix(N, a);
@@ -252,7 +252,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
             float[,] U = HankelTransform.Matrix(N, a);

@@ -93,7 +93,7 @@ namespace UMapx.Distribution
         /// </summary>
         public RangeFloat Support
         {
-            get { return new RangeFloat(-MathsF.Pi, MathsF.Pi); }
+            get { return new RangeFloat(-Maths.Pi, Maths.Pi); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.

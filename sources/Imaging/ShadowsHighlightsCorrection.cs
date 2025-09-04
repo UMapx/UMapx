@@ -68,7 +68,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.shadows = MathsF.Range(value, 0, 1);
+                this.shadows = Maths.Range(value, 0, 1);
                 this.rebuild = true;
             }
         }
@@ -83,7 +83,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                this.lights = MathsF.Range(value, 0, 1);
+                this.lights = Maths.Range(value, 0, 1);
                 this.rebuild = true;
             }
         }

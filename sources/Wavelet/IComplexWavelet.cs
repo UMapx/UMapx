@@ -13,13 +13,13 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        ComplexF Scaling(float x);
+        Complex32 Scaling(float x);
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        ComplexF Wavelet(float x);
+        Complex32 Wavelet(float x);
         #endregion
     }
 }

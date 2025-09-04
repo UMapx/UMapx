@@ -142,15 +142,15 @@ namespace UMapx.Imaging
                     if (Y < EPS)
                     {
                         // If near black, push towards grayscale mapped luminance
-                        byte yb = (byte)MathsF.Byte(Yeq);
+                        byte yb = (byte)Maths.Byte(Yeq);
                         px[0] = yb; px[1] = yb; px[2] = yb;
                     }
                     else
                     {
                         float gain = Yeq / Y;
-                        px[0] = (byte)MathsF.Byte(b * gain);
-                        px[1] = (byte)MathsF.Byte(g * gain);
-                        px[2] = (byte)MathsF.Byte(r * gain);
+                        px[0] = (byte)Maths.Byte(b * gain);
+                        px[1] = (byte)Maths.Byte(g * gain);
+                        px[2] = (byte)Maths.Byte(r * gain);
                     }
                     // alpha unchanged (px[3])
                 }

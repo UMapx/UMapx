@@ -31,13 +31,13 @@ namespace UMapx.Decomposition
         /// <param name="eps">Epsilon [0, 1]</param>
         public Schur(float[,] A, float eps = 1e-16f)
         {
-            if (!MatrixF.IsSquare(A))
+            if (!Matrix.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             this.n = A.GetLength(0);
             this.Re = new float[n];
             this.Im = new float[n];
-            this.eps = MathsF.Float(eps);
+            this.eps = Maths.Float(eps);
 
             // reduce to Hessenberg form using existing decomposition
             var h = new Hessenberg(A);

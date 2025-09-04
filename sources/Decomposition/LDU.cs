@@ -30,7 +30,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Square matrix</param>
         public LDU(float[,] A)
         {
-            if (!MatrixF.IsSquare(A))
+            if (!Matrix.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             // LDU algorithm:

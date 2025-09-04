@@ -107,11 +107,11 @@ namespace UMapx.Imaging
 
                 for (int dy = -ry; dy <= ry; dy++)
                 {
-                    int yi = MathsF.Range(y + dy, 0, height - 1);
+                    int yi = Maths.Range(y + dy, 0, height - 1);
 
                     for (int dx = -rx; dx <= rx; dx++)
                     {
-                        int xi = MathsF.Range(0 + dx, 0, width - 1);
+                        int xi = Maths.Range(0 + dx, 0, width - 1);
                         byte* pixel = src + yi * stride + xi * 4;
 
                         histB[pixel[0]]++;
@@ -127,12 +127,12 @@ namespace UMapx.Imaging
 
                 for (int x = 1; x < width; x++)
                 {
-                    int outX = MathsF.Range(x - rx - 1, 0, width - 1);
-                    int inX = MathsF.Range(x + rx, 0, width - 1);
+                    int outX = Maths.Range(x - rx - 1, 0, width - 1);
+                    int inX = Maths.Range(x + rx, 0, width - 1);
 
                     for (int dy = -ry; dy <= ry; dy++)
                     {
-                        int yi = MathsF.Range(y + dy, 0, height - 1);
+                        int yi = Maths.Range(y + dy, 0, height - 1);
 
                         byte* outPixel = src + yi * stride + outX * 4;
                         byte* inPixel = src + yi * stride + inX * 4;

@@ -32,7 +32,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float ChebyshevT(float x, int n)
         {
-            return MathsF.Cos(n * MathsF.Acos(x));
+            return Maths.Cos(n * Maths.Acos(x));
         }
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the first kind.
@@ -40,9 +40,9 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
-        public static ComplexF ChebyshevT(ComplexF x, int n)
+        public static Complex32 ChebyshevT(Complex32 x, int n)
         {
-            return MathsF.Cos(n * MathsF.Acos(x));
+            return Maths.Cos(n * Maths.Acos(x));
         }
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the second kind.
@@ -52,8 +52,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float ChebyshevU(float x, int n)
         {
-            float z = MathsF.Acos(x);
-            return MathsF.Sin((n + 1) * z) / MathsF.Sin(z);
+            float z = Maths.Acos(x);
+            return Maths.Sin((n + 1) * z) / Maths.Sin(z);
         }
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the second kind.
@@ -61,10 +61,10 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
-        public static ComplexF ChebyshevU(ComplexF x, int n)
+        public static Complex32 ChebyshevU(Complex32 x, int n)
         {
-            ComplexF z = MathsF.Acos(x);
-            return MathsF.Sin((n + 1) * z) / MathsF.Sin(z);
+            Complex32 z = Maths.Acos(x);
+            return Maths.Sin((n + 1) * z) / Maths.Sin(z);
         }
         #endregion
 
@@ -84,7 +84,7 @@ namespace UMapx.Core
 
             // Generalized formula
             // Abel polynomials recurrence relation for any n ≥ 1:
-            return x * MathsF.Pow(x - a * n, n - 1);
+            return x * Maths.Pow(x - a * n, n - 1);
         }
         /// <summary>
         /// Returns the value of the Abel polynomial.
@@ -93,15 +93,15 @@ namespace UMapx.Core
         /// <param name="a">Power</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
-        public static ComplexF Abel(ComplexF x, float a, int n)
+        public static Complex32 Abel(Complex32 x, float a, int n)
         {
-            if (n < 0) return ComplexF.NaN;
+            if (n < 0) return Complex32.NaN;
             if (n == 0) return 1;
             if (n == 1) return x;
 
             // Generalized formula
             // Abel polynomials recurrence relation for any n ≥ 1:
-            return x * MathsF.Pow(x - a * n, n - 1);
+            return x * Maths.Pow(x - a * n, n - 1);
         }
         #endregion
 
@@ -129,13 +129,13 @@ namespace UMapx.Core
         /// <param name="a">Power</param>
         /// <param name="k">Order</param>
         /// <returns>Value</returns>
-        public static ComplexF Laguerre(ComplexF x, ComplexF a, int k)
+        public static Complex32 Laguerre(Complex32 x, Complex32 a, int k)
         {
-            if (k < 0) return ComplexF.NaN;
+            if (k < 0) return Complex32.NaN;
             if (k == 0) return 1f;
             if (k == 1) return 1f + a - x;
 
-            ComplexF num = (2f * k - 1f + a - x) * Laguerre(x, a, k - 1) - (k - 1f + a) * Laguerre(x, a, k - 2);
+            Complex32 num = (2f * k - 1f + a - x) * Laguerre(x, a, k - 1) - (k - 1f + a) * Laguerre(x, a, k - 2);
             return num / k;
         }
         #endregion
@@ -162,13 +162,13 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="m">Order</param>
         /// <returns>Value</returns>
-        public static ComplexF Legendre(ComplexF x, int m)
+        public static Complex32 Legendre(Complex32 x, int m)
         {
-            if (m < 0) return ComplexF.NaN;
+            if (m < 0) return Complex32.NaN;
             if (m == 0) return 1f;
             if (m == 1) return x;
 
-            ComplexF num = (2f * m - 1f) * x * Legendre(x, m - 1) - (m - 1f) * Legendre(x, m - 2);
+            Complex32 num = (2f * m - 1f) * x * Legendre(x, m - 1) - (m - 1f) * Legendre(x, m - 2);
             return num / m;
         }
         #endregion
@@ -195,13 +195,13 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="m">Order</param>
         /// <returns>Value</returns>
-        public static ComplexF Hermite(ComplexF x, int m)
+        public static Complex32 Hermite(Complex32 x, int m)
         {
-            if (m < 0) return ComplexF.NaN;
-            if (m == 0) return ComplexF.One;
+            if (m < 0) return Complex32.NaN;
+            if (m == 0) return Complex32.One;
             if (m == 1) return 2f * x;
 
-            ComplexF ksi = x * Hermite(x, m - 1) - (m - 1) * Hermite(x, m - 2);
+            Complex32 ksi = x * Hermite(x, m - 1) - (m - 1) * Hermite(x, m - 2);
             return 2f * ksi;
         }
         #endregion
@@ -232,15 +232,15 @@ namespace UMapx.Core
         /// <param name="a">Power</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
-        public static ComplexF Gegenbauer(ComplexF x, ComplexF a, int n)
+        public static Complex32 Gegenbauer(Complex32 x, Complex32 a, int n)
         {
-            if (n < 0) return ComplexF.NaN;
+            if (n < 0) return Complex32.NaN;
             if (n == 0) return 1;
             if (n == 1) return 2 * a * x;
 
             // Generalized formula
             // Laguerre polynomials recurrence relation for any k ≥ 1:
-            ComplexF psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
+            Complex32 psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
             return psi / n;
         }
         #endregion
@@ -253,16 +253,16 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Sinc(float x)
         {
-            return Special.Sinc(x, MathsF.Pi);
+            return Special.Sinc(x, Maths.Pi);
         }
         /// <summary>
         /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Sinc(ComplexF x)
+        public static Complex32 Sinc(Complex32 x)
         {
-            return Special.Sinc(x, MathsF.Pi);
+            return Special.Sinc(x, Maths.Pi);
         }
         /// <summary>
         /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
@@ -285,14 +285,14 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="a">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Sinc(ComplexF x, ComplexF a)
+        public static Complex32 Sinc(Complex32 x, Complex32 a)
         {
             var ax = a * x;
 
-            if (ax == ComplexF.Zero)
-                return ComplexF.One;
+            if (ax == Complex32.Zero)
+                return Complex32.One;
 
-            return MathsF.Sin(ax) / ax;
+            return Maths.Sin(ax) / ax;
         }
         #endregion
 
@@ -305,17 +305,17 @@ namespace UMapx.Core
         public static float Agd(float x)
         {
             // gd^{-1}(x) = artanh(sin(x))
-            return MathsF.Atanh(MathsF.Sin(x));
+            return Maths.Atanh(Maths.Sin(x));
         }
         /// <summary>
         /// Returns the value of the inverse Guderman function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Agd(ComplexF x)
+        public static Complex32 Agd(Complex32 x)
         {
             // gd^{-1}(x) = artanh(sin(x))
-            return MathsF.Atanh(MathsF.Sin(x));
+            return Maths.Atanh(Maths.Sin(x));
         }
         /// <summary>
         /// Returns the value of the Guderman function.
@@ -324,16 +324,16 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Gd(float x)
         {
-            return MathsF.Asin(MathsF.Tanh(x));
+            return Maths.Asin(Maths.Tanh(x));
         }
         /// <summary>
         /// Returns the value of the Guderman function.
         /// </summary>
         /// <param name="x">Angle in radians</param>
         /// <returns>Value</returns>
-        public static ComplexF Gd(ComplexF x)
+        public static Complex32 Gd(Complex32 x)
         {
-            return MathsF.Asin(MathsF.Tanh(x));
+            return Maths.Asin(Maths.Tanh(x));
         }
         /// <summary>
         /// Returns the value of the function Cas(x).
@@ -342,16 +342,16 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Cas(float theta)
         {
-            return MathsF.Cos(theta) + MathsF.Sin(theta);
+            return Maths.Cos(theta) + Maths.Sin(theta);
         }
         /// <summary>
         /// Returns the value of the function Cas(x).
         /// </summary>
         /// <param name="theta">Theta</param>
         /// <returns>Value</returns>
-        public static ComplexF Cas(ComplexF theta)
+        public static Complex32 Cas(Complex32 theta)
         {
-            return MathsF.Cos(theta) + MathsF.Sin(theta);
+            return Maths.Cos(theta) + Maths.Sin(theta);
         }
         #endregion
 
@@ -365,7 +365,7 @@ namespace UMapx.Core
         public static float Rademacher(float t, int n)
         {
             float p = (float)Math.Pow(2, n);
-            float v = p * MathsF.Pi * t;
+            float v = p * Maths.Pi * t;
             return Math.Sign(Math.Sin(v));
         }
         /// <summary>
@@ -374,14 +374,14 @@ namespace UMapx.Core
         /// <param name="z">Value</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
-        public static ComplexF Rademacher(ComplexF z, int n)
+        public static Complex32 Rademacher(Complex32 z, int n)
         {
             float p = (float)Math.Pow(2.0, n);
-            ComplexF v = new ComplexF(p * MathsF.Pi, 0f) * z;
-            ComplexF s = MathsF.Sin(v);
+            Complex32 v = new Complex32(p * Maths.Pi, 0f) * z;
+            Complex32 s = Maths.Sin(v);
 
-            float mag = MathsF.Abs(s);
-            if (mag == 0f) return ComplexF.Zero;  // zeros at z = k / 2^n for real z
+            float mag = Maths.Abs(s);
+            if (mag == 0f) return Complex32.Zero;  // zeros at z = k / 2^n for real z
 
             return s / mag; // complex signum
         }
@@ -396,7 +396,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Heaviside(float x, float k)
         {
-            return 0.5f + 0.5f * MathsF.Tanh(k * x);
+            return 0.5f + 0.5f * Maths.Tanh(k * x);
         }
         /// <summary>
         /// Returns the value of the Heaviside delta function.
@@ -404,9 +404,9 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="k">Smoothing factor</param>
         /// <returns>Value</returns>
-        public static ComplexF Heaviside(ComplexF x, ComplexF k)
+        public static Complex32 Heaviside(Complex32 x, Complex32 k)
         {
-            return 0.5f + 0.5f * MathsF.Tanh(k * x);
+            return 0.5f + 0.5f * Maths.Tanh(k * x);
         }
         #endregion
 
@@ -419,7 +419,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Mahler(float x, float t)
         {
-            return MathsF.Exp(x * (1.0f + t - MathsF.Pow(MathsF.E, t)));
+            return Maths.Exp(x * (1.0f + t - Maths.Pow(Maths.E, t)));
         }
         /// <summary>
         /// Returns the value of the Mahler function.
@@ -427,9 +427,9 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="t">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Mahler(ComplexF x, ComplexF t)
+        public static Complex32 Mahler(Complex32 x, Complex32 t)
         {
-            return MathsF.Exp(x * (1.0f + t - MathsF.Pow(MathsF.E, t)));
+            return Maths.Exp(x * (1.0f + t - Maths.Pow(Maths.E, t)));
         }
         #endregion
 
@@ -445,8 +445,8 @@ namespace UMapx.Core
         public static float Gompertz(float t, float a, float b, float c)
         {
             float x = -c * t;
-            float y = -b * MathsF.E;
-            float z = a * MathsF.E;
+            float y = -b * Maths.E;
+            float z = a * Maths.E;
             return (float)Math.Pow(z, Math.Pow(y, x));
         }
         /// <summary>
@@ -457,12 +457,12 @@ namespace UMapx.Core
         /// <param name="b">Growth parameter</param>
         /// <param name="c">Growth rate</param>
         /// <returns>Value</returns>
-        public static ComplexF Gompertz(ComplexF t, ComplexF a, ComplexF b, ComplexF c)
+        public static Complex32 Gompertz(Complex32 t, Complex32 a, Complex32 b, Complex32 c)
         {
-            ComplexF x = -c * t;
-            ComplexF y = -b * MathsF.E;
-            ComplexF z = a * MathsF.E;
-            return MathsF.Pow(z, MathsF.Pow(y, x));
+            Complex32 x = -c * t;
+            Complex32 y = -b * Maths.E;
+            Complex32 z = a * Maths.E;
+            return Maths.Pow(z, Maths.Pow(y, x));
         }
         #endregion
 
@@ -487,12 +487,12 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="a">Coefficient</param>
         /// <returns>Value</returns>
-        public static ComplexF Dirac(ComplexF x, ComplexF a)
+        public static Complex32 Dirac(Complex32 x, Complex32 a)
         {
-            ComplexF s = MathsF.Sqrt(MathsF.Pi);
-            ComplexF b = 1.0f / MathsF.Abs(a) / s;
-            ComplexF c = MathsF.Pow(x / a, 2);
-            ComplexF e = MathsF.Exp(-c);
+            Complex32 s = Maths.Sqrt(Maths.Pi);
+            Complex32 b = 1.0f / Maths.Abs(a) / s;
+            Complex32 c = Maths.Pow(x / a, 2);
+            Complex32 e = Maths.Exp(-c);
             return b * e;
         }
         #endregion
@@ -511,7 +511,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Logistic(float x, float a, float k, float b, float v, float q, float c)
         {
-            return a + (k - a) / MathsF.Pow(c + q * MathsF.Exp(-b * x), 1.0f / v);
+            return a + (k - a) / Maths.Pow(c + q * Maths.Exp(-b * x), 1.0f / v);
         }
         /// <summary>
         /// Returns the value of a logistic function.
@@ -524,9 +524,9 @@ namespace UMapx.Core
         /// <param name="q">Central moment</param>
         /// <param name="c">Offset</param>
         /// <returns>Value</returns>
-        public static ComplexF Logistic(ComplexF x, ComplexF a, ComplexF k, ComplexF b, ComplexF v, ComplexF q, ComplexF c)
+        public static Complex32 Logistic(Complex32 x, Complex32 a, Complex32 k, Complex32 b, Complex32 v, Complex32 q, Complex32 c)
         {
-            return a + (k - a) / MathsF.Pow(c + q * MathsF.Exp(-b * x), 1.0f / v);
+            return a + (k - a) / Maths.Pow(c + q * Maths.Exp(-b * x), 1.0f / v);
         }
         /// <summary>
         /// Returns the value of a logistic function.
@@ -548,7 +548,7 @@ namespace UMapx.Core
         /// <param name="k">Upper asymptote</param>
         /// <param name="b">Growth rate</param>
         /// <returns>Value</returns>
-        public static ComplexF Logistic(ComplexF x, ComplexF a, ComplexF k, ComplexF b)
+        public static Complex32 Logistic(Complex32 x, Complex32 a, Complex32 k, Complex32 b)
         {
             return Special.Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
         }
@@ -566,7 +566,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Logistic(ComplexF x)
+        public static Complex32 Logistic(Complex32 x)
         {
             return Special.Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
         }
@@ -586,7 +586,7 @@ namespace UMapx.Core
             float a = v * e;
             float b = v - y + y * e;
             float c = (v - y) * t;
-            return a / b * MathsF.Exp(-c);
+            return a / b * Maths.Exp(-c);
         }
         /// <summary>
         /// Returns the value of the Erlang C-function.
@@ -595,13 +595,13 @@ namespace UMapx.Core
         /// <param name="v">Second parameter</param>
         /// <param name="t">Time parameter</param>
         /// <returns>Value</returns>
-        public static ComplexF Erlang(ComplexF y, int v, ComplexF t)
+        public static Complex32 Erlang(Complex32 y, int v, Complex32 t)
         {
-            ComplexF e = Special.Erlang(y, v);             // Erlang-B (blocking)
-            ComplexF a = v * e;                    // v * B
-            ComplexF b = v - y + y * e;            // v - y + y B = v(1-ρ) + ρ v B
-            ComplexF c = (v - y) * t;              // (v - y) t
-            return a / b * MathsF.Exp(-c);           // C * exp( - (v - y) t )
+            Complex32 e = Special.Erlang(y, v);             // Erlang-B (blocking)
+            Complex32 a = v * e;                    // v * B
+            Complex32 b = v - y + y * e;            // v - y + y B = v(1-ρ) + ρ v B
+            Complex32 c = (v - y) * t;              // (v - y) t
+            return a / b * Maths.Exp(-c);           // C * exp( - (v - y) t )
         }
         /// <summary>
         /// Returns the value of the Erlang B-function.
@@ -637,14 +637,14 @@ namespace UMapx.Core
         /// <param name="y">Firset parameter</param>
         /// <param name="v">Second parameter</param>
         /// <returns>Value</returns>
-        public static ComplexF Erlang(ComplexF y, int v)
+        public static Complex32 Erlang(Complex32 y, int v)
         {
             // Special cases match your real version
-            if (v == 0) return ComplexF.One;
-            if (v < 0) return ComplexF.NaN;
+            if (v == 0) return Complex32.One;
+            if (v < 0) return Complex32.NaN;
 
-            ComplexF t = ComplexF.One;  // term for k=0
-            ComplexF b = ComplexF.One;  // partial sum Σ_{k=0}^{v-1}
+            Complex32 t = Complex32.One;  // term for k=0
+            Complex32 b = Complex32.One;  // partial sum Σ_{k=0}^{v-1}
             int i;
 
             // Build sum up to k = v-1:  t = y^k / k!,  b += t
@@ -655,7 +655,7 @@ namespace UMapx.Core
             }
 
             // Last term k = v:  a = y^v / v!
-            ComplexF a = t * y / i;      // here i == v
+            Complex32 a = t * y / i;      // here i == v
             return a / (a + b);
         }
         #endregion
@@ -716,10 +716,10 @@ namespace UMapx.Core
             if (x < -0.2f)
             {
                 // w ≈ -1 ± sqrt(2 (e x + 1))
-                float q = MathsF.E * x + 1f;
+                float q = Maths.E * x + 1f;
                 if (q >= 0f)
                 {
-                    float s = MathsF.Sqrt(2f * q);
+                    float s = Maths.Sqrt(2f * q);
                     w = (k == 0) ? (-1f + s) : (-1f - s);
                 }
             }
@@ -740,7 +740,7 @@ namespace UMapx.Core
                 var v = w;
                 w = w - f / denom;
 
-                if (MathsF.Abs(w - v) <= eps * MathsF.Abs(w))
+                if (Maths.Abs(w - v) <= eps * Maths.Abs(w))
                     break;
             }
 
@@ -752,20 +752,20 @@ namespace UMapx.Core
         /// <param name="z">Value</param>
         /// <param name="k">Branch</param>
         /// <returns>Value</returns>
-        public static ComplexF LambertW(ComplexF z, int k = 0)
+        public static Complex32 LambertW(Complex32 z, int k = 0)
         {
             // Special cases
             if (z.Real == 0f && z.Imag == 0f)
             {
-                if (k == 0) return ComplexF.Zero;           // W_0(0)=0
-                return ComplexF.NaN;                        // other branches not defined at 0
+                if (k == 0) return Complex32.Zero;           // W_0(0)=0
+                return Complex32.NaN;                        // other branches not defined at 0
             }
 
             // ---- ASYMPTOTIC for large |z| on branch k ----
             // W_k(z) ≈ L1 − L2 + L2/L1 + L2(−2+L2)/(2 L1^2) + L2(6−9L2+2L2^2)/(6 L1^3)
-            if (MathsF.Abs(z) > 1000f)
+            if (Maths.Abs(z) > 1000f)
             {
-                Complex I2Pi = new Complex(0f, 2f * MathsF.Pi);
+                Complex I2Pi = new Complex(0f, 2f * Maths.Pi);
                 Complex L1 = Complex.Log(z) + k * I2Pi;
                 Complex L2 = Complex.Log(L1);
 
@@ -778,12 +778,12 @@ namespace UMapx.Core
                           + (L2 * (-2f + L2)) * 0.5f * invL1_2
                           + (L2 * (6f - 9f * L2 + 2f * L2 * L2)) * (1f / 6f) * invL1_3;
 
-                return (ComplexF)v;
+                return (Complex32)v;
             }
 
             // Initial guess:
             // w0 ≈ L - Log(L), where L = Log(z) + i*2πk (multi-valued log).
-            Complex I2Pi0 = new Complex(0f, 2f * MathsF.Pi);
+            Complex I2Pi0 = new Complex(0f, 2f * Maths.Pi);
             Complex L = Complex.Log(z) + k * I2Pi0;
             Complex w0 = (Complex.Abs(L) < 1e-3f) ? Complex.Log(z) : (L - Complex.Log(L));
             Complex w = w0;
@@ -802,18 +802,18 @@ namespace UMapx.Core
                 Complex denom = ew * wp1 - (w + 2f) * f / (2f * wp1);
 
                 // Newton fallback if denom ~ 0
-                if (MathsF.Abs(denom) == 0f)
+                if (Maths.Abs(denom) == 0f)
                     denom = ew * wp1;
 
                 Complex wNext = w - f / denom;
 
-                if (MathsF.Abs(wNext - w) <= tol * (1f + MathsF.Abs(wNext)))
-                    return (ComplexF)wNext;
+                if (Maths.Abs(wNext - w) <= tol * (1f + Maths.Abs(wNext)))
+                    return (Complex32)wNext;
 
                 w = wNext;
             }
 
-            return (ComplexF)w; // last iterate
+            return (Complex32)w; // last iterate
         }
         /// <summary>
         /// Returns the value of the square super-root.
@@ -834,21 +834,21 @@ namespace UMapx.Core
         /// <param name="z">Value</param>
         /// <param name="k">Branch</param>
         /// <returns>Value</returns>
-        public static ComplexF Ssqrt(ComplexF z, int k = 0)
+        public static Complex32 Ssqrt(Complex32 z, int k = 0)
         {
             // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
             // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
 
             // z = 1 → Log(z)=0 → W_0(0)=0 → y=exp(0)=1 on principal branch
             if (z.Real == 0f && z.Imag == 0f)
-                return ComplexF.Zero; // y^y = 0 has solution y=0 (principal choice)
+                return Complex32.Zero; // y^y = 0 has solution y=0 (principal choice)
 
-            ComplexF Lz = MathsF.Log(z);  // principal log
+            Complex32 Lz = Maths.Log(z);  // principal log
             if (Lz.Real == 0f && Lz.Imag == 0f && k == 0)
-                return ComplexF.One;
+                return Complex32.One;
 
-            ComplexF W = LambertW(Lz, k);
-            return MathsF.Exp(W);
+            Complex32 W = LambertW(Lz, k);
+            return Maths.Exp(W);
         }
         #endregion
 
@@ -904,10 +904,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Fresnelc(ComplexF z)
+        public static Complex32 Fresnelc(Complex32 z)
         {
-            if (z.Real == 0f && z.Imag == 0f) return ComplexF.Zero;
-            if (z.Imag == 0f) return new ComplexF(Fresnelc(z.Real), 0f);
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
+            if (z.Imag == 0f) return new Complex32(Fresnelc(z.Real), 0f);
 
             double az = Math.Sqrt((double)z.Real * z.Real + (double)z.Imag * z.Imag);
 
@@ -927,7 +927,7 @@ namespace UMapx.Core
                            + (3.0 / 8.0) * sinZ2 * invZ * invZ * invZ * invZ * invZ
                            - (15.0 / 16.0) * cosZ2 * invZ * invZ * invZ * invZ * invZ * invZ * invZ;
 
-                return new ComplexF((float)approx.Real, (float)approx.Imaginary);
+                return new Complex32((float)approx.Real, (float)approx.Imaginary);
             }
 
             // term_0 = z / ((2*0)! * (4*0+1)) = z
@@ -948,7 +948,7 @@ namespace UMapx.Core
                 s += term;
             }
 
-            return new ComplexF((float)s.Real, (float)s.Imaginary);
+            return new Complex32((float)s.Real, (float)s.Imaginary);
         }
         /// <summary>
         /// Returns the value of the Fresnel integral S(x).
@@ -1002,10 +1002,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Fresnels(ComplexF z)
+        public static Complex32 Fresnels(Complex32 z)
         {
-            if (z.Real == 0f && z.Imag == 0f) return ComplexF.Zero;
-            if (z.Imag == 0f) return new ComplexF(Fresnels(z.Real), 0f);
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
+            if (z.Imag == 0f) return new Complex32(Fresnels(z.Real), 0f);
 
             double az = Math.Sqrt((double)z.Real * z.Real + (double)z.Imag * z.Imag);
 
@@ -1025,7 +1025,7 @@ namespace UMapx.Core
                            - (3.0 / 8.0) * cosZ2 * invZ * invZ * invZ * invZ * invZ
                            - (15.0 / 16.0) * sinZ2 * invZ * invZ * invZ * invZ * invZ * invZ * invZ;
 
-                return new ComplexF((float)approx.Real, (float)approx.Imaginary);
+                return new Complex32((float)approx.Real, (float)approx.Imaginary);
             }
 
             // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
@@ -1048,7 +1048,7 @@ namespace UMapx.Core
                 s += term;
             }
 
-            return new ComplexF((float)s.Real, (float)s.Imaginary);
+            return new Complex32((float)s.Real, (float)s.Imaginary);
         }
         #endregion
 
@@ -1093,38 +1093,38 @@ namespace UMapx.Core
         /// <param name="h">First value</param>
         /// <param name="a">Second value</param>
         /// <returns>Value</returns>
-        public static ComplexF Owen(ComplexF h, ComplexF a)
+        public static Complex32 Owen(Complex32 h, Complex32 a)
         {
             if (float.IsNaN(h.Real) || float.IsNaN(h.Imag) ||
                 float.IsNaN(a.Real) || float.IsNaN(a.Imag))
-                return ComplexF.NaN;
+                return Complex32.NaN;
 
-            if (a.Real == 0f && a.Imag == 0f) return ComplexF.Zero;
+            if (a.Real == 0f && a.Imag == 0f) return Complex32.Zero;
             if (h.Real == 0f && h.Imag == 0f)
             {
-                return INV_2PI * MathsF.Atan(a);
+                return INV_2PI * Maths.Atan(a);
             }
 
             int n = 1024;
             float ds = 1f / n;
 
-            ComplexF F(float s)
+            Complex32 F(float s)
             {
-                ComplexF sa = s * a;
-                ComplexF denom = ComplexF.One + sa * sa;
-                ComplexF expo = MathsF.Exp(-0.5f * h * h * denom);
+                Complex32 sa = s * a;
+                Complex32 denom = Complex32.One + sa * sa;
+                Complex32 expo = Maths.Exp(-0.5f * h * h * denom);
                 return a * (expo / denom); // dt = a ds
             }
 
-            ComplexF sum = F(0f) + F(1f);
-            ComplexF s4 = ComplexF.Zero;
-            ComplexF s2 = ComplexF.Zero;
+            Complex32 sum = F(0f) + F(1f);
+            Complex32 s4 = Complex32.Zero;
+            Complex32 s2 = Complex32.Zero;
             for (int i = 1; i < n; i++)
             {
                 float si = i * ds;
                 if ((i & 1) == 1) s4 += F(si); else s2 += F(si);
             }
-            ComplexF integral = ds / 3f * (sum + 4f * s4 + 2f * s2);
+            Complex32 integral = ds / 3f * (sum + 4f * s4 + 2f * s2);
             return INV_2PI * integral;
         }
 
@@ -1146,9 +1146,9 @@ namespace UMapx.Core
                 return ZetaHasse(s);
 
             // Functional equation for s ≤ 0
-            float twoPowS = MathsF.Exp(s * MathsF.Log(2f));
-            float piPow = MathsF.Exp((s - 1f) * MathsF.Log(MathsF.Pi));
-            float sinTerm = MathsF.Sin(0.5f * MathsF.Pi * s);
+            float twoPowS = Maths.Exp(s * Maths.Log(2f));
+            float piPow = Maths.Exp((s - 1f) * Maths.Log(Maths.Pi));
+            float sinTerm = Maths.Sin(0.5f * Maths.Pi * s);
             float gamma = Special.Gamma(1f - s);
 
             float zeta1ms = ZetaHasse(1f - s);          // now 1-s ≥ 1
@@ -1159,25 +1159,25 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="s">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Zeta(ComplexF s)
+        public static Complex32 Zeta(Complex32 s)
         {
             // explicit pole at s = 1 + 0i
             if (s.Imag == 0f && s.Real == 1f)
-                return ComplexF.NaN;
+                return Complex32.NaN;
 
             if (s.Real > 0f && !(s.Imag == 0f && s.Real == 1f))
                 return ZetaHasse(s);
 
             // Functional equation
-            ComplexF two = new ComplexF(2f, 0f);
-            ComplexF pi = new ComplexF(MathsF.Pi, 0f);
+            Complex32 two = new Complex32(2f, 0f);
+            Complex32 pi = new Complex32(Maths.Pi, 0f);
 
-            ComplexF twoPowS = MathsF.Exp(s * MathsF.Log(two));
-            ComplexF piPow = MathsF.Exp((s - ComplexF.One) * MathsF.Log(pi));
-            ComplexF sinTerm = MathsF.Sin(0.5f * pi * s);
-            ComplexF gamma = Special.Gamma(ComplexF.One - s);
+            Complex32 twoPowS = Maths.Exp(s * Maths.Log(two));
+            Complex32 piPow = Maths.Exp((s - Complex32.One) * Maths.Log(pi));
+            Complex32 sinTerm = Maths.Sin(0.5f * pi * s);
+            Complex32 gamma = Special.Gamma(Complex32.One - s);
 
-            ComplexF zeta1ms = ZetaHasse(ComplexF.One - s);
+            Complex32 zeta1ms = ZetaHasse(Complex32.One - s);
             return twoPowS * piPow * sinTerm * gamma * zeta1ms;
         }
 
@@ -1193,7 +1193,7 @@ namespace UMapx.Core
         private static float ZetaEta(float s)
         {
             // ζ(s) = η(s) / (1 - 2^{1-s}), valid for s>0, s≠1
-            float denom = 1f - MathsF.Exp((1f - s) * MathsF.Log(2f));
+            float denom = 1f - Maths.Exp((1f - s) * Maths.Log(2f));
             // Handle s≈1 numerically? Here API has exact s; s==1 already excluded.
 
             const float eps = 1e-16f;
@@ -1215,23 +1215,23 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="s">Function argument</param>
         [Obsolete]
-        private static ComplexF ZetaEta(ComplexF s)
+        private static Complex32 ZetaEta(Complex32 s)
         {
             // ζ(s) = η(s) / (1 - 2^{1-s}), valid for Re(s)>0, s≠1
-            ComplexF two = new ComplexF(2f, 0f);
-            ComplexF denom = ComplexF.One - MathsF.Exp((ComplexF.One - s) * MathsF.Log(two));
+            Complex32 two = new Complex32(2f, 0f);
+            Complex32 denom = Complex32.One - Maths.Exp((Complex32.One - s) * Maths.Log(two));
 
             const float eps = 1e-16f;
             const int maxIter = 10000000;
 
-            ComplexF sum = ComplexF.Zero;
+            Complex32 sum = Complex32.Zero;
             for (int n = 1; n <= maxIter; n++)
             {
                 // term = (-1)^{n-1} / n^s  = (-1)^{n-1} * exp( -s * log n )
-                ComplexF term = MathsF.Exp(-s * new ComplexF(MathsF.Log(n), 0f));
+                Complex32 term = Maths.Exp(-s * new Complex32(Maths.Log(n), 0f));
                 if ((n & 1) == 0) term = -term;
                 sum += term;
-                if (MathsF.Abs(term) < eps) break;
+                if (Maths.Abs(term) < eps) break;
             }
             return sum / denom;
         }
@@ -1243,7 +1243,7 @@ namespace UMapx.Core
         private static float ZetaHasse(float s)
         {
             // ζ(s) = S(s) / (1 - 2^{1-s}), with S(s) the Hasse inner sum
-            float denom = 1f - MathsF.Exp((1f - s) * MathsF.Log(2f));
+            float denom = 1f - Maths.Exp((1f - s) * Maths.Log(2f));
             // handle near-pole numerically? caller excludes s=1 exactly.
 
             double S = 0.0;
@@ -1278,37 +1278,37 @@ namespace UMapx.Core
         /// Computes the Riemann zeta function for complex inputs using Hasse's series.
         /// </summary>
         /// <param name="s">Function argument</param>
-        private static ComplexF ZetaHasse(ComplexF s)
+        private static Complex32 ZetaHasse(Complex32 s)
         {
-            ComplexF two = new ComplexF(2f, 0f);
-            ComplexF denom = ComplexF.One - MathsF.Exp((ComplexF.One - s) * MathsF.Log(two));
+            Complex32 two = new Complex32(2f, 0f);
+            Complex32 denom = Complex32.One - Maths.Exp((Complex32.One - s) * Maths.Log(two));
 
-            ComplexF S = ComplexF.Zero;
+            Complex32 S = Complex32.Zero;
             float eps = 1e-16f;
             int maxK = 512;
 
             for (int k = 0; k < maxK; k++)
             {
-                ComplexF Ak = ComplexF.Zero;
+                Complex32 Ak = Complex32.Zero;
                 // binomial C(k,q) iteratively
-                ComplexF C = ComplexF.One; // real-positive actually, but keep as complex-friendly
+                Complex32 C = Complex32.One; // real-positive actually, but keep as complex-friendly
                 for (int q = 0; q <= k; q++)
                 {
                     // (q+1)^{-s} = exp( -s * log(q+1) )
-                    ComplexF pow = MathsF.Exp(-s * new ComplexF(MathsF.Log(q + 1), 0f));
-                    ComplexF term = C * pow;
+                    Complex32 pow = Maths.Exp(-s * new Complex32(Maths.Log(q + 1), 0f));
+                    Complex32 term = C * pow;
                     if ((q & 1) == 1) term = -term;
                     Ak += term;
 
                     // C(k,q+1) = C(k,q) * (k - q)/(q + 1)
                     float ratio = (q < k) ? (float)(k - q) / (q + 1f) : 0f;
-                    C *= new ComplexF(ratio, 0f);
+                    C *= new Complex32(ratio, 0f);
                 }
 
-                ComplexF Tk = Ak / MathsF.Exp(new ComplexF((k + 1f) * MathsF.Log(2f), 0f));
+                Complex32 Tk = Ak / Maths.Exp(new Complex32((k + 1f) * Maths.Log(2f), 0f));
                 S += Tk;
 
-                if (MathsF.Abs(Tk) < eps * (1f + MathsF.Abs(S))) break;
+                if (Maths.Abs(Tk) < eps * (1f + Maths.Abs(S))) break;
             }
             return S / denom;
         }
@@ -1329,18 +1329,18 @@ namespace UMapx.Core
             if (float.IsNaN(x)) return float.NaN;
 
             // Poles on the real axis
-            if (x <= 0f && x == MathsF.Round(x)) // integer check
+            if (x <= 0f && x == Maths.Round(x)) // integer check
             {
-                int xi = (int)MathsF.Round(x);
+                int xi = (int)Maths.Round(x);
                 if (xi <= 0) return float.NaN;
             }
 
             // Reflection for better accuracy and negative non-integers
             if (x < 0.5f)
             {
-                float sinpix = MathsF.Sin(MathsF.Pi * x);
+                float sinpix = Maths.Sin(Maths.Pi * x);
                 if (sinpix == 0f) return float.NaN; // pole
-                return MathsF.Pi / (sinpix * Gamma(1f - x));
+                return Maths.Pi / (sinpix * Gamma(1f - x));
             }
 
             return (float)GammaLanczos((double)x);
@@ -1350,20 +1350,20 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Gamma(ComplexF x)
+        public static Complex32 Gamma(Complex32 x)
         {
             // Detect real negative integer poles exactly
             if (x.Imag == 0f)
             {
                 float xr = x.Real;
-                if (xr <= 0f && xr == MathsF.Round(xr)) return ComplexF.NaN;
+                if (xr <= 0f && xr == Maths.Round(xr)) return Complex32.NaN;
             }
 
             if (x.Real < 0.5f)
             {
-                ComplexF sinpiz = MathsF.Sin(new ComplexF(MathsF.Pi, 0f) * x);
-                if (MathsF.Abs(sinpiz) == 0f) return ComplexF.NaN;
-                return new ComplexF(MathsF.Pi, 0f) / (sinpiz * Gamma(ComplexF.One - x));
+                Complex32 sinpiz = Maths.Sin(new Complex32(Maths.Pi, 0f) * x);
+                if (Maths.Abs(sinpiz) == 0f) return Complex32.NaN;
+                return new Complex32(Maths.Pi, 0f) / (sinpiz * Gamma(Complex32.One - x));
             }
 
             return GammaLanczos(x);
@@ -1379,14 +1379,14 @@ namespace UMapx.Core
             if (float.IsNaN(x)) return float.NaN;
 
             // Poles on the real axis
-            if (x <= 0f && x == MathsF.Round(x)) return float.NaN;
+            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
 
             if (x < 0.5f)
             {
                 // log|Γ(x)| = log(π) - log|sin(πx)| - log|Γ(1-x)|
-                float sinpix = MathsF.Sin(MathsF.Pi * x);
+                float sinpix = Maths.Sin(Maths.Pi * x);
                 if (sinpix == 0f) return float.NaN;
-                return MathsF.Log(MathsF.Pi) - MathsF.Log(MathsF.Abs(sinpix)) - LogGamma(1f - x);
+                return Maths.Log(Maths.Pi) - Maths.Log(Maths.Abs(sinpix)) - LogGamma(1f - x);
             }
 
             return (float)LogGammaLanczos((double)x);
@@ -1396,22 +1396,22 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF LogGamma(ComplexF z)
+        public static Complex32 LogGamma(Complex32 z)
         {
             // Real negative integers: simple poles
             if (z.Imag == 0f)
             {
                 float xr = z.Real;
-                if (xr <= 0f && xr == MathsF.Round(xr))
-                    return ComplexF.NaN;
+                if (xr <= 0f && xr == Maths.Round(xr))
+                    return Complex32.NaN;
             }
 
             if (z.Real < 0.5f)
             {
                 // log Γ(z) = log π − log sin(πz) − log Γ(1−z)  (principal branches)
-                ComplexF sinpiz = MathsF.Sin(new ComplexF(MathsF.Pi, 0f) * z);
-                if (MathsF.Abs(sinpiz) == 0f) return ComplexF.NaN;
-                return MathsF.Log(new ComplexF(MathsF.Pi, 0f)) - MathsF.Log(sinpiz) - LogGamma(ComplexF.One - z);
+                Complex32 sinpiz = Maths.Sin(new Complex32(Maths.Pi, 0f) * z);
+                if (Maths.Abs(sinpiz) == 0f) return Complex32.NaN;
+                return Maths.Log(new Complex32(Maths.Pi, 0f)) - Maths.Log(sinpiz) - LogGamma(Complex32.One - z);
             }
 
             return LogGammaLanczos(z);
@@ -1427,16 +1427,16 @@ namespace UMapx.Core
             if (float.IsNaN(x)) return float.NaN;
 
             // Real poles at non-positive integers
-            if (x <= 0f && x == MathsF.Round(x)) return float.NaN;
+            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
 
             // Reflection to avoid small/negative arguments
             if (x < 0.5f)
             {
-                float pix = MathsF.Pi * x;
-                float sin = MathsF.Sin(pix);
+                float pix = Maths.Pi * x;
+                float sin = Maths.Sin(pix);
                 if (sin == 0f) return float.NaN;             // pole
                                                              // ψ(x) = ψ(1-x) - π cot(πx)
-                return DiGamma(1f - x) - MathsF.Pi * (MathsF.Cos(pix) / sin);
+                return DiGamma(1f - x) - Maths.Pi * (Maths.Cos(pix) / sin);
             }
 
             // Shift up to a safe region for the asymptotic
@@ -1451,7 +1451,7 @@ namespace UMapx.Core
             // Bernoulli asymptotic: ψ(z) ~ ln z - 1/(2z) - 1/(12 z^2) + 1/(120 z^4) - 1/(252 z^6) + 1/(240 z^8) - 1/(132 z^10)
             float inv = 1f / z;
             float inv2 = inv * inv;
-            float res = MathsF.Log(z) - 0.5f * inv
+            float res = Maths.Log(z) - 0.5f * inv
                         - (1f / 12f) * inv2
                         + (1f / 120f) * (inv2 * inv2)
                         - (1f / 252f) * (inv2 * inv2 * inv2)
@@ -1465,42 +1465,42 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF DiGamma(ComplexF x)
+        public static Complex32 DiGamma(Complex32 x)
         {
             // Real negative integers: poles
             if (x.Imag == 0f)
             {
                 float xr = x.Real;
-                if (xr <= 0f && xr == MathsF.Round(xr))
-                    return ComplexF.NaN;
+                if (xr <= 0f && xr == Maths.Round(xr))
+                    return Complex32.NaN;
             }
 
-            ComplexF z = x;
+            Complex32 z = x;
 
             // Reflection for better behavior near the poles/left half-plane
             if (z.Real < 0.5f)
             {
-                ComplexF piz = new ComplexF(MathsF.Pi, 0f) * z;
-                ComplexF sin = MathsF.Sin(piz);
-                if (MathsF.Abs(sin) == 0f) return ComplexF.NaN;
+                Complex32 piz = new Complex32(Maths.Pi, 0f) * z;
+                Complex32 sin = Maths.Sin(piz);
+                if (Maths.Abs(sin) == 0f) return Complex32.NaN;
                 // ψ(z) = ψ(1 - z) - π cot(π z) = ψ(1 - z) - π * cos(π z)/sin(π z)
-                ComplexF cot = MathsF.Cos(piz) / sin;
-                return DiGamma(ComplexF.One - z) - new ComplexF(MathsF.Pi, 0f) * cot;
+                Complex32 cot = Maths.Cos(piz) / sin;
+                return DiGamma(Complex32.One - z) - new Complex32(Maths.Pi, 0f) * cot;
             }
 
             // Shift up to Re(z) ≥ 8
-            ComplexF acc = ComplexF.Zero;
+            Complex32 acc = Complex32.Zero;
             while (z.Real < 8f)
             {
-                acc -= ComplexF.One / z;
-                z += ComplexF.One;
+                acc -= Complex32.One / z;
+                z += Complex32.One;
             }
 
             // Bernoulli asymptotic in the complex plane
-            ComplexF inv = ComplexF.One / z;
-            ComplexF inv2 = inv * inv;
+            Complex32 inv = Complex32.One / z;
+            Complex32 inv2 = inv * inv;
 
-            ComplexF res = MathsF.Log(z) - 0.5f * inv
+            Complex32 res = Maths.Log(z) - 0.5f * inv
                             - (1f / 12f) * inv2
                             + (1f / 120f) * (inv2 * inv2)
                             - (1f / 252f) * (inv2 * inv2 * inv2)
@@ -1520,16 +1520,16 @@ namespace UMapx.Core
             if (float.IsNaN(x)) return float.NaN;
 
             // Real poles at non-positive integers
-            if (x <= 0f && x == MathsF.Round(x)) return float.NaN;
+            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
 
             // Reflection for better behavior in left half-plane
             if (x < 0.5f)
             {
-                float pix = MathsF.Pi * x;
-                float sin = MathsF.Sin(pix);
+                float pix = Maths.Pi * x;
+                float sin = Maths.Sin(pix);
                 if (sin == 0f) return float.NaN;
                 float csc2 = 1f / (sin * sin);
-                return (MathsF.Pi * MathsF.Pi) * csc2 - TriGamma(1f - x);
+                return (Maths.Pi * Maths.Pi) * csc2 - TriGamma(1f - x);
             }
 
             // Shift up to a safe region for asymptotics
@@ -1565,47 +1565,47 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF TriGamma(ComplexF x)
+        public static Complex32 TriGamma(Complex32 x)
         {
             // Detect real negative integer poles exactly
             if (x.Imag == 0f)
             {
                 float xr = x.Real;
-                if (xr <= 0f && xr == MathsF.Round(xr))
-                    return ComplexF.NaN;
+                if (xr <= 0f && xr == Maths.Round(xr))
+                    return Complex32.NaN;
             }
 
-            ComplexF z = x;
+            Complex32 z = x;
 
             // Reflection
             if (z.Real < 0.5f)
             {
-                ComplexF piz = new ComplexF(MathsF.Pi, 0f) * z;
-                ComplexF sin = MathsF.Sin(piz);
-                if (MathsF.Abs(sin) == 0f) return ComplexF.NaN;
+                Complex32 piz = new Complex32(Maths.Pi, 0f) * z;
+                Complex32 sin = Maths.Sin(piz);
+                if (Maths.Abs(sin) == 0f) return Complex32.NaN;
 
-                ComplexF csc2 = ComplexF.One / (sin * sin);
-                return new ComplexF(MathsF.Pi * MathsF.Pi, 0f) * csc2 - TriGamma(ComplexF.One - z);
+                Complex32 csc2 = Complex32.One / (sin * sin);
+                return new Complex32(Maths.Pi * Maths.Pi, 0f) * csc2 - TriGamma(Complex32.One - z);
             }
 
             // Shift up to Re(z) ≥ 8
-            ComplexF acc = ComplexF.Zero;
+            Complex32 acc = Complex32.Zero;
             while (z.Real < 8f)
             {
-                acc += ComplexF.One / (z * z);
-                z += ComplexF.One;
+                acc += Complex32.One / (z * z);
+                z += Complex32.One;
             }
 
             // Bernoulli asymptotic
-            ComplexF inv = ComplexF.One / z;
-            ComplexF inv2 = inv * inv;
-            ComplexF inv3 = inv2 * inv;
-            ComplexF inv5 = inv3 * inv2;
-            ComplexF inv7 = inv5 * inv2;
-            ComplexF inv9 = inv7 * inv2;
-            ComplexF inv11 = inv9 * inv2;
+            Complex32 inv = Complex32.One / z;
+            Complex32 inv2 = inv * inv;
+            Complex32 inv3 = inv2 * inv;
+            Complex32 inv5 = inv3 * inv2;
+            Complex32 inv7 = inv5 * inv2;
+            Complex32 inv9 = inv7 * inv2;
+            Complex32 inv11 = inv9 * inv2;
 
-            ComplexF res = inv
+            Complex32 res = inv
                            + 0.5f * inv2
                            + (1f / 6f) * inv3
                            - (1f / 30f) * inv5
@@ -1625,7 +1625,7 @@ namespace UMapx.Core
         public static float GammaQ(float s, float x)
         {
             if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
-            if (s <= 0f && s == MathsF.Round(s)) return float.NaN;    // poles of Γ(s)
+            if (s <= 0f && s == Maths.Round(s)) return float.NaN;    // poles of Γ(s)
             if (x < 0f) return float.NaN;
 
             if (x == 0f) return 1f;          // Q(s,0)=1 (for s>0)
@@ -1641,9 +1641,9 @@ namespace UMapx.Core
             else
             {
                 // continued fraction for Q(s,x)
-                float logPref = s * MathsF.Log(x) - x - Special.LogGamma(s); // log( e^{-x} x^s / Γ(s) )
+                float logPref = s * Maths.Log(x) - x - Special.LogGamma(s); // log( e^{-x} x^s / Γ(s) )
                 float h = UpperGammaCF(s, x);                 // CF value
-                return MathsF.Exp(logPref) * h;
+                return Maths.Exp(logPref) * h;
             }
         }
         /// <summary>
@@ -1652,25 +1652,25 @@ namespace UMapx.Core
         /// <param name="s">Value</param>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF GammaQ(ComplexF s, ComplexF x)
+        public static Complex32 GammaQ(Complex32 s, Complex32 x)
         {
             // Poles at real non-positive integers s
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.One; // Q(s,0)=1 (analytic continuation)
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.One; // Q(s,0)=1 (analytic continuation)
             if (float.IsNaN(s.Real) || float.IsNaN(s.Imag) ||
                 float.IsNaN(x.Real) || float.IsNaN(x.Imag))
-                return ComplexF.NaN;
+                return Complex32.NaN;
 
             // heuristic split like real case
-            if (MathsF.Abs(x) < MathsF.Abs(s) + 1f)
+            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
             {
-                ComplexF P = LowerRegGammaSeries(s, x);
-                return ComplexF.One - P;
+                Complex32 P = LowerRegGammaSeries(s, x);
+                return Complex32.One - P;
             }
             else
             {
-                ComplexF logPref = s * MathsF.Log(x) - x - Special.LogGamma(s);
-                ComplexF h = UpperGammaCF(s, x);
-                return MathsF.Exp(logPref) * h;
+                Complex32 logPref = s * Maths.Log(x) - x - Special.LogGamma(s);
+                Complex32 h = UpperGammaCF(s, x);
+                return Maths.Exp(logPref) * h;
             }
         }
 
@@ -1685,7 +1685,7 @@ namespace UMapx.Core
             if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
             if (x < 0f) return float.NaN;
             // Poles of Γ(s) on the real line:
-            if (s <= 0f && s == MathsF.Round(s)) return float.NaN;
+            if (s <= 0f && s == Maths.Round(s)) return float.NaN;
 
             if (x == 0f) return 0f;                        // P(s,0) = 0  (s>0)
             if (float.IsPositiveInfinity(x)) return 1f;    // P(s,∞) = 1
@@ -1699,9 +1699,9 @@ namespace UMapx.Core
             else
             {
                 // Continued fraction for Q(s,x), then P = 1 - Q
-                float logPref = s * MathsF.Log(x) - x - Special.LogGamma(s); // log(e^{-x} x^s / Γ(s))
+                float logPref = s * Maths.Log(x) - x - Special.LogGamma(s); // log(e^{-x} x^s / Γ(s))
                 float cf = UpperGammaCF(s, x);                // CF approximates Γ(s,x)/(e^{-x} x^s)
-                float Q = MathsF.Exp(logPref) * cf;
+                float Q = Maths.Exp(logPref) * cf;
                 return 1f - Q;
             }
         }
@@ -1711,24 +1711,24 @@ namespace UMapx.Core
         /// <param name="s">Value</param>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF GammaP(ComplexF s, ComplexF x)
+        public static Complex32 GammaP(Complex32 s, Complex32 x)
         {
             // Poles of Γ(s) at real non-positive integers:
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.Zero; // P(s,0)=0 (analytic continuation)
-            if ((s.Imag == 0f) && s.Real <= 0f && s.Real == MathsF.Round(s.Real))
-                return ComplexF.NaN;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero; // P(s,0)=0 (analytic continuation)
+            if ((s.Imag == 0f) && s.Real <= 0f && s.Real == Maths.Round(s.Real))
+                return Complex32.NaN;
 
             // Heuristic split mirroring the real case
-            if (MathsF.Abs(x) < MathsF.Abs(s) + 1f)
+            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
             {
                 return LowerRegGammaSeries(s, x);
             }
             else
             {
-                ComplexF logPref = s * MathsF.Log(x) - x - Special.LogGamma(s);
-                ComplexF cf = UpperGammaCF(s, x);
-                ComplexF Q = MathsF.Exp(logPref) * cf;
-                return ComplexF.One - Q;
+                Complex32 logPref = s * Maths.Log(x) - x - Special.LogGamma(s);
+                Complex32 cf = UpperGammaCF(s, x);
+                Complex32 Q = Maths.Exp(logPref) * cf;
+                return Complex32.One - Q;
             }
         }
 
@@ -1744,7 +1744,7 @@ namespace UMapx.Core
             if (x < 0f) return float.NaN;
 
             // Poles of Γ(s) on the real axis (we restrict to s > 0 in this real overload)
-            if (s <= 0f && s == MathsF.Round(s)) return float.NaN;
+            if (s <= 0f && s == Maths.Round(s)) return float.NaN;
 
             if (x == 0f) return 0f;                       // γ(s,0) = 0  (s>0)
             if (float.IsPositiveInfinity(x)) return Special.Gamma(s); // γ(s,∞) = Γ(s)
@@ -1758,9 +1758,9 @@ namespace UMapx.Core
             else
             {
                 // γ(s,x) = Γ(s) − Γ(s,x),  Γ(s,x) ≈ e^{−x} x^s * CF
-                float logPref = s * MathsF.Log(x) - x;                  // log(e^{−x} x^s)
+                float logPref = s * Maths.Log(x) - x;                  // log(e^{−x} x^s)
                 float cf = UpperGammaCF(s, x);           // CF ≈ Γ(s,x)/(e^{−x} x^s)
-                float upper = MathsF.Exp(logPref) * cf;
+                float upper = Maths.Exp(logPref) * cf;
                 return Special.Gamma(s) - upper;
             }
         }
@@ -1770,35 +1770,35 @@ namespace UMapx.Core
         /// <param name="s">Value</param>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF GammaIncomplete(ComplexF s, ComplexF x)
+        public static Complex32 GammaIncomplete(Complex32 s, Complex32 x)
         {
             if ((float.IsNaN(s.Real) || float.IsNaN(s.Imag)) ||
                 (float.IsNaN(x.Real) || float.IsNaN(x.Imag)))
-                return ComplexF.NaN;
+                return Complex32.NaN;
 
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.Zero; // γ(s,0) = 0
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero; // γ(s,0) = 0
 
             // Poles of Γ(s) on the principal branch (real negative integers)
             if (s.Imag == 0f)
             {
                 float sr = s.Real;
-                if (sr <= 0f && sr == MathsF.Round(sr))
-                    return ComplexF.NaN;
+                if (sr <= 0f && sr == Maths.Round(sr))
+                    return Complex32.NaN;
             }
 
             // Heuristic split mirroring the real case
-            if (MathsF.Abs(x) < MathsF.Abs(s) + 1f)
+            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
             {
                 // γ = Γ * P, with P via series
-                ComplexF P = LowerRegGammaSeries(s, x);
+                Complex32 P = LowerRegGammaSeries(s, x);
                 return Special.Gamma(s) * P;
             }
             else
             {
                 // γ = Γ − Γ(s,x), with Γ(s,x) ≈ e^{−x} x^s * CF
-                ComplexF logPref = s * MathsF.Log(x) - x;         // log(e^{−x} x^s)
-                ComplexF cf = UpperGammaCF(s, x);
-                ComplexF upper = MathsF.Exp(logPref) * cf;
+                Complex32 logPref = s * Maths.Log(x) - x;         // log(e^{−x} x^s)
+                Complex32 cf = UpperGammaCF(s, x);
+                Complex32 upper = Maths.Exp(logPref) * cf;
                 return Special.Gamma(s) - upper;
             }
         }
@@ -1820,7 +1820,7 @@ namespace UMapx.Core
         /// <param name="s">Value</param>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF GammaIncompleteComplemented(ComplexF s, ComplexF x)
+        public static Complex32 GammaIncompleteComplemented(Complex32 s, Complex32 x)
         {
             return Special.Gamma(s) - Special.GammaIncomplete(s, x);
         }
@@ -1866,18 +1866,18 @@ namespace UMapx.Core
         /// <summary>
         /// Lanczos approximation (complex) valid for Re(z) > 0.5. Computes principal branch.
         /// </summary>
-        private static ComplexF GammaLanczos(ComplexF x)
+        private static Complex32 GammaLanczos(Complex32 x)
         {
-            ComplexF z = x - ComplexF.One;
-            ComplexF sum = new ComplexF(LANCZOS[0], 0f);
+            Complex32 z = x - Complex32.One;
+            Complex32 sum = new Complex32(LANCZOS[0], 0f);
             for (int k = 1; k < LANCZOS.Length; k++)
-                sum += LANCZOS[k] / (z + new ComplexF(k, 0f));
+                sum += LANCZOS[k] / (z + new Complex32(k, 0f));
 
-            ComplexF t = z + new ComplexF(G + 0.5f, 0f);
-            ComplexF logPart = MathsF.Log(new ComplexF(SQRT_TWO_PI, 0f) * sum)
-                              + (z + new ComplexF(0.5f, 0f)) * MathsF.Log(t)
+            Complex32 t = z + new Complex32(G + 0.5f, 0f);
+            Complex32 logPart = Maths.Log(new Complex32(SQRT_TWO_PI, 0f) * sum)
+                              + (z + new Complex32(0.5f, 0f)) * Maths.Log(t)
                               - t;
-            return MathsF.Exp(logPart);
+            return Maths.Exp(logPart);
         }
 
         /// <summary>
@@ -1898,17 +1898,17 @@ namespace UMapx.Core
         /// <summary>
         /// Lanczos log-gamma for complex z with Re(z) ≥ 0.5 (principal branch).
         /// </summary>
-        private static ComplexF LogGammaLanczos(ComplexF x)
+        private static Complex32 LogGammaLanczos(Complex32 x)
         {
-            ComplexF z = x - ComplexF.One;
-            ComplexF sum = new ComplexF(LANCZOS[0], 0f);
+            Complex32 z = x - Complex32.One;
+            Complex32 sum = new Complex32(LANCZOS[0], 0f);
             for (int k = 1; k < LANCZOS.Length; k++)
-                sum += LANCZOS[k] / (z + new ComplexF(k, 0f));
+                sum += LANCZOS[k] / (z + new Complex32(k, 0f));
 
-            ComplexF t = z + new ComplexF(G + 0.5f, 0f);
+            Complex32 t = z + new Complex32(G + 0.5f, 0f);
             // log Γ(x) ≈ log(√(2π)*sum) + (z+0.5) log t − t
-            return MathsF.Log(new ComplexF(SQRT_TWO_PI, 0f) * sum)
-                 + (z + new ComplexF(0.5f, 0f)) * MathsF.Log(t)
+            return Maths.Log(new Complex32(SQRT_TWO_PI, 0f) * sum)
+                 + (z + new Complex32(0.5f, 0f)) * Maths.Log(t)
                  - t;
         }
 
@@ -1931,10 +1931,10 @@ namespace UMapx.Core
             {
                 term *= x / (s + n + 1f);
                 sum += term;
-                if (MathsF.Abs(term) < eps * (1f + MathsF.Abs(sum))) break;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
             }
             // e^{-x} x^{s}
-            float pref = MathsF.Exp(-x + s * MathsF.Log(x));
+            float pref = Maths.Exp(-x + s * Maths.Log(x));
             return pref * sum;
         }
 
@@ -1943,10 +1943,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="s">Shape parameter</param>
         /// <param name="x">Upper limit of integration</param>
-        private static ComplexF LowerRegGammaSeries(ComplexF s, ComplexF x)
+        private static Complex32 LowerRegGammaSeries(Complex32 s, Complex32 x)
         {
-            ComplexF term = ComplexF.One / s; // n=0
-            ComplexF sum = term;
+            Complex32 term = Complex32.One / s; // n=0
+            Complex32 sum = term;
             float eps = 1e-16f;
             int maxIter = 200;
 
@@ -1954,9 +1954,9 @@ namespace UMapx.Core
             {
                 term *= x / (s + (n + 1f));
                 sum += term;
-                if (MathsF.Abs(term) < eps * (1f + MathsF.Abs(sum))) break;
+                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
             }
-            ComplexF pref = MathsF.Exp(-x + s * MathsF.Log(x));
+            Complex32 pref = Maths.Exp(-x + s * Maths.Log(x));
             return pref * sum;
         }
 
@@ -1993,7 +1993,7 @@ namespace UMapx.Core
                 h *= delta;
 
                 b += 2f;
-                if (MathsF.Abs(delta - 1f) < eps) break;
+                if (Maths.Abs(delta - 1f) < eps) break;
             }
             return h;
         }
@@ -2003,30 +2003,30 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="s">Shape parameter</param>
         /// <param name="x">Lower limit of integration</param>
-        private static ComplexF UpperGammaCF(ComplexF s, ComplexF x)
+        private static Complex32 UpperGammaCF(Complex32 s, Complex32 x)
         {
             const float tiny = 1e-30f;
 
-            ComplexF b = x + ComplexF.One - s;
-            ComplexF c = new ComplexF(1f / tiny, 0f);
-            ComplexF d = ComplexF.One / b;
-            ComplexF h = d;
+            Complex32 b = x + Complex32.One - s;
+            Complex32 c = new Complex32(1f / tiny, 0f);
+            Complex32 d = Complex32.One / b;
+            Complex32 h = d;
 
             float eps = 1e-16f;
             int maxIter = 200;
 
             for (int i = 1; i <= maxIter; i++)
             {
-                ComplexF ii = new ComplexF(i, 0f);
-                ComplexF a = ii * (s - ii); // a_i
+                Complex32 ii = new Complex32(i, 0f);
+                Complex32 a = ii * (s - ii); // a_i
 
-                d = ComplexF.One / (b + a * d);
+                d = Complex32.One / (b + a * d);
                 c = b + a / c;
-                ComplexF delta = c * d;
+                Complex32 delta = c * d;
                 h *= delta;
 
                 b += 2f; // b increases by 2 each step
-                if (MathsF.Abs(delta - ComplexF.One) < eps) break;
+                if (Maths.Abs(delta - Complex32.One) < eps) break;
             }
             return h;
         }
@@ -2049,10 +2049,10 @@ namespace UMapx.Core
                 return float.NaN; // singular values
 
             else if (n == 0)
-                return x / MathsF.E / SQRT_PI; // E0(x)
+                return x / Maths.E / SQRT_PI; // E0(x)
 
             else if (n == 1)
-                return (1 - MathsF.Exp(-x)) / SQRT_PI; // E1(x)
+                return (1 - Maths.Exp(-x)) / SQRT_PI; // E1(x)
 
             else if (n == 2)
                 return Erf(x); // E2(x) = erf(x)
@@ -2062,7 +2062,7 @@ namespace UMapx.Core
             {
                 float p = 1.0f / n;
                 float w = 1.0f / SQRT_PI;
-                float v = Gamma(p) - GammaIncompleteComplemented(p, MathsF.Pow(x, n));
+                float v = Gamma(p) - GammaIncompleteComplemented(p, Maths.Pow(x, n));
                 return w * Gamma(n) * v;
             }
             return float.NaN;
@@ -2073,24 +2073,24 @@ namespace UMapx.Core
         /// <param name="x">Value (0, +inf)</param>
         /// <param name="n">Order [0, +inf)</param>
         /// <returns>Value</returns>
-        public static ComplexF Gerf(ComplexF x, int n)
+        public static Complex32 Gerf(Complex32 x, int n)
         {
             if (n < 0)
-                return ComplexF.NaN; // singular by your convention
+                return Complex32.NaN; // singular by your convention
 
             // E0, E1, E2
             if (n == 0)
-                return x / (MathsF.E * SQRT_PI);
+                return x / (Maths.E * SQRT_PI);
             if (n == 1)
-                return (ComplexF.One - MathsF.Exp(-x)) / SQRT_PI;
+                return (Complex32.One - Maths.Exp(-x)) / SQRT_PI;
             if (n == 2)
                 return Erf(x); // your complex erf
 
             // General case: En(x) = Γ(n)/√π * γ(1/n, x^n)
-            ComplexF xn = MathsF.Pow(x, n);                       // x^n, integer power
-            ComplexF p = new ComplexF(1f / n, 0f);          // 1/n
-            ComplexF lower = GammaIncomplete(p, xn);          // γ(1/n, x^n)
-            ComplexF gammaN = Gamma(new ComplexF(n, 0f));    // Γ(n) = (n-1)!
+            Complex32 xn = Maths.Pow(x, n);                       // x^n, integer power
+            Complex32 p = new Complex32(1f / n, 0f);          // 1/n
+            Complex32 lower = GammaIncomplete(p, xn);          // γ(1/n, x^n)
+            Complex32 gammaN = Gamma(new Complex32(n, 0f));    // Γ(n) = (n-1)!
             return gammaN * lower / SQRT_PI;
         }
         /// <summary>
@@ -2107,7 +2107,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Gerf(ComplexF x) => Gerf(x, 2);
+        public static Complex32 Gerf(Complex32 x) => Gerf(x, 2);
         #endregion
 
         #region Factorial function
@@ -2125,9 +2125,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF LogFactorial(ComplexF z)
+        public static Complex32 LogFactorial(Complex32 z)
         {
-            return Special.LogGamma(z + ComplexF.One);
+            return Special.LogGamma(z + Complex32.One);
         }
         /// <summary>
         /// Returns the factorial of a number.
@@ -2137,7 +2137,7 @@ namespace UMapx.Core
         public static double Factorial(float n)
         {
             // check it:
-            if (n >= 0 && n == MathsF.Round(n))
+            if (n >= 0 && n == Maths.Round(n))
             {
                 // get it from memory
                 if (n <= 170)
@@ -2153,9 +2153,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Factorial(ComplexF z)
+        public static Complex32 Factorial(Complex32 z)
         {
-            return Special.Gamma(z + ComplexF.One);
+            return Special.Gamma(z + Complex32.One);
         }
         /// <summary>
         /// Returns the decreasing factorial of a number.
@@ -2173,9 +2173,9 @@ namespace UMapx.Core
         /// <param name="z">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF FactorialDown(ComplexF z, ComplexF k)
+        public static Complex32 FactorialDown(Complex32 z, Complex32 k)
         {
-            return Special.Gamma(z + ComplexF.One) / Special.Gamma(z + ComplexF.One - k);
+            return Special.Gamma(z + Complex32.One) / Special.Gamma(z + Complex32.One - k);
         }
         /// <summary>
         /// Returns the increasing factorial of a number (Pohhammer symbol).
@@ -2197,7 +2197,7 @@ namespace UMapx.Core
         /// <param name="z">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF FactorialUp(ComplexF z, ComplexF k)
+        public static Complex32 FactorialUp(Complex32 z, Complex32 k)
         {
             return Special.Gamma(z + k) / Special.Gamma(z);
         }
@@ -2224,7 +2224,7 @@ namespace UMapx.Core
         /// <param name="n">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Binomial(ComplexF n, ComplexF k)
+        public static Complex32 Binomial(Complex32 n, Complex32 k)
         {
             return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
         }
@@ -2244,7 +2244,7 @@ namespace UMapx.Core
         /// <param name="n">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF LogBinomial(ComplexF n, ComplexF k)
+        public static Complex32 LogBinomial(Complex32 n, Complex32 k)
         {
             return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
         }
@@ -2280,7 +2280,7 @@ namespace UMapx.Core
                 double ya = Math.Abs(y);
                 double u = Math.Log(1.0 - ya * ya);
                 double s = 2.0 / (Math.PI * a) + 0.5 * u;
-                double w = MathsF.CopySign((float)Math.Sqrt(Math.Max(0.0f, Math.Sqrt(s * s - u / a) - s)), (float)y);
+                double w = Maths.CopySign((float)Math.Sqrt(Math.Max(0.0f, Math.Sqrt(s * s - u / a) - s)), (float)y);
 
                 for (int it = 0; it < 2; it++)
                 {
@@ -2300,9 +2300,9 @@ namespace UMapx.Core
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <param name="inverse">Reverse function or not</param>
         /// <returns>Value</returns>
-        public static ComplexF Erf(ComplexF x, bool inverse)
+        public static Complex32 Erf(Complex32 x, bool inverse)
         {
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.Zero;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
 
             Complex z = new Complex(x.Real, x.Imag);
 
@@ -2314,7 +2314,7 @@ namespace UMapx.Core
             else
             {
                 // inverse error function: y = erf^{-1}(x)
-                if (x.Imag == 0f) return new ComplexF(Erf(x.Real, true), 0f);
+                if (x.Imag == 0f) return new Complex32(Erf(x.Real, true), 0f);
 
                 const double a = 0.147;
                 Complex u = Complex.Log(Complex.One - z * z);
@@ -2346,7 +2346,7 @@ namespace UMapx.Core
                     if (Complex.Abs(step) <= 1e-16 * (1.0 + Complex.Abs(W))) break;
                 }
 
-                return new ComplexF((float)W.Real, (float)W.Imaginary);
+                return new Complex32((float)W.Real, (float)W.Imaginary);
             }
         }
         /// <summary>
@@ -2394,9 +2394,9 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <returns>Value</returns>
-        public static ComplexF Erfi(ComplexF x)
+        public static Complex32 Erfi(Complex32 x)
         {
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.Zero;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
 
             // erfi(z) = -i * erf(i z)
             var Z = new Complex(x.Real, x.Imag);
@@ -2405,7 +2405,7 @@ namespace UMapx.Core
 
             // -i * (a + i b) = b - i a
             var erfi = new Complex(w.Imaginary, -w.Real);
-            return new ComplexF((float)erfi.Real, (float)erfi.Imaginary);
+            return new Complex32((float)erfi.Real, (float)erfi.Imaginary);
         }
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
@@ -2421,7 +2421,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <returns>Value</returns>
-        public static ComplexF Erf(ComplexF x)
+        public static Complex32 Erf(Complex32 x)
         {
             return Erf(x, false);
         }
@@ -2443,7 +2443,7 @@ namespace UMapx.Core
         /// <param name="a">The lower boundary of the normalization</param>
         /// <param name="b">The upper limit of the normalization</param>
         /// <returns>Value</returns>
-        public static ComplexF Erf(ComplexF x, ComplexF a, ComplexF b)
+        public static Complex32 Erf(Complex32 x, Complex32 a, Complex32 b)
         {
             return Erf((x - a) / b);
         }
@@ -2461,7 +2461,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">The value of the upper limit of the integral</param>
         /// <returns>Value</returns>
-        public static ComplexF Erfc(ComplexF x)
+        public static Complex32 Erfc(Complex32 x)
         {
             return 1.0f - Erf(x);
         }
@@ -2483,7 +2483,7 @@ namespace UMapx.Core
         /// <param name="a">The lower boundary of the normalization</param>
         /// <param name="b">The upper limit of the normalization</param>
         /// <returns>Value</returns>
-        public static ComplexF Erfc(ComplexF x, ComplexF a, ComplexF b)
+        public static Complex32 Erfc(Complex32 x, Complex32 a, Complex32 b)
         {
             return 1.0f - Erf(x, a, b);
         }
@@ -2529,7 +2529,7 @@ namespace UMapx.Core
             double t = 1.0 / (1.0 + p * ax);
             double poly = ((((a5 * t + a4) * t) + a3) * t + a2) * t + a1;
             double erfp = 1.0 - poly * t * Math.Exp(-ax * ax);
-            return MathsF.CopySign((float)erfp, (float)x);
+            return Maths.CopySign((float)erfp, (float)x);
         }
 
         #endregion
@@ -2549,7 +2549,7 @@ namespace UMapx.Core
             {
                 // D+ function:
                 float p = Special.SQRT_PI / 2.0f;
-                float v = MathsF.Exp(-x * x);
+                float v = Maths.Exp(-x * x);
                 float erfi = Special.Erfi(x);
                 return p * v * erfi;
             }
@@ -2557,7 +2557,7 @@ namespace UMapx.Core
             float y = x * x;
             float g = SQRT_PI / 2.0f;
             float e = Special.Erf(x);
-            float d = MathsF.Exp(y);
+            float d = Maths.Exp(y);
             return g * d * e;
         }
         /// <summary>
@@ -2566,21 +2566,21 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="positive">D- or D+</param>
         /// <returns>Value</returns>
-        public static ComplexF Dawson(ComplexF x, bool positive)
+        public static Complex32 Dawson(Complex32 x, bool positive)
         {
             if (positive)
             {
                 // D+ function:
-                ComplexF p = Special.SQRT_PI / 2.0f;
-                ComplexF v = MathsF.Exp(-x * x);
-                ComplexF erfi = Special.Erfi(x);
+                Complex32 p = Special.SQRT_PI / 2.0f;
+                Complex32 v = Maths.Exp(-x * x);
+                Complex32 erfi = Special.Erfi(x);
                 return p * v * erfi;
             }
             // D- function:
-            ComplexF y = x * x;
-            ComplexF g = SQRT_PI / 2.0f;
-            ComplexF e = Special.Erf(x);
-            ComplexF d = MathsF.Exp(y);
+            Complex32 y = x * x;
+            Complex32 g = SQRT_PI / 2.0f;
+            Complex32 e = Special.Erf(x);
+            Complex32 d = Maths.Exp(y);
             return g * d * e;
         }
         #endregion
@@ -2591,20 +2591,20 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Faddeeva(float x)
+        public static Complex32 Faddeeva(float x)
         {
             float re = (float)Math.Exp(-(double)x * x);
             float im = (float)(2.0 / Math.Sqrt(Math.PI)) * Special.Dawson(x, true);
-            return new ComplexF(re, im);
+            return new Complex32(re, im);
         }
         /// <summary>
         /// Returns the value of the Faddeeva function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Faddeeva(ComplexF x)
+        public static Complex32 Faddeeva(Complex32 x)
         {
-            return MathsF.Exp(-x * x) * Special.Erfc(-x * ComplexF.I);
+            return Maths.Exp(-x * x) * Special.Erfc(-x * Complex32.I);
         }
         #endregion
 
@@ -2619,9 +2619,9 @@ namespace UMapx.Core
         {
             if (inverse)
             {
-                return MathsF.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+                return Maths.Sqrt(2) * Special.Erf(1 - 2 * x, true);
             }
-            return 0.5f * Special.Erfc(x / MathsF.Sqrt2);
+            return 0.5f * Special.Erfc(x / Maths.Sqrt2);
         }
         /// <summary>
         /// Returns the value of a Q function.
@@ -2629,13 +2629,13 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="inverse">Inverse function or not</param>
         /// <returns>Value</returns>
-        public static ComplexF Q(ComplexF x, bool inverse = false)
+        public static Complex32 Q(Complex32 x, bool inverse = false)
         {
             if (inverse)
             {
-                return MathsF.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+                return Maths.Sqrt(2) * Special.Erf(1 - 2 * x, true);
             }
-            return 0.5f * Special.Erfc(x / MathsF.Sqrt2);
+            return 0.5f * Special.Erfc(x / Maths.Sqrt2);
         }
         #endregion
 
@@ -2702,10 +2702,10 @@ namespace UMapx.Core
         /// <param name="c">Value</param>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Hypergeom(ComplexF a, ComplexF b, ComplexF c, ComplexF z)
+        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 c, Complex32 z)
         {
             // z = 0 => 1
-            if (z.Real == 0f && z.Imag == 0f) return ComplexF.One;
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
 
             Complex s = Complex.One;     // partial sum
             Complex m = Complex.One;     // z^n / n!
@@ -2728,7 +2728,7 @@ namespace UMapx.Core
                 m *= (Complex)z / i; // z^i / i!
                 Complex t = pa * pb * m / pc;
 
-                if (MathsF.Abs(t) < eps) break;
+                if (Maths.Abs(t) < eps) break;
                 s += t;
             }
             return s;
@@ -2757,16 +2757,16 @@ namespace UMapx.Core
 
             // 0F0(;;z) = exp(z)  and  1F1(a;a;z) = exp(z)
             if ((aNaN && bNaN) || a == b)
-                return MathsF.Exp(z);
+                return Maths.Exp(z);
 
             // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
             if (bNaN)
-                return MathsF.Exp(-a * MathsF.Log(1f - z));
+                return Maths.Exp(-a * Maths.Log(1f - z));
 
             // pole guard: b ∈ {0, -1, -2, ...} (real axis)
             {
-                float k = MathsF.Round(b);
-                if (b <= 0f && MathsF.Abs(b - k) < 1e-6f)
+                float k = Maths.Round(b);
+                if (b <= 0f && Maths.Abs(b - k) < 1e-6f)
                     return float.NaN;
             }
 
@@ -2785,12 +2785,12 @@ namespace UMapx.Core
                     double bn = b + n;
                     double denom = bn * (n + 1f);
 
-                    if (MathsF.Abs(denom) < tiny) return float.NaN; // pole/underflow
+                    if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
 
                     t *= z / denom;
                     s += t;
 
-                    if (MathsF.Abs(t) < eps * (1f + MathsF.Abs(s))) break;
+                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
                 }
                 return (float)s;
             }
@@ -2798,7 +2798,7 @@ namespace UMapx.Core
             // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
             // Kummer transform helps convergence if z < 0
             if (z < 0f)
-                return MathsF.Exp(z) * Hypergeom(b - a, b, -z);
+                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
 
             for (int n = 0; n < iterations; n++)
             {
@@ -2806,12 +2806,12 @@ namespace UMapx.Core
                 double bn = b + n;
                 double denom = (n + 1f) * bn;
 
-                if (MathsF.Abs(denom) < tiny) return float.NaN; // pole/underflow
+                if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
 
                 t *= an * z / denom;
                 s += t;
 
-                if (MathsF.Abs(t) < eps * (1f + MathsF.Abs(s))) break;
+                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
             }
             return (float)s;
         }
@@ -2829,28 +2829,28 @@ namespace UMapx.Core
         /// <param name="b">Value</param>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Hypergeom(ComplexF a, ComplexF b, ComplexF z)
+        public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 z)
         {
             // z = 0 => 1
-            if (z.Real == 0f && z.Imag == 0f) return ComplexF.One;
+            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
 
-            bool aNaN = ComplexF.IsNaN(a);
-            bool bNaN = ComplexF.IsNaN(b);
+            bool aNaN = Complex32.IsNaN(a);
+            bool bNaN = Complex32.IsNaN(b);
 
             // 0F0(;;z) = exp(z)
             if (aNaN && bNaN || (a.Real == b.Real && a.Imag == b.Imag))
-                return MathsF.Exp(z);
+                return Maths.Exp(z);
 
             // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
             if (bNaN)
-                return MathsF.Exp(-a * MathsF.Log(ComplexF.One - z));
+                return Maths.Exp(-a * Maths.Log(Complex32.One - z));
 
             // pole guard: b ∈ {0, -1, -2, ...} (real axis)
             if (b.Imag == 0f)
             {
-                float br = b.Real, k = MathsF.Round(br);
-                if (br <= 0f && MathsF.Abs(br - k) < 1e-6f)
-                    return ComplexF.NaN;
+                float br = b.Real, k = Maths.Round(br);
+                if (br <= 0f && Maths.Abs(br - k) < 1e-6f)
+                    return Complex32.NaN;
             }
 
             const float eps = 1e-16f;
@@ -2868,12 +2868,12 @@ namespace UMapx.Core
                     Complex bn = (Complex)b + new Complex(n, 0f);
                     Complex denom = bn * new Complex(n + 1f, 0f);
 
-                    if (MathsF.Abs(denom) < tiny) return ComplexF.NaN; // pole/underflow
+                    if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
 
                     t *= (Complex)z / denom;
                     s += t;
 
-                    if (MathsF.Abs(t) < eps * (1f + MathsF.Abs(s))) break;
+                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
                 }
                 return s;
             }
@@ -2881,7 +2881,7 @@ namespace UMapx.Core
             // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
             // Kummer transform helps convergence if Re(z) < 0
             if (z.Real < 0f)
-                return MathsF.Exp(z) * Hypergeom(b - a, b, -z);
+                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
 
             for (int n = 0; n < iterations; n++)
             {
@@ -2889,12 +2889,12 @@ namespace UMapx.Core
                 Complex bn = (Complex)b + new Complex(n, 0f);
                 Complex denom = new Complex(n + 1f, 0f) * bn;
 
-                if (MathsF.Abs(denom) < tiny) return ComplexF.NaN; // pole/underflow
+                if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
 
                 t *= an * (Complex)z / denom;
                 s += t;
 
-                if (MathsF.Abs(t) < eps * (1f + MathsF.Abs(s))) break;
+                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
             }
             return s;
         }
@@ -2917,7 +2917,7 @@ namespace UMapx.Core
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Beta(ComplexF a, ComplexF b)
+        public static Complex32 Beta(Complex32 a, Complex32 b)
         {
             return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
         }
@@ -2947,7 +2947,7 @@ namespace UMapx.Core
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF BetaDerivative(ComplexF a, ComplexF b)
+        public static Complex32 BetaDerivative(Complex32 a, Complex32 b)
         {
             return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
         }
@@ -2971,7 +2971,7 @@ namespace UMapx.Core
             }
 
             // Poles of Beta when a or b is a non-positive integer
-            if ((a <= 0f && a == MathsF.Round(a)) || (b <= 0f && b == MathsF.Round(b)))
+            if ((a <= 0f && a == Maths.Round(a)) || (b <= 0f && b == Maths.Round(b)))
                 return float.NaN;
 
             // Optional symmetry to improve conditioning near x≈1:
@@ -2983,7 +2983,7 @@ namespace UMapx.Core
             }
 
             // Hypergeometric representation
-            float pref = MathsF.Exp(a * MathsF.Log(x)) / a;          // x^a / a
+            float pref = Maths.Exp(a * Maths.Log(x)) / a;          // x^a / a
             float hyp = Special.Hypergeom(a, 1f - b, a + 1f, x);  // 2F1(a,1-b; a+1; x)
             return pref * hyp;
         }
@@ -2994,18 +2994,18 @@ namespace UMapx.Core
         /// <param name="b">Value</param>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF BetaIncomplete(ComplexF a, ComplexF b, ComplexF x)
+        public static Complex32 BetaIncomplete(Complex32 a, Complex32 b, Complex32 x)
         {
             // B_0(a,b) = 0
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.Zero;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
 
             // B_1(a,b) = B(a,b) = Γ(a)Γ(b)/Γ(a+b)
             if (x.Imag == 0f && x.Real == 1f)
                 return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
 
             // Principal-branch power and Gauss 2F1
-            ComplexF pref = MathsF.Exp(a * MathsF.Log(x)) / a;                   // x^a / a
-            ComplexF hyp = Special.Hypergeom(a, ComplexF.One - b, a + ComplexF.One, x); // 2F1(a,1-b; a+1; x)
+            Complex32 pref = Maths.Exp(a * Maths.Log(x)) / a;                   // x^a / a
+            Complex32 hyp = Special.Hypergeom(a, Complex32.One - b, a + Complex32.One, x); // 2F1(a,1-b; a+1; x)
             return pref * hyp;
         }
         /// <summary>
@@ -3035,7 +3035,7 @@ namespace UMapx.Core
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF LogBeta(ComplexF a, ComplexF b)
+        public static Complex32 LogBeta(Complex32 a, Complex32 b)
         {
             return Special.LogGamma(a) + Special.LogGamma(b) - Special.LogGamma(a + b);
         }
@@ -3059,7 +3059,7 @@ namespace UMapx.Core
             {
                 // Ci(x) = γ + ln x + ∫_0^1 (cos(x t) - 1)/t dt
                 double integral = GaussLegendre01(t => (Math.Cos(xd * t) - 1.0) / t);
-                return (float)(MathsF.Gamma + Math.Log(xd) + integral);
+                return (float)(Maths.Gamma + Math.Log(xd) + integral);
             }
             else
             {
@@ -3108,10 +3108,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Ci(ComplexF z)
+        public static Complex32 Ci(Complex32 z)
         {
             if (z.Real == 0f && z.Imag == 0f)
-                return new ComplexF(float.NegativeInfinity, 0f);
+                return new Complex32(float.NegativeInfinity, 0f);
 
             var Z = new Complex(z.Real, z.Imag);
             double r = Complex.Abs(Z);
@@ -3121,8 +3121,8 @@ namespace UMapx.Core
             {
                 // Ci(z) = γ + Log(z) + ∫_0^1 (cos(z t) - 1)/t dt  (principal log)
                 var integral = GaussLegendre01C(t => Complex.Cos(Z * t) - Complex.One);
-                var val = (MathsF.Gamma + Complex.Log(Z)) + integral;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                var val = (Maths.Gamma + Complex.Log(Z)) + integral;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
             else
             {
@@ -3133,7 +3133,7 @@ namespace UMapx.Core
                 var sinz = Complex.Sin(Z);
                 var cosz = Complex.Cos(Z);
                 var val = sinz * s0 - cosz * s1;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
 
             static Complex GaussLegendre01C(Func<double, Complex> f, int panels = 1)
@@ -3231,7 +3231,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Si(ComplexF z)
+        public static Complex32 Si(Complex32 z)
         {
             var Z = new Complex(z.Real, z.Imag);
             double r = Complex.Abs(Z);
@@ -3241,7 +3241,7 @@ namespace UMapx.Core
             {
                 // Si(z) = ∫_0^1 sin(z t)/t dt
                 var integral = GL01C(t => Complex.Sin(Z * t) / t);
-                return new ComplexF((float)integral.Real, (float)integral.Imaginary);
+                return new Complex32((float)integral.Real, (float)integral.Imaginary);
             }
             else
             {
@@ -3250,7 +3250,7 @@ namespace UMapx.Core
                 var s0 = inv * (1.0 - 2.0 * inv2 + 24.0 * inv2 * inv2 - 720.0 * inv2 * inv2 * inv2);
                 var s1 = inv2 * (1.0 - 6.0 * inv2 + 120.0 * inv2 * inv2 - 5040.0 * inv2 * inv2 * inv2);
                 var val = Math.PI * 0.5 - Complex.Cos(Z) * s0 - Complex.Sin(Z) * s1;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
 
             static Complex GL01C(Func<double, Complex> f, int panels = 1)
@@ -3309,7 +3309,7 @@ namespace UMapx.Core
 
             // Ei(x) = γ + ln|x| + ∫_0^1 (e^{x t} - 1)/t dt  (|arg x|<π)
             double integral = GL01(t => (Math.Exp(xd * t) - 1.0) / t);
-            return (float)(MathsF.Gamma + Math.Log(Math.Abs(xd)) + integral);
+            return (float)(Maths.Gamma + Math.Log(Math.Abs(xd)) + integral);
 
             static double GL01(Func<double, double> f, int panels = 1)
             {
@@ -3340,10 +3340,10 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Ei(ComplexF z)
+        public static Complex32 Ei(Complex32 z)
         {
             if (z.Real == 0f && z.Imag == 0f)
-                return new ComplexF(float.NegativeInfinity, 0f);
+                return new Complex32(float.NegativeInfinity, 0f);
 
             var Z = new Complex(z.Real, z.Imag);
             double r = Complex.Abs(Z);
@@ -3356,14 +3356,14 @@ namespace UMapx.Core
                 var inv2 = inv * inv;
                 var poly = Complex.One + inv + 2.0 * inv2 + 6.0 * inv2 * inv + 24.0 * inv2 * inv2;
                 var val = Complex.Exp(Z) * inv * poly;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
             else
             {
                 // Ei(z) = γ + Log(z) + ∫_0^1 (e^{z t} - 1)/t dt
                 var integral = GL01C(t => (Complex.Exp(Z * t) - Complex.One) / t);
-                var val = (MathsF.Gamma + Complex.Log(Z)) + integral;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                var val = (Maths.Gamma + Complex.Log(Z)) + integral;
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
 
             static Complex GL01C(Func<double, Complex> f)
@@ -3398,16 +3398,16 @@ namespace UMapx.Core
         public static float Li(float x)
         {
             if (x < 0f) return float.NaN;
-            return Ei(MathsF.Log(x));
+            return Ei(Maths.Log(x));
         }
         /// <summary>
         /// Returns the value of the integral logarithm.
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Li(ComplexF z)
+        public static Complex32 Li(Complex32 z)
         {
-            return Ei(MathsF.Log(z));
+            return Ei(Maths.Log(z));
         }
         #endregion
 
@@ -3459,10 +3459,10 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="a">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF J(ComplexF x, int a)
+        public static Complex32 J(Complex32 x, int a)
         {
             if (x.Real == 0f && x.Imag == 0f)
-                return (a == 0) ? ComplexF.One : ComplexF.Zero;
+                return (a == 0) ? Complex32.One : Complex32.Zero;
 
             int n = a < 0 ? -a : a;
             double signOrder = (a < 0 && ((n & 1) == 1)) ? -1.0 : 1.0;
@@ -3482,7 +3482,7 @@ namespace UMapx.Core
                 // J_n(z) = (1/π) ∫_0^π cos(n t − z sin t) dt
                 Complex sum = GL0PiC(theta => Complex.Cos(n * theta - Z * Math.Sin(theta)));
                 Complex val = sum / Math.PI * signOrder;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
             else
             {
@@ -3494,7 +3494,7 @@ namespace UMapx.Core
                 Complex phi = Z - (n * Math.PI * 0.5 + Math.PI * 0.25);
                 Complex val = c0 * (Complex.Cos(phi) - A1 * Complex.Sin(phi) - A2 * Complex.Cos(phi));
                 val *= signOrder;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
         }
 
@@ -3542,9 +3542,9 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="a">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF Y(ComplexF x, int a)
+        public static Complex32 Y(Complex32 x, int a)
         {
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.NaN;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.NaN;
 
             int n = a < 0 ? -a : a;
             double sgn = (a < 0 && ((n & 1) == 1)) ? -1.0 : 1.0;
@@ -3561,7 +3561,7 @@ namespace UMapx.Core
                 Complex Idc = GL0TC(u => Complex.Exp(-Z * Math.Sinh(u) - n * u), T) / Math.PI;
                 Complex val = Iosc - Idc;
                 val *= sgn;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
             else
             {
@@ -3574,7 +3574,7 @@ namespace UMapx.Core
                 Complex sinφ = Complex.Sin(Z - (n * Math.PI * 0.5 + Math.PI * 0.25));
                 Complex val = c0 * (sinφ + A1 * cosφ - A2 * sinφ);
                 val *= sgn;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
         }
 
@@ -3617,10 +3617,10 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="a">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF I(ComplexF x, int a)
+        public static Complex32 I(Complex32 x, int a)
         {
             if (x.Real == 0f && x.Imag == 0f)
-                return (a == 0) ? ComplexF.One : ComplexF.Zero;
+                return (a == 0) ? Complex32.One : Complex32.Zero;
 
             int n = a < 0 ? -a : a; // I_{-n} = I_n
             Complex Z = new Complex(x.Real, x.Imag);
@@ -3631,7 +3631,7 @@ namespace UMapx.Core
             {
                 // I_n(z) = (1/π) ∫_0^π e^{z cos t} cos(n t) dt
                 Complex val = GL0PiC(t => Complex.Exp(Z * Math.Cos(t)) * Math.Cos(n * t)) / Math.PI;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
             else
             {
@@ -3642,7 +3642,7 @@ namespace UMapx.Core
                 double P2 = (mu - 1.0) * (mu - 9.0) / 256.0 / (ax * ax);
                 Complex scale = Complex.Exp(Z - ax);
                 Complex val = scale * (c0 * (1.0 + P1 + P2));
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
         }
 
@@ -3685,9 +3685,9 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="a">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF K(ComplexF x, int a)
+        public static Complex32 K(Complex32 x, int a)
         {
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.NaN;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.NaN;
 
             int n = a < 0 ? -a : a; // K_{-n} = K_n
             Complex Z = new Complex(x.Real, x.Imag);
@@ -3698,7 +3698,7 @@ namespace UMapx.Core
             {
                 double T = Math.Max(8.0, Math.Log(40.0 / (r + 1e-12) + 1.0) + 2.0);
                 Complex val = GL0TC(t => Complex.Exp(-Z * Math.Cosh(t)) * Math.Cosh(n * t), T);
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
             else
             {
@@ -3711,7 +3711,7 @@ namespace UMapx.Core
                 double P1 = (mu - 1.0) * 0.125 * inv;
                 double P2 = ((mu - 1.0) * (mu - 9.0)) / 256.0 * inv * inv;
                 Complex val = scale * (c0 * (1.0 + P1 + P2));
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
         }
 
@@ -3912,14 +3912,14 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="a">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF H(ComplexF x, int a)
+        public static Complex32 H(Complex32 x, int a)
         {
-            if (a < 0) return ComplexF.Zero;
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.Zero;
-            if (x.Imag == 0f) return new ComplexF(H(x.Real, a), 0f);
+            if (a < 0) return Complex32.Zero;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
+            if (x.Imag == 0f) return new Complex32(H(x.Real, a), 0f);
 
             var Z = new Complex(x.Real, x.Imag);
-            double r = MathsF.Abs(x);
+            double r = Maths.Abs(x);
 
             const double XSW = 25.0;
             const double BW = 1.0;
@@ -3964,7 +3964,7 @@ namespace UMapx.Core
 
             Complex largeVal()
             {
-                ComplexF ya32 = Special.Y(x, a);
+                Complex32 ya32 = Special.Y(x, a);
                 var ya = new Complex(ya32.Real, ya32.Imag);
 
                 var lead0 = Complex.Pow(Z * 0.5, a - 1) * invNorm0;
@@ -3986,7 +3986,7 @@ namespace UMapx.Core
                 val = (1.0 - wBlend) * valSmall + wBlend * valLarge;
             }
 
-            return new ComplexF((float)val.Real, (float)val.Imaginary);
+            return new Complex32((float)val.Real, (float)val.Imaginary);
         }
         /// <summary>
         /// Returns the value of the modified Struve function.
@@ -4042,16 +4042,16 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="v">Value</param>
         /// <returns>Value</returns>
-        public static ComplexF L(ComplexF x, int v)
+        public static Complex32 L(Complex32 x, int v)
         {
-            if (v < 0) return ComplexF.Zero;
-            if (x.Real == 0f && x.Imag == 0f) return ComplexF.Zero;
+            if (v < 0) return Complex32.Zero;
+            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
 
             if (x.Imag == 0f)
-                return new ComplexF(L(x.Real, v), 0f);
+                return new Complex32(L(x.Real, v), 0f);
 
             var Z = new Complex(x.Real, x.Imag);
-            double r = MathsF.Abs(x);
+            double r = Maths.Abs(x);
             const double XSW = 12.0;
 
             double gv = Special.Gamma(v + 0.5f);
@@ -4076,14 +4076,14 @@ namespace UMapx.Core
 
                 var pref = 2.0 * invNorm * Complex.Exp(v * Complex.Log(Z * 0.5));
                 var val = pref * sum;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
             else
             {
                 var lead = Complex.Exp((v - 1) * Complex.Log(Z * 0.5)) * invNorm;
                 var iv = Special.I(x, v);
                 var val = new Complex(iv.Real, iv.Imag) + lead;
-                return new ComplexF((float)val.Real, (float)val.Imaginary);
+                return new Complex32((float)val.Real, (float)val.Imaginary);
             }
         }
         #endregion
@@ -4125,7 +4125,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Harm(int n)
         {
-            return Special.DiGamma(n) + 1.0f / n + MathsF.Gamma;
+            return Special.DiGamma(n) + 1.0f / n + Maths.Gamma;
         }
         /// <summary>
         /// Returns the harmonic number.
@@ -4160,7 +4160,7 @@ namespace UMapx.Core
                 return 1;
 
             // for even number:
-            else if (MathsF.Mod(n, 2) == 0)
+            else if (Maths.Mod(n, 2) == 0)
             {
                 // get it from memory
                 if (n <= 186)
@@ -4213,7 +4213,7 @@ namespace UMapx.Core
                 return -0.5f;
 
             // for even number:
-            else if (MathsF.Mod(n, 2) == 0)
+            else if (Maths.Mod(n, 2) == 0)
             {
                 // get it from memory
                 if (n <= 258)

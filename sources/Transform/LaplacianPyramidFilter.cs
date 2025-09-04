@@ -74,7 +74,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = MatrixF.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
+                pA[i] = Matrix.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
             }
 
             // backward pyramid transform
@@ -92,21 +92,21 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(ComplexF[,] data)
+        public void Apply(Complex32[,] data)
         {
             // forward pyramid transform
-            ComplexF[][,] pA = lap.Forward(data);
+            Complex32[][,] pA = lap.Forward(data);
 
             int r = data.GetLength(0), c = data.GetLength(1);
             int nlev = pA.Length - 1, i, j;
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = MatrixF.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
+                pA[i] = Matrix.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
             }
 
             // backward pyramid transform
-            ComplexF[,] dummy = lap.Backward(pA);
+            Complex32[,] dummy = lap.Backward(pA);
 
             for (i = 0; i < r; i++)
             {
@@ -130,7 +130,7 @@ namespace UMapx.Transform
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = MatrixF.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
+                pA[i] = Matrix.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
             }
 
             // backward pyramid transform
@@ -145,21 +145,21 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(ComplexF[] data)
+        public void Apply(Complex32[] data)
         {
             // forward pyramid transform
-            ComplexF[][] pA = lap.Forward(data);
+            Complex32[][] pA = lap.Forward(data);
 
             int r = data.GetLength(0);
             int nlev = pA.Length - 1, i;
 
             for (i = 0; i < nlev; i++)
             {
-                pA[i] = MatrixF.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
+                pA[i] = Matrix.Mul(pA[i], 1.0f + this.factor / (1.0f + i));
             }
 
             // backward pyramid transform
-            ComplexF[] dummy = lap.Backward(pA);
+            Complex32[] dummy = lap.Backward(pA);
 
             for (i = 0; i < r; i++)
             {

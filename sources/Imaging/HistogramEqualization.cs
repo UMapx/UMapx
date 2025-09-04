@@ -36,9 +36,9 @@ namespace UMapx.Imaging
             {
                 for (x = 0; x < width; x++, p += 4)
                 {
-                    p[2] = MathsF.Byte(table[p[2]] * length);
-                    p[1] = MathsF.Byte(table[p[1]] * length);
-                    p[0] = MathsF.Byte(table[p[0]] * length);
+                    p[2] = Maths.Byte(table[p[2]] * length);
+                    p[1] = Maths.Byte(table[p[1]] * length);
+                    p[0] = Maths.Byte(table[p[0]] * length);
                 }
             }
         }

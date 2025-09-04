@@ -67,8 +67,8 @@ namespace UMapx.Decomposition
             m = A.GetLength(0);
             n = A.GetLength(1);
             b = Jagged.ToJagged(A);
-            u = Jagged.ToJagged(MatrixF.Eye(m, m));
-            v = Jagged.ToJagged(MatrixF.Eye(n, n));
+            u = Jagged.ToJagged(Matrix.Eye(m, m));
+            v = Jagged.ToJagged(Matrix.Eye(n, n));
             int p = Math.Min(m, n);
 
             for (int k = 0; k < p; k++)
@@ -76,7 +76,7 @@ namespace UMapx.Decomposition
                 // -------- Left Householder (zero below diagonal in column k) --------
                 float norm = 0f;
                 for (int i = k; i < m; i++)
-                    norm = MathsF.Hypotenuse(norm, b[i][k]);
+                    norm = Maths.Hypotenuse(norm, b[i][k]);
 
                 if (norm != 0f)
                 {
@@ -128,7 +128,7 @@ namespace UMapx.Decomposition
                     // -------- Right Householder (zero beyond superdiagonal in row k) --------
                     norm = 0f;
                     for (int j = k + 1; j < n; j++)
-                        norm = MathsF.Hypotenuse(norm, b[k][j]);
+                        norm = Maths.Hypotenuse(norm, b[k][j]);
 
                     if (norm != 0f)
                     {

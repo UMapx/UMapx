@@ -92,38 +92,38 @@ namespace UMapx.Window
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[,] Matrix(float[] g0, int M)
+        public static Complex32[,] Matrix(float[] g0, int M)
         {
             int N = g0.Length, L = N / M;
 
             if (L <= 0)
                 throw new ArgumentException("Number of frequency shifts not defined correctly");
 
-            ComplexF[,] G = new ComplexF[N, 2 * N];
-            ComplexF c = 2 * MathsF.Pi * MathsF.I;
+            Complex32[,] G = new Complex32[N, 2 * N];
+            Complex32 c = 2 * Maths.Pi * Maths.I;
             float a = M / 2.0f;
 
             Parallel.For(0, N, n =>
             {
                 float phase = n - a / 2.0f;
                 int k, l, u, i, j;
-                ComplexF exp;
+                Complex32 exp;
 
                 for (k = 0; k < M; k++)
                 {
-                    exp = MathsF.Exp(c * k / M * phase);
+                    exp = Maths.Exp(c * k / M * phase);
 
                     for (l = 0; l < L; l++)
                     {
                         u = l * M + k;
-                        i = MathsF.Mod(n - l * M, N);
-                        j = MathsF.Mod(n + M / 2 - l * M, N);
+                        i = Maths.Mod(n - l * M, N);
+                        j = Maths.Mod(n + M / 2 - l * M, N);
 
                         // implements the [N, 2N] WH matrix
                         // https://github.com/asiryan/Weyl-Heisenberg-Toolbox/blob/master/matlab/toolbox_scripts/weylhzf.m
 
                         G[n, u + 0] =           g0[i] * exp;
-                        G[n, u + N] = MathsF.I * g0[j] * exp;
+                        G[n, u + N] = Maths.I * g0[j] * exp;
                     }
                 }
             });
@@ -141,7 +141,7 @@ namespace UMapx.Window
         /// <param name="M">Number of frequency shifts [4, N/2]</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
+        public static Complex32[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
         {
             return WeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.Packet(window, N), M, orthogonalize);
         }
@@ -155,7 +155,7 @@ namespace UMapx.Window
         /// <param name="M">Number of frequency shifts [4, N/2]</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
-        public static ComplexF[,] Matrix(float[] g0, int M, bool orthogonalize = true)
+        public static Complex32[,] Matrix(float[] g0, int M, bool orthogonalize = true)
         {
             if (orthogonalize)
             {
@@ -214,11 +214,11 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public virtual ComplexF[] Forward(ComplexF[] A)
+        public virtual Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            ComplexF[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            ComplexF[] B = MatrixF.Dot(A, U.Hermitian());
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
+            Complex32[] B = Core.Matrix.Dot(A, Core.Matrix.Hermitian(U));
             return B;
         }
         /// <summary>
@@ -226,11 +226,11 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public virtual ComplexF[] Backward(ComplexF[] B)
+        public virtual Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            ComplexF[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            ComplexF[] A = MatrixF.Dot(B, U);
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
+            Complex32[] A = Core.Matrix.Dot(B, U);
             return A.Div(2);
         }
         /// <summary>
@@ -238,12 +238,12 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public virtual ComplexF[,] Forward(ComplexF[,] A)
+        public virtual Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            ComplexF[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            ComplexF[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
-            ComplexF[,] B;
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
+            Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
+            Complex32[,] B;
 
             if (direction == Direction.Both)
             {
@@ -264,12 +264,12 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public virtual ComplexF[,] Backward(ComplexF[,] B)
+        public virtual Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            ComplexF[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            ComplexF[,] V = WeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
-            ComplexF[,] A;
+            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
+            Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
+            Complex32[,] A;
 
             if (direction == Direction.Both)
             {

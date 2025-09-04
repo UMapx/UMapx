@@ -164,12 +164,12 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Matrix</param>
         /// <returns>Pyramid</returns>
-        public ComplexF[][,] Forward(ComplexF[,] data)
+        public Complex32[][,] Forward(Complex32[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
             int nlev = (int)Math.Min((Math.Log(Math.Min(r, c)) / Math.Log(2)), levels);
-            ComplexF[][,] lapl = new ComplexF[nlev][,];
-            ComplexF[,] I, J = data;
+            Complex32[][,] lapl = new Complex32[nlev][,];
+            Complex32[,] I, J = data;
 
             for (int i = 0; i < nlev - 1; i++)
             {
@@ -186,13 +186,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <returns>Pyramid</returns>
-        public ComplexF[][] Forward(ComplexF[] data)
+        public Complex32[][] Forward(Complex32[] data)
         {
             int r = data.Length;
             int nlev = (int)Math.Min((Math.Log(r) / Math.Log(2)), levels);
 
-            ComplexF[][] lapl = new ComplexF[nlev][];
-            ComplexF[] I, J = data;
+            Complex32[][] lapl = new Complex32[nlev][];
+            Complex32[] I, J = data;
 
             for (int i = 0; i < nlev - 1; i++)
             {
@@ -209,10 +209,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="pyramid">Pyramid</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[][,] pyramid)
+        public Complex32[,] Backward(Complex32[][,] pyramid)
         {
             int nlev = pyramid.Length - 1;
-            ComplexF[,] I = pyramid[nlev];
+            Complex32[,] I = pyramid[nlev];
 
             for (int i = nlev - 1; i >= 0; i--)
             {
@@ -226,10 +226,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="pyramid">Pyramid</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[][] pyramid)
+        public Complex32[] Backward(Complex32[][] pyramid)
         {
             int nlev = pyramid.Length;
-            ComplexF[] I = pyramid[nlev];
+            Complex32[] I = pyramid[nlev];
 
             for (int i = nlev - 1; i >= 0; i--)
             {
@@ -282,10 +282,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Gaussian pyramid</param>
         /// <returns>Pyramid</returns>
-        public ComplexF[][,] Forward(ComplexF[][,] data)
+        public Complex32[][,] Forward(Complex32[][,] data)
         {
             int nlev = data.Length;
-            ComplexF[][,] lapl = new ComplexF[nlev][,];
+            Complex32[][,] lapl = new Complex32[nlev][,];
 
             for (int i = 1; i < nlev; i++)
             {
@@ -300,10 +300,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Gaussian pyramid</param>
         /// <returns>Pyramid</returns>
-        public ComplexF[][] Forward(ComplexF[][] data)
+        public Complex32[][] Forward(Complex32[][] data)
         {
             int nlev = data.Length;
-            ComplexF[][] lapl = new ComplexF[nlev][];
+            Complex32[][] lapl = new Complex32[nlev][];
 
             for (int i = 1; i < nlev; i++)
             {

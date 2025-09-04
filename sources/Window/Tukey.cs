@@ -35,7 +35,7 @@ namespace UMapx.Window
             }
             set
             {
-                this.a = MathsF.Float(value);
+                this.a = Maths.Float(value);
             }
         }
         /// <summary>
@@ -74,7 +74,7 @@ namespace UMapx.Window
         public override float[] GetWindow(int frameSize)
         {
             float t = (frameSize - 1);
-            float[] x = MatrixF.Compute(0, t, 1);
+            float[] x = Matrix.Compute(0, t, 1);
             return this.Function(x, frameSize);
         }
         #endregion

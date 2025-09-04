@@ -88,7 +88,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Variance
         {
-            get { return (s * s * MathsF.Pi * MathsF.Pi) / 3.0f; }
+            get { return (s * s * Maths.Pi * Maths.Pi) / 3.0f; }
         }
         /// <summary>
         /// Gets the median value.

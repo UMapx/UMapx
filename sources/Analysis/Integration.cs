@@ -105,7 +105,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
         /// <returns>Complex number</returns>
-        public ComplexF Compute(IComplexF function, ComplexF a, ComplexF b, int n)
+        public Complex32 Compute(IComplex32 function, Complex32 a, Complex32 b, int n)
         {
             // chose method of integration
             switch (method)
@@ -134,7 +134,7 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit</param>
         /// <param name="n">Number of splits</param>
         /// <returns>Complex number</returns>
-        public ComplexF Compute(ComplexF[] y, ComplexF a, ComplexF b, int n)
+        public Complex32 Compute(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
             // chose method of integration
             switch (method)
@@ -478,10 +478,10 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals (rectangles)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static ComplexF Rect(IComplexF f, ComplexF a, ComplexF b, int n)
+        private static Complex32 Rect(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
-            ComplexF sum = 0.0;
-            ComplexF h = (b - a) / n;
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += h * f(a + i * h);
@@ -500,10 +500,10 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals/samples used (left endpoints)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static ComplexF Rect(ComplexF[] y, ComplexF a, ComplexF b, int n)
+        private static Complex32 Rect(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
-            ComplexF sum = 0.0;
-            ComplexF h = (b - a) / n;
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += h * y[i];
@@ -523,11 +523,11 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static ComplexF Midp(IComplexF f, ComplexF a, ComplexF b, int n)
+        private static Complex32 Midp(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
             // Midpoint
-            ComplexF sum = 0.0;
-            ComplexF h = (b - a) / n;
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += h * f(a + (i + 0.5) * h);
@@ -546,10 +546,10 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of samples (grid points)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static ComplexF Midp(ComplexF[] y, ComplexF a, ComplexF b, int n)
+        private static Complex32 Midp(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
-            ComplexF sum = 0.0;
-            ComplexF h = (b - a) / (n - 1);
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / (n - 1);
             for (int i = 0; i < (n - 1); i++)
             {
                 sum += h * 0.5 * (y[i] + y[i + 1]);
@@ -569,10 +569,10 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static ComplexF Trap(IComplexF f, ComplexF a, ComplexF b, int n)
+        private static Complex32 Trap(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
-            ComplexF sum = 0.0;
-            ComplexF h = (b - a) / n;
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / n;
             for (int i = 0; i < n; i++)
             {
                 sum += 0.5 * h * (f(a + i * h) + f(a + (i + 1) * h));
@@ -591,10 +591,10 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of samples (grid points)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
-        private static ComplexF Trap(ComplexF[] y, ComplexF a, ComplexF b, int n)
+        private static Complex32 Trap(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
-            ComplexF sum = 0.0;
-            ComplexF h = (b - a) / (n - 1);
+            Complex32 sum = 0.0;
+            Complex32 h = (b - a) / (n - 1);
             for (int i = 0; i < (n - 1); i++)
             {
                 sum += 0.5 * h * (y[i] + y[i + 1]);
@@ -615,15 +615,15 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of subintervals (even for pure Simpson 1/3)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx (NaN if n &lt; 2)</returns>
-        private static ComplexF Simp(IComplexF f, ComplexF a, ComplexF b, int n)
+        private static Complex32 Simp(IComplex32 f, Complex32 a, Complex32 b, int n)
         {
-            if (n < 2) return ComplexF.NaN;
-            ComplexF h = (b - a) / n;
-            ComplexF sum;
+            if (n < 2) return Complex32.NaN;
+            Complex32 h = (b - a) / n;
+            Complex32 sum;
 
             if (n % 2 == 0)
             {
-                ComplexF s_odd = 0f, s_even = 0f;
+                Complex32 s_odd = 0f, s_even = 0f;
                 for (int i = 1; i < n; i += 2) s_odd += f(a + i * h);
                 for (int i = 2; i < n; i += 2) s_even += f(a + i * h);
                 sum = (h / 3f) * (f(a) + f(b) + 4f * s_odd + 2f * s_even);
@@ -632,7 +632,7 @@ namespace UMapx.Analysis
             {
                 sum = (3f * h / 8f) * (f(a) + 3f * f(a + h) + 3f * f(a + 2 * h) + f(a + 3 * h));
                 int m = n - 3;
-                ComplexF s_odd = 0f, s_even = 0f;
+                Complex32 s_odd = 0f, s_even = 0f;
                 for (int j = 1; j < m; j += 2) s_odd += f(a + (3 + j) * h);
                 for (int j = 2; j < m; j += 2) s_even += f(a + (3 + j) * h);
                 sum += (h / 3f) * (f(a + 3 * h) + f(b) + 4f * s_odd + 2f * s_even);
@@ -653,16 +653,16 @@ namespace UMapx.Analysis
         /// <param name="b">Upper limit of integration</param>
         /// <param name="n">Number of samples (grid points)</param>
         /// <returns>Approximation of ∫_a^b f(x) dx (NaN if n &lt; 3)</returns>
-        private static ComplexF Simp(ComplexF[] y, ComplexF a, ComplexF b, int n)
+        private static Complex32 Simp(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
-            if (n < 3) return ComplexF.NaN;
+            if (n < 3) return Complex32.NaN;
 
-            ComplexF h = (b - a) / (n - 1);
-            ComplexF sum;
+            Complex32 h = (b - a) / (n - 1);
+            Complex32 sum;
 
             if ((n - 1) % 2 == 0)
             {
-                ComplexF s_odd = 0f, s_even = 0f;
+                Complex32 s_odd = 0f, s_even = 0f;
                 for (int i = 1; i < n - 1; i += 2) s_odd += y[i];
                 for (int i = 2; i < n - 1; i += 2) s_even += y[i];
                 sum = (h / 3f) * (y[0] + y[n - 1] + 4f * s_odd + 2f * s_even);
@@ -670,7 +670,7 @@ namespace UMapx.Analysis
             else
             {
                 sum = (3f * h / 8f) * (y[0] + 3f * y[1] + 3f * y[2] + y[3]);
-                ComplexF s_odd = 0f, s_even = 0f;
+                Complex32 s_odd = 0f, s_even = 0f;
                 for (int i = 4; i < n - 1; i += 2) s_odd += y[i - 1];
                 for (int i = 5; i < n - 1; i += 2) s_even += y[i - 1];
                 sum += (h / 3f) * (y[3] + y[n - 1] + 4f * s_odd + 2f * s_even);
@@ -692,27 +692,27 @@ namespace UMapx.Analysis
         /// <param name="maxK">Maximum number of Romberg levels (table size)</param>
         /// <param name="eps">Relative tolerance for early stopping</param>
         /// <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
-        private static ComplexF Romb(IComplexF f, ComplexF a, ComplexF b, int maxK, float eps = 1e-8f)
+        private static Complex32 Romb(IComplex32 f, Complex32 a, Complex32 b, int maxK, float eps = 1e-8f)
         {
             if (maxK < 1) throw new ArgumentException();
-            ComplexF[,] R = new ComplexF[maxK, maxK];
+            Complex32[,] R = new Complex32[maxK, maxK];
 
-            ComplexF h = b - a;
+            Complex32 h = b - a;
             R[0, 0] = 0.5f * h * (f(a) + f(b));
             int n = 1;
 
             for (int k = 1; k < maxK; k++)
             {
                 n *= 2; h *= 0.5f;
-                ComplexF sum = 0f;
+                Complex32 sum = 0f;
                 for (int i = 1; i < n; i += 2) sum += f(a + i * h);
                 R[k, 0] = 0.5f * R[k - 1, 0] + h * sum;
 
-                ComplexF factor = 4f;
+                Complex32 factor = 4f;
                 for (int j = 1; j <= k; j++, factor *= 4f)
                     R[k, j] = (factor * R[k, j - 1] - R[k - 1, j - 1]) / (factor - 1f);
 
-                if (MathsF.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * MathsF.Abs(R[k, k]))
+                if (Maths.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * Maths.Abs(R[k, k]))
                     return R[k, k];
             }
             return R[maxK - 1, maxK - 1];
@@ -731,7 +731,7 @@ namespace UMapx.Analysis
         /// <param name="maxK">Maximum number of Romberg levels (≥ 1)</param>
         /// <param name="eps">Relative tolerance for early stopping</param>
         /// <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
-        private static ComplexF Romb(ComplexF[] y, ComplexF a, ComplexF b, int maxK, float eps = 1e-8f)
+        private static Complex32 Romb(Complex32[] y, Complex32 a, Complex32 b, int maxK, float eps = 1e-8f)
         {
             if (y == null || y.Length < 2) throw new ArgumentException("y must have at least 2 samples.");
             if (maxK < 1) throw new ArgumentException(nameof(maxK));
@@ -741,15 +741,15 @@ namespace UMapx.Analysis
             int usableLevels = 1;
             while (usableLevels < maxK && (S % (1 << usableLevels) == 0)) usableLevels++;
 
-            ComplexF[,] R = new ComplexF[usableLevels, usableLevels];
+            Complex32[,] R = new Complex32[usableLevels, usableLevels];
 
             for (int k = 0; k < usableLevels; k++)
             {
                 int M = 1 << k;
                 int stride = S / M;
-                ComplexF h = (b - a) / M;
+                Complex32 h = (b - a) / M;
 
-                ComplexF interiorSum = 0.0;
+                Complex32 interiorSum = 0.0;
                 for (int m = 1; m < M; m++)
                 {
                     int idx = m * stride;
@@ -757,11 +757,11 @@ namespace UMapx.Analysis
                 }
                 R[k, 0] = 0.5 * h * (y[0] + y[N - 1]) + h * interiorSum;
 
-                ComplexF factor = 4.0;
+                Complex32 factor = 4.0;
                 for (int j = 1; j <= k; j++, factor *= 4.0)
                     R[k, j] = (factor * R[k, j - 1] - R[k - 1, j - 1]) / (factor - 1.0);
 
-                if (k > 0 && MathsF.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * MathsF.Abs(R[k, k]))
+                if (k > 0 && Maths.Abs(R[k, k] - R[k - 1, k - 1]) <= eps * Maths.Abs(R[k, k]))
                     return R[k, k];
             }
 

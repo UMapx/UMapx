@@ -130,7 +130,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(ComplexF[] data)
+        public void Apply(Complex32[] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -140,7 +140,7 @@ namespace UMapx.Transform
                 int i;
 
                 // guided filter
-                ComplexF[] copy = (ComplexF[])data.Clone();
+                Complex32[] copy = (Complex32[])data.Clone();
                 BilateralGridFilter.Bilateralgridfilter(copy, this.sigmaSpatial, this.sigmaRange);
 
                 // process
@@ -152,7 +152,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(ComplexF[,] data)
+        public void Apply(Complex32[,] data)
         {
             // enhancement or not?
             if (this.factor != 0)
@@ -163,7 +163,7 @@ namespace UMapx.Transform
                 int i, j;
 
                 // guided filter
-                ComplexF[,] copy = (ComplexF[,])data.Clone();
+                Complex32[,] copy = (Complex32[,])data.Clone();
                 BilateralGridFilter.Bilateralgridfilter(copy, this.sigmaSpatial, this.sigmaRange);
 
                 // process
@@ -225,8 +225,8 @@ namespace UMapx.Transform
                 {
                     for (int xx = 0; xx <= 1; xx++)
                     {
-                        int zi = MathsF.Range(z0 + zz, 0, gridZ - 1);
-                        int xi = MathsF.Range(x0 + xx, 0, gridX - 1);
+                        int zi = Maths.Range(z0 + zz, 0, gridZ - 1);
+                        int xi = Maths.Range(x0 + xx, 0, gridX - 1);
 
                         float weight = (1 - Math.Abs(dz - zz)) * (1 - Math.Abs(dx - xx));
 
@@ -302,9 +302,9 @@ namespace UMapx.Transform
                         {
                             for (int xx = 0; xx <= 1; xx++)
                             {
-                                int zi = MathsF.Range(z0 + zz, 0, gridZ - 1);
-                                int yi = MathsF.Range(y0 + yy, 0, gridY - 1);
-                                int xi = MathsF.Range(x0 + xx, 0, gridX - 1);
+                                int zi = Maths.Range(z0 + zz, 0, gridZ - 1);
+                                int yi = Maths.Range(y0 + yy, 0, gridY - 1);
+                                int xi = Maths.Range(x0 + xx, 0, gridX - 1);
 
                                 float weight = (1 - Math.Abs(dz - zz)) *
                                                (1 - Math.Abs(dy - yy)) *
@@ -326,15 +326,15 @@ namespace UMapx.Transform
         /// <param name="input">Input</param>
         /// <param name="sigmaSpatial">Spatial smoothing factor</param>
         /// <param name="sigmaRange">Range smoothing factor</param>
-        internal static void Bilateralgridfilter(ComplexF[] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
+        internal static void Bilateralgridfilter(Complex32[] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
         {
             int length = input.Length;
 
             int gridZ = (int)(1.0f / sigmaRange) + 1;
             int gridX = (int)Math.Ceiling(length / sigmaSpatial) + 2;
 
-            ComplexF[,] gridData = new ComplexF[gridZ, gridX];
-            ComplexF[,] gridWeight = new ComplexF[gridZ, gridX];
+            Complex32[,] gridData = new Complex32[gridZ, gridX];
+            Complex32[,] gridWeight = new Complex32[gridZ, gridX];
 
             // SPLAT step
             for (int x = 0; x < length; x++)
@@ -364,14 +364,14 @@ namespace UMapx.Transform
                 float dz = z - z0;
                 float dx = gx - x0;
 
-                ComplexF v = 0f, w = 0f;
+                Complex32 v = 0f, w = 0f;
 
                 for (int zz = 0; zz <= 1; zz++)
                 {
                     for (int xx = 0; xx <= 1; xx++)
                     {
-                        int zi = MathsF.Range(z0 + zz, 0, gridZ - 1);
-                        int xi = MathsF.Range(x0 + xx, 0, gridX - 1);
+                        int zi = Maths.Range(z0 + zz, 0, gridZ - 1);
+                        int xi = Maths.Range(x0 + xx, 0, gridX - 1);
 
                         float weight = (1 - Math.Abs(dz - zz)) * (1 - Math.Abs(dx - xx));
 
@@ -389,7 +389,7 @@ namespace UMapx.Transform
         /// <param name="input">Input</param>
         /// <param name="sigmaSpatial">Spatial smoothing factor</param>
         /// <param name="sigmaRange">Range smoothing factor</param>
-        internal static void Bilateralgridfilter(ComplexF[,] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
+        internal static void Bilateralgridfilter(Complex32[,] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
         {
             int height = input.GetLength(0);
             int width = input.GetLength(1);
@@ -398,8 +398,8 @@ namespace UMapx.Transform
             int gridY = (int)Math.Ceiling(height / sigmaSpatial) + 2;
             int gridX = (int)Math.Ceiling(width / sigmaSpatial) + 2;
 
-            ComplexF[,,] gridData = new ComplexF[gridZ, gridY, gridX];
-            ComplexF[,,] gridWeight = new ComplexF[gridZ, gridY, gridX];
+            Complex32[,,] gridData = new Complex32[gridZ, gridY, gridX];
+            Complex32[,,] gridWeight = new Complex32[gridZ, gridY, gridX];
 
             // SPLAT step: accumulate data into the grid
             for (int y = 0; y < height; y++)
@@ -439,7 +439,7 @@ namespace UMapx.Transform
                     float dy = gy - y0;
                     float dx = gx - x0;
 
-                    ComplexF v = 0f, w = 0f;
+                    Complex32 v = 0f, w = 0f;
 
                     for (int zz = 0; zz <= 1; zz++)
                     {
@@ -447,9 +447,9 @@ namespace UMapx.Transform
                         {
                             for (int xx = 0; xx <= 1; xx++)
                             {
-                                int zi = MathsF.Range(z0 + zz, 0, gridZ - 1);
-                                int yi = MathsF.Range(y0 + yy, 0, gridY - 1);
-                                int xi = MathsF.Range(x0 + xx, 0, gridX - 1);
+                                int zi = Maths.Range(z0 + zz, 0, gridZ - 1);
+                                int yi = Maths.Range(y0 + yy, 0, gridY - 1);
+                                int xi = Maths.Range(x0 + xx, 0, gridX - 1);
 
                                 float weight = (1 - Math.Abs(dz - zz)) *
                                                (1 - Math.Abs(dy - yy)) *
@@ -489,8 +489,8 @@ namespace UMapx.Transform
                     {
                         for (int dx = -radius; dx <= radius; dx++)
                         {
-                            int zi = MathsF.Range(z + dz, 0, depth - 1);
-                            int xi = MathsF.Range(x + dx, 0, width - 1);
+                            int zi = Maths.Range(z + dz, 0, depth - 1);
+                            int xi = Maths.Range(x + dx, 0, width - 1);
 
                             sum += temp[zi, xi];
                             count++;
@@ -529,9 +529,9 @@ namespace UMapx.Transform
                             {
                                 for (int dx = -radius; dx <= radius; dx++)
                                 {
-                                    int zi = MathsF.Range(z + dz, 0, depth - 1);
-                                    int yi = MathsF.Range(y + dy, 0, height - 1);
-                                    int xi = MathsF.Range(x + dx, 0, width - 1);
+                                    int zi = Maths.Range(z + dz, 0, depth - 1);
+                                    int yi = Maths.Range(y + dy, 0, height - 1);
+                                    int xi = Maths.Range(x + dx, 0, width - 1);
 
                                     sum += temp[zi, yi, xi];
                                     count++;
@@ -549,26 +549,26 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="grid">Grid</param>
         /// <param name="radius">Radius</param>
-        private static void Boxblur2d(ComplexF[,] grid, int radius)
+        private static void Boxblur2d(Complex32[,] grid, int radius)
         {
             int depth = grid.GetLength(0);
             int width = grid.GetLength(1);
 
-            ComplexF[,] temp = (ComplexF[,])grid.Clone();
+            Complex32[,] temp = (Complex32[,])grid.Clone();
 
             for (int z = 0; z < depth; z++)
             {
                 for (int x = 0; x < width; x++)
                 {
-                    ComplexF sum = 0f;
+                    Complex32 sum = 0f;
                     int count = 0;
 
                     for (int dz = -radius; dz <= radius; dz++)
                     {
                         for (int dx = -radius; dx <= radius; dx++)
                         {
-                            int zi = MathsF.Range(z + dz, 0, depth - 1);
-                            int xi = MathsF.Range(x + dx, 0, width - 1);
+                            int zi = Maths.Range(z + dz, 0, depth - 1);
+                            int xi = Maths.Range(x + dx, 0, width - 1);
 
                             sum += temp[zi, xi];
                             count++;
@@ -584,13 +584,13 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="grid">Grid</param>
         /// <param name="radius">Radius</param>
-        private static void Boxblur3d(ComplexF[,,] grid, int radius)
+        private static void Boxblur3d(Complex32[,,] grid, int radius)
         {
             int depth = grid.GetLength(0);
             int height = grid.GetLength(1);
             int width = grid.GetLength(2);
 
-            ComplexF[,,] temp = (ComplexF[,,])grid.Clone();
+            Complex32[,,] temp = (Complex32[,,])grid.Clone();
 
             for (int z = 0; z < depth; z++)
             {
@@ -598,7 +598,7 @@ namespace UMapx.Transform
                 {
                     for (int x = 0; x < width; x++)
                     {
-                        ComplexF sum = 0f;
+                        Complex32 sum = 0f;
                         int count = 0;
 
                         for (int dz = -radius; dz <= radius; dz++)
@@ -607,9 +607,9 @@ namespace UMapx.Transform
                             {
                                 for (int dx = -radius; dx <= radius; dx++)
                                 {
-                                    int zi = MathsF.Range(z + dz, 0, depth - 1);
-                                    int yi = MathsF.Range(y + dy, 0, height - 1);
-                                    int xi = MathsF.Range(x + dx, 0, width - 1);
+                                    int zi = Maths.Range(z + dz, 0, depth - 1);
+                                    int yi = Maths.Range(y + dy, 0, height - 1);
+                                    int xi = Maths.Range(x + dx, 0, width - 1);
 
                                     sum += temp[zi, yi, xi];
                                     count++;

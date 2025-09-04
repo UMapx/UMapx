@@ -53,15 +53,15 @@ namespace UMapx.Window
         /// <param name="input">Array</param>
         /// <returns>Matrix</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        public ComplexF[,] Forward(ComplexF[] input)
+        public Complex32[,] Forward(Complex32[] input)
         {
             int N = input.Length;
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
-            var result = new ComplexF[N, L];
+            var result = new Complex32[N, L];
 
-            ComplexF[] buffer = new ComplexF[L];
+            Complex32[] buffer = new Complex32[L];
 
             for (int m = 0; m < N; m++)
             {
@@ -89,15 +89,15 @@ namespace UMapx.Window
         /// <param name="input">Array</param>
         /// <returns>Matrix</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        public ComplexF[,] Forward(float[] input)
+        public Complex32[,] Forward(float[] input)
         {
             int N = input.Length;
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
-            var result = new ComplexF[N, L];
+            var result = new Complex32[N, L];
 
-            ComplexF[] buffer = new ComplexF[L];
+            Complex32[] buffer = new Complex32[L];
 
             for (int m = 0; m < N; m++)
             {
@@ -126,17 +126,17 @@ namespace UMapx.Window
         /// <param name="matrix">Matrix</param>
         /// <returns>Array</returns>
         /// <exception cref="ArgumentException">Exception</exception>
-        public ComplexF[] Backward(ComplexF[,] matrix)
+        public Complex32[] Backward(Complex32[,] matrix)
         {
             int N = matrix.GetLength(0);
             int L = matrix.GetLength(1);
             if (N % M != 0 || L != N / M) throw new ArgumentException("The dimensions of matrix do not correspond to the M parameter");
 
-            var output = new ComplexF[N];
+            var output = new Complex32[N];
 
             for (int m = 0; m < N; m++)
             {
-                ComplexF sum = ComplexF.Zero;
+                Complex32 sum = Complex32.Zero;
 
                 for (int n = 0; n < L; n++)
                 {
@@ -162,19 +162,19 @@ namespace UMapx.Window
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
-            int R = MathsF.Gcd(M, L);           // number of Zak cosets to stitch
+            int R = Maths.Gcd(M, L);           // number of Zak cosets to stitch
             int RL = R * L;                    // vertical length
             int delta = M / R;                 // time shift step between cosets
             const float eps = 1e-8f;
 
             // 1) Build G (RL x N) by circular shifts with step Δ = M/R
-            var G = new ComplexF[RL, N];
+            var G = new Complex32[RL, N];
             for (int i = 0; i < RL; i++)
             {
                 int shift = delta * i % N;
                 for (int j = 0; j < N; j++)
                 {
-                    G[i, j] = input[MathsF.Mod(j + shift, N)];
+                    G[i, j] = input[Maths.Mod(j + shift, N)];
                 }
             }
 
@@ -206,7 +206,7 @@ namespace UMapx.Window
             var outR = new float[N];
             for (int j = 0; j < N; j++)
             {
-                ComplexF sum = ComplexF.Zero;
+                Complex32 sum = Complex32.Zero;
                 for (int i = 0; i < RL; i++)
                     sum += Z[i, j];
                 outR[j] = (sum / RL).Real;
@@ -218,25 +218,25 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="input">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Orthogonalize(ComplexF[] input)
+        public Complex32[] Orthogonalize(Complex32[] input)
         {
             int N = input.Length;
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
-            int R = MathsF.Gcd(M, L);           // number of Zak cosets to stitch
+            int R = Maths.Gcd(M, L);           // number of Zak cosets to stitch
             int RL = R * L;                    // vertical length
             int delta = M / R;                 // time shift step between cosets
             const float eps = 1e-8f;
 
             // 1) Build G (RL x N) by circular shifts with step Δ = M/R
-            var G = new ComplexF[RL, N];
+            var G = new Complex32[RL, N];
             for (int i = 0; i < RL; i++)
             {
                 int shift = delta * i % N;
                 for (int j = 0; j < N; j++)
                 {
-                    G[i, j] = input[MathsF.Mod(j + shift, N)];
+                    G[i, j] = input[Maths.Mod(j + shift, N)];
                 }
             }
 
@@ -263,10 +263,10 @@ namespace UMapx.Window
             }
 
             // 4) Take DC over the vertical axis (average across RL rows)
-            var outC = new ComplexF[N];
+            var outC = new Complex32[N];
             for (int j = 0; j < N; j++)
             {
-                ComplexF sum = ComplexF.Zero;
+                Complex32 sum = Complex32.Zero;
                 for (int i = 0; i < RL; i++)
                     sum += Z[i, j];
                 outC[j] = sum / RL;

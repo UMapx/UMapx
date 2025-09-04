@@ -66,7 +66,7 @@ namespace UMapx.Imaging
             }
             set
             {
-                difference = MathsF.Float(value);
+                difference = Maths.Float(value);
                 this.rebuild = true;
             }
         }

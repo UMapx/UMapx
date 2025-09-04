@@ -95,7 +95,7 @@ namespace UMapx.Distribution
             {
                 if (k > 2)
                 {
-                    return MathsF.Pow(xm / k - 1) * (k / (k - 2));
+                    return Maths.Pow(xm / k - 1) * (k / (k - 2));
                 }
                 return float.NaN;
             }
@@ -117,7 +117,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return xm * MathsF.Sqrt(2, k);
+                return xm * Maths.Sqrt(2, k);
             }
         }
         /// <summary>

@@ -73,10 +73,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Forward(ComplexF[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            var B = (ComplexF[])A.Clone();
+            var B = (Complex32[])A.Clone();
 
             if ((N & (N - 1)) == 0)
                 CooleyTukeyFFT(B, inverse: false);
@@ -93,10 +93,10 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            var A = (ComplexF[])B.Clone();
+            var A = (Complex32[])B.Clone();
 
             if ((N & (N - 1)) == 0)
                 CooleyTukeyFFT(A, inverse: true);
@@ -115,9 +115,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Forward(ComplexF[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
-            var B = (ComplexF[,])A.Clone();
+            var B = (Complex32[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -125,7 +125,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    var row = new ComplexF[M];
+                    var row = new Complex32[M];
                     for (int j = 0; j < M; j++) row[j] = B[i, j];
 
                     if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, false);
@@ -136,7 +136,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    var col = new ComplexF[N];
+                    var col = new Complex32[N];
                     for (int i = 0; i < N; i++) col[i] = B[i, j].Conjugate;
 
                     if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, false);
@@ -145,13 +145,13 @@ namespace UMapx.Transform
                     for (int i = 0; i < N; i++) B[i, j] = col[i];
                 });
 
-                if (normalized) B = MatrixF.Div(B, (float)Math.Sqrt(N * (double)M));
+                if (normalized) B = Matrix.Div(B, (float)Math.Sqrt(N * (double)M));
             }
             else if (direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
-                    var col = new ComplexF[N];
+                    var col = new Complex32[N];
                     for (int i = 0; i < N; i++) col[i] = B[i, j].Conjugate;
 
                     if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, false);
@@ -160,13 +160,13 @@ namespace UMapx.Transform
                     for (int i = 0; i < N; i++) B[i, j] = col[i];
                 });
 
-                if (normalized) B = MatrixF.Div(B, (float)Math.Sqrt(N));
+                if (normalized) B = Matrix.Div(B, (float)Math.Sqrt(N));
             }
             else // Direction.Horizontal
             {
                 Parallel.For(0, N, i =>
                 {
-                    var row = new ComplexF[M];
+                    var row = new Complex32[M];
                     for (int j = 0; j < M; j++) row[j] = B[i, j];
 
                     if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, false);
@@ -175,7 +175,7 @@ namespace UMapx.Transform
                     for (int j = 0; j < M; j++) B[i, j] = row[j];
                 });
 
-                if (normalized) B = MatrixF.Div(B, (float)Math.Sqrt(M));
+                if (normalized) B = Matrix.Div(B, (float)Math.Sqrt(M));
             }
 
             return B;
@@ -185,9 +185,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
-            var A = (ComplexF[,])B.Clone();
+            var A = (Complex32[,])B.Clone();
             int N = A.GetLength(0);
             int M = A.GetLength(1);
 
@@ -195,7 +195,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    var col = new ComplexF[N];
+                    var col = new Complex32[N];
                     for (int i = 0; i < N; i++) col[i] = A[i, j];
 
                     if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, true);
@@ -206,7 +206,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    var row = new ComplexF[M];
+                    var row = new Complex32[M];
                     for (int j = 0; j < M; j++) row[j] = A[i, j].Conjugate;
 
                     if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, true);
@@ -215,14 +215,14 @@ namespace UMapx.Transform
                     for (int j = 0; j < M; j++) A[i, j] = row[j];
                 });
 
-                if (normalized) A = MatrixF.Div(A, (float)Math.Sqrt(N * (double)M));
+                if (normalized) A = Matrix.Div(A, (float)Math.Sqrt(N * (double)M));
                 //else A = Matrice.Div(A, (float)(N * (double)M));
             }
             else if (direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
-                    var col = new ComplexF[N];
+                    var col = new Complex32[N];
                     for (int i = 0; i < N; i++) col[i] = A[i, j];
 
                     if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, true);
@@ -231,14 +231,14 @@ namespace UMapx.Transform
                     for (int i = 0; i < N; i++) A[i, j] = col[i];
                 });
 
-                if (normalized) A = MatrixF.Div(A, (float)Math.Sqrt(N));
+                if (normalized) A = Matrix.Div(A, (float)Math.Sqrt(N));
                 //else A = Matrice.Div(A, (float)N);
             }
             else // Direction.Horizontal
             {
                 Parallel.For(0, N, i =>
                 {
-                    var row = new ComplexF[M];
+                    var row = new Complex32[M];
                     for (int j = 0; j < M; j++) row[j] = A[i, j].Conjugate;
 
                     if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, true);
@@ -247,7 +247,7 @@ namespace UMapx.Transform
                     for (int j = 0; j < M; j++) A[i, j] = row[j];
                 });
 
-                if (normalized) A = MatrixF.Div(A, (float)Math.Sqrt(M));
+                if (normalized) A = Matrix.Div(A, (float)Math.Sqrt(M));
                 //else A = Matrice.Div(A, (float)M);
             }
 
@@ -297,7 +297,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
-        private static void BluesteinFFT(ComplexF[] data, bool inverse)
+        private static void BluesteinFFT(Complex32[] data, bool inverse)
         {
             if (data == null || data.Length <= 1) return;
 
@@ -310,7 +310,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <param name="inverse">Inverse or not</param>
-        private static void CooleyTukeyFFT(ComplexF[] data, bool inverse)
+        private static void CooleyTukeyFFT(Complex32[] data, bool inverse)
         {
             if (data == null || data.Length <= 1) return;
             int n = data.Length;
@@ -326,7 +326,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="data">Array</param>
         /// <exception cref="ArgumentException">Exception</exception>
-        private static void TransformRadix2(ComplexF[] data)
+        private static void TransformRadix2(Complex32[] data)
         {
             int n = data.Length;
             int levels = FloorLog2(n);
@@ -367,8 +367,8 @@ namespace UMapx.Transform
                         double rej = data[j].Real;
                         double imj = data[j].Imag;
 
-                        data[h] = new ComplexF((float)(rej - tpre), (float)(imj - tpim));
-                        data[j] = new ComplexF((float)(rej + tpre), (float)(imj + tpim));
+                        data[h] = new Complex32((float)(rej - tpre), (float)(imj - tpim));
+                        data[j] = new Complex32((float)(rej + tpre), (float)(imj + tpim));
                     }
                 }
                 if (size == n) break; // prevent overflow
@@ -378,7 +378,7 @@ namespace UMapx.Transform
         /// Bluestein forward kernel (no scaling). Works for arbitrary lengths.
         /// </summary>
         /// <param name="data">Array</param>
-        private static void TransformBluestein(ComplexF[] data)
+        private static void TransformBluestein(Complex32[] data)
         {
             int n = data.Length;
             int m = HighestOneBit(n * 2 + 1) << 1; // next power-of-two >= 2n
@@ -416,7 +416,7 @@ namespace UMapx.Transform
             {
                 double re = +cre[i] * expC[i] + cim[i] * expS[i];
                 double im = -cre[i] * expS[i] + cim[i] * expC[i];
-                data[i] = new ComplexF((float)re, (float)im);
+                data[i] = new Complex32((float)re, (float)im);
             }
         }
         /// <summary>
@@ -433,13 +433,13 @@ namespace UMapx.Transform
             int n = xre.Length;
 
             // pack to Complex
-            var X = new ComplexF[n];
-            var Y = new ComplexF[n];
+            var X = new Complex32[n];
+            var Y = new Complex32[n];
 
             for (int i = 0; i < n; i++)
             {
-                X[i] = new ComplexF((float)xre[i], (float)xim[i]);
-                Y[i] = new ComplexF((float)yre[i], (float)yim[i]);
+                X[i] = new Complex32((float)xre[i], (float)xim[i]);
+                Y[i] = new Complex32((float)yre[i], (float)yim[i]);
             }
 
             // FFT forward
@@ -459,7 +459,7 @@ namespace UMapx.Transform
             {
                 float ar = X[i].Real, ai = X[i].Imag;
                 float br = Y[i].Real, bi = Y[i].Imag;
-                X[i] = new ComplexF(ar * br - ai * bi, ai * br + ar * bi);
+                X[i] = new Complex32(ar * br - ai * bi, ai * br + ar * bi);
             }
 
             // IDFT without scaling (swap trick)
@@ -480,12 +480,12 @@ namespace UMapx.Transform
         /// This is equivalent to applying the conjugation trick to switch between forward and inverse.
         /// </summary>
         /// <param name="a">Array</param>
-        private static void SwapRealImagInPlace(ComplexF[] a)
+        private static void SwapRealImagInPlace(Complex32[] a)
         {
             for (int i = 0; i < a.Length; i++)
             {
                 float r = a[i].Real, im = a[i].Imag;
-                a[i] = new ComplexF(im, r);
+                a[i] = new Complex32(im, r);
             }
         }
         /// <summary>
@@ -493,7 +493,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="a">Array</param>
         /// <param name="s">Scale param</param>
-        private static void Scale(ComplexF[] a, float s)
+        private static void Scale(Complex32[] a, float s)
         {
             for (int i = 0; i < a.Length; i++)
             {

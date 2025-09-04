@@ -109,7 +109,7 @@ namespace UMapx.Analysis
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
         /// <returns>Complex number</returns>
-        public ComplexF Compute(IComplexF function, ComplexF x, ComplexF h, int order)
+        public Complex32 Compute(IComplex32 function, Complex32 x, Complex32 h, int order)
         {
             // exception
             if (order > this.points)
@@ -120,7 +120,7 @@ namespace UMapx.Analysis
             // Create the interpolation points
             int length = this.points + 1;
             float[,] coefficients = Differentiation.GetCoefficients(length);
-            ComplexF sum = 0.0;
+            Complex32 sum = 0.0;
 
             // do job
             for (int i = 0, center = 0; i < length; i++)
@@ -130,7 +130,7 @@ namespace UMapx.Analysis
             }
 
             // result
-            return sum / MathsF.Pow(h, order);
+            return sum / Maths.Pow(h, order);
         }
         /// <summary>
         /// Returns the value of a derived function.
@@ -140,7 +140,7 @@ namespace UMapx.Analysis
         /// <param name="h">Step</param>
         /// <param name="order">Order</param>
         /// <returns>Complex number</returns>
-        public ComplexF Compute(ComplexF[] y, int index, float h, int order)
+        public Complex32 Compute(Complex32[] y, int index, float h, int order)
         {
             // exception
             if (order > this.points)
@@ -151,7 +151,7 @@ namespace UMapx.Analysis
             // Create the interpolation points
             int length = this.points + 1;
             float[,] coefficients = Differentiation.GetCoefficients(length);
-            ComplexF sum = 0.0;
+            Complex32 sum = 0.0;
 
             // do job
             for (int i = 0, center = 0; i < length; i++)
@@ -192,7 +192,7 @@ namespace UMapx.Analysis
             }
 
             // matrix invert
-            deltas = MatrixF.Invert(deltas);
+            deltas = Matrix.Invert(deltas);
 
             //// rounding
             //float fac = (float)Special.Factorial(points);

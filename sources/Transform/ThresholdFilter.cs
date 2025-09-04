@@ -107,7 +107,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Array</param>
-        public void Apply(ComplexF[] data)
+        public void Apply(Complex32[] data)
         {
             int length = data.Length;
             int i;
@@ -116,7 +116,7 @@ namespace UMapx.Transform
             {
                 for (i = 0; i < length; i++)
                 {
-                    if (MathsF.Abs(data[i]) < threshold)
+                    if (Maths.Abs(data[i]) < threshold)
                     {
                         data[i] = 0;
                     }
@@ -205,7 +205,7 @@ namespace UMapx.Transform
         /// Apply filter.
         /// </summary>
         /// <param name="data">Matrix</param>
-        public void Apply(ComplexF[,] data)
+        public void Apply(Complex32[,] data)
         {
             int width = data.GetLength(1);
             int height = data.GetLength(0);
@@ -217,7 +217,7 @@ namespace UMapx.Transform
                 {
                     for (j = 0; j < width; j++)
                     {
-                        if (MathsF.Abs(data[i, j]) < threshold)
+                        if (Maths.Abs(data[i, j]) < threshold)
                         {
                             data[i, j] = 0;
                         }

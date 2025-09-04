@@ -153,9 +153,9 @@ namespace UMapx.Imaging
 
                 for (p = xx, y = 0; y < v; y++, p += stride)
                 {
-                    dst[p + 2] = MathsF.Byte(r / h);
-                    dst[p + 1] = MathsF.Byte(g / h);
-                    dst[p + 0] = MathsF.Byte(b / h);
+                    dst[p + 2] = Maths.Byte(r / h);
+                    dst[p + 1] = Maths.Byte(g / h);
+                    dst[p + 0] = Maths.Byte(b / h);
                 }
 
                 for (
@@ -175,9 +175,9 @@ namespace UMapx.Imaging
                     g = g - src[p + 1] + src[w + 1];
                     b = b - src[p + 0] + dst[w + 0];
 
-                    dst[q + 2] = MathsF.Byte(r / h);
-                    dst[q + 1] = MathsF.Byte(g / h);
-                    dst[q + 0] = MathsF.Byte(b / h);
+                    dst[q + 2] = Maths.Byte(r / h);
+                    dst[q + 1] = Maths.Byte(g / h);
+                    dst[q + 0] = Maths.Byte(b / h);
                 }
 
                 for (
@@ -195,9 +195,9 @@ namespace UMapx.Imaging
                     g = g - src[p + 1] + src[q + 1];
                     b = b - src[p + 0] + src[q + 0];
 
-                    dst[q + 2] = MathsF.Byte(r / h);
-                    dst[q + 1] = MathsF.Byte(g / h);
-                    dst[q + 0] = MathsF.Byte(b / h);
+                    dst[q + 2] = Maths.Byte(r / h);
+                    dst[q + 1] = Maths.Byte(g / h);
+                    dst[q + 0] = Maths.Byte(b / h);
                 }
 
             });
@@ -235,9 +235,9 @@ namespace UMapx.Imaging
 
                 for (p = yy, x = 0; x < v; x++, p += 4)
                 {
-                    dst[p + 2] = MathsF.Byte(r / h);
-                    dst[p + 1] = MathsF.Byte(g / h);
-                    dst[p + 0] = MathsF.Byte(b / h);
+                    dst[p + 2] = Maths.Byte(r / h);
+                    dst[p + 1] = Maths.Byte(g / h);
+                    dst[p + 0] = Maths.Byte(b / h);
                 }
 
                 for (
@@ -257,9 +257,9 @@ namespace UMapx.Imaging
                     g = g - src[p + 1] + src[w + 1];
                     b = b - src[p + 0] + src[w + 0];
 
-                    dst[q + 2] = MathsF.Byte(r / h);
-                    dst[q + 1] = MathsF.Byte(g / h);
-                    dst[q + 0] = MathsF.Byte(b / h);
+                    dst[q + 2] = Maths.Byte(r / h);
+                    dst[q + 1] = Maths.Byte(g / h);
+                    dst[q + 0] = Maths.Byte(b / h);
                 }
 
                 for (
@@ -277,9 +277,9 @@ namespace UMapx.Imaging
                     g = g - src[p + 1] + src[q + 1];
                     b = b - src[p + 0] + src[q + 0];
 
-                    dst[q + 2] = MathsF.Byte(r / h);
-                    dst[q + 1] = MathsF.Byte(g / h);
-                    dst[q + 0] = MathsF.Byte(b / h);
+                    dst[q + 2] = Maths.Byte(r / h);
+                    dst[q + 1] = Maths.Byte(g / h);
+                    dst[q + 0] = Maths.Byte(b / h);
                 }
 
             });

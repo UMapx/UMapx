@@ -74,7 +74,7 @@ namespace UMapx.Transform
         public float[] Forward(float[] A)
         {
             int N = A.Length;
-            if (!MathsF.IsPower(N, 2))
+            if (!Maths.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[] B = (float[])A.Clone();
@@ -82,7 +82,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                B = MatrixF.Div(B, MathsF.Sqrt(N));
+                B = Matrix.Div(B, Maths.Sqrt(N));
             }
 
             return B;
@@ -95,7 +95,7 @@ namespace UMapx.Transform
         public float[] Backward(float[] B)
         {
             int N = B.Length;
-            if (!MathsF.IsPower(N, 2))
+            if (!Maths.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             float[] A = (float[])B.Clone();
@@ -103,7 +103,7 @@ namespace UMapx.Transform
 
             if (normalized)
             {
-                A = MatrixF.Div(A, MathsF.Sqrt(N));
+                A = Matrix.Div(A, Maths.Sqrt(N));
             }
 
             return A;
@@ -161,7 +161,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = MatrixF.Div(B, MathsF.Sqrt(N * M));
+                    B = Matrix.Div(B, Maths.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
@@ -187,7 +187,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = MatrixF.Div(B, MathsF.Sqrt(N));
+                    B = Matrix.Div(B, Maths.Sqrt(N));
                 }
             }
             else
@@ -212,7 +212,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = MatrixF.Div(B, MathsF.Sqrt(M));
+                    B = Matrix.Div(B, Maths.Sqrt(M));
                 }
             }
 
@@ -268,7 +268,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = MatrixF.Div(A, MathsF.Sqrt(N * M));
+                    A = Matrix.Div(A, Maths.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
@@ -292,7 +292,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = MatrixF.Div(A, MathsF.Sqrt(N));
+                    A = Matrix.Div(A, Maths.Sqrt(N));
                 }
             }
             else
@@ -316,7 +316,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = MatrixF.Div(A, MathsF.Sqrt(M));
+                    A = Matrix.Div(A, Maths.Sqrt(M));
                 }
             }
 
@@ -327,18 +327,18 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Forward(ComplexF[] A)
+        public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            if (!MathsF.IsPower(N, 2))
+            if (!Maths.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            ComplexF[] B = (ComplexF[])A.Clone();
+            Complex32[] B = (Complex32[])A.Clone();
             FWHT(B);
 
             if (normalized)
             {
-                B = MatrixF.Div(B, Math.Sqrt(N));
+                B = Matrix.Div(B, Math.Sqrt(N));
             }
 
             return B;
@@ -348,18 +348,18 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public ComplexF[] Backward(ComplexF[] B)
+        public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            if (!MathsF.IsPower(N, 2))
+            if (!Maths.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            ComplexF[] A = (ComplexF[])B.Clone();
+            Complex32[] A = (Complex32[])B.Clone();
             FWHT(A);
 
             if (normalized)
             {
-                A = MatrixF.Div(A, Math.Sqrt(N));
+                A = Matrix.Div(A, Math.Sqrt(N));
             }
 
             return A;
@@ -369,9 +369,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Forward(ComplexF[,] A)
+        public Complex32[,] Forward(Complex32[,] A)
         {
-            ComplexF[,] B = (ComplexF[,])A.Clone();
+            Complex32[,] B = (Complex32[,])A.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -379,7 +379,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, N, i =>
                 {
-                    ComplexF[] row = new ComplexF[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -398,7 +398,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, M, j =>
                 {
-                    ComplexF[] col = new ComplexF[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -417,14 +417,14 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = MatrixF.Div(B, Math.Sqrt(N * M));
+                    B = Matrix.Div(B, Math.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
-                    ComplexF[] col = new ComplexF[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
 
                     for (i = 0; i < N; i++)
@@ -443,14 +443,14 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = MatrixF.Div(B, Math.Sqrt(N));
+                    B = Matrix.Div(B, Math.Sqrt(N));
                 }
             }
             else
             {
                 Parallel.For(0, N, i =>
                 {
-                    ComplexF[] row = new ComplexF[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -468,7 +468,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    B = MatrixF.Div(B, Math.Sqrt(M));
+                    B = Matrix.Div(B, Math.Sqrt(M));
                 }
             }
 
@@ -479,9 +479,9 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public ComplexF[,] Backward(ComplexF[,] B)
+        public Complex32[,] Backward(Complex32[,] B)
         {
-            ComplexF[,] A = (ComplexF[,])B.Clone();
+            Complex32[,] A = (Complex32[,])B.Clone();
             int N = B.GetLength(0);
             int M = B.GetLength(1);
 
@@ -489,7 +489,7 @@ namespace UMapx.Transform
             {
                 Parallel.For(0, M, j =>
                 {
-                    ComplexF[] col = new ComplexF[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -506,7 +506,7 @@ namespace UMapx.Transform
 
                 Parallel.For(0, N, i =>
                 {
-                    ComplexF[] row = new ComplexF[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -524,14 +524,14 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = MatrixF.Div(A, Math.Sqrt(N * M));
+                    A = Matrix.Div(A, Math.Sqrt(N * M));
                 }
             }
             else if (direction == Direction.Vertical)
             {
                 Parallel.For(0, M, j =>
                 {
-                    ComplexF[] col = new ComplexF[N];
+                    Complex32[] col = new Complex32[N];
                     int i;
                     for (i = 0; i < N; i++)
                     {
@@ -548,14 +548,14 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = MatrixF.Div(A, Math.Sqrt(N));
+                    A = Matrix.Div(A, Math.Sqrt(N));
                 }
             }
             else
             {
                 Parallel.For(0, N, i =>
                 {
-                    ComplexF[] row = new ComplexF[M];
+                    Complex32[] row = new Complex32[M];
                     int j;
 
                     for (j = 0; j < M; j++)
@@ -572,7 +572,7 @@ namespace UMapx.Transform
 
                 if (normalized == true)
                 {
-                    A = MatrixF.Div(A, Math.Sqrt(M));
+                    A = Matrix.Div(A, Math.Sqrt(M));
                 }
             }
 
@@ -589,10 +589,10 @@ namespace UMapx.Transform
         {
             int N = data.Length;
 
-            if (!MathsF.IsPower(N, 2))
+            if (!Maths.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            int log2N = (int)MathsF.Log2(N);
+            int log2N = (int)Maths.Log2(N);
             float x_even, x_odd;
 
             int k0 = N, k1 = 1, k2 = N / 2;
@@ -623,15 +623,15 @@ namespace UMapx.Transform
         /// Fast Walsh-Hadamard transform.
         /// </summary>
         /// <param name="data">Array</param>
-        private void FWHT(ComplexF[] data)
+        private void FWHT(Complex32[] data)
         {
             int N = data.Length;
 
-            if (!MathsF.IsPower(N, 2))
+            if (!Maths.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
-            int log2N = (int)MathsF.Log2(N);
-            ComplexF x_even, x_odd;
+            int log2N = (int)Maths.Log2(N);
+            Complex32 x_even, x_odd;
 
             int k0 = N, k1 = 1, k2 = N / 2;
             int x, y, z, i, j, l;

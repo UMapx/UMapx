@@ -106,19 +106,19 @@ namespace UMapx.Response
         public float[] Amplitude(float[] w)
         {
             int i, j;
-            ComplexF K1;
-            ComplexF K2;
+            Complex32 K1;
+            Complex32 K2;
             int length = w.Length;
             int P = b.Length, Q = a.Length;
             float[] amplitude = new float[length];
 
             for (j = 0; j < length; j++)
             {
-                K1 = ComplexF.Zero;
-                K2 = ComplexF.One;
+                K1 = Complex32.Zero;
+                K2 = Complex32.One;
 
-                for (i = 0; i < P; i++) { K1 += b[i] * MathsF.Exp(-MathsF.I * w[j] * i); }
-                for (i = 0; i < Q; i++) { K2 -= a[i] * MathsF.Exp(-MathsF.I * w[j] * i); }
+                for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
 
                 amplitude[j] = K1.Abs / K2.Abs;
             }
@@ -132,19 +132,19 @@ namespace UMapx.Response
         public float[] Phase(float[] w)
         {
             int i, j;
-            ComplexF K1;
-            ComplexF K2;
+            Complex32 K1;
+            Complex32 K2;
             int length = w.Length;
             int P = b.Length, Q = a.Length;
             float[] phase = new float[length];
 
             for (j = 0; j < w.Length; j++)
             {
-                K1 = ComplexF.Zero;
-                K2 = ComplexF.One;
+                K1 = Complex32.Zero;
+                K2 = Complex32.One;
 
-                for (i = 0; i < P; i++) { K1 += b[i] * MathsF.Exp(-MathsF.I * w[j] * i); }
-                for (i = 0; i < Q; i++) { K2 -= a[i] * MathsF.Exp(-MathsF.I * w[j] * i); }
+                for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
 
                 phase[j] = K1.Angle - K2.Angle;
             }
@@ -158,11 +158,11 @@ namespace UMapx.Response
         public float Amplitude(float w)
         {
             int i;
-            ComplexF K1 = new ComplexF(0, 0);
-            ComplexF K2 = new ComplexF(1, 0);
+            Complex32 K1 = new Complex32(0, 0);
+            Complex32 K2 = new Complex32(1, 0);
 
-            for (i = 0; i < b.Length; i++) { K1 += b[i] * MathsF.Exp(-MathsF.I * w * i); }
-            for (i = 0; i < a.Length; i++) { K2 -= a[i] * MathsF.Exp(-MathsF.I * w * i); }
+            for (i = 0; i < b.Length; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
+            for (i = 0; i < a.Length; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
 
             return K1.Abs / K2.Abs;
         }
@@ -174,12 +174,12 @@ namespace UMapx.Response
         public float Phase(float w)
         {
             int i;
-            ComplexF K1 = new ComplexF(0, 0);
-            ComplexF K2 = new ComplexF(1, 0);
+            Complex32 K1 = new Complex32(0, 0);
+            Complex32 K2 = new Complex32(1, 0);
             int P = b.Length, Q = a.Length;
 
-            for (i = 0; i < P; i++) { K1 += b[i] * MathsF.Exp(-MathsF.I * w * i); }
-            for (i = 0; i < Q; i++) { K2 -= a[i] * MathsF.Exp(-MathsF.I * w * i); }
+            for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
+            for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
 
             return K1.Angle - K2.Angle;
         }
@@ -190,8 +190,8 @@ namespace UMapx.Response
         {
             get
             {
-                ComplexF sum = ComplexF.Zero;
-                ComplexF exp = MathsF.Exp(-MathsF.I);
+                Complex32 sum = Complex32.Zero;
+                Complex32 exp = Maths.Exp(-Maths.I);
                 int length = a.Length;
 
                 for (int j = 0; j < length; j++)
@@ -199,7 +199,7 @@ namespace UMapx.Response
                     sum += a[j] * exp;
                 }
 
-                if (sum == ComplexF.Zero)
+                if (sum == Complex32.Zero)
                 {
                     return true;
                 }
