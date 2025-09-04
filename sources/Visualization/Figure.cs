@@ -182,10 +182,6 @@ namespace UMapx.Visualization
             int dw = (_figure_width - _canvas_width) / 2;
             int dh = (_figure_height - _canvas_height) / 2;
 
-            // points
-            float[] X = Points.GetPoints(_xmin, _xmax, _xscale);
-            float[] Y = Points.GetPoints(_ymin, _ymax, _yscale);
-
             #endregion
 
             #region Autorange
@@ -223,6 +219,10 @@ namespace UMapx.Visualization
             #endregion
 
             #region Paint
+
+            // points
+            float[] X = Points.GetPoints(_xmin, _xmax, _xscale);
+            float[] Y = Points.GetPoints(_ymin, _ymax, _yscale);
 
             Paint_Numerics(figure_graphics, X, Y, dw, dh);
 
@@ -779,27 +779,24 @@ namespace UMapx.Visualization
         {
             using SolidBrush br = new SolidBrush(_style.ColorMarks);
             string numerics;
-            int xlength, ylength, i;
             int xpoint, ypoint;
             SizeF numsize;
 
-            xlength = X.Length;
-            float numX;
+            var xlength = X.Length;
 
-            for (i = 0; i < xlength; i++)
+            for (var i = 0; i < xlength; i++)
             {
-                numX = X[i];
+                var numX = X[i];
                 numerics = GetNumString(numX);
                 xpoint = (int)Points.X2Point(numX, _xmin, _xmax, _canvas_width);
                 graphics.DrawString(numerics, _style.FontMarks, br, xpoint + dw - 5, _canvas_height + dh + 5);
             }
 
-            ylength = Y.Length;
-            float numY;
+            var ylength = Y.Length;
 
-            for (i = 0; i < ylength; i++)
+            for (var i = 0; i < ylength; i++)
             {
-                numY = Y[i];
+                var numY = Y[i];
                 numerics = GetNumString(numY);
                 numsize = graphics.MeasureString(numerics, _style.FontMarks);
                 ypoint = (int)Points.Y2Point(numY, _ymin, _ymax, _canvas_height);
