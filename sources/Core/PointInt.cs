@@ -84,7 +84,7 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Checks if two PointDouble objects are equal.
+        /// Checks if two PointInt objects are equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>
@@ -94,7 +94,7 @@ namespace UMapx.Core
             return (a.X == b.X && a.Y == b.Y);
         }
         /// <summary>
-        /// Checks if two PointDouble objects are not equal.
+        /// Checks if two PointInt objects are not equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>
