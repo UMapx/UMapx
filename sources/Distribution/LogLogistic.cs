@@ -132,7 +132,12 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            return (b / a) * (float)Math.Pow(x / a, b - 1) / (1.0f + (float)Math.Pow(Math.Pow(x / a, b), 2));
+            if (x <= 0)
+            {
+                return 0;
+            }
+
+            return (b / a) * (float)Math.Pow(x / a, b - 1) / (float)Math.Pow(1.0f + Math.Pow(x / a, b), 2);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -141,6 +146,11 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
+            if (x <= 0)
+            {
+                return 0;
+            }
+
             return 1.0f / (1 + (float)Math.Pow(x / a, -b));
         }
         /// <summary>
