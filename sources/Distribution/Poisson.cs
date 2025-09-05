@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the Poisson distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Poisson_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Poisson : IDistribution
     {

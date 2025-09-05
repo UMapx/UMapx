@@ -5,13 +5,13 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines the Gram-Schmidt orthogonalization process.
+    /// </summary>
     /// <remarks>
     /// In mathematics, in particular linear algebra and numerical analysis, the Gram-Schmidt process is a method of orthonormalizing a set of vectors
     /// in the space of internal works. This procedure is actively used for orthogonalization of bases.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class GramSchmidt
     {

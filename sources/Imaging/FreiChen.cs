@@ -8,11 +8,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines Frei-Chen convolution filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Frei-Chen_operator
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class FreiChen : IBitmapFilter2, IBitmapFilter
     {

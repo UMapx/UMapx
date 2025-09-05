@@ -5,13 +5,13 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines bidiagonal decomposition.
+    /// </summary>
     /// <remarks>
     /// This is a representation of a matrix in the form A = U * B * Vᵀ, where U and V are orthogonal matrices
     /// obtained using Householder transformations and B is a bidiagonal matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Bidiagonalization
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Bidiagonal
     {

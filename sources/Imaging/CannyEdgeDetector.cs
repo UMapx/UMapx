@@ -9,11 +9,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines a Canny edge detector.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Canny_edge_detector
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class CannyEdgeDetector : IBitmapFilter2, IBitmapFilter
     {

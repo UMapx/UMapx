@@ -5,6 +5,7 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines eigenvalue decomposition.
+    /// </summary>
     /// <remarks>
     /// The eigenvalue decomposition is the representation of the square matrix A in the form of the product of three matrices A = V * D * inv(V), 
     /// where V is the matrix of spectral vectors and D is the diagonal (generally complex) matrix of eigenvalues.
@@ -15,7 +16,6 @@ namespace UMapx.Decomposition
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class EVD
     {

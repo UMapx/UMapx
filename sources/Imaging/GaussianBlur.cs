@@ -8,10 +8,10 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the Gaussian blur filter.
+    /// </summary>
     /// <remarks>
     /// This is a very fast pseudo-Gaussian blur filter via N separable box filters (default 3).
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class GaussianBlur : IBitmapFilter2, IBitmapFilter
     {

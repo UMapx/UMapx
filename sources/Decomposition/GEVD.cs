@@ -5,12 +5,12 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines generalized eigenvalue decomposition.
+    /// </summary>
     /// <remarks>
     /// It is the task of finding a vector of values of V such that the representation: A * V = B * V * D.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix#Generalized_eigenvalue_problem
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class GEVD
     {

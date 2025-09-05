@@ -5,10 +5,10 @@ namespace UMapx.Analysis
 {
     /// <summary>
     /// Defines a class that implements an extremum search.
+    /// </summary>
     /// <remarks>
     /// This class is a solution to the problem of finding the maximum and minimum points of the function F(x).
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Optimization
     {

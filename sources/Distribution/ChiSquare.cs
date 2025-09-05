@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the xi-square distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Chi-squared_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class ChiSquare : IDistribution
     {

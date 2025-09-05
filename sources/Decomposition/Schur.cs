@@ -5,13 +5,13 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines Schur decomposition.
+    /// </summary>
     /// <remarks>
     /// This is a representation of a square matrix in the form of a product of three matrices: A = Q * T * Qᵀ,
     /// where Q is a unitary matrix and T is a quasi upper triangular matrix (Schur form).
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Schur_decomposition
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Schur
     {

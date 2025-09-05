@@ -5,13 +5,13 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines LU decomposition.
+    /// </summary>
     /// <remarks>
     /// This is a representation of the square matrix A as the product of two matrices: A = L * U, 
     /// where L is the lower triangular matrix, U is the upper triangular matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/LU_decomposition
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LU
     {

@@ -4,10 +4,10 @@ namespace UMapx.Core
 {
     /// <summary>
     /// Defines a quaternion.
+    /// </summary>
     /// <remarks>
     /// A quaternion is a system of hypercomplex numbers that forms a four-dimensional vector space over a field of real numbers.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public struct Quaternion32 : ICloneable
     {

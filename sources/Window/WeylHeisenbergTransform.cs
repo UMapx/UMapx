@@ -7,11 +7,11 @@ namespace UMapx.Window
 {
     /// <summary>
     /// Defines a group of orthogonal bases and discrete Weyl-Heisenberg transforms.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://ieeexplore.ieee.org/document/8711969/
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class WeylHeisenbergTransform : IWindowTransform, ITransform
     {
@@ -85,10 +85,10 @@ namespace UMapx.Window
         #region Weyl-Heisenberg static components
         /// <summary>
         /// Returns the complex Weyl-Heisenberg basis matrix.
+        /// </summary>
         /// <remarks>
         /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
-        /// </summary>
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts</param>
         /// <returns>Matrix</returns>
@@ -132,10 +132,10 @@ namespace UMapx.Window
         }
         /// <summary>
         /// Returns the complex Weyl-Heisenberg basis matrix.
+        /// </summary>
         /// <remarks>
         /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
-        /// </summary>
         /// <param name="window">Windows function</param>
         /// <param name="N">Number of samples</param>
         /// <param name="M">Number of frequency shifts [4, N/2]</param>
@@ -147,10 +147,10 @@ namespace UMapx.Window
         }
         /// <summary>
         /// Returns the complex Weyl-Heisenberg basis matrix.
+        /// </summary>
         /// <remarks>
         /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
-        /// </summary>
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts [4, N/2]</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>

@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the logarithmic Gaussian distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Log-normal_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LogGaussian : IDistribution
     {

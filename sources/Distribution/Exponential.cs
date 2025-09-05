@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the exponential distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Exponential_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Exponential : IDistribution
     {

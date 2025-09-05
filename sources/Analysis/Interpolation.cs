@@ -5,10 +5,10 @@ namespace UMapx.Analysis
 {
     /// <summary>
     /// Defines a class that implements interpolation.
+    /// </summary>
     /// <remarks>
     /// This class is a solution to the problem of finding an intermediate value of the function F(x).
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Interpolation
     {
@@ -41,10 +41,10 @@ namespace UMapx.Analysis
         }
         /// <summary>
         /// Returns the value of a function at a point.
+        /// </summary>
         /// <remarks>
         /// In this case, only bilinear interpolation is used.
         /// </remarks>
-        /// </summary>
         /// <param name="x">Array of values of the first argument</param>
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="z">Function matrix</param>

@@ -5,11 +5,11 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the Laplace pyramid filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LaplacianPyramidFilter : IFilter
     {

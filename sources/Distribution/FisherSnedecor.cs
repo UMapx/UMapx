@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the Fisher distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/F-distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class FisherSnedecor : IDistribution
     {

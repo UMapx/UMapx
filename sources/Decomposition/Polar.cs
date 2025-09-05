@@ -5,13 +5,13 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines polar decomposition.
+    /// </summary>
     /// <remarks>
     /// This is a representation of a rectangular matrix A in the form of a product of two matrices: A = U * P, 
     /// where U is a unitary matrix, P is a positive definite matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Polar_decomposition
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Polar
     {

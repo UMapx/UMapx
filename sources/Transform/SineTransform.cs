@@ -5,11 +5,11 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the sine transform.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://sernam.ru/book_prett1.php?id=91
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class SineTransform : ITransform
     {

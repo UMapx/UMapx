@@ -6,11 +6,11 @@ namespace UMapx.Analysis
 {
     /// <summary>
     /// Defines a class for solving equations using the spectral decomposition of a matrix.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://www.mathworks.com/help/matlab/ref/roots.html
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Roots
     {

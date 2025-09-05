@@ -5,11 +5,11 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the cosine transform.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class CosineTransform : ITransform
     {

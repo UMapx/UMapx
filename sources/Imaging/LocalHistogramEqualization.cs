@@ -8,11 +8,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the local histogram equalization filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://angeljohnsy.blogspot.com/2011/06/local-histogram-equalization.html
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LocalHistogramEqualization : IBitmapFilter2, IBitmapFilter
     {

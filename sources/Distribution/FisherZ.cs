@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the Fisher's Z-distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Fisher%27s_z-distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class FisherZ : IDistribution
     {

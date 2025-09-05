@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the beta distribution of the second kind.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Beta_prime_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class BetaPrime : IDistribution
     {

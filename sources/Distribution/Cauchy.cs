@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the Cauchy distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Cauchy_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Cauchy : IDistribution
     {

@@ -9,11 +9,11 @@ namespace UMapx.Imaging
     /// <summary>
     /// Defines the Contrast Limited Adaptive Histogram Equalization (CLAHE).
     /// Operates in RGB by equalizing luminance (Rec.709) with bilinear interpolation between tile LUTs.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://uk.mathworks.com/help/visionhdl/ug/contrast-adaptive-histogram-equalization.html
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class CLAHE : IBitmapFilter
     {

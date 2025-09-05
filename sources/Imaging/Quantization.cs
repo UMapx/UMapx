@@ -4,11 +4,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the quantization filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://en.wikipedia.org/wiki/Posterization
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Quantization : Correction, IBitmapFilter
     {

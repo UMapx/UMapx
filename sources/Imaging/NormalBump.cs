@@ -6,11 +6,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines a normal bump filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Normal_mapping
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class NormalBump : IBitmapFilter2, IBitmapFilter
     {

@@ -4,11 +4,11 @@ namespace UMapx.Window
 {
     /// <summary>
     /// Defines the class for window functions.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Window_function
     /// </remarks>
-    /// </summary>
     public abstract class WindowBase : IWindow
     {
         #region Private data

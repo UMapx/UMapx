@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the distribution of Nakagami.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Nakagami_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Nakagami : IDistribution
     {

@@ -5,11 +5,11 @@ namespace UMapx.Core
 {
     /// <summary>
     /// Used to implement special mathematical functions.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Special_functions
     /// </remarks>
-    /// </summary>
     public static class Special
     {
         #region Private data
@@ -2642,12 +2642,12 @@ namespace UMapx.Core
         #region Hypergeometric function
         /// <summary>
         /// Returns the value of a hypergeometric function.
+        /// </summary>
         /// <remarks>
         /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
         /// More information can be found on the website:
         /// https://en.wikipedia.org/wiki/Hypergeometric_function
         /// </remarks>
-        /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <param name="c">Value</param>
@@ -2691,12 +2691,12 @@ namespace UMapx.Core
         }
         /// <summary>
         /// Returns the value of a hypergeometric function.
+        /// </summary>
         /// <remarks>
         /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
         /// More information can be found on the website:
         /// https://en.wikipedia.org/wiki/Hypergeometric_function
         /// </remarks>
-        /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <param name="c">Value</param>
@@ -2735,6 +2735,7 @@ namespace UMapx.Core
         }
         /// <summary>
         /// Returns the value of a hypergeometric function.
+        /// </summary>
         /// <remarks>
         /// The hypergeometric function can be used in several variations:
         /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
@@ -2742,7 +2743,6 @@ namespace UMapx.Core
         /// More information can be found on the website:
         /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
         /// </remarks>
-        /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <param name="z">Value</param>
@@ -2817,6 +2817,7 @@ namespace UMapx.Core
         }
         /// <summary>
         /// Returns the value of a hypergeometric function.
+        /// </summary>
         /// <remarks>
         /// The hypergeometric function can be used in several variations:
         /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
@@ -2824,7 +2825,6 @@ namespace UMapx.Core
         /// More information can be found on the website:
         /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
         /// </remarks>
-        /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <param name="z">Value</param>

@@ -1134,10 +1134,10 @@ namespace UMapx.Core
         #region Modular arithmetic and number theory
         /// <summary>
         /// Checks if number is prime.
+        /// </summary>
         /// <remarks>
         /// This method is based on enumerating all the divisors.
         /// </remarks>
-        /// </summary>
         /// <param name="p">Value</param>
         /// <returns>Boolean</returns>
         public static bool IsPrime(int p)
@@ -1161,10 +1161,10 @@ namespace UMapx.Core
         }
         /// <summary>
         /// Checks if number is prime.
+        /// </summary>
         /// <remarks>
         /// This method is based on enumerating all the divisors.
         /// </remarks>
-        /// </summary>
         /// <param name="p">Value</param>
         /// <returns>Boolean</returns>
         public static bool IsPrime(long p)
@@ -1667,11 +1667,11 @@ namespace UMapx.Core
 
         /// <summary>
         /// Implements a sieve for finding prime numbers.
+        /// </summary>
         /// <remarks>
         /// Recursive implementation of a memory-optimized segmented sieve of Eratosthenes. 
         /// The operational complexity of the O(N* logN) algorithm.The memory complexity is O(Δ), where Δ = sqrt(N).
         /// </remarks>
-        /// </summary>
         /// <param name="limit">Value</param>
         /// <returns>Array</returns>
         public static int[] Sieve(int limit)
@@ -1842,10 +1842,10 @@ namespace UMapx.Core
         #region Numeral components
         /// <summary>
         /// Returns a vector representing the decimal number in the given number system.
+        /// </summary>
         /// <remarks>
         /// Example: 10[10] = {1,0,1,0}[2].
         /// </remarks>
-        /// </summary>
         /// <param name="x">Byte</param>
         /// <param name="newbase">Base</param>
         /// <returns>Array</returns>
@@ -1866,10 +1866,10 @@ namespace UMapx.Core
         }
         /// <summary>
         /// Returns the decimal Number represented in decimal notation.
+        /// </summary>
         /// <remarks>
         /// Example: {1,0,1,0}[2] = 10[10].
         /// </remarks>
-        /// </summary>
         /// <param name="x">Array</param>
         /// <param name="thisbase">Base</param>
         /// <returns>Integer number</returns>
@@ -1887,10 +1887,10 @@ namespace UMapx.Core
         }
         /// <summary>
         /// Returns a number that interprets the specified vector in decimal.
+        /// </summary>
         /// <remarks>
         /// Example: {1,0,1,0}[2] = 1010[10].
         /// </remarks>
-        /// </summary>
         /// <param name="x">Array</param>
         /// <returns>Integer number</returns>
         public static long Vector2Numeral(int[] x)
@@ -1906,10 +1906,10 @@ namespace UMapx.Core
         }
         /// <summary>
         /// Returns a vector representing the decomposition of a decimal number into components.
+        /// </summary>
         /// <remarks>
         /// Example: 1010[10] = {1,0,1,0}[2]
         /// </remarks>
-        /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Array</returns>
         public static int[] Numeral2Vector(long x)

@@ -4,11 +4,11 @@ namespace UMapx.Core
 {
     /// <summary>
     /// Used to work with kernel functions.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Kernel_(statistics)
     /// </remarks>
-    /// </summary>
     public static class Kernel
     {
         #region Bicubic kernel function

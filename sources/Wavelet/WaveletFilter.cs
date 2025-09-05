@@ -6,11 +6,11 @@ namespace UMapx.Wavelet
 {
     /// <summary>
     /// Defines the wavelet filter.
+    /// </summary>
     /// <remarks>
     /// For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
     /// It is recommended to use Coiflets (C1, C2, C3, C4 and C5).
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class WaveletFilter : IFilter
     {

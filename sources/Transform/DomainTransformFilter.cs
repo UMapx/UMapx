@@ -5,12 +5,12 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the domain transform filter.
+    /// </summary>
     /// <remarks>
     /// This filter is a computationally effective analogue of a bilateral filter.
     /// More information can be found on the website:
     /// http://www.inf.ufrgs.br/~eslgastal/DomainTransform/Gastal_Oliveira_SIGGRAPH2011_Domain_Transform.pdf
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class DomainTransformFilter : IFilter
     {

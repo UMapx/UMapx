@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the distribution of the conical shape.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Cone-shape_distribution_function
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class ConeShape : IDistribution
     {

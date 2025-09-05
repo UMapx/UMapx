@@ -7,11 +7,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the additive noise filter.
+    /// </summary>
     /// <remarks>
     /// Filter usage example:
     /// https://en.wikipedia.org/wiki/Gaussian_noise
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class AdditiveNoise : IBitmapFilter
     {

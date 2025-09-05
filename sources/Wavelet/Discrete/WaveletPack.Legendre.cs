@@ -2,20 +2,20 @@
 {
     /// <summary>
     /// Defines the discrete wavelet.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    /// </summary>
     public partial class WaveletPack
     {
         #region Legendre wavelets
         /// <summary>
         /// Returns Legendre wavelet of 1 order.
+        /// </summary>
         /// <remarks>
         /// Haar wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack L1
         {
             get
@@ -26,10 +26,10 @@
         }
         /// <summary>
         /// Returns Legendre wavelet of 2 order.
+        /// </summary>
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack L2
         {
             get
@@ -39,10 +39,10 @@
         }
         /// <summary>
         /// Returns Legendre wavelet of 3 order.
+        /// </summary>
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack L3
         {
             get
@@ -52,10 +52,10 @@
         }
         /// <summary>
         /// Returns Legendre wavelet of 4 order.
+        /// </summary>
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack L4
         {
             get
@@ -73,10 +73,10 @@
         }
         /// <summary>
         /// Returns Legendre wavelet of 5 order.
+        /// </summary>
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack L5
         {
             get
@@ -96,10 +96,10 @@
         }
         /// <summary>
         /// Returns Legendre wavelet of 6 order.
+        /// </summary>
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack L6
         {
             get
@@ -125,10 +125,10 @@
         }
         /// <summary>
         /// Returns Legendre wavelet of 7 order.
+        /// </summary>
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack L7
         {
             get
@@ -155,10 +155,10 @@
         }
         /// <summary>
         /// Returns Legendre wavelet of 8 order.
+        /// </summary>
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack L8
         {
             get
@@ -187,10 +187,10 @@
         }
         /// <summary>
         /// Returns Legendre wavelet of 9 order.
+        /// </summary>
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack L9
         {
             get

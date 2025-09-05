@@ -8,11 +8,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the oil painting filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://www.codeproject.com/articles/471994/oilpainteffect
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class OilPainting : IBitmapFilter2, IBitmapFilter
     {

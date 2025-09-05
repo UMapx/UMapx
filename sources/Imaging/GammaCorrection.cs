@@ -4,11 +4,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the gamma correction filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Gamma_correction
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class GammaCorrection : Correction, IBitmapFilter
     {

@@ -7,11 +7,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the error diffusion dithering filter.
+    /// </summary>
     /// <remarks>
     /// Filter usage example:
     /// https://en.wikipedia.org/wiki/Dither
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class ErrorDiffusionDithering : Rebuilder, IBitmapFilter
     {

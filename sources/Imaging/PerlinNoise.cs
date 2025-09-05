@@ -4,11 +4,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the Perlin noise.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Perlin_noise
     /// </remarks>
-    /// </summary>
     public class PerlinNoise
     {
         #region Private data

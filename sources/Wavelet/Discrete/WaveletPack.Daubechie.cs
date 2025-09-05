@@ -2,20 +2,20 @@
 {
     /// <summary>
     /// Defines the discrete wavelet.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    /// </summary>
     public partial class WaveletPack
     {
         #region Daubechies wavelets
         /// <summary>
         /// Returns Daubechies wavelet of 1 order.
+        /// </summary>
         /// <remarks>
         /// Haar wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack D1
         {
             get

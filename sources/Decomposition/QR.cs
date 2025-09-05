@@ -5,6 +5,7 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines QR decomposition.
+    /// </summary>
     /// <remarks>
     /// This is a matrix representation in the form of a product of two matrices: A = Q * R, 
     /// where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
@@ -12,7 +13,6 @@ namespace UMapx.Decomposition
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class QR
     {

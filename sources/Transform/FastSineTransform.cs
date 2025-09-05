@@ -7,6 +7,7 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the fast sine transform.
+    /// </summary>
     /// <remarks>
     /// NOT RECOMMENDED.
     /// This algorithm is less effective than the fast cosine transform.
@@ -14,7 +15,6 @@ namespace UMapx.Transform
     /// More information can be found on the website:
     /// http://sernam.ru/book_prett1.php?id=91
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class FastSineTransform : ITransform
     {

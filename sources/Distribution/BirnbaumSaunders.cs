@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the Birnbaum-Saunders distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Birnbaum–Saunders_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class BirnbaumSaunders : IDistribution
     {

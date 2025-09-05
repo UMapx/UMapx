@@ -6,11 +6,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the stereo effect filter for a pair of images.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://www.3dtv.at/Knowhow/AnaglyphComparison_en.aspx
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class StereoAnaglyph : IBitmapFilter2
     {

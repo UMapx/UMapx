@@ -104,10 +104,10 @@ namespace UMapx.Core
         }
         /// <summary>
         /// Translates the original string to complex number.
+        /// </summary>
         /// <remarks>
         /// Example: "1 + 2i", "0.321 + 11i", ".1i".
         /// </remarks>
-        /// </summary>
         /// <param name="s">Input string</param>
         /// <returns>Text as a sequence of Unicode characters</returns>
         public static Complex32 Compar(string s)

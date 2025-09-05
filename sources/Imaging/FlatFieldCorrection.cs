@@ -8,11 +8,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the flat-field correction filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://imagej.net/Image_Intensity_Processing
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class FlatFieldCorrection : IBitmapFilter2, IBitmapFilter
     {

@@ -4,11 +4,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the noise filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Noise : PointMultiplication, IBitmapFilter2
     {

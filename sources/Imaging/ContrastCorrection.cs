@@ -4,11 +4,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the contrast correction filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://esate.ru/uroki/OpenGL/image_processing/_p4106/
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class ContrastCorrection : Correction, IBitmapFilter
     {

@@ -5,12 +5,12 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines non-negative matrix factorization.
+    /// </summary>
     /// <remarks>
     /// This is a representation of a rectangular matrix A as the product of two matrices: A = W * H.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Non-negative_matrix_factorization
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class NNMF
     {

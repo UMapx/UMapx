@@ -5,13 +5,13 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines the QL decomposition of a square matrix.
+    /// </summary>
     /// <remarks>
     /// This is a representation of a matrix in the form of a product of two matrices: A = Q * L, 
     /// where Q is a unitary (or orthogonal) matrix and L is a lower triangular matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class QL
     {

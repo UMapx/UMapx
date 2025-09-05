@@ -4,11 +4,11 @@ namespace UMapx.Wavelet
 {
     /// <summary>
     /// Defines the discrete wavelet.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    /// </summary>
     public partial class WaveletPack
     {
         #region Battle-Lemarie wavelets

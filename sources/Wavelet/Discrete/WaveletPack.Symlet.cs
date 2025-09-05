@@ -2,20 +2,20 @@
 {
     /// <summary>
     /// Defines the discrete wavelet.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    /// </summary>
     public partial class WaveletPack
     {
         #region Symlets wavelets
         /// <summary>
         /// Returns wavelet symlet of 1 order.
+        /// </summary>
         /// <remarks>
         /// Haar wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack S1
         {
             get

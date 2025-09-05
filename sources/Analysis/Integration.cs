@@ -5,10 +5,10 @@ namespace UMapx.Analysis
 {
     /// <summary>
     /// Defines a class that implements numerical integration.
+    /// </summary>
     /// <remarks>
     /// This class is a solution to the problem of finding the value of the integral of the function F(x) within the values of a and b.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Integration
     {

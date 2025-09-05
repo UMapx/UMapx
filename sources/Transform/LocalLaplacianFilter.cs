@@ -5,11 +5,11 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the local Laplace pyramid filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://people.csail.mit.edu/sparis/publi/2011/siggraph/
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LocalLaplacianFilter : IFilter
     {
