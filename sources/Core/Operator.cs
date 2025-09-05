@@ -68,7 +68,7 @@ namespace UMapx.Core
 
         #region Compass fixed
         /// <summary>
-        /// Implements the construction of the Roberts operator [3 x 3]. [2 x 2].
+        /// Implements the construction of the Roberts operator [2 x 2].
         /// </summary>
         /// <param name="direction">Gradient direction</param>
         /// <returns>Matrix</returns>
