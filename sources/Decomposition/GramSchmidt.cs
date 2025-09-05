@@ -47,7 +47,7 @@ namespace UMapx.Decomposition
                 {
                     v1 = Matrice.GetCol(q, i); // get i-column of matrix Q
                     u = Matrice.Sub(u, Matrice.GramProj(v1, v2)); // calculate: u - proj'<v1, v2>, 
-                    // where ' - means transponate operator for projection.
+                    // where ' - means transpose operator for projection.
                 }
 
                 q = Matrice.SetCol(q, Matrice.Div(u, Matrice.Norm(u)), j); // set j-column of matrix Q.

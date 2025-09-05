@@ -28,10 +28,10 @@ namespace UMapx.Decomposition
         /// <param name="A">Square matrix</param>
         public LQ(float[,] A)
         {
-            qr = new QR(A.Transponate());
+            qr = new QR(A.Transpose());
 
-            l = qr.R.Transponate();
-            q = qr.Q.Transponate();
+            l = qr.R.Transpose();
+            q = qr.Q.Transpose();
         }
         #endregion
 

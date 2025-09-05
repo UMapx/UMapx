@@ -58,7 +58,7 @@ namespace UMapx.Decomposition
         {
             get
             {
-                return this.upper.Transponate();
+                return this.upper.Transpose();
             }
         }
         #endregion

@@ -61,7 +61,7 @@ namespace UMapx.Decomposition
         /// </summary>
         public float[,] U
         {
-            get { return Matrice.Transponate(lower); }
+            get { return Matrice.Transpose(lower); }
         }
         /// <summary>
         /// Gets the diagonal matrix.

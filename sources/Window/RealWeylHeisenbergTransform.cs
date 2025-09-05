@@ -124,7 +124,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[] B = Core.Matrice.Dot(A, (float[,])Core.Matrice.Transponate(U));
+            float[] B = Core.Matrice.Dot(A, (float[,])Core.Matrice.Transpose(U));
             return B;
         }
         /// <summary>
@@ -153,11 +153,11 @@ namespace UMapx.Window
 
             if (direction == Direction.Both)
             {
-                B = U.Transponate().Dot(A).Dot(V);
+                B = U.Transpose().Dot(A).Dot(V);
             }
             else if (direction == Direction.Vertical)
             {
-                B = U.Transponate().Dot(A);
+                B = U.Transpose().Dot(A);
             }
             else
             {
@@ -179,7 +179,7 @@ namespace UMapx.Window
 
             if (direction == Direction.Both)
             {
-                A = U.Dot(B).Dot(V.Transponate());
+                A = U.Dot(B).Dot(V.Transpose());
             }
             else if (direction == Direction.Vertical)
             {
@@ -187,7 +187,7 @@ namespace UMapx.Window
             }
             else
             {
-                A = B.Dot(V.Transponate());
+                A = B.Dot(V.Transpose());
             }
             return A.Div(2);
         }
@@ -200,7 +200,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] B = Core.Matrice.Dot(A, (float[,])Core.Matrice.Transponate(U));
+            Complex32[] B = Core.Matrice.Dot(A, (float[,])Core.Matrice.Transpose(U));
             return B;
         }
         /// <summary>
@@ -229,11 +229,11 @@ namespace UMapx.Window
 
             if (direction == Direction.Both)
             {
-                B = U.Transponate().Dot(A).Dot(V);
+                B = U.Transpose().Dot(A).Dot(V);
             }
             else if (direction == Direction.Vertical)
             {
-                B = U.Transponate().Dot(A);
+                B = U.Transpose().Dot(A);
             }
             else
             {
@@ -255,7 +255,7 @@ namespace UMapx.Window
 
             if (direction == Direction.Both)
             {
-                A = U.Dot(B).Dot(V.Transponate());
+                A = U.Dot(B).Dot(V.Transpose());
             }
             else if (direction == Direction.Vertical)
             {
@@ -263,7 +263,7 @@ namespace UMapx.Window
             }
             else
             {
-                A = B.Dot(V.Transponate());
+                A = B.Dot(V.Transpose());
             }
             return A;
         }

@@ -43,7 +43,7 @@ namespace UMapx.Decomposition
                 this.reversed = true;
                 this.n = A.GetLength(1);
                 this.m = A.GetLength(0);
-                this.svdcmp(A.Transponate());
+                this.svdcmp(A.Transpose());
             }
             else
             {
@@ -93,7 +93,7 @@ namespace UMapx.Decomposition
             {
                 // Moore–Penrose inverse:
                 // P = V * (I / S) * U'
-                return V.Dot(Matrice.One(m).Div(S)).Dot(U.Transponate());
+                return V.Dot(Matrice.One(m).Div(S)).Dot(U.Transpose());
             }
         }
         #endregion
