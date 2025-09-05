@@ -187,7 +187,7 @@ namespace UMapx.Core
             return new Complex32(a - b.Real, -b.Imag);
         }
         /// <summary>
-        /// Inverts complex number.
+        /// Negates a complex number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
