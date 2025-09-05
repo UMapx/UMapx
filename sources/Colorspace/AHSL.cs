@@ -19,7 +19,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the AHSL structure.
         /// </summary>
-        /// <param name="h">Hue [0, 360]</param>
+        /// <param name="h">Hue [0, 359]</param>
         /// <param name="s">Saturation [0, 255]</param>
         /// <param name="l">Lightness [-100, 100]</param>
         public AHSL(float h, float s, float l)
