@@ -132,7 +132,7 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="xmin">Minimum value</param>
         /// <param name="xmax">Maximum value</param>
-        /// <returns>Boolean</returns>
+        /// <returns>float</returns>
         public static float Range(float x, float xmin, float xmax)
         {
             if (x > xmax)
@@ -151,7 +151,7 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="xmin">Minimum value</param>
         /// <param name="xmax">Maximum value</param>
-        /// <returns>Boolean</returns>
+        /// <returns>int</returns>
         public static int Range(int x, int xmin, int xmax)
         {
             if (x > xmax)
@@ -170,7 +170,7 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="xmin">Minimum value</param>
         /// <param name="xmax">Maximum value</param>
-        /// <returns>Boolean</returns>
+        /// <returns>float</returns>
         public static float Scale(float x, float xmin, float xmax)
         {
             float h = x;
@@ -195,7 +195,7 @@ namespace UMapx.Core
         /// <param name="x">Value</param>
         /// <param name="xmin">Minimum value</param>
         /// <param name="xmax">Maximum value</param>
-        /// <returns>Boolean</returns>
+        /// <returns>int</returns>
         public static int Scale(int x, int xmin, int xmax)
         {
             int h = x;
@@ -1259,7 +1259,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="n">Modulo</param>
-        /// <returns>Integer number</returns>
+        /// <returns>float</returns>
         public static float Mod(float a, float n)
         {
             if (n < 0)
