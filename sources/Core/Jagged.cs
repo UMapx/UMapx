@@ -374,6 +374,7 @@ namespace UMapx.Core
             {
                 v = m[i];
                 r1 = v.GetLength(0);
+                H[i] = new float[r1];
 
                 for (j = 0; j < r1; j++)
                 {
