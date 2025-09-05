@@ -227,24 +227,24 @@ namespace UMapx.Analysis
             return sum;
         }
         /// <summary>
-        /// Trapezoidal rule for tabulated samples on [a, b].
+        /// Midpoint rule for tabulated samples on [a, b].
         /// </summary>
         /// <remarks>
-        /// Assumes n samples y[0..n-1] on a uniform grid x_i = a + i*h with h = (b - a)/(n - 1).
-        /// Applies the trapezoidal rule over adjacent pairs. Requires n ≥ 2. Complexity: O(n).
+        /// Assumes n midpoint samples y[i] ≈ f(a + (i + 0.5)*h) with h = (b - a)/n.
+        /// Approximates the integral using the midpoint rule. Requires n ≥ 1. Complexity: O(n).
         /// </remarks>
-        /// <param name="y">Samples y[i] at uniform points on [a, b]</param>
+        /// <param name="y">Sample values at subinterval midpoints</param>
         /// <param name="a">Lower limit of integration</param>
         /// <param name="b">Upper limit of integration</param>
-        /// <param name="n">Number of samples (grid points)</param>
+        /// <param name="n">Number of subintervals / midpoint samples</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
         private static float Midp(float[] y, float a, float b, int n)
         {
             float sum = 0.0f;
-            float h = (b - a) / (n - 1);
-            for (int i = 0; i < (n - 1); i++)
+            float h = (b - a) / n;
+            for (int i = 0; i < n; i++)
             {
-                sum += h * 0.5f * (y[i] + y[i + 1]);
+                sum += h * y[i];
             }
             return sum;
         }
@@ -535,24 +535,24 @@ namespace UMapx.Analysis
             return sum;
         }
         /// <summary>
-        /// Trapezoidal rule for tabulated samples on [a, b].
+        /// Midpoint rule for tabulated samples on [a, b].
         /// </summary>
         /// <remarks>
-        /// Assumes n samples y[0..n-1] on a uniform grid x_i = a + i*h with h = (b - a)/(n - 1).
-        /// Applies the trapezoidal rule over adjacent pairs. Requires n ≥ 2. Complexity: O(n).
+        /// Assumes n midpoint samples y[i] ≈ f(a + (i + 0.5)*h) with h = (b - a)/n.
+        /// Approximates the integral using the midpoint rule. Requires n ≥ 1. Complexity: O(n).
         /// </remarks>
-        /// <param name="y">Samples y[i] at uniform points on [a, b]</param>
+        /// <param name="y">Sample values at subinterval midpoints</param>
         /// <param name="a">Lower limit of integration</param>
         /// <param name="b">Upper limit of integration</param>
-        /// <param name="n">Number of samples (grid points)</param>
+        /// <param name="n">Number of subintervals / midpoint samples</param>
         /// <returns>Approximation of ∫_a^b f(x) dx</returns>
         private static Complex32 Midp(Complex32[] y, Complex32 a, Complex32 b, int n)
         {
             Complex32 sum = 0.0;
-            Complex32 h = (b - a) / (n - 1);
-            for (int i = 0; i < (n - 1); i++)
+            Complex32 h = (b - a) / n;
+            for (int i = 0; i < n; i++)
             {
-                sum += h * 0.5 * (y[i] + y[i + 1]);
+                sum += h * y[i];
             }
             return sum;
         }
