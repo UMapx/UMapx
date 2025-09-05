@@ -89,11 +89,11 @@ namespace UMapx.Core
             return false;
         }
         /// <summary>
-        /// Checks if the matrix is positive.
+        /// Checks if the matrix is non-negative.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Boolean</returns>
-        public static bool IsPositive(this float[,] m)
+        public static bool IsNonNegative(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
             int i, j;
@@ -3328,11 +3328,11 @@ namespace UMapx.Core
             return true;
         }
         /// <summary>
-        /// Checks if vectors are collinear.
+        /// Checks if the vector is non-negative.
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Boolean</returns>
-        public static bool IsPositive(this float[] v)
+        public static bool IsNonNegative(this float[] v)
         {
             int N = v.Length;
 
