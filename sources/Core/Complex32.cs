@@ -402,7 +402,7 @@ namespace UMapx.Core
         /// </remarks>
         /// </summary>
         /// <param name="s">Input string</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Complex number</returns>
         public static Complex32 Parse(string s)
         {
             return StringOptions.Compar(s);
