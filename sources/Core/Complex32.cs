@@ -32,7 +32,7 @@ namespace UMapx.Core
             this.Imag = im;
         }
         /// <summary>
-        /// Gets the value of the module.
+        /// Gets the value of the modulus.
         /// </summary>
         public float Abs
         {

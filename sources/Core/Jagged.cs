@@ -428,7 +428,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Takes a module for all matrix elements.
+        /// Calculates the modulus for all matrix elements.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
@@ -454,7 +454,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Takes a module for all matrix elements.
+        /// Calculates the modulus for all matrix elements.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
