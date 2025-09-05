@@ -5,10 +5,10 @@ namespace UMapx.Analysis
 {
     /// <summary>
     /// Defines a class that implements a solution to a differential equation.
+    /// </summary>
     /// <remarks>
     /// This class is a solution to the Cauchy problem for the ordinary differential equation y' = F(x, y).
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Differential
     {

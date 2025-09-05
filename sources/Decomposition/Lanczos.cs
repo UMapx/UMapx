@@ -5,13 +5,13 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines Lanczos transform.
+    /// </summary>
     /// <remarks>
     /// This transformation is used to represent the symmetric matrix A as a product
     /// of three matrices: A = Q * T * Qᵀ, where T is a tridiagonal matrix, and Q is an orthogonal matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Lanczos_algorithm
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Lanczos
     {

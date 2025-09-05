@@ -11111,10 +11111,10 @@ namespace UMapx.Core
         #region Parse methods
         /// <summary>
         /// Parses the original string into a matrix of float numbers.
+        /// </summary>
         /// <remarks>
         /// Example: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
         /// </remarks>
-        /// </summary>
         /// <param name="a">Matrix</param>
         /// <param name="s">Input string</param>
         /// <returns>Matrix</returns>
@@ -11225,10 +11225,10 @@ namespace UMapx.Core
 
         /// <summary>
         /// Parses the original string into a vector of float numbers.
+        /// </summary>
         /// <remarks>
         /// Example: "[1, 2, 3, 4]";
         /// </remarks>
-        /// </summary>
         /// <param name="a">Matrix</param>
         /// <param name="s">Input string</param>
         /// <returns>Matrix</returns>
@@ -11278,10 +11278,10 @@ namespace UMapx.Core
         }
         /// <summary>
         /// Parses the original string into a vector of complex numbers.
+        /// </summary>
         /// <remarks>
         /// Example: "[1 + 2i, 2 + 0.3i, 3 + i, 4 - 11i]";
         /// </remarks>
-        /// </summary>
         /// <param name="a">Matrix</param>
         /// <param name="s">Input string</param>
         /// <returns>Matrix</returns>

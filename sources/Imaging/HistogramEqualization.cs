@@ -7,11 +7,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the global histogram equalization filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://www.cromwell-intl.com/3d/histogram/
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class HistogramEqualization : IBitmapFilter
     {

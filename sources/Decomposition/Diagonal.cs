@@ -5,11 +5,11 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines diagonal decomposition.
+    /// </summary>
     /// <remarks>
     /// This is a representation of the square matrix A as the product of two matrices: A = B * D, where B is the Square matrix and D is the diagonal matrix.
     /// This decomposition is used to highlight diagonal matrices in other decompositions (for example, LDU-, LDL-decompositions).
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Diagonal
     {

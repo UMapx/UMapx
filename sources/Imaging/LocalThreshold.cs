@@ -5,11 +5,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the Bradley local threshold filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LocalThreshold : LocalCorrection, IBitmapFilter2
     {

@@ -5,6 +5,7 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines Householder transformation.
+    /// </summary>
     /// <remarks>
     /// This is a linear transformation H (u) of the vector space V, which describes its mapping with respect to the hyperplane,
     /// which passes through the origin. It was proposed in 1958 by the American mathematician Elston Scott Householder. 
@@ -17,7 +18,6 @@ namespace UMapx.Decomposition
     /// More information can be found on the website: 
     /// https://en.wikipedia.org/wiki/Householder_transformation
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Householder
     {

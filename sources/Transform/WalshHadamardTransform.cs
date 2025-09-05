@@ -5,11 +5,11 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the Walsh-Hadamard transform.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://kibia.ru/teachers/kreindelin/pdf/2.pdf
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class WalshHadamardTransform : ITransform
     {

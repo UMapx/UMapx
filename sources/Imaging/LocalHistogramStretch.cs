@@ -9,11 +9,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the local histogram stretch filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://www.academia.edu/7629047/Image_enhancement_by_local_histogram_stretching
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LocalHistogramStretch : IBitmapFilter
     {

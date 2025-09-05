@@ -5,6 +5,7 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the local contrast enhancement filter.
+    /// </summary>
     /// <remarks>
     /// This filter is also known as "Unsharp Masking."
     /// More information can be found on the website:
@@ -12,7 +13,6 @@ namespace UMapx.Imaging
     /// Filter usage example:
     /// http://www.knowhowtransfer.com/photoshop-professional-plugins/alce-local-contrast-enhancer/
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LocalContrastEnhancement : LocalCorrection, IBitmapFilter2
     {

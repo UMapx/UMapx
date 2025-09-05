@@ -9,10 +9,10 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the grayscale filter based on the HSB structure.
+    /// </summary>
     /// <remarks>
     /// The filter discolors the specified part of the image.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class HSBGrayscale : IBitmapFilter
     {

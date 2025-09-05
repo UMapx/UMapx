@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the U-quadratic distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/U-quadratic_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class UQuadratic : IDistribution
     {

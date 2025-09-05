@@ -7,11 +7,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the stereo disparity filter for a pair of images.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://docs.opencv.org/master/d3/d14/tutorial_ximgproc_disparity_filtering.html
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class StereoDisparity
     {

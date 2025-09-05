@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the distribution of Kumaraswamy.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Kumaraswamy_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Kumaraswamy : IDistribution
     {

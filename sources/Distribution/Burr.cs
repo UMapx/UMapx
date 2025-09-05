@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the Burr distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Burr_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Burr : IDistribution
     {

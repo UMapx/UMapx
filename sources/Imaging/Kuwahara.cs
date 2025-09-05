@@ -8,11 +8,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the Kuwahara filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Kuwahara_filter
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Kuwahara : IBitmapFilter2, IBitmapFilter
     {

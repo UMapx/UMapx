@@ -5,11 +5,11 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines power iteration.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Power_iteration
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Power
     {

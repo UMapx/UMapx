@@ -4,11 +4,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the exposure correction filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Exposure_(photography)
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class ExposureCorrection : Correction, IBitmapFilter
     {

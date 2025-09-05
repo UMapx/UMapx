@@ -5,11 +5,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the levels correction filter.
+    /// </summary>
     /// <remarks>
     /// Filter usage example:
     /// https://digital-photography-school.com/using-levels-photoshop-image-correct-color-contrast/
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LevelsCorrection : Correction, IBitmapFilter
     {

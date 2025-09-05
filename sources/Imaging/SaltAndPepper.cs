@@ -6,11 +6,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the salt and pepper noise filter.
+    /// </summary>
     /// <remarks>
     /// Filter usage example:
     /// https://en.wikipedia.org/wiki/Salt-and-pepper_noise
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class SaltAndPepper : IBitmapFilter
     {

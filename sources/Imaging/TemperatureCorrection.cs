@@ -5,10 +5,10 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the temperature correction filter.
+    /// </summary>
     /// <remarks>
     /// The filter uses an approximation of the Planck curve.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class TemperatureCorrection : PhotoFilter, IBitmapFilter
     {

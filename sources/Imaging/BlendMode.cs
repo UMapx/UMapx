@@ -4,11 +4,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Used to blending layers.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://www.pegtop.net/delphi/articles/blendmodes/index.htm
     /// </remarks>
-    /// </summary>
     public static class BlendMode
     {
         #region Blend mode components

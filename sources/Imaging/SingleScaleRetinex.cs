@@ -5,11 +5,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the Single Scale Retinex filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://dragon.larc.nasa.gov/background/pubabs/papers/gspx1.pdf
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class SingleScaleRetinex : LocalCorrection, IBitmapFilter2
     {

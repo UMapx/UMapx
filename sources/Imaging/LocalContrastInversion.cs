@@ -5,10 +5,10 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the local contrast inversion filter.
+    /// </summary>
     /// <remarks>
     /// This filter is used to equalize the illumination of images by averaging the brightness.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LocalContrastInversion : LocalCorrection, IBitmapFilter2
     {

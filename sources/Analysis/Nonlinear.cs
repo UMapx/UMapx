@@ -5,10 +5,10 @@ namespace UMapx.Analysis
 {
     /// <summary>
     /// Defines a class that implements the solution of a nonlinear equation.
+    /// </summary>
     /// <remarks>
     /// This class is a solution to the problem of finding the root of a nonlinear equation of the form F(x) = 0.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Nonlinear
     {

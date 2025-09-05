@@ -5,6 +5,7 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines QZ decomposition (generalized Schur decomposition).
+    /// </summary>
     /// <remarks>
     /// This is a matrix representation for a pair of matrices A and B such that
     /// A = Q * S * Zᵀ and B = Q * T * Zᵀ, where Q and Z are orthogonal and
@@ -12,7 +13,6 @@ namespace UMapx.Decomposition
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QZ_decomposition
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class QZ
     {

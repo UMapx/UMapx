@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the Gamma-distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Gamma_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Gamma : IDistribution
     {

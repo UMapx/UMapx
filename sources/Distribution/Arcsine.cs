@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the arcsine distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Arcsine_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Arcsine : IDistribution
     {

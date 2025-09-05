@@ -2,20 +2,20 @@
 {
     /// <summary>
     /// Defines the discrete wavelet.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    /// </summary>
     public partial class WaveletPack
     {
         #region Biorthogonal wavelets
         /// <summary>
         /// Returns a biorthogonal wavelet 1.1.
+        /// </summary>
         /// <remarks>
         /// Haar wavelet.
         /// </remarks>
-        /// </summary>
         public static WaveletPack Bior11
         {
             get

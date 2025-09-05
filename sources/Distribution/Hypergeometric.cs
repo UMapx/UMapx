@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the hypergeometric distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Hypergeometric_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Hypergeometric : IDistribution
     {

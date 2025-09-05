@@ -26,10 +26,10 @@ namespace UMapx.Window
         }
         /// <summary>
         /// Gets or sets number of frequency shifts [4, N/2].
+        /// </summary>
         /// <remarks>
         /// Even number.
         /// </remarks>
-        /// </summary>
         public int M
         {
             get

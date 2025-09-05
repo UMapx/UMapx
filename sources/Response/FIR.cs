@@ -5,13 +5,13 @@ namespace UMapx.Response
 {
     /// <summary>
     /// Defines a filter with a finite impulse response.
+    /// </summary>
     /// <remarks>
     /// A filter with a finite impulse response (transverse filter, FIR filter or FIR filter) is one of the types of linear
     /// digital filters, a characteristic feature of which is the limited time of its impulse response
     /// (from some point in time it becomes exactly equal to zero). Such a filter is also called non-recursive due to the lack of feedback.
     /// The denominator of the transfer function of such a filter is a certain constant.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class FIR : IResponse
     {

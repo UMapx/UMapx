@@ -8,11 +8,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the Wiener filter for local noise reduction.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wiener_filter
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Wiener : IBitmapFilter2, IBitmapFilter
     {

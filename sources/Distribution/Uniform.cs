@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the uniform distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Uniform : IDistribution
     {

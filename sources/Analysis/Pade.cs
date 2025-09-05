@@ -6,17 +6,17 @@ namespace UMapx.Analysis
 {
     /// <summary>
     /// Defines a Pade approximant.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Pad%C3%A9_approximant.
-    /// </remarks>
     /// Example: exp(x) = 1 + x + x^2/2! + x^3/3! + ...
     /// <code>
     /// float[] taylorExp = new float[] { 1.0f, 1.0f, 0.5f, 1.0f/6.0f, 1.0f/24.0f, 1.0f/120.0f, 1.0f/720.0f };
     /// var pade = new Pade(2, 2);
     /// var (n, d) = pade.Compute(taylorExp);
     /// </code>
-    /// </summary>
+    /// </remarks>
     [Serializable]
     public class Pade
     {

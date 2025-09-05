@@ -6,13 +6,13 @@ namespace UMapx.Wavelet
 {
     /// <summary>
     /// Defines a discrete wavelet decomposition.
+    /// </summary>
     /// <remarks>
     /// For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
     /// 
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Discrete_wavelet_transform
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class WaveletDecomposition : IPyramidTransform
     {

@@ -5,6 +5,7 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the Hankel transform.
+    /// </summary>
     /// <remarks>
     /// NOT RECOMMENDED.
     /// There is no fast O(N log N) algorithm for this transform.
@@ -12,7 +13,6 @@ namespace UMapx.Transform
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Hankel_transform
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class HankelTransform : ITransform
     {

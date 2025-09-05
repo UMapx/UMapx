@@ -5,12 +5,12 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the bilateral filter.
+    /// </summary>
     /// <remarks>
     /// Fast implementation of the bilateral filter (real-time).
     /// More information can be found on the website:
     /// https://www.researchgate.net/publication/220184523_Real-time_edge-aware_image_processing_with_the_bilateral_grid
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class BilateralGridFilter : IFilter
     {

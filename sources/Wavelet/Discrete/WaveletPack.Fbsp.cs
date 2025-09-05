@@ -2,20 +2,20 @@
 {
     /// <summary>
     /// Defines the discrete wavelet.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    /// </summary>
     public partial class WaveletPack
     {
         #region Fbsp wavelets
         /// <summary>
         /// Returns B-spline wavelet 1-0-0.
+        /// </summary>
         /// <remarks>
         /// Haar wavelet (delayed).
         /// </remarks>
-        /// </summary>
         public static WaveletPack Fbsp100
         {
             get

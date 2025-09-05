@@ -6,11 +6,11 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the fast Laplace transform.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Laplace_transform
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class FastLaplaceTransform : ITransform
     {
@@ -44,10 +44,10 @@ namespace UMapx.Transform
         }
         /// <summary>
         /// Gets or sets the damping factor (0, 1).
+        /// </summary>
         /// <remarks>
         /// If σ = 0, then the Laplace transform takes the form of a Fourier transform.
         /// </remarks>
-        /// </summary>
         public float Sigma
         {
             get

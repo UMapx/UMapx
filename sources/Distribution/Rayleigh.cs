@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the logarithmic distribution of Rayleigh.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Rayleigh_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Rayleigh : IDistribution
     {

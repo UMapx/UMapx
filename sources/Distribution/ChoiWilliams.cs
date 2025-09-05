@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the distribution of Choi Williams.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Choi%E2%80%93Williams_distribution_function
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class ChoiWilliams : IDistribution
     {

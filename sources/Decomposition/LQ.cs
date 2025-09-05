@@ -5,13 +5,13 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines LQ decomposition.
+    /// </summary>
     /// <remarks>
     /// This is the representation of a matrix in the form of a product of two matrices: A = L * Q, 
     /// where Q is a unitary (or orthogonal) matrix, and L is a lower triangular matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/QR_decomposition
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LQ
     {

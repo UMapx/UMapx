@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the compact Cauchy distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wrapped_Cauchy_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class WrappedCauchy : IDistribution
     {

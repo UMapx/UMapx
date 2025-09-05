@@ -5,12 +5,12 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the guided filter.
+    /// </summary>
     /// <remarks>
     /// This filter is a computationally effective analogue of a bilateral filter.
     /// More information can be found on the website:
     /// http://kaiminghe.com/eccv10/index.html
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class GuidedFilter : IFilter
     {
@@ -49,10 +49,10 @@ namespace UMapx.Transform
         }
         /// <summary>
         /// Gets or sets the value of the epsilon (0, 1).
+        /// </summary>
         /// <remarks>
         /// Optimal value ε = 0.025.
         /// </remarks>
-        /// </summary>
         public float Eps
         {
             get

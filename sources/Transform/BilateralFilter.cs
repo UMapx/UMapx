@@ -6,12 +6,12 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the bilateral filter.
+    /// </summary>
     /// <remarks>
     /// Optimized implementation.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Bilateral_filter
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class BilateralFilter : IFilter
     {

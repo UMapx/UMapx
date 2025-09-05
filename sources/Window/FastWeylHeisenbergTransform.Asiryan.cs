@@ -6,11 +6,11 @@ namespace UMapx.Window
 {
     /// <summary>
     /// Defines fast Weyl-Heisenberg transform.
+    /// </summary>
     /// <remarks>
     /// The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
     /// Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
     /// </remarks>
-    /// </summary>
     public partial class FastWeylHeisenbergTransform
     {
         #region Internal methods and classes
@@ -334,11 +334,11 @@ namespace UMapx.Window
         /// t<sub>n0</sub>[r] = g[r*M + (n0 + M/2) mod M], dimensions [M, L]</description></item>
         /// </list>
         /// </para>
+        /// </summary>
         /// <remarks>
         /// The cache is specific to a given combination of (N, M, window function).
         /// If the window changes, the cache must be rebuilt.
         /// </remarks>
-        /// </summary>
         internal sealed class PolyphaseCache
         {
             /// <summary>

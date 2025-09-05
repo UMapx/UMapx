@@ -6,11 +6,11 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the fast Hartley transform.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Discrete_Hartley_transform
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class FastHartleyTransform : ITransform
     {

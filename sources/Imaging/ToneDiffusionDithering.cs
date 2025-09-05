@@ -6,11 +6,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the tone diffusion dithering filter.
+    /// </summary>
     /// <remarks>
     /// Filter usage example:
     /// https://en.wikipedia.org/wiki/Dither
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class ToneDiffusionDithering : IBitmapFilter
     {
@@ -90,13 +90,13 @@ namespace UMapx.Imaging
         private static readonly Random rand = new Random();
         /// <summary>
         /// Initializes the order dithering filter.
+        /// </summary>
         /// <remarks>
         /// More information can be found on the website:
         /// http://en.wikipedia.org/wiki/Ordered_dithering
         /// Filter usage example:
         /// https://en.wikipedia.org/wiki/Dither
         /// </remarks>
-        /// </summary>
         /// <param name="radius">Radius [0, 255]</param>
         /// <returns>Tone diffusion dithering filter</returns>
         public static ToneDiffusionDithering Order(int radius)

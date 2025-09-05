@@ -8,10 +8,10 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the motion detector.
+    /// </summary>
     /// <remarks>
     /// Implements IDisposable interface.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class MotionDetector : IDisposable
     {

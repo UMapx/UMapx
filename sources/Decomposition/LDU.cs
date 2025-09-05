@@ -5,13 +5,13 @@ namespace UMapx.Decomposition
 {
     /// <summary>
     /// Defines LDU decomposition.
+    /// </summary>
     /// <remarks>
     /// This is the representation of a square matrix A as the product of three matrices: A = L * D * U, 
     /// where L is the lower triangular matrix, D is the diagonal matrix, and U is the upper triangular matrix.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/LU_decomposition
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LDU
     {

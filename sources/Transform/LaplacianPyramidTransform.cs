@@ -5,11 +5,11 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the Laplacian pyramid transform.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class LaplacianPyramidTransform : IPyramidTransform
     {

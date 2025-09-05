@@ -5,12 +5,12 @@ namespace UMapx.Analysis
 {
     /// <summary>
     /// Defines the least squares approximation class.
+    /// </summary>
     /// <remarks>
     /// This class is a solution to the problem of finding the function A (x) ≈ F (x), where F (x) is the original function.
     /// More information can be found on the website:
     /// http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Approximation
     {

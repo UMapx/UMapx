@@ -8,11 +8,11 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the exposure fusion filter.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://web.stanford.edu/class/cs231m/project-1/exposure-fusion.pdf
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class ExposureFusion
     {

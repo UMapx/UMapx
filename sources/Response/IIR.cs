@@ -5,13 +5,13 @@ namespace UMapx.Response
 {
     /// <summary>
     /// Defines a filter with an infinite impulse response.
+    /// </summary>
     /// <remarks>
     /// Filter with infinite impulse response (recursive filter, IIR filter or IIR filter) - a linear electronic filter,
     /// using one or more of its outputs as an input, i.e. forms a feedback. The main property of such filters
     /// is that their impulse response is of infinite length in the time domain, and the transfer function
     /// has a fractional rational look.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class IIR : IResponse
     {

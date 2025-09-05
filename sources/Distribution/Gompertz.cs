@@ -5,11 +5,11 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the Gompertz distribution.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Gompertz_distribution
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class Gompertz : IDistribution
     {

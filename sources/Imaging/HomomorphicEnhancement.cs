@@ -5,6 +5,7 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the filter for homomorphic processing.
+    /// </summary>
     /// <remarks>
     /// A homomorphic filter is most often used to equalize the illumination of images.
     /// It simultaneously normalizes the brightness of the image and increases the contrast.
@@ -12,7 +13,6 @@ namespace UMapx.Imaging
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Homomorphic_filtering
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class HomomorphicEnhancement : LocalCorrection, IBitmapFilter2
     {

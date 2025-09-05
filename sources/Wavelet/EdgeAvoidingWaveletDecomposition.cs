@@ -6,11 +6,11 @@ namespace UMapx.Wavelet
 {
     /// <summary>
     /// Defines the edge-avoiding wavelet decomposition.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://www.cs.huji.ac.il/w~raananf/projects/eaw/
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class EdgeAvoidingWaveletDecomposition : IPyramidTransform
     {

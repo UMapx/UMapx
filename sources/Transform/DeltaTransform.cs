@@ -6,11 +6,11 @@ namespace UMapx.Transform
 {
     /// <summary>
     /// Defines the delta transform.
+    /// </summary>
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Delta_encoding
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class DeltaTransform : ITransform
     {

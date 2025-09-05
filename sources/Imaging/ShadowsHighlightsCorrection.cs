@@ -5,12 +5,12 @@ namespace UMapx.Imaging
 {
     /// <summary>
     /// Defines the shadows and lights correction filter.
+    /// </summary>
     /// <remarks>
     /// Shadow-Highlights correction is used to correct unevenly lit images. Unlike other local algorithms
     /// (for example, Single Scale Retinex, Homomorphic Enhancement, Flat-Field Correction) filter allows you to adjust the brightness values separately in dark and bright areas
     /// Images.
     /// </remarks>
-    /// </summary>
     [Serializable]
     public class ShadowsHighlightsCorrection : LocalCorrection, IBitmapFilter2
     {

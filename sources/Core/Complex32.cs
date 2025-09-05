@@ -397,10 +397,10 @@ namespace UMapx.Core
         #region Parsing
         /// <summary>
         /// Parses the string to complex number.
+        /// </summary>
         /// <remarks>
         /// Example: "1 + 2i", "0.321 + 11i", ".1i".
         /// </remarks>
-        /// </summary>
         /// <param name="s">Input string</param>
         /// <returns>Complex number</returns>
         public static Complex32 Parse(string s)
