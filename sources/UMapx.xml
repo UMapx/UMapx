@@ -3831,7 +3831,7 @@
         </member>
         <member name="M:UMapx.Core.Complex32.op_Addition(System.Single,UMapx.Core.Complex32)">
             <summary>
-            The sum of a complex number and a real number.
+            The sum of a real number and a complex number.
             </summary>
             <param name="a">Value</param>
             <param name="b">Complex number</param>
@@ -3855,7 +3855,7 @@
         </member>
         <member name="M:UMapx.Core.Complex32.op_Subtraction(System.Single,UMapx.Core.Complex32)">
             <summary>
-            The difference between a complex number and a real number.
+            The difference of a real number and a complex number.
             </summary>
             <param name="a">Value</param>
             <param name="b">Complex number</param>

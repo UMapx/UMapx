@@ -54,7 +54,7 @@ namespace UMapx.Core
         public T Peek()
         {
             if (Count == 0)
-                throw new InvalidOperationException("Cannot peek from an empty heap.");
+                throw new InvalidOperationException("Cannot peek from an empty heap");
             return data[0];
         }
 
@@ -65,7 +65,7 @@ namespace UMapx.Core
         public T Extract()
         {
             if (Count == 0)
-                throw new InvalidOperationException("Cannot extract from an empty heap.");
+                throw new InvalidOperationException("Cannot extract from an empty heap");
 
             int li = data.Count - 1;
             T front = data[0];

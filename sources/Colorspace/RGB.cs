@@ -232,7 +232,7 @@ namespace UMapx.Colorspace
         {
             if (string.IsNullOrWhiteSpace(hexColor))
             {
-                throw new ArgumentException("hexColor");
+                throw new ArgumentException(nameof(hexColor));
             }
 
             // Trim and remove '#'
