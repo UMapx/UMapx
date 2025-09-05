@@ -576,7 +576,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Erlang C-function.
         /// </summary>
-        /// <param name="y">Firset parameter</param>
+        /// <param name="y">First parameter</param>
         /// <param name="v">Second parameter</param>
         /// <param name="t">Time parameter</param>
         /// <returns>Value</returns>
@@ -591,7 +591,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Erlang C-function.
         /// </summary>
-        /// <param name="y">Firset parameter</param>
+        /// <param name="y">First parameter</param>
         /// <param name="v">Second parameter</param>
         /// <param name="t">Time parameter</param>
         /// <returns>Value</returns>
@@ -606,7 +606,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Erlang B-function.
         /// </summary>
-        /// <param name="y">Firset parameter</param>
+        /// <param name="y">First parameter</param>
         /// <param name="v">Second parameter</param>
         /// <returns>Value</returns>
         public static float Erlang(float y, int v)
@@ -634,7 +634,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Erlang B-function.
         /// </summary>
-        /// <param name="y">Firset parameter</param>
+        /// <param name="y">First parameter</param>
         /// <param name="v">Second parameter</param>
         /// <returns>Value</returns>
         public static Complex32 Erlang(Complex32 y, int v)
