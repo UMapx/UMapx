@@ -47,7 +47,7 @@ namespace UMapx.Decomposition
         /// </summary>
         public float[,] U
         {
-            get { return Matrice.Transponate(L); }
+            get { return Matrice.Transpose(L); }
         }
         #endregion
 

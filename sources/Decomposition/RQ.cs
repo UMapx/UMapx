@@ -29,10 +29,10 @@ namespace UMapx.Decomposition
         /// <param name="A">Matrix</param>
         public RQ(float[,] A)
         {
-            qr = new QR(A.Flip(Direction.Vertical).Transponate());
+            qr = new QR(A.Flip(Direction.Vertical).Transpose());
 
-            r = qr.R.Transponate();
-            q = qr.Q.Transponate();
+            r = qr.R.Transpose();
+            q = qr.Q.Transpose();
 
             r = r.Flip(Direction.Both);
             q = q.Flip(Direction.Vertical);

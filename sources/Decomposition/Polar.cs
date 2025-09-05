@@ -33,7 +33,7 @@ namespace UMapx.Decomposition
 
             float[,] U = svd.U;
             float[,] V = svd.V;
-            float[,] H = V.Transponate();
+            float[,] H = V.Transpose();
             float[] S = svd.S;
 
             u = U.Dot(H); p = V.Dot(S).Dot(H);

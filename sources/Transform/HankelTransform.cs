@@ -160,7 +160,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
+            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transpose(U));
         }
         /// <summary>
         /// Forward Hankel transform.
@@ -175,13 +175,13 @@ namespace UMapx.Transform
 
             if (direction == Direction.Both)
             {
-                return U.Dot(A).Dot(V.Transponate());
+                return U.Dot(A).Dot(V.Transpose());
             }
             else if (direction == Direction.Vertical)
             {
                 return U.Dot(A);
             }
-            return A.Dot(V.Transponate());
+            return A.Dot(V.Transpose());
         }
         /// <summary>
         /// Backward Hankel transform.
@@ -196,11 +196,11 @@ namespace UMapx.Transform
 
             if (direction == Direction.Both)
             {
-                return U.Transponate().Dot(B).Dot(V);
+                return U.Transpose().Dot(B).Dot(V);
             }
             else if (direction == Direction.Vertical)
             {
-                return U.Transponate().Dot(B);
+                return U.Transpose().Dot(B);
             }
             return B.Dot(V);
         }
@@ -224,7 +224,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transponate(U));
+            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transpose(U));
         }
         /// <summary>
         /// Forward Hankel transform.
@@ -239,13 +239,13 @@ namespace UMapx.Transform
 
             if (direction == Direction.Both)
             {
-                return U.Dot(A).Dot(V.Transponate());
+                return U.Dot(A).Dot(V.Transpose());
             }
             else if (direction == Direction.Vertical)
             {
                 return U.Dot(A);
             }
-            return A.Dot(V.Transponate());
+            return A.Dot(V.Transpose());
         }
         /// <summary>
         /// Backward Hankel transform.
@@ -260,11 +260,11 @@ namespace UMapx.Transform
 
             if (direction == Direction.Both)
             {
-                return U.Transponate().Dot(B).Dot(V);
+                return U.Transpose().Dot(B).Dot(V);
             }
             else if (direction == Direction.Vertical)
             {
-                return U.Transponate().Dot(B);
+                return U.Transpose().Dot(B);
             }
             return B.Dot(V);
         }

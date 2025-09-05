@@ -118,7 +118,7 @@ namespace UMapx.Core
             if (Matrice.IsSquare(m))
             {
                 // A = Aᵀ
-                if (Matrice.IsEquals(m, m.Transponate()))
+                if (Matrice.IsEquals(m, m.Transpose()))
                 {
                     return true;
                 }
@@ -135,7 +135,7 @@ namespace UMapx.Core
             if (Matrice.IsSquare(m))
             {
                 // Aᵀ = -A:
-                if (Matrice.IsEquals(m.Transponate(), m.ToNegate()))
+                if (Matrice.IsEquals(m.Transpose(), m.ToNegate()))
                 {
                     return true;
                 }
@@ -275,7 +275,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static float[,] Transponate(this float[,] m)
+        public static float[,] Transpose(this float[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             float[,] H = new float[r1, r0];
@@ -310,7 +310,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Transponate(this Complex32[,] m)
+        public static Complex32[,] Transpose(this Complex32[,] m)
         {
             int r0 = m.GetLength(0), r1 = m.GetLength(1);
             Complex32[,] H = new Complex32[r1, r0];
@@ -2740,7 +2740,7 @@ namespace UMapx.Core
                 }
             }
 
-            return H.Transponate().Dot(H).Div(height - 1);
+            return H.Transpose().Dot(H).Div(height - 1);
         }
         /// <summary>
         /// Returns the covariance matrix.
