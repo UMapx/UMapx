@@ -1,1 +1,5 @@
             Initializes the Floyd-Steinberg dithering filter.
+        <member name="P:UMapx.Imaging.ErrorDiffusionDithering.SierraTwoRows">
+            Initializes the Sierra Two Rows dithering filter.
+<?xml version="1.0"?>
+<doc>

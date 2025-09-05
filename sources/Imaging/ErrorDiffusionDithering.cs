@@ -304,10 +304,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Initializes the Sierra lite dithering filter.
+        /// Initializes the Sierra Two Rows dithering filter.
         /// </summary>
         /// <returns>Error diffusion dithering filter</returns>
-        public static ErrorDiffusionDithering SierraTowsRows
+        public static ErrorDiffusionDithering SierraTwoRows
         {
             get
             {
