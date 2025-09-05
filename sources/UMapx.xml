@@ -7,12 +7,12 @@
         <member name="T:UMapx.Analysis.Approximation">
             <summary>
             Defines the least squares approximation class.
+            </summary>
             <remarks>
             This class is a solution to the problem of finding the function A (x) ≈ F (x), where F (x) is the original function.
             More information can be found on the website:
             http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Analysis.Approximation.#ctor(System.Int32,UMapx.Analysis.ApproximationMethod)">
             <summary>
@@ -271,10 +271,10 @@
         <member name="T:UMapx.Analysis.Differential">
             <summary>
             Defines a class that implements a solution to a differential equation.
+            </summary>
             <remarks>
             This class is a solution to the Cauchy problem for the ordinary differential equation y' = F(x, y).
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Analysis.Differential.#ctor(UMapx.Analysis.DifferentialMethod)">
             <summary>
@@ -523,10 +523,10 @@
         <member name="T:UMapx.Analysis.Integration">
             <summary>
             Defines a class that implements numerical integration.
+            </summary>
             <remarks>
             This class is a solution to the problem of finding the value of the integral of the function F(x) within the values of a and b.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Analysis.Integration.#ctor(UMapx.Analysis.IntegrationMethod)">
             <summary>
@@ -908,10 +908,10 @@
         <member name="T:UMapx.Analysis.Interpolation">
             <summary>
             Defines a class that implements interpolation.
+            </summary>
             <remarks>
             This class is a solution to the problem of finding an intermediate value of the function F(x).
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Analysis.Interpolation.#ctor(UMapx.Analysis.InterpolationMethod)">
             <summary>
@@ -927,10 +927,10 @@
         <member name="M:UMapx.Analysis.Interpolation.Compute(System.Single[],System.Single[],System.Single[0:,0:],System.Single,System.Single)">
             <summary>
             Returns the value of a function at a point.
+            </summary>
             <remarks>
             In this case, only bilinear interpolation is used.
             </remarks>
-            </summary>
             <param name="x">Array of values of the first argument</param>
             <param name="y">Array of values of the second argument</param>
             <param name="z">Function matrix</param>
@@ -1237,10 +1237,10 @@
         <member name="T:UMapx.Analysis.Nonlinear">
             <summary>
             Defines a class that implements the solution of a nonlinear equation.
+            </summary>
             <remarks>
             This class is a solution to the problem of finding the root of a nonlinear equation of the form F(x) = 0.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Analysis.Nonlinear.#ctor(System.Single,UMapx.Analysis.NonlinearMethod)">
             <summary>
@@ -1398,10 +1398,10 @@
         <member name="T:UMapx.Analysis.Optimization">
             <summary>
             Defines a class that implements an extremum search.
+            </summary>
             <remarks>
             This class is a solution to the problem of finding the maximum and minimum points of the function F(x).
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Analysis.Optimization.#ctor(System.Single)">
             <summary>
@@ -1467,17 +1467,17 @@
         <member name="T:UMapx.Analysis.Pade">
             <summary>
             Defines a Pade approximant.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Pad%C3%A9_approximant.
-            </remarks>
             Example: exp(x) = 1 + x + x^2/2! + x^3/3! + ...
             <code>
             float[] taylorExp = new float[] { 1.0f, 1.0f, 0.5f, 1.0f/6.0f, 1.0f/24.0f, 1.0f/120.0f, 1.0f/720.0f };
             var pade = new Pade(2, 2);
             var (n, d) = pade.Compute(taylorExp);
             </code>
-            </summary>
+            </remarks>
         </member>
         <member name="M:UMapx.Analysis.Pade.#ctor(System.Int32,System.Int32)">
             <summary>
@@ -1613,11 +1613,11 @@
         <member name="T:UMapx.Analysis.Roots">
             <summary>
             Defines a class for solving equations using the spectral decomposition of a matrix.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://www.mathworks.com/help/matlab/ref/roots.html
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Analysis.Roots.#ctor(System.Single)">
             <summary>
@@ -2347,7 +2347,7 @@
             <summary>
             Calculates the brightness value in the standard (PAL/NTSC).
             </summary>
-            <param name="rgb">RGB structure</param>
+            <param name="rgb">sRGB structure</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.HDTV(System.Int32,System.Int32,System.Int32)">
@@ -4010,10 +4010,10 @@
         <member name="M:UMapx.Core.Complex32.Parse(System.String)">
             <summary>
             Parses the string to complex number.
+            </summary>
             <remarks>
             Example: "1 + 2i", "0.321 + 11i", ".1i".
             </remarks>
-            </summary>
             <param name="s">Input string</param>
             <returns>Complex number</returns>
         </member>
@@ -5084,11 +5084,11 @@
         <member name="T:UMapx.Core.Kernel">
             <summary>
             Used to work with kernel functions.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Kernel_(statistics)
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Core.Kernel.Bicubic(System.Single)">
             <summary>
@@ -6515,20 +6515,20 @@
         <member name="M:UMapx.Core.Maths.IsPrime(System.Int32)">
             <summary>
             Checks if number is prime.
+            </summary>
             <remarks>
             This method is based on enumerating all the divisors.
             </remarks>
-            </summary>
             <param name="p">Value</param>
             <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.Maths.IsPrime(System.Int64)">
             <summary>
             Checks if number is prime.
+            </summary>
             <remarks>
             This method is based on enumerating all the divisors.
             </remarks>
-            </summary>
             <param name="p">Value</param>
             <returns>Boolean</returns>
         </member>
@@ -6721,11 +6721,11 @@
         <member name="M:UMapx.Core.Maths.Sieve(System.Int32)">
             <summary>
             Implements a sieve for finding prime numbers.
+            </summary>
             <remarks>
             Recursive implementation of a memory-optimized segmented sieve of Eratosthenes. 
             The operational complexity of the O(N* logN) algorithm.The memory complexity is O(Δ), where Δ = sqrt(N).
             </remarks>
-            </summary>
             <param name="limit">Value</param>
             <returns>Array</returns>
         </member>
@@ -6753,10 +6753,10 @@
         <member name="M:UMapx.Core.Maths.Decimal2Base(System.Int64,System.Int32)">
             <summary>
             Returns a vector representing the decimal number in the given number system.
+            </summary>
             <remarks>
             Example: 10[10] = {1,0,1,0}[2].
             </remarks>
-            </summary>
             <param name="x">Byte</param>
             <param name="newbase">Base</param>
             <returns>Array</returns>
@@ -6764,10 +6764,10 @@
         <member name="M:UMapx.Core.Maths.Base2Decimal(System.Int32[],System.Int32)">
             <summary>
             Returns the decimal Number represented in decimal notation.
+            </summary>
             <remarks>
             Example: {1,0,1,0}[2] = 10[10].
             </remarks>
-            </summary>
             <param name="x">Array</param>
             <param name="thisbase">Base</param>
             <returns>Integer number</returns>
@@ -6775,20 +6775,20 @@
         <member name="M:UMapx.Core.Maths.Vector2Numeral(System.Int32[])">
             <summary>
             Returns a number that interprets the specified vector in decimal.
+            </summary>
             <remarks>
             Example: {1,0,1,0}[2] = 1010[10].
             </remarks>
-            </summary>
             <param name="x">Array</param>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Numeral2Vector(System.Int64)">
             <summary>
             Returns a vector representing the decomposition of a decimal number into components.
+            </summary>
             <remarks>
             Example: 1010[10] = {1,0,1,0}[2]
             </remarks>
-            </summary>
             <param name="x">Value</param>
             <returns>Array</returns>
         </member>
@@ -10744,10 +10744,10 @@
         <member name="M:UMapx.Core.Matrice.Parse(System.Single[0:,0:],System.String)">
             <summary>
             Parses the original string into a matrix of float numbers.
+            </summary>
             <remarks>
             Example: "[1, 2, 3; 4, 5, 6; 7, 8, 9]";
             </remarks>
-            </summary>
             <param name="a">Matrix</param>
             <param name="s">Input string</param>
             <returns>Matrix</returns>
@@ -10782,10 +10782,10 @@
         <member name="M:UMapx.Core.Matrice.Parse(System.Single[],System.String)">
             <summary>
             Parses the original string into a vector of float numbers.
+            </summary>
             <remarks>
             Example: "[1, 2, 3, 4]";
             </remarks>
-            </summary>
             <param name="a">Matrix</param>
             <param name="s">Input string</param>
             <returns>Matrix</returns>
@@ -10801,10 +10801,10 @@
         <member name="M:UMapx.Core.Matrice.Parse(UMapx.Core.Complex32[],System.String)">
             <summary>
             Parses the original string into a vector of complex numbers.
+            </summary>
             <remarks>
             Example: "[1 + 2i, 2 + 0.3i, 3 + i, 4 - 11i]";
             </remarks>
-            </summary>
             <param name="a">Matrix</param>
             <param name="s">Input string</param>
             <returns>Matrix</returns>
@@ -11121,10 +11121,10 @@
         <member name="T:UMapx.Core.Quaternion32">
             <summary>
             Defines a quaternion.
+            </summary>
             <remarks>
             A quaternion is a system of hypercomplex numbers that forms a four-dimensional vector space over a field of real numbers.
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Core.Quaternion32.X">
             <summary>
@@ -11679,11 +11679,11 @@
         <member name="T:UMapx.Core.Special">
             <summary>
             Used to implement special mathematical functions.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Special_functions
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Core.Special.INV_2PI">
             <summary>
@@ -12616,12 +12616,12 @@
         <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Returns the value of a hypergeometric function.
+            </summary>
             <remarks>
             This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hypergeometric_function
             </remarks>
-            </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
             <param name="c">Value</param>
@@ -12631,12 +12631,12 @@
         <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Returns the value of a hypergeometric function.
+            </summary>
             <remarks>
             This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hypergeometric_function
             </remarks>
-            </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
             <param name="c">Value</param>
@@ -12646,6 +12646,7 @@
         <member name="M:UMapx.Core.Special.Hypergeom(System.Single,System.Single,System.Single)">
             <summary>
             Returns the value of a hypergeometric function.
+            </summary>
             <remarks>
             The hypergeometric function can be used in several variations:
             F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
@@ -12653,7 +12654,6 @@
             More information can be found on the website:
             https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
             </remarks>
-            </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
             <param name="z">Value</param>
@@ -12662,6 +12662,7 @@
         <member name="M:UMapx.Core.Special.Hypergeom(UMapx.Core.Complex32,UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             Returns the value of a hypergeometric function.
+            </summary>
             <remarks>
             The hypergeometric function can be used in several variations:
             F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
@@ -12669,7 +12670,6 @@
             More information can be found on the website:
             https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
             </remarks>
-            </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
             <param name="z">Value</param>
@@ -13054,10 +13054,10 @@
         <member name="M:UMapx.Core.StringOptions.Compar(System.String)">
             <summary>
             Translates the original string to complex number.
+            </summary>
             <remarks>
             Example: "1 + 2i", "0.321 + 11i", ".1i".
             </remarks>
-            </summary>
             <param name="s">Input string</param>
             <returns>Text as a sequence of Unicode characters</returns>
         </member>
@@ -13097,13 +13097,13 @@
         <member name="T:UMapx.Decomposition.Arnoldi">
             <summary>
             Defines Arnoldi transform.
+            </summary>
             <remarks>
             This transformation is used to reduce the square matrix to the Hessenberg form.
             The matrix A is represented as the product of three matrices: A = Q * H * Qᵀ, where H is the upper Hessenberg triangular matrix, Q is the orthogonal matrix.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Arnoldi_iteration
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Arnoldi.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13132,13 +13132,13 @@
         <member name="T:UMapx.Decomposition.Bidiagonal">
             <summary>
             Defines bidiagonal decomposition.
+            </summary>
             <remarks>
             This is a representation of a matrix in the form A = U * B * Vᵀ, where U and V are orthogonal matrices
             obtained using Householder transformations and B is a bidiagonal matrix.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Bidiagonalization
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Bidiagonal.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13170,13 +13170,13 @@
         <member name="T:UMapx.Decomposition.Cholesky">
             <summary>
             Defines Cholesky decomposition.
+            </summary>
             <remarks>
             This is a representation of a symmetric positive definite square matrix in the form of a product: A = L * Lᵀ, 
             where L is a lower triangular matrix with strictly positive elements on the diagonal.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Cholesky_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Cholesky.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13203,11 +13203,11 @@
         <member name="T:UMapx.Decomposition.Diagonal">
             <summary>
             Defines diagonal decomposition.
+            </summary>
             <remarks>
             This is a representation of the square matrix A as the product of two matrices: A = B * D, where B is the Square matrix and D is the diagonal matrix.
             This decomposition is used to highlight diagonal matrices in other decompositions (for example, LDU-, LDL-decompositions).
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Diagonal.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13228,6 +13228,7 @@
         <member name="T:UMapx.Decomposition.EVD">
             <summary>
             Defines eigenvalue decomposition.
+            </summary>
             <remarks>
             The eigenvalue decomposition is the representation of the square matrix A in the form of the product of three matrices A = V * D * inv(V), 
             where V is the matrix of spectral vectors and D is the diagonal (generally complex) matrix of eigenvalues.
@@ -13238,7 +13239,6 @@
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.EVD.#ctor(System.Single[0:,0:],System.Single)">
             <summary>
@@ -13314,12 +13314,12 @@
         <member name="T:UMapx.Decomposition.GEVD">
             <summary>
             Defines generalized eigenvalue decomposition.
+            </summary>
             <remarks>
             It is the task of finding a vector of values of V such that the representation: A * V = B * V * D.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix#Generalized_eigenvalue_problem
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
             <summary>
@@ -13505,13 +13505,13 @@
         <member name="T:UMapx.Decomposition.GramSchmidt">
             <summary>
             Defines the Gram-Schmidt orthogonalization process.
+            </summary>
             <remarks>
             In mathematics, in particular linear algebra and numerical analysis, the Gram-Schmidt process is a method of orthonormalizing a set of vectors
             in the space of internal works. This procedure is actively used for orthogonalization of bases.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.GramSchmidt.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13527,13 +13527,13 @@
         <member name="T:UMapx.Decomposition.Hessenberg">
             <summary>
             Defines decomposition with a cast to Hessenberg form.
+            </summary>
             <remarks>
             This is a representation of a square matrix in the form of a product of three matrices: A = P * H * Pᵀ, 
             where H is the Hessenberg form and P is the unitary matrix.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hessenberg_matrix
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Hessenberg.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13562,6 +13562,7 @@
         <member name="T:UMapx.Decomposition.Householder">
             <summary>
             Defines Householder transformation.
+            </summary>
             <remarks>
             This is a linear transformation H (u) of the vector space V, which describes its mapping with respect to the hyperplane,
             which passes through the origin. It was proposed in 1958 by the American mathematician Elston Scott Householder. 
@@ -13574,7 +13575,6 @@
             More information can be found on the website: 
             https://en.wikipedia.org/wiki/Householder_transformation
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Householder.#ctor(System.Single[])">
             <summary>
@@ -13615,13 +13615,13 @@
         <member name="T:UMapx.Decomposition.Lanczos">
             <summary>
             Defines Lanczos transform.
+            </summary>
             <remarks>
             This transformation is used to represent the symmetric matrix A as a product
             of three matrices: A = Q * T * Qᵀ, where T is a tridiagonal matrix, and Q is an orthogonal matrix.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Lanczos_algorithm
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Lanczos.#ctor(System.Single[0:,0:],System.Boolean)">
             <summary>
@@ -13654,6 +13654,7 @@
         <member name="T:UMapx.Decomposition.LDL">
             <summary>
             Defines LDL decomposition.
+            </summary>
             <remarks>
             This is a representation of a symmetric positive definite square matrix in the form of a product of three matrices: A = L * D * Lᵀ, 
             where L is a lower triangular matrix with strictly positive elements on the diagonal,
@@ -13661,7 +13662,6 @@
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Cholesky_decomposition#LDL_decomposition_2
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.LDL.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13687,13 +13687,13 @@
         <member name="T:UMapx.Decomposition.LDU">
             <summary>
             Defines LDU decomposition.
+            </summary>
             <remarks>
             This is the representation of a square matrix A as the product of three matrices: A = L * D * U, 
             where L is the lower triangular matrix, D is the diagonal matrix, and U is the upper triangular matrix.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/LU_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.LDU.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13719,13 +13719,13 @@
         <member name="T:UMapx.Decomposition.LQ">
             <summary>
             Defines LQ decomposition.
+            </summary>
             <remarks>
             This is the representation of a matrix in the form of a product of two matrices: A = L * Q, 
             where Q is a unitary (or orthogonal) matrix, and L is a lower triangular matrix.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/QR_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.LQ.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13746,13 +13746,13 @@
         <member name="T:UMapx.Decomposition.LU">
             <summary>
             Defines LU decomposition.
+            </summary>
             <remarks>
             This is a representation of the square matrix A as the product of two matrices: A = L * U, 
             where L is the lower triangular matrix, U is the upper triangular matrix.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/LU_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.LU.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13779,12 +13779,12 @@
         <member name="T:UMapx.Decomposition.NNMF">
             <summary>
             Defines non-negative matrix factorization.
+            </summary>
             <remarks>
             This is a representation of a rectangular matrix A as the product of two matrices: A = W * H.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Non-negative_matrix_factorization
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.NNMF.#ctor(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
@@ -13814,13 +13814,13 @@
         <member name="T:UMapx.Decomposition.Polar">
             <summary>
             Defines polar decomposition.
+            </summary>
             <remarks>
             This is a representation of a rectangular matrix A in the form of a product of two matrices: A = U * P, 
             where U is a unitary matrix, P is a positive definite matrix.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Polar_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Polar.#ctor(System.Single[0:,0:],System.Int32)">
             <summary>
@@ -13842,11 +13842,11 @@
         <member name="T:UMapx.Decomposition.Power">
             <summary>
             Defines power iteration.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Power_iteration
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Power.#ctor(System.Single[0:,0:],System.Int32)">
             <summary>
@@ -13868,13 +13868,13 @@
         <member name="T:UMapx.Decomposition.QL">
             <summary>
             Defines the QL decomposition of a square matrix.
+            </summary>
             <remarks>
             This is a representation of a matrix in the form of a product of two matrices: A = Q * L, 
             where Q is a unitary (or orthogonal) matrix and L is a lower triangular matrix.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/QR_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.QL.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13895,6 +13895,7 @@
         <member name="T:UMapx.Decomposition.QR">
             <summary>
             Defines QR decomposition.
+            </summary>
             <remarks>
             This is a matrix representation in the form of a product of two matrices: A = Q * R, 
             where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
@@ -13902,7 +13903,6 @@
             More information can be found on the website:
             https://en.wikipedia.org/wiki/QR_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.QR.#ctor(System.Single[0:,0:])">
             <summary>
@@ -13934,6 +13934,7 @@
         <member name="T:UMapx.Decomposition.QZ">
             <summary>
             Defines QZ decomposition (generalized Schur decomposition).
+            </summary>
             <remarks>
             This is a matrix representation for a pair of matrices A and B such that
             A = Q * S * Zᵀ and B = Q * T * Zᵀ, where Q and Z are orthogonal and
@@ -13941,7 +13942,6 @@
             More information can be found on the website:
             https://en.wikipedia.org/wiki/QZ_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.QZ.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
             <summary>
@@ -13981,6 +13981,7 @@
         <member name="T:UMapx.Decomposition.RQ">
             <summary>
             Defines RQ decomposition.
+            </summary>
             <remarks>
             This is a matrix representation in the form of a product of two matrices: A = R * Q, 
             where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
@@ -13988,7 +13989,6 @@
             More information can be found on the website:
             https://en.wikipedia.org/wiki/QR_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.RQ.#ctor(System.Single[0:,0:])">
             <summary>
@@ -14009,13 +14009,13 @@
         <member name="T:UMapx.Decomposition.Schur">
             <summary>
             Defines Schur decomposition.
+            </summary>
             <remarks>
             This is a representation of a square matrix in the form of a product of three matrices: A = Q * T * Qᵀ,
             where Q is a unitary matrix and T is a quasi upper triangular matrix (Schur form).
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Schur_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.Schur.#ctor(System.Single[0:,0:],System.Single)">
             <summary>
@@ -14042,13 +14042,13 @@
         <member name="T:UMapx.Decomposition.SVD">
             <summary>
             Defines singular value decomposition.
+            </summary>
             <remarks>
             This is a representation of a rectangular matrix A in the form of the product of three matrices A = U * S * Vᵀ, 
             where U are left vectors, V are right vectors, and S are singular values.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Singular_value_decomposition
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.SVD.#ctor(System.Single[0:,0:],System.Int32)">
             <summary>
@@ -14075,10 +14075,10 @@
         <member name="P:UMapx.Decomposition.SVD.P">
             <summary>
             Gets the pseudoinverse matrix.
+            </summary>
             <remarks>
             NOT RECOMMENDED.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.SVD.svdcmp(System.Single[0:,0:])">
             <summary>
@@ -14109,12 +14109,12 @@
         <member name="T:UMapx.Decomposition.UDL">
             <summary>
             Defines UDL decomposition.
+            </summary>
             <remarks>
             This is the representation of a symmetric square matrix as the product of three matrices: A = U * D * L, 
             where U is the upper triangular matrix, D is the diagonal matrix, and L is the lower triangular matrix.
             This decomposition is a specific form of Cholesky decomposition.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Decomposition.UDL.#ctor(System.Single[0:,0:])">
             <summary>
@@ -14146,11 +14146,11 @@
         <member name="T:UMapx.Distribution.Arcsine">
             <summary>
             Defines the arcsine distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Arcsine_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Arcsine.#ctor">
             <summary>
@@ -14236,11 +14236,11 @@
         <member name="T:UMapx.Distribution.Bernoulli">
             <summary>
             Defines the distribution of Bernoulli.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Bernoulli_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Bernoulli.#ctor">
             <summary>
@@ -14316,11 +14316,11 @@
         <member name="T:UMapx.Distribution.Beta">
             <summary>
             Defines the beta distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Beta_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Beta.#ctor">
             <summary>
@@ -14402,11 +14402,11 @@
         <member name="T:UMapx.Distribution.BetaPrime">
             <summary>
             Defines the beta distribution of the second kind.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Beta_prime_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.BetaPrime.#ctor(System.Single,System.Single)">
             <summary>
@@ -14482,11 +14482,11 @@
         <member name="T:UMapx.Distribution.Binomial">
             <summary>
             Defines the binomial distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Binomial_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Binomial.#ctor">
             <summary>
@@ -14568,11 +14568,11 @@
         <member name="T:UMapx.Distribution.BirnbaumSaunders">
             <summary>
             Defines the Birnbaum-Saunders distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Birnbaum–Saunders_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.BirnbaumSaunders.#ctor(System.Single,System.Single,System.Single)">
             <summary>
@@ -14654,11 +14654,11 @@
         <member name="T:UMapx.Distribution.Burr">
             <summary>
             Defines the Burr distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Burr_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Burr.#ctor(System.Single,System.Single)">
             <summary>
@@ -14734,11 +14734,11 @@
         <member name="T:UMapx.Distribution.Cauchy">
             <summary>
             Defines the Cauchy distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Cauchy_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Cauchy.#ctor">
             <summary>
@@ -14820,11 +14820,11 @@
         <member name="T:UMapx.Distribution.ChiSquare">
             <summary>
             Defines the xi-square distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Chi-squared_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.ChiSquare.#ctor(System.Int32)">
             <summary>
@@ -14894,11 +14894,11 @@
         <member name="T:UMapx.Distribution.ChoiWilliams">
             <summary>
             Defines the distribution of Choi Williams.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Choi%E2%80%93Williams_distribution_function
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.ChoiWilliams.#ctor(System.Single)">
             <summary>
@@ -14970,11 +14970,11 @@
         <member name="T:UMapx.Distribution.ConeShape">
             <summary>
             Defines the distribution of the conical shape.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Cone-shape_distribution_function
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.ConeShape.#ctor(System.Single)">
             <summary>
@@ -15046,11 +15046,11 @@
         <member name="T:UMapx.Distribution.Erlang">
             <summary>
             Defines the distribution of Erlang.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Erlang_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Erlang.#ctor(System.Int32,System.Single)">
             <summary>
@@ -15127,11 +15127,11 @@
         <member name="T:UMapx.Distribution.Exponential">
             <summary>
             Defines the exponential distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Exponential_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Exponential.#ctor">
             <summary>
@@ -15207,11 +15207,11 @@
         <member name="T:UMapx.Distribution.FisherSnedecor">
             <summary>
             Defines the Fisher distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/F-distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.FisherSnedecor.#ctor(System.Int32,System.Int32)">
             <summary>
@@ -15287,11 +15287,11 @@
         <member name="T:UMapx.Distribution.FisherZ">
             <summary>
             Defines the Fisher's Z-distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Fisher%27s_z-distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.FisherZ.#ctor(System.Single,System.Single)">
             <summary>
@@ -15367,11 +15367,11 @@
         <member name="T:UMapx.Distribution.Gamma">
             <summary>
             Defines the Gamma-distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Gamma_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Gamma.#ctor">
             <summary>
@@ -15453,11 +15453,11 @@
         <member name="T:UMapx.Distribution.Gaussian">
             <summary>
             Defines the Gaussian distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Normal_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Gaussian.#ctor">
             <summary>
@@ -15539,11 +15539,11 @@
         <member name="T:UMapx.Distribution.Geometric">
             <summary>
             Defines the geometric distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Geometric_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Geometric.#ctor">
             <summary>
@@ -15619,11 +15619,11 @@
         <member name="T:UMapx.Distribution.Gompertz">
             <summary>
             Defines the Gompertz distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Gompertz_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Gompertz.#ctor(System.Single,System.Single)">
              <summary>
@@ -15699,11 +15699,11 @@
         <member name="T:UMapx.Distribution.Gumbel">
             <summary>
             Defines the Gumbel distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Gumbel_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Gumbel.#ctor(System.Single,System.Single)">
             <summary>
@@ -15779,11 +15779,11 @@
         <member name="T:UMapx.Distribution.HyperbolicSecant">
             <summary>
             Defines the hyperbolic secant distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hyperbolic_secant_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.HyperbolicSecant.#ctor">
             <summary>
@@ -15847,11 +15847,11 @@
         <member name="T:UMapx.Distribution.Hypergeometric">
             <summary>
             Defines the hypergeometric distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hypergeometric_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Hypergeometric.#ctor">
             <summary>
@@ -15985,11 +15985,11 @@
         <member name="T:UMapx.Distribution.Kumaraswamy">
             <summary>
             Defines the distribution of Kumaraswamy.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Kumaraswamy_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Kumaraswamy.#ctor(System.Single,System.Single)">
             <summary>
@@ -16090,11 +16090,11 @@
         <member name="T:UMapx.Distribution.Laplace">
             <summary>
             Defines the Laplace distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Laplace_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Laplace.#ctor">
             <summary>
@@ -16176,11 +16176,11 @@
         <member name="T:UMapx.Distribution.Levy">
             <summary>
             Defines the Levy distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/L%C3%A9vy_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Levy.#ctor(System.Single,System.Single)">
             <summary>
@@ -16256,11 +16256,11 @@
         <member name="T:UMapx.Distribution.Logarithmic">
             <summary>
             Defines the logarithmic distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Logarithmic_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Logarithmic.#ctor(System.Single)">
             <summary>
@@ -16330,11 +16330,11 @@
         <member name="T:UMapx.Distribution.LogGaussian">
             <summary>
             Defines the logarithmic Gaussian distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Log-normal_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.LogGaussian.#ctor">
             <summary>
@@ -16416,11 +16416,11 @@
         <member name="T:UMapx.Distribution.Logistic">
             <summary>
             Defines the logistic distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Logistic_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Logistic.#ctor(System.Single,System.Single)">
             <summary>
@@ -16501,11 +16501,11 @@
         <member name="T:UMapx.Distribution.LogLogistic">
             <summary>
             Defines the log-logistic distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Log-logistic_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.LogLogistic.#ctor">
             <summary>
@@ -16587,11 +16587,11 @@
         <member name="T:UMapx.Distribution.Nakagami">
             <summary>
             Defines the distribution of Nakagami.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Nakagami_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Nakagami.#ctor">
              <summary>
@@ -16679,11 +16679,11 @@
         <member name="T:UMapx.Distribution.Pareto">
             <summary>
             Defines the Pareto distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Pareto_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Pareto.#ctor">
             <summary>
@@ -16765,11 +16765,11 @@
         <member name="T:UMapx.Distribution.Poisson">
             <summary>
             Defines the Poisson distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Poisson_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Poisson.#ctor">
             <summary>
@@ -16852,11 +16852,11 @@
         <member name="T:UMapx.Distribution.Rademacher">
             <summary>
             Defines the Rademacher distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Rademacher_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Rademacher.#ctor">
             <summary>
@@ -16920,11 +16920,11 @@
         <member name="T:UMapx.Distribution.Rayleigh">
             <summary>
             Defines the logarithmic distribution of Rayleigh.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Rayleigh_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Rayleigh.#ctor">
             <summary>
@@ -17000,11 +17000,11 @@
         <member name="T:UMapx.Distribution.Student">
             <summary>
             Defines the Student's distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Student%27s_t-distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Student.#ctor(System.Single)">
             <summary>
@@ -17081,11 +17081,11 @@
         <member name="T:UMapx.Distribution.Triangular">
             <summary>
             Defines the triangular distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Triangular_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Triangular.#ctor">
             <summary>
@@ -17172,11 +17172,11 @@
         <member name="T:UMapx.Distribution.Uniform">
             <summary>
             Defines the uniform distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Uniform.#ctor">
             <summary>
@@ -17259,11 +17259,11 @@
         <member name="T:UMapx.Distribution.UQuadratic">
             <summary>
             Defines the U-quadratic distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/U-quadratic_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.UQuadratic.#ctor(System.Single,System.Single)">
             <summary>
@@ -17339,11 +17339,11 @@
         <member name="T:UMapx.Distribution.Weibull">
             <summary>
             Defines the Weibull distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Weibull_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Weibull.#ctor">
             <summary>
@@ -17425,11 +17425,11 @@
         <member name="T:UMapx.Distribution.Wigner">
             <summary>
             Defines the Wigner semicircular distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wigner_semicircle_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.Wigner.#ctor(System.Single)">
             <summary>
@@ -17500,11 +17500,11 @@
         <member name="T:UMapx.Distribution.WrappedCauchy">
             <summary>
             Defines the compact Cauchy distribution.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wrapped_Cauchy_distribution
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.WrappedCauchy.#ctor(System.Single,System.Single)">
             <summary>
@@ -17580,11 +17580,11 @@
         <member name="T:UMapx.Imaging.AdditiveNoise">
             <summary>
             Defines the additive noise filter.
+            </summary>
             <remarks>
             Filter usage example:
             https://en.wikipedia.org/wiki/Gaussian_noise
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.AdditiveNoise.#ctor">
             <summary>
@@ -18181,11 +18181,11 @@
         <member name="T:UMapx.Imaging.BlendMode">
             <summary>
             Used to blending layers.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://www.pegtop.net/delphi/articles/blendmodes/index.htm
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.BlendMode.Average(System.Single,System.Single)">
             <summary>
@@ -18489,11 +18489,11 @@
         <member name="T:UMapx.Imaging.BrightnessCorrection">
             <summary>
             Defines the brightness correction filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://esate.ru/uroki/OpenGL/image_processing/_p4106/
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.BrightnessCorrection.#ctor(System.Single,UMapx.Imaging.Space)">
             <summary>
@@ -18520,11 +18520,11 @@
         <member name="T:UMapx.Imaging.CannyEdgeDetector">
             <summary>
             Defines a Canny edge detector.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Canny_edge_detector
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.CannyEdgeDetector.#ctor(System.Single,System.Single,System.Int32)">
             <summary>
@@ -18743,11 +18743,11 @@
             <summary>
             Defines the Contrast Limited Adaptive Histogram Equalization (CLAHE).
             Operates in RGB by equalizing luminance (Rec.709) with bilinear interpolation between tile LUTs.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://uk.mathworks.com/help/visionhdl/ug/contrast-adaptive-histogram-equalization.html
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.CLAHE.#ctor(System.Int32,System.Int32,System.Single)">
             <summary>
@@ -19068,11 +19068,11 @@
         <member name="T:UMapx.Imaging.ContrastCorrection">
             <summary>
             Defines the contrast correction filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://esate.ru/uroki/OpenGL/image_processing/_p4106/
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.ContrastCorrection.#ctor(System.Single,UMapx.Imaging.Space)">
             <summary>
@@ -19830,11 +19830,11 @@
         <member name="T:UMapx.Imaging.ErrorDiffusionDithering">
             <summary>
             Defines the error diffusion dithering filter.
+            </summary>
             <remarks>
             Filter usage example:
             https://en.wikipedia.org/wiki/Dither
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.ErrorDiffusionDithering.#ctor(System.Int32,System.Single[][])">
             <summary>
@@ -19960,11 +19960,11 @@
         <member name="T:UMapx.Imaging.ExposureCorrection">
             <summary>
             Defines the exposure correction filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Exposure_(photography)
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.ExposureCorrection.#ctor(System.Single,UMapx.Imaging.Space)">
             <summary>
@@ -19991,11 +19991,11 @@
         <member name="T:UMapx.Imaging.ExposureFusion">
             <summary>
             Defines the exposure fusion filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://web.stanford.edu/class/cs231m/project-1/exposure-fusion.pdf
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.ExposureFusion.#ctor(System.Int32,System.Single)">
             <summary>
@@ -20047,11 +20047,11 @@
         <member name="T:UMapx.Imaging.FlatFieldCorrection">
             <summary>
             Defines the flat-field correction filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://imagej.net/Image_Intensity_Processing
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.FlatFieldCorrection.#ctor(System.Int32)">
             <summary>
@@ -20276,11 +20276,11 @@
         <member name="T:UMapx.Imaging.FreiChen">
             <summary>
             Defines Frei-Chen convolution filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Frei-Chen_operator
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.FreiChen.#ctor(UMapx.Imaging.FreiChenMode)">
             <summary>
@@ -20353,11 +20353,11 @@
         <member name="T:UMapx.Imaging.GammaCorrection">
             <summary>
             Defines the gamma correction filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Gamma_correction
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.GammaCorrection.#ctor(System.Single,UMapx.Imaging.Space)">
             <summary>
@@ -20384,10 +20384,10 @@
         <member name="T:UMapx.Imaging.GaussianBlur">
             <summary>
             Defines the Gaussian blur filter.
+            </summary>
             <remarks>
             This is a very fast pseudo-Gaussian blur filter via N separable box filters (default 3).
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.GaussianBlur.#ctor(UMapx.Core.SizeInt,UMapx.Core.SizeFloat,System.Int32)">
             <summary>
@@ -20596,11 +20596,11 @@
         <member name="T:UMapx.Imaging.Grid">
             <summary>
             Defines the grid filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Grid.#ctor(System.Int32,System.Int32)">
             <summary>
@@ -20665,11 +20665,11 @@
         <member name="T:UMapx.Imaging.HistogramEqualization">
             <summary>
             Defines the global histogram equalization filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://www.cromwell-intl.com/3d/histogram/
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.HistogramEqualization.#ctor">
             <summary>
@@ -20721,6 +20721,7 @@
         <member name="T:UMapx.Imaging.HomomorphicEnhancement">
             <summary>
             Defines the filter for homomorphic processing.
+            </summary>
             <remarks>
             A homomorphic filter is most often used to equalize the illumination of images.
             It simultaneously normalizes the brightness of the image and increases the contrast.
@@ -20728,7 +20729,6 @@
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Homomorphic_filtering
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.HomomorphicEnhancement.#ctor(System.Int32,UMapx.Imaging.Space,System.Single,System.Single)">
             <summary>
@@ -20821,10 +20821,10 @@
         <member name="T:UMapx.Imaging.HSBGrayscale">
             <summary>
             Defines the grayscale filter based on the HSB structure.
+            </summary>
             <remarks>
             The filter discolors the specified part of the image.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.HSBGrayscale.#ctor(UMapx.Core.RangeInt)">
             <summary>
@@ -20904,10 +20904,10 @@
         <member name="T:UMapx.Imaging.HSLGrayscale">
             <summary>
             Defines the grayscale filter based on the HSL structure.
+            </summary>
             <remarks>
             The filter discolors the specified part of the image.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.HSLGrayscale.#ctor(UMapx.Core.RangeInt)">
             <summary>
@@ -21428,11 +21428,11 @@
         <member name="T:UMapx.Imaging.Jitter">
             <summary>
             Defines the jitter filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Jitter.#ctor(System.Int32)">
             <summary>
@@ -21506,11 +21506,11 @@
         <member name="T:UMapx.Imaging.Kuwahara">
             <summary>
             Defines the Kuwahara filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Kuwahara_filter
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Kuwahara.#ctor(System.Int32,System.Int32)">
             <summary>
@@ -21573,11 +21573,11 @@
         <member name="T:UMapx.Imaging.LevelsCorrection">
             <summary>
             Defines the levels correction filter.
+            </summary>
             <remarks>
             Filter usage example:
             https://digital-photography-school.com/using-levels-photoshop-image-correct-color-contrast/
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.LevelsCorrection.#ctor(UMapx.Core.RangeFloat,UMapx.Core.RangeFloat,UMapx.Imaging.Space)">
             <summary>
@@ -21650,6 +21650,7 @@
         <member name="T:UMapx.Imaging.LocalContrastEnhancement">
             <summary>
             Defines the local contrast enhancement filter.
+            </summary>
             <remarks>
             This filter is also known as "Unsharp Masking."
             More information can be found on the website:
@@ -21657,7 +21658,6 @@
             Filter usage example:
             http://www.knowhowtransfer.com/photoshop-professional-plugins/alce-local-contrast-enhancer/
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.LocalContrastEnhancement.#ctor(System.Int32,UMapx.Imaging.Space,System.Single)">
             <summary>
@@ -21697,10 +21697,10 @@
         <member name="T:UMapx.Imaging.LocalContrastInversion">
             <summary>
             Defines the local contrast inversion filter.
+            </summary>
             <remarks>
             This filter is used to equalize the illumination of images by averaging the brightness.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.LocalContrastInversion.#ctor(System.Int32,UMapx.Imaging.Space,System.Single,System.Single)">
             <summary>
@@ -21879,11 +21879,11 @@
         <member name="T:UMapx.Imaging.LocalHistogramEqualization">
             <summary>
             Defines the local histogram equalization filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://angeljohnsy.blogspot.com/2011/06/local-histogram-equalization.html
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.LocalHistogramEqualization.#ctor(System.Int32)">
             <summary>
@@ -21944,11 +21944,11 @@
         <member name="T:UMapx.Imaging.LocalHistogramStretch">
             <summary>
             Defines the local histogram stretch filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://www.academia.edu/7629047/Image_enhancement_by_local_histogram_stretching
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.LocalHistogramStretch.#ctor(System.Int32,UMapx.Imaging.Space,System.Single,System.Boolean)">
             <summary>
@@ -22061,11 +22061,11 @@
         <member name="T:UMapx.Imaging.LocalThreshold">
             <summary>
             Defines the Bradley local threshold filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.LocalThreshold.#ctor(System.Int32,UMapx.Imaging.Space,System.Single)">
             <summary>
@@ -22283,11 +22283,11 @@
         <member name="T:UMapx.Imaging.Morphology">
             <summary>
             Defines the morphology filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Mathematical_morphology
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Morphology.#ctor(System.Int32,UMapx.Core.MorphologyMode)">
             <summary>
@@ -22374,10 +22374,10 @@
         <member name="T:UMapx.Imaging.MotionDetector">
             <summary>
             Defines the motion detector.
+            </summary>
             <remarks>
             Implements IDisposable interface.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.MotionDetector.#ctor(System.Byte,System.Boolean)">
             <summary>
@@ -22434,11 +22434,11 @@
         <member name="T:UMapx.Imaging.Noise">
             <summary>
             Defines the noise filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Noise.#ctor(System.Int32)">
             <summary>
@@ -22464,11 +22464,11 @@
         <member name="T:UMapx.Imaging.NormalBump">
             <summary>
             Defines a normal bump filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Normal_mapping
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.NormalBump.#ctor(System.Int32)">
             <summary>
@@ -22517,11 +22517,11 @@
         <member name="T:UMapx.Imaging.OilPainting">
             <summary>
             Defines the oil painting filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://www.codeproject.com/articles/471994/oilpainteffect
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.OilPainting.#ctor(System.Int32,System.Double)">
             <summary>
@@ -22639,11 +22639,11 @@
         <member name="T:UMapx.Imaging.Operation">
             <summary>
             Defines the linear operation filter.
+            </summary>
             <remarks>
             This filter works by applying the following algorithm: C (x, y) = a * A (x, y) + b * B (x, y), where A, B are the original images,
             a, b are the coefficients.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Operation.#ctor(System.Single,System.Single)">
             <summary>
@@ -22694,11 +22694,11 @@
         <member name="T:UMapx.Imaging.PerlinNoise">
             <summary>
             Defines the Perlin noise.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Perlin_noise
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.#ctor(System.Int32,System.Double,System.Double,System.Double)">
             <summary>
@@ -22963,11 +22963,11 @@
         <member name="T:UMapx.Imaging.Pixelate">
             <summary>
             Defines the pixelation filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Pixelate.#ctor(System.Int32)">
             <summary>
@@ -23281,11 +23281,11 @@
         <member name="T:UMapx.Imaging.Quantization">
             <summary>
             Defines the quantization filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://en.wikipedia.org/wiki/Posterization
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Quantization.#ctor(System.Int32,UMapx.Imaging.Space)">
             <summary>
@@ -23714,11 +23714,11 @@
         <member name="T:UMapx.Imaging.SaltAndPepper">
             <summary>
             Defines the salt and pepper noise filter.
+            </summary>
             <remarks>
             Filter usage example:
             https://en.wikipedia.org/wiki/Salt-and-pepper_noise
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.SaltAndPepper.#ctor">
             <summary>
@@ -23784,12 +23784,12 @@
         <member name="T:UMapx.Imaging.ShadowsHighlightsCorrection">
             <summary>
             Defines the shadows and lights correction filter.
+            </summary>
             <remarks>
             Shadow-Highlights correction is used to correct unevenly lit images. Unlike other local algorithms
             (for example, Single Scale Retinex, Homomorphic Enhancement, Flat-Field Correction) filter allows you to adjust the brightness values separately in dark and bright areas
             Images.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.ShadowsHighlightsCorrection.#ctor(System.Int32,UMapx.Imaging.Space,System.Single,System.Single)">
             <summary>
@@ -24005,11 +24005,11 @@
         <member name="T:UMapx.Imaging.SingleScaleRetinex">
             <summary>
             Defines the Single Scale Retinex filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://dragon.larc.nasa.gov/background/pubabs/papers/gspx1.pdf
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.SingleScaleRetinex.#ctor(System.Int32,UMapx.Imaging.Space,System.Single,System.Single,System.Single)">
             <summary>
@@ -24349,11 +24349,11 @@
         <member name="T:UMapx.Imaging.StereoAnaglyph">
             <summary>
             Defines the stereo effect filter for a pair of images.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://www.3dtv.at/Knowhow/AnaglyphComparison_en.aspx
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.StereoAnaglyph.#ctor(UMapx.Imaging.AnaglyphMode)">
             <summary>
@@ -24383,11 +24383,11 @@
         <member name="T:UMapx.Imaging.StereoDisparity">
             <summary>
             Defines the stereo disparity filter for a pair of images.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://docs.opencv.org/master/d3/d14/tutorial_ximgproc_disparity_filtering.html
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.StereoDisparity.#ctor(System.Int32,System.Int32,System.Single)">
             <summary>
@@ -24455,10 +24455,10 @@
         <member name="T:UMapx.Imaging.TemperatureCorrection">
             <summary>
             Defines the temperature correction filter.
+            </summary>
             <remarks>
             The filter uses an approximation of the Planck curve.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.TemperatureCorrection.#ctor(System.Single,System.Single)">
             <summary>
@@ -24722,11 +24722,11 @@
         <member name="T:UMapx.Imaging.ToneDiffusionDithering">
             <summary>
             Defines the tone diffusion dithering filter.
+            </summary>
             <remarks>
             Filter usage example:
             https://en.wikipedia.org/wiki/Dither
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.ToneDiffusionDithering.#ctor">
             <summary>
@@ -24759,13 +24759,13 @@
         <member name="M:UMapx.Imaging.ToneDiffusionDithering.Order(System.Int32)">
             <summary>
             Initializes the order dithering filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://en.wikipedia.org/wiki/Ordered_dithering
             Filter usage example:
             https://en.wikipedia.org/wiki/Dither
             </remarks>
-            </summary>
             <param name="radius">Radius [0, 255]</param>
             <returns>Tone diffusion dithering filter</returns>
         </member>
@@ -24917,11 +24917,11 @@
         <member name="T:UMapx.Imaging.Water">
             <summary>
             Defines the water filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Water.#ctor(System.Int32)">
             <summary>
@@ -24947,11 +24947,11 @@
         <member name="T:UMapx.Imaging.Wiener">
             <summary>
             Defines the Wiener filter for local noise reduction.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wiener_filter
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Imaging.Wiener.#ctor(System.Int32,System.Single)">
             <summary>
@@ -25135,13 +25135,13 @@
         <member name="T:UMapx.Response.FIR">
             <summary>
             Defines a filter with a finite impulse response.
+            </summary>
             <remarks>
             A filter with a finite impulse response (transverse filter, FIR filter or FIR filter) is one of the types of linear
             digital filters, a characteristic feature of which is the limited time of its impulse response
             (from some point in time it becomes exactly equal to zero). Such a filter is also called non-recursive due to the lack of feedback.
             The denominator of the transfer function of such a filter is a certain constant.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Response.FIR.#ctor">
             <summary>
@@ -25217,13 +25217,13 @@
         <member name="T:UMapx.Response.IIR">
             <summary>
             Defines a filter with an infinite impulse response.
+            </summary>
             <remarks>
             Filter with infinite impulse response (recursive filter, IIR filter or IIR filter) - a linear electronic filter,
             using one or more of its outputs as an input, i.e. forms a feedback. The main property of such filters
             is that their impulse response is of infinite length in the time domain, and the transfer function
             has a fractional rational look.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Response.IIR.#ctor">
             <summary>
@@ -25350,12 +25350,12 @@
         <member name="T:UMapx.Transform.BilateralFilter">
             <summary>
             Defines the bilateral filter.
+            </summary>
             <remarks>
             Optimized implementation.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Bilateral_filter
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Transform.BilateralFilter.#ctor(System.Int32,System.Single,System.Int32,System.Single)">
             <summary>
@@ -25453,12 +25453,12 @@
         <member name="T:UMapx.Transform.BilateralGridFilter">
             <summary>
             Defines the bilateral filter.
+            </summary>
             <remarks>
             Fast implementation of the bilateral filter (real-time).
             More information can be found on the website:
             https://www.researchgate.net/publication/220184523_Real-time_edge-aware_image_processing_with_the_bilateral_grid
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Transform.BilateralGridFilter.#ctor(System.Single,System.Single,System.Single)">
             <summary>
@@ -25570,11 +25570,11 @@
         <member name="T:UMapx.Transform.CosineTransform">
             <summary>
             Defines the cosine transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Discrete_cosine_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.CosineTransform.direction">
             <summary>
@@ -25658,11 +25658,11 @@
         <member name="T:UMapx.Transform.DeltaTransform">
             <summary>
             Defines the delta transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Delta_encoding
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Transform.DeltaTransform.#ctor(UMapx.Core.Direction)">
             <summary>
@@ -25734,12 +25734,12 @@
         <member name="T:UMapx.Transform.DomainTransformFilter">
             <summary>
             Defines the domain transform filter.
+            </summary>
             <remarks>
             This filter is a computationally effective analogue of a bilateral filter.
             More information can be found on the website:
             http://www.inf.ufrgs.br/~eslgastal/DomainTransform/Gastal_Oliveira_SIGGRAPH2011_Domain_Transform.pdf
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Transform.DomainTransformFilter.#ctor(System.Single,System.Single,System.Int32,System.Single)">
             <summary>
@@ -25881,11 +25881,11 @@
         <member name="T:UMapx.Transform.FastCosineTransform">
             <summary>
             Defines the fast cosine transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Discrete_cosine_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FastCosineTransform.FFT">
             <summary>
@@ -25967,12 +25967,12 @@
         <member name="T:UMapx.Transform.FastFourierTransform">
             <summary>
             Defines the fast Fourier transform using the Cooley-Tukey and Bluestein algorithms.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
             https://en.wikipedia.org/wiki/Chirp_Z-transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FastFourierTransform.direction">
             <summary>
@@ -26161,11 +26161,11 @@
         <member name="T:UMapx.Transform.FastHartleyTransform">
             <summary>
             Defines the fast Hartley transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Discrete_Hartley_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FastHartleyTransform.FFT">
             <summary>
@@ -26248,13 +26248,13 @@
         <member name="T:UMapx.Transform.FastHilbertTransform">
             <summary>
             Defines the fast Hilbert transform.
+            </summary>
             <remarks>
             NOT RECOMMENDED.
             
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hilbert_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FastHilbertTransform.FFT">
             <summary>
@@ -26342,11 +26342,11 @@
         <member name="T:UMapx.Transform.FastLaplaceTransform">
             <summary>
             Defines the fast Laplace transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Laplace_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FastLaplaceTransform.FFT">
             <summary>
@@ -26374,10 +26374,10 @@
         <member name="P:UMapx.Transform.FastLaplaceTransform.Sigma">
             <summary>
             Gets or sets the damping factor (0, 1).
+            </summary>
             <remarks>
             If σ = 0, then the Laplace transform takes the form of a Fourier transform.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Transform.FastLaplaceTransform.Normalized">
             <summary>
@@ -26462,6 +26462,7 @@
         <member name="T:UMapx.Transform.FastSineTransform">
             <summary>
             Defines the fast sine transform.
+            </summary>
             <remarks>
             NOT RECOMMENDED.
             This algorithm is less effective than the fast cosine transform.
@@ -26469,7 +26470,6 @@
             More information can be found on the website:
             http://sernam.ru/book_prett1.php?id=91
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FastSineTransform.FFT">
             <summary>
@@ -26551,11 +26551,11 @@
         <member name="T:UMapx.Transform.FastWalshHadamardTransform">
             <summary>
             Defines the fast Walsh-Hadamard transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://www.mathworks.com/matlabcentral/fileexchange/6879-fast-walsh-hadamard-transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FastWalshHadamardTransform.direction">
             <summary>
@@ -26655,11 +26655,11 @@
         <member name="T:UMapx.Transform.FourierTransform">
             <summary>
             Defines the Fourier transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Discrete_Fourier_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FourierTransform.normalized">
             <summary>
@@ -26806,11 +26806,11 @@
         <member name="T:UMapx.Transform.GaussianPyramidTransform">
             <summary>
             Defines the Gaussian pyramid transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Transform.GaussianPyramidTransform.#ctor">
             <summary>
@@ -27021,12 +27021,12 @@
         <member name="T:UMapx.Transform.GuidedFilter">
             <summary>
             Defines the guided filter.
+            </summary>
             <remarks>
             This filter is a computationally effective analogue of a bilateral filter.
             More information can be found on the website:
             http://kaiminghe.com/eccv10/index.html
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Transform.GuidedFilter.#ctor(System.Int32,System.Single,System.Single)">
             <summary>
@@ -27044,10 +27044,10 @@
         <member name="P:UMapx.Transform.GuidedFilter.Eps">
             <summary>
             Gets or sets the value of the epsilon (0, 1).
+            </summary>
             <remarks>
             Optimal value ε = 0.025.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Transform.GuidedFilter.Factor">
             <summary>
@@ -27121,6 +27121,7 @@
         <member name="T:UMapx.Transform.HankelTransform">
             <summary>
             Defines the Hankel transform.
+            </summary>
             <remarks>
             NOT RECOMMENDED.
             There is no fast O(N log N) algorithm for this transform.
@@ -27128,7 +27129,6 @@
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hankel_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.HankelTransform.direction">
             <summary>
@@ -27235,11 +27235,11 @@
         <member name="T:UMapx.Transform.HartleyTransform">
             <summary>
             Defines the Hartley transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Discrete_Hartley_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.HartleyTransform.normalized">
             <summary>
@@ -27334,13 +27334,13 @@
         <member name="T:UMapx.Transform.HilbertTransform">
             <summary>
             Defines the Hilbert transform.
+            </summary>
             <remarks>
             NOT RECOMMENDED.
             
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Hilbert_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.HilbertTransform.DFT">
             <summary>
@@ -27585,11 +27585,11 @@
         <member name="T:UMapx.Transform.LaplaceTransform">
             <summary>
             Defines the Laplace transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Laplace_transform
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.LaplaceTransform.sigma">
             <summary>
@@ -27617,10 +27617,10 @@
         <member name="P:UMapx.Transform.LaplaceTransform.Sigma">
             <summary>
             Gets or sets the damping factor (0, 1).
+            </summary>
             <remarks>
             If σ = 0, then the Laplace transform takes the form of a Fourier transform.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Transform.LaplaceTransform.Normalized">
             <summary>
@@ -27700,11 +27700,11 @@
         <member name="T:UMapx.Transform.LaplacianPyramidFilter">
             <summary>
             Defines the Laplace pyramid filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Transform.LaplacianPyramidFilter.#ctor(UMapx.Transform.LaplacianPyramidTransform,System.Single)">
             <summary>
@@ -27750,11 +27750,11 @@
         <member name="T:UMapx.Transform.LaplacianPyramidTransform">
             <summary>
             Defines the Laplacian pyramid transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Transform.LaplacianPyramidTransform.#ctor">
             <summary>
@@ -27865,11 +27865,11 @@
         <member name="T:UMapx.Transform.LocalLaplacianFilter">
             <summary>
             Defines the local Laplace pyramid filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://people.csail.mit.edu/sparis/publi/2011/siggraph/
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.LocalLaplacianFilter.sigma">
             <summary>
@@ -28208,11 +28208,11 @@
         <member name="T:UMapx.Transform.SineTransform">
             <summary>
             Defines the sine transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://sernam.ru/book_prett1.php?id=91
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.SineTransform.direction">
             <summary>
@@ -28377,11 +28377,11 @@
         <member name="T:UMapx.Transform.WalshHadamardTransform">
             <summary>
             Defines the Walsh-Hadamard transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             http://kibia.ru/teachers/kreindelin/pdf/2.pdf
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Transform.WalshHadamardTransform.normalized">
             <summary>
@@ -31308,116 +31308,116 @@
         <member name="T:UMapx.Wavelet.WaveletPack">
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
             <summary>
             Defines the discrete wavelet.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.BL2">
             <summary>
@@ -31442,10 +31442,10 @@
         <member name="P:UMapx.Wavelet.WaveletPack.Bior11">
             <summary>
             Returns a biorthogonal wavelet 1.1.
+            </summary>
             <remarks>
             Haar wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.Bior13">
             <summary>
@@ -31610,10 +31610,10 @@
         <member name="P:UMapx.Wavelet.WaveletPack.D1">
             <summary>
             Returns Daubechies wavelet of 1 order.
+            </summary>
             <remarks>
             Haar wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.D2">
             <summary>
@@ -31803,10 +31803,10 @@
         <member name="P:UMapx.Wavelet.WaveletPack.Fbsp100">
             <summary>
             Returns B-spline wavelet 1-0-0.
+            </summary>
             <remarks>
             Haar wavelet (delayed).
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.Fbsp103">
             <summary>
@@ -31899,74 +31899,74 @@
         <member name="P:UMapx.Wavelet.WaveletPack.L1">
             <summary>
             Returns Legendre wavelet of 1 order.
+            </summary>
             <remarks>
             Haar wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.L2">
             <summary>
             Returns Legendre wavelet of 2 order.
+            </summary>
             <remarks>
             Nonorthogonal wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.L3">
             <summary>
             Returns Legendre wavelet of 3 order.
+            </summary>
             <remarks>
             Nonorthogonal wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.L4">
             <summary>
             Returns Legendre wavelet of 4 order.
+            </summary>
             <remarks>
             Nonorthogonal wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.L5">
             <summary>
             Returns Legendre wavelet of 5 order.
+            </summary>
             <remarks>
             Nonorthogonal wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.L6">
             <summary>
             Returns Legendre wavelet of 6 order.
+            </summary>
             <remarks>
             Nonorthogonal wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.L7">
             <summary>
             Returns Legendre wavelet of 7 order.
+            </summary>
             <remarks>
             Nonorthogonal wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.L8">
             <summary>
             Returns Legendre wavelet of 8 order.
+            </summary>
             <remarks>
             Nonorthogonal wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.L9">
             <summary>
             Returns Legendre wavelet of 9 order.
+            </summary>
             <remarks>
             Nonorthogonal wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.Meyer">
             <summary>
@@ -31976,10 +31976,10 @@
         <member name="P:UMapx.Wavelet.WaveletPack.S1">
             <summary>
             Returns wavelet symlet of 1 order.
+            </summary>
             <remarks>
             Haar wavelet.
             </remarks>
-            </summary>
         </member>
         <member name="P:UMapx.Wavelet.WaveletPack.S2">
             <summary>
@@ -32158,11 +32158,11 @@
         <member name="T:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition">
             <summary>
             Defines the edge-avoiding wavelet decomposition.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://www.cs.huji.ac.il/w~raananf/projects/eaw/
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Wavelet.EdgeAvoidingWaveletDecomposition.#ctor(System.Single,System.Single,System.Int32)">
             <summary>
@@ -32246,11 +32246,11 @@
         <member name="T:UMapx.Wavelet.EdgeAvoidingWaveletFilter">
             <summary>
             Defines the edge-avoiding wavelet filter.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://www.cs.huji.ac.il/w~raananf/projects/eaw/
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Wavelet.EdgeAvoidingWaveletFilter.#ctor(UMapx.Wavelet.EdgeAvoidingWaveletDecomposition,System.Single)">
             <summary>
@@ -32669,13 +32669,13 @@
         <member name="T:UMapx.Wavelet.WaveletDecomposition">
             <summary>
             Defines a discrete wavelet decomposition.
+            </summary>
             <remarks>
             For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
             
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Discrete_wavelet_transform
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Wavelet.WaveletDecomposition.#ctor(UMapx.Wavelet.WaveletPack,System.Int32,System.Boolean)">
             <summary>
@@ -32827,11 +32827,11 @@
         <member name="T:UMapx.Wavelet.WaveletFilter">
             <summary>
             Defines the wavelet filter.
+            </summary>
             <remarks>
             For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
             It is recommended to use Coiflets (C1, C2, C3, C4 and C5).
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Wavelet.WaveletFilter.#ctor(UMapx.Wavelet.WaveletDecomposition,System.Single)">
             <summary>
@@ -32877,13 +32877,13 @@
         <member name="T:UMapx.Wavelet.WaveletTransform">
             <summary>
             Defines a discrete wavelet transform.
+            </summary>
             <remarks>
             For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
             
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Discrete_wavelet_transform
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Wavelet.WaveletTransform.#ctor(UMapx.Wavelet.WaveletDecomposition)">
             <summary>
@@ -33136,11 +33136,11 @@
         <member name="T:UMapx.Window.FastRealWeylHeisenbergTransform">
             <summary>
             Defines fast real Weyl-Heisenberg transform.
+            </summary>
             <remarks>
             The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete real orthogonal
             Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
             <summary>
@@ -33209,11 +33209,11 @@
         <member name="T:UMapx.Window.FastShortTimeFourierTransform">
             <summary>
             Defines fast short-time Fourier transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Short-time_Fourier_transform
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Window.FastShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
             <summary>
@@ -33297,18 +33297,18 @@
         <member name="T:UMapx.Window.FastWeylHeisenbergTransform">
             <summary>
             Defines fast Weyl-Heisenberg transform.
+            </summary>
             <remarks>
             The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
             Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
             </remarks>
-            </summary>
             <summary>
             Defines fast Weyl-Heisenberg transform.
+            </summary>
             <remarks>
             The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
             Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
              <summary>
@@ -33387,11 +33387,11 @@
             t<sub>n0</sub>[r] = g[r*M + (n0 + M/2) mod M], dimensions [M, L]</description></item>
             </list>
             </para>
+            </summary>
             <remarks>
             The cache is specific to a given combination of (N, M, window function).
             If the window changes, the cache must be rebuilt.
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.N">
             <summary>
@@ -33524,10 +33524,10 @@
         <member name="P:UMapx.Window.FastZakTransform.M">
             <summary>
             Gets or sets number of frequency shifts [4, N/2].
+            </summary>
             <remarks>
             Even number.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Window.FastZakTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
@@ -33955,11 +33955,11 @@
         <member name="T:UMapx.Window.RealWeylHeisenbergTransform">
             <summary>
             Defines a group of real orthogonal bases and discrete Weyl-Heisenberg transforms.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://ieeexplore.ieee.org/document/8711969/
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
             <summary>
@@ -33972,10 +33972,10 @@
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32)">
             <summary>
             Returns the real Weyl-Heisenberg basis matrix.
+            </summary>
             <remarks>
             Matrix dimension [2N, 2N], where N = M * L.
             </remarks>
-            </summary>
             <param name="g0">Function</param>
             <param name="M">Number of frequency shifts [4, N/4]</param>
             <returns>Matrix</returns>
@@ -33983,10 +33983,10 @@
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
             <summary>
             Returns the real Weyl-Heisenberg basis matrix.
+            </summary>
             <remarks>
             Matrix dimension [2N, 2N], where N = M * L.
             </remarks>
-            </summary>
             <param name="window">Windows function</param>
             <param name="N">Number of samples</param>
             <param name="M">Number of frequency shifts [4, N/4]</param>
@@ -33996,10 +33996,10 @@
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
             <summary>
             Returns the real Weyl-Heisenberg basis matrix.
+            </summary>
             <remarks>
             Matrix dimension [2N, 2N], where N = M * L.
             </remarks>
-            </summary>
             <param name="g0">Function</param>
             <param name="M">Number of frequency shifts [4, N/4]</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
@@ -34064,11 +34064,11 @@
         <member name="T:UMapx.Window.ShortTimeFourierTransform">
             <summary>
             Defines short-time Fourier transform.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Short-time_Fourier_transform
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Window.ShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
             <summary>
@@ -34242,11 +34242,11 @@
         <member name="T:UMapx.Window.WeylHeisenbergTransform">
             <summary>
             Defines a group of orthogonal bases and discrete Weyl-Heisenberg transforms.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://ieeexplore.ieee.org/document/8711969/
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Window.WeylHeisenbergTransform.window">
             <summary>
@@ -34289,10 +34289,10 @@
         <member name="M:UMapx.Window.WeylHeisenbergTransform.Matrix(System.Single[],System.Int32)">
             <summary>
             Returns the complex Weyl-Heisenberg basis matrix.
+            </summary>
             <remarks>
             Matrix dimension [N, 2N], where N = M * L.
             </remarks>
-            </summary>
             <param name="g0">Function</param>
             <param name="M">Number of frequency shifts</param>
             <returns>Matrix</returns>
@@ -34300,10 +34300,10 @@
         <member name="M:UMapx.Window.WeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
             <summary>
             Returns the complex Weyl-Heisenberg basis matrix.
+            </summary>
             <remarks>
             Matrix dimension [N, 2N], where N = M * L.
             </remarks>
-            </summary>
             <param name="window">Windows function</param>
             <param name="N">Number of samples</param>
             <param name="M">Number of frequency shifts [4, N/2]</param>
@@ -34313,10 +34313,10 @@
         <member name="M:UMapx.Window.WeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
             <summary>
             Returns the complex Weyl-Heisenberg basis matrix.
+            </summary>
             <remarks>
             Matrix dimension [N, 2N], where N = M * L.
             </remarks>
-            </summary>
             <param name="g0">Function</param>
             <param name="M">Number of frequency shifts [4, N/2]</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
@@ -34389,11 +34389,11 @@
         <member name="T:UMapx.Window.WindowBase">
             <summary>
             Defines the class for window functions.
+            </summary>
             <remarks>
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Window_function
             </remarks>
-            </summary>
         </member>
         <member name="F:UMapx.Window.WindowBase.frameSize">
             <summary>
@@ -34462,10 +34462,10 @@
         <member name="P:UMapx.Window.ZakTransform.M">
             <summary>
             Gets or sets number of frequency shifts [4, N/2].
+            </summary>
             <remarks>
             Even number.
             </remarks>
-            </summary>
         </member>
         <member name="M:UMapx.Window.ZakTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
