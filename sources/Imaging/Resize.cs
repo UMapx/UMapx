@@ -225,7 +225,7 @@ namespace UMapx.Imaging
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
             byte* dst = (byte*)bmData.Scan0.ToPointer();
 
-            // coordinates of source points and cooefficiens
+            // coordinates of source points and coefficients
             float ox, oy, dx, dy, k1, k2;
             int ox1, oy1, ox2, oy2;
             // destination pixel values
