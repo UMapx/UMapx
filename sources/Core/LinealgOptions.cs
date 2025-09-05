@@ -26,8 +26,8 @@ namespace UMapx.Core
             /// <summary>
             /// Iterative calculation of the determinant.
             /// </summary>
-            /// <param name="element">"Element</param>
-            /// <param name="n">Radius</param>
+            /// <param name="element">Element</param>
+            /// <param name="n">Matrix size</param>
             /// <returns>Value</returns>
             public unsafe static float Determinant(float* element, int n)
             {
@@ -73,8 +73,8 @@ namespace UMapx.Core
             /// <summary>
             /// Iterative calculation of the determinant.
             /// </summary>
-            /// <param name="element">"Element</param>
-            /// <param name="n">Radius</param>
+            /// <param name="element">Element</param>
+            /// <param name="n">Matrix size</param>
             /// <returns>Complex number</returns>
             public unsafe static Complex32 Determinant(Complex32* element, int n)
             {
