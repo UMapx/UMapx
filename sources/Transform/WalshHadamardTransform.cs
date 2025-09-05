@@ -72,6 +72,12 @@ namespace UMapx.Transform
         /// <returns>Matrix</returns>
         public static float[,] Matrix(int powOf2)
         {
+            if (powOf2 < 0)
+                throw new ArgumentOutOfRangeException(nameof(powOf2), "Power must be non-negative");
+
+            if (powOf2 == 0)
+                return new float[1, 1] { { 1 } };
+
             int iterations = powOf2 - 1;
             float[,] hadamard = WalshHadamardTransform.Matrix();
 

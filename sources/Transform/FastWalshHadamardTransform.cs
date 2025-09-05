@@ -589,6 +589,9 @@ namespace UMapx.Transform
         {
             int N = data.Length;
 
+            if (N == 1)
+                return;
+
             if (!Maths.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
@@ -626,6 +629,9 @@ namespace UMapx.Transform
         private void FWHT(Complex32[] data)
         {
             int N = data.Length;
+
+            if (N == 1)
+                return;
 
             if (!Maths.IsPower(N, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
