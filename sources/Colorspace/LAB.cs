@@ -149,7 +149,7 @@ namespace UMapx.Colorspace
 
         #region CIE Lab convert
         /// <summary>
-        /// Converts a color model CIE Lab in model CIE XYZ.
+        /// Converts from CIE Lab to CIE XYZ.
         /// </summary>
         /// <param name="l">Component L</param>
         /// <param name="a">Component a</param>
@@ -172,7 +172,7 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Converts a color model CIE Lab in model CIE XYZ.
+        /// Converts from CIE Lab to CIE XYZ.
         /// </summary>
         /// <param name="lab">CIE Lab structure</param>
         /// <returns>CIE XYZ structure</returns>
@@ -181,7 +181,7 @@ namespace UMapx.Colorspace
             return LAB.ToXYZ(lab.L, lab.A, lab.B);
         }
         /// <summary>
-        /// Converts a color model RGB in model CIE Lab.
+        /// Converts from RGB to CIE Lab.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -192,7 +192,7 @@ namespace UMapx.Colorspace
             return XYZ.ToLAB(XYZ.FromRGB(red, green, blue));
         }
         /// <summary>
-        /// Converts a color model RGB in model CIE Lab.
+        /// Converts from RGB to CIE Lab.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>CIE Lab structure</returns>
@@ -204,7 +204,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model CIE Lab in model RGB.
+        /// Converts from CIE Lab to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

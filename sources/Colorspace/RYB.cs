@@ -162,7 +162,7 @@ namespace UMapx.Colorspace
 
         #region RYB convert
         /// <summary>
-        /// Converts a color model RGB in model RYB.
+        /// Converts from RGB to RYB.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -213,7 +213,7 @@ namespace UMapx.Colorspace
             return new RYB(r, y, b);
         }
         /// <summary>
-        /// Converts a color model RGB in model RYB.
+        /// Converts from RGB to RYB.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>RYB structure</returns>
@@ -225,7 +225,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model RYB in model RGB.
+        /// Converts from RYB to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

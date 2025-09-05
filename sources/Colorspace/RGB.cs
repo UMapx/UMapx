@@ -224,7 +224,7 @@ namespace UMapx.Colorspace
 
         #region HEX convert
         /// <summary>
-        /// Converts a color model HEX in model RGB.
+        /// Converts from HEX to RGB.
         /// </summary>
         /// <param name="hexColor">HEX</param>
         /// <returns>RGB structure</returns>
@@ -251,7 +251,7 @@ namespace UMapx.Colorspace
                 );
         }
         /// <summary>
-        /// Converts a color model RGB in model HEX.
+        /// Converts from RGB to HEX.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -262,7 +262,7 @@ namespace UMapx.Colorspace
             return String.Format("#{0:x2}{1:x2}{2:x2}", red, green, blue);
         }
         /// <summary>
-        /// Converts a color model RGB in model HEX.
+        /// Converts from RGB to HEX.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>Text as a sequence of Unicode characters</returns>

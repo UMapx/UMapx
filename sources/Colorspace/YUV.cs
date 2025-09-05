@@ -149,7 +149,7 @@ namespace UMapx.Colorspace
 
         #region YUV convert
         /// <summary>
-        /// Converts a color model RGB in model YUV.
+        /// Converts from RGB to YUV.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -168,7 +168,7 @@ namespace UMapx.Colorspace
             return new YUV(Y, U, V);
         }
         /// <summary>
-        /// Converts a color model RGB in model YUV.
+        /// Converts from RGB to YUV.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>YUV structure</returns>
@@ -180,7 +180,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model YUV in model RGB.
+        /// Converts from YUV to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

@@ -168,7 +168,7 @@ namespace UMapx.Colorspace
 
         #region CMYK convert
         /// <summary>
-        /// Converts a color model RGB in model CMYK.
+        /// Converts from RGB to CMYK.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -193,7 +193,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Converts a color model RGB to the CMYK model.
+        /// Converts from RGB to CMYK.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>CMYK structure</returns>
@@ -205,7 +205,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model CMYK in model RGB.
+        /// Converts from CMYK to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

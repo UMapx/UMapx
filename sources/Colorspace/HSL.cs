@@ -150,7 +150,7 @@ namespace UMapx.Colorspace
 
         #region HSL convert
         /// <summary>
-        /// Converts a color model RGB in model HSL.
+        /// Converts from RGB to HSL.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -207,7 +207,7 @@ namespace UMapx.Colorspace
             return new HSL(h, s, l);
         }
         /// <summary>
-        /// Converts a color model RGB in model HSL.
+        /// Converts from RGB to HSL.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>HSL structure</returns>
@@ -219,7 +219,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model HSL in model RGB.
+        /// Converts from HSL to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

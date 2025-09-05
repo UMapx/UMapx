@@ -149,7 +149,7 @@ namespace UMapx.Colorspace
 
         #region YCgCo convert
         /// <summary>
-        /// Converts a color model RGB in model YCgCo.
+        /// Converts from RGB to YCgCo.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -168,7 +168,7 @@ namespace UMapx.Colorspace
             return new YCgCo(Y, Cg, Co);
         }
         /// <summary>
-        /// Converts a color model RGB in model YCgCo.
+        /// Converts from RGB to YCgCo.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>YCgCo structure</returns>
@@ -180,7 +180,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model YCgCo in model RGB.
+        /// Converts from YCgCo to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

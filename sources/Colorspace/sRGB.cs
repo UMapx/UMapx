@@ -149,7 +149,7 @@ namespace UMapx.Colorspace
 
         #region sRGB convert
         /// <summary>
-        /// Converts a color model RGB in model sRGB.
+        /// Converts from RGB to sRGB.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -164,7 +164,7 @@ namespace UMapx.Colorspace
             return new sRGB(r, g, b);
         }
         /// <summary>
-        /// Converts a color model RGB in model sRGB.
+        /// Converts from RGB to sRGB.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>sRGB structure</returns>
@@ -176,7 +176,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model sRGB in model RGB.
+        /// Converts from sRGB to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

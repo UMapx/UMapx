@@ -149,7 +149,7 @@ namespace UMapx.Colorspace
 
         #region YPbPr convert
         /// <summary>
-        /// Converts a color model RGB in model YPbPr.
+        /// Converts from RGB to YPbPr.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -168,7 +168,7 @@ namespace UMapx.Colorspace
             return new YPbPr(Y, Cb, Cr);
         }
         /// <summary>
-        /// Converts a color model RGB in model YPbPr.
+        /// Converts from RGB to YPbPr.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>YPbPr structure</returns>
@@ -180,7 +180,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model YPbPr in model RGB.
+        /// Converts from YPbPr to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

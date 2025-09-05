@@ -149,7 +149,7 @@ namespace UMapx.Colorspace
 
         #region YIQ convert
         /// <summary>
-        /// Converts a color model RGB in model YIQ.
+        /// Converts from RGB to YIQ.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -168,7 +168,7 @@ namespace UMapx.Colorspace
             return new YIQ(Y, I, Q);
         }
         /// <summary>
-        /// Converts a color model RGB in model YIQ.
+        /// Converts from RGB to YIQ.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>YIQ structure</returns>
@@ -180,7 +180,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model YIQ in model RGB.
+        /// Converts from YIQ to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

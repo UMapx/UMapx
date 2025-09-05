@@ -149,7 +149,7 @@ namespace UMapx.Colorspace
 
         #region YDbDr convert
         /// <summary>
-        /// Converts a color model RGB in model YDbDr.
+        /// Converts from RGB to YDbDr.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
@@ -168,7 +168,7 @@ namespace UMapx.Colorspace
             return new YDbDr(Y, Cb, Cr);
         }
         /// <summary>
-        /// Converts a color model RGB in model YDbDr.
+        /// Converts from RGB to YDbDr.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
         /// <returns>YDbDr structure</returns>
@@ -180,7 +180,7 @@ namespace UMapx.Colorspace
 
         #region RGB convert
         /// <summary>
-        /// Converts a color model YDbDr in model RGB.
+        /// Converts from YDbDr to RGB.
         /// </summary>
         /// <returns>RGB structure</returns>
         public RGB ToRGB

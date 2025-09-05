@@ -1721,7 +1721,7 @@
         </member>
         <member name="M:UMapx.Colorspace.AHSL.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model AHSL.
+            Converts from RGB to AHSL.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -1730,14 +1730,14 @@
         </member>
         <member name="M:UMapx.Colorspace.AHSL.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model AHSL.
+            Converts from RGB to AHSL.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>AHSL structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.AHSL.ToRGB">
             <summary>
-            Converts a color model AHSL in model RGB.
+            Converts from AHSL to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -1824,7 +1824,7 @@
         </member>
         <member name="M:UMapx.Colorspace.CMYK.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model CMYK.
+            Converts from RGB to CMYK.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -1833,14 +1833,14 @@
         </member>
         <member name="M:UMapx.Colorspace.CMYK.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB to the CMYK model.
+            Converts from RGB to CMYK.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>CMYK structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.CMYK.ToRGB">
             <summary>
-            Converts a color model CMYK in model RGB.
+            Converts from CMYK to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -1921,7 +1921,7 @@
         </member>
         <member name="M:UMapx.Colorspace.HSB.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model HSB.
+            Converts from RGB to HSB.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -1930,14 +1930,14 @@
         </member>
         <member name="M:UMapx.Colorspace.HSB.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model HSB.
+            Converts from RGB to HSB.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>HSB structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.HSB.ToRGB">
             <summary>
-            Converts a color model HSB in model RGB.
+            Converts from HSB to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -2018,7 +2018,7 @@
         </member>
         <member name="M:UMapx.Colorspace.HSL.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model HSL.
+            Converts from RGB to HSL.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -2027,14 +2027,14 @@
         </member>
         <member name="M:UMapx.Colorspace.HSL.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model HSL.
+            Converts from RGB to HSL.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>HSL structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.HSL.ToRGB">
             <summary>
-            Converts a color model HSL in model RGB.
+            Converts from HSL to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -2125,7 +2125,7 @@
         </member>
         <member name="M:UMapx.Colorspace.LAB.ToXYZ(System.Single,System.Single,System.Single)">
             <summary>
-            Converts a color model CIE Lab in model CIE XYZ.
+            Converts from CIE Lab to CIE XYZ.
             </summary>
             <param name="l">Component L</param>
             <param name="a">Component a</param>
@@ -2134,14 +2134,14 @@
         </member>
         <member name="M:UMapx.Colorspace.LAB.ToXYZ(UMapx.Colorspace.LAB)">
             <summary>
-            Converts a color model CIE Lab in model CIE XYZ.
+            Converts from CIE Lab to CIE XYZ.
             </summary>
             <param name="lab">CIE Lab structure</param>
             <returns>CIE XYZ structure</returns>
         </member>
         <member name="M:UMapx.Colorspace.LAB.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model CIE Lab.
+            Converts from RGB to CIE Lab.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -2150,14 +2150,14 @@
         </member>
         <member name="M:UMapx.Colorspace.LAB.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model CIE Lab.
+            Converts from RGB to CIE Lab.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>CIE Lab structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.LAB.ToRGB">
             <summary>
-            Converts a color model CIE Lab in model RGB.
+            Converts from CIE Lab to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -2265,14 +2265,14 @@
         </member>
         <member name="M:UMapx.Colorspace.RGB.FromHEX(System.String)">
             <summary>
-            Converts a color model HEX in model RGB.
+            Converts from HEX to RGB.
             </summary>
             <param name="hexColor">HEX</param>
             <returns>RGB structure</returns>
         </member>
         <member name="M:UMapx.Colorspace.RGB.ToHEX(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model HEX.
+            Converts from RGB to HEX.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -2281,7 +2281,7 @@
         </member>
         <member name="M:UMapx.Colorspace.RGB.ToHEX(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model HEX.
+            Converts from RGB to HEX.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>Text as a sequence of Unicode characters</returns>
@@ -2605,7 +2605,7 @@
         </member>
         <member name="M:UMapx.Colorspace.RYB.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model RYB.
+            Converts from RGB to RYB.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -2614,14 +2614,14 @@
         </member>
         <member name="M:UMapx.Colorspace.RYB.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model RYB.
+            Converts from RGB to RYB.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>RYB structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.RYB.ToRGB">
             <summary>
-            Converts a color model RYB in model RGB.
+            Converts from RYB to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -2702,7 +2702,7 @@
         </member>
         <member name="M:UMapx.Colorspace.sRGB.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model sRGB.
+            Converts from RGB to sRGB.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -2711,14 +2711,14 @@
         </member>
         <member name="M:UMapx.Colorspace.sRGB.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model sRGB.
+            Converts from RGB to sRGB.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>sRGB structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.sRGB.ToRGB">
             <summary>
-            Converts a color model sRGB in model RGB.
+            Converts from sRGB to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -3109,7 +3109,7 @@
         </member>
         <member name="M:UMapx.Colorspace.XYZ.ToLAB(System.Single,System.Single,System.Single)">
             <summary>
-            Converts a color model CIE XYZ in model CIE Lab.
+            Converts from CIE XYZ to CIE Lab.
             </summary>
             <param name="x">Component X</param>
             <param name="y">Component Y</param>
@@ -3118,14 +3118,14 @@
         </member>
         <member name="M:UMapx.Colorspace.XYZ.ToLAB(UMapx.Colorspace.XYZ)">
             <summary>
-            Converts a color model CIE XYZ in model CIE Lab.
+            Converts from CIE XYZ to CIE Lab.
             </summary>
             <param name="xyz">CIE XYZ structure</param>
             <returns>CIE Lab structure</returns>
         </member>
         <member name="M:UMapx.Colorspace.XYZ.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model CIE XYZ.
+            Converts from RGB to CIE XYZ.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -3134,7 +3134,7 @@
         </member>
         <member name="M:UMapx.Colorspace.XYZ.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model CIE XYZ.
+            Converts from RGB to CIE XYZ.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>CIE XYZ structure</returns>
@@ -3148,7 +3148,7 @@
         </member>
         <member name="P:UMapx.Colorspace.XYZ.ToRGB">
             <summary>
-            Converts a color model CIE XYZ in model RGB.
+            Converts from CIE XYZ to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -3229,7 +3229,7 @@
         </member>
         <member name="M:UMapx.Colorspace.YCbCr.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model YCbCr.
+            Converts from RGB to YCbCr.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -3238,14 +3238,14 @@
         </member>
         <member name="M:UMapx.Colorspace.YCbCr.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model YCbCr.
+            Converts from RGB to YCbCr.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>YCbCr structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.YCbCr.ToRGB">
             <summary>
-            Converts a color model YCbCr in model RGB.
+            Converts from YCbCr to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -3326,7 +3326,7 @@
         </member>
         <member name="M:UMapx.Colorspace.YCgCo.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model YCgCo.
+            Converts from RGB to YCgCo.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -3335,14 +3335,14 @@
         </member>
         <member name="M:UMapx.Colorspace.YCgCo.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model YCgCo.
+            Converts from RGB to YCgCo.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>YCgCo structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.YCgCo.ToRGB">
             <summary>
-            Converts a color model YCgCo in model RGB.
+            Converts from YCgCo to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -3423,7 +3423,7 @@
         </member>
         <member name="M:UMapx.Colorspace.YDbDr.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model YDbDr.
+            Converts from RGB to YDbDr.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -3432,14 +3432,14 @@
         </member>
         <member name="M:UMapx.Colorspace.YDbDr.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model YDbDr.
+            Converts from RGB to YDbDr.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>YDbDr structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.YDbDr.ToRGB">
             <summary>
-            Converts a color model YDbDr in model RGB.
+            Converts from YDbDr to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -3520,7 +3520,7 @@
         </member>
         <member name="M:UMapx.Colorspace.YIQ.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model YIQ.
+            Converts from RGB to YIQ.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -3529,14 +3529,14 @@
         </member>
         <member name="M:UMapx.Colorspace.YIQ.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model YIQ.
+            Converts from RGB to YIQ.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>YIQ structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.YIQ.ToRGB">
             <summary>
-            Converts a color model YIQ in model RGB.
+            Converts from YIQ to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -3617,7 +3617,7 @@
         </member>
         <member name="M:UMapx.Colorspace.YPbPr.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model YPbPr.
+            Converts from RGB to YPbPr.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -3626,14 +3626,14 @@
         </member>
         <member name="M:UMapx.Colorspace.YPbPr.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model YPbPr.
+            Converts from RGB to YPbPr.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>YPbPr structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.YPbPr.ToRGB">
             <summary>
-            Converts a color model YPbPr in model RGB.
+            Converts from YPbPr to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
@@ -3714,7 +3714,7 @@
         </member>
         <member name="M:UMapx.Colorspace.YUV.FromRGB(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Converts a color model RGB in model YUV.
+            Converts from RGB to YUV.
             </summary>
             <param name="red">Red [0, 255]</param>
             <param name="green">Green [0, 255]</param>
@@ -3723,14 +3723,14 @@
         </member>
         <member name="M:UMapx.Colorspace.YUV.FromRGB(UMapx.Colorspace.RGB)">
             <summary>
-            Converts a color model RGB in model YUV.
+            Converts from RGB to YUV.
             </summary>
             <param name="rgb">RGB structure</param>
             <returns>YUV structure</returns>
         </member>
         <member name="P:UMapx.Colorspace.YUV.ToRGB">
             <summary>
-            Converts a color model YUV in model RGB.
+            Converts from YUV to RGB.
             </summary>
             <returns>RGB structure</returns>
         </member>
