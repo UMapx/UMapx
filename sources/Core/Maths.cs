@@ -69,22 +69,22 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Converts a value to a Byte type.
+        /// Converts a value to an <see cref="sbyte"/> type and clamps it to the range [-128, 127].
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Byte</returns>
+        /// <returns>sbyte</returns>
         public static sbyte sByte(float x)
         {
-            return (sbyte)((x > 128) ? 128 : ((x < -128) ? -128 : x));
+            return (sbyte)((x > 127) ? 127 : ((x < -128) ? -128 : x));
         }
         /// <summary>
-        /// Converts a value to a Byte type.
+        /// Converts a value to an <see cref="sbyte"/> type and clamps it to the range [-128, 127].
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Byte</returns>
+        /// <returns>sbyte</returns>
         public static sbyte sByte(int x)
         {
-            return (sbyte)((x > 128) ? 128 : ((x < -128) ? -128 : x));
+            return (sbyte)((x > 127) ? 127 : ((x < -128) ? -128 : x));
         }
 
         /// <summary>
