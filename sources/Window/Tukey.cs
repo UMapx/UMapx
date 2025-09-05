@@ -10,7 +10,7 @@ namespace UMapx.Window
     public class Tukey : WindowBase
     {
         #region Private data
-        private float a = 3;
+        private float a = 1;
         #endregion
 
         #region Window components
