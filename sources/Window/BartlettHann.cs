@@ -4,17 +4,17 @@ using UMapx.Core;
 namespace UMapx.Window
 {
     /// <summary>
-    /// Defines the Barlett-Hann window function.
+    /// Defines the Bartlett-Hann window function.
     /// </summary>
     [Serializable]
-    public class BarlettHann : WindowBase
+    public class BartlettHann : WindowBase
     {
         #region Window components
         /// <summary>
-        /// Initializes the Barlett-Hann window function.
+        /// Initializes the Bartlett-Hann window function.
         /// </summary>
         /// <param name="frameSize">Window size</param>
-        public BarlettHann(int frameSize)
+        public BartlettHann(int frameSize)
         {
             this.FrameSize = frameSize;
         }
