@@ -140,7 +140,7 @@ namespace UMapx.Imaging
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
-            // coordinates of source points and cooefficiens
+            // coordinates of source points and coefficients
             float ox, oy, dx, dy, k1, k2;
             int ox1, oy1, ox2, oy2;
             // destination pixel values
@@ -367,7 +367,7 @@ namespace UMapx.Imaging
             float xFactor = (float)width / w;
             float yFactor = (float)height / h;
 
-            // coordinates of source points and cooefficiens
+            // coordinates of source points and coefficients
             float ox, oy, dx, dy, k1, k2;
             int ox1, oy1, ox2, oy2;
             float g;
