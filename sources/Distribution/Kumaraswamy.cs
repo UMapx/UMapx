@@ -4,7 +4,7 @@ using UMapx.Core;
 namespace UMapx.Distribution
 {
     /// <summary>
-    /// Defines the distribution of Kumaraswa.
+    /// Defines the distribution of Kumaraswamy.
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Kumaraswamy_distribution
@@ -20,7 +20,7 @@ namespace UMapx.Distribution
 
         #region Distribution
         /// <summary>
-        /// Initializes the distribution of Kumarasva.
+        /// Initializes the distribution of Kumaraswamy.
         /// </summary>
         /// <param name="a">Form parameter a > 0</param>
         /// <param name="b">Form parameter b > 0</param>
