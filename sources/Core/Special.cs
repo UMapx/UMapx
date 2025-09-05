@@ -90,10 +90,10 @@ namespace UMapx.Core
         /// Returns the value of the Abel polynomial.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <param name="a">Power</param>
+        /// <param name="a">Complex power</param>
         /// <param name="n">Order</param>
         /// <returns>Value</returns>
-        public static Complex32 Abel(Complex32 x, float a, int n)
+        public static Complex32 Abel(Complex32 x, Complex32 a, int n)
         {
             if (n < 0) return Complex32.NaN;
             if (n == 0) return 1;
