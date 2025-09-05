@@ -318,7 +318,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Initializes the Flyd-Steinberg dithering filter.
+        /// Initializes the Floyd-Steinberg dithering filter.
         /// </summary>
         /// <returns>Error diffusion dithering filter</returns>
         public static ErrorDiffusionDithering FloydSteinberg
