@@ -1,3 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UMapx</name>
+    </assembly>
+    <members>
+        <member name="T:UMapx.Analysis.Approximation">
+            <summary>
+            Defines the least squares approximation class.
+            <remarks>
+            This class is a solution to the problem of finding the function A (x) ≈ F (x), where F (x) is the original function.
+            More information can be found on the website:
+            http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
+            </remarks>
+            </summary>
             Gets the value of the modulus.
             Calculates the modulus for all matrix elements.
             Calculates the modulus for all matrix elements.
@@ -13,3 +28,5 @@
             Returns matrix angle.
             Returns matrix angle.
             Returns the value of the quaternion modulus.
+            <returns>Value; returns 0 if either vector has zero magnitude.</returns>
+            <returns>Value; returns 0 if either vector has zero magnitude.</returns>
