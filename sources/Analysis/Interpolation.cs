@@ -64,7 +64,7 @@ namespace UMapx.Analysis
         /// <returns>Value</returns>
         public float Compute(float[] x, float[] y, float xl)
         {
-            // chose method of interpolation
+            // choose method of interpolation
             switch (method)
             {
                 case InterpolationMethod.Newton:
@@ -90,7 +90,7 @@ namespace UMapx.Analysis
         /// <returns>Complex number</returns>
         public Complex32 Compute(Complex32[] x, Complex32[] y, Complex32 xl)
         {
-            // chose method of interpolation
+            // choose method of interpolation
             switch (method)
             {
                 case InterpolationMethod.Newton:
