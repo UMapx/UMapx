@@ -1653,7 +1653,7 @@
             <summary>
             Creates an instance of the AHSL structure.
             </summary>
-            <param name="h">Hue [0, 360]</param>
+            <param name="h">Hue [0, 359]</param>
             <param name="s">Saturation [0, 255]</param>
             <param name="l">Lightness [-100, 100]</param>
         </member>
@@ -5834,7 +5834,7 @@
             <param name="x">Value</param>
             <param name="xmin">Minimum value</param>
             <param name="xmax">Maximum value</param>
-            <returns>Boolean</returns>
+            <returns>float</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Range(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -5843,7 +5843,7 @@
             <param name="x">Value</param>
             <param name="xmin">Minimum value</param>
             <param name="xmax">Maximum value</param>
-            <returns>Boolean</returns>
+            <returns>int</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Scale(System.Single,System.Single,System.Single)">
             <summary>
@@ -5852,7 +5852,7 @@
             <param name="x">Value</param>
             <param name="xmin">Minimum value</param>
             <param name="xmax">Maximum value</param>
-            <returns>Boolean</returns>
+            <returns>float</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Scale(System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -5861,7 +5861,7 @@
             <param name="x">Value</param>
             <param name="xmin">Minimum value</param>
             <param name="xmax">Maximum value</param>
-            <returns>Boolean</returns>
+            <returns>int</returns>
         </member>
         <member name="M:UMapx.Core.Maths.IsSingular(System.Single)">
             <summary>
@@ -6570,7 +6570,7 @@
             </summary>
             <param name="a">Value</param>
             <param name="n">Modulo</param>
-            <returns>Integer number</returns>
+            <returns>float</returns>
         </member>
         <member name="M:UMapx.Core.Maths.ModPow(System.Int32,System.Int32,System.Int32,System.Boolean)">
             <summary>
@@ -10916,7 +10916,7 @@
         </member>
         <member name="M:UMapx.Core.Operator.Roberts(UMapx.Core.Gradient)">
             <summary>
-            Implements the construction of the Roberts operator [3 x 3]. [2 x 2].
+            Implements the construction of the Roberts operator [2 x 2].
             </summary>
             <param name="direction">Gradient direction</param>
             <returns>Matrix</returns>
@@ -16919,21 +16919,23 @@
         </member>
         <member name="T:UMapx.Distribution.Rayleigh">
             <summary>
-            Defines the logarithmic distribution of Rayleigh.
+            Defines the Rayleigh distribution.
             </summary>
             <remarks>
+            The Rayleigh distribution is a continuous probability distribution for non-negative values,
+            often used to model the magnitude of a two-dimensional vector with independent Gaussian components.
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Rayleigh_distribution
             </remarks>
         </member>
         <member name="M:UMapx.Distribution.Rayleigh.#ctor">
             <summary>
-            Initializes the Rayleigh logarithmic distribution.
+            Initializes the Rayleigh distribution.
             </summary>
         </member>
         <member name="M:UMapx.Distribution.Rayleigh.#ctor(System.Single)">
             <summary>
-            Initializes the Rayleigh logarithmic distribution.
+            Initializes the Rayleigh distribution with a specified scale parameter.
             </summary>
             <param name="sigma">Scale parameter</param>
         </member>
