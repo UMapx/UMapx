@@ -812,7 +812,7 @@ namespace UMapx.Core
             {
                 if (p[i] != 0 || q[i] != 0)
                 {
-                    if (p[i] == q[i])
+                    if (Maths.Abs(p[i] - q[i]) < 1e-8f)
                         inter++;
                     union++;
                 }
@@ -864,7 +864,7 @@ namespace UMapx.Core
             {
                 if (p[i] != 0 || q[i] != 0)
                 {
-                    if (p[i] == q[i])
+                    if (Maths.Abs(p[i] - q[i]) < 1e-8f)
                         inter++;
                     union++;
                 }
