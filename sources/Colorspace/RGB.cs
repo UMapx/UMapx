@@ -230,15 +230,49 @@ namespace UMapx.Colorspace
         /// <returns>RGB structure</returns>
         public static RGB FromHEX(string hexColor)
         {
-            string r, g, b;
+            if (string.IsNullOrWhiteSpace(hexColor))
+            {
+                throw new ArgumentException("hexColor");
+            }
 
-            // Trim and normalize to uppercase to handle case-insensitive HEX values
-            hexColor = hexColor.Trim().ToUpperInvariant();
-            if (hexColor[0] == '#') hexColor = hexColor.Substring(1, hexColor.Length - 1);
+            // Trim and remove '#'
+            hexColor = hexColor.Trim();
+            if (hexColor.StartsWith("#"))
+            {
+                hexColor = hexColor.Substring(1);
+            }
 
-            r = hexColor.Substring(0, 2);
-            g = hexColor.Substring(2, 2);
-            b = hexColor.Substring(4, 2);
+            // Length must be 3 or 6
+            if (hexColor.Length != 3 && hexColor.Length != 6)
+            {
+                throw new ArgumentException("hexColor");
+            }
+
+            // Expand shorthand HEX code (e.g. FFF -> FFFFFF)
+            if (hexColor.Length == 3)
+            {
+                hexColor = new string(new[]
+                {
+                    hexColor[0], hexColor[0],
+                    hexColor[1], hexColor[1],
+                    hexColor[2], hexColor[2]
+                });
+            }
+
+            hexColor = hexColor.ToUpperInvariant();
+
+            // Validate characters
+            foreach (char c in hexColor)
+            {
+                if (!Uri.IsHexDigit(c))
+                {
+                    throw new ArgumentException("hexColor");
+                }
+            }
+
+            string r = hexColor.Substring(0, 2);
+            string g = hexColor.Substring(2, 2);
+            string b = hexColor.Substring(4, 2);
 
             r = Convert.ToString(16 * GetIntFromHex(r.Substring(0, 1)) + GetIntFromHex(r.Substring(1, 1)));
             g = Convert.ToString(16 * GetIntFromHex(g.Substring(0, 1)) + GetIntFromHex(g.Substring(1, 1)));
