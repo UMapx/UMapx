@@ -18,7 +18,7 @@ namespace UMapx.Distribution
         private float x0 = 0;
         #endregion
 
-        #region Caushi components
+        #region Cauchy components
         /// <summary>
         /// Initializes the Cauchy distribution.
         /// </summary>
@@ -154,6 +154,6 @@ namespace UMapx.Distribution
                 return Maths.Log(4 * Maths.Pi * g);
             }
         }
-        #endregion
+        #endregion Cauchy components
     }
 }
