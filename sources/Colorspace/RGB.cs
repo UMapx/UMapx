@@ -350,7 +350,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard (PAL/NTSC).
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
+        /// <param name="rgb">sRGB structure</param>
         /// <returns>Value</returns>
         public static float PAL(sRGB rgb)
         {
