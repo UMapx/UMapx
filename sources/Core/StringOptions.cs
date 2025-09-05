@@ -109,7 +109,7 @@ namespace UMapx.Core
         /// Example: "1 + 2i", "0.321 + 11i", ".1i".
         /// </remarks>
         /// <param name="s">Input string</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Complex32 value</returns>
         public static Complex32 Compar(string s)
         {
             string u = s.Replace(" ", "");
