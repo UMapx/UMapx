@@ -16,7 +16,7 @@ namespace UMapx.Distribution
         #region Private data
         private float sigma = 1;
         private float mu = 0;
-        #endregion;
+        #endregion
 
         #region GaussianLog components
         /// <summary>

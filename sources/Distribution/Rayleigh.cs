@@ -15,7 +15,7 @@ namespace UMapx.Distribution
     {
         #region Private data
         private float sigma = 1;
-        #endregion;
+        #endregion
 
         #region Rayleigh components
         /// <summary>
