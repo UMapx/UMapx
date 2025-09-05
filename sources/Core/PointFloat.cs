@@ -64,7 +64,7 @@ namespace UMapx.Core
             return x.GetHashCode() ^ y.GetHashCode();
         }
         /// <summary>
-        /// Converts a PointDouble to its corresponding string representation.
+        /// Converts a PointFloat to its corresponding string representation.
         /// </summary>
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
@@ -72,7 +72,7 @@ namespace UMapx.Core
             return string.Format("({0}, {1})", x, y);
         }
         /// <summary>
-        /// Gets a value indicating whether this instance is equal to the specified value of type PointDouble.
+        /// Gets a value indicating whether this instance is equal to the specified value of type PointFloat.
         /// </summary>
         /// <param name="obj">Object</param>
         /// <returns>Boolean</returns>
@@ -84,7 +84,7 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Checks if two PointDouble objects are equal.
+        /// Checks if two PointFloat objects are equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>
@@ -94,7 +94,7 @@ namespace UMapx.Core
             return (a.X == b.X && a.Y == b.Y);
         }
         /// <summary>
-        /// Checks if two PointDouble objects are not equal.
+        /// Checks if two PointFloat objects are not equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>
@@ -107,7 +107,7 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Creates a copy of PointDouble.
+        /// Creates a copy of PointFloat.
         /// </summary>
         /// <returns>Pair of numbers</returns>
         object ICloneable.Clone()
@@ -115,7 +115,7 @@ namespace UMapx.Core
             return new PointFloat(x, y);
         }
         /// <summary>
-        /// Creates a copy of PointDouble.
+        /// Creates a copy of PointFloat.
         /// </summary>
         /// <returns>Pair of numbers</returns>
         public PointFloat Clone()
