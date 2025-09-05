@@ -131,7 +131,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Maths.Exp(4 * sigma * sigma) + 2.0f * Maths.Exp(3 * sigma * sigma) + 3.0f * Maths.Exp(3 * sigma * sigma) - 6.0f;
+                return (float)Maths.Exp(4 * sigma * sigma) + 2.0f * Maths.Exp(3 * sigma * sigma) + 3.0f * Maths.Exp(2 * sigma * sigma) - 6.0f;
             }
         }
         /// <summary>
@@ -141,7 +141,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            if (x < 0)
+            if (x <= 0)
             {
                 return 0;
             }
@@ -154,11 +154,11 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            if (x < 0)
+            if (x <= 0)
             {
                 return 0;
             }
-            return 0.5f + 0.5f * Special.Erf((Maths.Log(x) - mu) / Maths.Sqrt(sigma * Maths.Sqrt2));
+            return 0.5f + 0.5f * Special.Erf((Maths.Log(x) - mu) / (sigma * Maths.Sqrt2));
         }
         /// <summary>
         /// Returns the value of differential entropy.
