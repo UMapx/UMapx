@@ -6696,7 +6696,7 @@ namespace UMapx.Core
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
-            // coordinates of source points and cooefficiens
+            // coordinates of source points and coefficients
             float ox, oy, dx, dy, k1, k2;
             int ox1, oy1, ox2, oy2;
             // destination pixel values
@@ -7090,7 +7090,7 @@ namespace UMapx.Core
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
-            // coordinates of source points and cooefficiens
+            // coordinates of source points and coefficients
             float ox, oy, dx, dy, k1, k2;
             int ox1, oy1, ox2, oy2;
             // destination pixel values
@@ -7215,7 +7215,7 @@ namespace UMapx.Core
             float xFactor = (float)width / w;
             float yFactor = (float)height / h;
 
-            // coordinates of source points and cooefficiens
+            // coordinates of source points and coefficients
             float ox, oy, dx, dy, k1, k2;
             int ox1, oy1, ox2, oy2;
             float g;
@@ -7421,7 +7421,7 @@ namespace UMapx.Core
             float xFactor = (float)width / w;
             float yFactor = (float)height / h;
 
-            // coordinates of source points and cooefficiens
+            // coordinates of source points and coefficients
             float ox, oy, dx, dy, k1, k2;
             int ox1, oy1, ox2, oy2;
             Complex32 g;
@@ -7623,7 +7623,7 @@ namespace UMapx.Core
 
             float yFactor = (float)height / h;
 
-            // coordinates of source points and cooefficiens
+            // coordinates of source points and coefficients
             float oy, dy, k1;
             int oy1, oy2;
             float g;
@@ -7779,7 +7779,7 @@ namespace UMapx.Core
 
             float yFactor = (float)height / h;
 
-            // coordinates of source points and cooefficiens
+            // coordinates of source points and coefficients
             float oy, dy, k1;
             int oy1, oy2;
             Complex32 g;
