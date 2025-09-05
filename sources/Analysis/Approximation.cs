@@ -72,7 +72,7 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public float[] Compute(float[] x, float[] y)
         {
-            // chose method of approximation
+            // choose method of approximation
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
@@ -97,7 +97,7 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public float[] Compute(float[] x, float[] y, out float[] cf)
         {
-            // chose method of approximation
+            // choose method of approximation
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
@@ -123,7 +123,7 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public float[] Compute(float[] x, float[] y, out float[] cf, out float similarity)
         {
-            // chose method of approximation
+            // choose method of approximation
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
@@ -150,7 +150,7 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public float[] Compute(float[] x, float[] y, out float[] cf, out float similarity, out string equation)
         {
-            // chose method of approximation
+            // choose method of approximation
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
@@ -175,7 +175,7 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public Complex32[] Compute(Complex32[] x, Complex32[] y)
         {
-            // chose method of approximation
+            // choose method of approximation
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
@@ -200,7 +200,7 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf)
         {
-            // chose method of approximation
+            // choose method of approximation
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
@@ -226,7 +226,7 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf, out Complex32 similarity)
         {
-            // chose method of approximation
+            // choose method of approximation
             switch (method)
             {
                 case ApproximationMethod.Polynomial:
@@ -253,7 +253,7 @@ namespace UMapx.Analysis
         /// <returns>Array</returns>
         public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf, out Complex32 similarity, out string equation)
         {
-            // chose method of approximation
+            // choose method of approximation
             switch (method)
             {
                 case ApproximationMethod.Polynomial:

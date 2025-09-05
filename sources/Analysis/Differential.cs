@@ -48,7 +48,7 @@ namespace UMapx.Analysis
         /// <returns>Array of function values</returns>
         public float[] Compute(IFloatMesh function, float[] x, float y0)
         {
-            // chose method of differentiation
+            // choose method of differentiation
             switch (method)
             {
                 case DifferentialMethod.Euler:
@@ -73,7 +73,7 @@ namespace UMapx.Analysis
         /// <returns>Array of function values</returns>
         public Complex32[] Compute(IComplex32Mesh function, Complex32[] x, Complex32 y0)
         {
-            // chose method of differentiation
+            // choose method of differentiation
             switch (method)
             {
                 case DifferentialMethod.Euler:

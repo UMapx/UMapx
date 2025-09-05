@@ -65,7 +65,7 @@ namespace UMapx.Analysis
         /// <returns>Value</returns>
         public float Compute(IFloat function, float a, float b)
         {
-            // chose method of nonlinear
+            // choose method of nonlinear
             switch (method)
             {
                 case NonlinearMethod.Chord:
@@ -87,7 +87,7 @@ namespace UMapx.Analysis
         /// <returns>Value</returns>
         public Complex32 Compute(IComplex32 function, Complex32 a, Complex32 b)
         {
-            // chose method of nonlinear
+            // choose method of nonlinear
             switch (method)
             {
                 case NonlinearMethod.Chord:
