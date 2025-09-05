@@ -40,7 +40,7 @@ namespace UMapx.Analysis
             }
         }
         /// <summary>
-        /// Returns the value of a derived function.
+        /// Returns the value of a derivative.
         /// </summary>
         /// <param name="function">Continuous function delegate</param>
         /// <param name="x">Argument value</param>
@@ -71,7 +71,7 @@ namespace UMapx.Analysis
             return sum / (float)Math.Pow(h, order);
         }
         /// <summary>
-        /// Returns the value of a derived function.
+        /// Returns the value of a derivative.
         /// </summary>
         /// <param name="y">Function vector</param>
         /// <param name="index">Index of argument</param>
@@ -102,7 +102,7 @@ namespace UMapx.Analysis
             return sum / (float)Math.Pow(h, order);
         }
         /// <summary>
-        /// Returns the value of a derived function.
+        /// Returns the value of a derivative.
         /// </summary>
         /// <param name="function">Continuous function delegate</param>
         /// <param name="x">Argument value</param>
@@ -133,7 +133,7 @@ namespace UMapx.Analysis
             return sum / Maths.Pow(h, order);
         }
         /// <summary>
-        /// Returns the value of a derived function.
+        /// Returns the value of a derivative.
         /// </summary>
         /// <param name="y">Function vector</param>
         /// <param name="index">Index of argument</param>
