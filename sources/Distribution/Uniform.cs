@@ -61,13 +61,13 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the support interval of the argument.
+        /// Gets the support interval of the argument [a, b].
         /// </summary>
         public RangeFloat Support
         {
             get
             {
-                return new RangeFloat(float.NegativeInfinity, float.PositiveInfinity);
+                return new RangeFloat(a, b);
             }
         }
         /// <summary>
@@ -91,13 +91,14 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode value. Since the uniform distribution has no unique mode,
+        /// the value is undefined and represented by <see cref="float.NaN"/>.
         /// </summary>
         public float Mode
         {
             get
             {
-                return (a - b) / 2.0f;
+                return float.NaN;
             }
         }
         /// <summary>
