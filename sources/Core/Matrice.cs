@@ -6414,7 +6414,7 @@ namespace UMapx.Core
             {
                 for (int j = 0; j < w; j++)
                 {
-                    H[j, i] = input[h - i - 1, w - j - 1];
+                    H[j, h - 1 - i] = input[i, j];
                 }
             }
 
@@ -6458,7 +6458,7 @@ namespace UMapx.Core
             {
                 for (int j = 0; j < w; j++)
                 {
-                    H[j, i] = input[i, w - j - 1];
+                    H[w - 1 - j, i] = input[i, j];
                 }
             }
 
@@ -6808,7 +6808,7 @@ namespace UMapx.Core
             {
                 for (int j = 0; j < w; j++)
                 {
-                    H[j, i] = input[h - i - 1, w - j - 1];
+                    H[j, h - 1 - i] = input[i, j];
                 }
             }
 
@@ -6852,7 +6852,7 @@ namespace UMapx.Core
             {
                 for (int j = 0; j < w; j++)
                 {
-                    H[j, i] = input[i, w - j - 1];
+                    H[w - 1 - j, i] = input[i, j];
                 }
             }
 
