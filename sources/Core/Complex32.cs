@@ -145,7 +145,7 @@ namespace UMapx.Core
             return new Complex32(a.Real + b, a.Imag);
         }
         /// <summary>
-        /// The sum of a complex number and a real number.
+        /// The sum of a real number and a complex number.
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
@@ -177,7 +177,7 @@ namespace UMapx.Core
             return new Complex32(a.Real - b, a.Imag);
         }
         /// <summary>
-        /// The difference between a complex number and a real number.
+        /// The difference of a real number and a complex number.
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Complex number</param>
