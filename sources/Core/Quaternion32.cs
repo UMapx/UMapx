@@ -67,7 +67,7 @@ namespace UMapx.Core
             }
         }
         /// <summary>
-        /// Returns the value of the quaternion module.
+        /// Returns the value of the quaternion modulus.
         /// </summary>
         public float Abs
         {

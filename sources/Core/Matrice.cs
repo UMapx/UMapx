@@ -2167,7 +2167,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Takes a module for all matrix elements.
+        /// Calculates the modulus for all matrix elements.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
@@ -2188,7 +2188,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Takes a module for all matrix elements.
+        /// Calculates the modulus for all matrix elements.
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <returns>Matrix</returns>
@@ -4763,7 +4763,7 @@ namespace UMapx.Core
             return u;
         }
         /// <summary>
-        /// Returns the module of the elements of the vector.
+        /// Returns the modulus of the elements of the vector.
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
@@ -4827,7 +4827,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Returns the module of elements of a complex vector.
+        /// Returns the modulus of elements of a complex vector.
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Array</returns>
@@ -8581,7 +8581,7 @@ namespace UMapx.Core
 
         #region Abs/Angle
         /// <summary>
-        /// Returns vector module.
+        /// Returns vector modulus.
         /// </summary>
         /// <param name="vector">Vector</param>
         /// <param name="squared">Squared or not</param>
@@ -8602,7 +8602,7 @@ namespace UMapx.Core
             return (float)Math.Sqrt(v);
         }
         /// <summary>
-        /// Returns matrix module.
+        /// Returns matrix modulus.
         /// </summary>
         /// <param name="matrix">Matrix</param>
         /// <param name="squared">Squared or not</param>
@@ -8628,7 +8628,7 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Returns vector module.
+        /// Returns vector modulus.
         /// </summary>
         /// <param name="vector">Vector</param>
         /// <param name="squared">Squared or not</param>
@@ -8649,7 +8649,7 @@ namespace UMapx.Core
             return Maths.Sqrt(v);
         }
         /// <summary>
-        /// Returns matrix module.
+        /// Returns matrix modulus.
         /// </summary>
         /// <param name="matrix">Matrix</param>
         /// <param name="squared">Squared or not</param>
@@ -8685,7 +8685,7 @@ namespace UMapx.Core
             return Angle(vector, vector);
         }
         /// <summary>
-        /// Returns matrix module.
+        /// Returns matrix angle.
         /// </summary>
         /// <param name="matrix">Matrix</param>
         /// <returns>Vector</returns>
@@ -8719,7 +8719,7 @@ namespace UMapx.Core
             return Angle(vector, vector);
         }
         /// <summary>
-        /// Returns matrix module.
+        /// Returns matrix angle.
         /// </summary>
         /// <param name="matrix">Matrix</param>
         /// <returns>Vector</returns>

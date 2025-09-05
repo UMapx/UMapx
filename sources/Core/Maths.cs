@@ -642,7 +642,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns complex number.
         /// </summary>
-        /// <param name="abs">Module</param>
+        /// <param name="abs">Modulus</param>
         /// <param name="angle">Angle</param>
         /// <returns>Complex number</returns>
         public static Complex32 FromPolar(float abs, float angle)
