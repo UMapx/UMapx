@@ -4,9 +4,11 @@ using UMapx.Core;
 namespace UMapx.Distribution
 {
     /// <summary>
-    /// Defines the logarithmic distribution of Rayleigh.
+    /// Defines the Rayleigh distribution.
     /// </summary>
     /// <remarks>
+    /// The Rayleigh distribution is a continuous probability distribution for non-negative values,
+    /// often used to model the magnitude of a two-dimensional vector with independent Gaussian components.
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Rayleigh_distribution
     /// </remarks>
@@ -19,11 +21,11 @@ namespace UMapx.Distribution
 
         #region Rayleigh components
         /// <summary>
-        /// Initializes the Rayleigh logarithmic distribution.
+        /// Initializes the Rayleigh distribution.
         /// </summary>
         public Rayleigh() { }
         /// <summary>
-        /// Initializes the Rayleigh logarithmic distribution.
+        /// Initializes the Rayleigh distribution with a specified scale parameter.
         /// </summary>
         /// <param name="sigma">Scale parameter</param>
         public Rayleigh(float sigma)
