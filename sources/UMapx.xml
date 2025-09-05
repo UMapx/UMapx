@@ -17202,7 +17202,7 @@
         </member>
         <member name="P:UMapx.Distribution.Uniform.Support">
             <summary>
-            Gets the support interval of the argument.
+            Gets the support interval of the argument [a, b].
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Uniform.Mean">
@@ -17217,7 +17217,8 @@
         </member>
         <member name="P:UMapx.Distribution.Uniform.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode value. Since the uniform distribution has no unique mode,
+            the value is undefined and represented by <see cref="F:System.Single.NaN"/>.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Uniform.Median">
