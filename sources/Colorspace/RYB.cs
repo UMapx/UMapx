@@ -32,7 +32,7 @@ namespace UMapx.Colorspace
         /// Creates an instance of the structure RYB.
         /// </summary>
         /// <param name="red">Red [0, 255]</param>
-        /// <param name="yellow">Green [0, 255]</param>
+        /// <param name="yellow">Yellow [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
         public RYB(float red, float yellow, float blue)
         {
