@@ -4,7 +4,7 @@ using UMapx.Core;
 namespace UMapx.Colorspace
 {
     /// <summary>
-    /// Defines a color model СMYK.
+    /// Defines a color model CMYK.
     /// </summary>
     [Serializable]
     public struct CMYK : IColorSpace, ICloneable
