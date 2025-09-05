@@ -178,7 +178,7 @@ namespace UMapx.Imaging
         /// <param name="a">Contrast [-1, 1]</param>
         /// <param name="b">Offset [-1, 1]</param>
         /// <returns>Value</returns>
-        public static float KsiContrastEnchancement(float x, float mu, float a, float b)
+        public static float KsiContrastEnhancement(float x, float mu, float a, float b)
         {
             // x ∈ [0, 1], μ ∈ [0, 1] - mean of x.
             // σ - variance, ξ - coefficient.
@@ -199,7 +199,7 @@ namespace UMapx.Imaging
         /// <param name="b">Offset [-1, 1]</param>
         /// <param name="length">Length</param>
         /// <returns>Matrix</returns>
-        public static float[,] KsiContrastEnchancement(float a, float b, int length)
+        public static float[,] KsiContrastEnhancement(float a, float b, int length)
         {
             float[,] table = new float[length, length];
             float w, v;
@@ -213,7 +213,7 @@ namespace UMapx.Imaging
                 {
                     v = y / (float)length;
 
-                    table[x, y] = Intensity.KsiContrastEnchancement(w, v, a, b);
+                    table[x, y] = Intensity.KsiContrastEnhancement(w, v, a, b);
                 }
             }
 

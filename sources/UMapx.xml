@@ -21077,7 +21077,7 @@
             <param name="length">Length</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Imaging.Intensity.KsiContrastEnchancement(System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:UMapx.Imaging.Intensity.KsiContrastEnhancement(System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Implements the ξ-contrast enhancement algorithm.
             </summary>
@@ -21087,7 +21087,7 @@
             <param name="b">Offset [-1, 1]</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Imaging.Intensity.KsiContrastEnchancement(System.Single,System.Single,System.Int32)">
+        <member name="M:UMapx.Imaging.Intensity.KsiContrastEnhancement(System.Single,System.Single,System.Int32)">
             <summary>
             Returns the correction mask.
             </summary>

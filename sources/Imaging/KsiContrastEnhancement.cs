@@ -87,7 +87,7 @@ namespace UMapx.Imaging
         /// </summary>
         protected override void Rebuild()
         {
-            this.values = Intensity.KsiContrastEnchancement(this.a, this.b, 256);
+            this.values = Intensity.KsiContrastEnhancement(this.a, this.b, 256);
         }
         #endregion
     }
