@@ -11,7 +11,7 @@ namespace UMapx.Core
     {
         #region Binaries
         /// <summary>
-        /// Save data from the file.
+        /// Save data to the file.
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <param name="o">Object</param>
@@ -21,7 +21,7 @@ namespace UMapx.Core
             xml.Serialize(stream, o);
         }
         /// <summary>
-        /// Save data from the file.
+        /// Save data to the file.
         /// </summary>
         /// <param name="fileName">File name</param>
         /// <param name="o">Object</param>
