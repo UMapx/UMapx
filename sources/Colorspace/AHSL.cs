@@ -17,7 +17,7 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Creates an instance of the structure HSL.
+        /// Creates an instance of the AHSL structure.
         /// </summary>
         /// <param name="h">Hue [0, 360]</param>
         /// <param name="s">Saturation [0, 255]</param>
@@ -76,8 +76,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">HSL structure</param>
-        /// <param name="item2">HSL structure</param>
+        /// <param name="item1">AHSL structure</param>
+        /// <param name="item2">AHSL structure</param>
         /// <returns>Boolean</returns>
         public static bool operator ==(AHSL item1, AHSL item2)
         {
@@ -90,8 +90,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">HSL structure</param>
-        /// <param name="item2">HSL structure</param>
+        /// <param name="item1">AHSL structure</param>
+        /// <param name="item2">AHSL structure</param>
         /// <returns>Boolean</returns>
         public static bool operator !=(AHSL item1, AHSL item2)
         {
@@ -155,7 +155,7 @@ namespace UMapx.Colorspace
         /// <param name="red">Red [0, 255]</param>
         /// <param name="green">Green [0, 255]</param>
         /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>HSL structure</returns>
+        /// <returns>AHSL structure</returns>
         public static AHSL FromRGB(int red, int green, int blue)
         {
             float s = 0, l = 0, h = 0;
@@ -169,19 +169,19 @@ namespace UMapx.Colorspace
             }
             else if (max == red && green >= blue)
             {
-                h = (int)(60 * (green - blue) / (max - min));
+                h = 60 * (green - blue) / (max - min);
             }
             else if (max == red && green < blue)
             {
-                h = (int)(60 * (green - blue) / (max - min) + 360);
+                h = 60 * (green - blue) / (max - min) + 360;
             }
             else if (max == green)
             {
-                h = (int)(60 * (blue - red) / (max - min) + 120);
+                h = 60 * (blue - red) / (max - min) + 120;
             }
             else if (max == blue)
             {
-                h = (int)(60 * (red - green) / (max - min) + 240);
+                h = 60 * (red - green) / (max - min) + 240;
             }
 
             float gray = (red + green + blue) / 3.0f;
@@ -212,7 +212,7 @@ namespace UMapx.Colorspace
         /// Converts a color model RGB in model AHSL.
         /// </summary>
         /// <param name="rgb">RGB structure</param>
-        /// <returns>HSL structure</returns>
+        /// <returns>AHSL structure</returns>
         public static AHSL FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
