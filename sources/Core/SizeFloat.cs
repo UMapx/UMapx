@@ -64,7 +64,7 @@ namespace UMapx.Core
             return width.GetHashCode() ^ height.GetHashCode();
         }
         /// <summary>
-        /// Converts a SizeDouble to its corresponding string representation.
+        /// Converts a SizeFloat to its corresponding string representation.
         /// </summary>
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
@@ -72,7 +72,7 @@ namespace UMapx.Core
             return string.Format("({0}, {1})", width, height);
         }
         /// <summary>
-        /// Gets a value indicating whether this instance is equal to the specified value of type SizeDouble.
+        /// Gets a value indicating whether this instance is equal to the specified value of type SizeFloat.
         /// </summary>
         /// <param name="obj">Object</param>
         /// <returns>Boolean</returns>
@@ -84,7 +84,7 @@ namespace UMapx.Core
 
         #region Bools
         /// <summary>
-        /// Checks if two SizeDouble objects are equal.
+        /// Checks if two SizeFloat objects are equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>
@@ -94,7 +94,7 @@ namespace UMapx.Core
             return (a.Width == b.Width && a.Height == b.Height);
         }
         /// <summary>
-        /// Checks if two SizeDouble objects are not equal.
+        /// Checks if two SizeFloat objects are not equal.
         /// </summary>
         /// <param name="a">Pair of numbers</param>
         /// <param name="b">Pair of numbers</param>
@@ -107,7 +107,7 @@ namespace UMapx.Core
 
         #region Clone members
         /// <summary>
-        /// Creates a copy of SizeDouble.
+        /// Creates a copy of SizeFloat.
         /// </summary>
         /// <returns>Pair of numbers</returns>
         object ICloneable.Clone()
@@ -115,7 +115,7 @@ namespace UMapx.Core
             return new SizeFloat(width, height);
         }
         /// <summary>
-        /// Creates a copy of SizeDouble.
+        /// Creates a copy of SizeFloat.
         /// </summary>
         /// <returns>Pair of numbers</returns>
         public SizeFloat Clone()
