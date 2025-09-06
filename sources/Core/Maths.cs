@@ -1438,6 +1438,8 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int Gcd(int a, int b)
         {
+            if (b == 0) return Math.Abs(a);
+
             int q = Maths.Mod(a, b);
             while (q != 0)
             {
@@ -1455,6 +1457,8 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static long Gcd(long a, long b)
         {
+            if (b == 0) return Math.Abs(a);
+
             long q = Maths.Mod(a, b);
             while (q != 0)
             {
