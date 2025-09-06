@@ -41,8 +41,8 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 0)
-                    throw new ArgumentException("Invalid argument value");
+                if (value <= 0)
+                    throw new ArgumentException("Lambda must be positive");
 
                 this.l = value;
             }
