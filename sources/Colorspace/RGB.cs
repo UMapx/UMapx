@@ -232,7 +232,7 @@ namespace UMapx.Colorspace
         {
             if (string.IsNullOrWhiteSpace(hexColor))
             {
-                throw new ArgumentException(nameof(hexColor));
+                throw new ArgumentException("Hex color string cannot be null or whitespace", nameof(hexColor));
             }
 
             // Trim and remove '#'
@@ -245,7 +245,7 @@ namespace UMapx.Colorspace
             // Length must be 3 or 6
             if (hexColor.Length != 3 && hexColor.Length != 6)
             {
-                throw new ArgumentException("hexColor");
+                throw new ArgumentException("Hex color string must be either 3 or 6 characters long", nameof(hexColor));
             }
 
             // Expand shorthand HEX code (e.g. FFF -> FFFFFF)
@@ -266,7 +266,7 @@ namespace UMapx.Colorspace
             {
                 if (!Uri.IsHexDigit(c))
                 {
-                    throw new ArgumentException("hexColor");
+                    throw new ArgumentException("Hex color string contains invalid characters", nameof(hexColor));
                 }
             }
 
