@@ -66,7 +66,7 @@ namespace UMapx.Imaging
         /// One-dimensional Perlin noise function.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>Value</returns>
         public double Function(double x)
         {
             double frequency = initFrequency;
@@ -88,7 +88,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="x">Value</param>
         /// <param name="y">Value</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>Value</returns>
         public double Function2D(double x, double y)
         {
             double frequency = initFrequency;

@@ -299,7 +299,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="Gx">Gradient X</param>
         /// <param name="Gy">Gradient Y</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float G(float Gx, float Gy)
         {
             return (float)Math.Sqrt(Gx * Gx + Gy * Gy);
@@ -309,7 +309,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="Gx">Gradient X</param>
         /// <param name="Gy">Gradient Y</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>Value</returns>
         public static float Tetta(float Gx, float Gy)
         {
             return (float)Math.Atan(Gx / Gy);

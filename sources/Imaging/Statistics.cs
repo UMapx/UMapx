@@ -249,7 +249,7 @@ namespace UMapx.Imaging
         /// <param name="init">Init</param>
         /// <param name="end">End</param>
         /// <param name="h">Histogram</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>Value</returns>
         private static int Omega(int init, int end, int[] h)
         {
             int sum = 0, i;
@@ -267,7 +267,7 @@ namespace UMapx.Imaging
         /// <param name="init">Init</param>
         /// <param name="end">End</param>
         /// <param name="h">Histogram</param>
-        /// <returns>Double precision floating point number</returns>
+        /// <returns>Value</returns>
         private static int Mu(int init, int end, int[] h)
         {
             int sum = 0, i;

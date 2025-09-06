@@ -19191,7 +19191,7 @@
             </summary>
             <param name="Gx">Gradient X</param>
             <param name="Gy">Gradient Y</param>
-            <returns>Double precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Convolution.Tetta(System.Single,System.Single)">
             <summary>
@@ -19199,7 +19199,7 @@
             </summary>
             <param name="Gx">Gradient X</param>
             <param name="Gy">Gradient Y</param>
-            <returns>Double precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Convolution.Gaussian(System.Int32,System.Int32,System.Single,System.Single)">
             <summary>
@@ -22736,7 +22736,7 @@
             One-dimensional Perlin noise function.
             </summary>
             <param name="x">Value</param>
-            <returns>Double precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.Function2D(System.Double,System.Double)">
             <summary>
@@ -22744,7 +22744,7 @@
             </summary>
             <param name="x">Value</param>
             <param name="y">Value</param>
-            <returns>Double precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.PerlinNoise.Noise(System.Int32)">
             <summary>
@@ -24249,7 +24249,7 @@
             <param name="init">Init</param>
             <param name="end">End</param>
             <param name="h">Histogram</param>
-            <returns>Double precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Statistics.Mu(System.Int32,System.Int32,System.Int32[])">
             <summary>
@@ -24258,7 +24258,7 @@
             <param name="init">Init</param>
             <param name="end">End</param>
             <param name="h">Histogram</param>
-            <returns>Double precision floating point number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Imaging.Statistics.Max(System.Int32[])">
             <summary>
