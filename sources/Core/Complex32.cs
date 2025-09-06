@@ -73,7 +73,7 @@ namespace UMapx.Core
             return this.Real.GetHashCode() ^ this.Imag.GetHashCode();
         }
         /// <summary>
-        /// Gets a value indicating whether this instance is equal to the given value of type Complex.
+        /// Gets a value indicating whether this instance is equal to the given value of type Complex32.
         /// </summary>
         /// <param name="obj">Object</param>
         /// <returns>Boolean</returns>
