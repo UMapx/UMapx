@@ -258,8 +258,12 @@ namespace UMapx.Core
         /// <returns>Boolean</returns>
         public static bool IsSquare(float n)
         {
-            float sq = (int)Math.Sqrt(n);
-            return (sq * sq == n);
+            if (n < 0 || float.IsNaN(n) || float.IsInfinity(n)) return false;
+            double s = Math.Sqrt(n);
+            long r = (long)Math.Floor(s + 0.5);   // nearest integer
+                                                  // compare in double to reduce rounding error; relative tolerance:
+            double diff = (double)r * r - (double)n;
+            return Math.Abs(diff) <= Math.Max(1.0, Math.Abs(n)) * 1e-7;
         }
         /// <summary>
         /// Checks whether a number is a power of another number.
@@ -880,7 +884,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Actan(Complex32 a)
         {
-            return I / 2.0 * (Maths.Log((a - I) / a) - Maths.Log((a + I) / a));
+            return (I / 2.0f) * (Maths.Log((a + I) / (a - I)));
         }
         /// <summary>
         /// Returns the arcsecance of a number.
@@ -1125,7 +1129,8 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Asech(Complex32 a)
         {
-            return Maths.Log(1.0 / a + Maths.Sqrt(1.0 / a + 1.0) + Maths.Sqrt(1.0 / a - 1.0));
+            var inv = 1.0f / a;
+            return Maths.Log(inv + Maths.Sqrt(inv + 1.0f) * Maths.Sqrt(inv - 1.0f));
         }
         /// <summary>
         /// Returns the hyperbolic arccosecant of a number.
@@ -1134,7 +1139,8 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Acosch(Complex32 a)
         {
-            return Maths.Log(1.0 / a + Maths.Sqrt(1.0 / a / a + 1.0));
+            var inv = 1.0f / a;
+            return Maths.Log(inv + Maths.Sqrt(inv * inv + 1.0f));
         }
         #endregion
         #endregion
