@@ -444,13 +444,13 @@ namespace UMapx.Imaging
 
         #region Fixed radius compass matrix
         /// <summary>
-        /// Implements the construction of the Kirsh operator [3 x 3].
+        /// Implements the construction of the Kirsch operator [3 x 3].
         /// </summary>
         /// <param name="direction">Gradient direction</param>
         /// <returns>Matrix</returns>
-        public static Convolution Kirsh(Gradient direction)
+        public static Convolution Kirsch(Gradient direction)
         {
-            return new Convolution(Operator.Kirsh(direction));
+            return new Convolution(Operator.Kirsch(direction));
         }
         /// <summary>
         /// Implements the construction of the Roberts operator [3 x 3]. [2 x 2].
