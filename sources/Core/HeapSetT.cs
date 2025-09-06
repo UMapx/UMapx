@@ -63,7 +63,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the rank.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Element</returns>
         public T GetRank() => low.Peek();
         #endregion
     }

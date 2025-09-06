@@ -4840,7 +4840,7 @@
             <summary>
             Returns the rank.
             </summary>
-            <returns></returns>
+            <returns>Element</returns>
         </member>
         <member name="T:UMapx.Core.Heap`1">
             <summary>
