@@ -102,7 +102,7 @@ namespace UMapx.Core
         /// </summary>
         private static readonly Random rnd = new Random();
         /// <summary>
-        /// Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
+        /// Constructs a matrix of random numbers with values uniformly distributed in the interval [0, 1).
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
@@ -125,7 +125,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
+        /// Constructs a complex matrix of random numbers whose real and imaginary parts are uniformly distributed in the interval [0, 1).
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
@@ -148,7 +148,7 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Implements the construction of a vector of integer random numbers.
+        /// Constructs a matrix of integer random numbers uniformly distributed between 1 and l (inclusive).
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
@@ -158,12 +158,12 @@ namespace UMapx.Core
             return Randi(m, l, 1, l + 1);
         }
         /// <summary>
-        /// Implements the construction of a vector of integer random numbers.
+        /// Constructs a matrix of integer random numbers uniformly distributed in the interval [<paramref name="a"/>, <paramref name="b"/>).
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
         /// <param name="a">Lower bound</param>
-        /// <param name="b">Upper bound</param>
+        /// <param name="b">Upper bound (exclusive)</param>
         /// <returns>Matrix</returns>
         public static float[][] Randi(int m, int l, int a, int b)
         {
@@ -183,7 +183,7 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements the construction of a vector of integer random numbers.
+        /// Constructs a complex matrix of integer random numbers whose real and imaginary parts are uniformly distributed between 1 and l (inclusive).
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
@@ -193,12 +193,12 @@ namespace UMapx.Core
             return Randic(m, l, 1, l + 1);
         }
         /// <summary>
-        /// Implements the construction of a vector of integer random numbers.
+        /// Constructs a complex matrix of integer random numbers whose real and imaginary parts are uniformly distributed in the interval [<paramref name="a"/>, <paramref name="b"/>).
         /// </summary>
         /// <param name="m">Height</param>
         /// <param name="l">Width</param>
         /// <param name="a">Lower bound</param>
-        /// <param name="b">Upper bound</param>
+        /// <param name="b">Upper bound (exclusive)</param>
         /// <returns>Matrix</returns>
         public static Complex32[][] Randic(int m, int l, int a, int b)
         {
