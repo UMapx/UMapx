@@ -4736,7 +4736,7 @@
             </summary>
             <param name="p">Vector</param>
             <param name="b">Vector</param>
-            <returns>Value; returns 0 if either vector has zero magnitude.</returns>
+            <returns>Value; returns 0 if either vector has zero magnitude</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Cosine(System.Single[0:,0:],System.Single[0:,0:])">
             <summary>
@@ -4752,7 +4752,7 @@
             </summary>
             <param name="p">Vector</param>
             <param name="b">Vector</param>
-            <returns>Value; returns 0 if either vector has zero magnitude.</returns>
+            <returns>Value; returns 0 if either vector has zero magnitude</returns>
         </member>
         <member name="M:UMapx.Core.Distance.Cosine(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
             <summary>
@@ -4869,13 +4869,13 @@
             <summary>
             Returns the element at the top of the heap without removing it.
             </summary>
-            <returns>Element at the top of the heap.</returns>
+            <returns>Element at the top of the heap</returns>
         </member>
         <member name="M:UMapx.Core.Heap`1.Extract">
             <summary>
             Extracts an item from the heap.
             </summary>
-            <returns>The removed root element.</returns>
+            <returns>The removed root element</returns>
         </member>
         <member name="T:UMapx.Core.InterpolationMode">
             <summary>
@@ -20202,7 +20202,7 @@
             <summary>
             Computes the determinant of the 3×3 matrix.
             </summary>
-            <returns>Determinant value.</returns>
+            <returns>Determinant value</returns>
             <remarks>
             Implementation expands along the first column.
             </remarks>
@@ -20211,7 +20211,7 @@
             <summary>
             Returns the inverse matrix using the classical adjugate / determinant formula.
             </summary>
-            <returns>Inverse matrix.</returns>
+            <returns>Inverse matrix</returns>
             <remarks>
             <para>
             Numerical note: if the matrix is singular or nearly singular (|det| ≈ 0),

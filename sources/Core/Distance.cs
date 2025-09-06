@@ -1629,7 +1629,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Vector</param>
         /// <param name="b">Vector</param>
-        /// <returns>Value; returns 0 if either vector has zero magnitude.</returns>
+        /// <returns>Value; returns 0 if either vector has zero magnitude</returns>
         public static float Cosine(this float[] p, float[] b)
         {
             int length = p.Length;
@@ -1678,7 +1678,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="p">Vector</param>
         /// <param name="b">Vector</param>
-        /// <returns>Value; returns 0 if either vector has zero magnitude.</returns>
+        /// <returns>Value; returns 0 if either vector has zero magnitude</returns>
         public static Complex32 Cosine(this Complex32[] p, Complex32[] b)
         {
             int length = p.Length;

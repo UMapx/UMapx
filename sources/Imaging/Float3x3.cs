@@ -146,7 +146,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Computes the determinant of the 3×3 matrix.
         /// </summary>
-        /// <returns>Determinant value.</returns>
+        /// <returns>Determinant value</returns>
         /// <remarks>
         /// Implementation expands along the first column.
         /// </remarks>
@@ -166,7 +166,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the inverse matrix using the classical adjugate / determinant formula.
         /// </summary>
-        /// <returns>Inverse matrix.</returns>
+        /// <returns>Inverse matrix</returns>
         /// <remarks>
         /// <para>
         /// Numerical note: if the matrix is singular or nearly singular (|det| ≈ 0),
