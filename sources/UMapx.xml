@@ -10471,6 +10471,14 @@
             <param name="v">Array</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Toeplitz(System.Single[],System.Single[])">
+            <summary>
+            Implements the construction of the general Toeplitz matrix.
+            </summary>
+            <param name="v">Array</param>
+            <param name="r">Array</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Cauchy(System.Single[],System.Single[])">
             <summary>
             Implements the construction of the Cauchy matrix.
@@ -10533,6 +10541,14 @@
             Implements the construction of the Toeplitz matrix.
             </summary>
             <param name="v">Array</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Toeplitz(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Implements the construction of the general Toeplitz matrix.
+            </summary>
+            <param name="v">Array</param>
+            <param name="r">Array</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Matrice.Cauchy(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
