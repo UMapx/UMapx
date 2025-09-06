@@ -776,7 +776,7 @@ namespace UMapx.Core
             return (float)Math.Atan2(1.0, a);
         }
         /// <summary>
-        /// Returns the arcsecance of a number.
+        /// Returns the arcsecant of a number.
         /// </summary>
         /// <param name="a">Value</param>
         /// <returns>Value</returns>
@@ -887,7 +887,7 @@ namespace UMapx.Core
             return (I / 2.0f) * (Maths.Log((a + I) / (a - I)));
         }
         /// <summary>
-        /// Returns the arcsecance of a number.
+        /// Returns the arcsecant of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
@@ -1001,7 +1001,7 @@ namespace UMapx.Core
             return 1.0f / 2.0f * Maths.Log((a + 1) / (a - 1));
         }
         /// <summary>
-        /// Returns the hyperbolic arcsecance of a number.
+        /// Returns the hyperbolic arcsecant of a number.
         /// </summary>
         /// <param name="a">Angle in radians</param>
         /// <returns>Value</returns>
@@ -1120,7 +1120,7 @@ namespace UMapx.Core
             return 1.0 / 2.0 * Maths.Log((a + 1.0) / (a - 1.0));
         }
         /// <summary>
-        /// Returns the hyperbolic arcsecance of a number.
+        /// Returns the hyperbolic arcsecant of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
         /// <returns>Complex number</returns>
