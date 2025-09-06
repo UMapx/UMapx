@@ -10349,6 +10349,29 @@ namespace UMapx.Core
             return T;
         }
         /// <summary>
+        /// Implements the construction of the general Toeplitz matrix.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="r">Array</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Toeplitz(float[] v, float[] r)
+        {
+            if (v[0] != r[0]) throw new ArgumentException("Toeplitz requires c[0] == r[0]");
+
+            int n = v.Length, m = r.Length;
+            var T = new float[n, m];
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    T[i, j] = (j >= i) ? r[j - i] : v[i - j];
+                }
+            }
+
+            return T;
+        }
+        /// <summary>
         /// Implements the construction of the Cauchy matrix.
         /// </summary>
         /// <param name="x">Array</param>
@@ -10563,6 +10586,29 @@ namespace UMapx.Core
                 for (int j = 0; j < n; j++)
                 {
                     T[i, j] = v[Math.Abs(i - j)];
+                }
+            }
+
+            return T;
+        }
+        /// <summary>
+        /// Implements the construction of the general Toeplitz matrix.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="r">Array</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Toeplitz(Complex32[] v, Complex32[] r)
+        {
+            if (v[0] != r[0]) throw new ArgumentException("Toeplitz requires c[0] == r[0]");
+
+            int n = v.Length, m = r.Length;
+            var T = new Complex32[n, m];
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    T[i, j] = (j >= i) ? r[j - i] : v[i - j];
                 }
             }
 
