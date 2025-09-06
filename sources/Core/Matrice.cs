@@ -530,27 +530,25 @@ namespace UMapx.Core
             if (!Matrice.IsSquare(m))
                 throw new ArgumentException("The matrix must be square");
 
-            int i, j, r, n = m.GetLength(0);
-            float[] temp; float diagonal;
-            float[][] perm = Jagged.ToJagged(Matrice.Eye(n, n));
+            int n = m.GetLength(0);
+            var perm = Jagged.ToJagged(Matrice.Eye(n, n));
 
-            for (i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                diagonal = m[i, i]; r = i;
+                int r = i;
+                float best = Math.Abs(m[i, i]);
 
-                for (j = i; j < n; j++)
+                for (int j = i + 1; j < n; j++)
                 {
-                    if (m[j, i] > diagonal)
-                    {
-                        diagonal = m[j, i]; r = j;
-                    }
+                    float cand = Math.Abs(m[j, i]);
+                    if (cand > best) { best = cand; r = j; }
                 }
 
                 if (i != r)
                 {
-                    temp = perm[i];
+                    var tmp = perm[i];
                     perm[i] = perm[r];
-                    perm[r] = temp;
+                    perm[r] = tmp;
                 }
             }
             return Jagged.FromJagged(perm);
@@ -3515,7 +3513,7 @@ namespace UMapx.Core
 
             for (i = 0; i < ml; i++)
             {
-                H[i] = (float)Math.Round(H[i], digits, mode);
+                H[i] = (float)Math.Round(m[i], digits, mode);
             }
 
             return H;
