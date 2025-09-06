@@ -60,7 +60,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                     throw new ArgumentException("Invalid argument value");
 
                 this.k = value;
