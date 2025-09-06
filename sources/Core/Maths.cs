@@ -655,7 +655,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 FromPolar(float abs, float angle)
         {
-            return new Complex32(abs * (float)Math.Cos(angle), abs * (float)Math.Sin(angle));
+            return new Complex32(abs * Maths.Cos(angle), abs * Maths.Sin(angle));
         }
         /// <summary>
         /// Returns the rounded number.
