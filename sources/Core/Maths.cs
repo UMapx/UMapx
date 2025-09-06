@@ -540,7 +540,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Log(Complex32 a)
         {
-            return Log(a, E);
+            return new Complex32(Maths.Log(a.Abs), a.Angle);
         }
         /// <summary>
         /// Returns the decimal logarithm of a number.
@@ -568,7 +568,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Log(Complex32 a, float b)
         {
-            return new Complex32((float)Math.Log(a.Abs), a.Angle) / Math.Log(b);
+            return Maths.Log(a) / Maths.Log(b);
         }
         /// <summary>
         /// Returns the exponent raised to a complex degree.
@@ -577,7 +577,9 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Exp(Complex32 a)
         {
-            return Pow(E, a);
+            float ex = Maths.Exp(a.Real);
+            return new Complex32(ex * Maths.Cos(a.Imag),
+                                 ex * Maths.Sin(a.Imag));
         }
         /// <summary>
         /// Returns the number raised to a complex power.
@@ -587,8 +589,11 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Pow(float a, Complex32 b)
         {
-            float r = (float)Math.Pow(a, b.Real);
-            return new Complex32(r * (float)Math.Cos(b.Imag), r * (float)Math.Sin(b.Imag));
+            float lnA = Maths.Log(a);
+            float r = Maths.Exp(b.Real * lnA);
+            float ang = b.Imag * lnA;
+            return new Complex32(r * Maths.Cos(ang),
+                                 r * Maths.Sin(ang));
         }
         /// <summary>
         /// Returns the number raised to the power.
@@ -598,7 +603,10 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Pow(Complex32 a, float b)
         {
-            return Math.Pow(a.Abs, b) * new Complex32((float)Math.Cos(b * a.Angle), (float)Math.Sin(b * a.Angle));
+            float r = Maths.Pow(a.Abs, b);
+            float theta = b * a.Angle;
+            return new Complex32(r * Maths.Cos(theta),
+                                 r * Maths.Sin(theta));
         }
         /// <summary>
         /// Returns the number raised to the power.
@@ -627,7 +635,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Sqrt(Complex32 a, float b)
         {
-            return Maths.FromPolar((float)Math.Sqrt(a.Abs), a.Angle / b);
+            return Maths.FromPolar(Maths.Pow(a.Abs, 1f / b), a.Angle / b);
         }
         /// <summary>
         /// Returns the root of a number.
