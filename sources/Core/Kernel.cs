@@ -213,7 +213,7 @@ namespace UMapx.Core
             {
                 return 0;
             }
-            return 0.864197531f * (float)Math.Pow((1 - x * x * x), 3);
+            return 0.864197531f * (float)Math.Pow((1 - abs * abs * abs), 3);
         }
         #endregion
 
