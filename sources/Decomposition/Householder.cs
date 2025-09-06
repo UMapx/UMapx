@@ -130,7 +130,7 @@ namespace UMapx.Decomposition
 
                 for (j = 0; j < n; j++)
                 {
-                    z[j] -= w[i] * w[j];
+                    z[j] -= 2 * w[i] * w[j];
                 }
 
                 matrices[i] = z;
