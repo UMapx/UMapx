@@ -4,7 +4,7 @@ using UMapx.Core;
 namespace UMapx.Distribution
 {
     /// <summary>
-    /// Defines the xi-square distribution.
+    /// Defines the chi-square distribution.
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
@@ -19,7 +19,7 @@ namespace UMapx.Distribution
 
         #region Chi-square components
         /// <summary>
-        /// Initializes the xi-square distribution.
+        /// Initializes the chi-square distribution.
         /// </summary>
         /// <param name="k">Degrees of freedom (0, +inf)</param>
         public ChiSquare(int k)
