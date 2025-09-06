@@ -3880,16 +3880,16 @@
             <summary>
             Multiplies real number by complex number.
             </summary>
-            <param name="a">Complex number</param>
-            <param name="b">Value</param>
+            <param name="a">Value</param>
+            <param name="b">Complex number</param>
             <returns>Complex number</returns>
         </member>
         <member name="M:UMapx.Core.Complex32.op_Multiply(UMapx.Core.Complex32,System.Single)">
             <summary>
             Multiplies complex number by real number.
             </summary>
-            <param name="a">Value</param>
-            <param name="b">Complex number</param>
+            <param name="a">Complex number</param>
+            <param name="b">Value</param>
             <returns>Complex number</returns>
         </member>
         <member name="M:UMapx.Core.Complex32.op_Division(UMapx.Core.Complex32,UMapx.Core.Complex32)">
